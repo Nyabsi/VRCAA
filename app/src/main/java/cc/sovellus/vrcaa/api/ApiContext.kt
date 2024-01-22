@@ -307,6 +307,7 @@ class ApiContext(
         }
     }
 
+    @Suppress("unused")
     suspend fun getUser(userId: String): LimitedUser? {
 
         val headers = Headers.Builder()
