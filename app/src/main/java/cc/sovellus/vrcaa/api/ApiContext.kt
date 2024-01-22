@@ -55,8 +55,7 @@ class ApiContext(
         url: String,
         headers: Headers,
         body: String?
-    ): Response? {
-        return when (method)
+    ): Any? = when (method)
         {
             "GET" -> {
                 val request =
@@ -68,28 +67,26 @@ class ApiContext(
 
                 val response = client.newCall(request).await()
 
-                if (response.code == 200) {
-                    response
-                } else {
-                    return when (response.code) {
-                        429 -> {
-                            Toast.makeText(
-                                context,
-                                "You are being rate-limited, calm down.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            null
+                when (response.code) {
+                    200 -> {
+                        response
+                    }
+                    429 -> {
+                        Toast.makeText(
+                            context,
+                            "You are being rate-limited, calm down.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        null
+                    }
+                    401 -> {
+                        refreshToken(method, url, headers, body)
+                    }
+                    else -> {
+                        response.body?.let {
+                            Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
                         }
-                        401 -> {
-                            refreshToken()
-                            doRequest(method, url, headers, body)
-                        }
-                        else -> {
-                            response.body?.let {
-                                Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
-                            }
-                            null
-                        }
+                        null
                     }
                 }
             }
@@ -108,28 +105,26 @@ class ApiContext(
 
                 val response = client.newCall(request).await()
 
-                if (response.code == 200) {
-                    response
-                } else {
-                    return when (response.code) {
-                        429 -> {
-                            Toast.makeText(
-                                context,
-                                "You are being rate-limited, calm down.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            null
+                when (response.code) {
+                    200 -> {
+                        response
+                    }
+                    429 -> {
+                        Toast.makeText(
+                            context,
+                            "You are being rate-limited, calm down.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        null
+                    }
+                    401 -> {
+                        refreshToken(method, url, headers, body)
+                    }
+                    else -> {
+                        response.body?.let {
+                            Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
                         }
-                        401 -> {
-                            refreshToken()
-                            doRequest(method, url, headers, body)
-                        }
-                        else -> {
-                            response.body?.let {
-                                Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
-                            }
-                            null
-                        }
+                        null
                     }
                 }
             }
@@ -145,58 +140,53 @@ class ApiContext(
 
                 val response = client.newCall(request).await()
 
-                if (response.code == 200) {
-                    response
-                } else {
-                    return when (response.code) {
-                        429 -> {
-                            Toast.makeText(
-                                context,
-                                "You are being rate-limited, calm down.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            null
+                when (response.code) {
+                    200 -> {
+                        response
+                    }
+                    429 -> {
+                        Toast.makeText(
+                            context,
+                            "You are being rate-limited, calm down.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        null
+                    }
+                    401 -> {
+                        refreshToken(method, url, headers, body)
+                    }
+                    else -> {
+                        response.body?.let {
+                            Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
                         }
-                        401 -> {
-                            refreshToken()
-                            doRequest(method, url, headers, body)
-                        }
-                        else -> {
-                            response.body?.let {
-                                Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
-                            }
-                            null
-                        }
+                        null
                     }
                 }
             }
-
-            else -> {
-                Log.d("VRCAA", "Unsupported request type, how did you end up here?")
-                null
-            }
+        else -> {
+            null
         }
     }
 
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun refreshToken() {
+    suspend fun refreshToken(method: String, url: String, headers: Headers, body: String?): Any? {
 
-        val headers = Headers.Builder()
+        val requestHeaders = Headers.Builder()
         val token = Base64.encode((URLEncoder.encode(preferences.userCredentials.first) + ":" + URLEncoder.encode(preferences.userCredentials.second)).toByteArray())
 
-        headers["Authorization"] = "Basic $token"
-        headers["User-Agent"] = userAgent
+        requestHeaders["Authorization"] = "Basic $token"
+        requestHeaders["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/auth/user",
-            headers = headers.build(),
+            headers = requestHeaders.build(),
             body = null
         )
 
-        when (result) {
+        return when (result) {
             is Response -> {
-                preferences.cookies = result.headers["Set-Cookie"].toString()
+                doRequest(method, url, headers, body)
             }
             else -> {
                 Toast.makeText(
@@ -204,6 +194,7 @@ class ApiContext(
                     "Something went horribly wrong when refreshing access token, contact the developer.",
                     Toast.LENGTH_LONG
                 ).show()
+                null
             }
         }
     }
