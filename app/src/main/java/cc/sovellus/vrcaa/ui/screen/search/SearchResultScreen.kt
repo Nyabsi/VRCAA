@@ -3,7 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.search
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -46,6 +48,7 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -164,14 +167,14 @@ class SearchResultScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.clickable(
                 onClick = { onClick() }
-            )
+            ).padding(4.dp).fillMaxWidth()
         ) {
             GlideImage(
                 model = url,
                 contentDescription = "Preview Image",
                 modifier = Modifier
                     .height(120.dp)
-                    .width(190.dp)
+                    .width(200.dp)
                     .clip(RoundedCornerShape(10)),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center
@@ -184,62 +187,54 @@ class SearchResultScreen(
     private fun ShowWorlds(
         worlds: MutableList<Worlds.WorldItem>
     ) {
-        VerticalColumn {
-            items(worlds.size / 2) {
-                val firstWorld = worlds[it]
-                val secondWorld = worlds[it + 1]
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .padding(4.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(
+                start = 12.dp,
+                top = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp
+            ),
+            content = {
+                items(worlds.size) {
+                    val world = worlds[it]
                     RowItem(
-                        name = firstWorld.name,
-                        url = firstWorld.imageUrl,
-                        onClick = { }
-                    )
-                    RowItem(
-                        name = secondWorld.name,
-                        url = secondWorld.imageUrl,
-                        onClick = { }
+                        name = world.name,
+                        url = world.imageUrl,
+                        onClick = { navigator.push(NestedPlaceholderScreen()) }
                     )
                 }
             }
-        }
+        )
     }
 
     @Composable
     private fun ShowUsers(
         users: MutableList<Users.UsersItem>
     ) {
-        VerticalColumn {
-            items(users.size / 2) {
-                val firstUser = users[it]
-                val secondUser = users[it + 1]
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .padding(4.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(
+                start = 12.dp,
+                top = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp
+            ),
+            content = {
+                items(users.size) {
+                    val user = users[it]
                     RowItem(
-                        name = firstUser.displayName,
-                        url = firstUser.profilePicOverride.ifEmpty { firstUser.currentAvatarImageUrl },
-                        onClick = { }
-                    )
-                    RowItem(
-                        name = secondUser.displayName,
-                        url = secondUser.profilePicOverride.ifEmpty { secondUser.currentAvatarImageUrl },
-                        onClick = { }
+                        name = user.displayName,
+                        url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
+                        onClick = { navigator.push(NestedPlaceholderScreen()) }
                     )
                 }
             }
-        }
+        )
     }
 
     @Composable
