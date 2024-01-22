@@ -174,14 +174,14 @@ class FriendProfileScreen(
     }
 
     @Composable
-    fun Description(text: String) {
+    fun Description(text: String?) {
         Column(
             modifier = Modifier
                 .padding(24.dp)
         ) {
             Text(
                 modifier = Modifier.padding(start = 2.dp),
-                text = text,
+                text = if (text.isNullOrEmpty()) {"No description specified." } else { text },
                 textAlign = TextAlign.Left,
                 fontWeight = FontWeight.SemiBold
             )
