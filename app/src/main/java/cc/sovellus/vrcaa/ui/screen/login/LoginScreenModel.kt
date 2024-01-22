@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -28,6 +29,7 @@ class LoginScreenModel(
         screenModelScope.launch {
             val token = api.getToken(username.value, password.value)
             if (token.isNotEmpty()) {
+                Log.d("VRCAA", "WAT THE FUCK!?!?!")
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", MODE_PRIVATE
                 )
@@ -36,6 +38,7 @@ class LoginScreenModel(
                 preferences.userCredentials = Pair(username.value, password.value)
                 preferences.cookies = token
 
+                navigator.popAll()
                 navigator.push(TwoAuthScreen(token))
             } else {
                 Toast.makeText(

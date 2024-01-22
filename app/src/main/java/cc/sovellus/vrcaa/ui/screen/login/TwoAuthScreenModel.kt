@@ -27,6 +27,8 @@ class TwoAuthScreenModel(
                 context.getSharedPreferences(
                     "vrcaa_prefs", Context.MODE_PRIVATE
                 ).twoFactorAuth = twoAuth
+
+                navigator.popAll()
                 navigator.push(MainScreen())
             } else {
                 Toast.makeText(
