@@ -83,7 +83,7 @@ class HomeScreen : Screen {
                        val friend = friends[it]
                        RowItemRounded(
                            name = friend.displayName,
-                           url = friend.imageUrl.ifEmpty { friend.currentAvatarImageUrl },
+                           url = friend.userIcon.ifEmpty { friend.imageUrl },
                            onClick = { navigator.parent?.parent?.push(FriendProfileScreen(friend)) }
                        )
                    }
