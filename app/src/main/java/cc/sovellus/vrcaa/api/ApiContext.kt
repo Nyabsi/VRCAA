@@ -31,8 +31,8 @@ class ApiContext(
 
     private var client: OkHttpClient = OkHttpClient()
 
-    private val apiBase: String = "https://api.vrchat.cloud/api/1";
-    private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc";
+    private val apiBase: String = "https://api.vrchat.cloud/api/1"
+    private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
     private var cookies: String = ""
 
     init {

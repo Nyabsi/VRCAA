@@ -15,7 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
@@ -57,7 +57,6 @@ class SearchResultScreen(
     @Composable
     override fun Content() {
 
-        val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
         val model = rememberScreenModel { SearchResultScreenModel(query = query, api = ApiContext(context)) }
@@ -87,7 +86,7 @@ class SearchResultScreen(
                     navigationIcon = {
                         IconButton(onClick = { navigator.popUntil { it.key == "main" } }) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Go Back"
                             )
                         }
