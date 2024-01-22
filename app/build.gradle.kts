@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.mikepenz.aboutlibraries.plugin") version "10.10.0"
 }
 
 android {
@@ -81,4 +82,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
     implementation("androidx.compose.material:material:1.5.4")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
+    implementation("com.mikepenz:aboutlibraries-core:10.10.0")
+    implementation("com.mikepenz:aboutlibraries-compose-m3-android:10.10.0@aar")
 }
