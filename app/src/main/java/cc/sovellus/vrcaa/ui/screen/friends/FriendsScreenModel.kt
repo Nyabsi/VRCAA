@@ -10,7 +10,6 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Friends
 import kotlinx.coroutines.launch
 
-
 class FriendsScreenModel(
     private val api: ApiContext
 ) : StateScreenModel<FriendsScreenModel.FriendListState>(FriendListState.Init) {
