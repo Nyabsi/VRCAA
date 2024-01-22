@@ -35,8 +35,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.utils.StatusUtils
-import cc.sovellus.vrcaa.api.utils.TrustRank
+import cc.sovellus.vrcaa.api.helper.StatusHelper
+import cc.sovellus.vrcaa.api.helper.TrustHelper
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -79,9 +79,9 @@ class FriendProfileScreen(
                                 ProfileCard(
                                     thumbnailUrl = it.imageUrl,
                                     displayName = it.displayName,
-                                    statusDescription = it.statusDescription.ifEmpty { StatusUtils.Status.toString(StatusUtils().getStatusFromString(it.status)) },
-                                    trustRankColor = TrustRank.Rank.toColor(TrustRank().getTrustRankFromTags(it.tags)),
-                                    statusColor = StatusUtils.Status.toColor(StatusUtils().getStatusFromString(it.status))
+                                    statusDescription = it.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(it.status)) },
+                                    trustRankColor = TrustHelper.Rank.toColor(TrustHelper().getTrustRankFromTags(it.tags)),
+                                    statusColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(it.status))
                                 )
                             }
                         }

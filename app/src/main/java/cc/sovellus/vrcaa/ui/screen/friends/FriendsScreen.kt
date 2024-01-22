@@ -30,7 +30,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.utils.StatusUtils
+import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
@@ -78,7 +78,7 @@ class FriendsScreen : Screen {
                     items(friendsSorted.count()) {
                         val friend = friendsSorted[it]
                         ListItem(
-                            headlineContent = { Text(friend.statusDescription.ifEmpty { StatusUtils.Status.toString(StatusUtils().getStatusFromString(friend.status)) }, maxLines = 1) },
+                            headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
                             overlineContent = { Text(friend.displayName) },
                             supportingContent = { Text(text = friend.location, maxLines = 1) },
                             leadingContent = {
@@ -93,7 +93,7 @@ class FriendsScreen : Screen {
                                 )
                             },
                             trailingContent = {
-                                Badge(containerColor = StatusUtils.Status.toColor(StatusUtils().getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                                Badge(containerColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
                             },
                             modifier = Modifier.clickable(
                                 onClick = {

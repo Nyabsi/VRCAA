@@ -1,8 +1,8 @@
-package cc.sovellus.vrcaa.api.utils
+package cc.sovellus.vrcaa.api.helper
 
 import androidx.compose.ui.graphics.Color
 
-class StatusUtils {
+class StatusHelper {
     enum class Status {
         JoinMe,
         Active,

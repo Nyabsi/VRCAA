@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColor
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -35,8 +34,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.User
-import cc.sovellus.vrcaa.api.utils.StatusUtils
-import cc.sovellus.vrcaa.api.utils.TrustRank
+import cc.sovellus.vrcaa.api.helper.StatusHelper
+import cc.sovellus.vrcaa.api.helper.TrustHelper
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.ProfileScreenModel.ProfileState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -75,8 +74,8 @@ class ProfileScreen : Screen {
                             thumbnailUrl = it.currentAvatarThumbnailImageUrl,
                             displayName = it.displayName,
                             statusDescription = it.statusDescription,
-                            trustRankColor = TrustRank.Rank.toColor(TrustRank().getTrustRankFromTags(it.tags)),
-                            statusColor = StatusUtils.Status.toColor(StatusUtils().getStatusFromString(it.status))
+                            trustRankColor = TrustHelper.Rank.toColor(TrustHelper().getTrustRankFromTags(it.tags)),
+                            statusColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(it.status))
                         )
                     }
                 }
