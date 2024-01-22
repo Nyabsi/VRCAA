@@ -170,8 +170,8 @@ class SearchResultScreen(
                 model = url,
                 contentDescription = "Preview Image",
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(200.dp)
+                    .height(120.dp)
+                    .width(190.dp)
                     .clip(RoundedCornerShape(10)),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center
@@ -192,7 +192,7 @@ class SearchResultScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .padding(8.dp),
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -223,7 +223,7 @@ class SearchResultScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .padding(8.dp),
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {

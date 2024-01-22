@@ -14,20 +14,20 @@ class TrustHelper {
         companion object {
             fun toString(rank: Rank): String {
                 return when(rank) {
-                    Rank.Trusted -> "Trusted"
-                    Rank.Known -> "Known"
-                    Rank.User -> "User"
-                    Rank.NewUser -> "New User"
+                    Trusted -> "Trusted"
+                    Known -> "Known"
+                    User -> "User"
+                    NewUser -> "New User"
                     Rank.Visitor -> "Visitor"
                 }
             }
 
             fun toColor(rank: Rank): Color {
                 return when(rank) {
-                    Rank.Trusted -> Color(129, 67, 230)
-                    Rank.Known -> Color(255, 123, 66)
-                    Rank.User -> Color(43, 207, 92)
-                    Rank.NewUser -> Color(23, 120, 255)
+                    Trusted -> Color(129, 67, 230)
+                    Known -> Color(255, 123, 66)
+                    User -> Color(43, 207, 92)
+                    NewUser -> Color(23, 120, 255)
                     Rank.Visitor -> Color(204, 204, 204)
                 }
             }
@@ -36,7 +36,7 @@ class TrustHelper {
 
     fun getTrustRankFromTags(tags: List<String>): Rank
     {
-        var rank: Rank = Rank.Visitor;
+        var rank: Rank = Rank.Visitor
 
         for (tag in tags.reversed()) {
 

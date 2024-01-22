@@ -23,6 +23,3 @@ internal var SharedPreferences.cookies: String
 internal var SharedPreferences.twoFactorAuth: String
     get() = getString("TwoFactorAuth", "")!!
     set(it) = edit { putString("TwoFactorAuth", it) }
-
-internal val SharedPreferences.PREFERENCE_TAG: String
-    get() = "vrcaa_prefs"
