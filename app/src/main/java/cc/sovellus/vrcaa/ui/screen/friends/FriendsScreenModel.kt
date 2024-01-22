@@ -8,7 +8,6 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Friends
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
