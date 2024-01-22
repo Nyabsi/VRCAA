@@ -381,7 +381,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getWorlds(query: String = "", featured: Boolean = true, n: Int = 50, sort: String = "relevance"): Worlds? {
+    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): Worlds? {
 
         val headers = Headers.Builder()
 
