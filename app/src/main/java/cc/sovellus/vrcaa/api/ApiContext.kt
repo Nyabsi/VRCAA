@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.api
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.api.models.Avatars
@@ -10,6 +11,9 @@ import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.api.models.User
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.helper.userCredentials
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -29,22 +33,15 @@ class ApiContext(
     private var context: Context
 ) {
 
-    private var client: OkHttpClient = OkHttpClient()
+    private val client: OkHttpClient = OkHttpClient()
+    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", 0)
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
     private var cookies: String = ""
 
     init {
-        val result = context.getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "")
-        result.let {
-            if (it!!.isNotEmpty())
-                cookies = it
-        }
-
-        // Well, you see. It can happen, but only when you're logging in..
-        if (cookies.isEmpty())
-            Log.w("VRCAA", "cookies are empty, this should not happen if you're not in LoginActivity. This can be safely ignored, unless you have issues.")
+        cookies = "${preferences.cookies} ${preferences.twoFactorAuth}"
     }
 
     enum class TwoFactorType {
@@ -53,123 +50,161 @@ class ApiContext(
         TOTP
     }
 
-    private suspend fun doRequest(
+    suspend fun doRequest(
         method: String,
         url: String,
         headers: Headers,
         body: String?
-    ) = when (method)
-    {
-        "GET" -> {
-            val request =
-                Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .get()
-                    .build()
+    ): Response? {
+        return when (method)
+        {
+            "GET" -> {
+                val request =
+                    Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .get()
+                        .build()
 
-            val response = client.newCall(request).await()
+                val response = client.newCall(request).await()
 
-            if (response.code == 200) {
-                response
-            } else {
-                // TODO: create a "log" dump here to give us more information of the cause.
-                response.body?.let { Log.d("VRCAA", it.string()) }
-
-                if (response.code == 429) {
-                    Toast.makeText(
-                        context,
-                        "You are being rate-limited, calm down.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                if (response.code == 200) {
+                    response
                 } else {
-                    Toast.makeText(
-                        context,
-                        "Got unknown response from server: ${response.body.toString()}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    return when (response.code) {
+                        429 -> {
+                            Toast.makeText(
+                                context,
+                                "You are being rate-limited, calm down.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            null
+                        }
+                        401 -> {
+                            refreshToken()
+                            doRequest(method, url, headers, body)
+                        }
+                        else -> {
+                            response.body?.let {
+                                Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
+                            }
+                            null
+                        }
+                    }
                 }
+            }
 
+            "POST" -> {
+
+                val type: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody: RequestBody = body!!.toRequestBody(type)
+
+                val request =
+                    Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .post(requestBody)
+                        .build()
+
+                val response = client.newCall(request).await()
+
+                if (response.code == 200) {
+                    response
+                } else {
+                    return when (response.code) {
+                        429 -> {
+                            Toast.makeText(
+                                context,
+                                "You are being rate-limited, calm down.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            null
+                        }
+                        401 -> {
+                            refreshToken()
+                            doRequest(method, url, headers, body)
+                        }
+                        else -> {
+                            response.body?.let {
+                                Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
+                            }
+                            null
+                        }
+                    }
+                }
+            }
+
+            "PUT" -> {
+
+                val request =
+                    Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .put(EMPTY_REQUEST)
+                        .build()
+
+                val response = client.newCall(request).await()
+
+                if (response.code == 200) {
+                    response
+                } else {
+                    return when (response.code) {
+                        429 -> {
+                            Toast.makeText(
+                                context,
+                                "You are being rate-limited, calm down.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            null
+                        }
+                        401 -> {
+                            refreshToken()
+                            doRequest(method, url, headers, body)
+                        }
+                        else -> {
+                            response.body?.let {
+                                Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
+                            }
+                            null
+                        }
+                    }
+                }
+            }
+
+            else -> {
+                Log.d("VRCAA", "Unsupported request type, how did you end up here?")
                 null
             }
         }
+    }
 
-        "POST" -> {
+    @OptIn(ExperimentalEncodingApi::class)
+    suspend fun refreshToken() {
 
-            val type: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
-            val requestBody: RequestBody = body!!.toRequestBody(type)
+        val headers = Headers.Builder()
+        val token = Base64.encode((URLEncoder.encode(preferences.userCredentials.first) + ":" + URLEncoder.encode(preferences.userCredentials.second)).toByteArray())
 
-            val request =
-                Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .post(requestBody)
-                    .build()
+        headers["Authorization"] = "Basic $token"
+        headers["User-Agent"] = userAgent
 
-            val response = client.newCall(request).await()
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/auth/user",
+            headers = headers.build(),
+            body = null
+        )
 
-            if (response.code == 200) {
-                response
-            } else {
-                // TODO: create a "log" dump here to give us more information of the cause.
-                response.body?.let { Log.d("VRCAA", it.string()) }
-
-                if (response.code == 429) {
-                    Toast.makeText(
-                        context,
-                        "You are being rate-limited, calm down.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Got unknown response from server: ${response.body.toString()}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                null
+        when (result) {
+            is Response -> {
+                preferences.cookies = result.headers["Set-Cookie"].toString()
             }
-        }
-
-        "PUT" -> {
-
-            val request =
-                Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .put(EMPTY_REQUEST)
-                    .build()
-
-            val response = client.newCall(request).await()
-
-            if (response.code == 200) {
-                response
-            } else {
-                // TODO: create a "log" dump here to give us more information of the cause.
-                response.body?.let { Log.d("VRCAA", it.string()) }
-
-                if (response.code == 429) {
-                    Toast.makeText(
-                        context,
-                        "You are being rate-limited, calm down.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Got unknown response from server: ${response.body.toString()}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                null
+            else -> {
+                Toast.makeText(
+                    context,
+                    "Something went horribly wrong when refreshing access token, contact the developer.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        }
-
-        else -> {
-            Log.d("VRCAA", "Unsupported request type, how did you end up here?")
-            null
         }
     }
 
@@ -220,7 +255,7 @@ class ApiContext(
 
                 when (result) {
                     is Response -> {
-                        token + result.headers["twoFactorAuth"].toString()
+                        result.headers["twoFactorAuth"].toString()
                     }
                     else -> {
                         ""

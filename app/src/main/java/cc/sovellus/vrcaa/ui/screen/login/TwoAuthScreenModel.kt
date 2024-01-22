@@ -8,6 +8,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import kotlinx.coroutines.launch
 
@@ -18,17 +20,13 @@ class TwoAuthScreenModel(
 
     var code = mutableStateOf("")
 
-    @SuppressLint("ApplySharedPref")
     fun doVerify(token: String, navigator: Navigator) {
         screenModelScope.launch {
-            val cookies = api.verifyAccount(token, ApiContext.TwoFactorType.EMAIL_OTP, code.value)
-            if (cookies.isNotEmpty()) {
-                // store cookies to preferences
-                val editor = context.getSharedPreferences("vrcaa_prefs", 0).edit()
-                editor.putString("cookies", cookies)
-                editor.commit()
-
-                navigator.popAll()
+            val twoAuth = api.verifyAccount(token, ApiContext.TwoFactorType.EMAIL_OTP, code.value)
+            if (twoAuth.isNotEmpty()) {
+                context.getSharedPreferences(
+                    "vrcaa_prefs", Context.MODE_PRIVATE
+                ).twoFactorAuth = twoAuth
                 navigator.push(MainScreen())
             } else {
                 Toast.makeText(
