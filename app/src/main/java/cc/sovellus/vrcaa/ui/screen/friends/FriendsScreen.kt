@@ -62,7 +62,8 @@ class FriendsScreen : Screen {
     private fun RenderList(friends: List<Friends.FriendsItem>, model: FriendsScreenModel) {
 
         val navigator = LocalNavigator.currentOrThrow
-        val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends() })
+        val context = LocalContext.current
+        val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
 
         Box(Modifier.pullRefresh(stateRefresh)) {
             if (!model.isRefreshing.value) {

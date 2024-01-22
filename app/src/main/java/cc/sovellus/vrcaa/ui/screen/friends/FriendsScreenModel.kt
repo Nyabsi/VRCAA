@@ -1,11 +1,14 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Friends
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -47,7 +50,15 @@ class FriendsScreenModel(
         }
     }
 
-    fun refreshFriends() {
-        getFriends()
+    fun refreshFriends(context: Context) {
+        screenModelScope.launch {
+            val oldCount = friends.size
+            getFriends()
+            Toast.makeText(
+                context,
+                if(oldCount != friends.size) { "Oh, hey there! You seem to have new faces around here." } else { "There was no change in sight to be seen." } ,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
