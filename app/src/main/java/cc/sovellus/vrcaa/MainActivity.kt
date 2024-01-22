@@ -10,6 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
+import cafe.adriel.voyager.transitions.FadeTransition
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
@@ -38,9 +40,10 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Content() {
         if (checkForCookies()) {
-            Navigator(LoginScreen(), onBackPressed = { false })
+
+            Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator)  }
         } else {
-            Navigator(MainScreen(), onBackPressed = { it.key != "main" })
+            Navigator(MainScreen(), onBackPressed = { it.key != "main" }) { navigator -> FadeTransition(navigator) }
         }
     }
 }
