@@ -49,6 +49,7 @@ import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -230,7 +231,7 @@ class SearchResultScreen(
                     RowItem(
                         name = user.displayName,
                         url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
-                        onClick = { navigator.push(NestedPlaceholderScreen()) }
+                        onClick = { navigator.push(UserProfileScreen(user)) }
                     )
                 }
             }
