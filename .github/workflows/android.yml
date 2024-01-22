@@ -1,0 +1,47 @@
+name: Publish pre-release
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up JDK 17
+      if: contains(github.event.head_commit.message, 'smoke_test')
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      if: contains(github.event.head_commit.message, '[CI]')
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      if: contains(github.event.head_commit.message, '[CI]')
+      run: ./gradlew build
+    
+    - name: Upload a Build Artifact
+      if: contains(github.event.head_commit.message, '[CI]')
+      uses: actions/upload-artifact@v2
+      with:
+        name: app
+        path: app/build/outputs/apk/debug/app-debug.apk
+
+    - name: Make release
+      uses: marvinpinto/action-automatic-releases@latest
+      if: contains(github.event.head_commit.message, '[CI]')
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "${{ env.GITHUB_SHA }}"
+        files: |
+          app/build/outputs/apk/debug/app-debug.apk

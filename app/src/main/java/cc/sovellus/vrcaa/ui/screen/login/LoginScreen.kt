@@ -1,0 +1,135 @@
+package cc.sovellus.vrcaa.ui.screen.login
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.api.ApiContext
+
+class LoginScreen : Screen {
+    @Composable
+    override fun Content() {
+
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        val screenModel = navigator.rememberNavigatorScreenModel { LoginScreenModel(
+            ApiContext(context),
+            context,
+            navigator
+        ) }
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Login to VRC Android Assistant")
+
+            TextInput(
+                title = "Username",
+                input = screenModel.username
+            )
+
+            TextInputPassword(
+                title = "Password",
+                input = screenModel.password,
+                visible = screenModel.passwordVisible.value,
+                onVisibilityChange = { screenModel.passwordVisible.value = !screenModel.passwordVisible.value }
+            )
+
+            Button(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(200.dp),
+                onClick = {
+                    screenModel.doLogin()
+                }
+            ) {
+                Text(text = "Login")
+            }
+        }
+        
+        Column (
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "VRCAA is not endorsed by VRChat Inc. or any of their affiliates."
+            )
+        }
+    }
+
+    @Composable
+    fun TextInput(
+        title: String,
+        input: MutableState<String>
+    ) {
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = input.value,
+            onValueChange = { input.value = it },
+            label = { Text(text = title) },
+            singleLine = true,
+        )
+    }
+
+    @Composable
+    fun TextInputPassword(
+        title: String,
+        input: MutableState<String>,
+        visible: Boolean,
+        onVisibilityChange: () -> Unit
+    ) {
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = input.value,
+            onValueChange = { input.value = it },
+            label = { Text(text = title) },
+            singleLine = true,
+            visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                val image = if (visible)
+                    Icons.Filled.Visibility
+                else Icons.Filled.VisibilityOff
+
+                IconButton(onClick = {
+                    onVisibilityChange()
+                }){
+                    Icon(imageVector  = image, "Emptiness")
+                }
+            }
+        )
+    }
+}
