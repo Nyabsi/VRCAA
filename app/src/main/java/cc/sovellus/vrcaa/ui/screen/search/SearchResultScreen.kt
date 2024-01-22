@@ -3,21 +3,29 @@ package cc.sovellus.vrcaa.ui.screen.search
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -28,9 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -39,7 +46,6 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -54,20 +60,24 @@ class SearchResultScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = rememberScreenModel { SearchResultScreenModel(query = query, api = ApiContext(context)) }
+        val model = rememberScreenModel { SearchResultScreenModel(query = query, api = ApiContext(context)) }
 
-        val state by screenModel.state.collectAsState()
+        val state by model.state.collectAsState()
 
         when (val result = state) {
             is SearchState.Loading -> LoadingIndicatorScreen().Content()
-            is SearchState.Result -> DisplayResult(result.foundWorlds, result.foundUsers)
+            is SearchState.Result -> DisplayResult(result.foundWorlds, result.foundUsers, model)
             else -> {}
         }
     }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable
-    fun DisplayResult(worlds: MutableList<Worlds.WorldItem>, users: MutableList<Users.UsersItem>) {
+    fun DisplayResult(
+        worlds: MutableList<Worlds.WorldItem>,
+        users: MutableList<Users.UsersItem>,
+        model: SearchResultScreenModel
+    ) {
 
         val navigator = LocalNavigator.currentOrThrow
 
@@ -86,48 +96,45 @@ class SearchResultScreen(
                     title = { Text(text = "Search Results for $query") }
                 )
             },
-            content = { padding ->
-                LazyColumn(
+            content = {
+
+                val options = listOf("Worlds", "Users", "Avatars")
+                val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person, Icons.Filled.Visibility)
+
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding(), start = 16.dp, end = 16.dp)
+                        .fillMaxSize()
+                        .padding(top = it.calculateTopPadding()),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    item {
-                        if (worlds.isEmpty())
-                            EmptyRowItem("Could not find worlds with the specified keywords.")
-                        else {
-                            HorizontalRow(
-                                title = "Worlds"
+                    MultiChoiceSegmentedButtonRow {
+                        options.forEachIndexed { index, label ->
+                            SegmentedButton(
+                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                                icon = {
+                                    SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                                        Icon(
+                                            imageVector = icons[index],
+                                            contentDescription = null,
+                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                        )
+                                    }
+                                },
+                                onCheckedChange = {
+                                    model.currentIndex.intValue = index
+                                },
+                                checked = index == model.currentIndex.intValue
                             ) {
-                                items(worlds.size) {
-                                    val world = worlds[it]
-                                    RowItem(
-                                        name = world.name,
-                                        url = world.imageUrl,
-                                        onClick = { navigator.push(NestedPlaceholderScreen()) }
-                                    )
-                                }
+                                Text(label)
                             }
                         }
                     }
 
-                    item {
-                        if (users.isEmpty())
-                            EmptyRowItem("Could not find users with the specified keywords.")
-                        else {
-                            HorizontalRow(
-                                title = "Users"
-                            ) {
-                                items(users.size) {
-                                    val user = users[it]
-                                    RowItem(
-                                        name = user.displayName,
-                                        url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
-                                        onClick = { navigator.push(NestedPlaceholderScreen()) }
-                                    )
-                                }
-                            }
-                        }
+                    when(model.currentIndex.intValue) {
+                        0 -> ShowWorlds(worlds)
+                        1 -> ShowUsers(users)
+                        2 -> ShowAvatars()
                     }
                 }
             }
@@ -135,22 +142,14 @@ class SearchResultScreen(
     }
 
     @Composable
-    private fun HorizontalRow(
-        title: String,
+    private fun VerticalColumn(
         content: LazyListScope.() -> Unit
     ) {
-        Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            fontSize = 32.sp,
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
-
-        LazyRow(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             content = content
         )
     }
@@ -173,25 +172,83 @@ class SearchResultScreen(
                 contentDescription = "Preview Image",
                 modifier = Modifier
                     .height(150.dp)
-                    .width(240.dp)
+                    .width(200.dp)
                     .clip(RoundedCornerShape(10)),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center
             )
-            Text(text = name)
+            Text(text = name, overflow = TextOverflow.Ellipsis, maxLines = 1, modifier = Modifier.width(200.dp).fillMaxWidth())
         }
     }
 
     @Composable
-    private fun EmptyRowItem(label: String) {
-        Column(
-            modifier = Modifier
-                .height(150.dp)
-                .width(240.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(label)
+    private fun ShowWorlds(
+        worlds: MutableList<Worlds.WorldItem>
+    ) {
+        VerticalColumn {
+            items(worlds.size / 2) {
+                val firstWorld = worlds[it]
+                val secondWorld = worlds[it + 1]
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RowItem(
+                        name = firstWorld.name,
+                        url = firstWorld.imageUrl,
+                        onClick = { }
+                    )
+                    RowItem(
+                        name = secondWorld.name,
+                        url = secondWorld.imageUrl,
+                        onClick = { }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun ShowUsers(
+        users: MutableList<Users.UsersItem>
+    ) {
+        VerticalColumn {
+            items(users.size / 2) {
+                val firstUser = users[it]
+                val secondUser = users[it + 1]
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RowItem(
+                        name = firstUser.displayName,
+                        url = firstUser.profilePicOverride.ifEmpty { firstUser.currentAvatarImageUrl },
+                        onClick = { }
+                    )
+                    RowItem(
+                        name = secondUser.displayName,
+                        url = secondUser.profilePicOverride.ifEmpty { secondUser.currentAvatarImageUrl },
+                        onClick = { }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun ShowAvatars() {
+        VerticalColumn {
+            item {
+                Text(text = "Not Implemented")
+            }
         }
     }
 }

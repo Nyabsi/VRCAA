@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.search
 
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
@@ -23,6 +25,8 @@ class SearchResultScreenModel(
 
     private var foundWorlds = mutableListOf<Worlds.WorldItem>()
     private var foundUsers = mutableListOf<Users.UsersItem>()
+
+    var currentIndex = mutableIntStateOf(0)
 
     init {
         mutableState.value = SearchState.Loading
