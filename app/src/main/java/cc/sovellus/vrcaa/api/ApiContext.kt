@@ -186,6 +186,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
+                preferences.cookies = result.headers["Set-Cookie"].toString()
                 doRequest(method, url, headers, body)
             }
             else -> {
