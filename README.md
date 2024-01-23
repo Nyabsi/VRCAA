@@ -15,8 +15,8 @@ VRCAA is free and open-source utility on your Android 13+ devices which allows y
 
 - Browse worlds, users and avatars!
 - See favorite, online and offline friends.
-- Sleek, modern and intuitive UI
-- Support for Android Monet Colors
+- Sleek, modern and intuitive UI.
+- Support for Android Monet Colors.
 - And much more!
 
 > VRCAA is under active development and is *nowhere near* being user-ready, this list is subject to change and may or may not represent the current features of the application.
