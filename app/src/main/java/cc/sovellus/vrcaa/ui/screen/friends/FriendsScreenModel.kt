@@ -1,12 +1,14 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Friends
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FriendsScreenModel(
@@ -19,9 +21,9 @@ class FriendsScreenModel(
         data class Result (val friends: List<Friends.FriendsItem>, val offlineFriends: List<Friends.FriendsItem>, val favoriteFriends: List<Friends.FriendsItem>) : FriendListState()
     }
 
-    var friends = mutableListOf<Friends.FriendsItem>()
-    var offlineFriends = mutableListOf<Friends.FriendsItem>()
-    var favoriteFriends = mutableListOf<Friends.FriendsItem>()
+    private var friends = mutableListOf<Friends.FriendsItem>()
+    private var offlineFriends = mutableListOf<Friends.FriendsItem>()
+    private var favoriteFriends = mutableListOf<Friends.FriendsItem>()
     var isRefreshing = mutableStateOf(false)
     var currentIndex = mutableIntStateOf(0)
 
@@ -74,7 +76,18 @@ class FriendsScreenModel(
 
     fun refreshFriends(context: Context) {
         screenModelScope.launch {
+            isRefreshing.value = true
             getFriends()
+
+            // Would you ever think the application being too fast is problematic... Well, it is. So add that delay.
+            delay(500)
+            isRefreshing.value = false
+
+            Toast.makeText(
+                context,
+                "Refreshed friend list.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

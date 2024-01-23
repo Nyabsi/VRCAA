@@ -41,9 +41,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.api.ApiContext
-import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.helper.StatusHelper
-import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
@@ -85,89 +84,98 @@ class FriendsScreen : Screen {
         val options = listOf("Favorite", "Online", "Offline")
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
 
-        Box(Modifier.pullRefresh(stateRefresh)) {
-            if (!model.isRefreshing.value) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    MultiChoiceSegmentedButtonRow {
-                        options.forEachIndexed { index, label ->
-                            SegmentedButton(
-                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                                icon = {
-                                    SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
-                                        Icon(
-                                            imageVector = icons[index],
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                        )
-                                    }
-                                },
-                                onCheckedChange = {
-                                    model.currentIndex.intValue = index
-                                },
-                                checked = index == model.currentIndex.intValue
-                            ) {
-                                Text(label)
-                            }
+        Box(Modifier.pullRefresh(stateRefresh).fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                MultiChoiceSegmentedButtonRow {
+                    options.forEachIndexed { index, label ->
+                        SegmentedButton(
+                            shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                            icon = {
+                                SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                                    Icon(
+                                        imageVector = icons[index],
+                                        contentDescription = null,
+                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                    )
+                                }
+                            },
+                            onCheckedChange = {
+                                model.currentIndex.intValue = index
+                            },
+                            checked = index == model.currentIndex.intValue
+                        ) {
+                            Text(label)
                         }
                     }
-
-                    when(model.currentIndex.intValue) {
-                        0 -> ShowFriends(favoriteFriends)
-                        1 -> ShowFriends(friends)
-                        2 -> ShowFriends(offlineFriends)
-                    }
                 }
-            } else {
-                PullRefreshIndicator(model.isRefreshing.value, stateRefresh, Modifier.align(Alignment.TopCenter))
             }
+
+            when(model.currentIndex.intValue) {
+                0 -> ShowFriends(favoriteFriends)
+                1 -> ShowFriends(friends)
+                2 -> ShowFriends(offlineFriends)
+            }
+
+            PullRefreshIndicator(model.isRefreshing.value, stateRefresh, Modifier.align(Alignment.TopCenter))
         }
     }
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     fun ShowFriends(friends: List<Friends.FriendsItem>) {
-        LazyColumn(
-            Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(1.dp)
-        ) {
-            // TODO: later add customization to the sort, but for now just put "offline" status to the bottom.
-            val friendsSorted = friends.sortedWith(compareBy { it.location == "offline" })
 
-            items(friendsSorted.count()) {
-                val navigator = LocalNavigator.currentOrThrow
-                val friend = friendsSorted[it]
+        if (friends.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "There's nothing but chickens here!")
+            }
+        } else {
+            LazyColumn(
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(1.dp)
+            ) {
+                // TODO: later add customization to the sort, but for now just put "offline" status to the bottom.
+                val friendsSorted = friends.sortedWith(compareBy { it.location == "offline" })
 
-                ListItem(
-                    headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
-                    overlineContent = { Text(friend.displayName) },
-                    supportingContent = { Text(text = friend.location, maxLines = 1) },
-                    leadingContent = {
-                        GlideImage(
-                            model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
-                            contentDescription = "Profile Picture",
-                            modifier = Modifier
-                                .size(48.dp)
-                                .clip(RoundedCornerShape(50)),
-                            contentScale = ContentScale.FillBounds,
-                            alignment = Alignment.Center
+                items(friendsSorted.count()) {
+                    val navigator = LocalNavigator.currentOrThrow
+                    val friend = friendsSorted[it]
+
+                    ListItem(
+                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
+                        overlineContent = { Text(friend.displayName) },
+                        supportingContent = { Text(text = friend.location, maxLines = 1) },
+                        leadingContent = {
+                            GlideImage(
+                                model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
+                                contentDescription = "Profile Picture",
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(RoundedCornerShape(50)),
+                                contentScale = ContentScale.FillBounds,
+                                alignment = Alignment.Center
+                            )
+                        },
+                        trailingContent = {
+                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                        },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(FriendProfileScreen(friend))
+                            }
                         )
-                    },
-                    trailingContent = {
-                        Badge(containerColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
-                    },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            navigator.parent?.parent?.push(FriendProfileScreen(friend))
-                        }
                     )
-                )
+                }
             }
         }
     }
