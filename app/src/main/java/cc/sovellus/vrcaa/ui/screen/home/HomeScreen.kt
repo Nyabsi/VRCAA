@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.home
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -97,9 +104,10 @@ class HomeScreen : Screen {
                ) {
                    items(lastVisited.size) {
                        val world = lastVisited[it]
-                       RowItem(
+                       WorldRow(
                            name = world.name,
                            url = world.imageUrl,
+                           count = world.occupants,
                            onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
                        )
                    }
@@ -113,9 +121,10 @@ class HomeScreen : Screen {
                ) {
                    items(featuredAvatars.size) {
                        val avatar = featuredAvatars[it]
-                       RowItem(
+                       WorldRow(
                            name = avatar.name,
                            url = avatar.imageUrl,
+                           count = null,
                            onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
                        )
                    }
@@ -129,9 +138,10 @@ class HomeScreen : Screen {
                ) {
                    items(offlineFriends.size) {
                        val friend = offlineFriends[it]
-                       RowItem(
+                       WorldRow(
                            name = friend.displayName,
                            url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
+                           count = null,
                            onClick = { navigator.parent?.parent?.push(FriendProfileScreen(friend)) }
                        )
                    }
@@ -145,9 +155,10 @@ class HomeScreen : Screen {
                ) {
                    items(featuredWorlds.size) {
                        val world = featuredWorlds[it]
-                       RowItem(
+                       WorldRow(
                            name = world.name,
                            url = world.imageUrl,
+                           count = world.occupants,
                            onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
                        )
                    }
@@ -180,28 +191,41 @@ class HomeScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    private fun RowItem(
+    private fun WorldRow(
         name: String,
+        count: Int?,
         url: String,
         onClick: () -> Unit
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.clickable(
-                onClick = { onClick() }
-            )
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 2.dp
+            ),
+            modifier = Modifier
+                .height(180.dp)
+                .width(240.dp)
+                .fillMaxWidth()
+                .clickable(onClick = { onClick() })
         ) {
+
             GlideImage(
                 model = url,
-                contentDescription = "Preview Image",
+                contentDescription = "Preview Picture",
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(240.dp)
-                    .clip(RoundedCornerShape(10)),
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentScale = ContentScale.Crop
             )
-            Text(text = name)
+
+            Row(
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.95f), maxLines = 1, softWrap = false)
+                if (count != null) {
+                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier.weight(0.05f).padding(end = 2.dp))
+                    Icon(imageVector = Icons.Filled.Group, contentDescription = "Player Counter Icon")
+                }
+            }
         }
     }
 
