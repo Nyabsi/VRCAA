@@ -7,7 +7,7 @@
     
 </div>
 
-VRCAA is free and open-source utility on your Android 13+ devices which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
+VRCAA is free and open-source utility on your Android 8.1+ (NOTE: Older devices may behave in unintended way) devices which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
 
 [Click here to download the Pre-Release](https://github.com/Nyabsi/vrcaa/releases/download/latest/app-debug.apk)
 
