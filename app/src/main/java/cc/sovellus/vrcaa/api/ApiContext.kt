@@ -187,6 +187,7 @@ class ApiContext(
         return when (result) {
             is Response -> {
                 preferences.cookies = result.headers["Set-Cookie"].toString()
+                cookies = "${preferences.cookies} ${preferences.twoFactorAuth}"
                 doRequest(method, url, headers, body)
             }
             else -> {
