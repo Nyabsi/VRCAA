@@ -25,6 +25,14 @@ VRCAA is free and open-source utility on your Android 13+ devices which allows y
 
 VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRCAA does NOT store nor collect ANY data out of the scope of YOUR device. The Author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
 
+# Credits
+
+- Me (Nyabsi) for the initial idea and creation of the application.
+- ttofu for testing and giving feedback.
+- bnuybuny for creating the application icon.
+
+And all the other contributors and people who gave me feedback.
+
 # License
 
 ```
