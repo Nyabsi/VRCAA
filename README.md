@@ -1,7 +1,11 @@
 
-# VRCAA: VRChat Android Assistant
+# <img src="https://github.com/Nyabsi/vrcaa/assets/43046474/3c0b1f68-eed6-4fa7-88ac-7350cfea5e82" height="24" width="24"> VRCAA: VRChat Android Assistant
 
 > NOTE: VRCAA is still in its early stages, you may and will experience issues or missing features.
+
+<div align="center">
+    
+</div>
 
 VRCAA is free and open-source utility on your Android 13+ devices which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
 
@@ -9,8 +13,14 @@ VRCAA is free and open-source utility on your Android 13+ devices which allows y
 
 # Features
 
-There is no feature list at the moment.
+- Browse worlds, users and avatars!
+- See favorite, online and offline friends.
+- Sleek, modern and intuitive UI
+- Support for Android Monet Colors
+- And much more!
 
+> VRCAA is under active development and is *nowhere near* being user-ready, this list is subject to change and may or may not represent the current features of the application.
+  
 # Disclaimer
 
 VRCAA is not affiliated with VRChat Inc, nor does it represent the view of opinion of VRChat Inc. VRCAA does NOT store nor collect ANY data out of the scope of YOUR device. The Author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
