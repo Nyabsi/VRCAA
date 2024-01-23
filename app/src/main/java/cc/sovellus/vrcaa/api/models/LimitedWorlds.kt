@@ -3,8 +3,8 @@ package cc.sovellus.vrcaa.api.models
 
 import com.google.gson.annotations.SerializedName
 
-class Worlds : ArrayList<Worlds.WorldItem>(){
-    data class WorldItem(
+class LimitedWorlds : ArrayList<LimitedWorlds.LimitedWorldItem>(){
+    data class LimitedWorldItem(
         @SerializedName("authorId")
         val authorId: String,
         @SerializedName("authorName")

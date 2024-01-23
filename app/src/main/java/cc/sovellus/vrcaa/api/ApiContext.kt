@@ -11,7 +11,8 @@ import cc.sovellus.vrcaa.api.models.Instance
 import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.api.models.User
 import cc.sovellus.vrcaa.api.models.Users
-import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.helper.userCredentials
@@ -410,7 +411,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getRecentWorlds(): Worlds? {
+    suspend fun getRecentWorlds(): LimitedWorlds? {
 
         val headers = Headers.Builder()
 
@@ -426,7 +427,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), Worlds::class.java)
+                Gson().fromJson(result.body?.string(), LimitedWorlds::class.java)
             }
             else -> {
                 null
@@ -434,7 +435,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): Worlds? {
+    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): LimitedWorlds? {
 
         val headers = Headers.Builder()
 
@@ -450,7 +451,31 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), Worlds::class.java)
+                Gson().fromJson(result.body?.string(), LimitedWorlds::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getWorld(id: String): World? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/worlds/$id",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), World::class.java)
             }
             else -> {
                 null
