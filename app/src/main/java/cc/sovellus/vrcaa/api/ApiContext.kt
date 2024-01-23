@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.api.models.Avatars
+import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.Instance
 import cc.sovellus.vrcaa.api.models.LimitedUser
@@ -475,6 +476,30 @@ class ApiContext(
         return when (result) {
             is Response -> {
                 Gson().fromJson(result.body?.string(), Users::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getFavorites(type: String, n: Int = 50): Favorites? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/favorites?type=$type&n=$n", // TODO: if ever needed, implement "tag"
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Favorites::class.java)
             }
             else -> {
                 null
