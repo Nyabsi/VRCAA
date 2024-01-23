@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.helper.TrustHelper
 import cc.sovellus.vrcaa.api.models.Users
@@ -98,8 +97,7 @@ class UserProfileScreen(
                             Description(text = user.bio)
 
                             SubHeader(title = "Languages")
-                            val list: List<String> = listOf("Finnish", "Swedish", "Chinese")
-                            Languages(languages = list)
+                            Languages(languages = user.tags)
                         }
                     }
                 }
@@ -188,21 +186,26 @@ class UserProfileScreen(
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     @Composable
     fun Languages(languages: List<String>) {
         Row(
             modifier = Modifier.padding(24.dp)
         ) {
-            languages.let {
-                for (language in languages) {
-                    Badge(
-                        containerColor = Color(R.color.accent),
-                        modifier = Modifier
-                            .size(width = 64.dp, height = 24.dp)
-                            .padding(start = 2.dp),
-                        content = { Text( text = language ) }
-                    )
+            if (languages.isEmpty()) {
+                Text("No languages specified.")
+            } else {
+                languages.let {
+                    for (language in languages) {
+                        if (language.contains("language_")) {
+                            Badge(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                modifier = Modifier
+                                    .height(height = 24.dp)
+                                    .padding(start = 2.dp),
+                                content = { Text( text = language.substring("language_".length).uppercase() ) }
+                            )
+                        }
+                    }
                 }
             }
         }
