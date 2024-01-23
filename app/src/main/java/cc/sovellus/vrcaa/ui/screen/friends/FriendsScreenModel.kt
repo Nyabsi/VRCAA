@@ -1,8 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -17,11 +16,14 @@ class FriendsScreenModel(
     sealed class FriendListState {
         data object Init : FriendListState()
         data object Loading : FriendListState()
-        data class Result (val friends: List<Friends.FriendsItem>) : FriendListState()
+        data class Result (val friends: List<Friends.FriendsItem>, val offlineFriends: List<Friends.FriendsItem>, val favoriteFriends: List<Friends.FriendsItem>) : FriendListState()
     }
 
     var friends = mutableListOf<Friends.FriendsItem>()
+    var offlineFriends = mutableListOf<Friends.FriendsItem>()
+    var favoriteFriends = mutableListOf<Friends.FriendsItem>()
     var isRefreshing = mutableStateOf(false)
+    var currentIndex = mutableIntStateOf(0)
 
     init {
         mutableState.value = FriendListState.Loading
@@ -30,33 +32,49 @@ class FriendsScreenModel(
 
     private fun getFriends() {
         screenModelScope.launch {
-            val result = api.getFriends()
-            if (result != null) {
-                friends = result
-                // This code could be prettified, can't be bothered to do so.
-                for (friend in friends) {
-                    if (friend.location.contains("wrld_")) {
-                        friend.location = api.getInstance(friend.location)?.world?.name.toString()
+            api.getFriends()?.let {
+                friends = it
+                getFriendLocations(api, friends)
+            }
+
+            api.getFriends(true)?.let {
+                offlineFriends = it
+            }
+
+            api.getFavorites("friend")?.let { favorites ->
+                for (favorite in favorites) {
+                    api.getFriend(favorite.favoriteId)?.let { friend ->
+                        getFriendLocation(api, friend)
+                        favoriteFriends.add(friend)
                     }
                 }
-                mutableState.value = FriendListState.Result(friends = friends)
-            } else {
-                // You know, it will throw error in the ApiContext anyway, we should inform the user here with Toast
-                // and probably throw them to the login screen since it is often invalid session.
-                Log.e("VRCAA", "Something went horribly wrong when fetching friends.")
+            }
+
+            mutableState.value = FriendListState.Result(
+                friends = friends,
+                offlineFriends = offlineFriends,
+                favoriteFriends = favoriteFriends
+            )
+        }
+    }
+
+    private suspend fun getFriendLocation(api: ApiContext, friend: Friends.FriendsItem) {
+        if (friend.location.contains("wrld_")) {
+            friend.location = api.getInstance(friend.location)?.world?.name.toString()
+        }
+    }
+
+    private suspend fun getFriendLocations(api: ApiContext, friends: List<Friends.FriendsItem>) {
+        for (friend in friends) {
+            if (friend.location.contains("wrld_")) {
+                friend.location = api.getInstance(friend.location)?.world?.name.toString()
             }
         }
     }
 
     fun refreshFriends(context: Context) {
         screenModelScope.launch {
-            val oldCount = friends.size
             getFriends()
-            Toast.makeText(
-                context,
-                if(oldCount != friends.size) { "Oh, hey there! You seem to have new faces around here." } else { "There was no change in sight to be seen." } ,
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 }

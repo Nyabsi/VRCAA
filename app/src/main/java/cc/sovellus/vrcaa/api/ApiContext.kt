@@ -336,7 +336,30 @@ class ApiContext(
         }
     }
 
-    @Suppress("unused")
+    suspend fun getFriend(userId: String): Friends.FriendsItem? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/users/$userId",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Friends.FriendsItem::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
     suspend fun getUser(userId: String): LimitedUser? {
 
         val headers = Headers.Builder()
