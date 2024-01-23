@@ -1,13 +1,10 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import androidx.compose.runtime.mutableStateOf
-import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
-import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.User
-import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel
 import kotlinx.coroutines.launch
 
 class ProfileScreenModel(

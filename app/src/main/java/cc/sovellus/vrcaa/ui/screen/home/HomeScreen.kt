@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -40,11 +41,12 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
 import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -69,10 +71,10 @@ class HomeScreen : Screen {
     @Composable
     fun DisplayHome(
         friends: MutableList<Friends.FriendsItem>,
-        lastVisited: MutableList<Worlds.WorldItem>,
+        lastVisited: MutableList<LimitedWorlds.LimitedWorldItem>,
         featuredAvatars: MutableList<Avatars.AvatarsItem>,
         offlineFriends: MutableList<Friends.FriendsItem>,
-        featuredWorlds: MutableList<Worlds.WorldItem>
+        featuredWorlds: MutableList<LimitedWorlds.LimitedWorldItem>
     ) {
        val navigator = LocalNavigator.currentOrThrow
 
@@ -108,7 +110,7 @@ class HomeScreen : Screen {
                            name = world.name,
                            url = world.imageUrl,
                            count = world.occupants,
-                           onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
+                           onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                        )
                    }
                }
@@ -159,7 +161,7 @@ class HomeScreen : Screen {
                            name = world.name,
                            url = world.imageUrl,
                            count = world.occupants,
-                           onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
+                           onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                        )
                    }
                }
@@ -220,9 +222,9 @@ class HomeScreen : Screen {
             Row(
                 modifier = Modifier.padding(4.dp)
             ) {
-                Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.95f), maxLines = 1, softWrap = false)
+                Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.80f), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (count != null) {
-                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier.weight(0.05f).padding(end = 2.dp))
+                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier.weight(0.20f).padding(end = 2.dp))
                     Icon(imageVector = Icons.Filled.Group, contentDescription = "Player Counter Icon")
                 }
             }

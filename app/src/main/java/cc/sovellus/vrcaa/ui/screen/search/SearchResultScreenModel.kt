@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Users
-import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import kotlinx.coroutines.launch
 
 class SearchResultScreenModel(
@@ -17,12 +17,12 @@ class SearchResultScreenModel(
         data object Init : SearchState()
         data object Loading : SearchState()
         data class Result(
-            val foundWorlds: MutableList<Worlds.WorldItem>,
+            val foundWorlds: MutableList<LimitedWorlds.LimitedWorldItem>,
             val foundUsers: MutableList<Users.UsersItem>
         ) : SearchState()
     }
 
-    private var foundWorlds = mutableListOf<Worlds.WorldItem>()
+    private var foundWorlds = mutableListOf<LimitedWorlds.LimitedWorldItem>()
     private var foundUsers = mutableListOf<Users.UsersItem>()
 
     var currentIndex = mutableIntStateOf(0)

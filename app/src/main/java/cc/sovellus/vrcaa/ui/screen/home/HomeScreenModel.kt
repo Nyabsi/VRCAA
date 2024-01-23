@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import kotlinx.coroutines.launch
 
 class HomeScreenModel(
@@ -17,18 +17,18 @@ class HomeScreenModel(
         data object Loading : HomeState()
         data class Result(
             val friends: MutableList<Friends.FriendsItem>,
-            val lastVisited: MutableList<Worlds.WorldItem>,
+            val lastVisited: MutableList<LimitedWorlds.LimitedWorldItem>,
             val featuredAvatars: MutableList<Avatars.AvatarsItem>,
             val offlineFriends: MutableList<Friends.FriendsItem>,
-            val featuredWorlds: MutableList<Worlds.WorldItem>
+            val featuredWorlds: MutableList<LimitedWorlds.LimitedWorldItem>
         ) : HomeState()
     }
 
     private var friends = mutableListOf<Friends.FriendsItem>()
-    private var lastVisited = mutableListOf<Worlds.WorldItem>()
+    private var lastVisited = mutableListOf<LimitedWorlds.LimitedWorldItem>()
     private var featuredAvatars = mutableListOf<Avatars.AvatarsItem>()
     private var offlineFriends = mutableListOf<Friends.FriendsItem>()
-    private var featuredWorlds = mutableListOf<Worlds.WorldItem>()
+    private var featuredWorlds = mutableListOf<LimitedWorlds.LimitedWorldItem>()
 
     init {
         mutableState.value = HomeState.Loading
