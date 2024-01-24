@@ -1,6 +1,6 @@
 package cc.sovellus.vrcaa.activity.main
 
-import android.content.Intent
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,11 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import cafe.adriel.voyager.navigator.Navigator
+import androidx.compose.ui.Modifier import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import cc.sovellus.vrcaa.activity.login.LoginActivity
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
@@ -42,8 +39,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Content() {
         if (checkForCookies()) {
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            LocalContext.current.startActivity(intent)
+            Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator) }
         } else {
             Navigator(MainScreen(), onBackPressed = { it.key != "main" }) { navigator -> SlideTransition(navigator) }
         }

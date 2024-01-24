@@ -7,6 +7,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import kotlinx.coroutines.launch
@@ -18,15 +19,17 @@ class TwoAuthScreenModel(
 
     var code = mutableStateOf("")
 
-    fun doVerify(token: String, navigator: Navigator) {
+    fun doVerify(otpType: ApiContext.TwoFactorType, token: String, navigator: Navigator) {
         screenModelScope.launch {
-            val twoAuth = api.verifyAccount(token, ApiContext.TwoFactorType.EMAIL_OTP, code.value)
+            val twoAuth = api.verifyAccount(token, otpType, code.value)
             if (twoAuth.isNotEmpty()) {
-                context.getSharedPreferences(
+                val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", Context.MODE_PRIVATE
-                ).twoFactorAuth = twoAuth
+                )
 
-                navigator.popAll()
+                preferences.twoFactorAuth = twoAuth
+                preferences.isExpiredSession = false // even if it's false, doesn't matter.
+
                 navigator.push(MainScreen())
             } else {
                 Toast.makeText(

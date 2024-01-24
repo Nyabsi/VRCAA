@@ -23,3 +23,7 @@ internal var SharedPreferences.cookies: String
 internal var SharedPreferences.twoFactorAuth: String
     get() = getString("TwoFactorAuth", "")!!
     set(it) = edit { putString("TwoFactorAuth", it) }
+
+internal var SharedPreferences.isExpiredSession: Boolean
+    get() = getBoolean("isExpiredSession", false)
+    set(it) = edit { putBoolean("isExpiredSession", it) }

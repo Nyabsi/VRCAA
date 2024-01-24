@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
-import cc.sovellus.vrcaa.activity.login.LoginActivity
+import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
@@ -17,6 +17,7 @@ import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.helper.userCredentials
 import com.google.gson.Gson
@@ -86,7 +87,11 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        refreshToken()
+                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                                refreshToken()
+                        } else {
+                            null
+                        }
                     }
                     else -> {
                         response.body?.let {
@@ -124,7 +129,11 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        refreshToken()
+                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                            refreshToken()
+                        } else {
+                            null
+                        }
                     }
                     else -> {
                         response.body?.let {
@@ -159,7 +168,11 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        refreshToken()
+                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                            refreshToken()
+                        } else {
+                            null
+                        }
                     }
                     else -> {
                         response.body?.let {
@@ -184,14 +197,15 @@ class ApiContext(
         ).show()
 
         preferences.cookies = ""
+        preferences.isExpiredSession = true
 
-        val intent = Intent(context, LoginActivity::class.java)
+        val intent = Intent(context, MainActivity::class.java)
         context.startActivity(intent)
     }
 
     @Suppress("DEPRECATION")
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun getToken(username: String, password: String): String {
+    suspend fun getToken(username: String, password: String): Pair<TwoFactorType, String>? {
 
         val token = Base64.encode((URLEncoder.encode(username) + ":" + URLEncoder.encode(password)).toByteArray())
 
@@ -209,10 +223,14 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                result.headers["Set-Cookie"].toString()
+                if (result.body?.string()?.contains("emailOtp") == true) {
+                    Pair(TwoFactorType.EMAIL_OTP, result.headers["Set-Cookie"].toString())
+                } else {
+                    Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
+                }
             }
             else -> {
-                ""
+                null
             }
         }
     }
@@ -243,10 +261,25 @@ class ApiContext(
                     }
                 }
             }
-            TwoFactorType.OTP -> {
-                "not_implemented"
-            }
             TwoFactorType.TOTP -> {
+
+                val result = doRequest(
+                    method = "POST",
+                    url = "$apiBase/auth/twofactorauth/totp/verify",
+                    headers = headers.build(),
+                    body = "{\"code\":\"$code\"}"
+                )
+
+                when (result) {
+                    is Response -> {
+                        result.headers["twoFactorAuth"].toString()
+                    }
+                    else -> {
+                        ""
+                    }
+                }
+            }
+            TwoFactorType.OTP -> {
                 "not_implemented"
             }
         }

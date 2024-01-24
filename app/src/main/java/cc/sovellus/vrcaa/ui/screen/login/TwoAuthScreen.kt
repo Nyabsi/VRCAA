@@ -40,6 +40,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class TwoAuthScreen(
+    private val otpType: ApiContext.TwoFactorType,
    private val token: String
 ) : Screen {
 
@@ -61,7 +62,7 @@ class TwoAuthScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(text = stringResource(R.string.auth_text))
+            Text(text = if (otpType == ApiContext.TwoFactorType.EMAIL_OTP) { stringResource(R.string.auth_text_email) } else { stringResource(R.string.auth_text_app) })
 
             TextInput(
                 title = stringResource(R.string.auth_label_code),
@@ -73,7 +74,7 @@ class TwoAuthScreen(
                     .height(48.dp)
                     .width(200.dp),
                 onClick = {
-                    screenModel.doVerify(token, navigator)
+                    screenModel.doVerify(otpType, token, navigator)
                 }
             ) {
                 Text(text = stringResource(R.string.auth_button_text))

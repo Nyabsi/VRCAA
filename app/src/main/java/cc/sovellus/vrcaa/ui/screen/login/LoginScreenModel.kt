@@ -25,19 +25,17 @@ class LoginScreenModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            val token = api.getToken(username.value, password.value)
-            if (token.isNotEmpty()) {
-                Log.d("VRCAA", "WAT THE FUCK!?!?!")
+            val result = api.getToken(username.value, password.value)
+            if (result != null) {
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", MODE_PRIVATE
                 )
 
                 // STORE credentials, so we can request new session later when it expires, for any given reason.
                 preferences.userCredentials = Pair(username.value, password.value)
-                preferences.cookies = token
+                preferences.cookies = result.second
 
-                navigator.popAll()
-                navigator.push(TwoAuthScreen(token))
+                navigator.push(TwoAuthScreen(result.first, result.second))
             } else {
                 Toast.makeText(
                     context,

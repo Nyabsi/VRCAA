@@ -26,7 +26,8 @@
     <string name="login_button_text">Login</string>
 
     <!-- TwoAuthScreen -->
-    <string name="auth_text">Input the code sent to your e-mail</string>
+    <string name="auth_text_email">Input the code sent to your e-mail</string>
+    <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_label_code">2FA Code</string>
     <string name="auth_button_text">Verify</string>
 
