@@ -25,6 +25,10 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 - Friend notifications (Leave/Join/GPS, ...)
 - Profile page shows all user information; Worlds, Avatars and Groups
 
+# Translations
+
+Are you multilangual, and you are interested in translating VRCAA for your language? You can do it now at [Crowdin](https://crowdin.com/project/vrcaa)!
+
 # Showcase
 
 ![image](https://github.com/Nyabsi/vrcaa/assets/43046474/772633dd-e6bc-440c-8638-abca5665b405)
