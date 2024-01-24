@@ -15,6 +15,7 @@ import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.api.models.User
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.Notifications
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
@@ -567,6 +568,30 @@ class ApiContext(
         return when (result) {
             is Response -> {
                 Gson().fromJson(result.body?.string(), Favorites::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getNotifications(): Notifications? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/auth/user/notifications",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Notifications::class.java)
             }
             else -> {
                 null
