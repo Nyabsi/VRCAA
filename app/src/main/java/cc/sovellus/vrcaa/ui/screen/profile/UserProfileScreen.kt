@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.helper.TrustHelper
 import cc.sovellus.vrcaa.api.models.Users
@@ -56,7 +58,7 @@ class UserProfileScreen(
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go Back"
+                                contentDescription = stringResource(R.string.preview_image_description)
                             )
                         }
                     },
@@ -93,10 +95,10 @@ class UserProfileScreen(
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.Start
                         ) {
-                            SubHeader(title = "Bio")
+                            SubHeader(title = stringResource(R.string.profile_label_biography))
                             Description(text = user.bio)
 
-                            SubHeader(title = "Languages")
+                            SubHeader(title = stringResource(R.string.profile_label_languages))
                             Languages(languages = user.tags)
                         }
                     }
@@ -126,7 +128,7 @@ class UserProfileScreen(
 
             GlideImage(
                 model = thumbnailUrl,
-                contentDescription = "Profile Picture",
+                contentDescription = stringResource(R.string.preview_image_description),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
@@ -179,7 +181,7 @@ class UserProfileScreen(
         ) {
             Text(
                 modifier = Modifier.padding(start = 2.dp),
-                text = if (text.isNullOrEmpty()) {"No description specified." } else { text },
+                text = if (text.isNullOrEmpty()) { stringResource(R.string.profile_text_no_biography) } else { text },
                 textAlign = TextAlign.Left,
                 fontWeight = FontWeight.SemiBold
             )
@@ -192,7 +194,7 @@ class UserProfileScreen(
             modifier = Modifier.padding(24.dp)
         ) {
             if (languages.isEmpty()) {
-                Text("No languages specified.")
+                Text(stringResource(R.string.profile_text_no_languages))
             } else {
                 languages.let {
                     for (language in languages) {

@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,6 +37,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
@@ -84,7 +86,9 @@ class WorldInfoScreen(
             },
             content = { padding ->
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth().padding(top = padding.calculateTopPadding()),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = padding.calculateTopPadding()),
                 ) {
                     item {
                         Column(
@@ -108,10 +112,10 @@ class WorldInfoScreen(
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.Start
                         ) {
-                            SubHeader(title = "Description")
+                            SubHeader(title = stringResource(R.string.world_label_description))
                             Description(text = world.description)
 
-                            SubHeader(title = "Tags")
+                            SubHeader(title = stringResource(R.string.world_label_tags))
                             AuthorTags(tags = world.tags)
                         }
                     }
@@ -185,7 +189,7 @@ class WorldInfoScreen(
         ) {
             Text(
                 modifier = Modifier.padding(start = 2.dp),
-                text = if (text.isNullOrEmpty()) { "No description specified." } else { text },
+                text = if (text.isNullOrEmpty()) { stringResource(R.string.world_text_no_description) } else { text },
                 textAlign = TextAlign.Left,
                 fontWeight = FontWeight.SemiBold
             )
@@ -198,7 +202,8 @@ class WorldInfoScreen(
             modifier = Modifier.padding(24.dp)
         ) {
             if (tags.isEmpty()) {
-                Text("No tags specified.")
+
+                Text(stringResource(R.string.world_text_no_tags))
             } else {
                 tags.let {
                     for (tag in tags) {

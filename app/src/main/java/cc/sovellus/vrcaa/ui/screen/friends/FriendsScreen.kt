@@ -35,11 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.Friends
@@ -67,8 +70,7 @@ class FriendsScreen : Screen {
     }
 
     @OptIn(
-        ExperimentalMaterialApi::class,
-        ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class
+        ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class
     )
     @Composable
     private fun RenderList(
@@ -81,7 +83,7 @@ class FriendsScreen : Screen {
         val context = LocalContext.current
         val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
 
-        val options = listOf("Favorite", "Online", "Offline")
+        val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
 
         Box(Modifier.pullRefresh(stateRefresh).fillMaxSize()) {
@@ -109,7 +111,7 @@ class FriendsScreen : Screen {
                             },
                             checked = index == model.currentIndex.intValue
                         ) {
-                            Text(label)
+                            Text(text = label)
                         }
                     }
                 }
@@ -135,7 +137,7 @@ class FriendsScreen : Screen {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "There's nothing but chickens here!")
+                Text(text = stringResource(R.string.result_not_found))
             }
         } else {
             LazyColumn(
@@ -158,7 +160,7 @@ class FriendsScreen : Screen {
                         leadingContent = {
                             GlideImage(
                                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
-                                contentDescription = "Profile Picture",
+                                contentDescription = stringResource(R.string.preview_image_description),
                                 modifier = Modifier
                                     .size(48.dp)
                                     .clip(RoundedCornerShape(50)),

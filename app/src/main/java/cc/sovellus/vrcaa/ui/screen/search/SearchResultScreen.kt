@@ -40,6 +40,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -47,6 +49,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.Users
@@ -77,7 +80,7 @@ class SearchResultScreen(
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun DisplayResult(
         worlds: MutableList<LimitedWorlds.LimitedWorldItem>,
@@ -94,17 +97,16 @@ class SearchResultScreen(
                         IconButton(onClick = { navigator.popUntil { it.key == "main" } }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go Back"
+                                contentDescription = stringResource(R.string.preview_image_description)
                             )
                         }
                     },
-
-                    title = { Text(text = "Search Results for $query") }
+                    title = { Text(text = "${stringResource(R.string.search_text_result)} $query") }
                 )
             },
             content = {
 
-                val options = listOf("Worlds", "Users", "Avatars")
+                val options = stringArrayResource(R.array.search_selection_options)
                 val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person, Icons.Filled.Visibility)
 
                 Column(
@@ -180,7 +182,7 @@ class SearchResultScreen(
 
             GlideImage(
                 model = url,
-                contentDescription = "Preview Image",
+                contentDescription = stringResource(R.string.preview_image_description),
                 modifier = Modifier
                     .height(120.dp)
                     .width(200.dp),
@@ -193,8 +195,10 @@ class SearchResultScreen(
             ) {
                 Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.80f), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (count != null) {
-                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier.weight(0.20f).padding(end = 2.dp))
-                    Icon(imageVector = Icons.Filled.Group, contentDescription = "Player Counter Icon")
+                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
+                        .weight(0.20f)
+                        .padding(end = 2.dp))
+                    Icon(imageVector = Icons.Filled.Group, contentDescription = stringResource(R.string.preview_image_description))
                 }
             }
         }
@@ -212,7 +216,7 @@ class SearchResultScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "There's nothing but chickens here!")
+                Text(text = stringResource(R.string.result_not_found))
             }
         } else {
             LazyVerticalGrid(
@@ -249,7 +253,7 @@ class SearchResultScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "There's nothing but chickens here!")
+                Text(text = stringResource(R.string.result_not_found))
             }
         } else {
             LazyVerticalGrid(
@@ -281,7 +285,7 @@ class SearchResultScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Not Implemented")
+            Text(text = stringResource(R.string.not_implemented_text))
         }
     }
 }

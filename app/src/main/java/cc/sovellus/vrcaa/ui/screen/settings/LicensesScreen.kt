@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -39,12 +40,14 @@ class LicensesScreen : Screen {
                         }
                     },
 
-                    title = { Text(text = "Open Source Licenses") }
+                    title = { Text(text = stringResource(R.string.license_title)) }
                 )
             },
             content = {
                 LibrariesContainer(
-                    modifier = Modifier.fillMaxSize().padding(top = it.calculateTopPadding()),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = it.calculateTopPadding()),
                     librariesBlock = { ctx ->
                         Libs.Builder().withJson(ctx, R.raw.aboutlibraries).build()
                     }

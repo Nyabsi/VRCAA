@@ -22,11 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 
@@ -64,7 +66,7 @@ class SettingsScreen : Screen {
                 ) {
                     item {
                         ListItem(
-                            headlineContent = { Text("Open Source Licenses") },
+                            headlineContent = { Text(stringResource(R.string.license_title)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Dehaze,
@@ -92,7 +94,7 @@ class SettingsScreen : Screen {
                         },
                         modifier = Modifier.padding(bottom = 16.dp)
                     ) {
-                        Text(text = "Logout")
+                        Text(text = stringResource(R.string.logout_button_text))
                     }
                 }
             }

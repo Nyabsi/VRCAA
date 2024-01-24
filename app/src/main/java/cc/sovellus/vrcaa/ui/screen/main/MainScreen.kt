@@ -24,6 +24,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -36,6 +37,7 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
@@ -69,7 +71,7 @@ class MainScreen : Screen {
                 topBar = {
                     SearchBar(
                         query = screenModel.searchText.value,
-                        placeholder = { Text(text = "Search Content") },
+                        placeholder = { Text(text = stringResource(R.string.main_search_placeholder)) },
                         onQueryChange = { screenModel.searchText.value = it; },
                         onSearch = {
                             screenModel.existSearchMode()
@@ -88,14 +90,14 @@ class MainScreen : Screen {
                                 IconButton(onClick = { screenModel.clearSearchText() }) {
                                     Icon(
                                         imageVector = Icons.Filled.Close,
-                                        contentDescription = "Localized description"
+                                        contentDescription = stringResource(R.string.preview_image_description)
                                     )
                                 }
                             } else {
                                 IconButton(onClick = { navigator.push(SettingsScreen()) }) {
                                     Icon(
                                         imageVector = Icons.Filled.Settings,
-                                        contentDescription = "Localized description"
+                                        contentDescription = stringResource(R.string.preview_image_description)
                                     )
                                 }
                             }
@@ -105,13 +107,13 @@ class MainScreen : Screen {
                                 IconButton(onClick = { screenModel.existSearchMode() }) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = "Localized description"
+                                        contentDescription = stringResource(R.string.preview_image_description)
                                     )
                                 }
                             } else {
                                 Icon(
                                     imageVector = Icons.Filled.Search,
-                                    contentDescription = "Localized description"
+                                    contentDescription = stringResource(R.string.preview_image_description)
                                 )
                             }
                         }
@@ -125,7 +127,7 @@ class MainScreen : Screen {
                                     leadingContent = {
                                         Icon(
                                             imageVector = Icons.Filled.History,
-                                            contentDescription = "Just Icon"
+                                            contentDescription = stringResource(R.string.preview_image_description)
                                         )
                                     },
                                     headlineContent = {

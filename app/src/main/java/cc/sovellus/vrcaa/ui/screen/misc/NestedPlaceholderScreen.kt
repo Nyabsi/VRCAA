@@ -15,9 +15,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 
 class NestedPlaceholderScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -34,12 +36,12 @@ class NestedPlaceholderScreen : Screen {
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "Go Back"
+                                contentDescription =stringResource(R.string.preview_image_description)
                             )
                         }
                     },
 
-                    title = { Text(text = "Not Implemented") }
+                    title = { Text(text = stringResource(R.string.not_implemented_title)) }
                 )
             },
             content = {
@@ -48,7 +50,7 @@ class NestedPlaceholderScreen : Screen {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "This page is not implemented yet, come back later!")
+                    Text(text = stringResource(R.string.not_implemented_text))
                 }
             }
         )

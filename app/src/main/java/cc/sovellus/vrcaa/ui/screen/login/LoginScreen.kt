@@ -22,6 +22,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -32,6 +33,7 @@ import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 
 class LoginScreen : Screen {
@@ -52,15 +54,15 @@ class LoginScreen : Screen {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Login to VRC Android Assistant")
+            Text(text = stringResource(R.string.login_text))
 
             TextInput(
-                title = "Username",
+                title = stringResource(R.string.login_label_username),
                 input = screenModel.username
             )
 
             TextInputPassword(
-                title = "Password",
+                title = stringResource(R.string.login_label_password),
                 input = screenModel.password,
                 visible = screenModel.passwordVisible.value,
                 onVisibilityChange = { screenModel.passwordVisible.value = !screenModel.passwordVisible.value }
@@ -74,7 +76,7 @@ class LoginScreen : Screen {
                     screenModel.doLogin()
                 }
             ) {
-                Text(text = "Login")
+                Text(text = stringResource(R.string.login_button_text))
             }
         }
 
@@ -86,7 +88,7 @@ class LoginScreen : Screen {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "VRCAA is not endorced by VRChat Inc. or any of their affiliates.",
+                text = stringResource(R.string.legal_disclaimer),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 fontSize = 12.sp
@@ -135,7 +137,7 @@ class LoginScreen : Screen {
                 IconButton(onClick = {
                     onVisibilityChange()
                 }){
-                    Icon(imageVector  = image, "Emptiness")
+                    Icon(imageVector  = image, stringResource(R.string.preview_image_description))
                 }
             }
         )

@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,6 +39,7 @@ import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
@@ -86,7 +88,7 @@ class HomeScreen : Screen {
        ) {
            item {
                HorizontalRow(
-                   title = "Active Friends"
+                   title = stringResource(R.string.home_active_friends)
                ) {
                    items(friends.size) {
                        val friend = friends[it]
@@ -102,7 +104,7 @@ class HomeScreen : Screen {
 
            item {
                HorizontalRow(
-                   title = "Recently Visited"
+                   title = stringResource(R.string.home_recently_visited)
                ) {
                    items(lastVisited.size) {
                        val world = lastVisited[it]
@@ -119,7 +121,7 @@ class HomeScreen : Screen {
 
            item {
                HorizontalRow(
-                   title = "Featured Avatars"
+                   title = stringResource(R.string.home_featured_avatars)
                ) {
                    items(featuredAvatars.size) {
                        val avatar = featuredAvatars[it]
@@ -136,7 +138,7 @@ class HomeScreen : Screen {
 
            item {
                HorizontalRow(
-                   title = "Offline Friends"
+                   title = stringResource(R.string.home_offline_friends)
                ) {
                    items(offlineFriends.size) {
                        val friend = offlineFriends[it]
@@ -153,7 +155,7 @@ class HomeScreen : Screen {
 
            item {
                HorizontalRow(
-                   title = "Featured Worlds"
+                   title = stringResource(R.string.home_featured_worlds)
                ) {
                    items(featuredWorlds.size) {
                        val world = featuredWorlds[it]
@@ -212,7 +214,7 @@ class HomeScreen : Screen {
 
             GlideImage(
                 model = url,
-                contentDescription = "Preview Picture",
+                contentDescription = stringResource(R.string.preview_image_description),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp),
@@ -224,8 +226,10 @@ class HomeScreen : Screen {
             ) {
                 Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.80f), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (count != null) {
-                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier.weight(0.20f).padding(end = 2.dp))
-                    Icon(imageVector = Icons.Filled.Group, contentDescription = "Player Counter Icon")
+                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
+                        .weight(0.20f)
+                        .padding(end = 2.dp))
+                    Icon(imageVector = Icons.Filled.Group, contentDescription = stringResource(R.string.preview_image_description))
                 }
             }
         }
@@ -246,7 +250,7 @@ class HomeScreen : Screen {
         ) {
             GlideImage(
                 model = url,
-                contentDescription = "Preview Image",
+                contentDescription = stringResource(R.string.preview_image_description),
                 modifier = Modifier
                     .size(72.dp)
                     .clip(RoundedCornerShape(50)),

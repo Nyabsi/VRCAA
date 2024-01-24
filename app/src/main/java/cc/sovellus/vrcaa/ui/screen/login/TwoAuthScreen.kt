@@ -25,6 +25,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -59,10 +61,10 @@ class TwoAuthScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(text = "Input the code sent to your e-mail")
+            Text(text = stringResource(R.string.auth_text))
 
             TextInput(
-                title = "2FA Code",
+                title = stringResource(R.string.auth_label_code),
                 input = screenModel.code
             )
 
@@ -74,7 +76,7 @@ class TwoAuthScreen(
                     screenModel.doVerify(token, navigator)
                 }
             ) {
-                Text(text = "Verify")
+                Text(text = stringResource(R.string.auth_button_text))
             }
         }
 
@@ -86,7 +88,7 @@ class TwoAuthScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "VRCAA is not endorced by VRChat Inc. or any of their affiliates.",
+                text = stringResource(R.string.legal_disclaimer),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 fontSize = 12.sp
