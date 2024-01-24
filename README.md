@@ -1,5 +1,4 @@
-
-# <img src="https://github.com/Nyabsi/vrcaa/assets/43046474/3c0b1f68-eed6-4fa7-88ac-7350cfea5e82" height="24" width="24"> VRCAA: VRChat Android Assistant
+# <img src="https://github.com/Nyabsi/vrcaa/assets/43046474/a90fb8bf-6017-410c-9def-93a8a43682cb" height="24" width="24"> VRCAA: VRChat Android Assistant
 
 > NOTE: VRCAA is still in its early stages, you may and will experience issues or missing features.
 
