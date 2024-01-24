@@ -5,24 +5,22 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import cc.sovellus.vrcaa.activity.main.MainActivity
+import cc.sovellus.vrcaa.api.models.Auth
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.Instance
 import cc.sovellus.vrcaa.api.models.LimitedUser
-import cc.sovellus.vrcaa.api.models.User
-import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.Notifications
+import cc.sovellus.vrcaa.api.models.User
+import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
-import cc.sovellus.vrcaa.helper.userCredentials
 import com.google.gson.Gson
-import kotlinx.coroutines.delay
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -229,6 +227,29 @@ class ApiContext(
                 } else {
                     Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
                 }
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getAuth(): String? {
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/auth",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Auth::class.java).token
             }
             else -> {
                 null

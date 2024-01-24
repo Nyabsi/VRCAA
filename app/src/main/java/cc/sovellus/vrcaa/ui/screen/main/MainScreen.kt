@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -24,6 +25,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -56,7 +58,9 @@ class MainScreen : Screen {
     override fun Content() {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val screenModel = navigator.rememberNavigatorScreenModel { MainScreenModel() }
+        val context: Context = LocalContext.current
+
+        val screenModel = navigator.rememberNavigatorScreenModel { MainScreenModel(context) }
 
         TabNavigator(
             HomeTab,
