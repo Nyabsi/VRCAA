@@ -17,6 +17,7 @@ import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.helper.userCredentials
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -190,6 +191,7 @@ class ApiContext(
             is Response -> {
                 preferences.cookies = result.headers["Set-Cookie"].toString()
                 cookies = "${preferences.cookies} ${preferences.twoFactorAuth}"
+                delay(2000) // try mitigating 429, I am not sure if this works.
                 doRequest(method, url, headers, body)
             }
             else -> {
