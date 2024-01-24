@@ -88,7 +88,7 @@ class FriendsScreen : Screen {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
+                verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 MultiChoiceSegmentedButtonRow {
@@ -113,12 +113,12 @@ class FriendsScreen : Screen {
                         }
                     }
                 }
-            }
 
-            when(model.currentIndex.intValue) {
-                0 -> ShowFriends(favoriteFriends)
-                1 -> ShowFriends(friends)
-                2 -> ShowFriends(offlineFriends)
+                when(model.currentIndex.intValue) {
+                    0 -> ShowFriends(favoriteFriends)
+                    1 -> ShowFriends(friends)
+                    2 -> ShowFriends(offlineFriends)
+                }
             }
 
             PullRefreshIndicator(model.isRefreshing.value, stateRefresh, Modifier.align(Alignment.TopCenter))
