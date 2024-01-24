@@ -1,4 +1,5 @@
-package cc.sovellus.vrcaa
+package cc.sovellus.vrcaa.activity.login
+
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,11 +16,7 @@ import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
 
-class MainActivity : ComponentActivity() {
-    private fun checkForCookies(): Boolean {
-        return getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrEmpty()
-    }
-
+class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,11 +35,6 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Content() {
-        if (checkForCookies()) {
-
-            Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator)  }
-        } else {
-            Navigator(MainScreen(), onBackPressed = { it.key != "main" }) { navigator -> SlideTransition(navigator) }
-        }
+        Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator)  }
     }
 }

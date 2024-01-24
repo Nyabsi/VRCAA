@@ -1,9 +1,12 @@
 package cc.sovellus.vrcaa.api
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
+import cc.sovellus.vrcaa.activity.login.LoginActivity
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
@@ -83,7 +86,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        refreshToken(method, url, headers, body)
+                        refreshToken()
                     }
                     else -> {
                         response.body?.let {
@@ -121,7 +124,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        refreshToken(method, url, headers, body)
+                        refreshToken()
                     }
                     else -> {
                         response.body?.let {
@@ -156,7 +159,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        refreshToken(method, url, headers, body)
+                        refreshToken()
                     }
                     else -> {
                         response.body?.let {
@@ -171,38 +174,19 @@ class ApiContext(
         }
     }
 
-    @OptIn(ExperimentalEncodingApi::class)
-    suspend fun refreshToken(method: String, url: String, headers: Headers, body: String?): Any? {
+    private fun refreshToken() {
 
-        val requestHeaders = Headers.Builder()
-        val token = Base64.encode((URLEncoder.encode(preferences.userCredentials.first) + ":" + URLEncoder.encode(preferences.userCredentials.second)).toByteArray())
+        // just tell the user to re-login, I give up.
+        Toast.makeText(
+            context,
+            "Your session has expired, please login again.",
+            Toast.LENGTH_LONG
+        ).show()
 
-        requestHeaders["Authorization"] = "Basic $token"
-        requestHeaders["User-Agent"] = userAgent
+        preferences.cookies = ""
 
-        val result = doRequest(
-            method = "GET",
-            url = "$apiBase/auth/user",
-            headers = requestHeaders.build(),
-            body = null
-        )
-
-        return when (result) {
-            is Response -> {
-                preferences.cookies = result.headers["Set-Cookie"].toString()
-                cookies = "${preferences.cookies} ${preferences.twoFactorAuth}"
-                delay(2000) // try mitigating 429, I am not sure if this works.
-                doRequest(method, url, headers, body)
-            }
-            else -> {
-                Toast.makeText(
-                    context,
-                    "Something went horribly wrong when refreshing access token, contact the developer.",
-                    Toast.LENGTH_LONG
-                ).show()
-                null
-            }
-        }
+        val intent = Intent(context, LoginActivity::class.java)
+        context.startActivity(intent)
     }
 
     @Suppress("DEPRECATION")

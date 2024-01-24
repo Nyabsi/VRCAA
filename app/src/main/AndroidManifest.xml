@@ -19,7 +19,7 @@
         tools:targetApi="s">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.VRCAA"
             android:fitsSystemWindows="true">
@@ -28,6 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.login.LoginActivity"/>
     </application>
 
 </manifest>
