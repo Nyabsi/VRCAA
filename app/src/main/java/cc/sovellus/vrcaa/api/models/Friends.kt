@@ -5,9 +5,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-class Friends() : ArrayList<Friends.FriendsItem>(), Parcelable {
-    constructor(parcel: Parcel) : this() {}
-
+class Friends() : ArrayList<Friends.FriendsItem>() {
     data class FriendsItem(
         @SerializedName("bio")
         val bio: String,
@@ -48,22 +46,4 @@ class Friends() : ArrayList<Friends.FriendsItem>(), Parcelable {
         @SerializedName("userIcon")
         val userIcon: String
     )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Friends> {
-        override fun createFromParcel(parcel: Parcel): Friends {
-            return Friends(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Friends?> {
-            return arrayOfNulls(size)
-        }
-    }
 }

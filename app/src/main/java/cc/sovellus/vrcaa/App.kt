@@ -9,7 +9,10 @@ class App : Application() {
 
     companion object {
         const val CHANNEL_ID = "VRCAA_notifications"
+        const val CHANNEL_NAME = "VRCAA"
+        const val CHANNEL_DESCRIPTION = "Notification channel for VRCAA"
     }
+
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
@@ -18,8 +21,8 @@ class App : Application() {
     private fun createNotificationChannel() {
 
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(CHANNEL_ID, "VRCAA", importance).apply {
-            description = "Notification channel for VRCAA"
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
+            description = CHANNEL_DESCRIPTION
         }
 
         val notificationManager: NotificationManager =
