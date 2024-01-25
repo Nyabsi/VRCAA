@@ -60,7 +60,7 @@ class MainScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { MainScreenModel(context) }
+        val screenModel = navigator.rememberNavigatorScreenModel { MainScreenModel() }
 
         TabNavigator(
             HomeTab,

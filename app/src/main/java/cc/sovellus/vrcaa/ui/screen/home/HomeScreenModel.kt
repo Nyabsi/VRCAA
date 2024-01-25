@@ -1,16 +1,23 @@
 package cc.sovellus.vrcaa.ui.screen.home
 
+import android.content.Context
+import android.content.Intent
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.helper.isMyServiceRunning
+import cc.sovellus.vrcaa.service.PipelineService
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 class HomeScreenModel(
-    private val api: ApiContext
+    private val context: Context
 ) : StateScreenModel<HomeScreenModel.HomeState>(HomeState.Init) {
+
+    private val api: ApiContext = ApiContext(context)
 
     sealed class HomeState {
         data object Init : HomeState()
@@ -44,6 +51,8 @@ class HomeScreenModel(
             api.getFriends(true)?.let { offlineFriends = it }
             api.getWorlds()?.let { featuredWorlds = it }
 
+            initService()
+
             mutableState.value = HomeState.Result(
                 friends = friends,
                 lastVisited = lastVisited,
@@ -51,6 +60,18 @@ class HomeScreenModel(
                 offlineFriends = offlineFriends,
                 featuredWorlds = featuredWorlds
             )
+        }
+    }
+
+    private fun initService() {
+        screenModelScope.launch {
+            // Start running PipelineService on background.
+            if (!context.isMyServiceRunning(PipelineService::class.java)) {
+                val intent = Intent(context, PipelineService::class.java)
+                intent.putExtra("access_token", api.getAuth())
+                intent.putExtra("online_friends", Gson().toJson(api.getFriends()))
+                context.startForegroundService(intent)
+            }
         }
     }
 }

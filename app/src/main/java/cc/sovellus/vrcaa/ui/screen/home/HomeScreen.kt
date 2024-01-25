@@ -60,7 +60,7 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { HomeScreenModel(api = ApiContext(context)) }
+        val model = navigator.rememberNavigatorScreenModel { HomeScreenModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {

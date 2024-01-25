@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
@@ -49,11 +51,13 @@ class PipelineService : Service() {
         title: String,
         content: String
     ) {
+        val flags = NotificationCompat.FLAG_NO_CLEAR and NotificationCompat.FLAG_ONGOING_EVENT
+
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
             .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
             .setContentTitle(title)
             .setContentText(content)
-            .setPriority(NotificationCompat.FLAG_ONGOING_EVENT)
+            .setPriority(flags)
 
         val notificationManager = NotificationManagerCompat.from(this)
 
@@ -142,6 +146,7 @@ class PipelineService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+
         Toast.makeText(this, "PipelineService started, listening for events.", Toast.LENGTH_SHORT).show()
 
         this.pipeline = PipelineContext(intent.getStringExtra("access_token")!!)
@@ -150,6 +155,19 @@ class PipelineService : Service() {
         pipeline.let { pipeline ->
             pipeline!!.connect()
             listener.let { pipeline.setListener(it) }
+        }
+
+        val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
+            .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
+            .setContentTitle("VRCAA")
+            .setContentText("VRChat is now monitoring your friends on the background.")
+            .setPriority(NotificationCompat.FLAG_FOREGROUND_SERVICE) // Make the notification sticky.
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID_STICKY, builder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else {
+            // Older versions do not require to specify the `foregroundServiceType`
+            startForeground(NOTIFICATION_ID_STICKY, builder.build())
         }
 
         return START_STICKY // This makes sure, the service does not get killed.
@@ -162,5 +180,9 @@ class PipelineService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    companion object {
+        private const val NOTIFICATION_ID_STICKY = 42069
     }
 }
