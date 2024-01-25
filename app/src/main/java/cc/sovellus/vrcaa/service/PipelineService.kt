@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.service
 
 import android.Manifest
+import android.app.Application
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,16 +12,19 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
+import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.PipelineContext
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
+import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,6 +37,7 @@ class PipelineService : Service(), CoroutineScope {
 
     private var pipeline: PipelineContext? = null
     private var api: ApiContext? = null
+    private var notificationManager: NotificationManager? = null
 
     private var friends: ArrayList<FriendOnline.User> = arrayListOf()
     private lateinit var activeFriends: Friends
@@ -58,7 +63,7 @@ class PipelineService : Service(), CoroutineScope {
         title: String,
         content: String
     ) {
-        val flags = NotificationCompat.FLAG_NO_CLEAR or NotificationCompat.FLAG_ONGOING_EVENT
+        val flags = NotificationCompat.FLAG_ONGOING_EVENT
 
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
             .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
@@ -88,10 +93,13 @@ class PipelineService : Service(), CoroutineScope {
                     if (friends.find { it.id == friend.userId } == null)
                         friends.add(friend.user)
 
-                    pushNotification(
-                        title = "Friend has come online!",
-                        content = "Your friend, ${friend.user.displayName} has come online!"
-                    )
+                    if (notificationManager!!.isOnWhitelist(friend.userId) &&
+                        notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_ONLINE)) {
+                        pushNotification(
+                            title = application.getString(R.string.notification_service_title_online),
+                            content = application.getString(R.string.notification_service_description_online).format(friend.user.displayName)
+                        )
+                    }
 
                     notificationCounter++
                 }
@@ -102,10 +110,13 @@ class PipelineService : Service(), CoroutineScope {
                     val friendObject = friends.find { it.id == friend.userId }
                     if (friendObject != null)
                     {
-                        pushNotification(
-                            title = "Friend has gone offline!",
-                            content = "Your friend, ${friendObject.displayName} has gone offline!"
-                        )
+                        if (notificationManager!!.isOnWhitelist(friend.userId) &&
+                            notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                            pushNotification(
+                                title = application.getString(R.string.notification_service_title_offline),
+                                content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName)
+                            )
+                        }
 
                         friends = friends.filter { it.id != friend.userId } as ArrayList<FriendOnline.User>
                     } else {
@@ -113,12 +124,15 @@ class PipelineService : Service(), CoroutineScope {
                         // That we pass from the Intent to this Service
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
-                        pushNotification(
-                            title = "Friend has gone offline!",
-                            content = "Your friend, ${fallbackFriend?.displayName} has gone offline!"
-                        )
+                        if (notificationManager!!.isOnWhitelist(friend.userId) &&
+                            notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                            pushNotification(
+                                title = application.getString(R.string.notification_service_title_offline),
+                                content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName)
+                            )
+                        }
 
-                        activeFriends = activeFriends.filter { it.id != friend.userId } as Friends
+                        activeFriends.remove(activeFriends.find { it.id == friend.userId })
                     }
 
                     notificationCounter++
@@ -129,10 +143,13 @@ class PipelineService : Service(), CoroutineScope {
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
                     if (friend.travelingToLocation.isEmpty()) {
-                        pushNotification(
-                            title = "Friend changed location!",
-                            content = "Your friend, ${friend.user.displayName} went to ${friend.world.name}."
-                        )
+                        if (notificationManager!!.isOnWhitelist(friend.userId) &&
+                            notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
+                            pushNotification(
+                                title = application.getString(R.string.notification_service_title_location),
+                                content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name)
+                            )
+                        }
                     }
 
                     notificationCounter++
@@ -141,7 +158,6 @@ class PipelineService : Service(), CoroutineScope {
             }
         }
     }
-
 
     override fun onCreate() {
         HandlerThread("ServiceStartArguments", 10).apply {
@@ -152,17 +168,18 @@ class PipelineService : Service(), CoroutineScope {
         }
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         this.api = ApiContext(this)
+        this.notificationManager = NotificationManager(this)
 
         launch {
             withContext(Dispatchers.Main) {
                 pipeline = PipelineContext(api!!.getAuth()!!)
                 activeFriends = api!!.getFriends()!!
 
-                pipeline.let { pipeline ->
-                    pipeline!!.connect()
+                pipeline?.let { pipeline ->
+                    pipeline.connect()
                     listener.let { pipeline.setListener(it) }
                 }
             }
@@ -171,7 +188,7 @@ class PipelineService : Service(), CoroutineScope {
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
             .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
             .setContentTitle("VRCAA")
-            .setContentText("VRChat is now monitoring your friends on the background.")
+            .setContentText(application.getString(R.string.service_notification))
             .setPriority(NotificationCompat.FLAG_FOREGROUND_SERVICE) // Make the notification sticky.
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
