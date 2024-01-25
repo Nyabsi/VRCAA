@@ -55,16 +55,16 @@
     <string name="tabs_label_notifications">Уведомления</string>
     <string name="tabs_label_profile">Профиль</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="notification_service_title_online">Friend has come online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has come online!</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
-    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
-    <string name="notification_service_title_location">Friend changed location!</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %1$s.</string>
-    <string name="notification_title_player">\'s Notifications</string>
-    <string name="notification_label_enable">Enable Notifications</string>
-    <string name="notification_label_intent_online">Online Notifications</string>
-    <string name="notification_label_intent_offline">Offline Notifications</string>
-    <string name="notification_label_intent_location">Location Notifications</string>
+    <string name="service_notification">VRCAA теперь следит за вашими друзьями на фоновом режиме.</string>
+    <string name="notification_service_title_online">Друг появился в сети!</string>
+    <string name="notification_service_description_online">Ваш друг, %1$s появился в сети!</string>
+    <string name="notification_service_title_offline">Друг вышел из сети!</string>
+    <string name="notification_service_description_offline">Ваш друг, %1$s вышел из сети!</string>
+    <string name="notification_service_title_location">Друг изменил местоположение!</string>
+    <string name="notification_service_description_location">Ваш друг, %1$s отправился на %1$s.</string>
+    <string name="notification_title_player">Уведомлений</string>
+    <string name="notification_label_enable">Включить уведомления</string>
+    <string name="notification_label_intent_online">Онлайн уведомления</string>
+    <string name="notification_label_intent_offline">Офлайн уведомления</string>
+    <string name="notification_label_intent_location">Уведомления о местоположении</string>
 </resources>
