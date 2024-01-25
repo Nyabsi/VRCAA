@@ -149,19 +149,6 @@ class SearchResultScreen(
         )
     }
 
-    @Composable
-    private fun VerticalColumn(
-        content: LazyListScope.() -> Unit
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            content = content
-        )
-    }
-
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     private fun RowItem(
