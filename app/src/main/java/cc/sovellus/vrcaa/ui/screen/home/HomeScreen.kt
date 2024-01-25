@@ -47,7 +47,7 @@ import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
-import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -95,7 +95,7 @@ class HomeScreen : Screen {
                        RowItemRounded(
                            name = friend.displayName,
                            url = friend.userIcon.ifEmpty { friend.imageUrl },
-                           onClick = { navigator.parent?.parent?.push(FriendProfileScreen(friend)) }
+                           onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                        )
                    }
                }
@@ -146,7 +146,7 @@ class HomeScreen : Screen {
                            name = friend.displayName,
                            url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
                            count = null,
-                           onClick = { navigator.parent?.parent?.push(FriendProfileScreen(friend)) }
+                           onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                        )
                    }
                }

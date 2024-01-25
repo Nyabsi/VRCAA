@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,8 +11,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,33 +25,60 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.helper.TrustHelper
-import cc.sovellus.vrcaa.api.models.Users
+import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreenModel.UserProfileState
+import cc.sovellus.vrcaa.ui.screen.friends.ManageNotificationsScreen
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
 class UserProfileScreen(
-    private val user: Users.UsersItem
+    private val userId: String
 ): Screen {
+
+    @Composable
+    override fun Content() {
+
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        val model = rememberScreenModel { UserProfileScreenModel(ApiContext(context), userId) }
+
+        val state by model.state.collectAsState()
+
+        when (val result = state) {
+            is UserProfileState.Loading -> LoadingIndicatorScreen().Content()
+            is UserProfileState.Result -> RenderProfile(result.profile, model)
+            else -> {}
+        }
+    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    override fun Content() {
+    fun RenderProfile(profile: LimitedUser, model: UserProfileScreenModel) {
 
         val navigator = LocalNavigator.currentOrThrow
 
@@ -62,13 +93,39 @@ class UserProfileScreen(
                             )
                         }
                     },
+                    actions = {
+                        IconButton(onClick = { model.isMenuExpanded.value = true }) {
+                            Icon(
+                                imageVector = Icons.Filled.MoreVert,
+                                contentDescription = stringResource(R.string.preview_image_description)
+                            )
 
-                    title = { Text(text = user.displayName) }
+                            Box(
+                                contentAlignment = Alignment.Center
+                            ) {
+                                DropdownMenu(
+                                    expanded = model.isMenuExpanded.value,
+                                    onDismissRequest = { model.isMenuExpanded.value = false },
+                                    offset = DpOffset(0.dp, 0.dp)
+                                ) {
+                                    if (profile.isFriend) {
+                                        DropdownMenuItem(
+                                            onClick = { navigator.push(ManageNotificationsScreen(profile.id, profile.displayName)) },
+                                            text = { Text("Manage notifications") }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    title = { Text(text = profile.displayName) }
                 )
             },
             content = { padding ->
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth().padding(top = padding.calculateTopPadding()),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = padding.calculateTopPadding()),
                 ) {
                     item {
                         Column(
@@ -76,7 +133,7 @@ class UserProfileScreen(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            user.let {
+                            profile.let {
                                 ProfileCard(
                                     thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
                                     displayName = it.displayName,
@@ -96,10 +153,10 @@ class UserProfileScreen(
                             horizontalAlignment = Alignment.Start
                         ) {
                             SubHeader(title = stringResource(R.string.profile_label_biography))
-                            Description(text = user.bio)
+                            Description(text = profile.bio)
 
                             SubHeader(title = stringResource(R.string.profile_label_languages))
-                            Languages(languages = user.tags)
+                            Languages(languages = profile.tags)
                         }
                     }
                 }

@@ -48,7 +48,7 @@ import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -173,7 +173,7 @@ class FriendsScreen : Screen {
                         },
                         modifier = Modifier.clickable(
                             onClick = {
-                                navigator.parent?.parent?.push(FriendProfileScreen(friend))
+                                navigator.parent?.parent?.push(UserProfileScreen(friend.id))
                             }
                         )
                     )

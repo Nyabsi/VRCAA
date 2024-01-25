@@ -51,6 +51,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
@@ -271,7 +272,9 @@ class SearchResultScreen(
                             name = user.displayName,
                             url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
                             count = null
-                        ) { navigator.push(UserProfileScreen(user)) }
+                        ) {
+                            navigator.push(UserProfileScreen(user.id))
+                        }
                     }
                 }
             )
