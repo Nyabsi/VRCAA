@@ -46,7 +46,7 @@ VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opini
 - Me (Nyabsi) for the initial idea and creation of the application.
 - ttofu for testing and giving feedback.
 - bnuybuny for creating the application icon.
-
+- VRCX team, I've used their software as reference for some functionality.
 And all the other contributors and people who gave me feedback.
 
 # License
