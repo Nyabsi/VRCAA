@@ -10,6 +10,8 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 
 [Click here to download the Pre-Release](https://github.com/Nyabsi/vrcaa/releases/download/latest/app-debug.apk)
 
+**NOTICE: VRCAA relies on Android's background services to implement some of it's functionality and some Android OEM vendors are breaking them, if you have issue with Notifications please refer to: [dontkillmyapp](https://dontkillmyapp.com/), you have been adviced.**
+
 # Features
 
 - Browse worlds, users and avatars!
