@@ -11,8 +11,6 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
-import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -23,11 +21,9 @@ import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

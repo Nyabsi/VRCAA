@@ -1,20 +1,16 @@
 package cc.sovellus.vrcaa.ui.screen.home
 
 import android.content.Context
-import android.content.Intent
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
-import cc.sovellus.vrcaa.helper.isMyServiceRunning
-import cc.sovellus.vrcaa.service.PipelineService
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 class HomeScreenModel(
-    private val context: Context
+    context: Context
 ) : StateScreenModel<HomeScreenModel.HomeState>(HomeState.Init) {
 
     private val api: ApiContext = ApiContext(context)

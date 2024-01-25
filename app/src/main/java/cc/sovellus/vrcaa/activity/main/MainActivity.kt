@@ -22,7 +22,6 @@ import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
-import com.google.gson.Gson
 
 class MainActivity : ComponentActivity() {
     private fun checkForCookies(): Boolean {
