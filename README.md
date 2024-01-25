@@ -16,13 +16,13 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 - See favorite, online and offline friends.
 - Sleek, modern and intuitive UI.
 - Support for Android Monet Colors.
+- Notifications (Includes whitelist system for Friends and different Notification types!)
 - And much more!
 
 > VRCAA is under active development and is *nowhere near* being user-ready, this list is subject to change and may or may not represent the current features of the application.
 
 # Planned/Under Work Features
 
-- ~~Friend notifications (Leave/Join/GPS, ...)~~ Partially implemented.
 - Profile page shows all user information; Worlds, Avatars and Groups
 
 # Translations
@@ -35,7 +35,7 @@ Are you multilangual, and you are interested in translating VRCAA for your langu
 
 ![image](https://github.com/Nyabsi/vrcaa/assets/43046474/fb34fce5-6d2d-4ea3-aa52-c16fa4a6af40)
 
-> These showcases are partially outdated, the UI has improved lot in past few days.
+> These showcases are outdated, the application has changed lot in past few days.
   
 # Disclaimer
 
@@ -47,6 +47,7 @@ VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opini
 - ttofu for testing and giving feedback.
 - bnuybuny for creating the application icon.
 - VRCX team, I've used their software as reference for some functionality.
+
 And all the other contributors and people who gave me feedback.
 
 # License
