@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -8,9 +9,10 @@ import cc.sovellus.vrcaa.api.models.World
 import kotlinx.coroutines.launch
 
 class WorldInfoScreenModel(
-    private val api: ApiContext,
+    context: Context,
     private val id: String
 ) : StateScreenModel<WorldInfoScreenModel.WorldInfoState>(WorldInfoState.Init) {
+    private val api = ApiContext(context)
 
     sealed class WorldInfoState {
         data object Init : WorldInfoState()

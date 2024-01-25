@@ -44,7 +44,6 @@ class LoginScreen : Screen {
         val context = LocalContext.current
 
         val screenModel = navigator.rememberNavigatorScreenModel { LoginScreenModel(
-            ApiContext(context),
             context,
             navigator
         ) }

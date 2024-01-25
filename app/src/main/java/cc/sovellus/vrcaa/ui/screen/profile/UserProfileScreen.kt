@@ -62,10 +62,9 @@ class UserProfileScreen(
     @Composable
     override fun Content() {
 
-        val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = rememberScreenModel { UserProfileScreenModel(ApiContext(context), userId) }
+        val model = rememberScreenModel { UserProfileScreenModel(context, userId) }
 
         val state by model.state.collectAsState()
 

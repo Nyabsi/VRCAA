@@ -51,10 +51,7 @@ class TwoAuthScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(
-            ApiContext(context),
-            context
-        ) }
+        val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(context) }
 
         Column(
             modifier = Modifier.fillMaxHeight(),
@@ -65,7 +62,6 @@ class TwoAuthScreen(
             Text(text = if (otpType == ApiContext.TwoFactorType.EMAIL_OTP) { stringResource(R.string.auth_text_email) } else { stringResource(R.string.auth_text_app) })
 
             TextInput(
-                title = stringResource(R.string.auth_label_code),
                 input = screenModel.code
             )
 
@@ -100,7 +96,6 @@ class TwoAuthScreen(
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     fun TextInput(
-        title: String,
         input: MutableState<String>
     ) {
         val focus = LocalFocusManager.current

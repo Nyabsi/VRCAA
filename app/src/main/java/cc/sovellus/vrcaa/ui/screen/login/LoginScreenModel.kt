@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.helper.cookies
@@ -14,10 +15,10 @@ import cc.sovellus.vrcaa.helper.userCredentials
 import kotlinx.coroutines.launch
 
 class LoginScreenModel(
-    private val api: ApiContext,
     private val context: Context,
     private val navigator: Navigator
 ) : ScreenModel {
+    private val api = ApiContext(context)
 
     var username = mutableStateOf("")
     var password = mutableStateOf("")

@@ -12,8 +12,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FriendsScreenModel(
-    private val api: ApiContext
+    context: Context
 ) : StateScreenModel<FriendsScreenModel.FriendListState>(FriendListState.Init) {
+    private val api = ApiContext(context)
 
     sealed class FriendListState {
         data object Init : FriendListState()

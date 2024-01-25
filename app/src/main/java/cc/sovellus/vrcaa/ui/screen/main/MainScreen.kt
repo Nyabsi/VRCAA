@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -25,7 +24,6 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -58,9 +56,8 @@ class MainScreen : Screen {
     override fun Content() {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val context: Context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { MainScreenModel() }
+        val model = navigator.rememberNavigatorScreenModel { MainScreenModel() }
 
         TabNavigator(
             HomeTab,
@@ -74,24 +71,24 @@ class MainScreen : Screen {
             Scaffold(
                 topBar = {
                     SearchBar(
-                        query = screenModel.searchText.value,
+                        query = model.searchText.value,
                         placeholder = { Text(text = stringResource(R.string.main_search_placeholder)) },
-                        onQueryChange = { screenModel.searchText.value = it; },
+                        onQueryChange = { model.searchText.value = it; },
                         onSearch = {
-                            screenModel.existSearchMode()
-                            navigator.push(SearchResultScreen(screenModel.searchText.value))
+                            model.existSearchMode()
+                            navigator.push(SearchResultScreen(model.searchText.value))
                         },
-                        active = screenModel.isSearchActive.value,
+                        active = model.isSearchActive.value,
                         onActiveChange = {
-                            if (it) { screenModel.enterSearchMode() } else { screenModel.existSearchMode() }
+                            if (it) { model.enterSearchMode() } else { model.existSearchMode() }
                         },
-                        tonalElevation = screenModel.tonalElevation.value,
+                        tonalElevation = model.tonalElevation.value,
                         modifier = Modifier
                             .padding(16.dp)
                             .fillMaxWidth(),
                         trailingIcon = {
-                            if (screenModel.isSearchActive.value) {
-                                IconButton(onClick = { screenModel.clearSearchText() }) {
+                            if (model.isSearchActive.value) {
+                                IconButton(onClick = { model.clearSearchText() }) {
                                     Icon(
                                         imageVector = Icons.Filled.Close,
                                         contentDescription = stringResource(R.string.preview_image_description)
@@ -107,8 +104,8 @@ class MainScreen : Screen {
                             }
                         },
                         leadingIcon = {
-                            if (screenModel.isSearchActive.value) {
-                                IconButton(onClick = { screenModel.existSearchMode() }) {
+                            if (model.isSearchActive.value) {
+                                IconButton(onClick = { model.existSearchMode() }) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                         contentDescription = stringResource(R.string.preview_image_description)
@@ -125,8 +122,8 @@ class MainScreen : Screen {
                         LazyColumn(
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            items(screenModel.searchHistory.size) {
-                                val item = screenModel.searchHistory[it]
+                            items(model.searchHistory.size) {
+                                val item = model.searchHistory[it]
                                 ListItem(
                                     leadingContent = {
                                         Icon(
@@ -139,7 +136,7 @@ class MainScreen : Screen {
                                     },
                                     modifier = Modifier.clickable(
                                         onClick = {
-                                            screenModel.existSearchMode()
+                                            model.existSearchMode()
                                             navigator.push(SearchResultScreen(item))
                                         }
                                     )
@@ -157,7 +154,7 @@ class MainScreen : Screen {
                 },
                 bottomBar = {
                     NavigationBar(
-                        tonalElevation = screenModel.tonalElevation.value
+                        tonalElevation = model.tonalElevation.value
                     ) {
                         NavigationBarItem(HomeTab)
                         NavigationBarItem(FriendsTab)

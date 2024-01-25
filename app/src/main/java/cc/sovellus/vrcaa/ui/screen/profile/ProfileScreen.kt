@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,11 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
@@ -47,15 +43,14 @@ class ProfileScreen : Screen {
 
     @Composable
     override fun Content() {
-
-        val navigator = LocalNavigator.currentOrThrow
+        
         val context = LocalContext.current
 
         // don't store it in the `Navigator` because it *may* change, this is not a proper way to handle it either,
         // we really should just store a global `synchronized` variable in `apiContext` that contains the current `User` state.
-        val screenModel = rememberScreenModel { ProfileScreenModel(api = ApiContext(context)) }
+        val model = rememberScreenModel { ProfileScreenModel(context) }
 
-        val state by screenModel.state.collectAsState()
+        val state by model.state.collectAsState()
 
         when (val result = state) {
             is ProfileState.Loading -> LoadingIndicatorScreen().Content()

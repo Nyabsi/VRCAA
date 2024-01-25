@@ -38,7 +38,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreenModel.WorldInfoState
@@ -46,7 +45,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
 class WorldInfoScreen(
-    private val id: String
+    private val worldId: String
 ) : Screen {
 
     @Composable
@@ -54,7 +53,7 @@ class WorldInfoScreen(
 
         val context = LocalContext.current
 
-        val model = rememberScreenModel { WorldInfoScreenModel(api = ApiContext(context), id = id) }
+        val model = rememberScreenModel { WorldInfoScreenModel(context, worldId) }
         val state by model.state.collectAsState()
 
         when (val result = state) {

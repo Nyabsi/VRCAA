@@ -41,7 +41,7 @@ class SettingsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { SettingsScreenModel(ApiContext(context), context) }
+        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(context) }
 
         Scaffold(
             topBar = {
@@ -88,7 +88,7 @@ class SettingsScreen : Screen {
                 ) {
                     Button(
                         onClick = {
-                            screenModel.doLogout()
+                            model.doLogout()
                             navigator.popAll()
                             navigator.push(LoginScreen())
                         },

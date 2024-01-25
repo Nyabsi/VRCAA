@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.ui.tabs
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.RssFeed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

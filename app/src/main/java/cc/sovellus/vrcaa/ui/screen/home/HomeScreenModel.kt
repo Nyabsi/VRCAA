@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class HomeScreenModel(
     context: Context
 ) : StateScreenModel<HomeScreenModel.HomeState>(HomeState.Init) {
-
     private val api: ApiContext = ApiContext(context)
 
     sealed class HomeState {

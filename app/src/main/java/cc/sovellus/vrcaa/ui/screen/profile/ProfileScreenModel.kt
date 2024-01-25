@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -8,8 +9,9 @@ import cc.sovellus.vrcaa.api.models.User
 import kotlinx.coroutines.launch
 
 class ProfileScreenModel(
-    private val api: ApiContext
+    context: Context
 ) : StateScreenModel<ProfileScreenModel.ProfileState>(ProfileState.Init) {
+    private val api = ApiContext(context)
 
     sealed class ProfileState {
         data object Init : ProfileState()

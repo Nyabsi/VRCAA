@@ -43,9 +43,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
-import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import java.text.SimpleDateFormat
@@ -62,7 +60,6 @@ class AvatarViewScreen(
         val context = LocalContext.current
 
         val model = navigator.rememberNavigatorScreenModel { AvatarViewScreenModel(context) }
-        val isMenuExpanded = remember { mutableStateOf(false) }
 
         Scaffold(
             topBar = {
@@ -76,7 +73,7 @@ class AvatarViewScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { isMenuExpanded.value = true }) {
+                        IconButton(onClick = { model.isMenuExpanded.value = true }) {
                             Icon(
                                 imageVector = Icons.Filled.MoreVert,
                                 contentDescription = stringResource(R.string.preview_image_description)
@@ -86,8 +83,8 @@ class AvatarViewScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 DropdownMenu(
-                                    expanded = isMenuExpanded.value,
-                                    onDismissRequest = { isMenuExpanded.value = false },
+                                    expanded = model.isMenuExpanded.value,
+                                    onDismissRequest = { model.isMenuExpanded.value = false },
                                     offset = DpOffset(0.dp, 0.dp)
                                 ) {
                                     DropdownMenuItem(

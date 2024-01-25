@@ -13,9 +13,9 @@ import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import kotlinx.coroutines.launch
 
 class TwoAuthScreenModel(
-    private val api: ApiContext,
     private val context: Context
 ) : ScreenModel {
+    private val api = ApiContext(context)
 
     var code = mutableStateOf("")
 

@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.search
 
+import android.content.Context
 import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -9,9 +10,10 @@ import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import kotlinx.coroutines.launch
 
 class SearchResultScreenModel(
-    private val query: String,
-    private val api: ApiContext
+    context: Context,
+    private val query: String
 ) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
+    private val api = ApiContext(context)
 
     sealed class SearchState {
         data object Init : SearchState()
