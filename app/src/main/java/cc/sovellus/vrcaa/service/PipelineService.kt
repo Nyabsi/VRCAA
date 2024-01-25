@@ -51,7 +51,7 @@ class PipelineService : Service() {
         title: String,
         content: String
     ) {
-        val flags = NotificationCompat.FLAG_NO_CLEAR and NotificationCompat.FLAG_ONGOING_EVENT
+        val flags = NotificationCompat.FLAG_NO_CLEAR or NotificationCompat.FLAG_ONGOING_EVENT
 
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
             .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
