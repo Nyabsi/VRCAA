@@ -65,7 +65,7 @@
 
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_notifications">Notifications</string>
+    <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_profile">Profile</string>
 
     <!-- Notifications -->

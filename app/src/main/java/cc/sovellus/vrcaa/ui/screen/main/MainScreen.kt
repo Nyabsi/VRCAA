@@ -44,7 +44,7 @@ import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
-import cc.sovellus.vrcaa.ui.tabs.NotificationsTab
+import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 
 class MainScreen : Screen {
@@ -67,7 +67,7 @@ class MainScreen : Screen {
             tabDisposable = {
                 TabDisposable(
                     navigator = it,
-                    tabs = listOf(HomeTab, FriendsTab, NotificationsTab, ProfileTab)
+                    tabs = listOf(HomeTab, FriendsTab, FeedTab, ProfileTab)
                 )
             }
         ) {
@@ -161,7 +161,7 @@ class MainScreen : Screen {
                     ) {
                         NavigationBarItem(HomeTab)
                         NavigationBarItem(FriendsTab)
-                        NavigationBarItem(NotificationsTab)
+                        NavigationBarItem(FeedTab)
                         NavigationBarItem(ProfileTab)
                     }
                 }

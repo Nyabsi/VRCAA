@@ -52,6 +52,6 @@
     <string name="world_text_no_tags">Kirjoittaja ei ole antanut tunnisteita.</string>
     <string name="tabs_label_friends">Kaverit</string>
     <string name="tabs_label_home">Kotisivu</string>
-    <string name="tabs_label_notifications">Ilmoitukset</string>
+    <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_profile">Profiili</string>
 </resources>
