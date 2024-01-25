@@ -12,6 +12,8 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 
 **NOTICE: VRCAA relies on Android's background services to implement some of it's functionality and some Android OEM vendors are breaking them, if you have issue with Notifications please refer to: [dontkillmyapp](https://dontkillmyapp.com/), you have been adviced.**
 
+> We have discord now, click [here](https://discord.gg/tJf7aD8uDr) to join!
+
 # Features
 
 - Browse worlds, users and avatars!
@@ -25,7 +27,6 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 
 # Planned/Under Work Features
 
-- Avatar Page
 - Feed
 - Misc Actions through DropDownMenu (favorites, select avatar, unfriend, etc..)
 - Implement Groups
