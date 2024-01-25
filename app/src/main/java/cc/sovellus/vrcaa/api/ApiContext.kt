@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.api
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
@@ -199,6 +200,7 @@ class ApiContext(
         preferences.isExpiredSession = true
 
         val intent = Intent(context, MainActivity::class.java)
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 
