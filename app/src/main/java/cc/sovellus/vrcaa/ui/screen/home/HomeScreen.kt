@@ -44,6 +44,7 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
@@ -129,7 +130,7 @@ class HomeScreen : Screen {
                            name = avatar.name,
                            url = avatar.imageUrl,
                            count = null,
-                           onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
+                           onClick = { navigator.parent?.parent?.push(AvatarViewScreen(avatar)) }
                        )
                    }
                }

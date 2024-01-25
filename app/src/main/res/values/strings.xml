@@ -83,4 +83,20 @@
     <string name="notification_label_intent_online">Online Notifications</string>
     <string name="notification_label_intent_offline">Offline Notifications</string>
     <string name="notification_label_intent_location">Location Notifications</string>
+
+    <!-- Avatars -->
+    <string name="avatar_dropdown_label_select">Select Avatar</string>
+    <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
+    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
+
+    <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
+    <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
+
+    <string name="avatar_title_description">Description</string>
+    <string name="avatar_title_created_at">Creation Date</string>
+    <string name="avatar_title_updated_at">Last Updated</string>
+    <string name="avatar_title_content_labels">Content Labels</string>
+
+    <string name="avatar_text_author">By %1$s</string>
+    <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
 </resources>
