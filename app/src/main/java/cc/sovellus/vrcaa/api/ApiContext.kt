@@ -621,4 +621,28 @@ class ApiContext(
             }
         }
     }
+
+    suspend fun selectAvatar(avatarId: String): User? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "PUT",
+            url = "$apiBase/avatars/${avatarId}/select",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), User::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
 }

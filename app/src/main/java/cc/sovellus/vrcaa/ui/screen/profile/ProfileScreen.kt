@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -50,7 +51,9 @@ class ProfileScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { ProfileScreenModel(api = ApiContext(context)) }
+        // don't store it in the `Navigator` because it *may* change, this is not a proper way to handle it either,
+        // we really should just store a global `synchronized` variable in `apiContext` that contains the current `User` state.
+        val screenModel = rememberScreenModel { ProfileScreenModel(api = ApiContext(context)) }
 
         val state by screenModel.state.collectAsState()
 

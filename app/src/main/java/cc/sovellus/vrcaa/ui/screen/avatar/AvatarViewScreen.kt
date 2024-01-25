@@ -38,11 +38,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
+import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import java.text.SimpleDateFormat
@@ -58,6 +61,7 @@ class AvatarViewScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
+        val model = navigator.rememberNavigatorScreenModel { AvatarViewScreenModel(context) }
         val isMenuExpanded = remember { mutableStateOf(false) }
 
         Scaffold(
@@ -88,6 +92,8 @@ class AvatarViewScreen(
                                 ) {
                                     DropdownMenuItem(
                                         onClick = {
+                                            model.selectAvatar(avatar.id)
+
                                             Toast.makeText(
                                                 context,
                                                 context.getString(R.string.avatar_dropdown_toast_select_avatar),
