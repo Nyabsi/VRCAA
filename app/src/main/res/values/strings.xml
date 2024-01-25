@@ -32,7 +32,7 @@
     <string name="auth_button_text">Verify</string>
 
     <!-- MainScreen -->
-    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
+    <string name="main_search_placeholder">Search for content…</string>
 
     <!-- Placeholder Strings -->
     <string name="not_implemented_title">Not Implemented</string>
