@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.activity.main
 
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -16,13 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import cc.sovellus.vrcaa.helper.isMyServiceRunning
+import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
+import com.google.gson.Gson
 
 class MainActivity : ComponentActivity() {
     private fun checkForCookies(): Boolean {
-        return getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrEmpty()
+        return !getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrEmpty()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +63,13 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        if (checkForCookies()) {
+            if (!this.isMyServiceRunning(PipelineService::class.java)) {
+                val intent = Intent(this, PipelineService::class.java)
+                this.startForegroundService(intent)
+            }
+        }
+
         setContent {
             Theme {
                 Surface(
@@ -73,7 +84,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Content() {
-        if (checkForCookies()) {
+        if (!checkForCookies()) {
             Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator) }
         } else {
             Navigator(MainScreen(), onBackPressed = { it.key != "main" }) { navigator -> SlideTransition(navigator) }

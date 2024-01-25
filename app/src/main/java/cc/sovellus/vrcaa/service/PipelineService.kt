@@ -11,23 +11,34 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.PipelineContext
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class PipelineService : Service() {
+class PipelineService : Service(), CoroutineScope {
+
+    override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private var pipeline: PipelineContext? = null
+    private var api: ApiContext? = null
+
     private var friends: ArrayList<FriendOnline.User> = arrayListOf()
-    // Passed from Intent
     private lateinit var activeFriends: Friends
 
     private val listener = object : PipelineContext.SocketListener {
@@ -147,14 +158,18 @@ class PipelineService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        Toast.makeText(this, "PipelineService started, listening for events.", Toast.LENGTH_SHORT).show()
+        this.api = ApiContext(this)
 
-        this.pipeline = PipelineContext(intent.getStringExtra("access_token")!!)
-        this.activeFriends = Gson().fromJson(intent.getStringExtra("online_friends")!!, Friends::class.java)
+        launch {
+            withContext(Dispatchers.Main) {
+                pipeline = PipelineContext(api!!.getAuth()!!)
+                activeFriends = api!!.getFriends()!!
 
-        pipeline.let { pipeline ->
-            pipeline!!.connect()
-            listener.let { pipeline.setListener(it) }
+                pipeline.let { pipeline ->
+                    pipeline!!.connect()
+                    listener.let { pipeline.setListener(it) }
+                }
+            }
         }
 
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
@@ -174,7 +189,7 @@ class PipelineService : Service() {
     }
 
     override fun onDestroy() {
-        Toast.makeText(this, "PipelineService got killed, uh oh!", Toast.LENGTH_SHORT).show()
+        super.onDestroy()
         pipeline!!.disconnect()
     }
 

@@ -51,8 +51,6 @@ class HomeScreenModel(
             api.getFriends(true)?.let { offlineFriends = it }
             api.getWorlds()?.let { featuredWorlds = it }
 
-            initService()
-
             mutableState.value = HomeState.Result(
                 friends = friends,
                 lastVisited = lastVisited,
@@ -60,18 +58,6 @@ class HomeScreenModel(
                 offlineFriends = offlineFriends,
                 featuredWorlds = featuredWorlds
             )
-        }
-    }
-
-    private fun initService() {
-        screenModelScope.launch {
-            // Start running PipelineService on background.
-            if (!context.isMyServiceRunning(PipelineService::class.java)) {
-                val intent = Intent(context, PipelineService::class.java)
-                intent.putExtra("access_token", api.getAuth())
-                intent.putExtra("online_friends", Gson().toJson(api.getFriends()))
-                context.startForegroundService(intent)
-            }
         }
     }
 }
