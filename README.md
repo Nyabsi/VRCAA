@@ -25,7 +25,12 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 
 # Planned/Under Work Features
 
-- Profile page shows all user information; Worlds, Avatars and Groups
+- Avatar Page=
+- Feed
+- Misc Actions through DropDownMenu (favorites, select avatar, unfriend, etc..)
+- Implement Groups
+- Add other pages to Profile (Worlds, Avatars and Groups)
+- Avatar Search through h-just.party (third-party issue atm)
 
 # Translations
 
