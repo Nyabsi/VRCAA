@@ -146,12 +146,12 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                // TODO: later add customization to the sort, but for now just put "offline" status to the bottom.
-                val friendsSorted = friends.sortedWith(compareBy { it.location == "offline" })
+                val friendsSorted = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
+                val friendsFiltered = friendsSorted.filter { it.location != "offline" }
 
-                items(friendsSorted.count()) {
+                items(friendsFiltered.count()) {
                     val navigator = LocalNavigator.currentOrThrow
-                    val friend = friendsSorted[it]
+                    val friend = friendsFiltered[it]
 
                     ListItem(
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
