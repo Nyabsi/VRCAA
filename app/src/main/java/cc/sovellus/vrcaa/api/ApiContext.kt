@@ -86,7 +86,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                                 refreshToken()
                         } else {
                             null
@@ -128,7 +128,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                             refreshToken()
                         } else {
                             null
@@ -167,7 +167,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                             refreshToken()
                         } else {
                             null
