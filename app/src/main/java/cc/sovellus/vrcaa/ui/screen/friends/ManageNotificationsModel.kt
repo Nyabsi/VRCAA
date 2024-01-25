@@ -12,11 +12,11 @@ class ManageNotificationsModel(
     private val notificationManager = NotificationManager(context)
 
     val isNotificationsEnabled = mutableStateOf(notificationManager.isOnWhitelist(friendId))
-    val isIntentEnabled = mutableMapOf(
-        NotificationManager.Intents.FRIEND_FLAG_OFFLINE to notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE),
-        NotificationManager.Intents.FRIEND_FLAG_ONLINE to notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_ONLINE),
-        NotificationManager.Intents.FRIEND_FLAG_LOCATION to notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)
-    )
+
+    val isOnlineIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_ONLINE))
+    val isOfflineIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE))
+    val isLocationIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_LOCATION))
+
 
     fun toggleNotifications(toggle: Boolean) {
 
@@ -33,10 +33,14 @@ class ManageNotificationsModel(
 
         if (toggle) {
             notificationManager.enableIntent(friendId, intent)
-            isIntentEnabled[intent] = true
         } else {
             notificationManager.disableIntent(friendId, intent)
-            isIntentEnabled[intent] = false
+        }
+
+        when(intent) {
+            NotificationManager.Intents.FRIEND_FLAG_ONLINE -> isOnlineIntentEnabled.value = toggle
+            NotificationManager.Intents.FRIEND_FLAG_OFFLINE -> isOfflineIntentEnabled.value = toggle
+            NotificationManager.Intents.FRIEND_FLAG_LOCATION -> isLocationIntentEnabled.value = toggle
         }
     }
 }

@@ -102,8 +102,8 @@ class ManageNotificationsScreen(
                             Text(text = stringResource(R.string.notification_label_intent_offline))
 
                             Switch(
-                                checked = model.isIntentEnabled[NotificationManager.Intents.FRIEND_FLAG_OFFLINE]!!,
-                                onCheckedChange = { toggle -> model.toggleIntent(toggle, NotificationManager.Intents.FRIEND_FLAG_OFFLINE) },
+                                checked = model.isOfflineIntentEnabled.value,
+                                onCheckedChange = { toggleOffline -> model.toggleIntent(toggleOffline, NotificationManager.Intents.FRIEND_FLAG_OFFLINE) },
                                 colors = SwitchDefaults.colors(
                                     checkedThumbColor = MaterialTheme.colorScheme.primary,
                                     checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
@@ -126,8 +126,8 @@ class ManageNotificationsScreen(
                             Text(text = stringResource(R.string.notification_label_intent_online))
 
                             Switch(
-                                checked = model.isIntentEnabled[NotificationManager.Intents.FRIEND_FLAG_ONLINE]!!,
-                                onCheckedChange = { toggle -> model.toggleIntent(toggle, NotificationManager.Intents.FRIEND_FLAG_ONLINE) },
+                                checked = model.isOnlineIntentEnabled.value,
+                                onCheckedChange = { toggleOnline -> model.toggleIntent(toggleOnline, NotificationManager.Intents.FRIEND_FLAG_ONLINE) },
                                 colors = SwitchDefaults.colors(
                                     checkedThumbColor = MaterialTheme.colorScheme.primary,
                                     checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
@@ -150,7 +150,7 @@ class ManageNotificationsScreen(
                             Text(text = stringResource(R.string.notification_label_intent_location))
 
                             Switch(
-                                checked = model.isIntentEnabled[NotificationManager.Intents.FRIEND_FLAG_LOCATION]!!,
+                                checked = model.isLocationIntentEnabled.value,
                                 onCheckedChange = { toggle -> model.toggleIntent(toggle, NotificationManager.Intents.FRIEND_FLAG_LOCATION) },
                                 colors = SwitchDefaults.colors(
                                     checkedThumbColor = MaterialTheme.colorScheme.primary,

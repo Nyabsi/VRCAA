@@ -32,13 +32,11 @@ class NotificationManager(
 
     fun isIntentEnabled(friendId: String, intent: Intents): Boolean {
         val intents = preferences.notificationWhitelist.find { it.friendId == friendId }?.intents
-        if (intents != null) {
-            for (
-            target in intents
-            ) {
-                if (target == intent)
-                    return true
-            }
+            ?: return false
+
+        for (target in intents) {
+            if (target == intent)
+                return true
         }
         return false
     }
@@ -53,7 +51,7 @@ class NotificationManager(
     fun disableIntent(friendId: String, intent: Intents) {
         val tmp = preferences.notificationWhitelist
         tmp.find { it.friendId == friendId }
-            ?.intents?.remove(intent)
+            ?.intents?.remove(tmp.find { it.friendId == friendId }?.intents?.find { it == intent })
         preferences.notificationWhitelist = tmp
     }
 
