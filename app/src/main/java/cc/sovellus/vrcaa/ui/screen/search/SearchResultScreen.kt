@@ -47,9 +47,11 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.Users
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreen
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreenModel
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
@@ -72,7 +74,7 @@ class SearchResultScreen(
 
         when (val result = state) {
             is SearchState.Loading -> LoadingIndicatorScreen().Content()
-            is SearchState.Result -> DisplayResult(result.foundWorlds, result.foundUsers, model)
+            is SearchState.Result -> DisplayResult(result.foundWorlds, result.foundUsers, result.foundAvatars, model)
             else -> {}
         }
     }
@@ -82,6 +84,7 @@ class SearchResultScreen(
     fun DisplayResult(
         worlds: MutableList<LimitedWorlds.LimitedWorldItem>,
         users: MutableList<Users.UsersItem>,
+        avatars: MutableList<JustHPartyAvatars.JustHPartyAvatarsItem>,
         model: SearchResultScreenModel
     ) {
 
@@ -139,7 +142,7 @@ class SearchResultScreen(
                     when(model.currentIndex.intValue) {
                         0 -> ShowWorlds(worlds)
                         1 -> ShowUsers(users)
-                        2 -> ShowAvatars()
+                        2 -> ShowAvatars(avatars)
                     }
                 }
             }
@@ -265,13 +268,45 @@ class SearchResultScreen(
     }
 
     @Composable
-    private fun ShowAvatars() {
+    private fun ShowAvatars(avatars: MutableList<JustHPartyAvatars.JustHPartyAvatarsItem>) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = stringResource(R.string.not_implemented_text))
+            val navigator = LocalNavigator.currentOrThrow
+
+            if (avatars.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(R.string.result_not_found))
+                }
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(
+                        start = 12.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    ),
+                    content = {
+                        items(avatars.size) {
+                            val avatar = avatars[it]
+                            RowItem(
+                                name = avatar.name,
+                                url = avatar.thumbnailImageUrl,
+                                count = null
+                            ) {
+                                navigator.push(AvatarViewScreen(avatar.id))
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
 }

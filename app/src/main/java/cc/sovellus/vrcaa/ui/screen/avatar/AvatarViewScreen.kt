@@ -25,8 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,28 +38,44 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.models.Avatars
+import cc.sovellus.vrcaa.api.models.Avatar
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreenModel.AvatarState
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AvatarViewScreen(
-    private val avatar: Avatars.AvatarsItem
+    private val avatarId: String
 ) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { AvatarViewScreenModel(context) }
+        val model = rememberScreenModel { AvatarViewScreenModel(context, avatarId) }
+
+        val state by model.state.collectAsState()
+
+        when (val result = state) {
+            is AvatarState.Loading -> LoadingIndicatorScreen().Content()
+            is AvatarState.Result -> DisplayResult(result.avatar, model)
+            else -> {}
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun DisplayResult(avatar: Avatar?, model: AvatarViewScreenModel) {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
 
         Scaffold(
             topBar = {
@@ -87,85 +103,105 @@ class AvatarViewScreen(
                                     onDismissRequest = { model.isMenuExpanded.value = false },
                                     offset = DpOffset(0.dp, 0.dp)
                                 ) {
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            model.selectAvatar(avatar.id)
+                                    if (avatar != null) {
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                model.selectAvatar(model.avatar!!.id)
 
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.avatar_dropdown_toast_select_avatar),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        },
-                                        text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
-                                    )
-                                    // TODO: when implementing favorites, check here if it's favorited or not.
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.avatar_dropdown_toast_not_implemented),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        },
-                                        text = { Text(stringResource(R.string.avatar_dropdown_label_favorite)) }
-                                    )
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.avatar_dropdown_toast_select_avatar),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            },
+                                            text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
+                                        )
+                                        // TODO: when implementing favorites, check here if it's favorited or not.
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.avatar_dropdown_toast_not_implemented),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            },
+                                            text = { Text(stringResource(R.string.avatar_dropdown_label_favorite)) }
+                                        )
+                                    }
                                 }
                             }
                         }
                     },
-                    title = { Text(text = avatar.name) }
+                    title = {
+                        if (avatar != null) {
+                            Text(text = avatar.name)
+                        } else {
+                            Text(text = "Invalid Avatar")
+                        }
+                    }
                 )
             },
             content = { padding ->
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding()),
-                ) {
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            avatar.let {
-                                AvatarCard(
-                                    thumbnailUrl = it.imageUrl,
-                                    name = it.name,
-                                    authorName = it.authorName
-                                )
+                if (avatar != null) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = padding.calculateTopPadding()),
+                    ) {
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                avatar.let {
+                                    AvatarCard(
+                                        thumbnailUrl = it.imageUrl,
+                                        name = it.name,
+                                        authorName = it.authorName
+                                    )
+                                }
+                            }
+                        }
+
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start
+                            ) {
+                                SubHeader(title = stringResource(R.string.avatar_title_description))
+                                Description(text = avatar.description)
+
+                                val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                                val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+
+                                val createdAtFormatted = parser.parse(avatar.createdAt)
+                                    ?.let { formatter.format(it) }
+
+                                val updatedAtFormatted = parser.parse(avatar.updatedAt)
+                                    ?.let { formatter.format(it) }
+
+                                SubHeader(title = stringResource(R.string.avatar_title_created_at))
+                                Description(text = createdAtFormatted)
+
+                                SubHeader(title = stringResource(R.string.avatar_title_updated_at))
+                                Description(text = updatedAtFormatted)
+
+                                SubHeader(title = stringResource(R.string.avatar_title_content_labels))
+                                ContentWarnings(tags = avatar.tags)
                             }
                         }
                     }
-
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            SubHeader(title = stringResource(R.string.avatar_title_description))
-                            Description(text = avatar.description)
-
-                            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                            val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
-
-                            val createdAtFormatted = parser.parse(avatar.createdAt)
-                                ?.let { formatter.format(it) }
-
-                            val updatedAtFormatted = parser.parse(avatar.updatedAt)
-                                ?.let { formatter.format(it) }
-
-                            SubHeader(title = stringResource(R.string.avatar_title_created_at))
-                            Description(text = createdAtFormatted)
-
-                            SubHeader(title = stringResource(R.string.avatar_title_updated_at))
-                            Description(text = updatedAtFormatted)
-
-                            SubHeader(title = stringResource(R.string.avatar_title_content_labels))
-                            ContentWarnings(tags = avatar.tags)
-                        }
+                } else {
+                    if (!model.once.value) {
+                        model.once.value = true
+                        navigator.pop()
+                        Toast.makeText(
+                            context,
+                            "The avatar is either private or invalid!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.api.models.Auth
+import cc.sovellus.vrcaa.api.models.Avatar
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
@@ -640,6 +641,30 @@ class ApiContext(
         return when (result) {
             is Response -> {
                 Gson().fromJson(result.body?.string(), User::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getAvatar(avatarId: String): Avatar? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/avatars/${avatarId}",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Avatar::class.java)
             }
             else -> {
                 null

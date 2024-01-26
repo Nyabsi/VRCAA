@@ -130,7 +130,7 @@ class HomeScreen : Screen {
                            name = avatar.name,
                            url = avatar.imageUrl,
                            count = null,
-                           onClick = { navigator.parent?.parent?.push(AvatarViewScreen(avatar)) }
+                           onClick = { navigator.parent?.parent?.push(AvatarViewScreen(avatar.id)) }
                        )
                    }
                }
