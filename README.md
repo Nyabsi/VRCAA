@@ -1,12 +1,8 @@
 # <img src="https://github.com/Nyabsi/vrcaa/assets/43046474/a90fb8bf-6017-410c-9def-93a8a43682cb" height="24" width="24"> VRCAA: VRChat Android Assistant
 
-> NOTE: VRCAA is still in its early stages, you may and will experience issues or missing features.
+> NOTE: VRCAA is still in its early stages, you may experience issues.
 
-<div align="center">
-    
-</div>
-
-VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devices may behave in unintended way) devices which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
+VRCAA is free and open-source utility on your Android 8.1-13+ (Tested on Android >13) devices which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
 
 [Click here to download the Pre-Release](https://github.com/Nyabsi/vrcaa/releases/download/latest/app-debug.apk)
 
@@ -22,8 +18,6 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (NOTE: Older devic
 - Support for Android Monet Colors.
 - Notifications (Includes whitelist system for Friends and different Notification types!)
 - And much more!
-
-> VRCAA is under active development and is *nowhere near* being user-ready, this list is subject to change and may or may not represent the current features of the application.
 
 # Planned/Under Work Features
 
@@ -51,7 +45,7 @@ VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opini
 # Credits
 
 - Me (Nyabsi) for the initial idea and creation of the application.
-- ttofu for testing and giving feedback.
+- ttofu & Hikari for testing and giving feedback.
 - bnuybuny for creating the application icon.
 - VRCX team, I've used their software as reference for some functionality.
 
