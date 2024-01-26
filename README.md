@@ -21,7 +21,7 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (Tested on Android
 
 # Planned/Under Work Features
 
-- Feed
+- ~~Feed~~ (Initial functionality is complete, still needs to be finalized)
 - Misc Actions through DropDownMenu (favorites, select avatar, unfriend, etc..)
 - Implement Groups
 - Add other pages to Profile (Worlds, Avatars and Groups)
