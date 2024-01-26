@@ -2,7 +2,6 @@ package cc.sovellus.vrcaa.activity.main
 
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -17,8 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import cc.sovellus.vrcaa.helper.isMyServiceRunning
-import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
@@ -59,13 +56,6 @@ class MainActivity : ComponentActivity() {
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC), 0)
-            }
-        }
-
-        if (checkForCookies()) {
-            if (!this.isMyServiceRunning(PipelineService::class.java)) {
-                val intent = Intent(this, PipelineService::class.java)
-                this.startForegroundService(intent)
             }
         }
 
