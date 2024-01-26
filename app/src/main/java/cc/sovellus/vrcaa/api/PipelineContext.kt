@@ -86,7 +86,14 @@ class PipelineContext(
             override fun onFailure(
                 webSocket: WebSocket, t: Throwable, response: Response?
             ) {
-                Log.d("VRCAA", t.message.toString())
+                when (response?.code) {
+                    401 -> {
+                        shouldReconnect = false // no you shouldn't reconnect in-case of Api Failure.
+                    }
+                    else -> {
+                        Log.d("VRCAA", t.message.toString())
+                    }
+                }
             }
         }
     }
