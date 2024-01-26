@@ -37,7 +37,8 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ApiContext(
-    private var context: Context
+    private var context: Context,
+    private var isPipeline: Boolean = false
 ) {
 
     private val client: OkHttpClient = OkHttpClient()
@@ -87,7 +88,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession && !isPipeline) {
                                 refreshToken()
                         } else {
                             null
@@ -129,7 +130,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession && !isPipeline) {
                             refreshToken()
                         } else {
                             null
@@ -168,7 +169,7 @@ class ApiContext(
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession && !isPipeline) {
                             refreshToken()
                         } else {
                             null

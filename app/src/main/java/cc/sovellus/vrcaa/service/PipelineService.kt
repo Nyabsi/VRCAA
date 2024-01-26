@@ -168,7 +168,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        this.api = ApiContext(this)
+        this.api = ApiContext(this, true)
         this.notificationManager = NotificationManager(this)
 
         launch {
