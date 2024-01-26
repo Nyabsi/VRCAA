@@ -22,6 +22,7 @@ import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
+import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,8 @@ class PipelineService : Service(), CoroutineScope {
     private var pipeline: PipelineContext? = null
     private var api: ApiContext? = null
     private var notificationManager: NotificationManager? = null
+
+    private val feedManager = FeedManager()
 
     private var friends: ArrayList<FriendOnline.User> = arrayListOf()
     private lateinit var activeFriends: Friends
@@ -99,6 +102,12 @@ class PipelineService : Service(), CoroutineScope {
                         )
                     }
 
+                    val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE)
+                    feedObject.friendName = friend.user.displayName
+                    feedObject.travelDestination = ""
+
+                    feedManager.addFeed(feedObject)
+
                     notificationCounter++
                 }
                 is FriendOffline -> {
@@ -116,10 +125,15 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
+                        val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE)
+                        feedObject.friendName = friendObject.displayName
+                        feedObject.travelDestination = ""
+
+                        feedManager.addFeed(feedObject)
+
                         friends = friends.filter { it.id != friend.userId } as ArrayList<FriendOnline.User>
                     } else {
                         // It seems it was not cached during local session, instead fallback to currentFriends
-                        // That we pass from the Intent to this Service
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
                         if (notificationManager!!.isOnWhitelist(friend.userId) &&
@@ -129,6 +143,12 @@ class PipelineService : Service(), CoroutineScope {
                                 content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName)
                             )
                         }
+
+                        val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE)
+                        feedObject.friendName = fallbackFriend?.displayName.toString()
+                        feedObject.travelDestination = ""
+
+                        feedManager.addFeed(feedObject)
 
                         activeFriends.remove(activeFriends.find { it.id == friend.userId })
                     }
@@ -148,6 +168,12 @@ class PipelineService : Service(), CoroutineScope {
                                 content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name)
                             )
                         }
+
+                        val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
+                        feedObject.friendName = friend.user.displayName
+                        feedObject.travelDestination = friend.location
+
+                        feedManager.addFeed(feedObject)
                     }
 
                     notificationCounter++
@@ -173,12 +199,20 @@ class PipelineService : Service(), CoroutineScope {
 
         launch {
             withContext(Dispatchers.Main) {
-                pipeline = PipelineContext(api!!.getAuth()!!)
-                activeFriends = api!!.getFriends()!!
+                api!!.getAuth().let { token ->
+                    if (!token.isNullOrEmpty()) {
+                        pipeline = PipelineContext(token)
+                        pipeline?.let { pipeline ->
+                            pipeline.connect()
+                            listener.let { pipeline.setListener(it) }
+                        }
+                    }
+                }
 
-                pipeline?.let { pipeline ->
-                    pipeline.connect()
-                    listener.let { pipeline.setListener(it) }
+                api!!.getFriends().let { friends ->
+                    if (friends != null) {
+                        activeFriends = friends
+                    }
                 }
             }
         }

@@ -10,7 +10,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.screen.misc.PlaceholderScreen
+import cc.sovellus.vrcaa.ui.screen.feed.FeedScreen
 
 object FeedTab : Tab {
     override val options: TabOptions
@@ -30,6 +30,6 @@ object FeedTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(PlaceholderScreen())
+        Navigator(FeedScreen())
     }
 }
