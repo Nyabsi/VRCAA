@@ -64,7 +64,7 @@ class PipelineService : Service(), CoroutineScope {
         val flags = NotificationCompat.FLAG_ONGOING_EVENT
 
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
-            .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
+            .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(title)
             .setContentText(content)
             .setPriority(flags)
@@ -184,7 +184,7 @@ class PipelineService : Service(), CoroutineScope {
         }
 
         val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
-            .setSmallIcon(androidx.core.R.drawable.notification_icon_background)
+            .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle("VRCAA")
             .setContentText(application.getString(R.string.service_notification))
             .setPriority(NotificationCompat.FLAG_FOREGROUND_SERVICE) // Make the notification sticky.
