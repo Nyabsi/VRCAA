@@ -59,7 +59,7 @@ class ApiContext(
         TOTP
     }
 
-    suspend fun doRequest(
+    private suspend fun doRequest(
         method: String,
         url: String,
         headers: Headers,
