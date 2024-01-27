@@ -166,7 +166,7 @@ class PipelineService : Service(), CoroutineScope {
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
                             friendName = friend.user.displayName
-                            travelDestination = friend.location
+                            travelDestination = friend.world.name
                         })
                     }
 
