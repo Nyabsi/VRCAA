@@ -44,19 +44,19 @@ class FeedScreen : Screen {
                 when(item.type) {
                     FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.feed_online_text)) },
+                            headlineContent = { Text(stringResource(R.string.feed_online_text).format(item.friendName)) },
                             overlineContent = { Text(stringResource(R.string.feed_online_label)) }
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_OFFLINE -> {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.feed_offline_text)) },
+                            headlineContent = { Text(stringResource(R.string.feed_offline_text).format(item.friendName)) },
                             overlineContent = { Text(stringResource(R.string.feed_offline_label)) }
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_LOCATION -> {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.feed_location_text)) },
+                            headlineContent = { Text(stringResource(R.string.feed_location_text).format(item.friendName, item.travelDestination)) },
                             overlineContent = { Text(stringResource(R.string.feed_location_label)) }
                         )
                     }
