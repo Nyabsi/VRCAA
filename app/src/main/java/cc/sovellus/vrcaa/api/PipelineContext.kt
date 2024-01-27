@@ -5,6 +5,9 @@ import cc.sovellus.vrcaa.api.models.pipeline.FriendActive
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
+import cc.sovellus.vrcaa.api.models.pipeline.FriendUpdate
+import cc.sovellus.vrcaa.api.models.pipeline.Notification
+import cc.sovellus.vrcaa.api.models.pipeline.NotificationV2
 import cc.sovellus.vrcaa.api.models.pipeline.UpdateModel
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -59,6 +62,18 @@ class PipelineContext(
                     "friend-offline" -> {
                         val friend = Gson().fromJson(update.content, FriendOffline::class.java)
                         socketListener?.onMessage(friend)
+                    }
+                    "friend-update" -> {
+                        val friend = Gson().fromJson(update.content, FriendUpdate::class.java)
+                        socketListener?.onMessage(friend)
+                    }
+                    "notification" -> {
+                        val notification = Gson().fromJson(update.content, Notification::class.java)
+                        socketListener?.onMessage(notification)
+                    }
+                    "notification-v2" -> {
+                        val notification = Gson().fromJson(update.content, NotificationV2::class.java)
+                        socketListener?.onMessage(notification)
                     }
                     else -> {
                         Log.d("VRCAA", "Got Unknown pipeline message (${update.type})")
