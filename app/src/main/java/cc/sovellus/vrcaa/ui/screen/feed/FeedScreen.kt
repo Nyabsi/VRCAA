@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -17,6 +18,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.R
 
 class FeedScreen : Screen {
 
@@ -42,29 +44,20 @@ class FeedScreen : Screen {
                 when(item.type) {
                     FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
                         ListItem(
-                            headlineContent = { Text("${item.friendName} is has come online.") },
-                            overlineContent = { Text(item.type.name) },
-                            supportingContent = { },
-                            leadingContent = { },
-                            trailingContent = { },
+                            headlineContent = { Text(stringResource(R.string.feed_online_text)) },
+                            overlineContent = { Text(stringResource(R.string.feed_online_label)) }
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_OFFLINE -> {
                         ListItem(
-                            headlineContent = { Text("${item.friendName} has gone offline.") },
-                            overlineContent = { Text(item.type.name) },
-                            supportingContent = { },
-                            leadingContent = { },
-                            trailingContent = { },
+                            headlineContent = { Text(stringResource(R.string.feed_offline_text)) },
+                            overlineContent = { Text(stringResource(R.string.feed_offline_label)) }
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_LOCATION -> {
                         ListItem(
-                            headlineContent = { Text("${item.friendName} went to ${item.travelDestination}.") },
-                            overlineContent = { Text(item.type.name) },
-                            supportingContent = { },
-                            leadingContent = { },
-                            trailingContent = { },
+                            headlineContent = { Text(stringResource(R.string.feed_location_text)) },
+                            overlineContent = { Text(stringResource(R.string.feed_location_label)) }
                         )
                     }
                     else -> { /* Unhandled */ }
