@@ -22,11 +22,11 @@
     <string name="login_button_text">Логин</string>
     <!-- TwoAuthScreen -->
     <string name="auth_text_email">Введите код, отправленный на вашу эл. почту</string>
-    <string name="auth_text_app">Введите код из приложения Authenticator</string>
-    <string name="auth_label_code">2FA Код</string>
+    <string name="auth_text_app">Введите код из вашего приложения для двухфакторной аутентификации</string>
+    <string name="auth_label_code">Код двухфакторной аутентификации</string>
     <string name="auth_button_text">Подтвердить</string>
     <!-- MainScreen -->
-    <string name="main_search_placeholder">Search for content…</string>
+    <string name="main_search_placeholder">Поиск контента…</string>
     <!-- Placeholder Strings -->
     <string name="not_implemented_title">Не реализовано</string>
     <string name="not_implemented_text">Эта страница еще не реализована, возвращайтесь позже!</string>
@@ -68,15 +68,22 @@
     <string name="notification_label_intent_offline">Офлайн уведомления</string>
     <string name="notification_label_intent_location">Уведомления о местоположении</string>
     <!-- Avatars -->
-    <string name="avatar_dropdown_label_select">Select Avatar</string>
-    <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
-    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
-    <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
-    <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
-    <string name="avatar_title_description">Description</string>
-    <string name="avatar_title_created_at">Creation Date</string>
-    <string name="avatar_title_updated_at">Last Updated</string>
-    <string name="avatar_title_content_labels">Content Labels</string>
-    <string name="avatar_text_author">By %1$s</string>
-    <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
+    <string name="avatar_dropdown_label_select">Выбрать аватар</string>
+    <string name="avatar_dropdown_label_favorite">Добавить в избранное</string>
+    <string name="avatar_dropdown_label_remove_favorite">Удалить из избранного</string>
+    <string name="avatar_dropdown_toast_not_implemented">Эта страница еще не реализована! Возвращайтесь позже.</string>
+    <string name="avatar_dropdown_toast_select_avatar">Аватар выбран!</string>
+    <string name="avatar_title_description">Описание</string>
+    <string name="avatar_title_created_at">Дата создания</string>
+    <string name="avatar_title_updated_at">Дата последнего обновления</string>
+    <string name="avatar_title_content_labels">Метки содержимого</string>
+    <string name="avatar_text_author">Создано %1$s</string>
+    <string name="avatar_text_content_labels_not_found">Аватар не содержит предупреждений о содержимом.</string>
+    <!-- Feed -->
+    <string name="feed_online_label">Online</string>
+    <string name="feed_online_text">%1$s is has come online.</string>
+    <string name="feed_offline_label">Offline</string>
+    <string name="feed_offline_text">%1$s has gone offline.</string>
+    <string name="feed_location_label">GPS</string>
+    <string name="feed_location_text">%1$s went to %2$s.</string>
 </resources>
