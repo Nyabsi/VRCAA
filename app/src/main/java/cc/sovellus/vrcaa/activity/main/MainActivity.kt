@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
         if (!checkForCookies()) {
             Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator) }
         } else {
-            Navigator(MainScreen(), onBackPressed = { it.key != "main" }) { navigator -> SlideTransition(navigator) }
+            Navigator(MainScreen()) { navigator -> SlideTransition(navigator) }
         }
     }
 }

@@ -47,9 +47,6 @@ import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 
 class MainScreen : Screen {
 
-    override val key: ScreenKey
-        get() = "main"
-
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

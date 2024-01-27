@@ -30,7 +30,8 @@ class TwoAuthScreenModel(
                 preferences.twoFactorAuth = twoAuth
                 preferences.isExpiredSession = false // even if it's false, doesn't matter.
 
-                navigator.push(MainScreen())
+                navigator.popUntilRoot()
+                navigator.replace(MainScreen())
             } else {
                 Toast.makeText(
                     context,

@@ -29,7 +29,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 
 class SettingsScreen : Screen {
@@ -89,8 +88,8 @@ class SettingsScreen : Screen {
                     Button(
                         onClick = {
                             model.doLogout()
-                            navigator.popAll()
-                            navigator.push(LoginScreen())
+                            navigator.popUntilRoot()
+                            navigator.replace(LoginScreen())
                         },
                         modifier = Modifier.padding(bottom = 16.dp)
                     ) {
