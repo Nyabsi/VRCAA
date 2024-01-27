@@ -16,7 +16,8 @@ VRCAA is free and open-source utility on your Android 8.1-13+ (Tested on Android
 - See favorite, online and offline friends.
 - Sleek, modern and intuitive UI.
 - Support for Android Monet Colors.
-- Notifications (Includes whitelist system for Friends and different Notification types!)
+- Notifications (from chosen friends)
+- Feed, real time events from all of your friends!
 - And much more!
 
 # Planned/Under Work Features
