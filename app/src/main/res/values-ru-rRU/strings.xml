@@ -62,11 +62,18 @@
     <string name="notification_service_description_offline">Ваш друг, %1$s вышел из сети!</string>
     <string name="notification_service_title_location">Друг изменил местоположение!</string>
     <string name="notification_service_description_location">Ваш друг, %1$s отправился в %2$s.</string>
+    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
+    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
+    <string name="notification_service_title_friend_added">You got a new friend!</string>
+    <string name="notification_service_description_friend_added">%1$s accepted your friend request!</string>
     <string name="notification_title_player">Уведомлений</string>
     <string name="notification_label_enable">Включить уведомления</string>
     <string name="notification_label_intent_online">Онлайн уведомления</string>
     <string name="notification_label_intent_offline">Офлайн уведомления</string>
     <string name="notification_label_intent_location">Уведомления о местоположении</string>
+    <string name="notification_label_intent_status">Status Change Notifications</string>
+    <string name="notification_service_title_status">Friend changed status!</string>
+    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Выбрать аватар</string>
     <string name="avatar_dropdown_label_favorite">Добавить в избранное</string>
