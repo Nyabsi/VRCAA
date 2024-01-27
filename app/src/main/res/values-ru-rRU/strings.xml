@@ -52,7 +52,7 @@
     <string name="world_text_no_tags">Автор не предоставил теги.</string>
     <string name="tabs_label_friends">Друзья</string>
     <string name="tabs_label_home">Главная</string>
-    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_feed">Лента</string>
     <string name="tabs_label_profile">Профиль</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA теперь следит за вашими друзьями на фоновом режиме.</string>
@@ -61,7 +61,7 @@
     <string name="notification_service_title_offline">Друг вышел из сети!</string>
     <string name="notification_service_description_offline">Ваш друг, %1$s вышел из сети!</string>
     <string name="notification_service_title_location">Друг изменил местоположение!</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
+    <string name="notification_service_description_location">Ваш друг, %1$s отправился в %2$s.</string>
     <string name="notification_title_player">Уведомлений</string>
     <string name="notification_label_enable">Включить уведомления</string>
     <string name="notification_label_intent_online">Онлайн уведомления</string>
