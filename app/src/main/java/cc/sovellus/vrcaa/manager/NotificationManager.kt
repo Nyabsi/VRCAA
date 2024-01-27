@@ -13,7 +13,8 @@ class NotificationManager(
     enum class Intents {
         FRIEND_FLAG_ONLINE,
         FRIEND_FLAG_OFFLINE,
-        FRIEND_FLAG_LOCATION
+        FRIEND_FLAG_LOCATION,
+        FRIEND_FLAG_STATUS
     }
 
     class NotificationPermissions : ArrayList<NotificationPermissions.NotificationPermission>() {

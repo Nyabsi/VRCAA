@@ -157,6 +157,136 @@ class FeedScreen : Screen {
                             }
                         )
                     }
+                    FeedManager.FeedType.FRIEND_FEED_STATUS -> {
+                        ListItem(
+                            headlineContent = {
+                                val text = buildAnnotatedString {
+                                    append(item.friendName)
+                                    append(" ")
+                                    withStyle(style = SpanStyle(color = Color.Gray)) {
+                                        append("changed status to")
+                                    }
+                                    append(" ")
+                                    append(item.friendStatus.toString())
+                                }
+                                Text(text)
+                            },
+                            leadingContent = {
+                                GlideImage(
+                                    model = item.friendPictureUrl,
+                                    contentDescription = stringResource(R.string.preview_image_description),
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(RoundedCornerShape(50)),
+                                    contentScale = ContentScale.FillBounds,
+                                    alignment = Alignment.Center
+                                )
+                            },
+                            overlineContent = {
+                                Text("Status")
+                            },
+                            trailingContent = {
+                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                                Text(text = item.feedTimestamp.format(formatter))
+                            }
+                        )
+                    }
+                    FeedManager.FeedType.FRIEND_FEED_ADDED -> {
+                        ListItem(
+                            headlineContent = {
+                                val text = buildAnnotatedString {
+                                    append(item.friendName)
+                                    append(" ")
+                                    withStyle(style = SpanStyle(color = Color.Gray)) {
+                                        append("added you as friend.")
+                                    }
+                                }
+                                Text(text)
+                            },
+                            leadingContent = {
+                                GlideImage(
+                                    model = item.friendPictureUrl,
+                                    contentDescription = stringResource(R.string.preview_image_description),
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(RoundedCornerShape(50)),
+                                    contentScale = ContentScale.FillBounds,
+                                    alignment = Alignment.Center
+                                )
+                            },
+                            overlineContent = {
+                                Text("Friend Added")
+                            },
+                            trailingContent = {
+                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                                Text(text = item.feedTimestamp.format(formatter))
+                            }
+                        )
+                    }
+                    FeedManager.FeedType.FRIEND_FEED_REMOVED -> {
+                        ListItem(
+                            headlineContent = {
+                                val text = buildAnnotatedString {
+                                    append(item.friendName)
+                                    append(" ")
+                                    withStyle(style = SpanStyle(color = Color.Gray)) {
+                                        append("has removed you as friend.")
+                                    }
+                                }
+                                Text(text)
+                            },
+                            leadingContent = {
+                                GlideImage(
+                                    model = item.friendPictureUrl,
+                                    contentDescription = stringResource(R.string.preview_image_description),
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(RoundedCornerShape(50)),
+                                    contentScale = ContentScale.FillBounds,
+                                    alignment = Alignment.Center
+                                )
+                            },
+                            overlineContent = {
+                                Text("Friend Removed")
+                            },
+                            trailingContent = {
+                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                                Text(text = item.feedTimestamp.format(formatter))
+                            }
+                        )
+                    }
+                    FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST -> {
+                        ListItem(
+                            headlineContent = {
+                                val text = buildAnnotatedString {
+                                    append(item.friendName)
+                                    append(" ")
+                                    withStyle(style = SpanStyle(color = Color.Gray)) {
+                                        append("wants to add you as friend.")
+                                    }
+                                }
+                                Text(text)
+                            },
+                            leadingContent = {
+                                GlideImage(
+                                    model = item.friendPictureUrl,
+                                    contentDescription = stringResource(R.string.preview_image_description),
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(RoundedCornerShape(50)),
+                                    contentScale = ContentScale.FillBounds,
+                                    alignment = Alignment.Center
+                                )
+                            },
+                            overlineContent = {
+                                Text("Friend Request")
+                            },
+                            trailingContent = {
+                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                                Text(text = item.feedTimestamp.format(formatter))
+                            }
+                        )
+                    }
                     else -> { /* Unhandled */ }
                 }
             }

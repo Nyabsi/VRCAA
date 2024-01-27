@@ -36,7 +36,7 @@ class Friends() : ArrayList<Friends.FriendsItem>() {
         @SerializedName("profilePicOverride")
         val profilePicOverride: String,
         @SerializedName("status")
-        val status: String,
+        var status: String,
         @SerializedName("statusDescription")
         val statusDescription: String,
         @SerializedName("tags")

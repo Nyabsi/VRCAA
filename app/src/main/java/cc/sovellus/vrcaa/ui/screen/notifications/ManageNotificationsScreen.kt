@@ -162,6 +162,30 @@ class ManageNotificationsScreen(
                             )
                         }
                     }
+
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = stringResource(R.string.notification_label_intent_status))
+
+                            Switch(
+                                checked = model.isStatusIntentEnabled.value,
+                                onCheckedChange = { toggle -> model.toggleIntent(toggle, NotificationManager.Intents.FRIEND_FLAG_STATUS) },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                    uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                                ),
+                                enabled = model.isNotificationsEnabled.value
+                            )
+                        }
+                    }
                 }
             }
         )

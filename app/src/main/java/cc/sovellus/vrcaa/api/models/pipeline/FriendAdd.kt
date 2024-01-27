@@ -3,11 +3,11 @@ package cc.sovellus.vrcaa.api.models.pipeline
 
 import com.google.gson.annotations.SerializedName
 
-data class FriendUpdate(
-    @SerializedName("user")
-    val user: User,
+data class FriendAdd(
     @SerializedName("userId")
-    val userId: String
+    val userId: String,
+    @SerializedName("user")
+    val user: User
 ) {
     data class User(
         @SerializedName("allowAvatarCopying")
@@ -15,7 +15,7 @@ data class FriendUpdate(
         @SerializedName("bio")
         val bio: String,
         @SerializedName("bioLinks")
-        val bioLinks: List<Any>,
+        val bioLinks: List<String>,
         @SerializedName("currentAvatarImageUrl")
         val currentAvatarImageUrl: String,
         @SerializedName("currentAvatarTags")
@@ -45,7 +45,7 @@ data class FriendUpdate(
         @SerializedName("state")
         val state: String,
         @SerializedName("status")
-        val status: String,
+        var status: String,
         @SerializedName("statusDescription")
         val statusDescription: String,
         @SerializedName("tags")

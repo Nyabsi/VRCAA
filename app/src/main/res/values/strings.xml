@@ -76,11 +76,18 @@
     <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
     <string name="notification_service_title_location">Friend changed location!</string>
     <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
+    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
+    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
+    <string name="notification_service_title_friend_added">You got a new friend!</string>
+    <string name="notification_service_description_friend_added">%1$s accepted your friend request!</string>
     <string name="notification_title_player">\'s Notifications</string>
     <string name="notification_label_enable">Enable Notifications</string>
     <string name="notification_label_intent_online">Online Notifications</string>
     <string name="notification_label_intent_offline">Offline Notifications</string>
     <string name="notification_label_intent_location">Location Notifications</string>
+    <string name="notification_label_intent_status">Status Change Notifications</string>
+    <string name="notification_service_title_status">Friend changed status!</string>
+    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
 
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Select Avatar</string>

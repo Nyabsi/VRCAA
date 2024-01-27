@@ -2,10 +2,11 @@ package cc.sovellus.vrcaa.api
 
 import android.util.Log
 import cc.sovellus.vrcaa.api.models.pipeline.FriendActive
+import cc.sovellus.vrcaa.api.models.pipeline.FriendAdd
+import cc.sovellus.vrcaa.api.models.pipeline.FriendDelete
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
-import cc.sovellus.vrcaa.api.models.pipeline.FriendUpdate
 import cc.sovellus.vrcaa.api.models.pipeline.Notification
 import cc.sovellus.vrcaa.api.models.pipeline.NotificationV2
 import cc.sovellus.vrcaa.api.models.pipeline.UpdateModel
@@ -63,8 +64,12 @@ class PipelineContext(
                         val friend = Gson().fromJson(update.content, FriendOffline::class.java)
                         socketListener?.onMessage(friend)
                     }
-                    "friend-update" -> {
-                        val friend = Gson().fromJson(update.content, FriendUpdate::class.java)
+                    "friend-delete" -> {
+                        val friend = Gson().fromJson(update.content, FriendDelete::class.java)
+                        socketListener?.onMessage(friend)
+                    }
+                    "friend-add" -> {
+                        val friend = Gson().fromJson(update.content, FriendAdd::class.java)
                         socketListener?.onMessage(friend)
                     }
                     "notification" -> {

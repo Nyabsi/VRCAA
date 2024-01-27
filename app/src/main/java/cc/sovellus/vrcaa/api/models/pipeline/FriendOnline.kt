@@ -53,7 +53,7 @@ data class FriendOnline(
         @SerializedName("state")
         val state: String,
         @SerializedName("status")
-        val status: String,
+        var status: String,
         @SerializedName("statusDescription")
         val statusDescription: String,
         @SerializedName("tags")
