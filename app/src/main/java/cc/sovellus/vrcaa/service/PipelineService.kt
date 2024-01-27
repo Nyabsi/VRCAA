@@ -34,9 +34,9 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private var pipeline: PipelineContext? = null
-    private var api: ApiContext? = null
-    private var notificationManager: NotificationManager? = null
+    private lateinit var pipeline: PipelineContext
+    private lateinit var api: ApiContext
+    private lateinit var notificationManager: NotificationManager
 
     private val feedManager = FeedManager()
 
@@ -94,19 +94,18 @@ class PipelineService : Service(), CoroutineScope {
                     if (friends.find { it.id == friend.userId } == null)
                         friends.add(friend.user)
 
-                    if (notificationManager!!.isOnWhitelist(friend.userId) &&
-                        notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_ONLINE)) {
+                    if (notificationManager.isOnWhitelist(friend.userId) &&
+                        notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_ONLINE)) {
                         pushNotification(
                             title = application.getString(R.string.notification_service_title_online),
                             content = application.getString(R.string.notification_service_description_online).format(friend.user.displayName)
                         )
                     }
 
-                    val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE)
-                    feedObject.friendName = friend.user.displayName
-                    feedObject.travelDestination = ""
-
-                    feedManager.addFeed(feedObject)
+                    feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                        friendName = friend.user.displayName
+                        travelDestination = ""
+                    })
 
                     notificationCounter++
                 }
@@ -117,38 +116,34 @@ class PipelineService : Service(), CoroutineScope {
                     val friendObject = friends.find { it.id == friend.userId }
                     if (friendObject != null)
                     {
-                        if (notificationManager!!.isOnWhitelist(friend.userId) &&
-                            notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                        if (notificationManager.isOnWhitelist(friend.userId) &&
+                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
                             pushNotification(
                                 title = application.getString(R.string.notification_service_title_offline),
                                 content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName)
                             )
                         }
 
-                        val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE)
-                        feedObject.friendName = friendObject.displayName
-                        feedObject.travelDestination = ""
-
-                        feedManager.addFeed(feedObject)
+                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                            friendName = friendObject.displayName
+                        })
 
                         friends = friends.filter { it.id != friend.userId } as ArrayList<FriendOnline.User>
                     } else {
                         // It seems it was not cached during local session, instead fallback to currentFriends
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
-                        if (notificationManager!!.isOnWhitelist(friend.userId) &&
-                            notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                        if (notificationManager.isOnWhitelist(friend.userId) &&
+                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
                             pushNotification(
                                 title = application.getString(R.string.notification_service_title_offline),
                                 content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName)
                             )
                         }
 
-                        val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE)
-                        feedObject.friendName = fallbackFriend?.displayName.toString()
-                        feedObject.travelDestination = ""
-
-                        feedManager.addFeed(feedObject)
+                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                            friendName = fallbackFriend?.displayName.toString()
+                        })
 
                         activeFriends.remove(activeFriends.find { it.id == friend.userId })
                     }
@@ -161,19 +156,18 @@ class PipelineService : Service(), CoroutineScope {
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
                     if (friend.travelingToLocation.isEmpty()) {
-                        if (notificationManager!!.isOnWhitelist(friend.userId) &&
-                            notificationManager!!.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
+                        if (notificationManager.isOnWhitelist(friend.userId) &&
+                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
                             pushNotification(
                                 title = application.getString(R.string.notification_service_title_location),
                                 content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name)
                             )
                         }
 
-                        val feedObject = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
-                        feedObject.friendName = friend.user.displayName
-                        feedObject.travelDestination = friend.location
-
-                        feedManager.addFeed(feedObject)
+                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
+                            friendName = friend.user.displayName
+                            travelDestination = friend.location
+                        })
                     }
 
                     notificationCounter++
@@ -199,17 +193,17 @@ class PipelineService : Service(), CoroutineScope {
 
         launch {
             withContext(Dispatchers.Main) {
-                api!!.getAuth().let { token ->
+                api.getAuth().let { token ->
                     if (!token.isNullOrEmpty()) {
                         pipeline = PipelineContext(token)
-                        pipeline?.let { pipeline ->
+                        pipeline.let { pipeline ->
                             pipeline.connect()
                             listener.let { pipeline.setListener(it) }
                         }
                     }
                 }
 
-                api!!.getFriends().let { friends ->
+                api.getFriends().let { friends ->
                     if (friends != null) {
                         activeFriends = friends
                     }
@@ -235,7 +229,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onDestroy() {
         super.onDestroy()
-        pipeline!!.disconnect()
+        pipeline.disconnect()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
