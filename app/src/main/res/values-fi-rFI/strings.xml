@@ -26,7 +26,7 @@
     <string name="auth_label_code">Kaksivaiheisen todennuksen koodi</string>
     <string name="auth_button_text">Vahvista</string>
     <!-- MainScreen -->
-    <string name="main_search_placeholder">Search for content…</string>
+    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
     <!-- Placeholder Strings -->
     <string name="not_implemented_title">Ei toteutettu</string>
     <string name="not_implemented_text">Sivua ei ole vielä toteutettu, tule myöhemmin takaisin!</string>
@@ -81,9 +81,9 @@
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
     <!-- Feed -->
     <string name="feed_online_label">Online</string>
-    <string name="feed_online_text">%1$s is has come online.</string>
+    <string name="feed_online_text">has come online.</string>
     <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">%1$s has gone offline.</string>
+    <string name="feed_offline_text">has gone offline.</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">%1$s went to %2$s.</string>
+    <string name="feed_location_text">went to</string>
 </resources>
