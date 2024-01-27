@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.friends
+package cc.sovellus.vrcaa.ui.screen.notifications
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
