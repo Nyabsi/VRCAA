@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
+import java.time.LocalDateTime
 import java.util.UUID
 
 
@@ -15,7 +16,9 @@ class FeedManager {
     data class Feed(val type: FeedType) {
         var feedId: UUID = UUID.randomUUID()
         var friendName: String = ""
+        var friendPictureUrl: String = ""
         var travelDestination: String = ""
+        var feedTimestamp: LocalDateTime = LocalDateTime.now()
     }
 
     interface FeedListener {

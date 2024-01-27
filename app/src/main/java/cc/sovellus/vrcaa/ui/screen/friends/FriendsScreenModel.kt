@@ -35,6 +35,7 @@ class FriendsScreenModel(
 
     private fun getFriends() {
         screenModelScope.launch {
+
             api.getFriends()?.let {
                 friends = it
                 getFriendLocations(api, friends)

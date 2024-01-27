@@ -104,7 +104,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendName = friend.user.displayName
-                        travelDestination = ""
+                        friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
 
                     notificationCounter++
@@ -126,6 +126,7 @@ class PipelineService : Service(), CoroutineScope {
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendName = friendObject.displayName
+                            friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
                         })
 
                         friends = friends.filter { it.id != friend.userId } as ArrayList<FriendOnline.User>
@@ -143,6 +144,7 @@ class PipelineService : Service(), CoroutineScope {
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendName = fallbackFriend?.displayName.toString()
+                            friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
                         })
 
                         activeFriends.remove(activeFriends.find { it.id == friend.userId })
@@ -167,6 +169,7 @@ class PipelineService : Service(), CoroutineScope {
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
                             friendName = friend.user.displayName
                             travelDestination = friend.world.name
+                            friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
                     }
 
