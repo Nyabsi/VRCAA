@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -23,8 +24,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -44,6 +48,7 @@ import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainScreen : Screen {
 
@@ -65,11 +70,25 @@ class MainScreen : Screen {
                 )
             }
         ) {
+
+            // How ironic... This solves the black icons for Android 14
+            // They are otherwise broken.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                val systemUiController = rememberSystemUiController()
+
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent,
+                        darkIcons = false
+                    )
+                }
+            }
+
             Scaffold(
                 topBar = {
                     SearchBar(
                         query = model.searchText.value,
-                        placeholder = { Text(text = stringResource(R.string.main_search_placeholder)) },
+                        placeholder = { Text(text = stringResource(R.string.main_search_placeholder), overflow = TextOverflow.Ellipsis) },
                         onQueryChange = { model.searchText.value = it; },
                         onSearch = {
                             model.existSearchMode()
