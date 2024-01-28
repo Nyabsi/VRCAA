@@ -1,8 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.feed
 
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -55,9 +51,9 @@ class FeedScreen : Screen {
         ) {
             items(
                 feed.value.count(),
-                key = { item -> feed.value[item].feedId })
+                key = { item -> feed.value.reversed()[item].feedId })
             {
-                val item = feed.value[it]
+                val item = feed.value.reversed()[it]
                 when(item.type) {
                     FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
                         ListItem(

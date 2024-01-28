@@ -139,7 +139,7 @@ class MainScreen : Screen {
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             items(model.searchHistory.size) {
-                                val item = model.searchHistory[it]
+                                val item = model.searchHistory.reversed()[it]
                                 ListItem(
                                     leadingContent = {
                                         Icon(
