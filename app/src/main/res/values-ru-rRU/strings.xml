@@ -75,7 +75,7 @@
     <string name="notification_service_title_status">Friend changed status!</string>
     <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
     <!-- Avatars -->
-    <string name="avatar_dropdown_label_select">Выбрать аватар</string>
+    <string name="avatar_dropdown_label_select">Change to Avatar</string>
     <string name="avatar_dropdown_label_favorite">Добавить в избранное</string>
     <string name="avatar_dropdown_label_remove_favorite">Удалить из избранного</string>
     <string name="avatar_dropdown_toast_not_implemented">Эта страница еще не реализована! Возвращайтесь позже.</string>
