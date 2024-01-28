@@ -22,14 +22,13 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.PipelineContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.models.pipeline.FriendActive
 import cc.sovellus.vrcaa.api.models.pipeline.FriendAdd
 import cc.sovellus.vrcaa.api.models.pipeline.FriendDelete
 import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
 import cc.sovellus.vrcaa.api.models.pipeline.Notification
-import cc.sovellus.vrcaa.helper.notificationWhitelist
+import cc.sovellus.vrcaa.api.models.pipeline.UserBase
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.CoroutineScope
@@ -45,7 +44,7 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var pipeline: PipelineContext
     private lateinit var api: ApiContext
 
-    private var friends: ArrayList<FriendOnline.User> = arrayListOf()
+    private var friends: ArrayList<UserBase> = arrayListOf()
     private lateinit var activeFriends: Friends
 
     private var serviceLooper: Looper? = null
@@ -136,7 +135,7 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
                         })
 
-                        friends = friends.filter { it.id != friend.userId } as ArrayList<FriendOnline.User>
+                        friends = friends.filter { it.id != friend.userId } as ArrayList<UserBase>
                     } else {
                         // It seems it was not cached during local session, instead fallback to currentFriends
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
@@ -259,7 +258,7 @@ class PipelineService : Service(), CoroutineScope {
                             content = application.getString(R.string.notification_service_description_friend_removed).format(friendObject.displayName)
                         )
 
-                        friends = friends.filter { it.id != friend.userId } as ArrayList<FriendOnline.User>
+                        friends = friends.filter { it.id != friend.userId } as ArrayList<UserBase>
                     } else {
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
