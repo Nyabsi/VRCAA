@@ -4,7 +4,7 @@
 
 VRCAA is free and open-source utility on your Android 8.1-13+ (Tested on Android >13) devices which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
 
-[Click here to download the Pre-Release](https://github.com/Nyabsi/vrcaa/releases/download/latest/app-debug.apk)
+[Click here to download the latest Nightly build](https://github.com/Nyabsi/vrcaa/releases/download/latest/app-debug.apk)
 
 **NOTICE: VRCAA relies on Android's background services to implement some of it's functionality and some Android OEM vendors are breaking them, if you have issue with Notifications please refer to: [dontkillmyapp](https://dontkillmyapp.com/), you have been adviced.**
 
