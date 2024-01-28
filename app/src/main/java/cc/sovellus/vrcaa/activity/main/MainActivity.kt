@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Content() {
         if (!checkForCookies()) {
-            Navigator(LoginScreen(), onBackPressed = { false }) { navigator -> SlideTransition(navigator) }
+            Navigator(LoginScreen()) { navigator -> SlideTransition(navigator) }
         } else {
             Navigator(MainScreen()) { navigator -> SlideTransition(navigator) }
         }
