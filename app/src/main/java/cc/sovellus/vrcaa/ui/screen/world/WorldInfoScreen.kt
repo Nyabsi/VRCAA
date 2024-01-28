@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
@@ -47,6 +48,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 class WorldInfoScreen(
     private val worldId: String
 ) : Screen {
+
+    override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {

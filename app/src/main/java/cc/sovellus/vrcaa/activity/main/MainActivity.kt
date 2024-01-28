@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
@@ -23,6 +24,7 @@ import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
 
 class MainActivity : ComponentActivity() {
+
     private fun checkForCookies(): Boolean {
         return !getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrEmpty()
     }
@@ -75,10 +77,11 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Content() {
-        if (!checkForCookies()) {
-            Navigator(LoginScreen()) { navigator -> SlideTransition(navigator) }
-        } else {
-            Navigator(MainScreen()) { navigator -> SlideTransition(navigator) }
+        Navigator(
+            screen =  if (!checkForCookies()) { LoginScreen() } else { MainScreen() },
+            disposeBehavior = NavigatorDisposeBehavior(disposeNestedNavigators = false, disposeSteps = true)
+        ) { navigator ->
+            SlideTransition(navigator)
         }
     }
 }

@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.home
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.runtime.mutableLongStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
@@ -12,6 +13,7 @@ import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.helper.isMyServiceRunning
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
+import java.time.Clock
 
 class HomeScreenModel(
     private val context: Context
@@ -35,6 +37,8 @@ class HomeScreenModel(
     private var featuredAvatars = mutableListOf<Avatars.AvatarsItem>()
     private var offlineFriends = mutableListOf<Friends.FriendsItem>()
     private var featuredWorlds = mutableListOf<LimitedWorlds.LimitedWorldItem>()
+
+    val lastClickElapsed = mutableLongStateOf(Clock.systemUTC().millis())
 
     init {
         mutableState.value = HomeState.Loading

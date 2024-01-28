@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
@@ -54,6 +55,8 @@ import java.util.Locale
 class AvatarViewScreen(
     private val avatarId: String
 ) : Screen {
+
+    override val key = uniqueScreenKey
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
