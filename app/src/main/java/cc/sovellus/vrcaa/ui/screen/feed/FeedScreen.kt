@@ -164,7 +164,7 @@ class FeedScreen : Screen {
                                     append(item.friendName)
                                     append(" ")
                                     withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append("changed status to")
+                                        append(stringResource(R.string.feed_status_text))
                                     }
                                     append(" ")
                                     append(item.friendStatus.toString())
@@ -183,7 +183,7 @@ class FeedScreen : Screen {
                                 )
                             },
                             overlineContent = {
-                                Text("Status")
+                                Text(stringResource(R.string.feed_status_label))
                             },
                             trailingContent = {
                                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -198,7 +198,7 @@ class FeedScreen : Screen {
                                     append(item.friendName)
                                     append(" ")
                                     withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append("added you as friend.")
+                                        append(stringResource(R.string.feed_added_text))
                                     }
                                 }
                                 Text(text)
@@ -215,7 +215,7 @@ class FeedScreen : Screen {
                                 )
                             },
                             overlineContent = {
-                                Text("Friend Added")
+                                Text(stringResource(R.string.feed_added_label))
                             },
                             trailingContent = {
                                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -230,7 +230,7 @@ class FeedScreen : Screen {
                                     append(item.friendName)
                                     append(" ")
                                     withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append("has removed you as friend.")
+                                        append(stringResource(R.string.feed_removed_text))
                                     }
                                 }
                                 Text(text)
@@ -247,7 +247,7 @@ class FeedScreen : Screen {
                                 )
                             },
                             overlineContent = {
-                                Text("Friend Removed")
+                                Text(stringResource(R.string.feed_removed_label))
                             },
                             trailingContent = {
                                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -262,7 +262,7 @@ class FeedScreen : Screen {
                                     append(item.friendName)
                                     append(" ")
                                     withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append("wants to add you as friend.")
+                                        append(stringResource(R.string.feed_friend_request_text))
                                     }
                                 }
                                 Text(text)
@@ -279,7 +279,7 @@ class FeedScreen : Screen {
                                 )
                             },
                             overlineContent = {
-                                Text("Friend Request")
+                                Text(stringResource(R.string.feed_friend_request_label))
                             },
                             trailingContent = {
                                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
