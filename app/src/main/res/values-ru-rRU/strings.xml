@@ -93,4 +93,12 @@
     <string name="feed_offline_text">has gone offline.</string>
     <string name="feed_location_label">GPS</string>
     <string name="feed_location_text">went to</string>
+    <string name="feed_status_label">Status</string>
+    <string name="feed_status_text">changed status to</string>
+    <string name="feed_added_label">Friend Added</string>
+    <string name="feed_added_text">added you as friend.</string>
+    <string name="feed_removed_label">Friend Removed</string>
+    <string name="feed_removed_text">has removed you as friend.</string>
+    <string name="feed_friend_request_label">Friend Request</string>
+    <string name="feed_friend_request_text">wants to add you as friend.</string>
 </resources>
