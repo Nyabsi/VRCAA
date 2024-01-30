@@ -14,8 +14,7 @@ class MainScreenModel: ScreenModel {
     var tonalElevation = mutableStateOf(16.dp)
     var searchHistory = mutableListOf<String>()
 
-    // HACK: those fucking shit below, it's the only way this shit works. I don't know why the fuck
-    // Google designed the SearchBar component to be utter shit.
+    // Bad code below.
     fun enterSearchMode() {
         screenModelScope.launch {
             tonalElevation.value = 0.dp

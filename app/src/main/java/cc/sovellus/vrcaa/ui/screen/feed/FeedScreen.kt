@@ -29,6 +29,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.ui.screen.feed.components.FeedItem
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import java.time.format.DateTimeFormatter
@@ -37,7 +38,6 @@ class FeedScreen : Screen {
 
     override val key = uniqueScreenKey
 
-    @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     override fun Content() {
 
@@ -59,231 +59,112 @@ class FeedScreen : Screen {
                 val item = feed.value.reversed()[it]
                 when(item.type) {
                     FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_online_text))
-                                    }
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_online_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_online_text))
                             }
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_online_label
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_OFFLINE -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_offline_text))
-                                    }
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_offline_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_offline_text))
                             }
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_offline_label
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_LOCATION -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_location_text))
-                                    }
-                                    append(" ")
-                                    append(item.travelDestination)
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_location_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_location_text))
                             }
+                            append(" ")
+                            append(item.travelDestination)
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_location_label
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_STATUS -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_status_text))
-                                    }
-                                    append(" ")
-                                    append(item.friendStatus.toString())
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_status_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_status_text))
                             }
+                            append(" ")
+                            append(item.friendStatus.toString())
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_status_label
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_ADDED -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_added_text))
-                                    }
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_added_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_added_text))
                             }
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_added_label
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_REMOVED -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_removed_text))
-                                    }
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_removed_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_removed_text))
                             }
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_removed_label
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST -> {
-                        ListItem(
-                            headlineContent = {
-                                val text = buildAnnotatedString {
-                                    append(item.friendName)
-                                    append(" ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append(stringResource(R.string.feed_friend_request_text))
-                                    }
-                                }
-                                Text(text)
-                            },
-                            leadingContent = {
-                                GlideImage(
-                                    model = item.friendPictureUrl,
-                                    contentDescription = stringResource(R.string.preview_image_description),
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(RoundedCornerShape(50)),
-                                    contentScale = ContentScale.FillBounds,
-                                    alignment = Alignment.Center
-                                )
-                            },
-                            overlineContent = {
-                                Text(stringResource(R.string.feed_friend_request_label))
-                            },
-                            trailingContent = {
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                                Text(text = item.feedTimestamp.format(formatter))
+                        val text = buildAnnotatedString {
+                            append(item.friendName)
+                            append(" ")
+                            withStyle(style = SpanStyle(color = Color.Gray)) {
+                                append(stringResource(R.string.feed_friend_request_text))
                             }
+                        }
+                        FeedItem(
+                            text = text,
+                            friendPictureUrl = item.friendPictureUrl,
+                            feedTimestamp = item.feedTimestamp,
+                            resourceStringTitle = R.string.feed_friend_request_label
                         )
                     }
                     else -> { /* Unhandled */ }

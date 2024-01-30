@@ -20,6 +20,7 @@ class FeedManager {
 
     data class Feed(val type: FeedType) {
         var feedId: UUID = UUID.randomUUID()
+        var friendId: String = ""
         var friendName: String = ""
         var friendPictureUrl: String = ""
         var friendStatus: StatusHelper.Status = StatusHelper.Status.Offline

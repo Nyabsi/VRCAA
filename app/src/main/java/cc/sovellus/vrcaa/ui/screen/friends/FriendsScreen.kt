@@ -72,9 +72,7 @@ class FriendsScreen : Screen {
         }
     }
 
-    @OptIn(
-        ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class
-    )
+    @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
     @Composable
     private fun RenderList(
         friends: List<Friends.FriendsItem>,
@@ -150,11 +148,10 @@ class FriendsScreen : Screen {
                     .padding(1.dp)
             ) {
                 val friendsSorted = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
-                val friendsFiltered = friendsSorted.filter { it.location != "offline" }
 
-                items(friendsFiltered.count()) {
+                items(friendsSorted.count()) {
                     val navigator = LocalNavigator.currentOrThrow
-                    val friend = friendsFiltered[it]
+                    val friend = friendsSorted[it]
 
                     ListItem(
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },

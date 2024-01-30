@@ -68,7 +68,7 @@ class SettingsScreen : Screen {
                 ) {
                     item {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.license_title)) },
+                            headlineContent = { Text("About") },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Dehaze,
@@ -77,7 +77,7 @@ class SettingsScreen : Screen {
                             },
                             modifier = Modifier.clickable(
                                 onClick = {
-                                    navigator.push(LicensesScreen())
+                                    navigator.push(AboutScreen())
                                 }
                             )
                         )

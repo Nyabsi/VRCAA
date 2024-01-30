@@ -111,6 +111,7 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                        friendId = friend.userId
                         friendName = friend.user.displayName
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
@@ -131,6 +132,7 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                            friendId = friend.userId
                             friendName = friendObject.displayName
                             friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
                         })
@@ -140,20 +142,23 @@ class PipelineService : Service(), CoroutineScope {
                         // It seems it was not cached during local session, instead fallback to currentFriends
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
-                        if (notificationManager.isOnWhitelist(friend.userId) &&
-                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
-                            pushNotification(
-                                title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName)
-                            )
+                        if (fallbackFriend != null) {
+                            if (notificationManager.isOnWhitelist(friend.userId) &&
+                                notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                                pushNotification(
+                                    title = application.getString(R.string.notification_service_title_offline),
+                                    content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName)
+                                )
+                            }
+
+                            feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                                friendId = friend.userId
+                                friendName = fallbackFriend.displayName
+                                friendPictureUrl = fallbackFriend.userIcon.ifEmpty { fallbackFriend.currentAvatarImageUrl }
+                            })
+
+                            activeFriends.remove(activeFriends.find { it.id == friend.userId })
                         }
-
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                            friendName = fallbackFriend?.displayName.toString()
-                            friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
-                        })
-
-                        activeFriends.remove(activeFriends.find { it.id == friend.userId })
                     }
                 }
                 is FriendLocation -> {
@@ -179,6 +184,7 @@ class PipelineService : Service(), CoroutineScope {
                             }
 
                             feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
+                                friendId = friend.userId
                                 friendName = friendObject.displayName
                                 friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
                                 friendStatus = StatusHelper().getStatusFromString(friend.user.status)
@@ -211,6 +217,7 @@ class PipelineService : Service(), CoroutineScope {
                             }
 
                             feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
+                                friendId = friend.userId
                                 friendName = fallbackFriend?.displayName.toString()
                                 friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
                                 friendStatus = StatusHelper().getStatusFromString(friend.user.status)
@@ -236,6 +243,7 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
+                            friendId = friend.userId
                             friendName = friend.user.displayName
                             travelDestination = friend.world.name
                             friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
@@ -248,6 +256,7 @@ class PipelineService : Service(), CoroutineScope {
                     val friendObject = friends.find { it.id == friend.userId }
                     if (friendObject != null) {
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
+                            friendId = friend.userId
                             friendName = friendObject.displayName
                             friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
 
@@ -263,6 +272,7 @@ class PipelineService : Service(), CoroutineScope {
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
+                            friendId = friend.userId
                             friendName = fallbackFriend?.displayName.toString()
                             friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
                         })
@@ -297,6 +307,7 @@ class PipelineService : Service(), CoroutineScope {
                     )
 
                     feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
+                        friendId = friend.userId
                         friendName = friend.user.displayName
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
@@ -312,6 +323,7 @@ class PipelineService : Service(), CoroutineScope {
                             when (notification.type) {
                                 "friendRequest" -> {
                                     feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
+                                        friendId = notification.senderUserId
                                         friendName = notification.senderUsername
                                         friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
                                     })
@@ -351,12 +363,12 @@ class PipelineService : Service(), CoroutineScope {
                             pipeline.connect()
                             listener.let { pipeline.setListener(it) }
                         }
-                    }
-                }
 
-                api.getFriends().let { friends ->
-                    if (friends != null) {
-                        activeFriends = friends
+                        api.getFriends().let { friends ->
+                            if (friends != null) {
+                                activeFriends = friends
+                            }
+                        }
                     }
                 }
             }

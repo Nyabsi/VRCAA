@@ -4,23 +4,17 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Badge
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -29,15 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -45,25 +34,26 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.models.Avatar
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreenModel.AvatarState
+import cc.sovellus.vrcaa.ui.components.BadgesFromTags
+import cc.sovellus.vrcaa.ui.components.Description
+import cc.sovellus.vrcaa.ui.components.SubHeader
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreenModel.AvatarState
+import cc.sovellus.vrcaa.ui.screen.avatar.components.AvatarCard
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AvatarViewScreen(
+class AvatarScreen(
     private val avatarId: String
 ) : Screen {
 
     override val key = uniqueScreenKey
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val context = LocalContext.current
 
-        val model = rememberScreenModel { AvatarViewScreenModel(context, avatarId) }
+        val model = rememberScreenModel { AvatarScreenModel(context, avatarId) }
 
         val state by model.state.collectAsState()
 
@@ -76,7 +66,7 @@ class AvatarViewScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun DisplayResult(avatar: Avatar?, model: AvatarViewScreenModel) {
+    private fun DisplayResult(avatar: Avatar?, model: AvatarScreenModel) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
@@ -192,7 +182,11 @@ class AvatarViewScreen(
                                 Description(text = updatedAtFormatted)
 
                                 SubHeader(title = stringResource(R.string.avatar_title_content_labels))
-                                ContentWarnings(tags = avatar.tags)
+                                BadgesFromTags(
+                                    tags = avatar.tags,
+                                    tagPropertyName = "content",
+                                    localizationResourceInt = R.string.avatar_text_content_labels_not_found
+                                )
                             }
                         }
                     }
@@ -209,104 +203,5 @@ class AvatarViewScreen(
                 }
             }
         )
-    }
-
-    @OptIn(ExperimentalGlideComposeApi::class)
-    @Composable
-    fun AvatarCard(
-        thumbnailUrl: String,
-        name: String,
-        authorName: String
-    ) {
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .height(320.dp)
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-
-            GlideImage(
-                model = thumbnailUrl,
-                contentDescription = stringResource(R.string.preview_image_description),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Text(
-                text = name,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Left,
-            )
-
-            Text(
-                modifier = Modifier.padding(start = 8.dp),
-                text = "By $authorName",
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.SemiBold,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-            )
-        }
-    }
-
-    @Composable
-    fun SubHeader(title: String) {
-        Text(
-            modifier = Modifier.padding(start = 24.dp),
-            text = title,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-
-    @Composable
-    fun Description(text: String?) {
-        Column(
-            modifier = Modifier
-                .padding(24.dp)
-        ) {
-            Text(
-                modifier = Modifier.padding(start = 2.dp),
-                text = if (text.isNullOrEmpty()) { stringResource(R.string.profile_text_no_biography) } else { text },
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-    }
-
-    @Composable
-    fun ContentWarnings(tags: List<String>) {
-        Row(
-            modifier = Modifier.padding(24.dp)
-        ) {
-            tags.let {
-                var foundEvenOne = false
-                for (tag in tags) {
-                    if (tag.contains("content_")) {
-                        foundEvenOne = true
-                        Badge(
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier
-                                .height(height = 24.dp)
-                                .padding(start = 2.dp),
-                            content = { Text( text = tag.substring("content_".length).uppercase() ) }
-                        )
-                    }
-                }
-
-                if (!foundEvenOne) {
-                    Text(text = stringResource(R.string.avatar_text_content_labels_not_found))
-                }
-            }
-        }
     }
 }

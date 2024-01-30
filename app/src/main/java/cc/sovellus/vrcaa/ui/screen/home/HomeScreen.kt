@@ -41,19 +41,16 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreen
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
-import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import wu.seal.jsontokotlin.feedback.UUID
 
 class HomeScreen : Screen {
 
@@ -143,7 +140,7 @@ class HomeScreen : Screen {
                            name = avatar.name,
                            url = avatar.imageUrl,
                            count = null,
-                           onClick = { navigator.parent?.parent?.push(AvatarViewScreen(avatar.id)) }
+                           onClick = { navigator.parent?.parent?.push(AvatarScreen(avatar.id)) }
                        )
                    }
                }

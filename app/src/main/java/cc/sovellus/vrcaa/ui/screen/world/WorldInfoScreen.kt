@@ -40,8 +40,12 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.models.World
+import cc.sovellus.vrcaa.ui.components.BadgesFromTags
+import cc.sovellus.vrcaa.ui.components.Description
+import cc.sovellus.vrcaa.ui.components.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreenModel.WorldInfoState
+import cc.sovellus.vrcaa.ui.screen.world.components.WorldCard
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -118,109 +122,15 @@ class WorldInfoScreen(
                             Description(text = world.description)
 
                             SubHeader(title = stringResource(R.string.world_label_tags))
-                            AuthorTags(tags = world.tags)
-                        }
-                    }
-                }
-            }
-        )
-    }
-
-    @OptIn(ExperimentalGlideComposeApi::class)
-    @Composable
-    fun WorldCard(
-        url: String,
-        name: String,
-        author: String
-    ) {
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .height(320.dp)
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-
-            GlideImage(
-                model = url,
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Text(
-                text = name,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Left
-            )
-
-            Text(
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-                text = author,
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.SemiBold,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-            )
-        }
-    }
-
-    @Composable
-    fun SubHeader(title: String) {
-        Text(
-            modifier = Modifier.padding(start = 24.dp),
-            text = title,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-
-    @Composable
-    fun Description(text: String?) {
-        Column(
-            modifier = Modifier
-                .padding(24.dp)
-        ) {
-            Text(
-                modifier = Modifier.padding(start = 2.dp),
-                text = if (text.isNullOrEmpty()) { stringResource(R.string.world_text_no_description) } else { text },
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-    }
-
-    @Composable
-    fun AuthorTags(tags: List<String>) {
-        Row(
-            modifier = Modifier.padding(24.dp)
-        ) {
-            if (tags.isEmpty()) {
-
-                Text(stringResource(R.string.world_text_no_tags))
-            } else {
-                tags.let {
-                    for (tag in tags) {
-                        if (tag.contains("author_tag_")) {
-                            Badge(
-                                containerColor = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier
-                                    .height(height = 24.dp)
-                                    .padding(start = 2.dp),
-                                content = { Text( text = tag.substring("author_tag_".length).uppercase() ) }
+                            BadgesFromTags(
+                                tags = world.tags,
+                                tagPropertyName = "author_tag",
+                                localizationResourceInt = R.string.world_text_no_tags
                             )
                         }
                     }
                 }
             }
-        }
+        )
     }
 }

@@ -8,10 +8,10 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatar
 import kotlinx.coroutines.launch
 
-class AvatarViewScreenModel(
+class AvatarScreenModel(
     context: Context,
     avatarId: String
-) : StateScreenModel<AvatarViewScreenModel.AvatarState>(AvatarState.Init) {
+) : StateScreenModel<AvatarScreenModel.AvatarState>(AvatarState.Init) {
     private val api = ApiContext(context)
 
     sealed class AvatarState {

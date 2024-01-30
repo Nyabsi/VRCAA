@@ -51,8 +51,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.Users
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreen
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarViewScreenModel
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
@@ -304,7 +303,7 @@ class SearchResultScreen(
                                 url = avatar.thumbnailImageUrl,
                                 count = null
                             ) {
-                                navigator.push(AvatarViewScreen(avatar.id))
+                                navigator.push(AvatarScreen(avatar.id))
                             }
                         }
                     }

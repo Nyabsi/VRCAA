@@ -91,7 +91,7 @@ class PipelineContext(
             override fun onClosing(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                Log.d("VRCAA", "Pipeline sent binary message.")
+                shouldReconnect = false
             }
 
             override fun onClosed(
@@ -108,7 +108,7 @@ class PipelineContext(
             ) {
                 when (response?.code) {
                     401 -> {
-                        shouldReconnect = false // no you shouldn't reconnect in-case of Api Failure.
+                        shouldReconnect = false // no you shouldn't reconnect in-case of "Wrong Credentials" Failure.
                     }
                     else -> {
                         Log.d("VRCAA", t.message.toString())
