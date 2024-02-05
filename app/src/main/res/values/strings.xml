@@ -24,6 +24,8 @@
     <string name="login_label_username">Username</string>
     <string name="login_label_password">Password</string>
     <string name="login_button_text">Login</string>
+    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
+    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
 
     <!-- TwoAuthScreen -->
     <string name="auth_text_email">Input the code sent to your e-mail</string>

@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.isExpiredSession
@@ -39,7 +40,7 @@ class TwoAuthScreenModel(
             } else {
                 Toast.makeText(
                     context,
-                    "Failed to verify, check the code again.",
+                    context.getString(R.string.login_toast_wrong_code),
                     Toast.LENGTH_SHORT
                 ).show()
             }

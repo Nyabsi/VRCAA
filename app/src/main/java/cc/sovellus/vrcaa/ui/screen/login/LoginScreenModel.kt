@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.userCredentials
@@ -37,7 +38,7 @@ class LoginScreenModel(
             } else {
                 Toast.makeText(
                     context,
-                    "Wrong username or password.",
+                    context.getString(R.string.login_toast_wrong_credentials),
                     Toast.LENGTH_SHORT
                 ).show()
             }
