@@ -1,13 +1,17 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.api.helper.LocationHelper
 import cc.sovellus.vrcaa.api.models.Friends
+import cc.sovellus.vrcaa.api.models.Instance
+import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -64,14 +68,28 @@ class FriendsScreenModel(
 
     private suspend fun getFriendLocation(api: ApiContext, friend: Friends.FriendsItem) {
         if (friend.location.contains("wrld_")) {
-            friend.location = api.getInstance(friend.location)?.world?.name.toString()
+            val result = LocationHelper().parseLocationIntent(friend.location)
+            val world = api.getWorld(result.worldId)!!
+
+            if (result.regionId.isNotEmpty()) {
+                friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+            } else {
+                friend.location = "${world.name}~(${result.instanceType})"
+            }
         }
     }
 
     private suspend fun getFriendLocations(api: ApiContext, friends: List<Friends.FriendsItem>) {
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
-                friend.location = api.getInstance(friend.location)?.world?.name.toString()
+                val result = LocationHelper().parseLocationIntent(friend.location)
+                val world = api.getWorld(result.worldId)!!
+
+                if (result.regionId.isNotEmpty()) {
+                    friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                } else {
+                    friend.location = "${world.name}~(${result.instanceType})"
+                }
             }
         }
     }
