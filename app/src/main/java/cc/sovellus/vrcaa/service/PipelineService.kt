@@ -57,11 +57,12 @@ class PipelineService : Service(), CoroutineScope {
 
     private fun pushNotification(
         title: String,
-        content: String
+        content: String,
+        channel: String
     ) {
         val flags = NotificationCompat.FLAG_ONGOING_EVENT
 
-        val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, channel)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(title)
             .setContentText(content)
@@ -69,7 +70,6 @@ class PipelineService : Service(), CoroutineScope {
 
         val notificationManager = NotificationManagerCompat.from(this)
 
-        // I won't even bother blame the user at this point, sounds like paranoia?
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
@@ -106,7 +106,8 @@ class PipelineService : Service(), CoroutineScope {
                         notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_ONLINE)) {
                         pushNotification(
                             title = application.getString(R.string.notification_service_title_online),
-                            content = application.getString(R.string.notification_service_description_online).format(friend.user.displayName)
+                            content = application.getString(R.string.notification_service_description_online).format(friend.user.displayName),
+                            channel = App.CHANNEL_ONLINE_ID
                         )
                     }
 
@@ -127,7 +128,8 @@ class PipelineService : Service(), CoroutineScope {
                             notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
                             pushNotification(
                                 title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName)
+                                content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName),
+                                channel = App.CHANNEL_OFFLINE_ID
                             )
                         }
 
@@ -147,7 +149,8 @@ class PipelineService : Service(), CoroutineScope {
                                 notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
                                 pushNotification(
                                     title = application.getString(R.string.notification_service_title_offline),
-                                    content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName)
+                                    content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName),
+                                    channel = App.CHANNEL_OFFLINE_ID
                                 )
                             }
 
@@ -179,7 +182,8 @@ class PipelineService : Service(), CoroutineScope {
                                         friendObject.displayName,
                                         StatusHelper().getStatusFromString(friendObject.status).toString(),
                                         StatusHelper().getStatusFromString(friend.user.status).toString()
-                                    )
+                                    ),
+                                    channel = App.CHANNEL_LOCATION_ID
                                 )
                             }
 
@@ -212,7 +216,8 @@ class PipelineService : Service(), CoroutineScope {
                                         fallbackFriend?.displayName,
                                         StatusHelper().getStatusFromString(fallbackFriend?.status.toString()).toString(),
                                         StatusHelper().getStatusFromString(friend.user.status).toString()
-                                    )
+                                    ),
+                                    channel = App.CHANNEL_LOCATION_ID
                                 )
                             }
 
@@ -238,7 +243,8 @@ class PipelineService : Service(), CoroutineScope {
                             notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
                             pushNotification(
                                 title = application.getString(R.string.notification_service_title_location),
-                                content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name)
+                                content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name),
+                                channel = App.CHANNEL_LOCATION_ID
                             )
                         }
 
@@ -264,7 +270,8 @@ class PipelineService : Service(), CoroutineScope {
 
                         pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed).format(friendObject.displayName)
+                            content = application.getString(R.string.notification_service_description_friend_removed).format(friendObject.displayName),
+                            channel = App.CHANNEL_STATUS_ID
                         )
 
                         friends = friends.filter { it.id != friend.userId } as ArrayList<UserBase>
@@ -279,7 +286,8 @@ class PipelineService : Service(), CoroutineScope {
 
                         pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed).format(fallbackFriend?.displayName.toString())
+                            content = application.getString(R.string.notification_service_description_friend_removed).format(fallbackFriend?.displayName.toString()),
+                            channel = App.CHANNEL_STATUS_ID
                         )
 
                         activeFriends.remove(activeFriends.find { it.id == friend.userId })
@@ -303,7 +311,8 @@ class PipelineService : Service(), CoroutineScope {
                     // Both Friend Add and Remove should send notification regardless of the specified setting.
                     pushNotification(
                         title = application.getString(R.string.notification_service_title_friend_added),
-                        content = application.getString(R.string.notification_service_description_friend_added).format(friend.user.displayName)
+                        content = application.getString(R.string.notification_service_description_friend_added).format(friend.user.displayName),
+                        channel = App.CHANNEL_STATUS_ID
                     )
 
                     feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
@@ -374,7 +383,7 @@ class PipelineService : Service(), CoroutineScope {
             }
         }
 
-        val builder = NotificationCompat.Builder(this, App.CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, App.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
             .setContentText(application.getString(R.string.service_notification))

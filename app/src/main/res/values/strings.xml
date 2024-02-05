@@ -79,7 +79,7 @@
     <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
     <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
     <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s accepted your friend request!</string>
+    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
     <string name="notification_title_player">\'s Notifications</string>
     <string name="notification_label_enable">Enable Notifications</string>
     <string name="notification_label_intent_online">Online Notifications</string>
