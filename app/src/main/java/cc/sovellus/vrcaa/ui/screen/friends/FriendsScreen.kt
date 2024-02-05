@@ -146,16 +146,18 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSorted = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
-
-                items(friendsSorted.count()) {
+                val friendsSortedStatus = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
+                val friendsSorted = friendsSortedStatus.sortedBy { it.location == "offline" }
+                items(friendsSorted.count()) { it ->
                     val navigator = LocalNavigator.currentOrThrow
                     val friend = friendsSorted[it]
 
                     ListItem(
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
-                        supportingContent = { Text(text = friend.location, maxLines = 1) },
+                        supportingContent = { Text(text = friend.location.let { location->
+                            if (location == "offline") { "Active on the website." } else { location }
+                        }, maxLines = 1) },
                         leadingContent = {
                             GlideImage(
                                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },

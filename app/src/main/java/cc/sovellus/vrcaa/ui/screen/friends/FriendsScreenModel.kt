@@ -71,7 +71,7 @@ class FriendsScreenModel(
             if (result.regionId.isNotEmpty()) {
                 friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
             } else {
-                friend.location = "${world.name}~(${result.instanceType})"
+                friend.location = "${world.name}~(${result.instanceType}) USW"
             }
         }
     }
