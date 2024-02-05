@@ -23,7 +23,7 @@ class LoginScreenModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            val result = context.api.getToken(username.value, password.value)
+            val result = context.api.get().getToken(username.value, password.value)
             if (result != null) {
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", MODE_PRIVATE

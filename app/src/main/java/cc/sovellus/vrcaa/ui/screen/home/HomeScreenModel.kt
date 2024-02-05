@@ -46,11 +46,11 @@ class HomeScreenModel(
     private fun getContent() {
         screenModelScope.launch {
 
-            context.api.getFriends()?.let { friends = it }
-            context.api.getRecentWorlds()?.let { lastVisited = it }
-            context.api.getAvatars()?.let { featuredAvatars = it }
-            context.api.getFriends(true)?.let { offlineFriends = it }
-            context.api.getWorlds()?.let { featuredWorlds = it }
+            context.api.get().getFriends()?.let { friends = it }
+            context.api.get().getRecentWorlds()?.let { lastVisited = it }
+            context.api.get().getAvatars()?.let { featuredAvatars = it }
+            context.api.get().getFriends(true)?.let { offlineFriends = it }
+            context.api.get().getWorlds()?.let { featuredWorlds = it }
 
             // Load the service here, I believe it's better than loading at `MainActivity`
             // Because if session expires, it would not restart the service.

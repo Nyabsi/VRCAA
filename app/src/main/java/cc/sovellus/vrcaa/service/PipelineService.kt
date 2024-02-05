@@ -310,7 +310,7 @@ class PipelineService : Service(), CoroutineScope {
                         withContext(Dispatchers.Main) {
                             // You're unlike to get that many friends that this would be harmful, it is a shitty workaround til I refactor the code, deal with it.
                             // You would rather have this than the application crashing on your face, would you now?
-                            api.getFriends().let { friends ->
+                            api.get().getFriends().let { friends ->
                                 if (friends != null) {
                                     activeFriends = friends
                                 }
@@ -337,7 +337,7 @@ class PipelineService : Service(), CoroutineScope {
                     // Welcome to the world of Kotlin :)
                     launch {
                         withContext(Dispatchers.Main) {
-                            val sender = api.getUser(notification.senderUserId)
+                            val sender = api.get().getUser(notification.senderUserId)
 
                             when (notification.type) {
                                 "friendRequest" -> {
@@ -374,7 +374,7 @@ class PipelineService : Service(), CoroutineScope {
 
         launch {
             withContext(Dispatchers.Main) {
-                api.getAuth().let { token ->
+                api.get().getAuth().let { token ->
                     if (!token.isNullOrEmpty()) {
                         pipeline = PipelineContext(token)
                         pipeline.let { pipeline ->
@@ -382,7 +382,7 @@ class PipelineService : Service(), CoroutineScope {
                             listener.let { pipeline.setListener(it) }
                         }
 
-                        api.getFriends().let { friends ->
+                        api.get().getFriends().let { friends ->
                             if (friends != null) {
                                 activeFriends = friends
                             }

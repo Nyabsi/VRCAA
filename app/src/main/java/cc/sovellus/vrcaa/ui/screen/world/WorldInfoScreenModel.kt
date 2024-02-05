@@ -27,7 +27,7 @@ class WorldInfoScreenModel(
     }
     private fun getProfile() {
         screenModelScope.launch {
-            world.value = context.api.getWorld(id)
+            world.value = context.api.get().getWorld(id)
             mutableState.value = WorldInfoState.Result(world.value!!)
         }
     }

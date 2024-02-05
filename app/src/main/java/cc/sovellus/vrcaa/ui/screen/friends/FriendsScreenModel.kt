@@ -37,18 +37,18 @@ class FriendsScreenModel(
     private fun getFriends() {
         screenModelScope.launch {
 
-            context.api.getFriends()?.let {
+            context.api.get().getFriends()?.let {
                 friends = it
                 getFriendLocations(friends)
             }
 
-            context.api.getFriends(true)?.let {
+            context.api.get().getFriends(true)?.let {
                 offlineFriends = it
             }
 
-            context.api.getFavorites("friend")?.let { favorites ->
+            context.api.get().getFavorites("friend")?.let { favorites ->
                 for (favorite in favorites) {
-                    context.api.getFriend(favorite.favoriteId)?.let { friend ->
+                    context.api.get().getFriend(favorite.favoriteId)?.let { friend ->
                         getFriendLocation(friend)
                         favoriteFriends.add(friend)
                     }
@@ -66,7 +66,7 @@ class FriendsScreenModel(
     private suspend fun getFriendLocation(friend: Friends.FriendsItem) {
         if (friend.location.contains("wrld_")) {
             val result = LocationHelper().parseLocationIntent(friend.location)
-            val world = context.api.getWorld(result.worldId)!!
+            val world = context.api.get().getWorld(result.worldId)!!
 
             if (result.regionId.isNotEmpty()) {
                 friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
@@ -80,7 +80,7 @@ class FriendsScreenModel(
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
                 val result = LocationHelper().parseLocationIntent(friend.location)
-                val world = context.api.getWorld(result.worldId)!!
+                val world = context.api.get().getWorld(result.worldId)!!
 
                 if (result.regionId.isNotEmpty()) {
                     friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"

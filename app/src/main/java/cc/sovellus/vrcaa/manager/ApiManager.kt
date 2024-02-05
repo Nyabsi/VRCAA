@@ -13,6 +13,12 @@ class ApiManager(
         @Volatile var api: ApiContext? = null
     }
 
+    fun force(apiContext: ApiContext) {
+        synchronized(apiContext) {
+            api = apiContext
+        }
+    }
+
     fun get(): ApiContext {
         if (api == null) {
             val apiContext = ApiContext(context)

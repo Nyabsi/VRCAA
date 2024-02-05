@@ -40,14 +40,14 @@ class SearchResultScreenModel(
 
     private fun getContent() {
         screenModelScope.launch {
-            context.api.getWorlds(
+            context.api.get().getWorlds(
                 query = query,
                 featured = false,
                 n = 50,
                 sort = "relevance"
             )?.let { foundWorlds = it }
 
-            context.api.getUsers(
+            context.api.get().getUsers(
                 username = query,
                 n = 50
             )?.let { foundUsers = it }

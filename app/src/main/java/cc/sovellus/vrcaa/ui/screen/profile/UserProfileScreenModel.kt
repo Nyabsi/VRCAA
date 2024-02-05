@@ -28,7 +28,7 @@ class UserProfileScreenModel(
     }
     private fun getProfile() {
         screenModelScope.launch {
-            profile.value = context.api.getUser(userId)
+            profile.value = context.api.get().getUser(userId)
             mutableState.value = UserProfileState.Result(profile.value!!)
         }
     }

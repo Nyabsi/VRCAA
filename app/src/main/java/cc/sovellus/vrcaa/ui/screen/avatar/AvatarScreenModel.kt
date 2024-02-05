@@ -27,14 +27,14 @@ class AvatarScreenModel(
 
     init {
         screenModelScope.launch {
-            avatar = context.api.getAvatar(avatarId)
+            avatar = context.api.get().getAvatar(avatarId)
             mutableState.value = AvatarState.Result(avatar)
         }
     }
 
     fun selectAvatar(avatarId: String) {
         screenModelScope.launch {
-            context.api.selectAvatar(avatarId)
+            context.api.get().selectAvatar(avatarId)
         }
     }
 }

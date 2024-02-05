@@ -22,7 +22,7 @@ class TwoAuthScreenModel(
 
     fun doVerify(otpType: ApiContext.TwoFactorType, token: String, navigator: Navigator) {
         screenModelScope.launch {
-            val twoAuth = context.api.verifyAccount(token, otpType, code.value)
+            val twoAuth = context.api.get().verifyAccount(token, otpType, code.value)
             if (twoAuth.isNotEmpty()) {
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", Context.MODE_PRIVATE
@@ -30,6 +30,9 @@ class TwoAuthScreenModel(
 
                 preferences.twoFactorAuth = twoAuth
                 preferences.isExpiredSession = false // even if it's false, doesn't matter.
+
+                // this is very much mandatory, or things will break.
+                context.api.force(ApiContext(context))
 
                 navigator.popUntilRoot()
                 navigator.replace(MainScreen())
