@@ -78,6 +78,8 @@ class FriendsScreenModel(
 
     fun refreshFriends(context: Context) {
         screenModelScope.launch {
+            favoriteFriends.clear()
+
             isRefreshing.value = true
             getFriends()
 
