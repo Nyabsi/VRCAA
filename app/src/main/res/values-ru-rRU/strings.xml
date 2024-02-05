@@ -20,6 +20,8 @@
     <string name="login_label_username">Имя пользователя</string>
     <string name="login_label_password">Пароль</string>
     <string name="login_button_text">Логин</string>
+    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
+    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
     <!-- TwoAuthScreen -->
     <string name="auth_text_email">Введите код, отправленный на вашу эл. почту</string>
     <string name="auth_text_app">Введите код из вашего приложения для двухфакторной аутентификации</string>
