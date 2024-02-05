@@ -54,6 +54,8 @@
     <string name="tabs_label_home">Startseite</string>
     <string name="tabs_label_feed">Für dich</string>
     <string name="tabs_label_profile">Profil</string>
+    <string name="world_title_created_at">Creation Date</string>
+    <string name="world_title_updated_at">Last Updated</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
     <string name="notification_service_title_online">Freund ist jetzt online!</string>
@@ -65,7 +67,7 @@
     <string name="notification_service_title_friend_removed">Dein Freund hat Dich entfernt.</string>
     <string name="notification_service_description_friend_removed">Dein Freund, %1$s ist nicht mehr dein Freund :(</string>
     <string name="notification_service_title_friend_added">Du hast einen neuen Freund!</string>
-    <string name="notification_service_description_friend_added">%1$s hat deine Freundschaftsanfrage angenommen!</string>
+    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
     <string name="notification_title_player">\'s Benachrichtigung</string>
     <string name="notification_label_enable">Aktiviere Benachrichtigungen</string>
     <string name="notification_label_intent_online">Online Benachrichtigungen</string>
