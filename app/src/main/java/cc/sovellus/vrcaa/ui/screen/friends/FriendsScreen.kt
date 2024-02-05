@@ -119,7 +119,7 @@ class FriendsScreen : Screen {
                 when(model.currentIndex.intValue) {
                     0 -> ShowFriends(favoriteFriends)
                     1 -> ShowFriends(friends)
-                    2 -> ShowFriends(offlineFriends)
+                    2 -> ShowFriends(offlineFriends, false)
                 }
             }
 
@@ -129,7 +129,7 @@ class FriendsScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    fun ShowFriends(friends: List<Friends.FriendsItem>) {
+    fun ShowFriends(friends: List<Friends.FriendsItem>, isOnline: Boolean = true) {
 
         if (friends.isEmpty()) {
             Column(
@@ -156,7 +156,7 @@ class FriendsScreen : Screen {
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = { Text(text = friend.location.let { location->
-                            if (location == "offline") { "Active on the website." } else { location }
+                            if (location == "offline" && isOnline) { "Active on the website." } else { location }
                         }, maxLines = 1) },
                         leadingContent = {
                             GlideImage(
