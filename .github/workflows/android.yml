@@ -23,21 +23,29 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
-    
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: app
-        path: app/build/outputs/apk/debug/app-debug.apk
+      
+    - name: Build Release with Gradle
+      run: ./gradlew assembleRelease
 
-    - name: Make release
+    - name: Sign app APK
+      uses: r0adkll/sign-android-release@v1
+      id: sign_app
+      with:
+        releaseDirectory: app/build/outputs/apk/release
+        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+      env:
+        BUILD_TOOLS_VERSION: "30.0.2"
+
+
+    - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: true
+        prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          app/build/outputs/apk/debug/app-debug.apk
+          ${{steps.sign_app.outputs.signedReleaseFile}}
