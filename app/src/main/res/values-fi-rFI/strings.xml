@@ -20,13 +20,15 @@
     <string name="login_label_username">Käyttäjänimi</string>
     <string name="login_label_password">Salasana</string>
     <string name="login_button_text">Kirjaudu sisään</string>
+    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
+    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
     <!-- TwoAuthScreen -->
     <string name="auth_text_email">Syötä sähköpostiisi lähetetty koodi</string>
     <string name="auth_text_app">Syötä autentikointisovelluksen antama koodi</string>
     <string name="auth_label_code">Kaksivaiheisen todennuksen koodi</string>
     <string name="auth_button_text">Vahvista</string>
     <!-- MainScreen -->
-    <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
+    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
     <!-- Placeholder Strings -->
     <string name="not_implemented_title">Ei toteutettu</string>
     <string name="not_implemented_text">Sivua ei ole vielä toteutettu, tule myöhemmin takaisin!</string>
@@ -54,4 +56,65 @@
     <string name="tabs_label_home">Kotisivu</string>
     <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_profile">Profiili</string>
+    <string name="world_title_created_at">Creation Date</string>
+    <string name="world_title_updated_at">Last Updated</string>
+    <!-- Notifications -->
+    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
+    <string name="notification_service_title_online">Friend has come online!</string>
+    <string name="notification_service_description_online">Your friend, %1$s has come online!</string>
+    <string name="notification_service_title_offline">Friend has gone offline!</string>
+    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
+    <string name="notification_service_title_location">Friend changed location!</string>
+    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
+    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
+    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
+    <string name="notification_service_title_friend_added">You got a new friend!</string>
+    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
+    <string name="notification_title_player">\'s Notifications</string>
+    <string name="notification_label_enable">Enable Notifications</string>
+    <string name="notification_label_intent_online">Online Notifications</string>
+    <string name="notification_label_intent_offline">Offline Notifications</string>
+    <string name="notification_label_intent_location">Location Notifications</string>
+    <string name="notification_label_intent_status">Status Change Notifications</string>
+    <string name="notification_service_title_status">Friend changed status!</string>
+    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
+    <!-- Avatars -->
+    <string name="avatar_dropdown_label_select">Change to Avatar</string>
+    <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
+    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
+    <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
+    <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
+    <string name="avatar_title_description">Description</string>
+    <string name="avatar_title_created_at">Creation Date</string>
+    <string name="avatar_title_updated_at">Last Updated</string>
+    <string name="avatar_title_content_labels">Content Labels</string>
+    <string name="avatar_text_author">By %1$s</string>
+    <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
+    <!-- Feed -->
+    <string name="feed_online_label">Online</string>
+    <string name="feed_online_text">has come online.</string>
+    <string name="feed_offline_label">Offline</string>
+    <string name="feed_offline_text">has gone offline.</string>
+    <string name="feed_location_label">GPS</string>
+    <string name="feed_location_text">went to</string>
+    <string name="feed_status_label">Status</string>
+    <string name="feed_status_text">changed status to</string>
+    <string name="feed_added_label">Friend Added</string>
+    <string name="feed_added_text">added you as friend.</string>
+    <string name="feed_removed_label">Friend Removed</string>
+    <string name="feed_removed_text">has removed you as friend.</string>
+    <string name="feed_friend_request_label">Friend Request</string>
+    <string name="feed_friend_request_text">wants to add you as friend.</string>
+    <!-- About -->
+    <string name="about_page_title">About</string>
+    <string name="about_page_version_title">You\'re currently running on version: %1$s</string>
+    <string name="about_page_version_description">Click here to check if you\'re on latest version.</string>
+    <string name="about_page_version_toast_message">Sorry, this is not implemented yet!</string>
+    <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
+    <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
+    <string name="about_page_translate_title">Contribute to Translation</string>
+    <string name="about_page_translate_description">View the libraries VRCAA was built on.</string>
+    <string name="about_page_battery_optimizations_title">Contribute to Translation</string>
+    <string name="about_page_battery_optimizations_description">View the libraries VRCAA was built on.</string>
+    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
 </resources>
