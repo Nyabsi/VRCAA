@@ -54,6 +54,8 @@
     <string name="tabs_label_home">Главная</string>
     <string name="tabs_label_feed">Лента</string>
     <string name="tabs_label_profile">Профиль</string>
+    <string name="world_title_created_at">Creation Date</string>
+    <string name="world_title_updated_at">Last Updated</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA теперь следит за вашими друзьями на фоновом режиме.</string>
     <string name="notification_service_title_online">Друг появился в сети!</string>
@@ -65,7 +67,7 @@
     <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
     <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
     <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s accepted your friend request!</string>
+    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
     <string name="notification_title_player">Уведомлений</string>
     <string name="notification_label_enable">Включить уведомления</string>
     <string name="notification_label_intent_online">Онлайн уведомления</string>
