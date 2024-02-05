@@ -48,6 +48,8 @@ import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreenModel.WorldInfoState
 import cc.sovellus.vrcaa.ui.screen.world.components.WorldCard
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class WorldInfoScreen(
     private val worldId: String
@@ -120,6 +122,21 @@ class WorldInfoScreen(
                         ) {
                             SubHeader(title = stringResource(R.string.world_label_description))
                             Description(text = world.description)
+
+                            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                            val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+
+                            val createdAtFormatted = parser.parse(world.createdAt)
+                                ?.let { formatter.format(it) }
+
+                            val updatedAtFormatted = parser.parse(world.updatedAt)
+                                ?.let { formatter.format(it) }
+
+                            SubHeader(title = stringResource(R.string.world_title_created_at))
+                            Description(text = createdAtFormatted)
+
+                            SubHeader(title = stringResource(R.string.world_title_updated_at))
+                            Description(text = updatedAtFormatted)
 
                             SubHeader(title = stringResource(R.string.world_label_tags))
                             BadgesFromTags(
