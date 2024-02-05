@@ -1,8 +1,5 @@
 package cc.sovellus.vrcaa.api.helper
 
-import android.util.Log
-import cc.sovellus.vrcaa.api.ApiContext
-
 class LocationHelper {
 
     data class LocationInfo(

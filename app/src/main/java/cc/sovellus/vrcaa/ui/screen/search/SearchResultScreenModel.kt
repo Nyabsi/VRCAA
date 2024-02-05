@@ -9,13 +9,13 @@ import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.avatars.providers.JustHPartyProvider
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.launch
 
 class SearchResultScreenModel(
-    context: Context,
+    private val context: Context,
     private val query: String
 ) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
-    private val api = ApiContext(context)
     private val avatarProvider = JustHPartyProvider()
 
     sealed class SearchState {
@@ -41,14 +41,14 @@ class SearchResultScreenModel(
 
     private fun getContent() {
         screenModelScope.launch {
-            api.getWorlds(
+            context.api.getWorlds(
                 query = query,
                 featured = false,
                 n = 50,
                 sort = "relevance"
             )?.let { foundWorlds = it }
 
-            api.getUsers(
+            context.api.getUsers(
                 username = query,
                 n = 50
             )?.let { foundUsers = it }

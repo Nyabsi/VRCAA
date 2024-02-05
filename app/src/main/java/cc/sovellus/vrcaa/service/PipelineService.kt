@@ -18,7 +18,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.PipelineContext
 import cc.sovellus.vrcaa.api.helper.LocationHelper
 import cc.sovellus.vrcaa.api.helper.StatusHelper
@@ -30,6 +29,7 @@ import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
 import cc.sovellus.vrcaa.api.models.pipeline.Notification
 import cc.sovellus.vrcaa.api.models.pipeline.UserBase
+import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.CoroutineScope
@@ -43,7 +43,6 @@ class PipelineService : Service(), CoroutineScope {
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private lateinit var pipeline: PipelineContext
-    private lateinit var api: ApiContext
 
     private var friends: ArrayList<UserBase> = arrayListOf()
     private lateinit var activeFriends: Friends
@@ -150,7 +149,9 @@ class PipelineService : Service(), CoroutineScope {
                                 notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
                                 pushNotification(
                                     title = application.getString(R.string.notification_service_title_offline),
-                                    content = application.getString(R.string.notification_service_description_offline).format(fallbackFriend?.displayName),
+                                    content = application.getString(R.string.notification_service_description_offline).format(
+                                        fallbackFriend.displayName
+                                    ),
                                     channel = App.CHANNEL_OFFLINE_ID
                                 )
                             }
@@ -369,7 +370,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        this.api = ApiContext(this, true)
         this.notificationManager = NotificationManager(this)
 
         launch {

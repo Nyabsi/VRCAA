@@ -44,7 +44,6 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState

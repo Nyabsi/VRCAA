@@ -5,11 +5,10 @@ import android.content.Intent
 import androidx.compose.runtime.mutableLongStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.ApiContext
-import cc.sovellus.vrcaa.api.avatars.providers.JustHPartyProvider
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.isMyServiceRunning
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
@@ -18,7 +17,6 @@ import java.time.Clock
 class HomeScreenModel(
     private val context: Context
 ) : StateScreenModel<HomeScreenModel.HomeState>(HomeState.Init) {
-    private val api: ApiContext = ApiContext(context)
 
     sealed class HomeState {
         data object Init : HomeState()
@@ -48,11 +46,11 @@ class HomeScreenModel(
     private fun getContent() {
         screenModelScope.launch {
 
-            api.getFriends()?.let { friends = it }
-            api.getRecentWorlds()?.let { lastVisited = it }
-            api.getAvatars()?.let { featuredAvatars = it }
-            api.getFriends(true)?.let { offlineFriends = it }
-            api.getWorlds()?.let { featuredWorlds = it }
+            context.api.getFriends()?.let { friends = it }
+            context.api.getRecentWorlds()?.let { lastVisited = it }
+            context.api.getAvatars()?.let { featuredAvatars = it }
+            context.api.getFriends(true)?.let { offlineFriends = it }
+            context.api.getWorlds()?.let { featuredWorlds = it }
 
             // Load the service here, I believe it's better than loading at `MainActivity`
             // Because if session expires, it would not restart the service.

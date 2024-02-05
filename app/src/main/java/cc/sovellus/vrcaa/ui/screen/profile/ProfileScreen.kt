@@ -31,7 +31,6 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.helper.TrustHelper
 import cc.sovellus.vrcaa.api.models.User

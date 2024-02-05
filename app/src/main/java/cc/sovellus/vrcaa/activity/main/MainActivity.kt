@@ -5,7 +5,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
-import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import cc.sovellus.vrcaa.ui.theme.Theme

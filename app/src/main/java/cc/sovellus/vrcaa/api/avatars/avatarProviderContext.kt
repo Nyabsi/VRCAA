@@ -8,7 +8,7 @@ import ru.gildor.coroutines.okhttp.await
 
 open class AvatarProviderContext {
 
-    val client: OkHttpClient by lazy { OkHttpClient() }
+    private val client: OkHttpClient by lazy { OkHttpClient() }
 
     // These should be populated in actual "providers"
     open val apiUrl = ""

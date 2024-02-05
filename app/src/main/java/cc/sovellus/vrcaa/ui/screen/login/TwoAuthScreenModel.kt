@@ -7,6 +7,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
@@ -21,7 +22,7 @@ class TwoAuthScreenModel(
 
     fun doVerify(otpType: ApiContext.TwoFactorType, token: String, navigator: Navigator) {
         screenModelScope.launch {
-            val twoAuth = api.verifyAccount(token, otpType, code.value)
+            val twoAuth = context.api.verifyAccount(token, otpType, code.value)
             if (twoAuth.isNotEmpty()) {
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", Context.MODE_PRIVATE

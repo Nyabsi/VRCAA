@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.feed
 
-import android.util.Log
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.manager.FeedManager
 import kotlinx.coroutines.flow.MutableStateFlow

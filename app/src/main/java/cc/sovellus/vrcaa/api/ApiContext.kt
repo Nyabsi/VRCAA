@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.api
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
@@ -38,12 +39,11 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ApiContext(
-    private var context: Context,
-    private var isPipeline: Boolean = false
-) {
+    context: Context
+): ContextWrapper(context) {
 
     private val client: OkHttpClient = OkHttpClient()
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", 0)
+    private val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", 0)
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
@@ -82,14 +82,14 @@ class ApiContext(
                     }
                     429 -> {
                         Toast.makeText(
-                            context,
+                            this,
                             "You are being rate-limited, calm down.",
                             Toast.LENGTH_LONG
                         ).show()
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession && !isPipeline) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                                 refreshToken()
                         } else {
                             null
@@ -124,14 +124,14 @@ class ApiContext(
                     }
                     429 -> {
                         Toast.makeText(
-                            context,
+                            this,
                             "You are being rate-limited, calm down.",
                             Toast.LENGTH_LONG
                         ).show()
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession && !isPipeline) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                             refreshToken()
                         } else {
                             null
@@ -163,14 +163,14 @@ class ApiContext(
                     }
                     429 -> {
                         Toast.makeText(
-                            context,
+                            this,
                             "You are being rate-limited, calm down.",
                             Toast.LENGTH_LONG
                         ).show()
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession && !isPipeline) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                             refreshToken()
                         } else {
                             null
@@ -193,7 +193,7 @@ class ApiContext(
 
         // just tell the user to re-login, I give up.
         Toast.makeText(
-            context,
+            this,
             "Your session has expired, please login again.",
             Toast.LENGTH_LONG
         ).show()
@@ -201,9 +201,9 @@ class ApiContext(
         preferences.cookies = ""
         preferences.isExpiredSession = true
 
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        startActivity(intent)
     }
 
     @Suppress("DEPRECATION")

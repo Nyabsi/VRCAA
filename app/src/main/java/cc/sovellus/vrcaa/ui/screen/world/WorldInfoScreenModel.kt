@@ -4,15 +4,14 @@ import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.World
+import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.launch
 
 class WorldInfoScreenModel(
-    context: Context,
+    private val context: Context,
     private val id: String
 ) : StateScreenModel<WorldInfoScreenModel.WorldInfoState>(WorldInfoState.Init) {
-    private val api = ApiContext(context)
 
     sealed class WorldInfoState {
         data object Init : WorldInfoState()
@@ -28,7 +27,7 @@ class WorldInfoScreenModel(
     }
     private fun getProfile() {
         screenModelScope.launch {
-            world.value = api.getWorld(id)
+            world.value = context.api.getWorld(id)
             mutableState.value = WorldInfoState.Result(world.value!!)
         }
     }
