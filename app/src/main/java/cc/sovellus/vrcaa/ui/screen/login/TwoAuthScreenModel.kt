@@ -6,22 +6,24 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import kotlinx.coroutines.launch
 
 class TwoAuthScreenModel(
-    private val api: ApiContext,
     private val context: Context
 ) : ScreenModel {
+    private val api = ApiContext(context)
 
     var code = mutableStateOf("")
 
     fun doVerify(otpType: ApiContext.TwoFactorType, token: String, navigator: Navigator) {
         screenModelScope.launch {
-            val twoAuth = api.verifyAccount(token, otpType, code.value)
+            val twoAuth = context.api.get().verifyAccount(token, otpType, code.value)
             if (twoAuth.isNotEmpty()) {
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", Context.MODE_PRIVATE
@@ -30,11 +32,15 @@ class TwoAuthScreenModel(
                 preferences.twoFactorAuth = twoAuth
                 preferences.isExpiredSession = false // even if it's false, doesn't matter.
 
-                navigator.push(MainScreen())
+                // this is very much mandatory, or things will break.
+                context.api.force(ApiContext(context))
+
+                navigator.popUntilRoot()
+                navigator.replace(MainScreen())
             } else {
                 Toast.makeText(
                     context,
-                    "Failed to verify, check the code again.",
+                    context.getString(R.string.login_toast_wrong_code),
                     Toast.LENGTH_SHORT
                 ).show()
             }

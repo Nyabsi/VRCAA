@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -23,12 +24,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.core.screen.ScreenKey
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -40,15 +44,15 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
+import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
-import cc.sovellus.vrcaa.ui.tabs.NotificationsTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainScreen : Screen {
 
-    override val key: ScreenKey
-        get() = "main"
+    override val key = uniqueScreenKey
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalMaterial3Api::class)
@@ -56,38 +60,53 @@ class MainScreen : Screen {
     override fun Content() {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val screenModel = navigator.rememberNavigatorScreenModel { MainScreenModel() }
+
+        val model = navigator.rememberNavigatorScreenModel { MainScreenModel() }
 
         TabNavigator(
             HomeTab,
             tabDisposable = {
                 TabDisposable(
                     navigator = it,
-                    tabs = listOf(HomeTab, FriendsTab, NotificationsTab, ProfileTab)
+                    tabs = listOf(HomeTab, FriendsTab, FeedTab, ProfileTab)
                 )
             }
         ) {
+
+            // How ironic... This solves the black icons for Android 14
+            // They are otherwise broken.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                val systemUiController = rememberSystemUiController()
+
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent,
+                        darkIcons = false
+                    )
+                }
+            }
+
             Scaffold(
                 topBar = {
                     SearchBar(
-                        query = screenModel.searchText.value,
-                        placeholder = { Text(text = stringResource(R.string.main_search_placeholder)) },
-                        onQueryChange = { screenModel.searchText.value = it; },
+                        query = model.searchText.value,
+                        placeholder = { Text(text = stringResource(R.string.main_search_placeholder), overflow = TextOverflow.Ellipsis) },
+                        onQueryChange = { model.searchText.value = it; },
                         onSearch = {
-                            screenModel.existSearchMode()
-                            navigator.push(SearchResultScreen(screenModel.searchText.value))
+                            model.existSearchMode()
+                            navigator.push(SearchResultScreen(model.searchText.value))
                         },
-                        active = screenModel.isSearchActive.value,
+                        active = model.isSearchActive.value,
                         onActiveChange = {
-                            if (it) { screenModel.enterSearchMode() } else { screenModel.existSearchMode() }
+                            if (it) { model.enterSearchMode() } else { model.existSearchMode() }
                         },
-                        tonalElevation = screenModel.tonalElevation.value,
+                        tonalElevation = model.tonalElevation.value,
                         modifier = Modifier
                             .padding(16.dp)
                             .fillMaxWidth(),
                         trailingIcon = {
-                            if (screenModel.isSearchActive.value) {
-                                IconButton(onClick = { screenModel.clearSearchText() }) {
+                            if (model.isSearchActive.value) {
+                                IconButton(onClick = { model.clearSearchText() }) {
                                     Icon(
                                         imageVector = Icons.Filled.Close,
                                         contentDescription = stringResource(R.string.preview_image_description)
@@ -103,8 +122,8 @@ class MainScreen : Screen {
                             }
                         },
                         leadingIcon = {
-                            if (screenModel.isSearchActive.value) {
-                                IconButton(onClick = { screenModel.existSearchMode() }) {
+                            if (model.isSearchActive.value) {
+                                IconButton(onClick = { model.existSearchMode() }) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                         contentDescription = stringResource(R.string.preview_image_description)
@@ -121,8 +140,8 @@ class MainScreen : Screen {
                         LazyColumn(
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            items(screenModel.searchHistory.size) {
-                                val item = screenModel.searchHistory[it]
+                            items(model.searchHistory.size) {
+                                val item = model.searchHistory.reversed()[it]
                                 ListItem(
                                     leadingContent = {
                                         Icon(
@@ -135,7 +154,7 @@ class MainScreen : Screen {
                                     },
                                     modifier = Modifier.clickable(
                                         onClick = {
-                                            screenModel.existSearchMode()
+                                            model.existSearchMode()
                                             navigator.push(SearchResultScreen(item))
                                         }
                                     )
@@ -153,11 +172,11 @@ class MainScreen : Screen {
                 },
                 bottomBar = {
                     NavigationBar(
-                        tonalElevation = screenModel.tonalElevation.value
+                        tonalElevation = model.tonalElevation.value
                     ) {
                         NavigationBarItem(HomeTab)
                         NavigationBarItem(FriendsTab)
-                        NavigationBarItem(NotificationsTab)
+                        NavigationBarItem(FeedTab)
                         NavigationBarItem(ProfileTab)
                     }
                 }

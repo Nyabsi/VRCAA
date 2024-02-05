@@ -9,9 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cc.sovellus.vrcaa.R
 
 class PlaceholderScreen : Screen {
+
+    override val key = uniqueScreenKey
+
     @Composable
     override fun Content() {
         Column(

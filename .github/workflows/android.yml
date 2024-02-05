@@ -10,11 +10,11 @@ jobs:
   build:
     permissions: write-all
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[CI]')
 
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 17
-      if: contains(github.event.head_commit.message, '[CI]')
       uses: actions/setup-java@v3
       with:
         java-version: '17'
@@ -22,26 +22,40 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      if: contains(github.event.head_commit.message, '[CI]')
       run: chmod +x gradlew
-    - name: Build with Gradle
-      if: contains(github.event.head_commit.message, '[CI]')
-      run: ./gradlew build
-    
-    - name: Upload a Build Artifact
-      if: contains(github.event.head_commit.message, '[CI]')
-      uses: actions/upload-artifact@v2
-      with:
-        name: app
-        path: app/build/outputs/apk/debug/app-debug.apk
+      
+    - name: Build Release with Gradle
+      run: ./gradlew assembleRelease
 
-    - name: Make release
+    - name: Rename built apk to "VRCAA.apk"
+      run: mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/VRCAA.apk
+
+    - name: Setup build tool version variable
+      shell: bash
+      run: |
+        BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
+        echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
+        echo Last build tool version is: $BUILD_TOOL_VERSION
+
+    - name: Sign app APK
+      uses: r0adkll/sign-android-release@v1
+      id: sign_app
+      with:
+        releaseDirectory: app/build/outputs/apk/release
+        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+      env:
+        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+
+
+    - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
-      if: contains(github.event.head_commit.message, '[CI]')
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: true
+        prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          app/build/outputs/apk/debug/app-debug.apk
+          ${{steps.sign_app.outputs.signedReleaseFile}}

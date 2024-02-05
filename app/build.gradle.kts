@@ -13,7 +13,7 @@ android {
         minSdk = 27
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -38,6 +38,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -85,4 +86,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
     implementation("com.mikepenz:aboutlibraries-core:10.10.0")
     implementation("com.mikepenz:aboutlibraries-compose-m3-android:10.10.0@aar")
+    implementation ("androidx.glance:glance-appwidget:1.0.0")
+    implementation ("androidx.glance:glance-material3:1.0.0@aar")
+
 }

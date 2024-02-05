@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
@@ -44,6 +45,8 @@ class TwoAuthScreen(
    private val token: String
 ) : Screen {
 
+    override val key = uniqueScreenKey
+
     @Composable
     override fun Content() {
 
@@ -51,10 +54,7 @@ class TwoAuthScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(
-            ApiContext(context),
-            context
-        ) }
+        val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(context) }
 
         Column(
             modifier = Modifier.fillMaxHeight(),
@@ -65,7 +65,6 @@ class TwoAuthScreen(
             Text(text = if (otpType == ApiContext.TwoFactorType.EMAIL_OTP) { stringResource(R.string.auth_text_email) } else { stringResource(R.string.auth_text_app) })
 
             TextInput(
-                title = stringResource(R.string.auth_label_code),
                 input = screenModel.code
             )
 
@@ -100,7 +99,6 @@ class TwoAuthScreen(
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     fun TextInput(
-        title: String,
         input: MutableState<String>
     ) {
         val focus = LocalFocusManager.current

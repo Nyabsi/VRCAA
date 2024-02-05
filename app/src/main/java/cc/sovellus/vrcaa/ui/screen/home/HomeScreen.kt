@@ -37,22 +37,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
-import cc.sovellus.vrcaa.ui.screen.misc.NestedPlaceholderScreen
-import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
 class HomeScreen : Screen {
+
+    override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
@@ -60,7 +62,7 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { HomeScreenModel(api = ApiContext(context)) }
+        val model = navigator.rememberNavigatorScreenModel { HomeScreenModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -90,12 +92,15 @@ class HomeScreen : Screen {
                HorizontalRow(
                    title = stringResource(R.string.home_active_friends)
                ) {
-                   items(friends.size) {
+                   items(
+                       friends.size,
+                       key = { item -> friends[item].id }
+                   ) {
                        val friend = friends[it]
                        RowItemRounded(
                            name = friend.displayName,
                            url = friend.userIcon.ifEmpty { friend.imageUrl },
-                           onClick = { navigator.parent?.parent?.push(FriendProfileScreen(friend)) }
+                           onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                        )
                    }
                }
@@ -106,7 +111,10 @@ class HomeScreen : Screen {
                HorizontalRow(
                    title = stringResource(R.string.home_recently_visited)
                ) {
-                   items(lastVisited.size) {
+                   items(
+                       lastVisited.size,
+                       key = { item -> lastVisited[item].id }
+                   ) {
                        val world = lastVisited[it]
                        WorldRow(
                            name = world.name,
@@ -123,13 +131,16 @@ class HomeScreen : Screen {
                HorizontalRow(
                    title = stringResource(R.string.home_featured_avatars)
                ) {
-                   items(featuredAvatars.size) {
+                   items(
+                       featuredAvatars.size,
+                       key = { item -> featuredAvatars[item].id }
+                   ) {
                        val avatar = featuredAvatars[it]
                        WorldRow(
                            name = avatar.name,
                            url = avatar.imageUrl,
                            count = null,
-                           onClick = { navigator.parent?.parent?.push(NestedPlaceholderScreen()) }
+                           onClick = { navigator.parent?.parent?.push(AvatarScreen(avatar.id)) }
                        )
                    }
                }
@@ -140,13 +151,16 @@ class HomeScreen : Screen {
                HorizontalRow(
                    title = stringResource(R.string.home_offline_friends)
                ) {
-                   items(offlineFriends.size) {
+                   items(
+                       offlineFriends.size,
+                       key = { item -> offlineFriends[item].id }
+                   ) {
                        val friend = offlineFriends[it]
                        WorldRow(
                            name = friend.displayName,
                            url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
                            count = null,
-                           onClick = { navigator.parent?.parent?.push(FriendProfileScreen(friend)) }
+                           onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                        )
                    }
                }
@@ -157,7 +171,10 @@ class HomeScreen : Screen {
                HorizontalRow(
                    title = stringResource(R.string.home_featured_worlds)
                ) {
-                   items(featuredWorlds.size) {
+                   items(
+                       featuredWorlds.size,
+                       key = { item -> featuredWorlds[item].id }
+                   ) {
                        val world = featuredWorlds[it]
                        WorldRow(
                            name = world.name,

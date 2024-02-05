@@ -6,13 +6,15 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.api.helper.LocationHelper
 import cc.sovellus.vrcaa.api.models.Friends
+import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FriendsScreenModel(
-    private val api: ApiContext
+    private val
+    context: Context
 ) : StateScreenModel<FriendsScreenModel.FriendListState>(FriendListState.Init) {
 
     sealed class FriendListState {
@@ -34,19 +36,20 @@ class FriendsScreenModel(
 
     private fun getFriends() {
         screenModelScope.launch {
-            api.getFriends()?.let {
+
+            context.api.get().getFriends()?.let {
                 friends = it
-                getFriendLocations(api, friends)
+                getFriendLocations(friends)
             }
 
-            api.getFriends(true)?.let {
+            context.api.get().getFriends(true)?.let {
                 offlineFriends = it
             }
 
-            api.getFavorites("friend")?.let { favorites ->
+            context.api.get().getFavorites("friend")?.let { favorites ->
                 for (favorite in favorites) {
-                    api.getFriend(favorite.favoriteId)?.let { friend ->
-                        getFriendLocation(api, friend)
+                    context.api.get().getFriend(favorite.favoriteId)?.let { friend ->
+                        getFriendLocation(friend)
                         favoriteFriends.add(friend)
                     }
                 }
@@ -60,22 +63,38 @@ class FriendsScreenModel(
         }
     }
 
-    private suspend fun getFriendLocation(api: ApiContext, friend: Friends.FriendsItem) {
+    private suspend fun getFriendLocation(friend: Friends.FriendsItem) {
         if (friend.location.contains("wrld_")) {
-            friend.location = api.getInstance(friend.location)?.world?.name.toString()
+            val result = LocationHelper().parseLocationIntent(friend.location)
+            val world = context.api.get().getWorld(result.worldId)!!
+
+            if (result.regionId.isNotEmpty()) {
+                friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+            } else {
+                friend.location = "${world.name}~(${result.instanceType}) USW"
+            }
         }
     }
 
-    private suspend fun getFriendLocations(api: ApiContext, friends: List<Friends.FriendsItem>) {
+    private suspend fun getFriendLocations(friends: List<Friends.FriendsItem>) {
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
-                friend.location = api.getInstance(friend.location)?.world?.name.toString()
+                val result = LocationHelper().parseLocationIntent(friend.location)
+                val world = context.api.get().getWorld(result.worldId)!!
+
+                if (result.regionId.isNotEmpty()) {
+                    friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                } else {
+                    friend.location = "${world.name}~(${result.instanceType})"
+                }
             }
         }
     }
 
     fun refreshFriends(context: Context) {
         screenModelScope.launch {
+            favoriteFriends.clear()
+
             isRefreshing.value = true
             getFriends()
 

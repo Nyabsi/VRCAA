@@ -1,27 +1,29 @@
 package cc.sovellus.vrcaa.api
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import cc.sovellus.vrcaa.activity.main.MainActivity
+import cc.sovellus.vrcaa.api.models.Auth
+import cc.sovellus.vrcaa.api.models.Avatar
 import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.Instance
 import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.Notifications
 import cc.sovellus.vrcaa.api.models.User
 import cc.sovellus.vrcaa.api.models.Users
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
-import cc.sovellus.vrcaa.helper.userCredentials
 import com.google.gson.Gson
-import kotlinx.coroutines.delay
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -37,11 +39,11 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ApiContext(
-    private var context: Context
-) {
+    context: Context
+): ContextWrapper(context) {
 
     private val client: OkHttpClient = OkHttpClient()
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", 0)
+    private val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", 0)
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
@@ -57,7 +59,7 @@ class ApiContext(
         TOTP
     }
 
-    suspend fun doRequest(
+    private suspend fun doRequest(
         method: String,
         url: String,
         headers: Headers,
@@ -80,14 +82,14 @@ class ApiContext(
                     }
                     429 -> {
                         Toast.makeText(
-                            context,
+                            this,
                             "You are being rate-limited, calm down.",
                             Toast.LENGTH_LONG
                         ).show()
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                                 refreshToken()
                         } else {
                             null
@@ -122,14 +124,14 @@ class ApiContext(
                     }
                     429 -> {
                         Toast.makeText(
-                            context,
+                            this,
                             "You are being rate-limited, calm down.",
                             Toast.LENGTH_LONG
                         ).show()
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                             refreshToken()
                         } else {
                             null
@@ -161,14 +163,14 @@ class ApiContext(
                     }
                     429 -> {
                         Toast.makeText(
-                            context,
+                            this,
                             "You are being rate-limited, calm down.",
                             Toast.LENGTH_LONG
                         ).show()
                         null
                     }
                     401 -> {
-                        if (!url.contains("auth/user") && preferences.isExpiredSession) {
+                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                             refreshToken()
                         } else {
                             null
@@ -191,7 +193,7 @@ class ApiContext(
 
         // just tell the user to re-login, I give up.
         Toast.makeText(
-            context,
+            this,
             "Your session has expired, please login again.",
             Toast.LENGTH_LONG
         ).show()
@@ -199,8 +201,9 @@ class ApiContext(
         preferences.cookies = ""
         preferences.isExpiredSession = true
 
-        val intent = Intent(context, MainActivity::class.java)
-        context.startActivity(intent)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     @Suppress("DEPRECATION")
@@ -228,6 +231,29 @@ class ApiContext(
                 } else {
                     Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
                 }
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getAuth(): String? {
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/auth",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Auth::class.java).token
             }
             else -> {
                 null
@@ -567,6 +593,78 @@ class ApiContext(
         return when (result) {
             is Response -> {
                 Gson().fromJson(result.body?.string(), Favorites::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getNotifications(): Notifications? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/auth/user/notifications",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Notifications::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun selectAvatar(avatarId: String): User? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "PUT",
+            url = "$apiBase/avatars/${avatarId}/select",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), User::class.java)
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    suspend fun getAvatar(avatarId: String): Avatar? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/avatars/${avatarId}",
+            headers = headers.build(),
+            body = null
+        )
+
+        return when (result) {
+            is Response -> {
+                Gson().fromJson(result.body?.string(), Avatar::class.java)
             }
             else -> {
                 null

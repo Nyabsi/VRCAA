@@ -8,9 +8,10 @@ import cc.sovellus.vrcaa.api.ApiContext
 import kotlinx.coroutines.launch
 
 class SettingsScreenModel(
-    private val api: ApiContext,
     private val context: Context
 ) : ScreenModel {
+    private val api = ApiContext(context)
+
     @SuppressLint("ApplySharedPref")
     fun doLogout() {
         screenModelScope.launch {

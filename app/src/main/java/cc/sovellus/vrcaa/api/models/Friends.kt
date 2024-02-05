@@ -3,7 +3,7 @@ package cc.sovellus.vrcaa.api.models
 
 import com.google.gson.annotations.SerializedName
 
-class Friends : ArrayList<Friends.FriendsItem>(){
+class Friends() : ArrayList<Friends.FriendsItem>() {
     data class FriendsItem(
         @SerializedName("bio")
         val bio: String,
@@ -36,7 +36,7 @@ class Friends : ArrayList<Friends.FriendsItem>(){
         @SerializedName("profilePicOverride")
         val profilePicOverride: String,
         @SerializedName("status")
-        val status: String,
+        var status: String,
         @SerializedName("statusDescription")
         val statusDescription: String,
         @SerializedName("tags")

@@ -2,19 +2,18 @@ package cc.sovellus.vrcaa.ui.screen.login
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
-import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.userCredentials
 import kotlinx.coroutines.launch
 
 class LoginScreenModel(
-    private val api: ApiContext,
     private val context: Context,
     private val navigator: Navigator
 ) : ScreenModel {
@@ -25,7 +24,7 @@ class LoginScreenModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            val result = api.getToken(username.value, password.value)
+            val result = context.api.get().getToken(username.value, password.value)
             if (result != null) {
                 val preferences = context.getSharedPreferences(
                     "vrcaa_prefs", MODE_PRIVATE
@@ -39,7 +38,7 @@ class LoginScreenModel(
             } else {
                 Toast.makeText(
                     context,
-                    "Wrong username or password.",
+                    context.getString(R.string.login_toast_wrong_credentials),
                     Toast.LENGTH_SHORT
                 ).show()
             }

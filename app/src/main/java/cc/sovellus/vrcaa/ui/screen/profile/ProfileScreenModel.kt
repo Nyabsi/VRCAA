@@ -1,14 +1,15 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.models.User
+import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.launch
 
 class ProfileScreenModel(
-    private val api: ApiContext
+    private val context: Context
 ) : StateScreenModel<ProfileScreenModel.ProfileState>(ProfileState.Init) {
 
     sealed class ProfileState {
@@ -25,7 +26,7 @@ class ProfileScreenModel(
     }
     private fun getProfile() {
         screenModelScope.launch {
-            profile.value = api.getSelf()
+            profile.value = context.api.get().getSelf()
             mutableState.value = ProfileState.Result(profile.value!!)
         }
     }

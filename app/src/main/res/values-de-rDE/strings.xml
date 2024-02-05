@@ -47,6 +47,7 @@
     <!-- Settings -->
     <string name="license_title">Open-Source Lizenzen</string>
     <string name="logout_button_text">Abmelden</string>
+  
     <!-- Worlds -->
     <string name="world_label_description">Beschreibung</string>
     <string name="world_label_tags">Stichworte</string>
@@ -58,6 +59,7 @@
     <string name="tabs_label_profile">Profil</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
+  
     <!-- Notifications -->
     <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
     <string name="notification_service_title_online">Freund ist jetzt online!</string>
@@ -78,6 +80,7 @@
     <string name="notification_label_intent_status">Statusänderungs-Benachrichtigungen</string>
     <string name="notification_service_title_status">Freund änderte seinen Status!</string>
     <string name="notification_service_description_status">Dein Freund %1$s änderte seinen Status von %2$s zu %3$s.</string>
+  
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Wechsel zu Avatar</string>
     <string name="avatar_dropdown_label_favorite">Füge zu Favoriten hinzu</string>
@@ -90,6 +93,7 @@
     <string name="avatar_title_content_labels">Inhaltsbezeichnungen</string>
     <string name="avatar_text_author">Von %1$s</string>
     <string name="avatar_text_content_labels_not_found">Avatar hat keine Inhaltswarnungen angegeben.</string>
+  
     <!-- Feed -->
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">ist jetzt online.</string>
@@ -105,6 +109,7 @@
     <string name="feed_removed_text">hat dich als Freund entfernt.</string>
     <string name="feed_friend_request_label">Freundschaftsanfrage</string>
     <string name="feed_friend_request_text">möchte dich als Freund hinzufügen.</string>
+  
     <!-- About -->
     <string name="about_page_title">About</string>
     <string name="about_page_version_title">You\'re currently running on version: %1$s</string>

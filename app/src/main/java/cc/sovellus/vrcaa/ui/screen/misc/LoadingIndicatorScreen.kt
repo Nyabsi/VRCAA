@@ -11,8 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 
 class LoadingIndicatorScreen : Screen {
+
+    override val key = uniqueScreenKey
     @Composable
     override fun Content() {
         Column(

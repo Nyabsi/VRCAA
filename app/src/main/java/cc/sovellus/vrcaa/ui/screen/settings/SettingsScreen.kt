@@ -26,13 +26,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 
 class SettingsScreen : Screen {
+
+    override val key = uniqueScreenKey
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -41,7 +43,7 @@ class SettingsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { SettingsScreenModel(ApiContext(context), context) }
+        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(context) }
 
         Scaffold(
             topBar = {
@@ -66,7 +68,7 @@ class SettingsScreen : Screen {
                 ) {
                     item {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.license_title)) },
+                            headlineContent = { Text("About") },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Dehaze,
@@ -75,7 +77,7 @@ class SettingsScreen : Screen {
                             },
                             modifier = Modifier.clickable(
                                 onClick = {
-                                    navigator.push(LicensesScreen())
+                                    navigator.push(AboutScreen())
                                 }
                             )
                         )
@@ -88,9 +90,9 @@ class SettingsScreen : Screen {
                 ) {
                     Button(
                         onClick = {
-                            screenModel.doLogout()
-                            navigator.popAll()
-                            navigator.push(LoginScreen())
+                            model.doLogout()
+                            navigator.popUntilRoot()
+                            navigator.replace(LoginScreen())
                         },
                         modifier = Modifier.padding(bottom = 16.dp)
                     ) {

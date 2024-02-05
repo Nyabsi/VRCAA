@@ -40,26 +40,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.profile.FriendProfileScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
 class FriendsScreen : Screen {
+
+    override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel(api = ApiContext(context)) }
+        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -69,9 +71,7 @@ class FriendsScreen : Screen {
         }
     }
 
-    @OptIn(
-        ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class
-    )
+    @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
     @Composable
     private fun RenderList(
         friends: List<Friends.FriendsItem>,
@@ -146,17 +146,18 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                // TODO: later add customization to the sort, but for now just put "offline" status to the bottom.
-                val friendsSorted = friends.sortedWith(compareBy { it.location == "offline" })
-
-                items(friendsSorted.count()) {
+                val friendsSortedStatus = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
+                val friendsSorted = friendsSortedStatus.sortedBy { it.location == "offline" }
+                items(friendsSorted.count()) { it ->
                     val navigator = LocalNavigator.currentOrThrow
                     val friend = friendsSorted[it]
 
                     ListItem(
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
-                        supportingContent = { Text(text = friend.location, maxLines = 1) },
+                        supportingContent = { Text(text = friend.location.let { location->
+                            if (location == "offline") { "Active on the website." } else { location }
+                        }, maxLines = 1) },
                         leadingContent = {
                             GlideImage(
                                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
@@ -173,7 +174,7 @@ class FriendsScreen : Screen {
                         },
                         modifier = Modifier.clickable(
                             onClick = {
-                                navigator.parent?.parent?.push(FriendProfileScreen(friend))
+                                navigator.parent?.parent?.push(UserProfileScreen(friend.id))
                             }
                         )
                     )
