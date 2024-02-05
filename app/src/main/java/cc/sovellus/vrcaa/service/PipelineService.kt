@@ -20,6 +20,7 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.api.PipelineContext
+import cc.sovellus.vrcaa.api.helper.LocationHelper
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.pipeline.FriendAdd
@@ -248,10 +249,18 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
+                        val result = LocationHelper().parseLocationIntent(friend.location)
+
+                        val locationFormatted = if (result.regionId.isNotEmpty()) {
+                            "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                        } else {
+                            "${friend.world.name}~(${result.instanceType})"
+                        }
+
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
                             friendId = friend.userId
                             friendName = friend.user.displayName
-                            travelDestination = friend.world.name
+                            travelDestination = locationFormatted
                             friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
                     }
