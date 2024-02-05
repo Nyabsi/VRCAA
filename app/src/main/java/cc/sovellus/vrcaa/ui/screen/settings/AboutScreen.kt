@@ -42,7 +42,7 @@ class AboutScreen : Screen {
 
     override val key = uniqueScreenKey
 
-    @SuppressLint("UnrememberedMutableState", "BatteryLife")
+    @SuppressLint("BatteryLife")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
@@ -62,7 +62,7 @@ class AboutScreen : Screen {
                         }
                     },
 
-                    title = { Text(text = "About") }
+                    title = { Text(stringResource(R.string.about_page_title)) }
                 )
             },
             content = { padding ->
@@ -76,14 +76,23 @@ class AboutScreen : Screen {
                             headlineContent = { Text(stringResource(R.string.app_name)) }
                         )
                         ListItem(
-                            headlineContent = { Text("You're currently running on version: ${BuildConfig.VERSION_NAME}") },
-                            supportingContent = { Text("Click here to check if you're on latest version.") },
+                            headlineContent = { Text(stringResource(R.string.about_page_version_title).format(BuildConfig.VERSION_NAME)) },
+                            supportingContent = { Text(stringResource(R.string.about_page_version_description)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Info,
                                     contentDescription = "Localized description"
                                 )
-                            }
+                            },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.about_page_version_toast_message),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            )
                         )
                         HorizontalDivider(
                             color = Color.Gray,
@@ -92,8 +101,8 @@ class AboutScreen : Screen {
                     }
                     item {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.license_title)) },
-                            supportingContent = { Text("View the libraries VRCAA was built on.") },
+                            headlineContent = { Text(stringResource(R.string.about_page_open_source_licenses_title)) },
+                            supportingContent = { Text(stringResource(R.string.about_page_open_source_licenses_description)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Dehaze,
@@ -109,8 +118,8 @@ class AboutScreen : Screen {
                     }
                     item {
                         ListItem(
-                            headlineContent = { Text("Translate") },
-                            supportingContent = { Text("Help translate VRCAA!") },
+                            headlineContent = { Text(stringResource(R.string.about_page_translate_title)) },
+                            supportingContent = { Text(stringResource(R.string.about_page_translate_description)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Language,
@@ -134,8 +143,8 @@ class AboutScreen : Screen {
                     }
                     item {
                         ListItem(
-                            headlineContent = { Text("Disable Battery Optimizations")  },
-                            supportingContent = { Text("Some Android devices may not work without this.") },
+                            headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title))  },
+                            supportingContent = { Text(stringResource(R.string.about_page_battery_optimizations_description)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Filled.Warning,
@@ -154,7 +163,7 @@ class AboutScreen : Screen {
                                     } else {
                                         Toast.makeText(
                                             context,
-                                            "Battery optimizations are already disabled!",
+                                            context.getString(R.string.about_page_battery_optimizations_toast),
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
