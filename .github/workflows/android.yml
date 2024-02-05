@@ -27,6 +27,9 @@ jobs:
     - name: Build Release with Gradle
       run: ./gradlew assembleRelease
 
+    - name: Rename built apk to "VRCAA.apk"
+      run: mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/VRCAA.apk
+
     - name: Setup build tool version variable
       shell: bash
       run: |
