@@ -68,7 +68,7 @@ class ManageNotificationsScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = it.calculateTopPadding()),
+                        .padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding()),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

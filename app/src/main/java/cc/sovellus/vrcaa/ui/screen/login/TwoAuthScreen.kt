@@ -57,7 +57,7 @@ class TwoAuthScreen(
         val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(context) }
 
         Column(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier.fillMaxHeight().padding(bottom = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

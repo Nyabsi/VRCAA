@@ -110,7 +110,10 @@ class UserProfileScreen(
                                 ) {
                                     if (profile.isFriend) {
                                         DropdownMenuItem(
-                                            onClick = { navigator.push(ManageNotificationsScreen(profile.id, profile.displayName)) },
+                                            onClick = {
+                                                navigator.push(ManageNotificationsScreen(profile.id, profile.displayName))
+                                                model.isMenuExpanded.value = false
+                                            },
                                             text = { Text("Manage notifications") }
                                         )
                                     }
@@ -125,7 +128,7 @@ class UserProfileScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding()),
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                 ) {
                     item {
                         Column(

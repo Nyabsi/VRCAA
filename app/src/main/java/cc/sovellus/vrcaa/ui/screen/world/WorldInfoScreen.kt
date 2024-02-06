@@ -82,7 +82,7 @@ class WorldInfoScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding()),
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                 ) {
                     item {
                         Column(

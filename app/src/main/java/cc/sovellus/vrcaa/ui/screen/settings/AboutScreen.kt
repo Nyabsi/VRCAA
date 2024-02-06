@@ -69,7 +69,7 @@ class AboutScreen : Screen {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding()),
+                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                 ) {
                     item {
                         ListItem(
