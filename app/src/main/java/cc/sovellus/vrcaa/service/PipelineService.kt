@@ -250,14 +250,12 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
-                        val result = LocationHelper().parseLocationIntent(friend.location)
+                        val result = LocationHelper.parseLocationIntent(friend.location)
 
                         val locationFormatted = if (result.regionId.isNotEmpty()) {
                             "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
-                        } else if (result.instanceType.isNotEmpty()) {
-                            "${friend.world.name}~(${result.instanceType})"
                         } else {
-                            friend.world.name
+                            "${friend.world.name}~(${result.instanceType})"
                         }
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {

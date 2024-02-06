@@ -65,7 +65,7 @@ class FriendsScreenModel(
 
     private suspend fun getFriendLocation(friend: Friends.FriendsItem) {
         if (friend.location.contains("wrld_")) {
-            val result = LocationHelper().parseLocationIntent(friend.location)
+            val result = LocationHelper.parseLocationIntent(friend.location)
             val world = context.api.get().getWorld(result.worldId)!!
 
             if (result.regionId.isNotEmpty()) {
@@ -79,13 +79,13 @@ class FriendsScreenModel(
     private suspend fun getFriendLocations(friends: List<Friends.FriendsItem>) {
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
-                val result = LocationHelper().parseLocationIntent(friend.location)
+                val result = LocationHelper.parseLocationIntent(friend.location)
                 val world = context.api.get().getWorld(result.worldId)!!
 
                 if (result.regionId.isNotEmpty()) {
                     friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
                 } else {
-                    friend.location = "${world.name}~(${result.instanceType})"
+                    friend.location = "${world.name}~(${result.instanceType}) USW"
                 }
             }
         }
