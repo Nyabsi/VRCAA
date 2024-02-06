@@ -11,7 +11,7 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
-import android.os.Process.THREAD_PRIORITY_BACKGROUND
+import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -362,7 +362,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
-        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_BACKGROUND).apply {
+        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
             serviceLooper = looper
