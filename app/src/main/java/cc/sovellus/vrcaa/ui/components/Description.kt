@@ -15,7 +15,7 @@ import cc.sovellus.vrcaa.R
 fun Description(text: String?) {
     Column(
         modifier = Modifier
-            .padding(24.dp)
+            .padding(start = 24.dp)
     ) {
         Text(
             modifier = Modifier.padding(start = 2.dp),
