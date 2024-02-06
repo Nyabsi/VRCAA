@@ -74,20 +74,6 @@ class MainScreen : Screen {
                 )
             }
         ) {
-
-            // How ironic... This solves the black icons for Android 14
-            // They are otherwise broken.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                val systemUiController = rememberSystemUiController()
-
-                SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = Color.Transparent,
-                        darkIcons = false
-                    )
-                }
-            }
-
             Scaffold(
                 topBar = {
                     SearchBar(
