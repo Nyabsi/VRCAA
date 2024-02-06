@@ -43,7 +43,7 @@ class App : Application() {
         val defaultChannel = NotificationChannel(
             CHANNEL_DEFAULT_ID,
             CHANNEL_DEFAULT_NAME,
-            NotificationManager.IMPORTANCE_DEFAULT).apply {
+            NotificationManager.IMPORTANCE_LOW).apply {
             description = CHANNEL_DEFAULT_DESCRIPTION
         }
 

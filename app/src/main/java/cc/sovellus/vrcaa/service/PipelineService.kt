@@ -396,7 +396,8 @@ class PipelineService : Service(), CoroutineScope {
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
             .setContentText(application.getString(R.string.service_notification))
-            .setPriority(NotificationCompat.FLAG_ONLY_ALERT_ONCE) // Make the notification less intrusive.
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .setOngoing(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(NOTIFICATION_ID_STICKY, builder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC)
