@@ -23,6 +23,7 @@ import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -200,6 +201,9 @@ class ApiContext(
 
         preferences.cookies = ""
         preferences.isExpiredSession = true
+
+        val serviceIntent = Intent(this, PipelineService::class.java)
+        stopService(serviceIntent)
 
         val intent = Intent(this, MainActivity::class.java)
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
