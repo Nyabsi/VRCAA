@@ -173,8 +173,8 @@ class PipelineService : Service(), CoroutineScope {
                     if (friendObject != null)
                     {
                         if (
-                            StatusHelper().getStatusFromString(friend.user.status) !=
-                            StatusHelper().getStatusFromString(friendObject.status))
+                            StatusHelper.getStatusFromString(friend.user.status) !=
+                            StatusHelper.getStatusFromString(friendObject.status))
                         {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
                                 notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_STATUS)) {
@@ -182,8 +182,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status).format(
                                         friendObject.displayName,
-                                        StatusHelper().getStatusFromString(friendObject.status).toString(),
-                                        StatusHelper().getStatusFromString(friend.user.status).toString()
+                                        StatusHelper.getStatusFromString(friendObject.status).toString(),
+                                        StatusHelper.getStatusFromString(friend.user.status).toString()
                                     ),
                                     channel = App.CHANNEL_LOCATION_ID
                                 )
@@ -193,7 +193,7 @@ class PipelineService : Service(), CoroutineScope {
                                 friendId = friend.userId
                                 friendName = friendObject.displayName
                                 friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
-                                friendStatus = StatusHelper().getStatusFromString(friend.user.status)
+                                friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                             })
 
                             val tmp = friends.find { it.id == friend.userId }
@@ -206,8 +206,8 @@ class PipelineService : Service(), CoroutineScope {
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
                         if (
-                            StatusHelper().getStatusFromString(friend.user.status) !=
-                            StatusHelper().getStatusFromString(fallbackFriend?.status.toString())
+                            StatusHelper.getStatusFromString(friend.user.status) !=
+                            StatusHelper.getStatusFromString(fallbackFriend?.status.toString())
                         )
                         {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
@@ -216,8 +216,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status).format(
                                         fallbackFriend?.displayName,
-                                        StatusHelper().getStatusFromString(fallbackFriend?.status.toString()).toString(),
-                                        StatusHelper().getStatusFromString(friend.user.status).toString()
+                                        StatusHelper.getStatusFromString(fallbackFriend?.status.toString()).toString(),
+                                        StatusHelper.getStatusFromString(friend.user.status).toString()
                                     ),
                                     channel = App.CHANNEL_LOCATION_ID
                                 )
@@ -227,7 +227,7 @@ class PipelineService : Service(), CoroutineScope {
                                 friendId = friend.userId
                                 friendName = fallbackFriend?.displayName.toString()
                                 friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
-                                friendStatus = StatusHelper().getStatusFromString(friend.user.status)
+                                friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                             })
 
                             val tmp = activeFriends.find { it.id == friend.userId }

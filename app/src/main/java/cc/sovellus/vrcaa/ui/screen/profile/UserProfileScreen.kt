@@ -141,9 +141,9 @@ class UserProfileScreen(
                                     thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
                                     displayName = it.displayName,
                                     statusDescription = it.statusDescription.ifEmpty { StatusHelper.Status.toString(
-                                        StatusHelper().getStatusFromString(it.status)) },
-                                    trustRankColor = TrustHelper.Rank.toColor(TrustHelper().getTrustRankFromTags(it.tags)),
-                                    statusColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(it.status))
+                                        StatusHelper.getStatusFromString(it.status)) },
+                                    trustRankColor = TrustHelper.Rank.toColor(TrustHelper.getTrustRankFromTags(it.tags)),
+                                    statusColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(it.status))
                                 )
                             }
                         }

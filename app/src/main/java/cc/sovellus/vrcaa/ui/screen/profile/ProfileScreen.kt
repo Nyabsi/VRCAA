@@ -75,8 +75,8 @@ class ProfileScreen : Screen {
                             thumbnailUrl = it.currentAvatarThumbnailImageUrl,
                             displayName = it.displayName,
                             statusDescription = it.statusDescription,
-                            trustRankColor = TrustHelper.Rank.toColor(TrustHelper().getTrustRankFromTags(it.tags)),
-                            statusColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(it.status))
+                            trustRankColor = TrustHelper.Rank.toColor(TrustHelper.getTrustRankFromTags(it.tags)),
+                            statusColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(it.status))
                         )
                     }
                 }
