@@ -116,5 +116,5 @@
     <string name="about_page_translate_description">VRCAAの飜訳への協力はこちらから。</string>
     <string name="about_page_battery_optimizations_title">バッテリーの最適化</string>
     <string name="about_page_battery_optimizations_description">一部の機種において、この機能の設定が必要です。</string>
-    <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。/string>
+    <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
 </resources>
