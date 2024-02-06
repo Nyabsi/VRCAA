@@ -11,7 +11,7 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
-import android.os.Process.THREAD_PRIORITY_BACKGROUND
+import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -173,8 +173,8 @@ class PipelineService : Service(), CoroutineScope {
                     if (friendObject != null)
                     {
                         if (
-                            StatusHelper().getStatusFromString(friend.user.status) !=
-                            StatusHelper().getStatusFromString(friendObject.status))
+                            StatusHelper.getStatusFromString(friend.user.status) !=
+                            StatusHelper.getStatusFromString(friendObject.status))
                         {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
                                 notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_STATUS)) {
@@ -182,8 +182,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status).format(
                                         friendObject.displayName,
-                                        StatusHelper().getStatusFromString(friendObject.status).toString(),
-                                        StatusHelper().getStatusFromString(friend.user.status).toString()
+                                        StatusHelper.getStatusFromString(friendObject.status).toString(),
+                                        StatusHelper.getStatusFromString(friend.user.status).toString()
                                     ),
                                     channel = App.CHANNEL_LOCATION_ID
                                 )
@@ -193,7 +193,7 @@ class PipelineService : Service(), CoroutineScope {
                                 friendId = friend.userId
                                 friendName = friendObject.displayName
                                 friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
-                                friendStatus = StatusHelper().getStatusFromString(friend.user.status)
+                                friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                             })
 
                             val tmp = friends.find { it.id == friend.userId }
@@ -206,8 +206,8 @@ class PipelineService : Service(), CoroutineScope {
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
                         if (
-                            StatusHelper().getStatusFromString(friend.user.status) !=
-                            StatusHelper().getStatusFromString(fallbackFriend?.status.toString())
+                            StatusHelper.getStatusFromString(friend.user.status) !=
+                            StatusHelper.getStatusFromString(fallbackFriend?.status.toString())
                         )
                         {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
@@ -216,8 +216,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status).format(
                                         fallbackFriend?.displayName,
-                                        StatusHelper().getStatusFromString(fallbackFriend?.status.toString()).toString(),
-                                        StatusHelper().getStatusFromString(friend.user.status).toString()
+                                        StatusHelper.getStatusFromString(fallbackFriend?.status.toString()).toString(),
+                                        StatusHelper.getStatusFromString(friend.user.status).toString()
                                     ),
                                     channel = App.CHANNEL_LOCATION_ID
                                 )
@@ -227,7 +227,7 @@ class PipelineService : Service(), CoroutineScope {
                                 friendId = friend.userId
                                 friendName = fallbackFriend?.displayName.toString()
                                 friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
-                                friendStatus = StatusHelper().getStatusFromString(friend.user.status)
+                                friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                             })
 
                             val tmp = activeFriends.find { it.id == friend.userId }
@@ -250,7 +250,7 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
-                        val result = LocationHelper().parseLocationIntent(friend.location)
+                        val result = LocationHelper.parseLocationIntent(friend.location)
 
                         val locationFormatted = if (result.regionId.isNotEmpty()) {
                             "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
@@ -360,7 +360,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
-        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_BACKGROUND).apply {
+        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
             serviceLooper = looper
@@ -396,7 +396,8 @@ class PipelineService : Service(), CoroutineScope {
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
             .setContentText(application.getString(R.string.service_notification))
-            .setPriority(NotificationCompat.FLAG_ONLY_ALERT_ONCE) // Make the notification less intrusive.
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .setOngoing(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(NOTIFICATION_ID_STICKY, builder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC)
@@ -405,7 +406,7 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID_STICKY, builder.build())
         }
 
-        return START_STICKY // This makes sure, the service does not get killed.
+        return START_REDELIVER_INTENT
     }
 
     override fun onDestroy() {

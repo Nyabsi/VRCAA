@@ -33,13 +33,15 @@ class StatusHelper {
         }
     }
 
-    fun getStatusFromString(status: String): Status {
-        return when(status) {
-            "join me" -> Status.JoinMe
-            "active" -> Status.Active
-            "ask me" -> Status.AskMe
-            "busy" -> Status.Busy
-            else -> Status.Offline
+    companion object {
+        fun getStatusFromString(status: String): Status {
+            return when(status) {
+                "join me" -> Status.JoinMe
+                "active" -> Status.Active
+                "ask me" -> Status.AskMe
+                "busy" -> Status.Busy
+                else -> Status.Offline
+            }
         }
     }
 }

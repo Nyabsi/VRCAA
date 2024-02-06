@@ -50,7 +50,7 @@ class LicensesScreen : Screen {
                 LibrariesContainer(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = it.calculateTopPadding()),
+                        .padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding()),
                     librariesBlock = { ctx ->
                         Libs.Builder().withJson(ctx, R.raw.aboutlibraries).build()
                     }

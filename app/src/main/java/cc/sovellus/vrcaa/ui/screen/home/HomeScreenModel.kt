@@ -52,13 +52,6 @@ class HomeScreenModel(
             context.api.get().getFriends(true)?.let { offlineFriends = it }
             context.api.get().getWorlds()?.let { featuredWorlds = it }
 
-            // Load the service here, I believe it's better than loading at `MainActivity`
-            // Because if session expires, it would not restart the service.
-            if (!context.isMyServiceRunning(PipelineService::class.java)) {
-                val intent = Intent(context, PipelineService::class.java)
-                context.startForegroundService(intent)
-            }
-
             mutableState.value = HomeState.Result(
                 friends = friends,
                 lastVisited = lastVisited,

@@ -146,14 +146,14 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSortedStatus = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
+                val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsSorted = friendsSortedStatus.sortedBy { it.location == "offline" }
                 items(friendsSorted.count()) { it ->
                     val navigator = LocalNavigator.currentOrThrow
                     val friend = friendsSorted[it]
 
                     ListItem(
-                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
+                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = { Text(text = friend.location.let { location->
                             if (location == "offline" && isOnline) { "Active on the website." } else { location }
@@ -170,7 +170,7 @@ class FriendsScreen : Screen {
                             )
                         },
                         trailingContent = {
-                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
                         },
                         modifier = Modifier.clickable(
                             onClick = {
