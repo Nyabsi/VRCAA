@@ -408,7 +408,7 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID_STICKY, builder.build())
         }
 
-        return START_STICKY // This makes sure, the service does not get killed.
+        return START_REDELIVER_INTENT
     }
 
     override fun onDestroy() {
