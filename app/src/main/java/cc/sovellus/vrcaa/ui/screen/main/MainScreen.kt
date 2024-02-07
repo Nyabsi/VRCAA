@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -60,8 +61,9 @@ class MainScreen : Screen {
     override fun Content() {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { MainScreenModel() }
+        val model = navigator.rememberNavigatorScreenModel { MainScreenModel(context) }
 
         TabNavigator(
             HomeTab,
@@ -72,20 +74,6 @@ class MainScreen : Screen {
                 )
             }
         ) {
-
-            // How ironic... This solves the black icons for Android 14
-            // They are otherwise broken.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                val systemUiController = rememberSystemUiController()
-
-                SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = Color.Transparent,
-                        darkIcons = false
-                    )
-                }
-            }
-
             Scaffold(
                 topBar = {
                     SearchBar(

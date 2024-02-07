@@ -41,9 +41,10 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.models.Avatars
-import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.Avatar
+import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
@@ -74,11 +75,11 @@ class HomeScreen : Screen {
 
     @Composable
     fun DisplayHome(
-        friends: MutableList<Friends.FriendsItem>,
-        lastVisited: MutableList<LimitedWorlds.LimitedWorldItem>,
-        featuredAvatars: MutableList<Avatars.AvatarsItem>,
-        offlineFriends: MutableList<Friends.FriendsItem>,
-        featuredWorlds: MutableList<LimitedWorlds.LimitedWorldItem>
+        friends: MutableList<LimitedUser>,
+        lastVisited: MutableList<World>,
+        featuredAvatars: MutableList<Avatar>,
+        offlineFriends: MutableList<LimitedUser>,
+        featuredWorlds: MutableList<World>
     ) {
        val navigator = LocalNavigator.currentOrThrow
 

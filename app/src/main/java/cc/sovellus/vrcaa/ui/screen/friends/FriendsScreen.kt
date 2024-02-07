@@ -39,13 +39,14 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.helper.StatusHelper
-import cc.sovellus.vrcaa.api.models.Friends
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -61,7 +62,7 @@ class FriendsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel(context) }
+        val model = rememberScreenModel { FriendsScreenModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -74,9 +75,9 @@ class FriendsScreen : Screen {
     @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
     @Composable
     private fun RenderList(
-        friends: List<Friends.FriendsItem>,
-        offlineFriends: List<Friends.FriendsItem>,
-        favoriteFriends: List<Friends.FriendsItem>,
+        friends: List<LimitedUser>,
+        offlineFriends: List<LimitedUser>,
+        favoriteFriends: List<LimitedUser>,
         model: FriendsScreenModel
     ) {
 
@@ -86,14 +87,21 @@ class FriendsScreen : Screen {
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
 
-        Box(Modifier.pullRefresh(stateRefresh).fillMaxSize()) {
+        Box(
+            Modifier
+                .pullRefresh(stateRefresh)
+                .fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                MultiChoiceSegmentedButtonRow {
+                MultiChoiceSegmentedButtonRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp)
+                ) {
                     options.forEachIndexed { index, label ->
                         SegmentedButton(
                             shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
@@ -111,7 +119,7 @@ class FriendsScreen : Screen {
                             },
                             checked = index == model.currentIndex.intValue
                         ) {
-                            Text(text = label)
+                            Text(text = label, softWrap = true, maxLines = 1)
                         }
                     }
                 }
@@ -129,7 +137,7 @@ class FriendsScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    fun ShowFriends(friends: List<Friends.FriendsItem>, isOnline: Boolean = true) {
+    fun ShowFriends(friends: List<LimitedUser>, isOnline: Boolean = true) {
 
         if (friends.isEmpty()) {
             Column(
@@ -146,14 +154,14 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSortedStatus = friends.sortedBy { StatusHelper().getStatusFromString(it.status) }
+                val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsSorted = friendsSortedStatus.sortedBy { it.location == "offline" }
                 items(friendsSorted.count()) { it ->
                     val navigator = LocalNavigator.currentOrThrow
                     val friend = friendsSorted[it]
 
                     ListItem(
-                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper().getStatusFromString(friend.status)) }, maxLines = 1) },
+                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = { Text(text = friend.location.let { location->
                             if (location == "offline" && isOnline) { "Active on the website." } else { location }
@@ -170,7 +178,7 @@ class FriendsScreen : Screen {
                             )
                         },
                         trailingContent = {
-                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper().getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
                         },
                         modifier = Modifier.clickable(
                             onClick = {

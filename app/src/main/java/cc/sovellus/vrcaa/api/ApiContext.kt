@@ -14,15 +14,16 @@ import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.Instance
-import cc.sovellus.vrcaa.api.models.LimitedUser
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.api.models.Notifications
 import cc.sovellus.vrcaa.api.models.User
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -200,6 +201,9 @@ class ApiContext(
 
         preferences.cookies = ""
         preferences.isExpiredSession = true
+
+        val serviceIntent = Intent(this, PipelineService::class.java)
+        stopService(serviceIntent)
 
         val intent = Intent(this, MainActivity::class.java)
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
@@ -382,7 +386,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getFriend(userId: String): Friends.FriendsItem? {
+    suspend fun getFriend(userId: String): LimitedUser? {
 
         val headers = Headers.Builder()
 
@@ -398,7 +402,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), Friends.FriendsItem::class.java)
+                Gson().fromJson(result.body?.string(), LimitedUser::class.java)
             }
             else -> {
                 null
@@ -456,7 +460,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getRecentWorlds(): LimitedWorlds? {
+    suspend fun getRecentWorlds(): Worlds? {
 
         val headers = Headers.Builder()
 
@@ -472,7 +476,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), LimitedWorlds::class.java)
+                Gson().fromJson(result.body?.string(), Worlds::class.java)
             }
             else -> {
                 null
@@ -480,7 +484,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): LimitedWorlds? {
+    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): Worlds? {
 
         val headers = Headers.Builder()
 
@@ -496,7 +500,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), LimitedWorlds::class.java)
+                Gson().fromJson(result.body?.string(), Worlds::class.java)
             }
             else -> {
                 null

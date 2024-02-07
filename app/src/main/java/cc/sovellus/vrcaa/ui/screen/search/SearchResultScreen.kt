@@ -49,8 +49,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
-import cc.sovellus.vrcaa.api.models.Users
+import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -84,8 +84,8 @@ class SearchResultScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun DisplayResult(
-        worlds: MutableList<LimitedWorlds.LimitedWorldItem>,
-        users: MutableList<Users.UsersItem>,
+        worlds: MutableList<World>,
+        users: MutableList<LimitedUser>,
         avatars: MutableList<JustHPartyAvatars.JustHPartyAvatarsItem>,
         model: SearchResultScreenModel
     ) {
@@ -114,11 +114,13 @@ class SearchResultScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = it.calculateTopPadding()),
+                        .padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding()),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    MultiChoiceSegmentedButtonRow {
+                    MultiChoiceSegmentedButtonRow(
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                    ) {
                         options.forEachIndexed { index, label ->
                             SegmentedButton(
                                 shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
@@ -136,7 +138,7 @@ class SearchResultScreen(
                                 },
                                 checked = index == model.currentIndex.intValue
                             ) {
-                                Text(label)
+                                Text(text = label, softWrap = true, maxLines = 1)
                             }
                         }
                     }
@@ -195,7 +197,7 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowWorlds(
-        worlds: MutableList<LimitedWorlds.LimitedWorldItem>
+        worlds: MutableList<World>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -232,7 +234,7 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowUsers(
-        users: MutableList<Users.UsersItem>
+        users: MutableList<LimitedUser>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 

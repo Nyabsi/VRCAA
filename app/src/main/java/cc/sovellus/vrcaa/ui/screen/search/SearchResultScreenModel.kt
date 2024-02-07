@@ -6,8 +6,8 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.avatars.providers.JustHPartyProvider
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
-import cc.sovellus.vrcaa.api.models.Users
+import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.launch
 
@@ -21,14 +21,14 @@ class SearchResultScreenModel(
         data object Init : SearchState()
         data object Loading : SearchState()
         data class Result(
-            val foundWorlds: MutableList<LimitedWorlds.LimitedWorldItem>,
-            val foundUsers: MutableList<Users.UsersItem>,
+            val foundWorlds: MutableList<World>,
+            val foundUsers: MutableList<LimitedUser>,
             val foundAvatars: MutableList<JustHPartyAvatars.JustHPartyAvatarsItem>
         ) : SearchState()
     }
 
-    private var foundWorlds = mutableListOf<LimitedWorlds.LimitedWorldItem>()
-    private var foundUsers = mutableListOf<Users.UsersItem>()
+    private var foundWorlds = mutableListOf<World>()
+    private var foundUsers = mutableListOf<LimitedUser>()
     private var foundAvatars = mutableListOf<JustHPartyAvatars.JustHPartyAvatarsItem>()
 
     var currentIndex = mutableIntStateOf(0)

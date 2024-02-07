@@ -34,25 +34,27 @@ class TrustHelper {
         }
     }
 
-    fun getTrustRankFromTags(tags: List<String>): Rank
-    {
-        var rank: Rank = Rank.Visitor
+    companion object {
+        fun getTrustRankFromTags(tags: List<String>): Rank
+        {
+            var rank: Rank = Rank.Visitor
 
-        for (tag in tags.reversed()) {
+            for (tag in tags.reversed()) {
 
-            if (tag.contains("system_trust_veteran") && (rank < Rank.Trusted))
-                rank = Rank.Trusted
+                if (tag.contains("system_trust_veteran") && (rank < Rank.Trusted))
+                    rank = Rank.Trusted
 
-            if (tag.contains("system_trust_trusted") && (rank < Rank.Known))
-                rank = Rank.Known
+                if (tag.contains("system_trust_trusted") && (rank < Rank.Known))
+                    rank = Rank.Known
 
-            if (tag.contains("system_trust_known") && (rank < Rank.User))
-                rank = Rank.User
+                if (tag.contains("system_trust_known") && (rank < Rank.User))
+                    rank = Rank.User
 
-            if (tag.contains("system_trust_basic") && (rank < Rank.NewUser))
-                rank = Rank.NewUser
+                if (tag.contains("system_trust_basic") && (rank < Rank.NewUser))
+                    rank = Rank.NewUser
+            }
+
+            return rank
         }
-
-        return rank
     }
 }
