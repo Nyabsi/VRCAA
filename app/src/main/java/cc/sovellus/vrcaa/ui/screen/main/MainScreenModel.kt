@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel

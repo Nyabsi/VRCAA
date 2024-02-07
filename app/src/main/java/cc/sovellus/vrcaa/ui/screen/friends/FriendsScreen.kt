@@ -30,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -166,7 +165,7 @@ class FriendsScreen : Screen {
                     ListItem(
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
-                        supportingContent = { friend.location?.let { location -> Text(text = location, maxLines = 1) } },
+                        supportingContent = { Text(text = friend.location, maxLines = 1) },
                         leadingContent = {
                             GlideImage(
                                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
