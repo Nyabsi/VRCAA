@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -93,7 +94,9 @@ class FriendsScreen : Screen {
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                MultiChoiceSegmentedButtonRow {
+                MultiChoiceSegmentedButtonRow(
+                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                ) {
                     options.forEachIndexed { index, label ->
                         SegmentedButton(
                             shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
@@ -111,7 +114,7 @@ class FriendsScreen : Screen {
                             },
                             checked = index == model.currentIndex.intValue
                         ) {
-                            Text(text = label)
+                            Text(text = label, softWrap = true, maxLines = 1)
                         }
                     }
                 }

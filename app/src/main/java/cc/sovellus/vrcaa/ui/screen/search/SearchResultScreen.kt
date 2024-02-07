@@ -118,7 +118,9 @@ class SearchResultScreen(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    MultiChoiceSegmentedButtonRow {
+                    MultiChoiceSegmentedButtonRow(
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                    ) {
                         options.forEachIndexed { index, label ->
                             SegmentedButton(
                                 shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
@@ -136,7 +138,7 @@ class SearchResultScreen(
                                 },
                                 checked = index == model.currentIndex.intValue
                             ) {
-                                Text(label)
+                                Text(text = label, softWrap = true, maxLines = 1)
                             }
                         }
                     }
