@@ -44,9 +44,6 @@ class PipelineService : Service(), CoroutineScope {
 
     private lateinit var pipeline: PipelineContext
 
-    private var friends: ArrayList<LimitedUser> = arrayListOf()
-    private lateinit var activeFriends: Friends
-
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
@@ -98,10 +95,6 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendOnline -> {
                     val friend = msg.obj as FriendOnline
 
-                    // We don't want to add duplicates to the list.
-                    if (friends.find { it.id == friend.userId } == null)
-                        friends.add(friend.user)
-
                     if (notificationManager.isOnWhitelist(friend.userId) &&
                         notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_ONLINE)) {
                         pushNotification(
@@ -116,126 +109,67 @@ class PipelineService : Service(), CoroutineScope {
                         friendName = friend.user.displayName
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
+
+                    feedManager.addFriend(friend.user)
                 }
                 is FriendOffline -> {
-                    val friend = msg.obj as FriendOffline
 
-                    // Remove from list if found.
-                    val friendObject = friends.find { it.id == friend.userId }
-                    if (friendObject != null)
-                    {
+                    val friend = msg.obj as FriendOffline
+                    val friendObject = feedManager.getFriend(friend.userId)
+
+                    if (notificationManager.isOnWhitelist(friend.userId) &&
+                        notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                        pushNotification(
+                            title = application.getString(R.string.notification_service_title_offline),
+                            content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName),
+                            channel = App.CHANNEL_OFFLINE_ID
+                        )
+                    }
+
+                    feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                        friendId = friend.userId
+                        friendName = friendObject.displayName
+                        friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
+                    })
+
+                    feedManager.removeFriend(friend.userId)
+                }
+                is FriendLocation -> {
+
+                    val friend = msg.obj as FriendLocation
+                    val friendObject = feedManager.getFriend(friend.userId)
+
+                    if (
+                        StatusHelper.getStatusFromString(friend.user.status) !=
+                        StatusHelper.getStatusFromString(friendObject.status)) {
                         if (notificationManager.isOnWhitelist(friend.userId) &&
-                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
+                            notificationManager.isIntentEnabled(
+                                friend.userId,
+                                NotificationManager.Intents.FRIEND_FLAG_STATUS
+                            )
+                        ) {
                             pushNotification(
-                                title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName),
-                                channel = App.CHANNEL_OFFLINE_ID
+                                title = application.getString(R.string.notification_service_title_status),
+                                content = application.getString(R.string.notification_service_description_status)
+                                    .format(
+                                        friendObject.displayName,
+                                        StatusHelper.getStatusFromString(friendObject.status)
+                                            .toString(),
+                                        StatusHelper.getStatusFromString(friend.user.status)
+                                            .toString()
+                                    ),
+                                channel = App.CHANNEL_LOCATION_ID
                             )
                         }
 
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                            friendId = friend.userId
-                            friendName = friendObject.displayName
-                            friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
-                        })
-
-                        friends = friends.filter { it.id != friend.userId } as ArrayList<LimitedUser>
-                    } else {
-                        // It seems it was not cached during local session, instead fallback to currentFriends
-                        val fallbackFriend = activeFriends.find { it.id == friend.userId }
-
-                        if (fallbackFriend != null) {
-                            if (notificationManager.isOnWhitelist(friend.userId) &&
-                                notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
-                                pushNotification(
-                                    title = application.getString(R.string.notification_service_title_offline),
-                                    content = application.getString(R.string.notification_service_description_offline).format(
-                                        fallbackFriend.displayName
-                                    ),
-                                    channel = App.CHANNEL_OFFLINE_ID
-                                )
-                            }
-
-                            feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                                friendId = friend.userId
-                                friendName = fallbackFriend.displayName
-                                friendPictureUrl = fallbackFriend.userIcon.ifEmpty { fallbackFriend.currentAvatarImageUrl }
-                            })
-
-                            activeFriends.remove(activeFriends.find { it.id == friend.userId })
-                        }
-                    }
-                }
-                is FriendLocation -> {
-                    val friend = msg.obj as FriendLocation
-
-                    val friendObject = friends.find { it.id == friend.userId }
-                    if (friendObject != null)
-                    {
-                        if (
-                            StatusHelper.getStatusFromString(friend.user.status) !=
-                            StatusHelper.getStatusFromString(friendObject.status))
-                        {
-                            if (notificationManager.isOnWhitelist(friend.userId) &&
-                                notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_STATUS)) {
-                                pushNotification(
-                                    title = application.getString(R.string.notification_service_title_status),
-                                    content = application.getString(R.string.notification_service_description_status).format(
-                                        friendObject.displayName,
-                                        StatusHelper.getStatusFromString(friendObject.status).toString(),
-                                        StatusHelper.getStatusFromString(friend.user.status).toString()
-                                    ),
-                                    channel = App.CHANNEL_LOCATION_ID
-                                )
-                            }
-
-                            feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
+                        feedManager.addFeed(
+                            FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                 friendId = friend.userId
                                 friendName = friendObject.displayName
-                                friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
+                                friendPictureUrl =
+                                    friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
                                 friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                             })
-
-                            val tmp = friends.find { it.id == friend.userId }
-                            tmp?.let {
-                                it.status = friend.user.status
-                                friends.set(friends.indexOf(tmp), tmp)
-                            }
-                        }
-                    } else {
-                        val fallbackFriend = activeFriends.find { it.id == friend.userId }
-
-                        if (
-                            StatusHelper.getStatusFromString(friend.user.status) !=
-                            StatusHelper.getStatusFromString(fallbackFriend?.status.toString())
-                        )
-                        {
-                            if (notificationManager.isOnWhitelist(friend.userId) &&
-                                notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_STATUS)) {
-                                pushNotification(
-                                    title = application.getString(R.string.notification_service_title_status),
-                                    content = application.getString(R.string.notification_service_description_status).format(
-                                        fallbackFriend?.displayName,
-                                        StatusHelper.getStatusFromString(fallbackFriend?.status.toString()).toString(),
-                                        StatusHelper.getStatusFromString(friend.user.status).toString()
-                                    ),
-                                    channel = App.CHANNEL_LOCATION_ID
-                                )
-                            }
-
-                            feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
-                                friendId = friend.userId
-                                friendName = fallbackFriend?.displayName.toString()
-                                friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
-                                friendStatus = StatusHelper.getStatusFromString(friend.user.status)
-                            })
-
-                            val tmp = activeFriends.find { it.id == friend.userId }
-                            tmp?.let {
-                                it.status = friend.user.status
-                                activeFriends.set(activeFriends.indexOf(tmp), tmp)
-                            }
-                        }
                     }
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
@@ -265,58 +199,30 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
                     }
+
+                    feedManager.updateFriend(friend.user)
                 }
                 is FriendDelete -> {
                     val friend = msg.obj as FriendDelete
+                    val friendObject = feedManager.getFriend(friend.userId)
 
-                    val friendObject = friends.find { it.id == friend.userId }
-                    if (friendObject != null) {
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
-                            friendId = friend.userId
-                            friendName = friendObject.displayName
-                            friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
+                    feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
+                        friendId = friend.userId
+                        friendName = friendObject.displayName
+                        friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
 
-                        })
+                    })
 
-                        pushNotification(
-                            title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed).format(friendObject.displayName),
-                            channel = App.CHANNEL_STATUS_ID
-                        )
+                    pushNotification(
+                        title = application.getString(R.string.notification_service_title_friend_removed),
+                        content = application.getString(R.string.notification_service_description_friend_removed).format(friendObject.displayName),
+                        channel = App.CHANNEL_STATUS_ID
+                    )
 
-                        friends = friends.filter { it.id != friend.userId } as ArrayList<LimitedUser>
-                    } else {
-                        val fallbackFriend = activeFriends.find { it.id == friend.userId }
-
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
-                            friendId = friend.userId
-                            friendName = fallbackFriend?.displayName.toString()
-                            friendPictureUrl = fallbackFriend?.userIcon?.ifEmpty { fallbackFriend.currentAvatarImageUrl }.toString()
-                        })
-
-                        pushNotification(
-                            title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed).format(fallbackFriend?.displayName.toString()),
-                            channel = App.CHANNEL_STATUS_ID
-                        )
-
-                        activeFriends.remove(activeFriends.find { it.id == friend.userId })
-                    }
+                    feedManager.removeFriend(friend.userId)
                 }
                 is FriendAdd -> {
                     val friend = msg.obj as FriendAdd
-
-                    launch {
-                        withContext(Dispatchers.Main) {
-                            // You're unlike to get that many friends that this would be harmful, it is a shitty workaround til I refactor the code, deal with it.
-                            // You would rather have this than the application crashing on your face, would you now?
-                            api.get().getFriends().let { friends ->
-                                if (friends != null) {
-                                    activeFriends = friends
-                                }
-                            }
-                        }
-                    }
 
                     // Both Friend Add and Remove should send notification regardless of the specified setting.
                     pushNotification(
@@ -330,6 +236,8 @@ class PipelineService : Service(), CoroutineScope {
                         friendName = friend.user.displayName
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
+
+                    feedManager.addFriend(friend.user)
                 }
                 is Notification -> {
                     val notification = msg.obj as Notification
@@ -376,16 +284,22 @@ class PipelineService : Service(), CoroutineScope {
             withContext(Dispatchers.Main) {
                 api.get().getAuth().let { token ->
                     if (!token.isNullOrEmpty()) {
+                        api.get().getFriends().let { friends ->
+                            if (friends != null) {
+                                feedManager.setFriends(friends)
+                            }
+                        }
+
+                        api.get().getFriends(true).let { friends ->
+                            if (friends != null) {
+                                feedManager.setFriends(friends, true)
+                            }
+                        }
+
                         pipeline = PipelineContext(token)
                         pipeline.let { pipeline ->
                             pipeline.connect()
                             listener.let { pipeline.setListener(it) }
-                        }
-
-                        api.get().getFriends().let { friends ->
-                            if (friends != null) {
-                                activeFriends = friends
-                            }
                         }
                     }
                 }

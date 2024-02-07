@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -61,7 +62,7 @@ class FriendsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel(context) }
+        val model = rememberScreenModel { FriendsScreenModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -86,7 +87,10 @@ class FriendsScreen : Screen {
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
 
-        Box(Modifier.pullRefresh(stateRefresh).fillMaxSize()) {
+        Box(
+            Modifier
+                .pullRefresh(stateRefresh)
+                .fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -94,7 +98,9 @@ class FriendsScreen : Screen {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 MultiChoiceSegmentedButtonRow(
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp)
                 ) {
                     options.forEachIndexed { index, label ->
                         SegmentedButton(

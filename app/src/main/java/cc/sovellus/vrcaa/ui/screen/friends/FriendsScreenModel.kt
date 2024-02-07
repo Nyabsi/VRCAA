@@ -9,6 +9,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.helper.LocationHelper
 import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.manager.FeedManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,8 @@ class FriendsScreenModel(
     var isRefreshing = mutableStateOf(false)
     var currentIndex = mutableIntStateOf(0)
 
+    private val feedManager = FeedManager()
+
     init {
         mutableState.value = FriendListState.Loading
         getFriends()
@@ -37,22 +40,22 @@ class FriendsScreenModel(
     private fun getFriends() {
         screenModelScope.launch {
 
-            context.api.get().getFriends()?.let {
+            feedManager.getFriends().let {
                 friends = it
                 getFriendLocations(friends)
             }
 
-            context.api.get().getFriends(true)?.let {
+            feedManager.getFriends(true).let {
                 offlineFriends = it
             }
 
             context.api.get().getFavorites("friend")?.let { favorites ->
                 for (favorite in favorites) {
                     context.api.get().getFriend(favorite.favoriteId)?.let { friend ->
-                        getFriendLocation(friend)
                         favoriteFriends.add(friend)
                     }
                 }
+                getFriendLocations(favoriteFriends)
             }
 
             mutableState.value = FriendListState.Result(
@@ -60,19 +63,6 @@ class FriendsScreenModel(
                 offlineFriends = offlineFriends,
                 favoriteFriends = favoriteFriends
             )
-        }
-    }
-
-    private suspend fun getFriendLocation(friend: LimitedUser) {
-        if (friend.location.contains("wrld_")) {
-            val result = LocationHelper.parseLocationIntent(friend.location)
-            val world = context.api.get().getWorld(result.worldId)!!
-
-            if (result.regionId.isNotEmpty()) {
-                friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
-            } else {
-                friend.location = "${world.name}~(${result.instanceType}) USW"
-            }
         }
     }
 

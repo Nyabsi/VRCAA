@@ -22,8 +22,6 @@ data class World(
     val id: String,
     @SerializedName("imageUrl")
     val imageUrl: String,
-    @SerializedName("instances")
-    val instances: List<List<Instance>>,
     @SerializedName("labsPublicationDate")
     val labsPublicationDate: String,
     @SerializedName("name")
