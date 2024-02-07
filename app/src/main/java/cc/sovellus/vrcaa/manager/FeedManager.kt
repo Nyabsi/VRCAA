@@ -89,9 +89,11 @@ class FeedManager {
     fun removeFriend(userId: String, offline: Boolean = false) {
         if (!offline) {
             synchronized(syncedFriends) {
-                val friend = syncedFriends.find { it.id == userId }!!
-                syncedFriends.remove(friend)
-                addFriend(friend, true)
+                val friend = syncedFriends.find { it.id == userId }
+                if (friend != null) {
+                    syncedFriends.remove(friend)
+                    addFriend(friend, true)
+                }
             }
         } else {
             synchronized(syncedOfflineFriends) {
@@ -108,7 +110,10 @@ class FeedManager {
 
     fun updateFriend(friend: LimitedUser) {
         synchronized(syncedFriends) {
-            syncedFriends.set(syncedFriends.indexOf(syncedFriends.find { it.id == friend.id }!!), friend)
+            val friendFound = syncedFriends.find { it.id == friend.id }
+            if (friendFound != null) {
+                syncedFriends.set(syncedFriends.indexOf(friendFound), friend)
+            }
         }
     }
 
