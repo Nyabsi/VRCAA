@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -40,20 +41,25 @@ class FriendsScreenModel(
 
     private var favoriteFriends = mutableListOf<LimitedUser>()
 
-    private val listener = object : FeedManager.FeedListener {
-        override fun onUpdateFriends(friends: ArrayList<LimitedUser>, offline: Boolean) {
+    private val listener = object : FeedManager.FriendListener {
+        override fun onUpdateFriends(friends: MutableList<LimitedUser>, offline: Boolean) {
+            val newFriends = friends.toList()
+            screenModelScope.launch { getFriendLocations(newFriends) }
+            Log.d("VRCAA", "state flow re-work 101")
             if (offline) {
-                onlineFriendsStateFlow.update { friends }
+                offlineFriendsStateFlow.update { newFriends }
             } else {
-                offlineFriendsStateFlow.update { friends }
+                onlineFriendsStateFlow.update { newFriends }
             }
         }
-
-        override fun onReceiveUpdate(list: MutableList<FeedManager.Feed>) {}
     }
 
     init {
-        feedManager.setListener(listener)
+        feedManager.setFriendListener(listener)
+        screenModelScope.launch {
+            getFriendLocations(onlineFriends.value)
+            getFriendLocations(offlineFriends.value)
+        }
         getFriends()
     }
 
@@ -74,14 +80,16 @@ class FriendsScreenModel(
 
     suspend fun getFriendLocations(friends: List<LimitedUser>) {
         for (friend in friends) {
-            if (friend.location.contains("wrld_")) {
-                val result = LocationHelper.parseLocationIntent(friend.location)
-                val world = context.api.get().getWorld(result.worldId)!!
+            friend.location?.let { location ->
+                if (location.contains("wrld_")) {
+                    val result = LocationHelper.parseLocationIntent(location)
+                    val world = context.api.get().getWorld(result.worldId)!!
 
-                if (result.regionId.isNotEmpty()) {
-                    friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
-                } else {
-                    friend.location = "${world.name}~(${result.instanceType}) USW"
+                    if (result.regionId.isNotEmpty()) {
+                        friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                    } else {
+                        friend.location = "${world.name}~(${result.instanceType}) USW"
+                    }
                 }
             }
         }

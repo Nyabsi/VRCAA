@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
+import android.util.Log
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.LimitedUser
 import java.time.LocalDateTime
@@ -31,16 +32,20 @@ class FeedManager {
 
     interface FeedListener {
         fun onReceiveUpdate(list: MutableList<Feed>)
-        fun onUpdateFriends(friends: ArrayList<LimitedUser>, offline: Boolean)
+    }
+
+    interface FriendListener {
+        fun onUpdateFriends(friends: MutableList<LimitedUser>, offline: Boolean)
     }
 
     // the feedList should be shared across *any* instance of "FeedManager"
     // since it is accessed by the MainThread (UI) and other threads (ie. Service)
     companion object {
-        @Volatile private var feedList: ArrayList<Feed> = ArrayList()
         @Volatile private var feedListener: FeedListener? = null
-        @Volatile private var syncedFriends: ArrayList<LimitedUser> = ArrayList()
-        @Volatile private var syncedOfflineFriends: ArrayList<LimitedUser> = ArrayList()
+        @Volatile private var friendListener: FriendListener? = null
+        @Volatile private var feedList: MutableList<Feed> = ArrayList()
+        @Volatile private var syncedFriends: MutableList<LimitedUser> = ArrayList()
+        @Volatile private var syncedOfflineFriends: MutableList<LimitedUser> = ArrayList()
     }
 
     fun addFeed(feed: Feed) {
@@ -56,80 +61,85 @@ class FeedManager {
         }
     }
 
-    fun setListener(listener: FeedListener) {
+    fun setFeedListener(listener: FeedListener) {
         synchronized(listener) {
             feedListener = listener
         }
     }
 
+    fun setFriendListener(listener: FriendListener) {
+        synchronized(listener) {
+            friendListener = listener
+        }
+    }
+
     fun setFriends(friends: ArrayList<LimitedUser>, offline: Boolean = false) {
         if (!offline) {
-            synchronized(syncedFriends) {
+            synchronized(friends) {
                 syncedFriends = friends
             }
         } else {
-            synchronized(syncedOfflineFriends) {
+            synchronized(friends) {
                 syncedOfflineFriends = friends
             }
         }
     }
 
-    fun addFriend(friend: LimitedUser, offline: Boolean = false) {
-        if (!offline) {
-            synchronized(syncedFriends) {
+    fun addFriend(friend: LimitedUser) {
+        if (syncedFriends.find { it.id == friend.id } == null)
+        {
+            synchronized(friend) {
                 syncedFriends.add(friend)
-                removeFriend(friend.id, true)
-                feedListener?.onUpdateFriends(syncedFriends, false)
+                friendListener?.onUpdateFriends(syncedFriends, false)
             }
-        } else {
-            synchronized(syncedOfflineFriends) {
-                syncedOfflineFriends.add(friend)
-                feedListener?.onUpdateFriends(syncedOfflineFriends, true)
+        }
+
+        if (syncedOfflineFriends.find { it.id == friend.id } != null)
+        {
+            synchronized(friend) {
+                syncedOfflineFriends.remove(friend)
+                friendListener?.onUpdateFriends(syncedOfflineFriends, true)
             }
         }
     }
 
-    fun removeFriend(userId: String, offline: Boolean = false) {
-        if (!offline) {
-            synchronized(syncedFriends) {
-                val friend = syncedFriends.find { it.id == userId }
-                if (friend != null) {
-                    friend.status = "offline"
-                    syncedFriends.remove(friend)
-                    feedListener?.onUpdateFriends(syncedFriends, false)
-                    addFriend(friend, true)
-                }
+    fun removeFriend(userId: String, user: LimitedUser) {
+        synchronized(userId) {
+            val friend = syncedFriends.find { it.id == userId }
+
+            friend?.let {
+                syncedOfflineFriends.add(user)
             }
-        } else {
-            synchronized(syncedOfflineFriends) {
-                syncedOfflineFriends.remove(syncedOfflineFriends.find { it.id == userId })
-                feedListener?.onUpdateFriends(syncedOfflineFriends, true)
+
+            friendListener?.onUpdateFriends(syncedOfflineFriends, true)
+
+            friend?.let {
+                syncedFriends.remove(friend)
             }
+
+            friendListener?.onUpdateFriends(syncedFriends, false)
         }
     }
 
     fun getFriend(userId: String): LimitedUser? {
-        synchronized(syncedFriends) {
-            return syncedFriends.find { it.id == userId }
-        }
+        return syncedFriends.find { it.id == userId }
     }
 
     fun updateFriend(friend: LimitedUser) {
-        synchronized(syncedFriends) {
-            val friendFound = syncedFriends.find { it.id == friend.id }
-            syncedFriends[syncedFriends.indexOf(friendFound)] = friend
+        synchronized(friend) {
+            val tmp = syncedFriends.find { it.id == friend.id }
+            tmp?.let {
+                syncedFriends.set(syncedFriends.indexOf(tmp), friend)
+            }
+            friendListener?.onUpdateFriends(syncedFriends, false)
         }
     }
 
-    fun getFriends(offline: Boolean = false): ArrayList<LimitedUser> {
+    fun getFriends(offline: Boolean = false): MutableList<LimitedUser> {
         return if (!offline) {
-            synchronized(syncedFriends) {
-                syncedFriends
-            }
+            syncedFriends
         } else {
-            synchronized(syncedOfflineFriends) {
-                syncedOfflineFriends
-            }
+            syncedOfflineFriends
         }
     }
 }

@@ -40,7 +40,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private lateinit var pipeline: PipelineContext
+    private var pipeline: PipelineContext? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -132,17 +132,21 @@ class PipelineService : Service(), CoroutineScope {
                         })
                     }
 
-                    feedManager.removeFriend(friend.userId)
+                    launch {
+                        val user = api.get().getUser(friend.userId)
+                        user!!.status = "offline"
+                        feedManager.removeFriend(friend.userId, user)
+                    }
                 }
                 is FriendLocation -> {
 
                     val friend = msg.obj as FriendLocation
-                    val friendObject = feedManager.getFriend(friend.userId)
+                    val cachedFriend = feedManager.getFriend(friend.userId)
 
-                    if (friendObject != null) {
+                    if (cachedFriend != null) {
                         if (
                             StatusHelper.getStatusFromString(friend.user.status) !=
-                            StatusHelper.getStatusFromString(friendObject.status)) {
+                            StatusHelper.getStatusFromString(cachedFriend.status)) {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
                                 notificationManager.isIntentEnabled(
                                     friend.userId,
@@ -153,8 +157,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status)
                                         .format(
-                                            friendObject.displayName,
-                                            StatusHelper.getStatusFromString(friendObject.status)
+                                            cachedFriend.displayName,
+                                            StatusHelper.getStatusFromString(cachedFriend.status)
                                                 .toString(),
                                             StatusHelper.getStatusFromString(friend.user.status)
                                                 .toString()
@@ -166,43 +170,49 @@ class PipelineService : Service(), CoroutineScope {
                             feedManager.addFeed(
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = friend.userId
-                                    friendName = friendObject.displayName
-                                    friendPictureUrl =
-                                        friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
+                                    friendName = friend.user.displayName
+                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                                     friendStatus = StatusHelper.getStatusFromString(friend.user.status)
-                                })
-                        }
+                                }
+                            )
 
-                        // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
-                        // We want to show it only once, so only show when the travelling is done.
-                        if (friend.travelingToLocation.isEmpty()) {
-                            if (notificationManager.isOnWhitelist(friend.userId) &&
-                                notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
-                                pushNotification(
-                                    title = application.getString(R.string.notification_service_title_location),
-                                    content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name),
-                                    channel = App.CHANNEL_LOCATION_ID
-                                )
-                            }
-
-                            val result = LocationHelper.parseLocationIntent(friend.location)
-
-                            val locationFormatted = if (result.regionId.isNotEmpty()) {
-                                "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
-                            } else {
-                                "${friend.world.name}~(${result.instanceType})"
-                            }
-
-                            feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
-                                friendId = friend.userId
-                                friendName = friend.user.displayName
-                                travelDestination = locationFormatted
-                                friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                            })
+                            feedManager.updateFriend(friend.user)
                         }
                     }
 
-                    feedManager.updateFriend(friend.user)
+                    // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
+                    // We want to show it only once, so only show when the travelling is done.
+                    if (friend.travelingToLocation.isEmpty()) {
+                        if (notificationManager.isOnWhitelist(friend.userId) &&
+                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
+                            pushNotification(
+                                title = application.getString(R.string.notification_service_title_location),
+                                content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name),
+                                channel = App.CHANNEL_LOCATION_ID
+                            )
+                        }
+
+                        val result = LocationHelper.parseLocationIntent(friend.location)
+
+                        val locationFormatted = if (result.regionId.isNotEmpty()) {
+                            "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                        } else {
+                            "${friend.world.name}~(${result.instanceType}) US"
+                        }
+
+                        // For some reason, VRChat doesn't also set the user object location properly...
+                        // It took me literally, *hours* to figure this. I'm out.
+                        friend.user.location = friend.location
+
+                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
+                            friendId = friend.userId
+                            friendName = friend.user.displayName
+                            travelDestination = locationFormatted
+                            friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                        })
+
+                        feedManager.updateFriend(friend.user)
+                    }
                 }
                 is FriendDelete -> {
                     val friend = msg.obj as FriendDelete
@@ -223,7 +233,10 @@ class PipelineService : Service(), CoroutineScope {
                         )
                     }
 
-                    feedManager.removeFriend(friend.userId)
+                    launch {
+                        val user = api.get().getUser(friend.userId)
+                        feedManager.removeFriend(friend.userId, user!!)
+                    }
                 }
                 is FriendAdd -> {
                     val friend = msg.obj as FriendAdd
@@ -300,10 +313,8 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         pipeline = PipelineContext(token)
-                        pipeline.let { pipeline ->
-                            pipeline.connect()
-                            listener.let { pipeline.setListener(it) }
-                        }
+                        pipeline?.connect()
+                        pipeline?.setListener(listener)
                     }
                 }
             }
@@ -328,7 +339,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onDestroy() {
         super.onDestroy()
-        pipeline.disconnect()
+        pipeline?.disconnect()
     }
 
     override fun onBind(intent: Intent?): IBinder? {

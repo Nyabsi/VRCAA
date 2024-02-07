@@ -40,8 +40,6 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
-import cafe.adriel.voyager.core.model.rememberScreenModel
-import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -54,7 +52,6 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -89,9 +86,6 @@ class FriendsScreen : Screen {
 
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
-
-        val onlineFriends = model.onlineFriends.collectAsState()
-        val offlineFriends = model.offlineFriends.collectAsState()
 
         Box(
             Modifier
@@ -131,9 +125,9 @@ class FriendsScreen : Screen {
                 }
 
                 when(model.currentIndex.intValue) {
-                    0 -> ShowFriends(favoriteFriends, model)
-                    1 -> ShowFriends(onlineFriends.value, model)
-                    2 -> ShowFriends(offlineFriends.value, model, false)
+                    0 -> ShowFriendsFavorite(favoriteFriends, model)
+                    1 -> ShowFriendsOnline(model)
+                    2 -> ShowFriendsOffline(model)
                 }
             }
 
@@ -143,10 +137,67 @@ class FriendsScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    fun ShowFriends(
+    fun ShowFriendsOffline(
+        model: FriendsScreenModel
+    ) {
+        val offlineFriends = model.offlineFriends.collectAsState()
+
+        if (offlineFriends.value.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
+        } else {
+            LazyColumn(
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(1.dp)
+            ) {
+                items(
+                    offlineFriends.value.count(),
+                    key = { UUID.randomUUID() }
+                ) {
+                    val navigator = LocalNavigator.currentOrThrow
+                    val friend = offlineFriends.value[it]
+
+                    ListItem(
+                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
+                        overlineContent = { Text(friend.displayName) },
+                        supportingContent = { friend.location?.let { location -> Text(text = location, maxLines = 1) } },
+                        leadingContent = {
+                            GlideImage(
+                                model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
+                                contentDescription = stringResource(R.string.preview_image_description),
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(RoundedCornerShape(50)),
+                                contentScale = ContentScale.FillBounds,
+                                alignment = Alignment.Center
+                            )
+                        },
+                        trailingContent = {
+                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                        },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(UserProfileScreen(friend.id))
+                            }
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalGlideComposeApi::class)
+    @Composable
+    fun ShowFriendsFavorite(
         friends: List<LimitedUser>,
-        model: FriendsScreenModel,
-        isOnline: Boolean = true
+        model: FriendsScreenModel
     ) {
         val coroutineScope = rememberCoroutineScope()
 
@@ -166,25 +217,89 @@ class FriendsScreen : Screen {
                     .padding(1.dp)
             ) {
                 val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
-                val friendsSorted = friendsSortedStatus.sortedBy { it.location == "offline" }
-
-                coroutineScope.launch {
-                    model.getFriendLocations(friendsSorted)
-                }
+                val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
 
                 items(
-                    friendsSorted.count(),
+                    friendsFiltered.count(),
                     key = { UUID.randomUUID() }
                 ) {
                     val navigator = LocalNavigator.currentOrThrow
-                    val friend = friendsSorted[it]
+                    val friend = friendsFiltered[it]
 
                     ListItem(
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
-                        supportingContent = { Text(text = friend.location.let { location->
-                            if (location == "offline" && isOnline) { "Active on the website." } else { location }
-                        }, maxLines = 1) },
+                        supportingContent = {
+                            friend.location?.let { location ->
+                                Text(text = location, maxLines = 1)
+                            }
+                        },
+                        leadingContent = {
+                            GlideImage(
+                                model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
+                                contentDescription = stringResource(R.string.preview_image_description),
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(RoundedCornerShape(50)),
+                                contentScale = ContentScale.FillBounds,
+                                alignment = Alignment.Center
+                            )
+                        },
+                        trailingContent = {
+                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                        },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(UserProfileScreen(friend.id))
+                            }
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalGlideComposeApi::class)
+    @Composable
+    fun ShowFriendsOnline(
+        model: FriendsScreenModel
+    ) {
+        val coroutineScope = rememberCoroutineScope()
+        val onlineFriends = model.onlineFriends.collectAsState()
+
+        if (onlineFriends.value.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
+        } else {
+            LazyColumn(
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(1.dp)
+            ) {
+                val friendsSortedStatus = onlineFriends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
+
+                items(
+                    friendsFiltered.count(),
+                    key = { UUID.randomUUID() }
+                ) {
+                    val navigator = LocalNavigator.currentOrThrow
+                    val friend = friendsFiltered[it]
+
+                    ListItem(
+                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
+                        overlineContent = { Text(friend.displayName) },
+                        supportingContent = {
+                            friend.location?.let { location ->
+                                Text(text = location, maxLines = 1)
+                            }
+                        },
                         leadingContent = {
                             GlideImage(
                                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
