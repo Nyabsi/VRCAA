@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableLongStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.models.Avatar
-import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.launch
 import java.time.Clock
@@ -20,18 +20,18 @@ class HomeScreenModel(
         data object Loading : HomeState()
         data class Result(
             val friends: MutableList<LimitedUser>,
-            val lastVisited: MutableList<Worlds.LimitedWorldItem>,
+            val lastVisited: MutableList<World>,
             val featuredAvatars: MutableList<Avatar>,
             val offlineFriends: MutableList<LimitedUser>,
-            val featuredWorlds: MutableList<Worlds.LimitedWorldItem>
+            val featuredWorlds: MutableList<World>
         ) : HomeState()
     }
 
     private var friends = mutableListOf<LimitedUser>()
-    private var lastVisited = mutableListOf<Worlds.LimitedWorldItem>()
+    private var lastVisited = mutableListOf<World>()
     private var featuredAvatars = mutableListOf<Avatar>()
     private var offlineFriends = mutableListOf<LimitedUser>()
-    private var featuredWorlds = mutableListOf<Worlds.LimitedWorldItem>()
+    private var featuredWorlds = mutableListOf<World>()
 
     val lastClickElapsed = mutableLongStateOf(Clock.systemUTC().millis())
 

@@ -44,6 +44,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.models.Avatar
 import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
@@ -75,10 +76,10 @@ class HomeScreen : Screen {
     @Composable
     fun DisplayHome(
         friends: MutableList<LimitedUser>,
-        lastVisited: MutableList<Worlds.LimitedWorldItem>,
+        lastVisited: MutableList<World>,
         featuredAvatars: MutableList<Avatar>,
         offlineFriends: MutableList<LimitedUser>,
-        featuredWorlds: MutableList<Worlds.LimitedWorldItem>
+        featuredWorlds: MutableList<World>
     ) {
        val navigator = LocalNavigator.currentOrThrow
 
