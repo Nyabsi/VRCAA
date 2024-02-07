@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.login
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -11,6 +12,7 @@ import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
 import kotlinx.coroutines.launch
 
@@ -34,6 +36,9 @@ class TwoAuthScreenModel(
 
                 // this is very much mandatory, or things will break.
                 context.api.force(ApiContext(context))
+
+                val intent = Intent(context, PipelineService::class.java)
+                context.startForegroundService(intent)
 
                 navigator.popUntilRoot()
                 navigator.replace(MainScreen())
