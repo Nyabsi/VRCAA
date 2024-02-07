@@ -46,7 +46,7 @@ data class LimitedUser(
     @SerializedName("userIcon")
     val userIcon: String,
     @SerializedName("location")
-    var location: String?,
+    var location: String,
     @SerializedName("imageUrl")
     val imageUrl: String
 )
