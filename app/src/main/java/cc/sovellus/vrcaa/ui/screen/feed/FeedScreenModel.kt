@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.feed
 
 import cafe.adriel.voyager.core.model.ScreenModel
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.manager.FeedManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,8 @@ class FeedScreenModel : ScreenModel {
             val newList = list.toList()
             feedStateFlow.update { newList }
         }
+
+        override fun onUpdateFriends(friends: ArrayList<LimitedUser>, offline: Boolean) {}
     }
 
     init {

@@ -31,6 +31,7 @@ class FeedManager {
 
     interface FeedListener {
         fun onReceiveUpdate(list: MutableList<Feed>)
+        fun onUpdateFriends(friends: ArrayList<LimitedUser>, offline: Boolean)
     }
 
     // the feedList should be shared across *any* instance of "FeedManager"
@@ -78,10 +79,12 @@ class FeedManager {
             synchronized(syncedFriends) {
                 syncedFriends.add(friend)
                 removeFriend(friend.id, true)
+                feedListener?.onUpdateFriends(syncedFriends, false)
             }
         } else {
             synchronized(syncedOfflineFriends) {
                 syncedOfflineFriends.add(friend)
+                feedListener?.onUpdateFriends(syncedFriends, true)
             }
         }
     }
@@ -91,13 +94,16 @@ class FeedManager {
             synchronized(syncedFriends) {
                 val friend = syncedFriends.find { it.id == userId }
                 if (friend != null) {
+                    friend.status = "offline"
                     syncedFriends.remove(friend)
+                    feedListener?.onUpdateFriends(syncedFriends, false)
                     addFriend(friend, true)
                 }
             }
         } else {
             synchronized(syncedOfflineFriends) {
                 syncedOfflineFriends.remove(syncedOfflineFriends.find { it.id == userId })
+                feedListener?.onUpdateFriends(syncedFriends, true)
             }
         }
     }
@@ -111,17 +117,19 @@ class FeedManager {
     fun updateFriend(friend: LimitedUser) {
         synchronized(syncedFriends) {
             val friendFound = syncedFriends.find { it.id == friend.id }
-            if (friendFound != null) {
-                syncedFriends.set(syncedFriends.indexOf(friendFound), friend)
-            }
+            syncedFriends[syncedFriends.indexOf(friendFound)] = friend
         }
     }
 
     fun getFriends(offline: Boolean = false): ArrayList<LimitedUser> {
         return if (!offline) {
-            syncedFriends
+            synchronized(syncedFriends) {
+                syncedFriends
+            }
         } else {
-            syncedOfflineFriends
+            synchronized(syncedOfflineFriends) {
+                syncedOfflineFriends
+            }
         }
     }
 }

@@ -90,6 +90,9 @@ class FriendsScreen : Screen {
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
 
+        val onlineFriends = model.onlineFriends.collectAsState()
+        val offlineFriends = model.offlineFriends.collectAsState()
+
         Box(
             Modifier
                 .pullRefresh(stateRefresh)
@@ -129,8 +132,8 @@ class FriendsScreen : Screen {
 
                 when(model.currentIndex.intValue) {
                     0 -> ShowFriends(favoriteFriends, model)
-                    1 -> ShowFriends(model.feedManager.getFriends(), model)
-                    2 -> ShowFriends(model.feedManager.getFriends(true), model, false)
+                    1 -> ShowFriends(onlineFriends.value, model)
+                    2 -> ShowFriends(offlineFriends.value, model, false)
                 }
             }
 

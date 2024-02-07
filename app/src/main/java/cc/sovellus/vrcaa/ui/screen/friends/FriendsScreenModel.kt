@@ -11,6 +11,9 @@ import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FriendsScreenModel(
@@ -24,14 +27,33 @@ class FriendsScreenModel(
         data class Result (val favoriteFriends: List<LimitedUser>) : FriendListState()
     }
 
-    private var favoriteFriends = mutableListOf<LimitedUser>()
     var isRefreshing = mutableStateOf(false)
     var currentIndex = mutableIntStateOf(0)
 
-    val feedManager = FeedManager()
+    private val feedManager = FeedManager()
+
+    private var onlineFriendsStateFlow = MutableStateFlow(feedManager.getFriends().toList())
+    var onlineFriends = onlineFriendsStateFlow.asStateFlow()
+
+    private var offlineFriendsStateFlow = MutableStateFlow(feedManager.getFriends(true).toList())
+    var offlineFriends = offlineFriendsStateFlow.asStateFlow()
+
+    private var favoriteFriends = mutableListOf<LimitedUser>()
+
+    private val listener = object : FeedManager.FeedListener {
+        override fun onUpdateFriends(friends: ArrayList<LimitedUser>, offline: Boolean) {
+            if (offline) {
+                onlineFriendsStateFlow.update { friends }
+            } else {
+                offlineFriendsStateFlow.update { friends }
+            }
+        }
+
+        override fun onReceiveUpdate(list: MutableList<FeedManager.Feed>) {}
+    }
 
     init {
-        mutableState.value = FriendListState.Loading
+        feedManager.setListener(listener)
         getFriends()
     }
 
