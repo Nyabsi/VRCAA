@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.manager
 
-import android.util.Log
 import cc.sovellus.vrcaa.api.helper.StatusHelper
 import cc.sovellus.vrcaa.api.models.LimitedUser
 import java.time.LocalDateTime

@@ -52,7 +52,6 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import kotlinx.coroutines.launch
 import java.util.UUID
 
 class FriendsScreen : Screen {
@@ -125,7 +124,7 @@ class FriendsScreen : Screen {
                 }
 
                 when(model.currentIndex.intValue) {
-                    0 -> ShowFriendsFavorite(favoriteFriends, model)
+                    0 -> ShowFriendsFavorite(favoriteFriends)
                     1 -> ShowFriendsOnline(model)
                     2 -> ShowFriendsOffline(model)
                 }
@@ -196,11 +195,8 @@ class FriendsScreen : Screen {
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     fun ShowFriendsFavorite(
-        friends: List<LimitedUser>,
-        model: FriendsScreenModel
+        friends: List<LimitedUser>
     ) {
-        val coroutineScope = rememberCoroutineScope()
-
         if (friends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -230,9 +226,7 @@ class FriendsScreen : Screen {
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = {
-                            friend.location?.let { location ->
-                                Text(text = location, maxLines = 1)
-                            }
+                            Text(text = friend.location, maxLines = 1)
                         },
                         leadingContent = {
                             GlideImage(
@@ -264,7 +258,6 @@ class FriendsScreen : Screen {
     fun ShowFriendsOnline(
         model: FriendsScreenModel
     ) {
-        val coroutineScope = rememberCoroutineScope()
         val onlineFriends = model.onlineFriends.collectAsState()
 
         if (onlineFriends.value.isEmpty()) {
@@ -296,9 +289,7 @@ class FriendsScreen : Screen {
                         headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = {
-                            friend.location?.let { location ->
-                                Text(text = location, maxLines = 1)
-                            }
+                            Text(text = friend.location, maxLines = 1)
                         },
                         leadingContent = {
                             GlideImage(

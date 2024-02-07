@@ -1,19 +1,14 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.helper.isMyServiceRunning
-import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainScreenModel(
-    context: Context
-) : ScreenModel {
+class MainScreenModel : ScreenModel {
 
     var isSearchActive = mutableStateOf(false)
     var searchText = mutableStateOf("")
