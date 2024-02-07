@@ -43,13 +43,14 @@ class FriendsScreenModel(
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>, offline: Boolean) {
-            val newFriends = friends.toList()
-            screenModelScope.launch { getFriendLocations(newFriends) }
-            Log.d("VRCAA", "state flow re-work 101")
-            if (offline) {
-                offlineFriendsStateFlow.update { newFriends }
-            } else {
-                onlineFriendsStateFlow.update { newFriends }
+            var newFriends = friends.toList()
+            screenModelScope.launch {
+                newFriends = getFriendLocations(newFriends)
+                if (offline) {
+                    offlineFriendsStateFlow.update { newFriends }
+                } else {
+                    onlineFriendsStateFlow.update { newFriends }
+                }
             }
         }
     }
@@ -57,8 +58,7 @@ class FriendsScreenModel(
     init {
         friendManager.setFriendListener(listener)
         screenModelScope.launch {
-            getFriendLocations(onlineFriends.value)
-            getFriendLocations(offlineFriends.value)
+            onlineFriendsStateFlow.update { getFriendLocations(onlineFriends.value) }
         }
         getFriends()
     }
@@ -78,19 +78,21 @@ class FriendsScreenModel(
         }
     }
 
-    suspend fun getFriendLocations(friends: List<LimitedUser>) {
+    suspend fun getFriendLocations(friends: List<LimitedUser>): List<LimitedUser> {
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
                 val result = LocationHelper.parseLocationIntent(friend.location)
                 val world = context.api.get().getWorld(result.worldId)!!
 
                 if (result.regionId.isNotEmpty()) {
-                    friend.location = "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                    friend.location =
+                        "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
                 } else {
                     friend.location = "${world.name}~(${result.instanceType}) USW"
                 }
             }
         }
+        return friends
     }
 
     fun refreshFriends(context: Context) {
