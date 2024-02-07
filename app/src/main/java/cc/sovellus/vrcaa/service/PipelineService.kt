@@ -29,6 +29,7 @@ import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
 import cc.sovellus.vrcaa.api.models.pipeline.Notification
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,15 +41,16 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private var pipeline: PipelineContext? = null
-
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
     private lateinit var notificationManager: NotificationManager
     private var notificationCounter: Int = 0
 
+    private var pipeline: PipelineContext? = null
+
     private val feedManager = FeedManager()
+    private val friendManager = FriendManager()
 
     private fun pushNotification(
         title: String,
@@ -108,40 +110,40 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
 
-                    feedManager.addFriend(friend.user)
+                    friendManager.addFriend(friend.user)
                 }
                 is FriendOffline -> {
 
                     val friend = msg.obj as FriendOffline
-                    val friendObject = feedManager.getFriend(friend.userId)
+                    val cachedFriend = friendManager.getFriend(friend.userId)
 
-                    if (friendObject != null) {
+                    if (cachedFriend != null) {
                         if (notificationManager.isOnWhitelist(friend.userId) &&
                             notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
                             pushNotification(
                                 title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline).format(friendObject.displayName),
+                                content = application.getString(R.string.notification_service_description_offline).format(cachedFriend.displayName),
                                 channel = App.CHANNEL_OFFLINE_ID
                             )
                         }
 
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendId = friend.userId
-                            friendName = friendObject.displayName
-                            friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
+                            friendName = cachedFriend.displayName
+                            friendPictureUrl = cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
                         })
                     }
 
                     launch {
                         val user = api.get().getUser(friend.userId)
                         user!!.status = "offline"
-                        feedManager.removeFriend(friend.userId, user)
+                        friendManager.removeFriend(friend.userId, user)
                     }
                 }
                 is FriendLocation -> {
 
                     val friend = msg.obj as FriendLocation
-                    val cachedFriend = feedManager.getFriend(friend.userId)
+                    val cachedFriend = friendManager.getFriend(friend.userId)
 
                     if (cachedFriend != null) {
                         if (
@@ -176,7 +178,7 @@ class PipelineService : Service(), CoroutineScope {
                                 }
                             )
 
-                            feedManager.updateFriend(friend.user)
+                            friendManager.updateFriend(friend.user)
                         }
                     }
 
@@ -211,31 +213,31 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
 
-                        feedManager.updateFriend(friend.user)
+                        friendManager.updateFriend(friend.user)
                     }
                 }
                 is FriendDelete -> {
                     val friend = msg.obj as FriendDelete
-                    val friendObject = feedManager.getFriend(friend.userId)
+                    val cachedFriend = friendManager.getFriend(friend.userId)
 
-                    if (friendObject != null) {
+                    if (cachedFriend != null) {
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
                             friendId = friend.userId
-                            friendName = friendObject.displayName
-                            friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
+                            friendName = cachedFriend.displayName
+                            friendPictureUrl = cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
 
                         })
 
                         pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed).format(friendObject.displayName),
+                            content = application.getString(R.string.notification_service_description_friend_removed).format(cachedFriend.displayName),
                             channel = App.CHANNEL_STATUS_ID
                         )
                     }
 
                     launch {
                         val user = api.get().getUser(friend.userId)
-                        feedManager.removeFriend(friend.userId, user!!)
+                        friendManager.removeFriend(friend.userId, user!!)
                     }
                 }
                 is FriendAdd -> {
@@ -254,7 +256,7 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
 
-                    feedManager.addFriend(friend.user)
+                    friendManager.addFriend(friend.user)
                 }
                 is Notification -> {
                     val notification = msg.obj as Notification
@@ -302,13 +304,13 @@ class PipelineService : Service(), CoroutineScope {
                     if (!token.isNullOrEmpty()) {
                         api.get().getFriends().let { friends ->
                             if (friends != null) {
-                                feedManager.setFriends(friends)
+                                friendManager.setFriends(friends)
                             }
                         }
 
                         api.get().getFriends(true).let { friends ->
                             if (friends != null) {
-                                feedManager.setFriends(friends, true)
+                                friendManager.setFriends(friends, true)
                             }
                         }
 

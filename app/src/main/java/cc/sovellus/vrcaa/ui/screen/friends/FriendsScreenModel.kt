@@ -10,7 +10,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.helper.LocationHelper
 import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.helper.api
-import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,17 +31,17 @@ class FriendsScreenModel(
     var isRefreshing = mutableStateOf(false)
     var currentIndex = mutableIntStateOf(0)
 
-    private val feedManager = FeedManager()
+    private val friendManager = FriendManager()
 
-    private var onlineFriendsStateFlow = MutableStateFlow(feedManager.getFriends().toList())
+    private var onlineFriendsStateFlow = MutableStateFlow(friendManager.getFriends().toList())
     var onlineFriends = onlineFriendsStateFlow.asStateFlow()
 
-    private var offlineFriendsStateFlow = MutableStateFlow(feedManager.getFriends(true).toList())
+    private var offlineFriendsStateFlow = MutableStateFlow(friendManager.getFriends(true).toList())
     var offlineFriends = offlineFriendsStateFlow.asStateFlow()
 
     private var favoriteFriends = mutableListOf<LimitedUser>()
 
-    private val listener = object : FeedManager.FriendListener {
+    private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>, offline: Boolean) {
             val newFriends = friends.toList()
             screenModelScope.launch { getFriendLocations(newFriends) }
@@ -55,7 +55,7 @@ class FriendsScreenModel(
     }
 
     init {
-        feedManager.setFriendListener(listener)
+        friendManager.setFriendListener(listener)
         screenModelScope.launch {
             getFriendLocations(onlineFriends.value)
             getFriendLocations(offlineFriends.value)
