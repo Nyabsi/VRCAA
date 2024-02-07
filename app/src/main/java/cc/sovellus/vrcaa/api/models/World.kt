@@ -12,6 +12,8 @@ data class World(
     val capacity: Int,
     @SerializedName("created_at")
     val createdAt: String,
+    @SerializedName("featured")
+    val featured: Boolean,
     @SerializedName("favorites")
     val favorites: Int,
     @SerializedName("heat")
@@ -20,6 +22,8 @@ data class World(
     val id: String,
     @SerializedName("imageUrl")
     val imageUrl: String,
+    @SerializedName("instances")
+    val instances: List<List<Instance>>,
     @SerializedName("labsPublicationDate")
     val labsPublicationDate: String,
     @SerializedName("name")
@@ -30,6 +34,10 @@ data class World(
     val organization: String,
     @SerializedName("popularity")
     val popularity: Int,
+    @SerializedName("privateOccupants")
+    val privateOccupants: Int,
+    @SerializedName("publicOccupants")
+    val publicOccupants: Int,
     @SerializedName("publicationDate")
     val publicationDate: String,
     @SerializedName("recommendedCapacity")
@@ -47,7 +55,11 @@ data class World(
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("description")
-    val description: String
+    val description: String,
+    @SerializedName("version")
+    val version: Int,
+    @SerializedName("visits")
+    val visits: Int
 ) {
     data class UnityPackage(
         @SerializedName("platform")
