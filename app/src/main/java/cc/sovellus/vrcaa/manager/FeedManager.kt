@@ -84,7 +84,7 @@ class FeedManager {
         } else {
             synchronized(syncedOfflineFriends) {
                 syncedOfflineFriends.add(friend)
-                feedListener?.onUpdateFriends(syncedFriends, true)
+                feedListener?.onUpdateFriends(syncedOfflineFriends, true)
             }
         }
     }
@@ -103,7 +103,7 @@ class FeedManager {
         } else {
             synchronized(syncedOfflineFriends) {
                 syncedOfflineFriends.remove(syncedOfflineFriends.find { it.id == userId })
-                feedListener?.onUpdateFriends(syncedFriends, true)
+                feedListener?.onUpdateFriends(syncedOfflineFriends, true)
             }
         }
     }
