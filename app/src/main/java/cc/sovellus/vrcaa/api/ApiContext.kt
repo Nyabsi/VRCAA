@@ -14,10 +14,10 @@ import cc.sovellus.vrcaa.api.models.Avatars
 import cc.sovellus.vrcaa.api.models.Favorites
 import cc.sovellus.vrcaa.api.models.Friends
 import cc.sovellus.vrcaa.api.models.Instance
-import cc.sovellus.vrcaa.api.models.LimitedUser
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.Worlds
 import cc.sovellus.vrcaa.api.models.Notifications
 import cc.sovellus.vrcaa.api.models.User
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.api.models.Users
 import cc.sovellus.vrcaa.api.models.World
 import cc.sovellus.vrcaa.helper.cookies
@@ -386,7 +386,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getFriend(userId: String): Friends.FriendsItem? {
+    suspend fun getFriend(userId: String): LimitedUser? {
 
         val headers = Headers.Builder()
 
@@ -402,7 +402,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), Friends.FriendsItem::class.java)
+                Gson().fromJson(result.body?.string(), LimitedUser::class.java)
             }
             else -> {
                 null
@@ -460,7 +460,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getRecentWorlds(): LimitedWorlds? {
+    suspend fun getRecentWorlds(): Worlds? {
 
         val headers = Headers.Builder()
 
@@ -476,7 +476,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), LimitedWorlds::class.java)
+                Gson().fromJson(result.body?.string(), Worlds::class.java)
             }
             else -> {
                 null
@@ -484,7 +484,7 @@ class ApiContext(
         }
     }
 
-    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): LimitedWorlds? {
+    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): Worlds? {
 
         val headers = Headers.Builder()
 
@@ -500,7 +500,7 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-                Gson().fromJson(result.body?.string(), LimitedWorlds::class.java)
+                Gson().fromJson(result.body?.string(), Worlds::class.java)
             }
             else -> {
                 null

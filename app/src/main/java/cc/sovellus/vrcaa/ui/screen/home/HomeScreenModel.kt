@@ -1,16 +1,13 @@
 package cc.sovellus.vrcaa.ui.screen.home
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.runtime.mutableLongStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.models.Avatars
-import cc.sovellus.vrcaa.api.models.Friends
-import cc.sovellus.vrcaa.api.models.LimitedWorlds
+import cc.sovellus.vrcaa.api.models.Avatar
+import cc.sovellus.vrcaa.api.models.Worlds
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.helper.api
-import cc.sovellus.vrcaa.helper.isMyServiceRunning
-import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 import java.time.Clock
 
@@ -22,19 +19,19 @@ class HomeScreenModel(
         data object Init : HomeState()
         data object Loading : HomeState()
         data class Result(
-            val friends: MutableList<Friends.FriendsItem>,
-            val lastVisited: MutableList<LimitedWorlds.LimitedWorldItem>,
-            val featuredAvatars: MutableList<Avatars.AvatarsItem>,
-            val offlineFriends: MutableList<Friends.FriendsItem>,
-            val featuredWorlds: MutableList<LimitedWorlds.LimitedWorldItem>
+            val friends: MutableList<LimitedUser>,
+            val lastVisited: MutableList<Worlds.LimitedWorldItem>,
+            val featuredAvatars: MutableList<Avatar>,
+            val offlineFriends: MutableList<LimitedUser>,
+            val featuredWorlds: MutableList<Worlds.LimitedWorldItem>
         ) : HomeState()
     }
 
-    private var friends = mutableListOf<Friends.FriendsItem>()
-    private var lastVisited = mutableListOf<LimitedWorlds.LimitedWorldItem>()
-    private var featuredAvatars = mutableListOf<Avatars.AvatarsItem>()
-    private var offlineFriends = mutableListOf<Friends.FriendsItem>()
-    private var featuredWorlds = mutableListOf<LimitedWorlds.LimitedWorldItem>()
+    private var friends = mutableListOf<LimitedUser>()
+    private var lastVisited = mutableListOf<Worlds.LimitedWorldItem>()
+    private var featuredAvatars = mutableListOf<Avatar>()
+    private var offlineFriends = mutableListOf<LimitedUser>()
+    private var featuredWorlds = mutableListOf<Worlds.LimitedWorldItem>()
 
     val lastClickElapsed = mutableLongStateOf(Clock.systemUTC().millis())
 

@@ -45,7 +45,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.helper.StatusHelper
-import cc.sovellus.vrcaa.api.models.Friends
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -74,9 +74,9 @@ class FriendsScreen : Screen {
     @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
     @Composable
     private fun RenderList(
-        friends: List<Friends.FriendsItem>,
-        offlineFriends: List<Friends.FriendsItem>,
-        favoriteFriends: List<Friends.FriendsItem>,
+        friends: List<LimitedUser>,
+        offlineFriends: List<LimitedUser>,
+        favoriteFriends: List<LimitedUser>,
         model: FriendsScreenModel
     ) {
 
@@ -131,7 +131,7 @@ class FriendsScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    fun ShowFriends(friends: List<Friends.FriendsItem>, isOnline: Boolean = true) {
+    fun ShowFriends(friends: List<LimitedUser>, isOnline: Boolean = true) {
 
         if (friends.isEmpty()) {
             Column(

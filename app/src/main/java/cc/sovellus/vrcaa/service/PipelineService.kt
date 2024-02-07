@@ -28,7 +28,7 @@ import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
 import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
 import cc.sovellus.vrcaa.api.models.pipeline.Notification
-import cc.sovellus.vrcaa.api.models.pipeline.UserBase
+import cc.sovellus.vrcaa.api.models.LimitedUser
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.NotificationManager
@@ -44,7 +44,7 @@ class PipelineService : Service(), CoroutineScope {
 
     private lateinit var pipeline: PipelineContext
 
-    private var friends: ArrayList<UserBase> = arrayListOf()
+    private var friends: ArrayList<LimitedUser> = arrayListOf()
     private lateinit var activeFriends: Friends
 
     private var serviceLooper: Looper? = null
@@ -139,7 +139,7 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friendObject.userIcon.ifEmpty { friendObject.currentAvatarImageUrl }
                         })
 
-                        friends = friends.filter { it.id != friend.userId } as ArrayList<UserBase>
+                        friends = friends.filter { it.id != friend.userId } as ArrayList<LimitedUser>
                     } else {
                         // It seems it was not cached during local session, instead fallback to currentFriends
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
@@ -284,7 +284,7 @@ class PipelineService : Service(), CoroutineScope {
                             channel = App.CHANNEL_STATUS_ID
                         )
 
-                        friends = friends.filter { it.id != friend.userId } as ArrayList<UserBase>
+                        friends = friends.filter { it.id != friend.userId } as ArrayList<LimitedUser>
                     } else {
                         val fallbackFriend = activeFriends.find { it.id == friend.userId }
 
