@@ -45,7 +45,9 @@ data class World(
     @SerializedName("unityPackages")
     val unityPackages: List<UnityPackage>,
     @SerializedName("updated_at")
-    val updatedAt: String
+    val updatedAt: String,
+    @SerializedName("description")
+    val description: String
 ) {
     data class UnityPackage(
         @SerializedName("platform")
