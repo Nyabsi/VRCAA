@@ -21,16 +21,14 @@ class FriendsScreenModel(
     sealed class FriendListState {
         data object Init : FriendListState()
         data object Loading : FriendListState()
-        data class Result (val friends: List<LimitedUser>, val offlineFriends: List<LimitedUser>, val favoriteFriends: List<LimitedUser>) : FriendListState()
+        data class Result (val favoriteFriends: List<LimitedUser>) : FriendListState()
     }
 
-    private var friends = mutableListOf<LimitedUser>()
-    private var offlineFriends = mutableListOf<LimitedUser>()
     private var favoriteFriends = mutableListOf<LimitedUser>()
     var isRefreshing = mutableStateOf(false)
     var currentIndex = mutableIntStateOf(0)
 
-    private val feedManager = FeedManager()
+    val feedManager = FeedManager()
 
     init {
         mutableState.value = FriendListState.Loading
@@ -39,16 +37,6 @@ class FriendsScreenModel(
 
     private fun getFriends() {
         screenModelScope.launch {
-
-            feedManager.getFriends().let {
-                friends = it
-                getFriendLocations(friends)
-            }
-
-            feedManager.getFriends(true).let {
-                offlineFriends = it
-            }
-
             context.api.get().getFavorites("friend")?.let { favorites ->
                 for (favorite in favorites) {
                     context.api.get().getFriend(favorite.favoriteId)?.let { friend ->
@@ -58,15 +46,11 @@ class FriendsScreenModel(
                 getFriendLocations(favoriteFriends)
             }
 
-            mutableState.value = FriendListState.Result(
-                friends = friends,
-                offlineFriends = offlineFriends,
-                favoriteFriends = favoriteFriends
-            )
+            mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
         }
     }
 
-    private suspend fun getFriendLocations(friends: List<LimitedUser>) {
+    suspend fun getFriendLocations(friends: List<LimitedUser>) {
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
                 val result = LocationHelper.parseLocationIntent(friend.location)

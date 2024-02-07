@@ -101,7 +101,9 @@ class FeedManager {
     }
 
     fun getFriend(userId: String): LimitedUser? {
-        return syncedFriends.find { it.id == userId }
+        synchronized(syncedFriends) {
+            return syncedFriends.find { it.id == userId }
+        }
     }
 
     fun updateFriend(friend: LimitedUser) {

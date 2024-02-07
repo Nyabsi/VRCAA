@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -52,6 +54,9 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 class FriendsScreen : Screen {
 
@@ -62,12 +67,12 @@ class FriendsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = rememberScreenModel { FriendsScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
             is FriendListState.Loading -> LoadingIndicatorScreen().Content()
-            is FriendListState.Result -> RenderList(result.friends, result.offlineFriends, result.favoriteFriends, model)
+            is FriendListState.Result -> RenderList(result.favoriteFriends, model)
             else -> {}
         }
     }
@@ -75,8 +80,6 @@ class FriendsScreen : Screen {
     @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
     @Composable
     private fun RenderList(
-        friends: List<LimitedUser>,
-        offlineFriends: List<LimitedUser>,
         favoriteFriends: List<LimitedUser>,
         model: FriendsScreenModel
     ) {
@@ -125,9 +128,9 @@ class FriendsScreen : Screen {
                 }
 
                 when(model.currentIndex.intValue) {
-                    0 -> ShowFriends(favoriteFriends)
-                    1 -> ShowFriends(friends)
-                    2 -> ShowFriends(offlineFriends, false)
+                    0 -> ShowFriends(favoriteFriends, model)
+                    1 -> ShowFriends(model.feedManager.getFriends(), model)
+                    2 -> ShowFriends(model.feedManager.getFriends(true), model, false)
                 }
             }
 
@@ -137,7 +140,12 @@ class FriendsScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    fun ShowFriends(friends: List<LimitedUser>, isOnline: Boolean = true) {
+    fun ShowFriends(
+        friends: List<LimitedUser>,
+        model: FriendsScreenModel,
+        isOnline: Boolean = true
+    ) {
+        val coroutineScope = rememberCoroutineScope()
 
         if (friends.isEmpty()) {
             Column(
@@ -156,7 +164,15 @@ class FriendsScreen : Screen {
             ) {
                 val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsSorted = friendsSortedStatus.sortedBy { it.location == "offline" }
-                items(friendsSorted.count()) { it ->
+
+                coroutineScope.launch {
+                    model.getFriendLocations(friendsSorted)
+                }
+
+                items(
+                    friendsSorted.count(),
+                    key = { UUID.randomUUID() }
+                ) {
                     val navigator = LocalNavigator.currentOrThrow
                     val friend = friendsSorted[it]
 
