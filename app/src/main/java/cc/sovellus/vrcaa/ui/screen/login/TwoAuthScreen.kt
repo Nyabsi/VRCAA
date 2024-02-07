@@ -37,6 +37,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.ui.theme.isSystemDarkMode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -141,7 +142,7 @@ class TwoAuthScreen(
                             modifier = Modifier
                                 .width(50.dp)
                                 .height(60.dp)
-                                .border(1.dp, Color.White, RoundedCornerShape(8.dp))
+                                .border(1.dp, if (isSystemDarkMode()) { Color.White } else { Color.Black }, RoundedCornerShape(8.dp))
                                 .fillMaxWidth()
                                 .fillMaxHeight()
                                 .padding(top = 10.dp),
