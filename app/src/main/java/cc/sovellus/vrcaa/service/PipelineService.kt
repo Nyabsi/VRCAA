@@ -178,34 +178,38 @@ class PipelineService : Service(), CoroutineScope {
                                 }
                             )
                         }
-                    }
 
-                    // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
-                    // We want to show it only once, so only show when the travelling is done.
-                    if (friend.travelingToLocation.isEmpty()) {
-                        if (notificationManager.isOnWhitelist(friend.userId) &&
-                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
-                            pushNotification(
-                                title = application.getString(R.string.notification_service_title_location),
-                                content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name),
-                                channel = App.CHANNEL_LOCATION_ID
-                            )
+                        if (
+                            StatusHelper.getStatusFromString(friend.user.location) !=
+                            StatusHelper.getStatusFromString(cachedFriend.location)) {
+                            // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
+                            // We want to show it only once, so only show when the travelling is done.
+                            if (friend.travelingToLocation.isEmpty()) {
+                                if (notificationManager.isOnWhitelist(friend.userId) &&
+                                    notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
+                                    pushNotification(
+                                        title = application.getString(R.string.notification_service_title_location),
+                                        content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name),
+                                        channel = App.CHANNEL_LOCATION_ID
+                                    )
+                                }
+
+                                val result = LocationHelper.parseLocationIntent(friend.location)
+
+                                val locationFormatted = if (result.regionId.isNotEmpty()) {
+                                    "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                                } else {
+                                    "${friend.world.name}~(${result.instanceType}) US"
+                                }
+
+                                feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
+                                    friendId = friend.userId
+                                    friendName = friend.user.displayName
+                                    travelDestination = locationFormatted
+                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                })
+                            }
                         }
-
-                        val result = LocationHelper.parseLocationIntent(friend.location)
-
-                        val locationFormatted = if (result.regionId.isNotEmpty()) {
-                            "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
-                        } else {
-                            "${friend.world.name}~(${result.instanceType}) US"
-                        }
-
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
-                            friendId = friend.userId
-                            friendName = friend.user.displayName
-                            travelDestination = locationFormatted
-                            friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                        })
                     }
 
                     // For some reason, VRChat doesn't also set the user object location properly...
