@@ -110,6 +110,7 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
 
+                    friend.user.location = ""
                     friendManager.addFriend(friend.user)
                 }
                 is FriendOffline -> {
@@ -137,6 +138,7 @@ class PipelineService : Service(), CoroutineScope {
                     launch {
                         val user = api.get().getUser(friend.userId)
                         user!!.status = "offline"
+                        user.location = ""
                         friendManager.removeFriend(friend.userId, user)
                     }
                 }
