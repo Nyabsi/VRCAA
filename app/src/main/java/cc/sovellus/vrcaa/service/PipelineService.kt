@@ -177,8 +177,6 @@ class PipelineService : Service(), CoroutineScope {
                                     friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                                 }
                             )
-
-                            friendManager.updateFriend(friend.user)
                         }
                     }
 
@@ -202,19 +200,19 @@ class PipelineService : Service(), CoroutineScope {
                             "${friend.world.name}~(${result.instanceType}) US"
                         }
 
-                        // For some reason, VRChat doesn't also set the user object location properly...
-                        // It took me literally, *hours* to figure this. I'm out.
-                        friend.user.location = friend.location
-
                         feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
                             friendId = friend.userId
                             friendName = friend.user.displayName
                             travelDestination = locationFormatted
                             friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
-
-                        friendManager.updateFriend(friend.user)
                     }
+
+                    // For some reason, VRChat doesn't also set the user object location properly...
+                    // It took me literally, *hours* to figure this. I'm out.
+                    friend.user.location = friend.location
+
+                    friendManager.updateFriend(friend.user)
                 }
                 is FriendDelete -> {
                     val friend = msg.obj as FriendDelete
