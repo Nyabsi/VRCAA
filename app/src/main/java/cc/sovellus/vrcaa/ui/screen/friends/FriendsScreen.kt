@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -51,6 +52,7 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import java.util.UUID
 
 class FriendsScreen : Screen {
@@ -174,7 +176,9 @@ class FriendsScreen : Screen {
                                     .size(48.dp)
                                     .clip(RoundedCornerShape(50)),
                                 contentScale = ContentScale.FillBounds,
-                                alignment = Alignment.Center
+                                alignment = Alignment.Center,
+                                loading = placeholder(R.drawable.icon_placeholder),
+                                failure = placeholder(R.drawable.icon_placeholder)
                             )
                         },
                         trailingContent = {
@@ -235,7 +239,9 @@ class FriendsScreen : Screen {
                                     .size(48.dp)
                                     .clip(RoundedCornerShape(50)),
                                 contentScale = ContentScale.FillBounds,
-                                alignment = Alignment.Center
+                                alignment = Alignment.Center,
+                                loading = placeholder(R.drawable.icon_placeholder),
+                                failure = placeholder(R.drawable.icon_placeholder)
                             )
                         },
                         trailingContent = {
@@ -298,7 +304,9 @@ class FriendsScreen : Screen {
                                     .size(48.dp)
                                     .clip(RoundedCornerShape(50)),
                                 contentScale = ContentScale.FillBounds,
-                                alignment = Alignment.Center
+                                alignment = Alignment.Center,
+                                loading = placeholder(R.drawable.image_placeholder),
+                                failure = placeholder(R.drawable.image_placeholder)
                             )
                         },
                         trailingContent = {

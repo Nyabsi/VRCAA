@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,6 +53,7 @@ import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 
 class HomeScreen : Screen {
 
@@ -236,7 +238,9 @@ class HomeScreen : Screen {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                loading = placeholder(painterResource(id = R.drawable.image_placeholder)),
+                failure = placeholder(painterResource(id = R.drawable.image_placeholder))
             )
 
             Row(
@@ -273,7 +277,9 @@ class HomeScreen : Screen {
                     .size(72.dp)
                     .clip(RoundedCornerShape(50)),
                 contentScale = ContentScale.Crop,
-                alignment = Alignment.Center
+                alignment = Alignment.Center,
+                loading = placeholder(R.drawable.image_placeholder),
+                failure = placeholder(R.drawable.image_placeholder)
             )
             Text(text = name)
         }

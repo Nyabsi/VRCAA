@@ -9,12 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -38,7 +40,9 @@ fun FeedItem(
                     .size(48.dp)
                     .clip(RoundedCornerShape(50)),
                 contentScale = ContentScale.FillBounds,
-                alignment = Alignment.Center
+                alignment = Alignment.Center,
+                loading = placeholder(R.drawable.icon_placeholder),
+                failure = placeholder(R.drawable.icon_placeholder)
             )
         },
         overlineContent = {
