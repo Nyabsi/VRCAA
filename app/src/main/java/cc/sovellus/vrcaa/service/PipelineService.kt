@@ -147,6 +147,10 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = msg.obj as FriendLocation
                     val cachedFriend = friendManager.getFriend(friend.userId)
 
+                    // For some reason, VRChat doesn't also set the user object location properly...
+                    // It took me literally, *hours* to figure this. I'm out.
+                    friend.user.location = friend.location
+
                     if (cachedFriend != null) {
                         if (
                             StatusHelper.getStatusFromString(friend.user.status) !=
@@ -213,10 +217,6 @@ class PipelineService : Service(), CoroutineScope {
                             }
                         }
                     }
-
-                    // For some reason, VRChat doesn't also set the user object location properly...
-                    // It took me literally, *hours* to figure this. I'm out.
-                    friend.user.location = friend.location
 
                     friendManager.updateFriend(friend.user)
                 }
