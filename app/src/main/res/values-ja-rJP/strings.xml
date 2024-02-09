@@ -96,7 +96,7 @@
     <string name="feed_offline_label">オフライン</string>
     <string name="feed_offline_text">さんがオフラインになりました。</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">さんが</string>
+    <string name="feed_location_text">さんが移動しました。：</string>
     <string name="feed_status_label">ステータス</string>
     <string name="feed_status_text">ステータスが変更されました：</string>
     <string name="feed_added_label">フレンドの追加</string>
