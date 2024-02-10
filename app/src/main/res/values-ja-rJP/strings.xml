@@ -17,7 +17,7 @@
     <string name="home_featured_worlds">注目のワールド</string>
     <!-- LoginScreen -->
     <string name="login_text">VRC Android Assistantへのログイン</string>
-    <string name="login_label_username">ユーザー名</string>
+    <string name="login_label_username">ユーザー名 or メールアドレス</string>
     <string name="login_label_password">パスワード</string>
     <string name="login_button_text">ログイン</string>
     <string name="login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
