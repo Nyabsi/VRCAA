@@ -239,8 +239,8 @@ class HomeScreen : Screen {
                     .fillMaxWidth()
                     .height(150.dp),
                 contentScale = ContentScale.Crop,
-                loading = placeholder(painterResource(id = R.drawable.image_placeholder)),
-                failure = placeholder(painterResource(id = R.drawable.image_placeholder))
+                loading = placeholder(R.drawable.image_placeholder),
+                failure = placeholder(R.drawable.image_placeholder)
             )
 
             Row(
@@ -278,8 +278,8 @@ class HomeScreen : Screen {
                     .clip(RoundedCornerShape(50)),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
-                loading = placeholder(R.drawable.image_placeholder),
-                failure = placeholder(R.drawable.image_placeholder)
+                loading = placeholder(R.drawable.icon_placeholder),
+                failure = placeholder(R.drawable.icon_placeholder)
             )
             Text(text = name)
         }
