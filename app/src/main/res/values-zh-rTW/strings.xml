@@ -17,7 +17,7 @@
     <string name="home_featured_worlds">Featured Worlds</string>
     <!-- LoginScreen -->
     <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username</string>
+    <string name="login_label_username">Username or E-Mail Address</string>
     <string name="login_label_password">Password</string>
     <string name="login_button_text">Login</string>
     <string name="login_toast_wrong_credentials">Wrong username or password.</string>
