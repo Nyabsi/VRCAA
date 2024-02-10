@@ -17,7 +17,7 @@
     <string name="home_featured_worlds">Suositellut Maailmat</string>
     <!-- LoginScreen -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
-    <string name="login_label_username">Käyttäjänimi tai sähköpostiosoite</string>
+    <string name="login_label_username">Username or E-Mail Address</string>
     <string name="login_label_password">Salasana</string>
     <string name="login_button_text">Kirjaudu sisään</string>
     <string name="login_toast_wrong_credentials">Wrong username or password.</string>
