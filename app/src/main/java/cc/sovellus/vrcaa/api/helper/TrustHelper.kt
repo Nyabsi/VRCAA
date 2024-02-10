@@ -18,7 +18,7 @@ class TrustHelper {
                     Known -> "Known"
                     User -> "User"
                     NewUser -> "New User"
-                    Rank.Visitor -> "Visitor"
+                    Visitor -> "Visitor"
                 }
             }
 
@@ -28,7 +28,7 @@ class TrustHelper {
                     Known -> Color(255, 123, 66)
                     User -> Color(43, 207, 92)
                     NewUser -> Color(23, 120, 255)
-                    Rank.Visitor -> Color(204, 204, 204)
+                    Visitor -> Color(204, 204, 204)
                 }
             }
         }
