@@ -138,7 +138,6 @@ class PipelineService : Service(), CoroutineScope {
                     launch {
                         val user = api.get().getUser(friend.userId)
                         user!!.status = "offline"
-                        user.location = ""
                         friendManager.removeFriend(friend.userId, user)
                     }
                 }
@@ -183,11 +182,7 @@ class PipelineService : Service(), CoroutineScope {
                                     friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                                 }
                             )
-                        }
-
-                        if (
-                            StatusHelper.getStatusFromString(friend.user.location) !=
-                            StatusHelper.getStatusFromString(cachedFriend.location)) {
+                        } else {
                             // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                             // We want to show it only once, so only show when the travelling is done.
                             if (friend.travelingToLocation.isEmpty()) {
@@ -344,7 +339,6 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         pipeline?.disconnect()
     }
 
