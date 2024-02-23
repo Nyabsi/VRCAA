@@ -59,7 +59,7 @@ fun FeedItem(
             Text(text = feedTimestamp.format(formatter))
         },
         modifier = Modifier.clickable(
-            onClick = { navigator.push(UserProfileScreen(userId)) }
+            onClick = { navigator.parent?.parent?.push(UserProfileScreen(userId)) }
         )
     )
 }
