@@ -7,6 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.api.models.Auth
 import cc.sovellus.vrcaa.api.models.Avatar
@@ -195,7 +196,7 @@ class ApiContext(
         // just tell the user to re-login, I give up.
         Toast.makeText(
             this,
-            "Your session has expired, please login again.",
+            getString(R.string.api_session_has_expired_text),
             Toast.LENGTH_LONG
         ).show()
 
