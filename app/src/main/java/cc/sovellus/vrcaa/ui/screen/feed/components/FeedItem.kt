@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.feed.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ListItem
@@ -9,11 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -26,8 +29,11 @@ fun FeedItem(
     text: AnnotatedString,
     friendPictureUrl: String,
     feedTimestamp: LocalDateTime,
-    resourceStringTitle: Int
+    resourceStringTitle: Int,
+    userId: String
 ) {
+    val navigator = LocalNavigator.currentOrThrow
+
     ListItem(
         headlineContent = {
             Text(text)
@@ -51,6 +57,9 @@ fun FeedItem(
         trailingContent = {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
             Text(text = feedTimestamp.format(formatter))
-        }
+        },
+        modifier = Modifier.clickable(
+            onClick = { navigator.push(UserProfileScreen(userId)) }
+        )
     )
 }

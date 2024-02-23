@@ -60,7 +60,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_online_label
+                            resourceStringTitle = R.string.feed_online_label,
+                            userId = item.friendId
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_OFFLINE -> {
@@ -75,7 +76,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_offline_label
+                            resourceStringTitle = R.string.feed_offline_label,
+                            userId = item.friendId
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_LOCATION -> {
@@ -92,7 +94,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_location_label
+                            resourceStringTitle = R.string.feed_location_label,
+                            userId = item.friendId
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_STATUS -> {
@@ -109,7 +112,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_status_label
+                            resourceStringTitle = R.string.feed_status_label,
+                            userId = item.friendId
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_ADDED -> {
@@ -124,7 +128,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_added_label
+                            resourceStringTitle = R.string.feed_added_label,
+                            userId = item.friendId
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_REMOVED -> {
@@ -139,7 +144,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_removed_label
+                            resourceStringTitle = R.string.feed_removed_label,
+                            userId = item.friendId
                         )
                     }
                     FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST -> {
@@ -154,7 +160,8 @@ class FeedScreen : Screen {
                             text = text,
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
-                            resourceStringTitle = R.string.feed_friend_request_label
+                            resourceStringTitle = R.string.feed_friend_request_label,
+                            userId = item.friendId
                         )
                     }
                     else -> { /* Unhandled */ }
