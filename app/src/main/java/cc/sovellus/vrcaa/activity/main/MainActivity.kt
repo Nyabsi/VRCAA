@@ -27,7 +27,7 @@ import cc.sovellus.vrcaa.ui.theme.Theme
 class MainActivity : ComponentActivity() {
 
     private fun checkForCookies(): Boolean {
-        return !getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrEmpty()
+        return !getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrBlank()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

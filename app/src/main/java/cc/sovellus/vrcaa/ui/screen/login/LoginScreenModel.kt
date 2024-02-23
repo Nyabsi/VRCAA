@@ -32,7 +32,6 @@ class LoginScreenModel(
 
                 // STORE credentials, so we can request new session later when it expires, for any given reason.
                 preferences.userCredentials = Pair(username.value, password.value)
-                preferences.cookies = result.second
 
                 navigator.push(TwoAuthScreen(result.first, result.second))
             } else {

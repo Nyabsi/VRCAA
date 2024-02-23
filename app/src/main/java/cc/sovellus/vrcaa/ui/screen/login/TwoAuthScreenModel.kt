@@ -10,6 +10,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.service.PipelineService
@@ -32,6 +33,7 @@ class TwoAuthScreenModel(
                 )
 
                 preferences.twoFactorAuth = twoAuth
+                preferences.cookies = token
                 preferences.isExpiredSession = false // even if it's false, doesn't matter.
 
                 // this is very much mandatory, or things will break.

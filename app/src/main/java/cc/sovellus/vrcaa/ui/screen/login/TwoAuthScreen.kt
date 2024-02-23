@@ -122,7 +122,7 @@ class TwoAuthScreen(
             },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.NumberPassword
+                keyboardType = KeyboardType.Ascii
             ),
             decorationBox = {
                 Row(
