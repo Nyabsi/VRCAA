@@ -33,6 +33,7 @@
     <string name="not_implemented_title">Ei toteutettu</string>
     <string name="not_implemented_text">Sivua ei ole vielä toteutettu, tule myöhemmin takaisin!</string>
     <!-- Profile Strings -->
+    <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">Kuvaus</string>
     <string name="profile_label_languages">Kielet</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
