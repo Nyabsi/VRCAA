@@ -33,6 +33,7 @@
     <string name="not_implemented_title">Not Implemented</string>
     <string name="not_implemented_text">This page is not implemented yet, come back later!</string>
     <!-- Profile Strings -->
+    <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">No description specified.</string>
