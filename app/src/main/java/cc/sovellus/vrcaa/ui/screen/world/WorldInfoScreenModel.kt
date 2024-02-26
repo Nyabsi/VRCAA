@@ -16,7 +16,7 @@ class WorldInfoScreenModel(
     sealed class WorldInfoState {
         data object Init : WorldInfoState()
         data object Loading : WorldInfoState()
-        data class Result (val world: World) : WorldInfoState()
+        data class Result(val world: World) : WorldInfoState()
     }
 
     private var world = mutableStateOf<World?>(null)
@@ -25,6 +25,7 @@ class WorldInfoScreenModel(
         mutableState.value = WorldInfoState.Loading
         getProfile()
     }
+
     private fun getProfile() {
         screenModelScope.launch {
             world.value = context.api.get().getWorld(id)

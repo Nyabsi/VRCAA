@@ -15,6 +15,7 @@ class JustHPartyProvider : AvatarProviderContext() {
             is String -> {
                 Gson().fromJson(result, JustHPartyAvatars::class.java)
             }
+
             else -> null
         }
     }

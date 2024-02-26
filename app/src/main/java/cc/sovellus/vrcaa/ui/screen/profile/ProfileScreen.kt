@@ -31,7 +31,7 @@ class ProfileScreen : Screen {
 
     @Composable
     override fun Content() {
-        
+
         val context = LocalContext.current
 
         // don't store it in the `Navigator` because it *may* change, this is not a proper way to handle it either,
@@ -61,8 +61,16 @@ class ProfileScreen : Screen {
                             thumbnailUrl = it.currentAvatarThumbnailImageUrl,
                             displayName = it.displayName,
                             statusDescription = it.statusDescription,
-                            trustRankColor = TrustHelper.Rank.toColor(TrustHelper.getTrustRankFromTags(it.tags)),
-                            statusColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(it.status))
+                            trustRankColor = TrustHelper.Rank.toColor(
+                                TrustHelper.getTrustRankFromTags(
+                                    it.tags
+                                )
+                            ),
+                            statusColor = StatusHelper.Status.toColor(
+                                StatusHelper.getStatusFromString(
+                                    it.status
+                                )
+                            )
                         )
                     }
                 }

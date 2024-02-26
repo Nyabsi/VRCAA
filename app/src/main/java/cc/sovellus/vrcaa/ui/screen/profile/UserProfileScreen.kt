@@ -45,7 +45,7 @@ import cc.sovellus.vrcaa.ui.screen.profile.components.ProfileCard
 
 class UserProfileScreen(
     private val userId: String
-): Screen {
+) : Screen {
 
     override val key = uniqueScreenKey
 
@@ -100,7 +100,12 @@ class UserProfileScreen(
                                     if (profile.isFriend) {
                                         DropdownMenuItem(
                                             onClick = {
-                                                navigator.push(ManageNotificationsScreen(profile.id, profile.displayName))
+                                                navigator.push(
+                                                    ManageNotificationsScreen(
+                                                        profile.id,
+                                                        profile.displayName
+                                                    )
+                                                )
                                                 model.isMenuExpanded.value = false
                                             },
                                             text = { Text("Manage notifications") }
@@ -117,7 +122,10 @@ class UserProfileScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
+                        ),
                 ) {
                     item {
                         Column(
@@ -129,10 +137,21 @@ class UserProfileScreen(
                                 ProfileCard(
                                     thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
                                     displayName = it.displayName,
-                                    statusDescription = it.statusDescription.ifEmpty { StatusHelper.Status.toString(
-                                        StatusHelper.getStatusFromString(it.status)) },
-                                    trustRankColor = TrustHelper.Rank.toColor(TrustHelper.getTrustRankFromTags(it.tags)),
-                                    statusColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(it.status))
+                                    statusDescription = it.statusDescription.ifEmpty {
+                                        StatusHelper.Status.toString(
+                                            StatusHelper.getStatusFromString(it.status)
+                                        )
+                                    },
+                                    trustRankColor = TrustHelper.Rank.toColor(
+                                        TrustHelper.getTrustRankFromTags(
+                                            it.tags
+                                        )
+                                    ),
+                                    statusColor = StatusHelper.Status.toColor(
+                                        StatusHelper.getStatusFromString(
+                                            it.status
+                                        )
+                                    )
                                 )
                             }
                         }

@@ -16,7 +16,7 @@ class UserProfileScreenModel(
     sealed class UserProfileState {
         data object Init : UserProfileState()
         data object Loading : UserProfileState()
-        data class Result (val profile: LimitedUser) : UserProfileState()
+        data class Result(val profile: LimitedUser) : UserProfileState()
     }
 
     private var profile = mutableStateOf<LimitedUser?>(null)
@@ -26,6 +26,7 @@ class UserProfileScreenModel(
         mutableState.value = UserProfileState.Loading
         getProfile()
     }
+
     private fun getProfile() {
         screenModelScope.launch {
             profile.value = context.api.get().getUser(userId)

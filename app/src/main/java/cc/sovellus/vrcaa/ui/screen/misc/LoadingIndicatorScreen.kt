@@ -16,6 +16,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 class LoadingIndicatorScreen : Screen {
 
     override val key = uniqueScreenKey
+
     @Composable
     override fun Content() {
         Column(

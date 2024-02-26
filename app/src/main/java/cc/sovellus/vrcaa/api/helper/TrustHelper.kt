@@ -13,7 +13,7 @@ class TrustHelper {
 
         companion object {
             fun toString(rank: Rank): String {
-                return when(rank) {
+                return when (rank) {
                     Trusted -> "Trusted"
                     Known -> "Known"
                     User -> "User"
@@ -23,7 +23,7 @@ class TrustHelper {
             }
 
             fun toColor(rank: Rank): Color {
-                return when(rank) {
+                return when (rank) {
                     Trusted -> Color(129, 67, 230)
                     Known -> Color(255, 123, 66)
                     User -> Color(43, 207, 92)
@@ -35,8 +35,7 @@ class TrustHelper {
     }
 
     companion object {
-        fun getTrustRankFromTags(tags: List<String>): Rank
-        {
+        fun getTrustRankFromTags(tags: List<String>): Rank {
             var rank: Rank = Rank.Visitor
 
             for (tag in tags.reversed()) {

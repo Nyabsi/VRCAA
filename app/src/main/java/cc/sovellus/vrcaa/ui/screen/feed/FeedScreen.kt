@@ -47,7 +47,7 @@ class FeedScreen : Screen {
                 key = { item -> feed.value.reversed()[item].feedId })
             {
                 val item = feed.value.reversed()[it]
-                when(item.type) {
+                when (item.type) {
                     FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -64,6 +64,7 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
+
                     FeedManager.FeedType.FRIEND_FEED_OFFLINE -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -80,6 +81,7 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
+
                     FeedManager.FeedType.FRIEND_FEED_LOCATION -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -98,6 +100,7 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
+
                     FeedManager.FeedType.FRIEND_FEED_STATUS -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -116,6 +119,7 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
+
                     FeedManager.FeedType.FRIEND_FEED_ADDED -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -132,6 +136,7 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
+
                     FeedManager.FeedType.FRIEND_FEED_REMOVED -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -148,6 +153,7 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
+
                     FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST -> {
                         val text = buildAnnotatedString {
                             append(item.friendName)
@@ -164,7 +170,9 @@ class FeedScreen : Screen {
                             userId = item.friendId
                         )
                     }
-                    else -> { /* Unhandled */ }
+
+                    else -> { /* Unhandled */
+                    }
                 }
             }
         }

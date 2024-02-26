@@ -33,7 +33,10 @@ open class AvatarProviderContext {
         return when (response.code) {
             200 -> response.body?.string()
             else -> {
-                Log.d("VRCAA", "Failed to fetch avatar data from provider, code: ${response.code} and body is ${response.body?.string()}")
+                Log.d(
+                    "VRCAA",
+                    "Failed to fetch avatar data from provider, code: ${response.code} and body is ${response.body?.string()}"
+                )
                 null
             }
         }

@@ -10,7 +10,8 @@ class ApiManager(
     private val context: Context
 ) {
     companion object {
-        @Volatile var api: ApiContext? = null
+        @Volatile
+        var api: ApiContext? = null
     }
 
     fun force(apiContext: ApiContext) {

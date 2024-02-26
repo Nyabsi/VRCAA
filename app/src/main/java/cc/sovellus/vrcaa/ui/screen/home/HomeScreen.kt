@@ -70,7 +70,14 @@ class HomeScreen : Screen {
 
         when (val result = state) {
             is HomeState.Loading -> LoadingIndicatorScreen().Content()
-            is HomeState.Result -> DisplayHome(result.friends, result.lastVisited, result.featuredAvatars, result.offlineFriends, result.featuredWorlds)
+            is HomeState.Result -> DisplayHome(
+                result.friends,
+                result.lastVisited,
+                result.featuredAvatars,
+                result.offlineFriends,
+                result.featuredWorlds
+            )
+
             else -> {}
         }
     }
@@ -83,113 +90,113 @@ class HomeScreen : Screen {
         offlineFriends: MutableList<LimitedUser>,
         featuredWorlds: MutableList<World>
     ) {
-       val navigator = LocalNavigator.currentOrThrow
+        val navigator = LocalNavigator.currentOrThrow
 
-       LazyColumn(
-           modifier = Modifier
-               .fillMaxWidth()
-               .fillMaxHeight()
-               .padding(16.dp)
-       ) {
-           item {
-               HorizontalRow(
-                   title = stringResource(R.string.home_active_friends)
-               ) {
-                   items(
-                       friends.size,
-                       key = { item -> friends[item].id }
-                   ) {
-                       val friend = friends[it]
-                       RowItemRounded(
-                           name = friend.displayName,
-                           url = friend.userIcon.ifEmpty { friend.imageUrl },
-                           onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                       )
-                   }
-               }
-               Spacer(modifier = Modifier.padding(2.dp))
-           }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(16.dp)
+        ) {
+            item {
+                HorizontalRow(
+                    title = stringResource(R.string.home_active_friends)
+                ) {
+                    items(
+                        friends.size,
+                        key = { item -> friends[item].id }
+                    ) {
+                        val friend = friends[it]
+                        RowItemRounded(
+                            name = friend.displayName,
+                            url = friend.userIcon.ifEmpty { friend.imageUrl },
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(2.dp))
+            }
 
-           item {
-               HorizontalRow(
-                   title = stringResource(R.string.home_recently_visited)
-               ) {
-                   items(
-                       lastVisited.size,
-                       key = { item -> lastVisited[item].id }
-                   ) {
-                       val world = lastVisited[it]
-                       WorldRow(
-                           name = world.name,
-                           url = world.imageUrl,
-                           count = world.occupants,
-                           onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
-                       )
-                   }
-               }
-               Spacer(modifier = Modifier.padding(2.dp))
-           }
+            item {
+                HorizontalRow(
+                    title = stringResource(R.string.home_recently_visited)
+                ) {
+                    items(
+                        lastVisited.size,
+                        key = { item -> lastVisited[item].id }
+                    ) {
+                        val world = lastVisited[it]
+                        WorldRow(
+                            name = world.name,
+                            url = world.imageUrl,
+                            count = world.occupants,
+                            onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(2.dp))
+            }
 
-           item {
-               HorizontalRow(
-                   title = stringResource(R.string.home_featured_avatars)
-               ) {
-                   items(
-                       featuredAvatars.size,
-                       key = { item -> featuredAvatars[item].id }
-                   ) {
-                       val avatar = featuredAvatars[it]
-                       WorldRow(
-                           name = avatar.name,
-                           url = avatar.imageUrl,
-                           count = null,
-                           onClick = { navigator.parent?.parent?.push(AvatarScreen(avatar.id)) }
-                       )
-                   }
-               }
-               Spacer(modifier = Modifier.padding(2.dp))
-           }
+            item {
+                HorizontalRow(
+                    title = stringResource(R.string.home_featured_avatars)
+                ) {
+                    items(
+                        featuredAvatars.size,
+                        key = { item -> featuredAvatars[item].id }
+                    ) {
+                        val avatar = featuredAvatars[it]
+                        WorldRow(
+                            name = avatar.name,
+                            url = avatar.imageUrl,
+                            count = null,
+                            onClick = { navigator.parent?.parent?.push(AvatarScreen(avatar.id)) }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(2.dp))
+            }
 
-           item {
-               HorizontalRow(
-                   title = stringResource(R.string.home_offline_friends)
-               ) {
-                   items(
-                       offlineFriends.size,
-                       key = { item -> offlineFriends[item].id }
-                   ) {
-                       val friend = offlineFriends[it]
-                       WorldRow(
-                           name = friend.displayName,
-                           url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
-                           count = null,
-                           onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                       )
-                   }
-               }
-               Spacer(modifier = Modifier.padding(2.dp))
-           }
+            item {
+                HorizontalRow(
+                    title = stringResource(R.string.home_offline_friends)
+                ) {
+                    items(
+                        offlineFriends.size,
+                        key = { item -> offlineFriends[item].id }
+                    ) {
+                        val friend = offlineFriends[it]
+                        WorldRow(
+                            name = friend.displayName,
+                            url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
+                            count = null,
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(2.dp))
+            }
 
-           item {
-               HorizontalRow(
-                   title = stringResource(R.string.home_featured_worlds)
-               ) {
-                   items(
-                       featuredWorlds.size,
-                       key = { item -> featuredWorlds[item].id }
-                   ) {
-                       val world = featuredWorlds[it]
-                       WorldRow(
-                           name = world.name,
-                           url = world.imageUrl,
-                           count = world.occupants,
-                           onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
-                       )
-                   }
-               }
-               Spacer(modifier = Modifier.padding(2.dp))
-           }
-       }
+            item {
+                HorizontalRow(
+                    title = stringResource(R.string.home_featured_worlds)
+                ) {
+                    items(
+                        featuredWorlds.size,
+                        key = { item -> featuredWorlds[item].id }
+                    ) {
+                        val world = featuredWorlds[it]
+                        WorldRow(
+                            name = world.name,
+                            url = world.imageUrl,
+                            count = world.occupants,
+                            onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(2.dp))
+            }
+        }
     }
 
     @Composable
@@ -246,12 +253,23 @@ class HomeScreen : Screen {
             Row(
                 modifier = Modifier.padding(4.dp)
             ) {
-                Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.80f), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    text = name,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(0.80f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 if (count != null) {
-                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                        .weight(0.20f)
-                        .padding(end = 2.dp))
-                    Icon(imageVector = Icons.Filled.Group, contentDescription = stringResource(R.string.preview_image_description))
+                    Text(
+                        text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
+                            .weight(0.20f)
+                            .padding(end = 2.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Group,
+                        contentDescription = stringResource(R.string.preview_image_description)
+                    )
                 }
             }
         }

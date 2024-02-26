@@ -42,7 +42,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ApiContext(
     context: Context
-): ContextWrapper(context) {
+) : ContextWrapper(context) {
 
     private val client: OkHttpClient = OkHttpClient()
     private val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", 0)
@@ -66,126 +66,144 @@ class ApiContext(
         url: String,
         headers: Headers,
         body: String?
-    ): Any? = when (method)
-        {
-            "GET" -> {
-                val request =
-                    Request.Builder()
-                        .headers(headers = headers)
-                        .url(url)
-                        .get()
-                        .build()
+    ): Any? = when (method) {
+        "GET" -> {
+            val request =
+                Request.Builder()
+                    .headers(headers = headers)
+                    .url(url)
+                    .get()
+                    .build()
 
-                val response = client.newCall(request).await()
+            val response = client.newCall(request).await()
 
-                when (response.code) {
-                    200 -> {
-                        response
-                    }
-                    429 -> {
-                        Toast.makeText(
-                            this,
-                            "You are being rate-limited, calm down.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        null
-                    }
-                    401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
-                                refreshToken()
-                        } else {
-                            null
-                        }
-                    }
-                    else -> {
-                        response.body?.let {
-                            Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
-                        }
+            when (response.code) {
+                200 -> {
+                    response
+                }
+
+                429 -> {
+                    Toast.makeText(
+                        this,
+                        "You are being rate-limited, calm down.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    null
+                }
+
+                401 -> {
+                    if (!url.contains("auth/user") && !preferences.isExpiredSession) {
+                        refreshToken()
+                    } else {
                         null
                     }
                 }
+
+                else -> {
+                    response.body?.let {
+                        Log.d(
+                            "VRCAA",
+                            "Got unhandled response from server (${response.code}): ${it.string()}"
+                        )
+                    }
+                    null
+                }
             }
+        }
 
-            "POST" -> {
+        "POST" -> {
 
-                val type: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
-                val requestBody: RequestBody = body!!.toRequestBody(type)
+            val type: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
+            val requestBody: RequestBody = body!!.toRequestBody(type)
 
-                val request =
-                    Request.Builder()
-                        .headers(headers = headers)
-                        .url(url)
-                        .post(requestBody)
-                        .build()
+            val request =
+                Request.Builder()
+                    .headers(headers = headers)
+                    .url(url)
+                    .post(requestBody)
+                    .build()
 
-                val response = client.newCall(request).await()
+            val response = client.newCall(request).await()
 
-                when (response.code) {
-                    200 -> {
-                        response
-                    }
-                    429 -> {
-                        Toast.makeText(
-                            this,
-                            "You are being rate-limited, calm down.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        null
-                    }
-                    401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
-                            refreshToken()
-                        } else {
-                            null
-                        }
-                    }
-                    else -> {
-                        response.body?.let {
-                            Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
-                        }
+            when (response.code) {
+                200 -> {
+                    response
+                }
+
+                429 -> {
+                    Toast.makeText(
+                        this,
+                        "You are being rate-limited, calm down.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    null
+                }
+
+                401 -> {
+                    if (!url.contains("auth/user") && !preferences.isExpiredSession) {
+                        refreshToken()
+                    } else {
                         null
                     }
                 }
+
+                else -> {
+                    response.body?.let {
+                        Log.d(
+                            "VRCAA",
+                            "Got unhandled response from server (${response.code}): ${it.string()}"
+                        )
+                    }
+                    null
+                }
             }
+        }
 
-            "PUT" -> {
+        "PUT" -> {
 
-                val request =
-                    Request.Builder()
-                        .headers(headers = headers)
-                        .url(url)
-                        .put(EMPTY_REQUEST)
-                        .build()
+            val request =
+                Request.Builder()
+                    .headers(headers = headers)
+                    .url(url)
+                    .put(EMPTY_REQUEST)
+                    .build()
 
-                val response = client.newCall(request).await()
+            val response = client.newCall(request).await()
 
-                when (response.code) {
-                    200 -> {
-                        response
-                    }
-                    429 -> {
-                        Toast.makeText(
-                            this,
-                            "You are being rate-limited, calm down.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        null
-                    }
-                    401 -> {
-                        if (!url.contains("auth/user") && !preferences.isExpiredSession) {
-                            refreshToken()
-                        } else {
-                            null
-                        }
-                    }
-                    else -> {
-                        response.body?.let {
-                            Log.d("VRCAA", "Got unhandled response from server (${response.code}): ${it.string()}")
-                        }
+            when (response.code) {
+                200 -> {
+                    response
+                }
+
+                429 -> {
+                    Toast.makeText(
+                        this,
+                        "You are being rate-limited, calm down.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    null
+                }
+
+                401 -> {
+                    if (!url.contains("auth/user") && !preferences.isExpiredSession) {
+                        refreshToken()
+                    } else {
                         null
                     }
                 }
+
+                else -> {
+                    response.body?.let {
+                        Log.d(
+                            "VRCAA",
+                            "Got unhandled response from server (${response.code}): ${it.string()}"
+                        )
+                    }
+                    null
+                }
             }
+        }
+
         else -> {
             null
         }
@@ -215,7 +233,8 @@ class ApiContext(
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun getToken(username: String, password: String): Pair<TwoFactorType, String>? {
 
-        val token = Base64.encode((URLEncoder.encode(username) + ":" + URLEncoder.encode(password)).toByteArray())
+        val token =
+            Base64.encode((URLEncoder.encode(username) + ":" + URLEncoder.encode(password)).toByteArray())
 
         val headers = Headers.Builder()
 
@@ -237,6 +256,7 @@ class ApiContext(
                     Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
                 }
             }
+
             else -> {
                 null
             }
@@ -260,6 +280,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Auth::class.java).token
             }
+
             else -> {
                 null
             }
@@ -287,11 +308,13 @@ class ApiContext(
                     is Response -> {
                         result.headers["twoFactorAuth"].toString()
                     }
+
                     else -> {
                         ""
                     }
                 }
             }
+
             TwoFactorType.TOTP -> {
 
                 val result = doRequest(
@@ -305,11 +328,13 @@ class ApiContext(
                     is Response -> {
                         result.headers["twoFactorAuth"].toString()
                     }
+
                     else -> {
                         ""
                     }
                 }
             }
+
             TwoFactorType.OTP -> {
                 "not_implemented"
             }
@@ -333,6 +358,7 @@ class ApiContext(
             is Response -> {
                 true
             }
+
             else -> {
                 false
             }
@@ -357,6 +383,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), User::class.java)
             }
+
             else -> {
                 null
             }
@@ -381,6 +408,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Friends::class.java)
             }
+
             else -> {
                 null
             }
@@ -405,6 +433,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), LimitedUser::class.java)
             }
+
             else -> {
                 null
             }
@@ -429,6 +458,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), LimitedUser::class.java)
             }
+
             else -> {
                 null
             }
@@ -453,10 +483,11 @@ class ApiContext(
 
         return when (result) {
             is Response -> {
-               Gson().fromJson(result.body?.string(), Instance::class.java)
+                Gson().fromJson(result.body?.string(), Instance::class.java)
             }
+
             else -> {
-               null
+                null
             }
         }
     }
@@ -479,13 +510,19 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Worlds::class.java)
             }
+
             else -> {
                 null
             }
         }
     }
 
-    suspend fun getWorlds(query: String = "", featured: Boolean = false, n: Int = 50, sort: String = "relevance"): Worlds? {
+    suspend fun getWorlds(
+        query: String = "",
+        featured: Boolean = false,
+        n: Int = 50,
+        sort: String = "relevance"
+    ): Worlds? {
 
         val headers = Headers.Builder()
 
@@ -503,6 +540,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Worlds::class.java)
             }
+
             else -> {
                 null
             }
@@ -527,6 +565,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), World::class.java)
             }
+
             else -> {
                 null
             }
@@ -551,6 +590,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Avatars::class.java)
             }
+
             else -> {
                 null
             }
@@ -575,6 +615,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Users::class.java)
             }
+
             else -> {
                 null
             }
@@ -599,6 +640,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Favorites::class.java)
             }
+
             else -> {
                 null
             }
@@ -623,6 +665,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Notifications::class.java)
             }
+
             else -> {
                 null
             }
@@ -647,6 +690,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), User::class.java)
             }
+
             else -> {
                 null
             }
@@ -671,6 +715,7 @@ class ApiContext(
             is Response -> {
                 Gson().fromJson(result.body?.string(), Avatar::class.java)
             }
+
             else -> {
                 null
             }

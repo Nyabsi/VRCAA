@@ -139,7 +139,10 @@ class AvatarScreen(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
                     ) {
                         item {
                             Column(
@@ -166,7 +169,8 @@ class AvatarScreen(
                                 SubHeader(title = stringResource(R.string.avatar_title_description))
                                 Description(text = avatar.description)
 
-                                val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                                val parser =
+                                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
                                 val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
 
                                 val createdAtFormatted = parser.parse(avatar.createdAt)

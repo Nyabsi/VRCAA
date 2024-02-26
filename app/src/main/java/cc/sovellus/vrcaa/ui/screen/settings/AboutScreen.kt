@@ -69,14 +69,23 @@ class AboutScreen : Screen {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
+                        ),
                 ) {
                     item {
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.app_name)) }
                         )
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.about_page_version_title).format(BuildConfig.VERSION_NAME)) },
+                            headlineContent = {
+                                Text(
+                                    stringResource(R.string.about_page_version_title).format(
+                                        BuildConfig.VERSION_NAME
+                                    )
+                                )
+                            },
                             supportingContent = { Text(stringResource(R.string.about_page_version_description)) },
                             leadingContent = {
                                 Icon(
@@ -143,7 +152,7 @@ class AboutScreen : Screen {
                     }
                     item {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title))  },
+                            headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title)) },
                             supportingContent = { Text(stringResource(R.string.about_page_battery_optimizations_description)) },
                             leadingContent = {
                                 Icon(
@@ -153,7 +162,8 @@ class AboutScreen : Screen {
                             },
                             modifier = Modifier.clickable(
                                 onClick = {
-                                    val pm: PowerManager = getSystemService(context, PowerManager::class.java)!!
+                                    val pm: PowerManager =
+                                        getSystemService(context, PowerManager::class.java)!!
                                     if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
                                         val intent = Intent(
                                             Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,

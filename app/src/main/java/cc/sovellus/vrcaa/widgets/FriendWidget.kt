@@ -39,11 +39,15 @@ class FriendWidget : GlanceAppWidget() {
     @Composable
     private fun Content() {
         Column(
-            modifier = GlanceModifier.fillMaxSize().background(imageProvider = ImageProvider(R.drawable.widget_background)),
+            modifier = GlanceModifier.fillMaxSize()
+                .background(imageProvider = ImageProvider(R.drawable.widget_background)),
             verticalAlignment = Alignment.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "You have $friendCount friends online.", modifier = GlanceModifier.padding(12.dp))
+            Text(
+                text = "You have $friendCount friends online.",
+                modifier = GlanceModifier.padding(12.dp)
+            )
 
         }
     }
