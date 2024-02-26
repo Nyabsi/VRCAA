@@ -33,6 +33,7 @@
     <string name="not_implemented_title">Niet Geïmplementeerd</string>
     <string name="not_implemented_text">Deze pagina is nog niet geïmplementeerd, kom later terug!</string>
     <!-- Profile Strings -->
+    <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">Over mij</string>
     <string name="profile_label_languages">Talen</string>
     <string name="profile_text_no_biography">Geen beschrijving opgegeven.</string>
