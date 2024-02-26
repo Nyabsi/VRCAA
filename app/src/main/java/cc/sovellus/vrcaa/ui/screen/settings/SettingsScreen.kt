@@ -85,21 +85,23 @@ class SettingsScreen : Screen {
                             )
                         )
                     }
-                }
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Bottom,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Button(
-                        onClick = {
-                            model.doLogout()
-                            navigator.popUntilRoot()
-                            navigator.replace(LoginScreen())
-                        },
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    ) {
-                        Text(text = stringResource(R.string.logout_button_text))
+                    item {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Button(
+                                onClick = {
+                                    model.doLogout()
+                                    navigator.popUntilRoot()
+                                    navigator.replace(LoginScreen())
+                                },
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            ) {
+                                Text(text = stringResource(R.string.logout_button_text))
+                            }
+                        }
                     }
                 }
             }
