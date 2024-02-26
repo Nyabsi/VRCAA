@@ -33,6 +33,7 @@
     <string name="not_implemented_title">Не реализовано</string>
     <string name="not_implemented_text">Эта страница еще не реализована, возвращайтесь позже!</string>
     <!-- Profile Strings -->
+    <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">О себе</string>
     <string name="profile_label_languages">Языки</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
