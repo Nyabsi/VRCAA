@@ -33,6 +33,7 @@
     <string name="not_implemented_title">Не реализовано</string>
     <string name="not_implemented_text">Эта страница еще не реализована, возвращайтесь позже!</string>
     <!-- Profile Strings -->
+    <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">О себе</string>
     <string name="profile_label_languages">Языки</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
@@ -117,4 +118,6 @@
     <string name="about_page_battery_optimizations_title">Click here to disable battery optimizations</string>
     <string name="about_page_battery_optimizations_description">Some phone models may require this to be used, for proper functionality.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
+    <!-- API -->
+    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
 </resources>
