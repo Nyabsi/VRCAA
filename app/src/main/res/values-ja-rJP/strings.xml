@@ -1,120 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="result_not_found">釣れた魚が居ないのでボウズのようです。</string>
+    <string name="legal_disclaimer">"VRCAAはVRChat社ならびに関連会社によって承認されておりません。"</string>
     <!-- FriendsScreen -->
     <string-array name="friend_selection_options">
-        <item>Favorite</item>
-        <item>Online</item>
-        <item>Offline</item>
+        <item>お気に入り</item>
+        <item>オンライン</item>
+        <item>オフライン</item>
     </string-array>
     <!-- HomeScreen -->
-    <string name="home_active_friends">Active Friends</string>
-    <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_featured_avatars">Featured Avatars</string>
-    <string name="home_offline_friends">Offline Friends</string>
-    <string name="home_featured_worlds">Featured Worlds</string>
+    <string name="home_active_friends">アクティブ</string>
+    <string name="home_recently_visited">最近訪れたワールド</string>
+    <string name="home_featured_avatars">注目のアバター</string>
+    <string name="home_offline_friends">オフライン</string>
+    <string name="home_featured_worlds">注目のワールド</string>
     <!-- LoginScreen -->
-    <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
-    <string name="login_label_password">Password</string>
-    <string name="login_button_text">Login</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
-    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
+    <string name="login_text">VRC Android Assistantへのログイン</string>
+    <string name="login_label_username">ユーザー名 or メールアドレス</string>
+    <string name="login_label_password">パスワード</string>
+    <string name="login_button_text">ログイン</string>
+    <string name="login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
+    <string name="login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
     <!-- TwoAuthScreen -->
-    <string name="auth_text_email">Input the code sent to your e-mail</string>
-    <string name="auth_text_app">Input the code from your Authenticator app</string>
-    <string name="auth_label_code">2FA Code</string>
-    <string name="auth_button_text">Verify</string>
+    <string name="auth_text_email">メールで送信されたコードを入力して下さい。</string>
+    <string name="auth_text_app">2段階認証アプリに表示されているコードを入力して下さい。</string>
+    <string name="auth_label_code">認証コード</string>
+    <string name="auth_button_text">認証</string>
     <!-- MainScreen -->
-    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
+    <string name="main_search_placeholder">>ワールド・ユーザー・アバターの検索</string>
     <!-- Placeholder Strings -->
-    <string name="not_implemented_title">Not Implemented</string>
-    <string name="not_implemented_text">This page is not implemented yet, come back later!</string>
+    <string name="not_implemented_title">準備中</string>
+    <string name="not_implemented_text">このページは準備中です。後日ご確認下さい。</string>
     <!-- Profile Strings -->
-    <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_languages">Languages</string>
-    <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
+    <string name="profile_label_biography">プロフィール</string>
+    <string name="profile_label_languages">言語</string>
+    <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
+    <string name="profile_text_no_languages">言語の記載が有りません。</string>
     <!-- Search Strings -->
-    <string name="search_text_result">Results for</string>
+    <string name="search_text_result">検索結果：</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
-        <item>Avatars</item>
+        <item>ワールド</item>
+        <item>ユーザー</item>
+        <item>アバター</item>
     </string-array>
     <!-- Settings -->
-    <string name="license_title">Open Source Licenses</string>
-    <string name="logout_button_text">Logout</string>
+    <string name="license_title">オープンソースライセンス</string>
+    <string name="logout_button_text">ログアウト</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_description">No description specified.</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="tabs_label_friends">Friends</string>
-    <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
+    <string name="world_label_description">情報</string>
+    <string name="world_label_tags">タグ</string>
+    <string name="world_text_no_description">情報の記載が有りません。</string>
+    <string name="world_text_no_tags">タグの記載が有りません。</string>
+    <string name="tabs_label_friends">フレンド</string>
+    <string name="tabs_label_home">ホーム</string>
+    <string name="tabs_label_feed">フィード</string>
+    <string name="tabs_label_profile">プロフィール</string>
+    <string name="world_title_created_at">作成日時</string>
+    <string name="world_title_updated_at">最終更新日時</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="notification_service_title_online">Friend has come online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has come online!</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
-    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
-    <string name="notification_service_title_location">Friend changed location!</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
-    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
-    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
-    <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
-    <string name="notification_title_player">\'s Notifications</string>
-    <string name="notification_label_enable">Enable Notifications</string>
-    <string name="notification_label_intent_online">Online Notifications</string>
-    <string name="notification_label_intent_offline">Offline Notifications</string>
-    <string name="notification_label_intent_location">Location Notifications</string>
-    <string name="notification_label_intent_status">Status Change Notifications</string>
-    <string name="notification_service_title_status">Friend changed status!</string>
-    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
+    <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
+    <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
+    <string name="notification_service_description_online">フレンドの %1$s さんがオンラインになりました。</string>
+    <string name="notification_service_title_offline">フレンドがオフラインになりました。</string>
+    <string name="notification_service_description_offline">フレンドの %1$s さんがオフラインになりました。</string>
+    <string name="notification_service_title_location">フレンドが別インスタンスへ移動しました。</string>
+    <string name="notification_service_description_location">フレンドの %1$s さんが %2$s へ移動しました。</string>
+    <string name="notification_service_title_friend_removed">フレンド解除されました。</string>
+    <string name="notification_service_description_friend_removed">フレンドの %1$s さんがフレンド解除しました。</string>
+    <string name="notification_service_title_friend_added">新しいフレンドが出来ました。</string>
+    <string name="notification_service_description_friend_added">%1$s さんがフレンドになりました。</string>
+    <string name="notification_title_player">の通知</string>
+    <string name="notification_label_enable">通知を有効にする</string>
+    <string name="notification_label_intent_online">オンラインの通知</string>
+    <string name="notification_label_intent_offline">オフラインの通知</string>
+    <string name="notification_label_intent_location">インスタンスの通知</string>
+    <string name="notification_label_intent_status">ステータス変更の通知</string>
+    <string name="notification_service_title_status">フレンドがステースを変更しました。</string>
+    <string name="notification_service_description_status">フレンドの %1$s さんのステータスが( %2$s )から( %3$s )へ変更されました。</string>
     <!-- Avatars -->
-    <string name="avatar_dropdown_label_select">Change to Avatar</string>
-    <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
-    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
-    <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
-    <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
-    <string name="avatar_title_description">Description</string>
-    <string name="avatar_title_created_at">Creation Date</string>
-    <string name="avatar_title_updated_at">Last Updated</string>
-    <string name="avatar_title_content_labels">Content Labels</string>
+    <string name="avatar_dropdown_label_select">このアバターへ変更</string>
+    <string name="avatar_dropdown_label_favorite">お気に入りへ追加</string>
+    <string name="avatar_dropdown_label_remove_favorite">お気に入りから削除</string>
+    <string name="avatar_dropdown_toast_not_implemented">この機能は準備中です。後日ご確認下さい。</string>
+    <string name="avatar_dropdown_toast_select_avatar">アバターが選択されました。</string>
+    <string name="avatar_title_description">情報</string>
+    <string name="avatar_title_created_at">作成日時</string>
+    <string name="avatar_title_updated_at">最終更新日時</string>
+    <string name="avatar_title_content_labels">コンテンツラベル</string>
     <string name="avatar_text_author">By %1$s</string>
-    <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
+    <string name="avatar_text_content_labels_not_found">このアバターにコンテンツラベルの登録は有りません。</string>
     <!-- Feed -->
-    <string name="feed_online_label">Online</string>
-    <string name="feed_online_text">has come online.</string>
-    <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">has gone offline.</string>
+    <string name="feed_online_label">オンライン</string>
+    <string name="feed_online_text">さんがオンラインになりました。</string>
+    <string name="feed_offline_label">オフライン</string>
+    <string name="feed_offline_text">さんがオフラインになりました。</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
-    <string name="feed_status_label">Status</string>
-    <string name="feed_status_text">changed status to</string>
-    <string name="feed_added_label">Friend Added</string>
-    <string name="feed_added_text">added you as friend.</string>
-    <string name="feed_removed_label">Friend Removed</string>
-    <string name="feed_removed_text">has removed you as friend.</string>
-    <string name="feed_friend_request_label">Friend Request</string>
-    <string name="feed_friend_request_text">wants to add you as friend.</string>
+    <string name="feed_location_text">さんが移動しました。：</string>
+    <string name="feed_status_label">ステータス</string>
+    <string name="feed_status_text">ステータスが変更されました：</string>
+    <string name="feed_added_label">フレンドの追加</string>
+    <string name="feed_added_text">さんがフレンドとして追加しました。</string>
+    <string name="feed_removed_label">フレンドの解除</string>
+    <string name="feed_removed_text">さんがフレンドを解除しました。</string>
+    <string name="feed_friend_request_label">フレンド・リクエスト</string>
+    <string name="feed_friend_request_text">さんがフレンドになりたいようです。</string>
     <!-- About -->
-    <string name="about_page_title">About</string>
-    <string name="about_page_version_title">You\'re currently running on version: %1$s</string>
-    <string name="about_page_version_description">Click here to check if you\'re on latest version.</string>
-    <string name="about_page_version_toast_message">Sorry, this is not implemented yet!</string>
-    <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
-    <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
-    <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_translate_description">View the libraries VRCAA was built on.</string>
-    <string name="about_page_battery_optimizations_title">Click here to disable battery optimizations</string>
-    <string name="about_page_battery_optimizations_description">Some phone models may require this to be used, for proper functionality.</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
+    <string name="about_page_title">概要</string>
+    <string name="about_page_version_title">現在のアプリバージョン: %1$s</string>
+    <string name="about_page_version_description">最新版を利用中か確認するにはここをクリックして下さい。</string>
+    <string name="about_page_version_toast_message">この機能は準備中です。後日ご確認下さい。</string>
+    <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
+    <string name="about_page_open_source_licenses_description">VRCAAが利用しているライブラリを確認する。</string>
+    <string name="about_page_translate_title">飜訳への協力</string>
+    <string name="about_page_translate_description">VRCAAの飜訳への協力はこちらから。</string>
+    <string name="about_page_battery_optimizations_title">バッテリーの最適化</string>
+    <string name="about_page_battery_optimizations_description">一部の機種において、この機能の設定が必要です。</string>
+    <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
 </resources>
