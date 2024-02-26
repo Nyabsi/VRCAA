@@ -14,7 +14,6 @@ class MainScreenModel : ScreenModel {
     var tonalElevation = mutableStateOf(16.dp)
     var searchHistory = mutableListOf<String>()
 
-    // Bad code below.
     fun enterSearchMode() {
         screenModelScope.launch {
             tonalElevation.value = 0.dp
@@ -29,7 +28,6 @@ class MainScreenModel : ScreenModel {
             delay(160)
             tonalElevation.value = 16.dp
 
-            // don't add empty search to the queue.
             if (searchText.value.isNotEmpty())
                 searchHistory.add(searchText.value)
             clearSearchText()

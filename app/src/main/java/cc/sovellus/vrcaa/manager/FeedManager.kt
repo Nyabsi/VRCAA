@@ -35,8 +35,10 @@ class FeedManager {
     // the feedList should be shared across *any* instance of "FeedManager"
     // since it is accessed by the MainThread (UI) and other threads (ie. Service)
     companion object {
-        @Volatile private var feedListener: FeedListener? = null
-        @Volatile private var feedList: MutableList<Feed> = ArrayList()
+        @Volatile
+        private var feedListener: FeedListener? = null
+        @Volatile
+        private var feedList: MutableList<Feed> = ArrayList()
     }
 
     fun addFeed(feed: Feed) {

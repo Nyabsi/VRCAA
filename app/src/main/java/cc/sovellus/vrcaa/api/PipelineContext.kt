@@ -34,17 +34,17 @@ class PipelineContext(
     private var socketListener: SocketListener? = null
 
     private val listener by lazy {
-        object : WebSocketListener()
-        {
+        object : WebSocketListener() {
             override fun onOpen(
                 webSocket: WebSocket, response: Response
             ) {
                 Log.d("VRCAA", "Connected to the VRChat pipeline.")
+                shouldReconnect = true
             }
 
             override fun onMessage(
-                webSocket: WebSocket, text: String)
-            {
+                webSocket: WebSocket, text: String
+            ) {
                 val update = Gson().fromJson(text, UpdateModel::class.java)
 
                 when (update.type) {
@@ -52,34 +52,43 @@ class PipelineContext(
                         val location = Gson().fromJson(update.content, FriendLocation::class.java)
                         socketListener?.onMessage(location)
                     }
+
                     "friend-active" -> {
                         val friend = Gson().fromJson(update.content, FriendActive::class.java)
                         socketListener?.onMessage(friend)
                     }
+
                     "friend-online" -> {
                         val friend = Gson().fromJson(update.content, FriendOnline::class.java)
                         socketListener?.onMessage(friend)
                     }
+
                     "friend-offline" -> {
                         val friend = Gson().fromJson(update.content, FriendOffline::class.java)
                         socketListener?.onMessage(friend)
                     }
+
                     "friend-delete" -> {
                         val friend = Gson().fromJson(update.content, FriendDelete::class.java)
                         socketListener?.onMessage(friend)
                     }
+
                     "friend-add" -> {
                         val friend = Gson().fromJson(update.content, FriendAdd::class.java)
                         socketListener?.onMessage(friend)
                     }
+
                     "notification" -> {
                         val notification = Gson().fromJson(update.content, Notification::class.java)
                         socketListener?.onMessage(notification)
                     }
+
                     "notification-v2" -> {
-                        val notification = Gson().fromJson(update.content, NotificationV2::class.java)
+                        val notification =
+                            Gson().fromJson(update.content, NotificationV2::class.java)
                         socketListener?.onMessage(notification)
                     }
+
                     else -> {
                         Log.d("VRCAA", "Got Unknown pipeline message (${update.type})")
                         Log.d("VRCAA", update.content)
@@ -91,16 +100,13 @@ class PipelineContext(
             override fun onClosing(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                shouldReconnect = false
+
             }
 
             override fun onClosed(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                Log.d("VRCAA", "Pipeline disconnected.")
-                if (shouldReconnect) {
-                    connect()
-                }
+
             }
 
             override fun onFailure(
@@ -108,11 +114,12 @@ class PipelineContext(
             ) {
                 when (response?.code) {
                     401 -> {
-                        shouldReconnect = false // no you shouldn't reconnect in-case of "Wrong Credentials" Failure.
+                        shouldReconnect = false
                     }
-                    else -> {
-                        Log.d("VRCAA", t.message.toString())
-                    }
+                }
+
+                if (shouldReconnect) {
+                    connect()
                 }
             }
         }
@@ -130,15 +137,11 @@ class PipelineContext(
             .build()
 
         socket = client.newWebSocket(request, listener)
-
-        // Shutdown OkHttpClient after we're sent the initial "handshake" to initialize WebSocket
-        client.dispatcher.executorService.shutdown()
-
-        shouldReconnect = true // yes, we should.
     }
 
     fun disconnect() {
-        shouldReconnect = true
+        socket.cancel()
+        client.dispatcher.executorService.shutdown()
     }
 
     fun setListener(listener: SocketListener) {

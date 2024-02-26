@@ -1,9 +1,7 @@
 package cc.sovellus.vrcaa.service
 
-import android.Manifest
 import android.app.Service
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Build
 import android.os.Handler
@@ -13,9 +11,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.PipelineContext
@@ -45,37 +41,11 @@ class PipelineService : Service(), CoroutineScope {
     private var serviceHandler: ServiceHandler? = null
 
     private lateinit var notificationManager: NotificationManager
-    private var notificationCounter: Int = 0
 
     private var pipeline: PipelineContext? = null
 
     private val feedManager = FeedManager()
     private val friendManager = FriendManager()
-
-    private fun pushNotification(
-        title: String,
-        content: String,
-        channel: String
-    ) {
-        val flags = NotificationCompat.FLAG_ONGOING_EVENT
-
-        val builder = NotificationCompat.Builder(this, channel)
-            .setSmallIcon(R.drawable.ic_notification_icon)
-            .setContentTitle(title)
-            .setContentText(content)
-            .setPriority(flags)
-
-        val notificationManager = NotificationManagerCompat.from(this)
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            notificationManager.notify(notificationCounter, builder.build())
-            notificationCounter++
-        }
-    }
 
     private val listener = object : PipelineContext.SocketListener {
         override fun onMessage(message: Any?) {
@@ -96,23 +66,31 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = msg.obj as FriendOnline
 
                     if (notificationManager.isOnWhitelist(friend.userId) &&
-                        notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_ONLINE)) {
-                        pushNotification(
+                        notificationManager.isIntentEnabled(
+                            friend.userId,
+                            NotificationManager.Intents.FRIEND_FLAG_ONLINE
+                        )
+                    ) {
+                        notificationManager.pushNotification(
                             title = application.getString(R.string.notification_service_title_online),
-                            content = application.getString(R.string.notification_service_description_online).format(friend.user.displayName),
+                            content = application.getString(R.string.notification_service_description_online)
+                                .format(friend.user.displayName),
                             channel = App.CHANNEL_ONLINE_ID
                         )
                     }
 
-                    feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
-                        friendId = friend.userId
-                        friendName = friend.user.displayName
-                        friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                    })
+                    feedManager.addFeed(
+                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                            friendId = friend.userId
+                            friendName = friend.user.displayName
+                            friendPictureUrl =
+                                friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                        })
 
                     friend.user.location = ""
                     friendManager.addFriend(friend.user)
                 }
+
                 is FriendOffline -> {
 
                     val friend = msg.obj as FriendOffline
@@ -120,19 +98,26 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (cachedFriend != null) {
                         if (notificationManager.isOnWhitelist(friend.userId) &&
-                            notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE)) {
-                            pushNotification(
+                            notificationManager.isIntentEnabled(
+                                friend.userId,
+                                NotificationManager.Intents.FRIEND_FLAG_OFFLINE
+                            )
+                        ) {
+                            notificationManager.pushNotification(
                                 title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline).format(cachedFriend.displayName),
+                                content = application.getString(R.string.notification_service_description_offline)
+                                    .format(cachedFriend.displayName),
                                 channel = App.CHANNEL_OFFLINE_ID
                             )
                         }
 
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                            friendId = friend.userId
-                            friendName = cachedFriend.displayName
-                            friendPictureUrl = cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
-                        })
+                        feedManager.addFeed(
+                            FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                                friendId = friend.userId
+                                friendName = cachedFriend.displayName
+                                friendPictureUrl =
+                                    cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
+                            })
                     }
 
                     launch {
@@ -141,6 +126,7 @@ class PipelineService : Service(), CoroutineScope {
                         friendManager.removeFriend(friend.userId, user)
                     }
                 }
+
                 is FriendLocation -> {
 
                     val friend = msg.obj as FriendLocation
@@ -153,14 +139,15 @@ class PipelineService : Service(), CoroutineScope {
                     if (cachedFriend != null) {
                         if (
                             StatusHelper.getStatusFromString(friend.user.status) !=
-                            StatusHelper.getStatusFromString(cachedFriend.status)) {
+                            StatusHelper.getStatusFromString(cachedFriend.status)
+                        ) {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
                                 notificationManager.isIntentEnabled(
                                     friend.userId,
                                     NotificationManager.Intents.FRIEND_FLAG_STATUS
                                 )
                             ) {
-                                pushNotification(
+                                notificationManager.pushNotification(
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status)
                                         .format(
@@ -178,8 +165,10 @@ class PipelineService : Service(), CoroutineScope {
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = friend.userId
                                     friendName = friend.user.displayName
-                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                    friendStatus = StatusHelper.getStatusFromString(friend.user.status)
+                                    friendPictureUrl =
+                                        friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                    friendStatus =
+                                        StatusHelper.getStatusFromString(friend.user.status)
                                 }
                             )
                         } else {
@@ -187,10 +176,15 @@ class PipelineService : Service(), CoroutineScope {
                             // We want to show it only once, so only show when the travelling is done.
                             if (friend.travelingToLocation.isEmpty()) {
                                 if (notificationManager.isOnWhitelist(friend.userId) &&
-                                    notificationManager.isIntentEnabled(friend.userId, NotificationManager.Intents.FRIEND_FLAG_LOCATION)) {
-                                    pushNotification(
+                                    notificationManager.isIntentEnabled(
+                                        friend.userId,
+                                        NotificationManager.Intents.FRIEND_FLAG_LOCATION
+                                    )
+                                ) {
+                                    notificationManager.pushNotification(
                                         title = application.getString(R.string.notification_service_title_location),
-                                        content = application.getString(R.string.notification_service_description_location).format(friend.user.displayName, friend.world.name),
+                                        content = application.getString(R.string.notification_service_description_location)
+                                            .format(friend.user.displayName, friend.world.name),
                                         channel = App.CHANNEL_LOCATION_ID
                                     )
                                 }
@@ -198,38 +192,45 @@ class PipelineService : Service(), CoroutineScope {
                                 val result = LocationHelper.parseLocationIntent(friend.location)
 
                                 val locationFormatted = if (result.regionId.isNotEmpty()) {
-                                    "${friend.world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                                    "${friend.world.name} (${result.instanceType}) ${result.regionId.uppercase()}"
                                 } else {
-                                    "${friend.world.name}~(${result.instanceType}) US"
+                                    "${friend.world.name} (${result.instanceType}) US"
                                 }
 
-                                feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
-                                    friendId = friend.userId
-                                    friendName = friend.user.displayName
-                                    travelDestination = locationFormatted
-                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                })
+                                feedManager.addFeed(
+                                    FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
+                                        .apply {
+                                            friendId = friend.userId
+                                            friendName = friend.user.displayName
+                                            travelDestination = locationFormatted
+                                            friendPictureUrl =
+                                                friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                        })
                             }
                         }
                     }
 
                     friendManager.updateFriend(friend.user)
                 }
+
                 is FriendDelete -> {
                     val friend = msg.obj as FriendDelete
                     val cachedFriend = friendManager.getFriend(friend.userId)
 
                     if (cachedFriend != null) {
-                        feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
-                            friendId = friend.userId
-                            friendName = cachedFriend.displayName
-                            friendPictureUrl = cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
+                        feedManager.addFeed(
+                            FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
+                                friendId = friend.userId
+                                friendName = cachedFriend.displayName
+                                friendPictureUrl =
+                                    cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
 
-                        })
+                            })
 
-                        pushNotification(
+                        notificationManager.pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed).format(cachedFriend.displayName),
+                            content = application.getString(R.string.notification_service_description_friend_removed)
+                                .format(cachedFriend.displayName),
                             channel = App.CHANNEL_STATUS_ID
                         )
                     }
@@ -239,24 +240,29 @@ class PipelineService : Service(), CoroutineScope {
                         friendManager.removeFriend(friend.userId, user!!)
                     }
                 }
+
                 is FriendAdd -> {
                     val friend = msg.obj as FriendAdd
 
                     // Both Friend Add and Remove should send notification regardless of the specified setting.
-                    pushNotification(
+                    notificationManager.pushNotification(
                         title = application.getString(R.string.notification_service_title_friend_added),
-                        content = application.getString(R.string.notification_service_description_friend_added).format(friend.user.displayName),
+                        content = application.getString(R.string.notification_service_description_friend_added)
+                            .format(friend.user.displayName),
                         channel = App.CHANNEL_STATUS_ID
                     )
 
-                    feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
-                        friendId = friend.userId
-                        friendName = friend.user.displayName
-                        friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                    })
+                    feedManager.addFeed(
+                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
+                            friendId = friend.userId
+                            friendName = friend.user.displayName
+                            friendPictureUrl =
+                                friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                        })
 
                     friendManager.addFriend(friend.user)
                 }
+
                 is Notification -> {
                     val notification = msg.obj as Notification
 
@@ -266,20 +272,29 @@ class PipelineService : Service(), CoroutineScope {
 
                             when (notification.type) {
                                 "friendRequest" -> {
-                                    feedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
-                                        friendId = notification.senderUserId
-                                        friendName = notification.senderUsername
-                                        friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
-                                    })
+                                    feedManager.addFeed(
+                                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST)
+                                            .apply {
+                                                friendId = notification.senderUserId
+                                                friendName = notification.senderUsername
+                                                friendPictureUrl =
+                                                    sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }
+                                                        .toString()
+                                            })
                                 }
+
                                 else -> {
-                                    Log.d("VRCAA", "Received unknown notificationType: ${notification.type}")
+                                    Log.d(
+                                        "VRCAA",
+                                        "Received unknown notificationType: ${notification.type}"
+                                    )
                                 }
                             }
                         }
                     }
                 }
-                else -> { /* Not Implemented */ }
+
+                else -> {}
             }
         }
     }
@@ -329,7 +344,11 @@ class PipelineService : Service(), CoroutineScope {
             .setOngoing(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(NOTIFICATION_ID_STICKY, builder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            startForeground(
+                NOTIFICATION_ID_STICKY,
+                builder.build(),
+                FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
         } else {
             // Older versions do not require to specify the `foregroundServiceType`
             startForeground(NOTIFICATION_ID_STICKY, builder.build())

@@ -41,7 +41,11 @@ class MainActivity : ComponentActivity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 0)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
             }
         }
 
@@ -51,7 +55,11 @@ class MainActivity : ComponentActivity() {
                     Manifest.permission.FOREGROUND_SERVICE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.FOREGROUND_SERVICE), 0)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.FOREGROUND_SERVICE),
+                    0
+                )
             }
         }
 
@@ -61,11 +69,15 @@ class MainActivity : ComponentActivity() {
                     Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC), 0)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC),
+                    0
+                )
             }
         }
 
-        if(checkForCookies()) {
+        if (checkForCookies()) {
             if (!isMyServiceRunning(PipelineService::class.java)) {
                 val intent = Intent(this, PipelineService::class.java)
                 startForegroundService(intent)
@@ -87,8 +99,15 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Content() {
         Navigator(
-            screen =  if (!checkForCookies()) { LoginScreen() } else { MainScreen() },
-            disposeBehavior = NavigatorDisposeBehavior(disposeNestedNavigators = false, disposeSteps = true)
+            screen = if (!checkForCookies()) {
+                LoginScreen()
+            } else {
+                MainScreen()
+            },
+            disposeBehavior = NavigatorDisposeBehavior(
+                disposeNestedNavigators = false,
+                disposeSteps = true
+            )
         ) { navigator ->
             SlideTransition(navigator)
         }

@@ -27,10 +27,22 @@ class LocationHelper {
             for (i in intents) {
 
                 val begin = i.indexOf('(')
-                val end = if (begin >= 0) { i.indexOf(')') } else { -1 }
+                val end = if (begin >= 0) {
+                    i.indexOf(')')
+                } else {
+                    -1
+                }
 
-                val key = if (end >= 0) { i.substring(0, begin) } else { "" }
-                val value = if (begin  < end) { i.substring(begin + 1, end) } else { "" }
+                val key = if (end >= 0) {
+                    i.substring(0, begin)
+                } else {
+                    ""
+                }
+                val value = if (begin < end) {
+                    i.substring(begin + 1, end)
+                } else {
+                    ""
+                }
 
                 if (key.isNotEmpty() && value.isNotEmpty()) {
                     when (key) {
@@ -54,7 +66,7 @@ class LocationHelper {
                         result.instanceType = "Friends"
                     } else if (result.hiddenId.isNotEmpty()) {
                         result.instanceType = "Friends+"
-                    } else if(result.groupId.isNotEmpty()) {
+                    } else if (result.groupId.isNotEmpty()) {
                         result.instanceType = "Group"
                         if (result.groupAccessType.isNotEmpty()) {
                             if (result.groupAccessType == "public") {

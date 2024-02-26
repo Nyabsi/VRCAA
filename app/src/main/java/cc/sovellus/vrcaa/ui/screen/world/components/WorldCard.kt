@@ -54,7 +54,7 @@ fun WorldCard(
         Text(
             text = name,
             modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-            fontSize = 32.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Left
         )

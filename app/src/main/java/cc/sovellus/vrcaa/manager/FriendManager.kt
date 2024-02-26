@@ -9,9 +9,12 @@ class FriendManager {
     }
 
     companion object {
-        @Volatile private var friendListener: FriendListener? = null
-        @Volatile private var syncedFriends: MutableList<LimitedUser> = ArrayList()
-        @Volatile private var syncedOfflineFriends: MutableList<LimitedUser> = ArrayList()
+        @Volatile
+        private var friendListener: FriendListener? = null
+        @Volatile
+        private var syncedFriends: MutableList<LimitedUser> = ArrayList()
+        @Volatile
+        private var syncedOfflineFriends: MutableList<LimitedUser> = ArrayList()
     }
 
     fun setFriendListener(listener: FriendListener) {
@@ -33,16 +36,14 @@ class FriendManager {
     }
 
     fun addFriend(friend: LimitedUser) {
-        if (syncedFriends.find { it.id == friend.id } == null)
-        {
+        if (syncedFriends.find { it.id == friend.id } == null) {
             synchronized(friend) {
                 syncedFriends.add(friend)
                 friendListener?.onUpdateFriends(syncedFriends, false)
             }
         }
 
-        if (syncedOfflineFriends.find { it.id == friend.id } != null)
-        {
+        if (syncedOfflineFriends.find { it.id == friend.id } != null) {
             synchronized(friend) {
                 syncedOfflineFriends.remove(friend)
                 friendListener?.onUpdateFriends(syncedOfflineFriends, true)

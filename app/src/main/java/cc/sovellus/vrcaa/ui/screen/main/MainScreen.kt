@@ -72,7 +72,12 @@ class MainScreen : Screen {
                 topBar = {
                     SearchBar(
                         query = model.searchText.value,
-                        placeholder = { Text(text = stringResource(R.string.main_search_placeholder), overflow = TextOverflow.Ellipsis) },
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.main_search_placeholder),
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
                         onQueryChange = { model.searchText.value = it; },
                         onSearch = {
                             model.existSearchMode()
@@ -80,7 +85,11 @@ class MainScreen : Screen {
                         },
                         active = model.isSearchActive.value,
                         onActiveChange = {
-                            if (it) { model.enterSearchMode() } else { model.existSearchMode() }
+                            if (it) {
+                                model.enterSearchMode()
+                            } else {
+                                model.existSearchMode()
+                            }
                         },
                         tonalElevation = model.tonalElevation.value,
                         modifier = Modifier
@@ -147,7 +156,10 @@ class MainScreen : Screen {
                 },
                 content = {
                     Column(
-                        modifier = Modifier.padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())
+                        modifier = Modifier.padding(
+                            top = it.calculateTopPadding(),
+                            bottom = it.calculateBottomPadding()
+                        )
                     ) {
                         CurrentTab()
                     }

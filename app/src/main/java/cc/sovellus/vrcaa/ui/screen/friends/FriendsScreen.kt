@@ -82,7 +82,9 @@ class FriendsScreen : Screen {
     ) {
 
         val context = LocalContext.current
-        val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
+        val stateRefresh = rememberPullRefreshState(
+            model.isRefreshing.value,
+            onRefresh = { model.refreshFriends(context) })
 
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
@@ -90,7 +92,8 @@ class FriendsScreen : Screen {
         Box(
             Modifier
                 .pullRefresh(stateRefresh)
-                .fillMaxSize()) {
+                .fillMaxSize()
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -104,7 +107,10 @@ class FriendsScreen : Screen {
                 ) {
                     options.forEachIndexed { index, label ->
                         SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = options.size
+                            ),
                             icon = {
                                 SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
                                     Icon(
@@ -124,14 +130,18 @@ class FriendsScreen : Screen {
                     }
                 }
 
-                when(model.currentIndex.intValue) {
+                when (model.currentIndex.intValue) {
                     0 -> ShowFriendsFavorite(favoriteFriends)
                     1 -> ShowFriendsOnline(model)
                     2 -> ShowFriendsOffline(model)
                 }
             }
 
-            PullRefreshIndicator(model.isRefreshing.value, stateRefresh, Modifier.align(Alignment.TopCenter))
+            PullRefreshIndicator(
+                model.isRefreshing.value,
+                stateRefresh,
+                Modifier.align(Alignment.TopCenter)
+            )
         }
     }
 
@@ -165,7 +175,13 @@ class FriendsScreen : Screen {
                     val friend = offlineFriends.value[it]
 
                     ListItem(
-                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
+                        headlineContent = {
+                            Text(friend.statusDescription.ifEmpty {
+                                StatusHelper.Status.toString(
+                                    StatusHelper.getStatusFromString(friend.status)
+                                )
+                            }, maxLines = 1)
+                        },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = { Text(text = friend.location, maxLines = 1) },
                         leadingContent = {
@@ -182,7 +198,13 @@ class FriendsScreen : Screen {
                             )
                         },
                         trailingContent = {
-                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                            Badge(
+                                containerColor = StatusHelper.Status.toColor(
+                                    StatusHelper.getStatusFromString(
+                                        friend.status
+                                    )
+                                ), modifier = Modifier.size(16.dp)
+                            )
                         },
                         modifier = Modifier.clickable(
                             onClick = {
@@ -215,7 +237,8 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsSortedStatus =
+                    friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
 
                 items(
@@ -226,7 +249,13 @@ class FriendsScreen : Screen {
                     val friend = friendsFiltered[it]
 
                     ListItem(
-                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
+                        headlineContent = {
+                            Text(friend.statusDescription.ifEmpty {
+                                StatusHelper.Status.toString(
+                                    StatusHelper.getStatusFromString(friend.status)
+                                )
+                            }, maxLines = 1)
+                        },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = {
                             Text(text = friend.location, maxLines = 1)
@@ -245,7 +274,13 @@ class FriendsScreen : Screen {
                             )
                         },
                         trailingContent = {
-                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                            Badge(
+                                containerColor = StatusHelper.Status.toColor(
+                                    StatusHelper.getStatusFromString(
+                                        friend.status
+                                    )
+                                ), modifier = Modifier.size(16.dp)
+                            )
                         },
                         modifier = Modifier.clickable(
                             onClick = {
@@ -280,7 +315,8 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSortedStatus = onlineFriends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsSortedStatus =
+                    onlineFriends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
 
                 items(
@@ -291,7 +327,13 @@ class FriendsScreen : Screen {
                     val friend = friendsFiltered[it]
 
                     ListItem(
-                        headlineContent = { Text(friend.statusDescription.ifEmpty { StatusHelper.Status.toString(StatusHelper.getStatusFromString(friend.status)) }, maxLines = 1) },
+                        headlineContent = {
+                            Text(friend.statusDescription.ifEmpty {
+                                StatusHelper.Status.toString(
+                                    StatusHelper.getStatusFromString(friend.status)
+                                )
+                            }, maxLines = 1)
+                        },
                         overlineContent = { Text(friend.displayName) },
                         supportingContent = {
                             Text(text = friend.location, maxLines = 1)
@@ -310,7 +352,13 @@ class FriendsScreen : Screen {
                             )
                         },
                         trailingContent = {
-                            Badge(containerColor = StatusHelper.Status.toColor(StatusHelper.getStatusFromString(friend.status)), modifier = Modifier.size(16.dp))
+                            Badge(
+                                containerColor = StatusHelper.Status.toColor(
+                                    StatusHelper.getStatusFromString(
+                                        friend.status
+                                    )
+                                ), modifier = Modifier.size(16.dp)
+                            )
                         },
                         modifier = Modifier.clickable(
                             onClick = {

@@ -25,7 +25,7 @@ class FriendsScreenModel(
     sealed class FriendListState {
         data object Init : FriendListState()
         data object Loading : FriendListState()
-        data class Result (val favoriteFriends: List<LimitedUser>) : FriendListState()
+        data class Result(val favoriteFriends: List<LimitedUser>) : FriendListState()
     }
 
     var isRefreshing = mutableStateOf(false)

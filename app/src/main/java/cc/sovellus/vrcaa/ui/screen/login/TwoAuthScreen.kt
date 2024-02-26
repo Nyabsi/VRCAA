@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 
 class TwoAuthScreen(
     private val otpType: ApiContext.TwoFactorType,
-   private val token: String
+    private val token: String
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -58,12 +58,20 @@ class TwoAuthScreen(
         val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(context) }
 
         Column(
-            modifier = Modifier.fillMaxHeight().padding(bottom = 16.dp),
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(text = if (otpType == ApiContext.TwoFactorType.EMAIL_OTP) { stringResource(R.string.auth_text_email) } else { stringResource(R.string.auth_text_app) })
+            Text(
+                text = if (otpType == ApiContext.TwoFactorType.EMAIL_OTP) {
+                    stringResource(R.string.auth_text_email)
+                } else {
+                    stringResource(R.string.auth_text_app)
+                }
+            )
 
             TextInput(
                 input = screenModel.code
@@ -81,7 +89,7 @@ class TwoAuthScreen(
             }
         }
 
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(vertical = 16.dp),
@@ -137,12 +145,18 @@ class TwoAuthScreen(
                             it >= input.value.length -> ""
                             else -> input.value[it].toString()
                         }
-                        
+
                         Text(
                             modifier = Modifier
                                 .width(50.dp)
                                 .height(60.dp)
-                                .border(1.dp, if (isSystemDarkMode()) { Color.White } else { Color.Black }, RoundedCornerShape(8.dp))
+                                .border(
+                                    1.dp, if (isSystemDarkMode()) {
+                                        Color.White
+                                    } else {
+                                        Color.Black
+                                    }, RoundedCornerShape(8.dp)
+                                )
                                 .fillMaxWidth()
                                 .fillMaxHeight()
                                 .padding(top = 10.dp),

@@ -3,7 +3,7 @@ package cc.sovellus.vrcaa.api.avatars.models
 
 import com.google.gson.annotations.SerializedName
 
-class JustHPartyAvatars : ArrayList<JustHPartyAvatars.JustHPartyAvatarsItem>(){
+class JustHPartyAvatars : ArrayList<JustHPartyAvatars.JustHPartyAvatarsItem>() {
     data class JustHPartyAvatarsItem(
         @SerializedName("authorId")
         val authorId: String,

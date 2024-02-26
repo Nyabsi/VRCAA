@@ -50,7 +50,10 @@ class FilterSettingsScreen : Screen {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
+                        ),
                 ) {
 
                 }

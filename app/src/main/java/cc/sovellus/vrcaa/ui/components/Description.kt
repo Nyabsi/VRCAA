@@ -18,7 +18,11 @@ fun Description(text: String?) {
             .padding(start = 24.dp)
     ) {
         Text(
-            text = if (text.isNullOrEmpty()) { stringResource(R.string.profile_text_no_biography) } else { text },
+            text = if (text.isNullOrEmpty()) {
+                stringResource(R.string.profile_text_no_biography)
+            } else {
+                text
+            },
             textAlign = TextAlign.Left,
             fontWeight = FontWeight.SemiBold
         )

@@ -78,7 +78,13 @@ class SearchResultScreen(
 
         when (val result = state) {
             is SearchState.Loading -> LoadingIndicatorScreen().Content()
-            is SearchState.Result -> DisplayResult(result.foundWorlds, result.foundUsers, result.foundAvatars, model)
+            is SearchState.Result -> DisplayResult(
+                result.foundWorlds,
+                result.foundUsers,
+                result.foundAvatars,
+                model
+            )
+
             else -> {}
         }
     }
@@ -116,16 +122,24 @@ class SearchResultScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding()),
+                        .padding(
+                            top = it.calculateTopPadding(),
+                            bottom = it.calculateBottomPadding()
+                        ),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     MultiChoiceSegmentedButtonRow(
-                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp)
                     ) {
                         options.forEachIndexed { index, label ->
                             SegmentedButton(
-                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = options.size
+                                ),
                                 icon = {
                                     SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
                                         Icon(
@@ -145,7 +159,7 @@ class SearchResultScreen(
                         }
                     }
 
-                    when(model.currentIndex.intValue) {
+                    when (model.currentIndex.intValue) {
                         0 -> ShowWorlds(worlds)
                         1 -> ShowUsers(users)
                         2 -> ShowAvatars(avatars)
@@ -188,12 +202,23 @@ class SearchResultScreen(
             Row(
                 modifier = Modifier.padding(4.dp)
             ) {
-                Text(text = name, textAlign = TextAlign.Start, modifier = Modifier.weight(0.80f), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    text = name,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(0.80f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 if (count != null) {
-                    Text(text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                        .weight(0.20f)
-                        .padding(end = 2.dp))
-                    Icon(imageVector = Icons.Filled.Group, contentDescription = stringResource(R.string.preview_image_description))
+                    Text(
+                        text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
+                            .weight(0.20f)
+                            .padding(end = 2.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Group,
+                        contentDescription = stringResource(R.string.preview_image_description)
+                    )
                 }
             }
         }

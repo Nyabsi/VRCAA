@@ -26,6 +26,7 @@ import cc.sovellus.vrcaa.R
 class NestedPlaceholderScreen : Screen {
 
     override val key = uniqueScreenKey
+
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
@@ -40,7 +41,7 @@ class NestedPlaceholderScreen : Screen {
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription =stringResource(R.string.preview_image_description)
+                                contentDescription = stringResource(R.string.preview_image_description)
                             )
                         }
                     },
@@ -50,7 +51,12 @@ class NestedPlaceholderScreen : Screen {
             },
             content = {
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding()),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = it.calculateTopPadding(),
+                            bottom = it.calculateBottomPadding()
+                        ),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

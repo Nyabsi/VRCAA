@@ -39,19 +39,24 @@ import cc.sovellus.vrcaa.R
 class LoginScreen : Screen {
 
     override val key = uniqueScreenKey
+
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { LoginScreenModel(
-            context,
-            navigator
-        ) }
+        val screenModel = navigator.rememberNavigatorScreenModel {
+            LoginScreenModel(
+                context,
+                navigator
+            )
+        }
 
         Column(
-            modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -66,7 +71,9 @@ class LoginScreen : Screen {
                 title = stringResource(R.string.login_label_password),
                 input = screenModel.password,
                 visible = screenModel.passwordVisible.value,
-                onVisibilityChange = { screenModel.passwordVisible.value = !screenModel.passwordVisible.value }
+                onVisibilityChange = {
+                    screenModel.passwordVisible.value = !screenModel.passwordVisible.value
+                }
             )
 
             Button(
@@ -81,7 +88,7 @@ class LoginScreen : Screen {
             }
         }
 
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(vertical = 16.dp),
@@ -137,8 +144,8 @@ class LoginScreen : Screen {
 
                 IconButton(onClick = {
                     onVisibilityChange()
-                }){
-                    Icon(imageVector  = image, stringResource(R.string.preview_image_description))
+                }) {
+                    Icon(imageVector = image, stringResource(R.string.preview_image_description))
                 }
             }
         )

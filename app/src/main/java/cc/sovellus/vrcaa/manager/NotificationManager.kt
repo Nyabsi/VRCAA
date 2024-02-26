@@ -1,14 +1,21 @@
 package cc.sovellus.vrcaa.manager
 
+import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.notificationWhitelist
 import com.google.gson.annotations.SerializedName
 
 class NotificationManager(
-    context: Context
+    private val context: Context
 ) {
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", 0)
+    private var notificationCounter: Int = 0
 
     enum class Intents {
         FRIEND_FLAG_ONLINE,
@@ -60,8 +67,9 @@ class NotificationManager(
         val tmp = preferences.notificationWhitelist
         tmp.add(
             NotificationPermissions.NotificationPermission(
-            friendId = friendId
-        ))
+                friendId = friendId
+            )
+        )
         preferences.notificationWhitelist = tmp
     }
 
@@ -71,5 +79,30 @@ class NotificationManager(
             preferences.notificationWhitelist.find { it.friendId == friendId }
         )
         preferences.notificationWhitelist = tmp
+    }
+
+    fun pushNotification(
+        title: String,
+        content: String,
+        channel: String
+    ) {
+        val flags = NotificationCompat.FLAG_ONGOING_EVENT
+
+        val builder = NotificationCompat.Builder(context, channel)
+            .setSmallIcon(R.drawable.ic_notification_icon)
+            .setContentTitle(title)
+            .setContentText(content)
+            .setPriority(flags)
+
+        val notificationManager = NotificationManagerCompat.from(context)
+
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            notificationManager.notify(notificationCounter, builder.build())
+            notificationCounter++
+        }
     }
 }

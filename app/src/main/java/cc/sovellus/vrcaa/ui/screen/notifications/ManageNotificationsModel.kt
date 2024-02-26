@@ -13,10 +13,30 @@ class ManageNotificationsModel(
 
     val isNotificationsEnabled = mutableStateOf(notificationManager.isOnWhitelist(friendId))
 
-    val isOnlineIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_ONLINE))
-    val isOfflineIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_OFFLINE))
-    val isLocationIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_LOCATION))
-    val isStatusIntentEnabled = mutableStateOf(notificationManager.isIntentEnabled(friendId, NotificationManager.Intents.FRIEND_FLAG_STATUS))
+    val isOnlineIntentEnabled = mutableStateOf(
+        notificationManager.isIntentEnabled(
+            friendId,
+            NotificationManager.Intents.FRIEND_FLAG_ONLINE
+        )
+    )
+    val isOfflineIntentEnabled = mutableStateOf(
+        notificationManager.isIntentEnabled(
+            friendId,
+            NotificationManager.Intents.FRIEND_FLAG_OFFLINE
+        )
+    )
+    val isLocationIntentEnabled = mutableStateOf(
+        notificationManager.isIntentEnabled(
+            friendId,
+            NotificationManager.Intents.FRIEND_FLAG_LOCATION
+        )
+    )
+    val isStatusIntentEnabled = mutableStateOf(
+        notificationManager.isIntentEnabled(
+            friendId,
+            NotificationManager.Intents.FRIEND_FLAG_STATUS
+        )
+    )
 
 
     fun toggleNotifications(toggle: Boolean) {
@@ -38,7 +58,7 @@ class ManageNotificationsModel(
             notificationManager.disableIntent(friendId, intent)
         }
 
-        when(intent) {
+        when (intent) {
             NotificationManager.Intents.FRIEND_FLAG_ONLINE -> isOnlineIntentEnabled.value = toggle
             NotificationManager.Intents.FRIEND_FLAG_OFFLINE -> isOfflineIntentEnabled.value = toggle
             NotificationManager.Intents.FRIEND_FLAG_LOCATION -> isLocationIntentEnabled.value = toggle
