@@ -219,6 +219,13 @@ class UserProfileScreen(
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
+                                        Text(
+                                            text = "${instance.world.name} (${instance.name}) ${result.instanceType}",
+                                            modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+                                            fontSize = 14.sp,
+                                            textAlign = TextAlign.Left,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
                                         if (result.regionId.isNotEmpty()) {
                                             when (result.regionId.lowercase()) {
                                                 "eu" -> Image(
@@ -258,13 +265,6 @@ class UserProfileScreen(
                                                 )
                                             )
                                         }
-                                        Text(
-                                            text = "${instance.world.name} (${instance.name}) ${result.instanceType}",
-                                            modifier = Modifier.padding(start = 2.dp, top = 4.dp),
-                                            fontSize = 14.sp,
-                                            textAlign = TextAlign.Left,
-                                            color = Color.Black
-                                        )
                                     }
                                 }
                             }
