@@ -32,11 +32,7 @@ Are you multilangual, and you are interested in translating VRCAA for your langu
 
 # Showcase
 
-![image](https://github.com/Nyabsi/vrcaa/assets/43046474/772633dd-e6bc-440c-8638-abca5665b405)
-
-![image](https://github.com/Nyabsi/vrcaa/assets/43046474/fb34fce5-6d2d-4ea3-aa52-c16fa4a6af40)
-
-> These showcases are outdated, the application has changed lot in past few days.
+> Under construction, new showcase is available shortly.
   
 # Disclaimer
 
