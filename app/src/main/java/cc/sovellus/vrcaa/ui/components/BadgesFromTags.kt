@@ -28,7 +28,7 @@ fun BadgesFromTags(
                     Badge(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier
-                            .height(height = 32.dp)
+                            .height(height = 26.dp)
                             .padding(2.dp),
                         content = {
                             Text(
