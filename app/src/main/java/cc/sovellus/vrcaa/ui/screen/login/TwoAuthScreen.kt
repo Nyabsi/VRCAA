@@ -110,19 +110,10 @@ class TwoAuthScreen(
     fun TextInput(
         input: MutableState<String>
     ) {
-        val focus = LocalFocusManager.current
-        val coroutineScope = rememberCoroutineScope()
-
         BasicTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .onFocusChanged {
-                    coroutineScope.launch {
-                        delay(5000)
-                        focus.clearFocus()
-                    }
-                },
+                .padding(16.dp),
             value = input.value,
             onValueChange = {
                 if (it.length <= 6)
@@ -130,7 +121,7 @@ class TwoAuthScreen(
             },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Ascii
+                keyboardType = KeyboardType.NumberPassword
             ),
             decorationBox = {
                 Row(
