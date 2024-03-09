@@ -217,52 +217,51 @@ class UserProfileScreen(
                                         LocationHelper.parseLocationIntent(profile.location)
 
                                     Row(
-                                        verticalAlignment = Alignment.CenterVertically
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.Start,
+                                        modifier = Modifier.padding(4.dp)
                                     ) {
                                         Text(
-                                            text = "${instance.world.name} (${instance.name}) ${result.instanceType}",
-                                            modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+                                            text = "${instance.world.name} (${instance.name}) ${result.instanceType} ${instance.nUsers}/${instance.world.capacity}",
                                             fontSize = 14.sp,
                                             textAlign = TextAlign.Left,
-                                            fontWeight = FontWeight.SemiBold
+                                            fontWeight = FontWeight.SemiBold,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
                                         )
                                         if (result.regionId.isNotEmpty()) {
                                             when (result.regionId.lowercase()) {
                                                 "eu" -> Image(
                                                     painter = painterResource(R.drawable.flag_eu),
-                                                    contentDescription = "Region flag",
-                                                    modifier = Modifier.padding(
-                                                        start = 8.dp,
-                                                        top = 4.dp
-                                                    )
+                                                    modifier = Modifier.padding(start = 2.dp),
+                                                    contentDescription = "Region flag"
                                                 )
-
                                                 "jp" -> Image(
                                                     painter = painterResource(R.drawable.flag_jp),
-                                                    contentDescription = "Region flag",
-                                                    modifier = Modifier.padding(
-                                                        start = 8.dp,
-                                                        top = 4.dp
-                                                    )
+                                                    modifier = Modifier.padding(start = 2.dp),
+                                                    contentDescription = "Region flag"
                                                 )
-
                                                 "us" -> Image(
                                                     painter = painterResource(R.drawable.flag_us),
-                                                    contentDescription = "Region flag",
-                                                    modifier = Modifier.padding(
-                                                        start = 8.dp,
-                                                        top = 4.dp
-                                                    )
+                                                    modifier = Modifier.padding(start = 2.dp),
+                                                    contentDescription = "Region flag"
+                                                )
+                                                "use" -> Image(
+                                                    painter = painterResource(R.drawable.flag_us),
+                                                    modifier = Modifier.padding(start = 2.dp),
+                                                    contentDescription = "Region flag"
+                                                )
+                                                "usw" -> Image(
+                                                    painter = painterResource(R.drawable.flag_us),
+                                                    modifier = Modifier.padding(start = 2.dp),
+                                                    contentDescription = "Region flag"
                                                 )
                                             }
                                         } else {
                                             Image(
                                                 painter = painterResource(R.drawable.flag_us),
+                                                modifier = Modifier.padding(start = 2.dp),
                                                 contentDescription = "Region flag",
-                                                modifier = Modifier.padding(
-                                                    start = 8.dp,
-                                                    top = 4.dp
-                                                )
                                             )
                                         }
                                     }
