@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,10 +33,7 @@ class FriendsScreenModel(
     private val friendManager = FriendManager()
 
     private var onlineFriendsStateFlow = MutableStateFlow(friendManager.getFriends().toList())
-    var onlineFriends = onlineFriendsStateFlow.asStateFlow()
-
-    private var offlineFriendsStateFlow = MutableStateFlow(friendManager.getFriends(true).toList())
-    var offlineFriends = offlineFriendsStateFlow.asStateFlow()
+    var friends = onlineFriendsStateFlow.asStateFlow()
 
     private var favoriteFriends = mutableListOf<LimitedUser>()
 
@@ -46,11 +42,7 @@ class FriendsScreenModel(
             var newFriends = friends.toList()
             screenModelScope.launch {
                 newFriends = getFriendLocations(newFriends)
-                if (offline) {
-                    offlineFriendsStateFlow.update { newFriends }
-                } else {
-                    onlineFriendsStateFlow.update { newFriends }
-                }
+                onlineFriendsStateFlow.update { newFriends }
             }
         }
     }
@@ -58,7 +50,7 @@ class FriendsScreenModel(
     init {
         friendManager.setFriendListener(listener)
         screenModelScope.launch {
-            onlineFriendsStateFlow.update { getFriendLocations(onlineFriends.value) }
+            onlineFriendsStateFlow.update { getFriendLocations(friends.value) }
         }
         getFriends()
     }

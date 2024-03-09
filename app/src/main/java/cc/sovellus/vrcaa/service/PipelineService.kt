@@ -87,8 +87,9 @@ class PipelineService : Service(), CoroutineScope {
                                 friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
 
-                    friend.user.location = ""
-                    friendManager.addFriend(friend.user)
+                    if (friendManager.getFriend(friend.userId) == null) {
+                        friendManager.addFriend(friend.user)
+                    }
                 }
 
                 is FriendOffline -> {
@@ -121,9 +122,9 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     launch {
-                        val user = api.get().getUser(friend.userId)
-                        user!!.status = "offline"
-                        friendManager.removeFriend(friend.userId, user)
+                        api.get().getUser(friend.userId)?.let { user ->
+                            friendManager.updateFriend(user)
+                        }
                     }
                 }
 
@@ -235,10 +236,7 @@ class PipelineService : Service(), CoroutineScope {
                         )
                     }
 
-                    launch {
-                        val user = api.get().getUser(friend.userId)
-                        friendManager.removeFriend(friend.userId, user!!)
-                    }
+                    friendManager.removeFriend(friend.userId)
                 }
 
                 is FriendAdd -> {
@@ -324,7 +322,11 @@ class PipelineService : Service(), CoroutineScope {
 
                         api.get().getFriends(true).let { friends ->
                             if (friends != null) {
-                                friendManager.setFriends(friends, true)
+                                val onlineFriends = friendManager.getFriends()
+                                for (offline in friends) {
+                                    onlineFriends.add(offline)
+                                }
+                                friendManager.setFriends(onlineFriends)
                             }
                         }
 
@@ -345,13 +347,13 @@ class PipelineService : Service(), CoroutineScope {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
-                NOTIFICATION_ID_STICKY,
+                NOTIFICATION_ID,
                 builder.build(),
                 FOREGROUND_SERVICE_TYPE_DATA_SYNC
             )
         } else {
             // Older versions do not require to specify the `foregroundServiceType`
-            startForeground(NOTIFICATION_ID_STICKY, builder.build())
+            startForeground(NOTIFICATION_ID, builder.build())
         }
 
         return START_STICKY
@@ -366,6 +368,6 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     companion object {
-        private const val NOTIFICATION_ID_STICKY = 42069
+        private const val NOTIFICATION_ID = 42069
     }
 }

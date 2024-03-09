@@ -13,8 +13,6 @@ class FriendManager {
         private var friendListener: FriendListener? = null
         @Volatile
         private var syncedFriends: MutableList<LimitedUser> = ArrayList()
-        @Volatile
-        private var syncedOfflineFriends: MutableList<LimitedUser> = ArrayList()
     }
 
     fun setFriendListener(listener: FriendListener) {
@@ -23,15 +21,9 @@ class FriendManager {
         }
     }
 
-    fun setFriends(friends: ArrayList<LimitedUser>, offline: Boolean = false) {
-        if (!offline) {
-            synchronized(friends) {
-                syncedFriends = friends
-            }
-        } else {
-            synchronized(friends) {
-                syncedOfflineFriends = friends
-            }
+    fun setFriends(friends: MutableList<LimitedUser>) {
+        synchronized(friends) {
+            syncedFriends = friends
         }
     }
 
@@ -42,24 +34,11 @@ class FriendManager {
                 friendListener?.onUpdateFriends(syncedFriends, false)
             }
         }
-
-        if (syncedOfflineFriends.find { it.id == friend.id } != null) {
-            synchronized(friend) {
-                syncedOfflineFriends.remove(friend)
-                friendListener?.onUpdateFriends(syncedOfflineFriends, true)
-            }
-        }
     }
 
-    fun removeFriend(userId: String, user: LimitedUser) {
+    fun removeFriend(userId: String) {
         synchronized(userId) {
             val friend = syncedFriends.find { it.id == userId }
-
-            friend?.let {
-                syncedOfflineFriends.add(user)
-            }
-
-            friendListener?.onUpdateFriends(syncedOfflineFriends, true)
 
             friend?.let {
                 syncedFriends.remove(friend)
@@ -83,11 +62,7 @@ class FriendManager {
         }
     }
 
-    fun getFriends(offline: Boolean = false): MutableList<LimitedUser> {
-        return if (!offline) {
-            syncedFriends
-        } else {
-            syncedOfflineFriends
-        }
+    fun getFriends(): MutableList<LimitedUser> {
+        return syncedFriends
     }
 }

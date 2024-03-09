@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -150,9 +150,9 @@ class FriendsScreen : Screen {
     fun ShowFriendsOffline(
         model: FriendsScreenModel
     ) {
-        val offlineFriends = model.offlineFriends.collectAsState()
+        val friends = model.friends.collectAsState()
 
-        if (offlineFriends.value.isEmpty()) {
+        if (friends.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -168,50 +168,55 @@ class FriendsScreen : Screen {
                     .padding(1.dp)
             ) {
                 items(
-                    offlineFriends.value.count(),
+                    friends.value.count(),
                     key = { UUID.randomUUID() }
                 ) {
                     val navigator = LocalNavigator.currentOrThrow
-                    val friend = offlineFriends.value[it]
+                    val friend = friends.value[it]
 
-                    ListItem(
-                        headlineContent = {
-                            Text(friend.statusDescription.ifEmpty {
-                                StatusHelper.Status.toString(
-                                    StatusHelper.getStatusFromString(friend.status)
-                                )
-                            }, maxLines = 1)
-                        },
-                        overlineContent = { Text(friend.displayName) },
-                        supportingContent = { Text(text = friend.location, maxLines = 1) },
-                        leadingContent = {
-                            GlideImage(
-                                model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
-                                contentDescription = stringResource(R.string.preview_image_description),
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .clip(RoundedCornerShape(50)),
-                                contentScale = ContentScale.FillBounds,
-                                alignment = Alignment.Center,
-                                loading = placeholder(R.drawable.icon_placeholder),
-                                failure = placeholder(R.drawable.icon_placeholder)
-                            )
-                        },
-                        trailingContent = {
-                            Badge(
-                                containerColor = StatusHelper.Status.toColor(
-                                    StatusHelper.getStatusFromString(
-                                        friend.status
+                    if (StatusHelper.getStatusFromString(friend.status) == StatusHelper.Status.Offline)
+                    {
+                        ListItem(
+                            headlineContent = {
+                                Text(friend.statusDescription.ifEmpty {
+                                    StatusHelper.Status.toString(
+                                        StatusHelper.getStatusFromString(friend.status)
                                     )
-                                ), modifier = Modifier.size(16.dp)
+                                }, maxLines = 1)
+                            },
+                            overlineContent = { Text(friend.displayName) },
+                            supportingContent = {
+                                Text(text = friend.location, maxLines = 1)
+                            },
+                            leadingContent = {
+                                GlideImage(
+                                    model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
+                                    contentDescription = stringResource(R.string.preview_image_description),
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(RoundedCornerShape(50)),
+                                    contentScale = ContentScale.FillBounds,
+                                    alignment = Alignment.Center,
+                                    loading = placeholder(R.drawable.image_placeholder),
+                                    failure = placeholder(R.drawable.image_placeholder)
+                                )
+                            },
+                            trailingContent = {
+                                Badge(
+                                    containerColor = StatusHelper.Status.toColor(
+                                        StatusHelper.getStatusFromString(
+                                            friend.status
+                                        )
+                                    ), modifier = Modifier.size(16.dp)
+                                )
+                            },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    navigator.parent?.parent?.push(UserProfileScreen(friend.id))
+                                }
                             )
-                        },
-                        modifier = Modifier.clickable(
-                            onClick = {
-                                navigator.parent?.parent?.push(UserProfileScreen(friend.id))
-                            }
                         )
-                    )
+                    }
                 }
             }
         }
@@ -298,9 +303,9 @@ class FriendsScreen : Screen {
     fun ShowFriendsOnline(
         model: FriendsScreenModel
     ) {
-        val onlineFriends = model.onlineFriends.collectAsState()
+        val friends = model.friends.collectAsState()
 
-        if (onlineFriends.value.isEmpty()) {
+        if (friends.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -316,7 +321,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp)
             ) {
                 val friendsSortedStatus =
-                    onlineFriends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                    friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
 
                 items(
@@ -326,46 +331,49 @@ class FriendsScreen : Screen {
                     val navigator = LocalNavigator.currentOrThrow
                     val friend = friendsFiltered[it]
 
-                    ListItem(
-                        headlineContent = {
-                            Text(friend.statusDescription.ifEmpty {
-                                StatusHelper.Status.toString(
-                                    StatusHelper.getStatusFromString(friend.status)
-                                )
-                            }, maxLines = 1)
-                        },
-                        overlineContent = { Text(friend.displayName) },
-                        supportingContent = {
-                            Text(text = friend.location, maxLines = 1)
-                        },
-                        leadingContent = {
-                            GlideImage(
-                                model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
-                                contentDescription = stringResource(R.string.preview_image_description),
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .clip(RoundedCornerShape(50)),
-                                contentScale = ContentScale.FillBounds,
-                                alignment = Alignment.Center,
-                                loading = placeholder(R.drawable.image_placeholder),
-                                failure = placeholder(R.drawable.image_placeholder)
-                            )
-                        },
-                        trailingContent = {
-                            Badge(
-                                containerColor = StatusHelper.Status.toColor(
-                                    StatusHelper.getStatusFromString(
-                                        friend.status
+                    if (StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline)
+                    {
+                        ListItem(
+                            headlineContent = {
+                                Text(friend.statusDescription.ifEmpty {
+                                    StatusHelper.Status.toString(
+                                        StatusHelper.getStatusFromString(friend.status)
                                     )
-                                ), modifier = Modifier.size(16.dp)
+                                }, maxLines = 1)
+                            },
+                            overlineContent = { Text(friend.displayName) },
+                            supportingContent = {
+                                Text(text = if (friend.location != "offline") { friend.location } else { "Active on website." }, maxLines = 1)
+                            },
+                            leadingContent = {
+                                GlideImage(
+                                    model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
+                                    contentDescription = stringResource(R.string.preview_image_description),
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(RoundedCornerShape(50)),
+                                    contentScale = ContentScale.FillBounds,
+                                    alignment = Alignment.Center,
+                                    loading = placeholder(R.drawable.image_placeholder),
+                                    failure = placeholder(R.drawable.image_placeholder)
+                                )
+                            },
+                            trailingContent = {
+                                Badge(
+                                    containerColor = StatusHelper.Status.toColor(
+                                        StatusHelper.getStatusFromString(
+                                            friend.status
+                                        )
+                                    ), modifier = Modifier.size(16.dp)
+                                )
+                            },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    navigator.parent?.parent?.push(UserProfileScreen(friend.id))
+                                }
                             )
-                        },
-                        modifier = Modifier.clickable(
-                            onClick = {
-                                navigator.parent?.parent?.push(UserProfileScreen(friend.id))
-                            }
                         )
-                    )
+                    }
                 }
             }
         }
