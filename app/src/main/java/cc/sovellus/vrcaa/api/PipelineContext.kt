@@ -116,6 +116,9 @@ class PipelineContext(
                     401 -> {
                         shouldReconnect = false
                     }
+                    500 -> {
+                        // possibly wait?
+                    }
                 }
 
                 if (shouldReconnect) {

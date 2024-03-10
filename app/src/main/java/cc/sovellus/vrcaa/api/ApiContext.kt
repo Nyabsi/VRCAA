@@ -99,6 +99,10 @@ class ApiContext(
                     }
                 }
 
+                500 -> {
+                    /* TODO: handle 500 error */
+                }
+
                 else -> {
                     response.body?.let {
                         Log.d(
@@ -147,6 +151,10 @@ class ApiContext(
                     }
                 }
 
+                500 -> {
+                    /* TODO: handle 500 error */
+                }
+
                 else -> {
                     response.body?.let {
                         Log.d(
@@ -190,6 +198,10 @@ class ApiContext(
                     } else {
                         null
                     }
+                }
+
+                500 -> {
+                    /* TODO: handle 500 error */
                 }
 
                 else -> {
