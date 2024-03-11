@@ -33,12 +33,12 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.models.Avatar
-import cc.sovellus.vrcaa.ui.components.BadgesFromTags
-import cc.sovellus.vrcaa.ui.components.Description
-import cc.sovellus.vrcaa.ui.components.SubHeader
+import cc.sovellus.vrcaa.api.http.models.Avatar
+import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
+import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreenModel.AvatarState
-import cc.sovellus.vrcaa.ui.screen.avatar.components.AvatarCard
+import cc.sovellus.vrcaa.ui.components.card.AvatarCard
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import java.text.SimpleDateFormat
 import java.util.Locale

@@ -1,6 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.api.models.LimitedUser
+import cc.sovellus.vrcaa.api.http.models.LimitedUser
 
 class FriendManager {
 

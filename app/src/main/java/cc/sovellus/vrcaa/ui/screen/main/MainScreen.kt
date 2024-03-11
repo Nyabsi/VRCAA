@@ -50,7 +50,6 @@ class MainScreen : Screen {
 
     override val key = uniqueScreenKey
 
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {

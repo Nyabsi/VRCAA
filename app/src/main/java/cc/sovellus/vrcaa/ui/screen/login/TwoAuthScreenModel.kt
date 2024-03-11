@@ -8,7 +8,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.api.http.ApiContext
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
@@ -37,7 +37,7 @@ class TwoAuthScreenModel(
                 preferences.isExpiredSession = false // even if it's false, doesn't matter.
 
                 // this is very much mandatory, or things will break.
-                context.api.force(ApiContext(context))
+                context.api.set(ApiContext(context))
 
                 val intent = Intent(context, PipelineService::class.java)
                 context.startForegroundService(intent)

@@ -1,7 +1,7 @@
 package cc.sovellus.vrcaa.manager
 
 import android.content.Context
-import cc.sovellus.vrcaa.api.ApiContext
+import cc.sovellus.vrcaa.api.http.ApiContext
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 
@@ -14,7 +14,7 @@ class ApiManager(
         var api: ApiContext? = null
     }
 
-    fun force(apiContext: ApiContext) {
+    fun set(apiContext: ApiContext) {
         synchronized(apiContext) {
             api = apiContext
         }

@@ -15,15 +15,15 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.helper.StatusHelper
-import cc.sovellus.vrcaa.api.helper.TrustHelper
-import cc.sovellus.vrcaa.api.models.User
-import cc.sovellus.vrcaa.ui.components.Description
-import cc.sovellus.vrcaa.ui.components.SubHeader
+import cc.sovellus.vrcaa.helper.StatusHelper
+import cc.sovellus.vrcaa.helper.TrustHelper
+import cc.sovellus.vrcaa.api.http.models.User
+import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.ProfileScreenModel.ProfileState
-import cc.sovellus.vrcaa.ui.screen.profile.components.Languages
-import cc.sovellus.vrcaa.ui.screen.profile.components.ProfileCard
+import cc.sovellus.vrcaa.ui.components.misc.Languages
+import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 
 class ProfileScreen : Screen {
 
@@ -34,8 +34,6 @@ class ProfileScreen : Screen {
 
         val context = LocalContext.current
 
-        // don't store it in the `Navigator` because it *may* change, this is not a proper way to handle it either,
-        // we really should just store a global `synchronized` variable in `apiContext` that contains the current `User` state.
         val model = rememberScreenModel { ProfileScreenModel(context) }
 
         val state by model.state.collectAsState()

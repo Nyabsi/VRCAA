@@ -22,7 +22,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
-import cc.sovellus.vrcaa.ui.screen.feed.components.FeedItem
+import cc.sovellus.vrcaa.ui.components.layout.FeedItem
 
 class FeedScreen : Screen {
 
@@ -171,8 +171,7 @@ class FeedScreen : Screen {
                         )
                     }
 
-                    else -> { /* Unhandled */
-                    }
+                    else -> { /* Unhandled */ }
                 }
             }
         }

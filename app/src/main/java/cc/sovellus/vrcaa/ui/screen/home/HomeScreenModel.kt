@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.compose.runtime.mutableLongStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.models.Avatar
-import cc.sovellus.vrcaa.api.models.LimitedUser
-import cc.sovellus.vrcaa.api.models.World
+import cc.sovellus.vrcaa.api.http.models.Avatar
+import cc.sovellus.vrcaa.api.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.http.models.World
 import cc.sovellus.vrcaa.helper.api
 import kotlinx.coroutines.launch
 import java.time.Clock

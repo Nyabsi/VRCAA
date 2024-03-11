@@ -1,25 +1,16 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
-import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Badge
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,39 +22,29 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.helper.LocationHelper
-import cc.sovellus.vrcaa.api.helper.StatusHelper
-import cc.sovellus.vrcaa.api.helper.TrustHelper
-import cc.sovellus.vrcaa.api.models.Instance
-import cc.sovellus.vrcaa.api.models.LimitedUser
-import cc.sovellus.vrcaa.ui.components.Description
-import cc.sovellus.vrcaa.ui.components.SubHeader
+import cc.sovellus.vrcaa.helper.StatusHelper
+import cc.sovellus.vrcaa.helper.TrustHelper
+import cc.sovellus.vrcaa.api.http.models.Instance
+import cc.sovellus.vrcaa.api.http.models.LimitedUser
+import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.card.InstanceCard
+import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notifications.ManageNotificationsScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreenModel.UserProfileState
-import cc.sovellus.vrcaa.ui.screen.profile.components.Languages
-import cc.sovellus.vrcaa.ui.screen.profile.components.ProfileCard
+import cc.sovellus.vrcaa.ui.components.misc.Languages
+import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 
 class UserProfileScreen(
     private val userId: String
@@ -87,7 +68,7 @@ class UserProfileScreen(
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun RenderProfile(profile: LimitedUser, instance: Instance?, model: UserProfileScreenModel) {
 
@@ -186,85 +167,8 @@ class UserProfileScreen(
                             horizontalAlignment = Alignment.Start
                         ) {
                             if (instance != null) {
-                                SubHeader(title = stringResource(id = R.string.profile_label_current_location))
-                                ElevatedCard(
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation = 6.dp
-                                    ),
-                                    modifier = Modifier
-                                        .height(220.dp)
-                                        .fillMaxWidth()
-                                        .padding(16.dp)
-                                        .clickable(
-                                            onClick = {
-                                                navigator.push(WorldInfoScreen(instance.worldId))
-                                            }
-                                        )
-                                ) {
-
-                                    GlideImage(
-                                        model = instance.world.imageUrl,
-                                        contentDescription = stringResource(R.string.preview_image_description),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(150.dp),
-                                        contentScale = ContentScale.Crop,
-                                        loading = placeholder(R.drawable.image_placeholder),
-                                        failure = placeholder(R.drawable.image_placeholder)
-                                    )
-
-                                    val result =
-                                        LocationHelper.parseLocationIntent(profile.location)
-
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Start,
-                                        modifier = Modifier.padding(4.dp)
-                                    ) {
-                                        Text(
-                                            text = "${instance.world.name} (${instance.name}) ${result.instanceType} ${instance.nUsers}/${instance.world.capacity}",
-                                            fontSize = 14.sp,
-                                            textAlign = TextAlign.Left,
-                                            fontWeight = FontWeight.SemiBold,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                        if (result.regionId.isNotEmpty()) {
-                                            when (result.regionId.lowercase()) {
-                                                "eu" -> Image(
-                                                    painter = painterResource(R.drawable.flag_eu),
-                                                    modifier = Modifier.padding(start = 2.dp),
-                                                    contentDescription = "Region flag"
-                                                )
-                                                "jp" -> Image(
-                                                    painter = painterResource(R.drawable.flag_jp),
-                                                    modifier = Modifier.padding(start = 2.dp),
-                                                    contentDescription = "Region flag"
-                                                )
-                                                "us" -> Image(
-                                                    painter = painterResource(R.drawable.flag_us),
-                                                    modifier = Modifier.padding(start = 2.dp),
-                                                    contentDescription = "Region flag"
-                                                )
-                                                "use" -> Image(
-                                                    painter = painterResource(R.drawable.flag_us),
-                                                    modifier = Modifier.padding(start = 2.dp),
-                                                    contentDescription = "Region flag"
-                                                )
-                                                "usw" -> Image(
-                                                    painter = painterResource(R.drawable.flag_us),
-                                                    modifier = Modifier.padding(start = 2.dp),
-                                                    contentDescription = "Region flag"
-                                                )
-                                            }
-                                        } else {
-                                            Image(
-                                                painter = painterResource(R.drawable.flag_us),
-                                                modifier = Modifier.padding(start = 2.dp),
-                                                contentDescription = "Region flag",
-                                            )
-                                        }
-                                    }
+                                InstanceCard(profile = profile, instance = instance) {
+                                    navigator.push(WorldInfoScreen(instance.worldId))
                                 }
                             }
 

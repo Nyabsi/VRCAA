@@ -3,7 +3,6 @@ package cc.sovellus.vrcaa.helper
 import android.app.ActivityManager
 import android.app.Service
 import android.content.Context
-import cc.sovellus.vrcaa.api.ApiContext
 import cc.sovellus.vrcaa.manager.ApiManager
 
 fun Context.isMyServiceRunning(serviceClass: Class<out Service>) = try {

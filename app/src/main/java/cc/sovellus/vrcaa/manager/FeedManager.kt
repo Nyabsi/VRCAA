@@ -1,6 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.api.helper.StatusHelper
+import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.util.UUID
 
