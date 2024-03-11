@@ -44,6 +44,7 @@ import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
+import cc.sovellus.vrcaa.ui.tabs.PicturesTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 
 class MainScreen : Screen {
@@ -170,6 +171,7 @@ class MainScreen : Screen {
                         NavigationBarItem(HomeTab)
                         NavigationBarItem(FriendsTab)
                         NavigationBarItem(FeedTab)
+                        NavigationBarItem(PicturesTab)
                         NavigationBarItem(ProfileTab)
                     }
                 }

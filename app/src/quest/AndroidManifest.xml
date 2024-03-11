@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.sovellus.vrcaa"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cc.sovellus.vrcaa"
     android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
-    <uses-sdk android:minSdkVersion="23"/>
+    <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="32"
+        tools:ignore="ExpiredTargetSdkVersion" />
     <uses-feature android:glEsVersion="0x00030001" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,6 +12,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".App"
@@ -30,7 +34,8 @@
             android:launchMode="singleTask"
             android:resizeableActivity="true"
             android:screenOrientation="landscape"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:requestLegacyExternalStorage="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.oculus.intent.category.2D" />

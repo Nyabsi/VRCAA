@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.helper.isMyServiceRunning
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
@@ -34,6 +35,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+
+        if (BuildConfig.FLAVOR == "quest") {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    0
+                )
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(
