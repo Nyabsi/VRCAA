@@ -19,6 +19,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "GIT_HASH", "\"${getGitHash()}\"")
+        buildConfigField("String", "GIT_BRANCH", "\"${getBranch()}\"")
     }
 
     buildTypes {
@@ -28,6 +31,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -49,6 +53,46 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "META-INF/androidx.compose.material3_material3.version"
         }
+    }
+
+    flavorDimensions += "type"
+    productFlavors {
+        create("standard") {
+            isDefault = true
+            dimension = "type"
+        }
+        create("quest") {
+            dimension = "type"
+        }
+    }
+}
+
+// credit: https://github.com/amwatson/CitraVR/blob/master/src/android/app/build.gradle.kts#L255C1-L275C2
+fun getGitHash(): String =
+    runGitCommand(ProcessBuilder("git", "rev-parse", "--short", "HEAD")) ?: "invalid-hash"
+
+fun getBranch(): String =
+    runGitCommand(ProcessBuilder("git", "rev-parse", "--abbrev-ref", "HEAD")) ?: "invalid-branch"
+
+fun runGitCommand(command: ProcessBuilder) : String? {
+    try {
+        command.directory(project.rootDir)
+        val process = command.start()
+        val inputStream = process.inputStream
+        val errorStream = process.errorStream
+        process.waitFor()
+
+        return if (process.exitValue() == 0) {
+            inputStream.bufferedReader()
+                .use { it.readText().trim() } // return the value of gitHash
+        } else {
+            val errorMessage = errorStream.bufferedReader().use { it.readText().trim() }
+            logger.error("Error running git command: $errorMessage")
+            return null
+        }
+    } catch (e: Exception) {
+        logger.error("$e: Cannot find git")
+        return null
     }
 }
 

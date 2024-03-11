@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="app_name" translatable="false">VRCAA</string>
+    <string name="app_name" translatable="false">VRChat Android Assistant</string>
     <string name="result_not_found">There\'s nothing but chickens here!</string>
     <string name="preview_image_description" translatable="false">Preview Image</string>
     <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>

@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,6 +30,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 
@@ -63,11 +65,8 @@ class SettingsScreen : Screen {
             content = { padding ->
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = padding.calculateTopPadding(),
-                            bottom = padding.calculateBottomPadding()
-                        ),
+                        .fillMaxWidth().fillMaxHeight()
+                        .padding(top = padding.calculateTopPadding()),
                 ) {
                     item {
                         ListItem(
@@ -85,24 +84,22 @@ class SettingsScreen : Screen {
                             )
                         )
                     }
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Bottom,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Button(
-                                onClick = {
-                                    model.doLogout()
-                                    navigator.popUntilRoot()
-                                    navigator.replace(LoginScreen())
-                                },
-                                modifier = Modifier.padding(bottom = 16.dp)
-                            ) {
-                                Text(text = stringResource(R.string.logout_button_text))
-                            }
+                }
+                Column(
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(bottom = padding.calculateBottomPadding()),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        onClick = {
+                            model.doLogout()
+                            navigator.popUntilRoot()
+                            navigator.replace(LoginScreen())
                         }
+                    ) {
+                        Text(text = stringResource(R.string.logout_button_text))
                     }
+                    Text(text = "Running on ${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}), ${BuildConfig.GIT_BRANCH} (${BuildConfig.GIT_HASH})")
                 }
             }
         )
