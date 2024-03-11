@@ -71,5 +71,5 @@ jobs:
         prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          ${{ steps.sign_standard.signedReleaseFile }}
-          ${{ steps.sign_quest.signedReleaseFile }}
+          ${{ steps.sign_standard.outputs.signedReleaseFile }}
+          ${{ steps.sign_quest.outputs.signedReleaseFile }}
