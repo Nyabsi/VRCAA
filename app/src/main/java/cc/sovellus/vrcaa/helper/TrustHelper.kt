@@ -11,25 +11,23 @@ class TrustHelper {
         Known,
         Trusted;
 
-        companion object {
-            fun toString(rank: Rank): String {
-                return when (rank) {
-                    Trusted -> "Trusted"
-                    Known -> "Known"
-                    User -> "User"
-                    NewUser -> "New User"
-                    Visitor -> "Visitor"
-                }
+        override fun toString(): String {
+            return when (this) {
+                Trusted -> "Trusted"
+                Known -> "Known"
+                User -> "User"
+                NewUser -> "New User"
+                Visitor -> "Visitor"
             }
+        }
 
-            fun toColor(rank: Rank): Color {
-                return when (rank) {
-                    Trusted -> Color(129, 67, 230)
-                    Known -> Color(255, 123, 66)
-                    User -> Color(43, 207, 92)
-                    NewUser -> Color(23, 120, 255)
-                    Visitor -> Color(204, 204, 204)
-                }
+        fun toColor(): Color {
+            return when (this) {
+                Trusted -> Color(129, 67, 230)
+                Known -> Color(255, 123, 66)
+                User -> Color(43, 207, 92)
+                NewUser -> Color(23, 120, 255)
+                Visitor -> Color(204, 204, 204)
             }
         }
     }

@@ -10,25 +10,23 @@ class StatusHelper {
         Busy,
         Offline;
 
-        companion object {
-            fun toColor(status: Status): Color {
-                return when (status) {
-                    JoinMe -> Color(66, 201, 255)
-                    Active -> Color(81, 229, 125)
-                    AskMe -> Color(232, 130, 52)
-                    Busy -> Color(91, 11, 11)
-                    else -> Color.Gray
-                }
+        fun toColor(): Color {
+            return when (this) {
+                JoinMe -> Color(66, 201, 255)
+                Active -> Color(81, 229, 125)
+                AskMe -> Color(232, 130, 52)
+                Busy -> Color(91, 11, 11)
+                else -> Color.Gray
             }
+        }
 
-            fun toString(status: Status): String {
-                return when (status) {
-                    JoinMe -> "Join Me"
-                    Active -> "Online"
-                    AskMe -> "Ask Me"
-                    Busy -> "Busy"
-                    else -> "Offline"
-                }
+        override fun toString(): String {
+            return when (this) {
+                JoinMe -> "Join Me"
+                Active -> "Online"
+                AskMe -> "Ask Me"
+                Busy -> "Busy"
+                else -> "Offline"
             }
         }
     }

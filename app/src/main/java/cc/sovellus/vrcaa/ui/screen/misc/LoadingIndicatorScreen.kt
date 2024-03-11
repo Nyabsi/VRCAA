@@ -31,7 +31,6 @@ class LoadingIndicatorScreen : Screen {
                 color = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.surfaceVariant,
             )
-            Text(text = "Content is loading, please hold on.")
         }
     }
 }

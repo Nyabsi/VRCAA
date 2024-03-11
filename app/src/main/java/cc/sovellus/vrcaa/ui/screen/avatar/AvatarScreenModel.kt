@@ -32,9 +32,9 @@ class AvatarScreenModel(
         }
     }
 
-    fun selectAvatar(avatarId: String) {
+    fun selectAvatar() {
         screenModelScope.launch {
-            context.api.get().selectAvatar(avatarId)
+            context.api.get().selectAvatar(avatar!!.id)
         }
     }
 }

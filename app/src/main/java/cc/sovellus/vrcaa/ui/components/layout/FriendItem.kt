@@ -26,9 +26,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
     ListItem(
         headlineContent = {
             Text(friend.statusDescription.ifEmpty {
-                StatusHelper.Status.toString(
-                    StatusHelper.getStatusFromString(friend.status)
-                )
+                StatusHelper.getStatusFromString(friend.status).toString()
             }, maxLines = 1)
         },
         overlineContent = { Text(friend.displayName) },
@@ -50,11 +48,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
         },
         trailingContent = {
             Badge(
-                containerColor = StatusHelper.Status.toColor(
-                    StatusHelper.getStatusFromString(
-                        friend.status
-                    )
-                ), modifier = Modifier.size(16.dp)
+                containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier.size(16.dp)
             )
         },
         modifier = Modifier.clickable(

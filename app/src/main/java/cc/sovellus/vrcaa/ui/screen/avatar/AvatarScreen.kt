@@ -99,7 +99,7 @@ class AvatarScreen(
                                     if (avatar != null) {
                                         DropdownMenuItem(
                                             onClick = {
-                                                model.selectAvatar(model.avatar!!.id)
+                                                model.selectAvatar()
 
                                                 Toast.makeText(
                                                     context,
