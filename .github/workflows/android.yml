@@ -1,4 +1,4 @@
-name: Publish pre-release
+name: Publish release
 
 on:
   push:
@@ -27,9 +27,9 @@ jobs:
     - name: Build Release with Gradle
       run: ./gradlew assembleRelease
 
-    - name: Rename built apk to "VRCAA.apk"
-      run: mv app/build/outputs/apk/standard/release/app-standard-release-unsigned.apk app/build/outputs/apk/release/VRCAA.apk &&
-           mv app/build/outputs/apk/quest/release/app-quest-release-unsigned.apk app/build/outputs/apk/release/VRCAA-quest.apk
+    - name: Rename built apk(s)
+      run: mv app/build/outputs/apk/standard/release/app-standard-release.apk app/build/outputs/apk/release/VRCAA.apk &&
+           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/release/VRCAA-quest.apk
 
     - name: Setup build tool version variable
       shell: bash
@@ -38,7 +38,7 @@ jobs:
         echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
         echo Last build tool version is: $BUILD_TOOL_VERSION
 
-    - name: Sign app APK
+    - name: Sign app APK (Standard)
       uses: r0adkll/sign-android-release@v1
       id: sign_standard
       with:
@@ -50,7 +50,7 @@ jobs:
       env:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
-    - name: Sign app APK
+    - name: Sign app APK (Quest)
       uses: r0adkll/sign-android-release@v1
       id: sign_quest
       with:
