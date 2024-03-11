@@ -1,15 +1,15 @@
-package cc.sovellus.vrcaa.api
+package cc.sovellus.vrcaa.api.pipeline
 
 import android.util.Log
-import cc.sovellus.vrcaa.api.models.pipeline.FriendActive
-import cc.sovellus.vrcaa.api.models.pipeline.FriendAdd
-import cc.sovellus.vrcaa.api.models.pipeline.FriendDelete
-import cc.sovellus.vrcaa.api.models.pipeline.FriendLocation
-import cc.sovellus.vrcaa.api.models.pipeline.FriendOffline
-import cc.sovellus.vrcaa.api.models.pipeline.FriendOnline
-import cc.sovellus.vrcaa.api.models.pipeline.Notification
-import cc.sovellus.vrcaa.api.models.pipeline.NotificationV2
-import cc.sovellus.vrcaa.api.models.pipeline.UpdateModel
+import cc.sovellus.vrcaa.api.pipeline.models.FriendActive
+import cc.sovellus.vrcaa.api.pipeline.models.FriendAdd
+import cc.sovellus.vrcaa.api.pipeline.models.FriendDelete
+import cc.sovellus.vrcaa.api.pipeline.models.FriendLocation
+import cc.sovellus.vrcaa.api.pipeline.models.FriendOffline
+import cc.sovellus.vrcaa.api.pipeline.models.FriendOnline
+import cc.sovellus.vrcaa.api.pipeline.models.Notification
+import cc.sovellus.vrcaa.api.pipeline.models.NotificationV2
+import cc.sovellus.vrcaa.api.pipeline.models.UpdateModel
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.OkHttpClient
@@ -143,7 +143,8 @@ class PipelineContext(
     }
 
     fun disconnect() {
-        socket.cancel()
+        shouldReconnect = false
+        socket.close(1000, "bye")
         client.dispatcher.executorService.shutdown()
     }
 
