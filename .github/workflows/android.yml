@@ -28,8 +28,8 @@ jobs:
       run: ./gradlew assembleRelease
 
     - name: Rename built apk(s)
-      run: mv app/build/outputs/apk/standard/release/app-standard-release.apk app/build/outputs/apk/release/VRCAA.apk &&
-           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/release/VRCAA-quest.apk
+      run: mv app/build/outputs/apk/standard/release/app-standard-release.apk app/build/outputs/apk/standard/release/VRCAA.apk &&
+           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/quest/release/VRCAA-quest.apk
 
     - name: Setup build tool version variable
       shell: bash
