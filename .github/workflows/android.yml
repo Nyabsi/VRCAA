@@ -28,7 +28,8 @@ jobs:
       run: ./gradlew assembleRelease
 
     - name: Rename built apk to "VRCAA.apk"
-      run: mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/VRCAA.apk
+      run: mv app/build/outputs/apk/standard/release/app-standard-release-unsigned.apk app/build/outputs/apk/release/VRCAA.apk &&
+           mv app/build/outputs/apk/quest/release/app-quest-release-unsigned.apk app/build/outputs/apk/release/VRCAA-quest.apk
 
     - name: Setup build tool version variable
       shell: bash
@@ -39,9 +40,21 @@ jobs:
 
     - name: Sign app APK
       uses: r0adkll/sign-android-release@v1
-      id: sign_app
+      id: sign_standard
       with:
-        releaseDirectory: app/build/outputs/apk/release
+        releaseDirectory: app/build/outputs/apk/standard/release
+        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+      env:
+        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+
+    - name: Sign app APK
+      uses: r0adkll/sign-android-release@v1
+      id: sign_quest
+      with:
+        releaseDirectory: app/build/outputs/apk/quest/release
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -58,4 +71,5 @@ jobs:
         prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          ${{steps.sign_app.outputs.signedReleaseFile}}
+          ${{ steps.sign_standard.signedReleaseFile }}
+          ${{ steps.sign_quest.signedReleaseFile }}
