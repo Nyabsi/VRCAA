@@ -77,7 +77,7 @@ class PipelineService : Service(), CoroutineScope {
                             title = application.getString(R.string.notification_service_title_online),
                             content = application.getString(R.string.notification_service_description_online)
                                 .format(friend.user.displayName),
-                            channel = App.CHANNEL_ONLINE_ID
+                            channel = NotificationManager.CHANNEL_ONLINE_ID
                         )
                     }
 
@@ -110,7 +110,7 @@ class PipelineService : Service(), CoroutineScope {
                                 title = application.getString(R.string.notification_service_title_offline),
                                 content = application.getString(R.string.notification_service_description_offline)
                                     .format(cachedFriend.displayName),
-                                channel = App.CHANNEL_OFFLINE_ID
+                                channel = NotificationManager.CHANNEL_OFFLINE_ID
                             )
                         }
 
@@ -160,7 +160,7 @@ class PipelineService : Service(), CoroutineScope {
                                             StatusHelper.getStatusFromString(friend.user.status)
                                                 .toString()
                                         ),
-                                    channel = App.CHANNEL_LOCATION_ID
+                                    channel = NotificationManager.CHANNEL_LOCATION_ID
                                 )
                             }
 
@@ -188,7 +188,7 @@ class PipelineService : Service(), CoroutineScope {
                                         title = application.getString(R.string.notification_service_title_location),
                                         content = application.getString(R.string.notification_service_description_location)
                                             .format(friend.user.displayName, friend.world.name),
-                                        channel = App.CHANNEL_LOCATION_ID
+                                        channel = NotificationManager.CHANNEL_LOCATION_ID
                                     )
                                 }
 
@@ -247,7 +247,7 @@ class PipelineService : Service(), CoroutineScope {
                             title = application.getString(R.string.notification_service_title_friend_removed),
                             content = application.getString(R.string.notification_service_description_friend_removed)
                                 .format(cachedFriend.displayName),
-                            channel = App.CHANNEL_STATUS_ID
+                            channel = NotificationManager.CHANNEL_STATUS_ID
                         )
                     }
 
@@ -262,7 +262,7 @@ class PipelineService : Service(), CoroutineScope {
                         title = application.getString(R.string.notification_service_title_friend_added),
                         content = application.getString(R.string.notification_service_description_friend_added)
                             .format(friend.user.displayName),
-                        channel = App.CHANNEL_STATUS_ID
+                        channel = NotificationManager.CHANNEL_STATUS_ID
                     )
 
                     feedManager.addFeed(
@@ -353,7 +353,7 @@ class PipelineService : Service(), CoroutineScope {
             }
         }
 
-        val builder = NotificationCompat.Builder(this, App.CHANNEL_DEFAULT_ID)
+        val builder = NotificationCompat.Builder(this, NotificationManager.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
             .setContentText(application.getString(R.string.service_notification))
