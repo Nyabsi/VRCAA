@@ -27,9 +27,8 @@ class GatewaySocket(
     private var shouldReconnect: Boolean = false
 
     private var sequence: Int = 0
-    private var status: String = "idle"
     private var interval: Long = 0
-    private val since: Long = System.currentTimeMillis()
+    private val since: Long = System.currentTimeMillis() / 1000
 
     private val heartbeatWorker: Runnable = Runnable {
         Thread.sleep(interval)
@@ -107,7 +106,7 @@ class GatewaySocket(
 
         val presence = ArrayMap<String, Any?>()
         presence["afk"] = true
-        presence["status"] = status
+        presence["status"] = "idle"
 
         val presencePayload = ArrayMap<String, Any>()
         presencePayload["op"] = 3
@@ -130,8 +129,8 @@ class GatewaySocket(
 
     fun sendPresence(playerStatus: String, worldName: String) {
 
-        val assets = ArrayMap<String, Any?>()
-        assets["large_image"] = "vrcaa_big"
+        val assets = ArrayMap<String, String>()
+        assets["large_image"] = "../../app-assets/1219592758914977913/1219760377718636665.png#"
         assets["large_text"] = "Powered by VRCAA"
 
         val timestamps = ArrayMap<String, Any>()
@@ -149,8 +148,8 @@ class GatewaySocket(
         val presence = ArrayMap<String, Any?>()
         presence["activities"] = arrayOf<Any>(activity)
         presence["afk"] = true
-        presence["since"] = since
-        presence["status"] = status
+        presence["since"] = 0
+        presence["status"] = "idle"
 
         val presencePayload = ArrayMap<String, Any>()
         presencePayload["op"] = 3
