@@ -2,7 +2,7 @@
 
 > NOTE: VRCAA is still under development, you should report issues if you find them to our discord, or at [issue tracker](https://github.com/Nyabsi/VRCAA/issues)
 
-VRCAA is free and open-source utility on your Android device which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
+VRCAA is free and open-source utility on your Android device (and Meta Quest devices!) which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
 
 [Click here to download the latest build](https://github.com/Nyabsi/vrcaa/releases/download/latest/VRCAA-signed.apk)
 
@@ -34,6 +34,10 @@ VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opini
 
   - You can change your profile through VRCAA (e.g. Status, Bio, ...) (W.I.P)
   - You can view your friends profile and find their current instance, and much more!
+
+### Quest Features
+  - Discord Rich Presence Support (W.I.P)
+  - Browse, Upload and Delete VRChat camera images (W.I.P)
 
 # Translations
 
