@@ -34,6 +34,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.crash.CrashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.VRCAA"
+            android:fitsSystemWindows="true">
+        </activity>
+
         <service
             android:name=".service.PipelineService"
             android:foregroundServiceType="dataSync"/>

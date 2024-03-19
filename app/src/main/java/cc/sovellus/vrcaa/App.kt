@@ -1,9 +1,12 @@
 package cc.sovellus.vrcaa
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import cc.sovellus.vrcaa.activity.crash.CrashActivity
+import cc.sovellus.vrcaa.activity.crash.GlobalExceptionHandler
 
 class App : Application() {
 
@@ -36,9 +39,12 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
         createNotificationChannels()
     }
 
+    @SuppressLint("NewApi")
     private fun createNotificationChannels() {
 
         val notificationManager: NotificationManager =

@@ -1,0 +1,41 @@
+package cc.sovellus.vrcaa.activity.crash
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
+import cc.sovellus.vrcaa.activity.main.MainActivity
+import cc.sovellus.vrcaa.ui.screen.crash.CrashScreen
+import cc.sovellus.vrcaa.ui.theme.Theme
+
+class CrashActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val exception = GlobalExceptionHandler.getThrowableFromIntent(intent)
+
+        setContent {
+            Theme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    CrashScreen(
+                        exception = exception,
+                        onRestart = {
+                            finishAffinity()
+                            startActivity(Intent(this@CrashActivity, MainActivity::class.java))
+                        }
+                    )
+                }
+            }
+        }
+    }
+}

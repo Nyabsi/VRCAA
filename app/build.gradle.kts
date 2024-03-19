@@ -132,5 +132,5 @@ dependencies {
     implementation("com.mikepenz:aboutlibraries-compose-m3-android:10.10.0@aar")
     implementation ("androidx.glance:glance-appwidget:1.0.0")
     implementation ("androidx.glance:glance-material3:1.0.0@aar")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }

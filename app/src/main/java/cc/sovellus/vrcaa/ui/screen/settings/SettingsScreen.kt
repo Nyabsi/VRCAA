@@ -33,6 +33,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
+import java.lang.RuntimeException
 
 class SettingsScreen : Screen {
 
@@ -80,6 +81,22 @@ class SettingsScreen : Screen {
                             modifier = Modifier.clickable(
                                 onClick = {
                                     navigator.push(AboutScreen())
+                                }
+                            )
+                        )
+                    }
+                    item {
+                        ListItem(
+                            headlineContent = { Text("Crash App") },
+                            leadingContent = {
+                                Icon(
+                                    imageVector = Icons.Filled.Dehaze,
+                                    contentDescription = "Localized description"
+                                )
+                            },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    throw RuntimeException("Why would you do this.")
                                 }
                             )
                         )
