@@ -29,8 +29,12 @@ fun Theme(content: @Composable () -> Unit) {
                 else
                     dynamicLightColorScheme(context)
             }
-
-            else -> darkColorScheme()
+            else -> {
+                if (isSystemDarkMode())
+                    darkColorScheme()
+                else
+                    lightColorScheme()
+            }
         },
         typography = Typography(),
         content = content,
