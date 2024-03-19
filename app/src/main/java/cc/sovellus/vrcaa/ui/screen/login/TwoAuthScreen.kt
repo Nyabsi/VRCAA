@@ -46,9 +46,9 @@ class TwoAuthScreen(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(bottom = 16.dp),
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Text(
@@ -66,7 +66,8 @@ class TwoAuthScreen(
             Button(
                 modifier = Modifier
                     .height(48.dp)
-                    .width(200.dp),
+                    .width(200.dp)
+                    .padding(1.dp),
                 onClick = {
                     screenModel.doVerify(otpType, token, navigator)
                 }
@@ -77,31 +78,23 @@ class TwoAuthScreen(
             Button(
                 modifier = Modifier
                     .height(48.dp)
-                    .width(200.dp),
+                    .width(200.dp)
+                    .padding(1.dp),
                 onClick = {
-                    screenModel.doVerify(otpType, token, navigator)
-                }
-            ) {
-                Button(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .width(200.dp),
-                    onClick = {
-                        val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                        if (clipboard?.hasPrimaryClip() == true) {
-                            val clipData = clipboard.primaryClip
-                            if ((clipData?.itemCount ?: 0) > 0) {
-                                val clipItem = clipData?.getItemAt(0)
-                                val clipText = clipItem?.text?.toString()
-                                if (clipText?.length == 6) {
-                                    screenModel.code.value = clipText
-                                }
+                    val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                    if (clipboard?.hasPrimaryClip() == true) {
+                        val clipData = clipboard.primaryClip
+                        if ((clipData?.itemCount ?: 0) > 0) {
+                            val clipItem = clipData?.getItemAt(0)
+                            val clipText = clipItem?.text?.toString()
+                            if (clipText?.length == 6) {
+                                screenModel.code.value = clipText
                             }
                         }
                     }
-                ) {
-                    Text(text = "Paste")
                 }
+            ) {
+                Text(text = "Paste")
             }
         }
 
