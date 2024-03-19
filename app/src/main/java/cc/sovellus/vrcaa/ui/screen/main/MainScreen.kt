@@ -38,6 +38,7 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
@@ -171,7 +172,7 @@ class MainScreen : Screen {
                         NavigationBarItem(HomeTab)
                         NavigationBarItem(FriendsTab)
                         NavigationBarItem(FeedTab)
-                        NavigationBarItem(PicturesTab)
+                        if (BuildConfig.FLAVOR == "quest") { NavigationBarItem(PicturesTab) }
                         NavigationBarItem(ProfileTab)
                     }
                 }
