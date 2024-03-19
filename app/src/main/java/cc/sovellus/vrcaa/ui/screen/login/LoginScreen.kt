@@ -60,9 +60,9 @@ class LoginScreen : Screen {
             PasswordInput(
                 title = stringResource(R.string.login_label_password),
                 input = screenModel.password,
-                visible = screenModel.passwordVisible.value,
+                visible = screenModel.visibility.value,
                 onVisibilityChange = {
-                    screenModel.passwordVisible.value = !screenModel.passwordVisible.value
+                    screenModel.visibility.value = !screenModel.visibility.value
                 }
             )
 

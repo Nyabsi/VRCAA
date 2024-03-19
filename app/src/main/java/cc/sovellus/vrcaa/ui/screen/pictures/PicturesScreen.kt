@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.pictures
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,10 +44,8 @@ class PicturesScreen : Screen {
                         GlideImage(
                             model = path.absolutePath,
                             contentDescription = stringResource(R.string.preview_image_description),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(400.dp),
-                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Fit,
                             loading = placeholder(R.drawable.image_placeholder),
                             failure = placeholder(R.drawable.image_placeholder)
                         )

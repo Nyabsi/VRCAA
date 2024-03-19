@@ -1,15 +1,12 @@
 package cc.sovellus.vrcaa.ui.screen.home
 
 import android.content.Context
-import androidx.compose.runtime.mutableLongStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.http.models.Avatar
-import cc.sovellus.vrcaa.api.http.models.LimitedUser
-import cc.sovellus.vrcaa.api.http.models.World
-import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.api.http.models.Friends
+import cc.sovellus.vrcaa.api.http.models.Worlds
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
-import java.time.Clock
 
 class HomeScreenModel(
     private val context: Context
@@ -19,40 +16,35 @@ class HomeScreenModel(
         data object Init : HomeState()
         data object Loading : HomeState()
         data class Result(
-            val friends: MutableList<LimitedUser>,
-            val lastVisited: MutableList<World>,
-            val featuredAvatars: MutableList<Avatar>,
-            val offlineFriends: MutableList<LimitedUser>,
-            val featuredWorlds: MutableList<World>
+            val friends: Friends?,
+            val lastVisited: Worlds?,
+            val offlineFriends: Friends?,
+            val featuredWorlds: Worlds?
         ) : HomeState()
     }
 
-    private var friends = mutableListOf<LimitedUser>()
-    private var lastVisited = mutableListOf<World>()
-    private var featuredAvatars = mutableListOf<Avatar>()
-    private var offlineFriends = mutableListOf<LimitedUser>()
-    private var featuredWorlds = mutableListOf<World>()
-
-    val lastClickElapsed = mutableLongStateOf(Clock.systemUTC().millis())
+    private var friends: Friends? = null
+    private var lastVisited: Worlds? = null
+    private var offlineFriends: Friends? = null
+    private var featuredWorlds: Worlds? = null
 
     init {
         mutableState.value = HomeState.Loading
-        getContent()
+        fetchContent()
     }
 
-    private fun getContent() {
+    private fun fetchContent() {
         screenModelScope.launch {
 
-            context.api.get().getFriends()?.let { friends = it }
-            context.api.get().getRecentWorlds()?.let { lastVisited = it }
-            context.api.get().getAvatars()?.let { featuredAvatars = it }
-            context.api.get().getFriends(true)?.let { offlineFriends = it }
-            context.api.get().getWorlds()?.let { featuredWorlds = it }
+            // TODO: fetch friends directly from FriendManager instead.
+            friends = api.getFriends()
+            lastVisited = api.getRecentWorlds()
+            offlineFriends = api.getFriends(true)
+            featuredWorlds = api.getWorlds()
 
             mutableState.value = HomeState.Result(
                 friends = friends,
                 lastVisited = lastVisited,
-                featuredAvatars = featuredAvatars,
                 offlineFriends = offlineFriends,
                 featuredWorlds = featuredWorlds
             )

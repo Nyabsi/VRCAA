@@ -1,11 +1,12 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
 import android.content.Context
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.http.models.World
-import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
 class WorldInfoScreenModel(
@@ -16,10 +17,10 @@ class WorldInfoScreenModel(
     sealed class WorldInfoState {
         data object Init : WorldInfoState()
         data object Loading : WorldInfoState()
-        data class Result(val world: World) : WorldInfoState()
+        data class Result(val world: World?) : WorldInfoState()
     }
 
-    private var world = mutableStateOf<World?>(null)
+    private var world: MutableState<World?> = mutableStateOf(null)
 
     init {
         mutableState.value = WorldInfoState.Loading
@@ -28,8 +29,8 @@ class WorldInfoScreenModel(
 
     private fun getProfile() {
         screenModelScope.launch {
-            world.value = context.api.get().getWorld(id)
-            mutableState.value = WorldInfoState.Result(world.value!!)
+            world.value = api.getWorld(id)
+            mutableState.value = WorldInfoState.Result(world.value)
         }
     }
 }

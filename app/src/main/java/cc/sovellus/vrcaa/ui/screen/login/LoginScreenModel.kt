@@ -2,15 +2,15 @@ package cc.sovellus.vrcaa.ui.screen.login
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.api
-import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.userCredentials
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
 class LoginScreenModel(
@@ -18,28 +18,25 @@ class LoginScreenModel(
     private val navigator: Navigator
 ) : ScreenModel {
 
+    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+
     var username = mutableStateOf("")
     var password = mutableStateOf("")
-    var passwordVisible = mutableStateOf(false)
+    var visibility = mutableStateOf(false)
 
     fun doLogin() {
         screenModelScope.launch {
-            val result = context.api.get().getToken(username.value, password.value)
-            if (result != null) {
-                val preferences = context.getSharedPreferences(
-                    "vrcaa_prefs", MODE_PRIVATE
-                )
-
-                // STORE credentials, so we can request new session later when it expires, for any given reason.
-                preferences.userCredentials = Pair(username.value, password.value)
-
-                navigator.push(TwoAuthScreen(result.first, result.second))
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.login_toast_wrong_credentials),
-                    Toast.LENGTH_SHORT
-                ).show()
+            api.getToken(username.value, password.value).let { result ->
+                if (result == null) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.login_toast_wrong_credentials),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    preferences.userCredentials = Pair(username.value, password.value)
+                    navigator.push(TwoAuthScreen(result.first, result.second))
+                }
             }
         }
     }

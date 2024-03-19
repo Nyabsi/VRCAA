@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,8 @@ import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
@@ -46,37 +49,49 @@ class ProfileScreen : Screen {
     }
 
     @Composable
-    private fun RenderProfile(profile: User) {
-        LazyColumn {
-            item {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    profile.let {
-                        ProfileCard(
-                            thumbnailUrl = it.currentAvatarThumbnailImageUrl,
-                            displayName = it.displayName,
-                            statusDescription = it.statusDescription,
-                            trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                            statusColor = StatusHelper.getStatusFromString(it.status).toColor()
-                        )
+    private fun RenderProfile(profile: User?) {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        if (profile == null) {
+            Toast.makeText(
+                context,
+                "User doesn't exist.",
+                Toast.LENGTH_SHORT
+            ).show()
+            navigator.pop()
+        } else {
+            LazyColumn {
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        profile.let {
+                            ProfileCard(
+                                thumbnailUrl = it.currentAvatarThumbnailImageUrl,
+                                displayName = it.displayName,
+                                statusDescription = it.statusDescription,
+                                trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                statusColor = StatusHelper.getStatusFromString(it.status).toColor()
+                            )
+                        }
                     }
                 }
-            }
 
-            item {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    SubHeader(title = stringResource(R.string.profile_label_biography))
-                    Description(text = profile.bio)
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        SubHeader(title = stringResource(R.string.profile_label_biography))
+                        Description(text = profile.bio)
 
-                    SubHeader(title = stringResource(R.string.profile_label_languages))
-                    Languages(languages = profile.tags)
+                        SubHeader(title = stringResource(R.string.profile_label_languages))
+                        Languages(languages = profile.tags)
+                    }
                 }
             }
         }

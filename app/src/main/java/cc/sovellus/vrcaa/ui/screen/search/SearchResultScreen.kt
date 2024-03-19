@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.search
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,7 +38,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -51,7 +51,9 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.http.models.Users
 import cc.sovellus.vrcaa.api.http.models.World
+import cc.sovellus.vrcaa.api.http.models.Worlds
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -78,10 +80,10 @@ class SearchResultScreen(
 
         when (val result = state) {
             is SearchState.Loading -> LoadingIndicatorScreen().Content()
-            is SearchState.Result -> DisplayResult(
-                result.foundWorlds,
-                result.foundUsers,
-                result.foundAvatars,
+            is SearchState.Result -> MultiChoiceHandler(
+                result.worlds,
+                result.users,
+                result.avatars,
                 model
             )
 
@@ -91,10 +93,10 @@ class SearchResultScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun DisplayResult(
-        worlds: MutableList<World>,
-        users: MutableList<LimitedUser>,
-        avatars: MutableList<JustHPartyAvatars.JustHPartyAvatarsItem>,
+    fun MultiChoiceHandler(
+        worlds: Worlds?,
+        users: Users?,
+        avatars: JustHPartyAvatars?,
         model: SearchResultScreenModel
     ) {
 
@@ -226,90 +228,19 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowWorlds(
-        worlds: MutableList<World>
+        worlds: Worlds?
     ) {
         val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
 
-        if (worlds.isEmpty()) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = stringResource(R.string.result_not_found))
-            }
+        if (worlds == null) {
+            Toast.makeText(
+                context,
+                "Failed to fetch worlds due to API error, try again.",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(
-                    start = 12.dp,
-                    top = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                ),
-                content = {
-                    items(worlds.size) {
-                        val world = worlds[it]
-                        RowItem(
-                            name = world.name,
-                            url = world.imageUrl,
-                            count = world.occupants
-                        ) { navigator.push(WorldInfoScreen(world.id)) }
-                    }
-                }
-            )
-        }
-    }
-
-    @Composable
-    private fun ShowUsers(
-        users: MutableList<LimitedUser>
-    ) {
-        val navigator = LocalNavigator.currentOrThrow
-
-        if (users.isEmpty()) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = stringResource(R.string.result_not_found))
-            }
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(
-                    start = 12.dp,
-                    top = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                ),
-                content = {
-                    items(users.size) {
-                        val user = users[it]
-                        RowItem(
-                            name = user.displayName,
-                            url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
-                            count = null
-                        ) {
-                            navigator.push(UserProfileScreen(user.id))
-                        }
-                    }
-                }
-            )
-        }
-    }
-
-    @Composable
-    private fun ShowAvatars(avatars: MutableList<JustHPartyAvatars.JustHPartyAvatarsItem>) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val navigator = LocalNavigator.currentOrThrow
-
-            if (avatars.isEmpty()) {
+            if (worlds.isEmpty()) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
@@ -327,18 +258,117 @@ class SearchResultScreen(
                         bottom = 16.dp
                     ),
                     content = {
-                        items(avatars.size) {
-                            val avatar = avatars[it]
+                        items(worlds.size) {
+                            val world = worlds[it]
                             RowItem(
-                                name = avatar.name,
-                                url = avatar.thumbnailImageUrl,
+                                name = world.name,
+                                url = world.imageUrl,
+                                count = world.occupants
+                            ) { navigator.push(WorldInfoScreen(world.id)) }
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun ShowUsers(
+        users: Users?
+    ) {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        if (users == null) {
+            Toast.makeText(
+                context,
+                "Failed to fetch users due to API error, try again.",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            if (users.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(R.string.result_not_found))
+                }
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(
+                        start = 12.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    ),
+                    content = {
+                        items(users.size) {
+                            val user = users[it]
+                            RowItem(
+                                name = user.displayName,
+                                url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
                                 count = null
                             ) {
-                                navigator.push(AvatarScreen(avatar.id))
+                                navigator.push(UserProfileScreen(user.id))
                             }
                         }
                     }
                 )
+            }
+        }
+    }
+
+    @Composable
+    private fun ShowAvatars(avatars: JustHPartyAvatars?) {
+        val context = LocalContext.current
+
+        if (avatars == null) {
+            Toast.makeText(
+                context,
+                "Failed to fetch avatars due to API error, try again.",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val navigator = LocalNavigator.currentOrThrow
+
+                if (avatars.isEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = stringResource(R.string.result_not_found))
+                    }
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        contentPadding = PaddingValues(
+                            start = 12.dp,
+                            top = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        ),
+                        content = {
+                            items(avatars.size) {
+                                val avatar = avatars[it]
+                                RowItem(
+                                    name = avatar.name,
+                                    url = avatar.thumbnailImageUrl,
+                                    count = null
+                                ) {
+                                    navigator.push(AvatarScreen(avatar.id))
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
     }

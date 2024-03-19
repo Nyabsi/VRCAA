@@ -19,7 +19,9 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.BuildConfig
+import cc.sovellus.vrcaa.api.http.ApiContext
 import cc.sovellus.vrcaa.helper.isMyServiceRunning
+import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.main.MainScreen
@@ -93,6 +95,8 @@ class MainActivity : ComponentActivity() {
         }
 
         if (checkForCookies()) {
+            ApiManager.set(ApiContext(this))
+
             if (!isMyServiceRunning(PipelineService::class.java)) {
                 val intent = Intent(this, PipelineService::class.java)
                 startForegroundService(intent)

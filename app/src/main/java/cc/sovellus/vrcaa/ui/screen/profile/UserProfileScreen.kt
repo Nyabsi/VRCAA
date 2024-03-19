@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -70,107 +71,120 @@ class UserProfileScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun RenderProfile(profile: LimitedUser, instance: Instance?, model: UserProfileScreenModel) {
-
+    fun RenderProfile(
+        profile: LimitedUser?,
+        instance: Instance?,
+        model: UserProfileScreenModel
+    ) {
         val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = { navigator.pop() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.preview_image_description)
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { model.isMenuExpanded.value = true }) {
-                            Icon(
-                                imageVector = Icons.Filled.MoreVert,
-                                contentDescription = stringResource(R.string.preview_image_description)
-                            )
+        if (profile == null) {
+            Toast.makeText(
+                context,
+                "User doesn't exist.",
+                Toast.LENGTH_SHORT
+            ).show()
+            navigator.pop()
+        } else {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = { navigator.pop() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.preview_image_description)
+                                )
+                            }
+                        },
+                        actions = {
+                            IconButton(onClick = { model.isMenuExpanded.value = true }) {
+                                Icon(
+                                    imageVector = Icons.Filled.MoreVert,
+                                    contentDescription = stringResource(R.string.preview_image_description)
+                                )
 
-                            Box(
-                                contentAlignment = Alignment.Center
-                            ) {
-                                DropdownMenu(
-                                    expanded = model.isMenuExpanded.value,
-                                    onDismissRequest = { model.isMenuExpanded.value = false },
-                                    offset = DpOffset(0.dp, 0.dp)
+                                Box(
+                                    contentAlignment = Alignment.Center
                                 ) {
-                                    if (profile.isFriend) {
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                navigator.push(
-                                                    ManageNotificationsScreen(
-                                                        profile.id,
-                                                        profile.displayName
+                                    DropdownMenu(
+                                        expanded = model.isMenuExpanded.value,
+                                        onDismissRequest = { model.isMenuExpanded.value = false },
+                                        offset = DpOffset(0.dp, 0.dp)
+                                    ) {
+                                        if (profile.isFriend) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    navigator.push(
+                                                        ManageNotificationsScreen(
+                                                            profile.id,
+                                                            profile.displayName
+                                                        )
                                                     )
-                                                )
-                                                model.isMenuExpanded.value = false
-                                            },
-                                            text = { Text("Manage notifications") }
-                                        )
+                                                    model.isMenuExpanded.value = false
+                                                },
+                                                text = { Text("Manage notifications") }
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                    title = { Text(text = profile.displayName) }
-                )
-            },
-            content = { padding ->
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = padding.calculateTopPadding(),
-                            bottom = padding.calculateBottomPadding()
-                        ),
-                ) {
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            profile.let {
-                                ProfileCard(
-                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                    displayName = it.displayName,
-                                    statusDescription = it.statusDescription.ifEmpty {
-                                        StatusHelper.getStatusFromString(it.status).toString()
-                                    },
-                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                    statusColor = StatusHelper.getStatusFromString(it.status).toColor()
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            if (instance != null) {
-                                InstanceCard(profile = profile, instance = instance) {
-                                    navigator.push(WorldInfoScreen(instance.worldId))
+                        },
+                        title = { Text(text = profile.displayName) }
+                    )
+                },
+                content = { padding ->
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
+                    ) {
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                profile.let {
+                                    ProfileCard(
+                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                        displayName = it.displayName,
+                                        statusDescription = it.statusDescription.ifEmpty {
+                                            StatusHelper.getStatusFromString(it.status).toString()
+                                        },
+                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                        statusColor = StatusHelper.getStatusFromString(it.status).toColor()
+                                    )
                                 }
                             }
+                        }
 
-                            SubHeader(title = stringResource(R.string.profile_label_biography))
-                            Description(text = profile.bio)
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start
+                            ) {
+                                if (instance != null) {
+                                    InstanceCard(profile = profile, instance = instance) {
+                                        navigator.push(WorldInfoScreen(instance.worldId))
+                                    }
+                                }
 
-                            SubHeader(title = stringResource(R.string.profile_label_languages))
-                            Languages(languages = profile.tags)
+                                SubHeader(title = stringResource(R.string.profile_label_biography))
+                                Description(text = profile.bio)
+
+                                SubHeader(title = stringResource(R.string.profile_label_languages))
+                                Languages(languages = profile.tags)
+                            }
                         }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 }

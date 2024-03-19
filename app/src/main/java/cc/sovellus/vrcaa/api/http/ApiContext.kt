@@ -29,6 +29,7 @@ import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -95,13 +96,8 @@ class ApiContext(
                 401 -> {
                     if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                         refreshToken()
-                    } else {
-                        null
                     }
-                }
-
-                500 -> {
-                    /* TODO: handle 500 error */
+                    null
                 }
 
                 else -> {
@@ -118,8 +114,8 @@ class ApiContext(
 
         "POST" -> {
 
-            val type: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
-            val requestBody: RequestBody = body!!.toRequestBody(type)
+            val type: MediaType = "application/json; charset=utf-8".toMediaType()
+            val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
 
             val request =
                 Request.Builder()
@@ -147,13 +143,8 @@ class ApiContext(
                 401 -> {
                     if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                         refreshToken()
-                    } else {
-                        null
                     }
-                }
-
-                500 -> {
-                    /* TODO: handle 500 error */
+                    null
                 }
 
                 else -> {
@@ -170,11 +161,14 @@ class ApiContext(
 
         "PUT" -> {
 
+            val type: MediaType = "application/json; charset=utf-8".toMediaType()
+            val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
+
             val request =
                 Request.Builder()
                     .headers(headers = headers)
                     .url(url)
-                    .put(EMPTY_REQUEST)
+                    .put(requestBody)
                     .build()
 
             val response = client.newCall(request).await()
@@ -196,13 +190,8 @@ class ApiContext(
                 401 -> {
                     if (!url.contains("auth/user") && !preferences.isExpiredSession) {
                         refreshToken()
-                    } else {
-                        null
                     }
-                }
-
-                500 -> {
-                    /* TODO: handle 500 error */
+                    null // regardless.
                 }
 
                 else -> {
@@ -212,14 +201,10 @@ class ApiContext(
                             "Got unhandled response from server (${response.code}): ${it.string()}"
                         )
                     }
-                    null
                 }
             }
         }
-
-        else -> {
-            null
-        }
+        else -> { null }
     }
 
     private fun refreshToken() {
@@ -303,7 +288,7 @@ class ApiContext(
         }
     }
 
-    suspend fun verifyAccount(token: String, type: TwoFactorType, code: String): String {
+    suspend fun verifyAccount(token: String, type: TwoFactorType, code: String): String? {
 
         val headers = Headers.Builder()
 
@@ -326,7 +311,7 @@ class ApiContext(
                     }
 
                     else -> {
-                        ""
+                        null
                     }
                 }
             }
@@ -577,15 +562,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), World::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        val response = result as Response
+        return Gson().fromJson(response.body?.string(), World::class.java)
     }
 
     suspend fun getAvatars(featured: Boolean = true, n: Int = 50): Avatars? {

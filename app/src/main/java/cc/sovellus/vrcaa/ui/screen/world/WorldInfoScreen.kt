@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,83 +61,93 @@ class WorldInfoScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun RenderWorld(world: World) {
+    fun RenderWorld(world: World?) {
         val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = { navigator.pop() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go Back"
-                            )
+        if (world == null) {
+            Toast.makeText(
+                context,
+                "World is private, or it doesn't exist.",
+                Toast.LENGTH_SHORT
+            ).show()
+            navigator.pop()
+        } else {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = { navigator.pop() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Go Back"
+                                )
+                            }
+                        },
+
+                        title = { Text(text = world.name) }
+                    )
+                },
+                content = { padding ->
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
+                    ) {
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                world.let {
+                                    WorldCard(
+                                        url = it.imageUrl,
+                                        name = it.name,
+                                        author = "By ${it.authorName}"
+                                    )
+                                }
+                            }
                         }
-                    },
 
-                    title = { Text(text = world.name) }
-                )
-            },
-            content = { padding ->
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = padding.calculateTopPadding(),
-                            bottom = padding.calculateBottomPadding()
-                        ),
-                ) {
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            world.let {
-                                WorldCard(
-                                    url = it.imageUrl,
-                                    name = it.name,
-                                    author = "By ${it.authorName}"
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start
+                            ) {
+                                SubHeader(title = stringResource(R.string.world_label_description))
+                                Description(text = world.description)
+
+                                val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                                val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+
+                                val createdAtFormatted = parser.parse(world.createdAt)
+                                    ?.let { formatter.format(it) }
+
+                                val updatedAtFormatted = parser.parse(world.updatedAt)
+                                    ?.let { formatter.format(it) }
+
+                                SubHeader(title = stringResource(R.string.world_title_created_at))
+                                Description(text = createdAtFormatted)
+
+                                SubHeader(title = stringResource(R.string.world_title_updated_at))
+                                Description(text = updatedAtFormatted)
+
+                                SubHeader(title = stringResource(R.string.world_label_tags))
+                                BadgesFromTags(
+                                    tags = world.tags,
+                                    tagPropertyName = "author_tag",
+                                    localizationResourceInt = R.string.world_text_no_tags
                                 )
                             }
                         }
                     }
-
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            SubHeader(title = stringResource(R.string.world_label_description))
-                            Description(text = world.description)
-
-                            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                            val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
-
-                            val createdAtFormatted = parser.parse(world.createdAt)
-                                ?.let { formatter.format(it) }
-
-                            val updatedAtFormatted = parser.parse(world.updatedAt)
-                                ?.let { formatter.format(it) }
-
-                            SubHeader(title = stringResource(R.string.world_title_created_at))
-                            Description(text = createdAtFormatted)
-
-                            SubHeader(title = stringResource(R.string.world_title_updated_at))
-                            Description(text = updatedAtFormatted)
-
-                            SubHeader(title = stringResource(R.string.world_label_tags))
-                            BadgesFromTags(
-                                tags = world.tags,
-                                tagPropertyName = "author_tag",
-                                localizationResourceInt = R.string.world_text_no_tags
-                            )
-                        }
-                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

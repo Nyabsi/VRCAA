@@ -70,33 +70,40 @@ class AvatarScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = { navigator.pop() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.preview_image_description)
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { model.isMenuExpanded.value = true }) {
-                            Icon(
-                                imageVector = Icons.Filled.MoreVert,
-                                contentDescription = stringResource(R.string.preview_image_description)
-                            )
+        if (avatar == null) {
+            Toast.makeText(
+                context,
+                "The avatar is either private or invalid!",
+                Toast.LENGTH_SHORT
+            ).show()
+            navigator.pop()
+        } else {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = { navigator.pop() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.preview_image_description)
+                                )
+                            }
+                        },
+                        actions = {
+                            IconButton(onClick = { model.isMenuExpanded.value = true }) {
+                                Icon(
+                                    imageVector = Icons.Filled.MoreVert,
+                                    contentDescription = stringResource(R.string.preview_image_description)
+                                )
 
-                            Box(
-                                contentAlignment = Alignment.Center
-                            ) {
-                                DropdownMenu(
-                                    expanded = model.isMenuExpanded.value,
-                                    onDismissRequest = { model.isMenuExpanded.value = false },
-                                    offset = DpOffset(0.dp, 0.dp)
+                                Box(
+                                    contentAlignment = Alignment.Center
                                 ) {
-                                    if (avatar != null) {
+                                    DropdownMenu(
+                                        expanded = model.isMenuExpanded.value,
+                                        onDismissRequest = { model.isMenuExpanded.value = false },
+                                        offset = DpOffset(0.dp, 0.dp)
+                                    ) {
                                         DropdownMenuItem(
                                             onClick = {
                                                 model.selectAvatar()
@@ -123,19 +130,13 @@ class AvatarScreen(
                                     }
                                 }
                             }
-                        }
-                    },
-                    title = {
-                        if (avatar != null) {
+                        },
+                        title = {
                             Text(text = avatar.name)
-                        } else {
-                            Text(text = "Invalid Avatar")
                         }
-                    }
-                )
-            },
-            content = { padding ->
-                if (avatar != null) {
+                    )
+                },
+                content = { padding ->
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -171,7 +172,8 @@ class AvatarScreen(
 
                                 val parser =
                                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                                val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+                                val formatter =
+                                    SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
 
                                 val createdAtFormatted = parser.parse(avatar.createdAt)
                                     ?.let { formatter.format(it) }
@@ -194,18 +196,8 @@ class AvatarScreen(
                             }
                         }
                     }
-                } else {
-                    if (!model.once.value) {
-                        model.once.value = true
-                        navigator.pop()
-                        Toast.makeText(
-                            context,
-                            "The avatar is either private or invalid!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

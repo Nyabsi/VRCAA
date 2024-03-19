@@ -12,6 +12,3 @@ fun Context.isMyServiceRunning(serviceClass: Class<out Service>) = try {
 } catch (e: Exception) {
     false
 }
-
-internal val Context.api: ApiManager
-    get() = ApiManager(this)

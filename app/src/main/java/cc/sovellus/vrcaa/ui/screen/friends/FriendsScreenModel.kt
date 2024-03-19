@@ -8,7 +8,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.api.http.models.LimitedUser
-import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,9 +57,9 @@ class FriendsScreenModel(
 
     private fun getFriends() {
         screenModelScope.launch {
-            context.api.get().getFavorites("friend")?.let { favorites ->
+            api.getFavorites("friend")?.let { favorites ->
                 for (favorite in favorites) {
-                    context.api.get().getFriend(favorite.favoriteId)?.let { friend ->
+                    api.getFriend(favorite.favoriteId)?.let { friend ->
                         favoriteFriends.add(friend)
                     }
                 }
@@ -74,7 +74,7 @@ class FriendsScreenModel(
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
                 val result = LocationHelper.parseLocationIntent(friend.location)
-                val world = context.api.get().getWorld(result.worldId)!!
+                val world =api.getWorld(result.worldId)!!
 
                 if (result.regionId.isNotEmpty()) {
                     friend.location =

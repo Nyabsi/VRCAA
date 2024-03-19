@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.http.ApiContext
 import cc.sovellus.vrcaa.api.websocket.GatewaySocket
 import cc.sovellus.vrcaa.api.websocket.PipelineContext
 import cc.sovellus.vrcaa.helper.LocationHelper
@@ -25,7 +26,8 @@ import cc.sovellus.vrcaa.api.websocket.models.FriendOffline
 import cc.sovellus.vrcaa.api.websocket.models.FriendOnline
 import cc.sovellus.vrcaa.api.websocket.models.Notification
 import cc.sovellus.vrcaa.api.websocket.models.UserLocation
-import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.manager.ApiManager
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
@@ -124,7 +126,7 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     launch {
-                        api.get().getUser(friend.userId)?.let { user ->
+                        api.getUser(friend.userId)?.let { user ->
                             friendManager.updateFriend(user)
                         }
                     }
@@ -281,7 +283,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     launch {
                         withContext(Dispatchers.Main) {
-                            val sender = api.get().getUser(notification.senderUserId)
+                            val sender = api.getUser(notification.senderUserId)
 
                             when (notification.type) {
                                 "friendRequest" -> {
@@ -327,15 +329,15 @@ class PipelineService : Service(), CoroutineScope {
 
         launch {
             withContext(Dispatchers.Main) {
-                api.get().getAuth().let { token ->
+                api.getAuth().let { token ->
                     if (!token.isNullOrEmpty()) {
-                        api.get().getFriends().let { friends ->
+                        api.getFriends().let { friends ->
                             if (friends != null) {
                                 friendManager.setFriends(friends)
                             }
                         }
 
-                        api.get().getFriends(true).let { friends ->
+                        api.getFriends(true).let { friends ->
                             if (friends != null) {
                                 val onlineFriends = friendManager.getFriends()
                                 for (offline in friends) {

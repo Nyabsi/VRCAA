@@ -16,7 +16,7 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.api
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -26,7 +26,7 @@ class FriendWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
 
         withContext(Dispatchers.IO) {
-            context.api.let { friendCount = it.get().getFriends()?.size ?: 0 }
+            api.let { friendCount = it.getFriends()?.size ?: 0 }
         }
 
         provideContent {
