@@ -489,6 +489,21 @@ class ApiContext(
         }
     }
 
+    suspend fun InviteSelfToInstance(intent: String){
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        doRequest(
+            method = "POST",
+            url = "$apiBase/invite/myself/to/$intent",
+            headers = headers.build(),
+            body = null
+        )
+    }
+
     suspend fun getRecentWorlds(): Worlds? {
 
         val headers = Headers.Builder()

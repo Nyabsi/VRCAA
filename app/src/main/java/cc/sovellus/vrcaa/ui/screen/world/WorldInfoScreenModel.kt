@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.world
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.http.models.Instance
@@ -26,6 +27,7 @@ class WorldInfoScreenModel(
     private val instances: MutableList<Pair<String, Instance>> = ArrayList()
 
     var currentIndex = mutableIntStateOf(0)
+    var clickedInstance = mutableStateOf("")
 
     init {
         mutableState.value = WorldInfoState.Loading
@@ -53,6 +55,12 @@ class WorldInfoScreenModel(
                 }
             }
             mutableState.value = WorldInfoState.Result(world, instances)
+        }
+    }
+
+    fun selfInvite() {
+        screenModelScope.launch {
+            api.InviteSelfToInstance(clickedInstance.value)
         }
     }
 }

@@ -25,6 +25,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -149,7 +151,7 @@ class WorldInfoScreen(
 
                         when (model.currentIndex.intValue) {
                             0 -> ShowInfo(world)
-                            1 -> ShowInstances(instances)
+                            1 -> ShowInstances(instances, model)
                         }
                     }
                 }
@@ -205,7 +207,21 @@ class WorldInfoScreen(
     }
 
     @Composable
-    fun ShowInstances(instances: MutableList<Pair<String, Instance>>) {
+    fun ShowInstances(instances: MutableList<Pair<String, Instance>>, model: WorldInfoScreenModel) {
+        val dialogState = remember { mutableStateOf(false) }
+
+        if (dialogState.value) {
+            InviteDialog(
+                onDismiss = { dialogState.value = false },
+                onConfirmation = {
+                    dialogState.value = false
+                    model.selfInvite()
+                },
+                title = "Are you sure?",
+                description = "You're about to send invite to yourself onto this instance, do you really want to do that?"
+            )
+        }
+
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceBetween,
@@ -220,7 +236,11 @@ class WorldInfoScreen(
                     val instance = instances[it]
                     InstanceCardWorld(
                         intent = instance.first,
-                        instance = instance.second
+                        instance = instance.second,
+                        onClick = {
+                            dialogState.value = true
+                            model.clickedInstance.value = "${instance.second.world.id}:${instance.first}"
+                        }
                     )
                 }
             }

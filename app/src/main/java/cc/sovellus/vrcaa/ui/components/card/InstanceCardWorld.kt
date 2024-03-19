@@ -14,7 +14,7 @@ import cc.sovellus.vrcaa.api.http.models.Instance
 import cc.sovellus.vrcaa.helper.LocationHelper
 
 @Composable
-fun InstanceCardWorld(intent: String, instance: Instance) {
+fun InstanceCardWorld(intent: String, instance: Instance, onClick: () -> Unit) {
     val result = LocationHelper.parseLocationIntent(intent)
     ListItem(
         headlineContent = {
@@ -62,7 +62,7 @@ fun InstanceCardWorld(intent: String, instance: Instance) {
         },
         modifier = Modifier.clickable(
             onClick = {
-
+                onClick()
             }
         )
     )
