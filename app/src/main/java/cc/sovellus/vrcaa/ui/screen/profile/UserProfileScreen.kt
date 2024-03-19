@@ -38,7 +38,7 @@ import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.api.http.models.Instance
 import cc.sovellus.vrcaa.api.http.models.LimitedUser
 import cc.sovellus.vrcaa.ui.components.misc.Description
-import cc.sovellus.vrcaa.ui.components.card.InstanceCard
+import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notifications.ManageNotificationsScreen
@@ -170,7 +170,7 @@ class UserProfileScreen(
                                 horizontalAlignment = Alignment.Start
                             ) {
                                 if (instance != null) {
-                                    InstanceCard(profile = profile, instance = instance) {
+                                    InstanceCardProfile(profile = profile, instance = instance) {
                                         navigator.push(WorldInfoScreen(instance.worldId))
                                     }
                                 }

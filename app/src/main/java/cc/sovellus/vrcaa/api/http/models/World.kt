@@ -57,7 +57,9 @@ data class World(
     @SerializedName("version")
     val version: Int,
     @SerializedName("visits")
-    val visits: Int
+    val visits: Int,
+    @SerializedName("instances")
+    val instances: List<Array<Any>>
 ) {
     data class UnityPackage(
         @SerializedName("platform")

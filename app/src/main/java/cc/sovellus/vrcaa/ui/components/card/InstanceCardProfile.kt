@@ -32,7 +32,7 @@ import com.bumptech.glide.integration.compose.placeholder
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun InstanceCard(profile: LimitedUser, instance: Instance, callback: () -> Unit) {
+fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -> Unit) {
     SubHeader(title = stringResource(id = R.string.profile_label_current_location))
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
