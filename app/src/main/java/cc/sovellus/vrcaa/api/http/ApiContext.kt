@@ -35,8 +35,8 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
-import okio.ByteString.Companion.encode
 import ru.gildor.coroutines.okhttp.await
+import java.net.URLEncoder
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -227,7 +227,7 @@ class ApiContext(
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun getToken(username: String, password: String, refreshToken: Boolean = false): Pair<TwoFactorType, String>? {
 
-        val token = Base64.encode("${username.encode(Charsets.UTF_8)}:${password.encode(Charsets.UTF_8)}".toByteArray())
+        val token = Base64.encode((URLEncoder.encode(username) + ":" + URLEncoder.encode(password)).toByteArray())
 
         val headers = Headers.Builder()
 
