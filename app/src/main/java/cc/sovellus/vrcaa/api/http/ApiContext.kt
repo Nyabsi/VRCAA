@@ -222,7 +222,7 @@ class ApiContext(
         }
     }
 
-    private suspend fun refreshToken() {
+    private fun refreshToken() {
 
         preferences.cookies = ""
         preferences.isExpiredSession = true
@@ -230,25 +230,15 @@ class ApiContext(
         val serviceIntent = Intent(this, PipelineService::class.java)
         stopService(serviceIntent)
 
-        preferences.userCredentials.let {
-            val result = getToken(it.first!!, it.second!!, true)
-            if (result != null) {
-                preferences.cookies = "${preferences.twoFactorAuth} ${result.second}"
-                preferences.isExpiredSession = false
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.api_session_has_expired_text),
-                    Toast.LENGTH_LONG
-                ).show()
+        Toast.makeText(
+            this,
+            getString(R.string.api_session_has_expired_text),
+            Toast.LENGTH_LONG
+        ).show()
 
-                val intent = Intent(this, MainActivity::class.java)
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
-        }
-
-        startService(serviceIntent)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     @Suppress("DEPRECATION")
