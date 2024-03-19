@@ -94,9 +94,9 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        if (checkForCookies()) {
-            ApiManager.set(ApiContext(this))
+        ApiManager.set(ApiContext(this))
 
+        if (checkForCookies()) {
             if (!isMyServiceRunning(PipelineService::class.java)) {
                 val intent = Intent(this, PipelineService::class.java)
                 startForegroundService(intent)
