@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.api.websocket
 import android.util.ArrayMap
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -10,11 +11,12 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 
-data class DataObject(
-    val heartbeat_interval: Long?,
-    val _trace: List<String>?
+data class IdentifyPayload(
+    @SerializedName("heartbeat_interval")
+    val heartbeatInterval: Long,
+    @SerializedName("trace")
+    val trace: List<String>?
 )
-
 
 // This code is referenced from https://github.com/khanhduytran0/MRPC/blob/main/app/src/main/java/com/kdt/mrpc/DiscordSocketClient.java
 class GatewaySocket(
@@ -78,7 +80,7 @@ class GatewaySocket(
             override fun onClosed(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                Log.d("VRCAA", "complain is ${code} and $reason")
+                Log.d("VRCAA", "complain is $code and $reason")
                 connect()
             }
 
@@ -121,7 +123,7 @@ class GatewaySocket(
     private fun handleDispatch(payload: ArrayMap<String, Any>) {
         when (payload["t"] as String) {
             "READY" -> {
-                Log.d("VRCAA", "Token was validated.")
+                Log.d("VRCAA", "Discord Gateway was authenticated without errors.")
             }
         }
     }
@@ -129,7 +131,7 @@ class GatewaySocket(
     fun sendPresence(playerStatus: String, worldName: String) {
 
         val assets = ArrayMap<String, Any?>()
-        assets["large_image"] = "vrchat"
+        assets["large_image"] = "vrcaa_big"
         assets["large_text"] = "Powered by VRCAA"
 
         val timestamps = ArrayMap<String, Any>()
@@ -142,7 +144,7 @@ class GatewaySocket(
         activity["type"] = 0
         activity["timestamps"] = timestamps
         activity["assets"] = assets
-        activity["application_id"] = "883308884863901717"
+        activity["application_id"] = "1219592758914977913"
 
         val presence = ArrayMap<String, Any?>()
         presence["activities"] = arrayOf<Any>(activity)
@@ -174,12 +176,10 @@ class GatewaySocket(
         identityPayload["op"] = 2
         identityPayload["d"] = data
 
-        Log.d("VRCAA", Gson().toJson(identityPayload))
-
         socket.send(Gson().toJson(identityPayload))
 
-        val payload_data = Gson().fromJson(Gson().toJsonTree(payload["d"]), DataObject::class.java)
-        interval = payload_data.heartbeat_interval!!
+        val payloadData: IdentifyPayload = Gson().fromJson(Gson().toJsonTree(payload["d"]), IdentifyPayload::class.java)
+        interval = payloadData.heartbeatInterval
 
         heartbeatThread = Thread(heartbeatWorker)
         heartbeatThread.start()
