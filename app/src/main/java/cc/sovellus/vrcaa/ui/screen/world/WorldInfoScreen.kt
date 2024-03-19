@@ -225,7 +225,7 @@ class WorldInfoScreen(
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (instances.isEmpty()) {
                 item {
@@ -239,7 +239,7 @@ class WorldInfoScreen(
                         instance = instance.second,
                         onClick = {
                             dialogState.value = true
-                            model.clickedInstance.value = "${instance.second.world.id}:${instance.first}"
+                            model.clickedInstance.value = instance.second.id
                         }
                     )
                 }
