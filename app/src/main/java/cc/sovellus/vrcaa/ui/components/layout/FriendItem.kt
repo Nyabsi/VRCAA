@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.layout
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,7 +32,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
         },
         overlineContent = { Text(friend.displayName) },
         supportingContent = {
-            Text(text = if (friend.location != "offline") { friend.location } else { "Active on website." }, maxLines = 1)
+            Text(text = if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { friend.location }, maxLines = 1)
         },
         leadingContent = {
             GlideImage(
