@@ -1,15 +1,16 @@
-package cc.sovellus.vrcaa.api.pipeline
+package cc.sovellus.vrcaa.api.websocket
 
 import android.util.Log
-import cc.sovellus.vrcaa.api.pipeline.models.FriendActive
-import cc.sovellus.vrcaa.api.pipeline.models.FriendAdd
-import cc.sovellus.vrcaa.api.pipeline.models.FriendDelete
-import cc.sovellus.vrcaa.api.pipeline.models.FriendLocation
-import cc.sovellus.vrcaa.api.pipeline.models.FriendOffline
-import cc.sovellus.vrcaa.api.pipeline.models.FriendOnline
-import cc.sovellus.vrcaa.api.pipeline.models.Notification
-import cc.sovellus.vrcaa.api.pipeline.models.NotificationV2
-import cc.sovellus.vrcaa.api.pipeline.models.UpdateModel
+import cc.sovellus.vrcaa.api.websocket.models.FriendActive
+import cc.sovellus.vrcaa.api.websocket.models.FriendAdd
+import cc.sovellus.vrcaa.api.websocket.models.FriendDelete
+import cc.sovellus.vrcaa.api.websocket.models.FriendLocation
+import cc.sovellus.vrcaa.api.websocket.models.FriendOffline
+import cc.sovellus.vrcaa.api.websocket.models.FriendOnline
+import cc.sovellus.vrcaa.api.websocket.models.Notification
+import cc.sovellus.vrcaa.api.websocket.models.NotificationV2
+import cc.sovellus.vrcaa.api.websocket.models.UpdateModel
+import cc.sovellus.vrcaa.api.websocket.models.UserLocation
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.OkHttpClient
@@ -76,6 +77,11 @@ class PipelineContext(
                     "friend-add" -> {
                         val friend = Gson().fromJson(update.content, FriendAdd::class.java)
                         socketListener?.onMessage(friend)
+                    }
+
+                    "user-location" -> {
+                        val location = Gson().fromJson(update.content, UserLocation::class.java)
+                        socketListener?.onMessage(location)
                     }
 
                     "notification" -> {

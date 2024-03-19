@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.api.pipeline.models
+package cc.sovellus.vrcaa.api.websocket.models
 
 
 import com.google.gson.annotations.SerializedName

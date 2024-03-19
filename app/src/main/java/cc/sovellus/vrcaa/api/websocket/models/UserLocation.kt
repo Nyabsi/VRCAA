@@ -1,24 +1,22 @@
-package cc.sovellus.vrcaa.api.pipeline.models
+package cc.sovellus.vrcaa.api.websocket.models
 
 
-import cc.sovellus.vrcaa.api.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.http.models.User
 import com.google.gson.annotations.SerializedName
 
-data class FriendLocation(
-    @SerializedName("canRequestInvite")
-    val canRequestInvite: Boolean,
+data class UserLocation(
+    @SerializedName("userId")
+    val userId: Boolean,
+    @SerializedName("user")
+    val user: User,
     @SerializedName("location")
     val location: String,
-    @SerializedName("travelingToLocation")
-    val travelingToLocation: String,
-    @SerializedName("user")
-    val user: LimitedUser,
-    @SerializedName("userId")
-    val userId: String,
-    @SerializedName("world")
-    val world: World,
+    @SerializedName("instance")
+    val instance: String,
     @SerializedName("worldId")
-    val worldId: String
+    val worldId: String,
+    @SerializedName("world")
+    val world: World
 ) {
     data class World(
         @SerializedName("authorId")

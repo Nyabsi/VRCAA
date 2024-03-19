@@ -14,15 +14,17 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.pipeline.PipelineContext
+import cc.sovellus.vrcaa.api.websocket.GatewaySocket
+import cc.sovellus.vrcaa.api.websocket.PipelineContext
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
-import cc.sovellus.vrcaa.api.pipeline.models.FriendAdd
-import cc.sovellus.vrcaa.api.pipeline.models.FriendDelete
-import cc.sovellus.vrcaa.api.pipeline.models.FriendLocation
-import cc.sovellus.vrcaa.api.pipeline.models.FriendOffline
-import cc.sovellus.vrcaa.api.pipeline.models.FriendOnline
-import cc.sovellus.vrcaa.api.pipeline.models.Notification
+import cc.sovellus.vrcaa.api.websocket.models.FriendAdd
+import cc.sovellus.vrcaa.api.websocket.models.FriendDelete
+import cc.sovellus.vrcaa.api.websocket.models.FriendLocation
+import cc.sovellus.vrcaa.api.websocket.models.FriendOffline
+import cc.sovellus.vrcaa.api.websocket.models.FriendOnline
+import cc.sovellus.vrcaa.api.websocket.models.Notification
+import cc.sovellus.vrcaa.api.websocket.models.UserLocation
 import cc.sovellus.vrcaa.helper.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
@@ -212,6 +214,19 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     friendManager.updateFriend(friend.user)
+                }
+
+                is UserLocation -> {
+                    // self updated and reported !!!
+                    val user = msg.obj as UserLocation
+
+                    val status = StatusHelper.getStatusFromString(user.user.status)
+
+                    if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
+                        // gateway?.sendPresence(status.toString(), "Currently in ${user.world.name}")
+                    } else {
+                        // gateway?.sendPresence(status.toString(), "User is in private instance.")
+                    }
                 }
 
                 is FriendDelete -> {
