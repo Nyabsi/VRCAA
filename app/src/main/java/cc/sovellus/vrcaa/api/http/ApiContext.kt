@@ -15,30 +15,28 @@ import cc.sovellus.vrcaa.api.http.models.Avatars
 import cc.sovellus.vrcaa.api.http.models.Favorites
 import cc.sovellus.vrcaa.api.http.models.Friends
 import cc.sovellus.vrcaa.api.http.models.Instance
-import cc.sovellus.vrcaa.api.http.models.Worlds
+import cc.sovellus.vrcaa.api.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.http.models.Notifications
 import cc.sovellus.vrcaa.api.http.models.User
-import cc.sovellus.vrcaa.api.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.http.models.Users
 import cc.sovellus.vrcaa.api.http.models.World
+import cc.sovellus.vrcaa.api.http.models.Worlds
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.isExpiredSession
 import cc.sovellus.vrcaa.helper.twoFactorAuth
-import cc.sovellus.vrcaa.helper.userCredentials
 import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
+import okio.ByteString.Companion.encode
 import ru.gildor.coroutines.okhttp.await
-import java.net.URLEncoder
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -226,12 +224,10 @@ class ApiContext(
         startActivity(intent)
     }
 
-    @Suppress("DEPRECATION")
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun getToken(username: String, password: String, refreshToken: Boolean = false): Pair<TwoFactorType, String>? {
 
-        val token =
-            Base64.encode((URLEncoder.encode(username) + ":" + URLEncoder.encode(password)).toByteArray())
+        val token = Base64.encode("${username.encode(Charsets.UTF_8)}:${password.encode(Charsets.UTF_8)}".toByteArray())
 
         val headers = Headers.Builder()
 

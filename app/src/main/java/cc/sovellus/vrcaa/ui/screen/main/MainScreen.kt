@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope

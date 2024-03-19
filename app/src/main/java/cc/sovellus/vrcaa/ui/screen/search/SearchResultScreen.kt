@@ -50,9 +50,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
-import cc.sovellus.vrcaa.api.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.http.models.Users
-import cc.sovellus.vrcaa.api.http.models.World
 import cc.sovellus.vrcaa.api.http.models.Worlds
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen

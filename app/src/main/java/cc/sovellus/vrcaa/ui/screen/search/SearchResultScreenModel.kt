@@ -1,16 +1,12 @@
 package cc.sovellus.vrcaa.ui.screen.search
 
 import android.content.Context
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.avatars.providers.JustHPartyProvider
-import cc.sovellus.vrcaa.api.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.http.models.Users
-import cc.sovellus.vrcaa.api.http.models.World
 import cc.sovellus.vrcaa.api.http.models.Worlds
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch

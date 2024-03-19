@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.http.ApiContext
-import kotlinx.coroutines.InternalCoroutinesApi
 
 object ApiManager {
 

@@ -19,17 +19,13 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.http.models.Avatar
 import cc.sovellus.vrcaa.api.http.models.Friends
-import cc.sovellus.vrcaa.api.http.models.LimitedUser
-import cc.sovellus.vrcaa.api.http.models.World
 import cc.sovellus.vrcaa.api.http.models.Worlds
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.WorldRow
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
-import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 

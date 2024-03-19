@@ -12,13 +12,8 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.http.ApiContext
-import cc.sovellus.vrcaa.api.websocket.GatewaySocket
 import cc.sovellus.vrcaa.api.websocket.PipelineContext
-import cc.sovellus.vrcaa.helper.LocationHelper
-import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.api.websocket.models.FriendAdd
 import cc.sovellus.vrcaa.api.websocket.models.FriendDelete
 import cc.sovellus.vrcaa.api.websocket.models.FriendLocation
@@ -26,7 +21,8 @@ import cc.sovellus.vrcaa.api.websocket.models.FriendOffline
 import cc.sovellus.vrcaa.api.websocket.models.FriendOnline
 import cc.sovellus.vrcaa.api.websocket.models.Notification
 import cc.sovellus.vrcaa.api.websocket.models.UserLocation
-import cc.sovellus.vrcaa.manager.ApiManager
+import cc.sovellus.vrcaa.helper.LocationHelper
+import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
