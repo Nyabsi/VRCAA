@@ -104,7 +104,7 @@ class SearchResultScreen(
             topBar = {
                 TopAppBar(
                     navigationIcon = {
-                        IconButton(onClick = { navigator.popUntil { it.key == "main" } }) {
+                        IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.preview_image_description)
