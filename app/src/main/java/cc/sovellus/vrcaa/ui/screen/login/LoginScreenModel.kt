@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.login
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -20,8 +21,8 @@ class LoginScreenModel(
 
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
-    var username = mutableStateOf("")
-    var password = mutableStateOf("")
+    var username = mutableStateOf(preferences.userCredentials.first.let { it ?: "" })
+    var password = mutableStateOf(preferences.userCredentials.second.let { it ?: "" })
     var visibility = mutableStateOf(false)
 
     fun doLogin() {
