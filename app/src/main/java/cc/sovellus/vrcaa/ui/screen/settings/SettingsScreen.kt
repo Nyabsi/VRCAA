@@ -82,22 +82,6 @@ class SettingsScreen : Screen {
                             )
                         )
                     }
-                    item {
-                        ListItem(
-                            headlineContent = { Text("Crash App") },
-                            leadingContent = {
-                                Icon(
-                                    imageVector = Icons.Filled.Dehaze,
-                                    contentDescription = "Localized description"
-                                )
-                            },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    throw RuntimeException("Why would you do this.")
-                                }
-                            )
-                        )
-                    }
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(bottom = padding.calculateBottomPadding()),
