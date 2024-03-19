@@ -74,13 +74,21 @@ class FriendsScreenModel(
         for (friend in friends) {
             if (friend.location.contains("wrld_")) {
                 val result = LocationHelper.parseLocationIntent(friend.location)
-                val world =api.getWorld(result.worldId)!!
+                val instance = api.getInstance(friend.location)
 
-                if (result.regionId.isNotEmpty()) {
-                    friend.location =
-                        "${world.name}~(${result.instanceType}) ${result.regionId.uppercase()}"
+                if (instance == null) {
+                    Toast.makeText(
+                        context,
+                        "Failed to fetch instance due to API error, try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    friend.location = "${world.name}~(${result.instanceType}) US"
+                    if (result.regionId.isNotEmpty()) {
+                        friend.location =
+                            "${instance.world.name} (${instance.name}) ${result.instanceType} ${result.regionId.uppercase()}"
+                    } else {
+                        friend.location = "${instance.world.name} (${instance.name}) ${result.instanceType} (${result.instanceType}) US"
+                    }
                 }
             }
         }
