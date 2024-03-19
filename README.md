@@ -2,7 +2,7 @@
 
 > NOTE: VRCAA is still under development, you should report issues if you find them to our discord, or at [issue tracker](https://github.com/Nyabsi/VRCAA/issues)
 
-VRCAA is free and open-source utility on your Android device (and Meta Quest devices!) which allows you to manage your VRChat friends, groups, profile and much more from the comfort of your phone!
+VRCAA is free and open-source utility on your Android device (inc. Meta Quest devices!) which allows you to manage your VRChat friends, groups, profile and much more!
 
 [Click here to download the latest build](https://github.com/Nyabsi/vrcaa/releases/download/latest/VRCAA-signed.apk)
 
@@ -10,7 +10,7 @@ You can join our discord [here](https://discord.gg/tJf7aD8uDr)!
 
 # Disclaimer
 
-VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRCAA does NOT store nor collect ANY data out of the scope of YOUR device. The Author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
+VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRCAA does NOT store nor collect ANY data out of the scope of YOUR device. The author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
 
 # Features
 
@@ -23,38 +23,42 @@ VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opini
 ### Avatar Search
 
   - Integration with public avatar database provider through [just-h.party](https://avtr.just-h.party).
-  - Option to use custom avatar providers (W.I.P)
   - Search and use millions of avatars.
 
 ### Search Content
 
-  - Seamlessly browse through Worlds, Users, Avatars and Groups (Groups are W.I.P)
+  - Seamlessly browse through Worlds, Users, Avatars and Groups (Groups are TBA)
 
 ### Profile Management
 
-  - You can change your profile through VRCAA (e.g. Status, Bio, ...) (W.I.P)
+  - You can change your profile through VRCAA (e.g. Status, Bio, ...) (TBA)
   - You can view your friends profile and find their current instance, and much more!
 
-### Quest Features
-  - Discord Rich Presence Support (W.I.P)
-  - Browse, Upload and Delete VRChat camera images (W.I.P)
+### Rich Presence
+  - Discord rich presence integration (Partially done)
+  - Integration for specifics worlds (IE. pypydance)
+
+### Quest Support
+  - Browse delete or upload VRCam images straight from your device without sideloading or Meta Quest app! (Partially done)
+  - Use VRCAA on background while you play VRChat or any other game.
 
 # Translations
 
-Are you multilangual, and you are interested in translating VRCAA for your language? You can do it at [Crowdin](https://crowdin.com/project/vrcaa).
+Are you multilangual? help translating VRCAA for your language, at [Crowdin](https://crowdin.com/project/vrcaa)!
 
 # Showcase
 
-> Under construction, new showcase is available shortly.
+> TBA
 
 # Credits
 
 - Me (Nyabsi) for the initial idea and creation of the application.
 - ttofu & Hikari for testing and giving feedback.
 - bnuybuny for creating the application icon.
+- Special thanks to Tony_Lewis for translating the application to Japanese and constantly giving iterative feedback.
 - VRCX team, I've used their software as reference for some functionality.
 
-And all the other contributors and people who gave me feedback.
+And all the other contributors.
 
 # License
 
