@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.login
 
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -70,6 +72,36 @@ class TwoAuthScreen(
                 }
             ) {
                 Text(text = stringResource(R.string.auth_button_text))
+            }
+
+            Button(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(200.dp),
+                onClick = {
+                    screenModel.doVerify(otpType, token, navigator)
+                }
+            ) {
+                Button(
+                    modifier = Modifier
+                        .height(48.dp)
+                        .width(200.dp),
+                    onClick = {
+                        val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                        if (clipboard?.hasPrimaryClip() == true) {
+                            val clipData = clipboard.primaryClip
+                            if ((clipData?.itemCount ?: 0) > 0) {
+                                val clipItem = clipData?.getItemAt(0)
+                                val clipText = clipItem?.text?.toString()
+                                if (clipText?.length == 6) {
+                                    screenModel.code.value = clipText
+                                }
+                            }
+                        }
+                    }
+                ) {
+                    Text(text = "Paste")
+                }
             }
         }
 
