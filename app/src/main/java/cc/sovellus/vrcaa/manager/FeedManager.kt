@@ -5,7 +5,10 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 
-class FeedManager {
+object FeedManager {
+
+    @Volatile private var feedListener: FeedListener? = null
+    @Volatile private var feedList: MutableList<Feed> = ArrayList()
 
     enum class FeedType {
         FRIEND_FEED_UNKNOWN,
@@ -32,15 +35,7 @@ class FeedManager {
         fun onReceiveUpdate(list: MutableList<Feed>)
     }
 
-    // the feedList should be shared across *any* instance of "FeedManager"
-    // since it is accessed by the MainThread (UI) and other threads (ie. Service)
-    companion object {
-        @Volatile
-        private var feedListener: FeedListener? = null
-        @Volatile
-        private var feedList: MutableList<Feed> = ArrayList()
-    }
-
+    @Synchronized
     fun addFeed(feed: Feed) {
         synchronized(feedList) {
             feedList.add(feed)
@@ -48,12 +43,14 @@ class FeedManager {
         }
     }
 
+    @Synchronized
     fun getFeed(): MutableList<Feed> {
         synchronized(feedList) {
             return feedList
         }
     }
 
+    @Synchronized
     fun setFeedListener(listener: FeedListener) {
         synchronized(listener) {
             feedListener = listener

@@ -30,9 +30,7 @@ class FriendsScreenModel(
     var isRefreshing = mutableStateOf(false)
     var currentIndex = mutableIntStateOf(0)
 
-    private val friendManager = FriendManager()
-
-    private var onlineFriendsStateFlow = MutableStateFlow(friendManager.getFriends().toList())
+    private var onlineFriendsStateFlow = MutableStateFlow(FriendManager.getFriends().toList())
     var friends = onlineFriendsStateFlow.asStateFlow()
 
     private var favoriteFriends = mutableListOf<LimitedUser>()
@@ -48,7 +46,7 @@ class FriendsScreenModel(
     }
 
     init {
-        friendManager.setFriendListener(listener)
+        FriendManager.setFriendListener(listener)
         screenModelScope.launch {
             onlineFriendsStateFlow.update { getFriendLocations(friends.value) }
         }

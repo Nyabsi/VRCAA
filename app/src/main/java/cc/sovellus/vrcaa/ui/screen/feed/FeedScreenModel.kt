@@ -7,9 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class FeedScreenModel : ScreenModel {
-    private val feedManager = FeedManager()
-
-    private var feedStateFlow = MutableStateFlow(feedManager.getFeed().toList())
+    private var feedStateFlow = MutableStateFlow(FeedManager.getFeed().toList())
     var feed = feedStateFlow.asStateFlow()
 
     private val listener = object : FeedManager.FeedListener {
@@ -20,6 +18,6 @@ class FeedScreenModel : ScreenModel {
     }
 
     init {
-        feedManager.setFeedListener(listener)
+        FeedManager.setFeedListener(listener)
     }
 }

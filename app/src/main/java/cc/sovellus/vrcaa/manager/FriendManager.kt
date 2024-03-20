@@ -2,31 +2,30 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.http.models.LimitedUser
 
-class FriendManager {
+object FriendManager {
+
+    @Volatile private var friendListener: FriendListener? = null
+    @Volatile private var syncedFriends: MutableList<LimitedUser> = ArrayList()
 
     interface FriendListener {
         fun onUpdateFriends(friends: MutableList<LimitedUser>, offline: Boolean)
     }
 
-    companion object {
-        @Volatile
-        private var friendListener: FriendListener? = null
-        @Volatile
-        private var syncedFriends: MutableList<LimitedUser> = ArrayList()
-    }
-
+    @Synchronized
     fun setFriendListener(listener: FriendListener) {
         synchronized(listener) {
             friendListener = listener
         }
     }
 
+    @Synchronized
     fun setFriends(friends: MutableList<LimitedUser>) {
         synchronized(friends) {
             syncedFriends = friends
         }
     }
 
+    @Synchronized
     fun addFriend(friend: LimitedUser) {
         if (syncedFriends.find { it.id == friend.id } == null) {
             synchronized(friend) {
@@ -36,6 +35,7 @@ class FriendManager {
         }
     }
 
+    @Synchronized
     fun removeFriend(userId: String) {
         synchronized(userId) {
             val friend = syncedFriends.find { it.id == userId }
@@ -52,6 +52,7 @@ class FriendManager {
         return syncedFriends.find { it.id == userId }
     }
 
+    @Synchronized
     fun updateFriend(friend: LimitedUser) {
         synchronized(friend) {
             val tmp = syncedFriends.find { it.id == friend.id }

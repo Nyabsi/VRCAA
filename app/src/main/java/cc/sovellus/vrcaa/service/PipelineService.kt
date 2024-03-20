@@ -12,7 +12,9 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.websocket.GatewaySocket
 import cc.sovellus.vrcaa.api.websocket.PipelineContext
 import cc.sovellus.vrcaa.api.websocket.models.FriendAdd
 import cc.sovellus.vrcaa.api.websocket.models.FriendDelete
@@ -43,9 +45,7 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var notificationManager: NotificationManager
 
     private var pipeline: PipelineContext? = null
-
-    private val feedManager = FeedManager()
-    private val friendManager = FriendManager()
+    private var gateway: GatewaySocket? = null
 
     private val listener = object : PipelineContext.SocketListener {
         override fun onMessage(message: Any?) {
@@ -79,7 +79,7 @@ class PipelineService : Service(), CoroutineScope {
                         )
                     }
 
-                    feedManager.addFeed(
+                    FeedManager.addFeed(
                         FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                             friendId = friend.userId
                             friendName = friend.user.displayName
@@ -87,15 +87,15 @@ class PipelineService : Service(), CoroutineScope {
                                 friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
 
-                    if (friendManager.getFriend(friend.userId) == null) {
-                        friendManager.addFriend(friend.user)
+                    if (FriendManager.getFriend(friend.userId) == null) {
+                        FriendManager.addFriend(friend.user)
                     }
                 }
 
                 is FriendOffline -> {
 
                     val friend = msg.obj as FriendOffline
-                    val cachedFriend = friendManager.getFriend(friend.userId)
+                    val cachedFriend = FriendManager.getFriend(friend.userId)
 
                     if (cachedFriend != null) {
                         if (notificationManager.isOnWhitelist(friend.userId) &&
@@ -112,7 +112,7 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
-                        feedManager.addFeed(
+                        FeedManager.addFeed(
                             FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                                 friendId = friend.userId
                                 friendName = cachedFriend.displayName
@@ -123,7 +123,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     launch {
                         api.getUser(friend.userId)?.let { user ->
-                            friendManager.updateFriend(user)
+                            FriendManager.updateFriend(user)
                         }
                     }
                 }
@@ -131,7 +131,7 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendLocation -> {
 
                     val friend = msg.obj as FriendLocation
-                    val cachedFriend = friendManager.getFriend(friend.userId)
+                    val cachedFriend = FriendManager.getFriend(friend.userId)
 
                     // For some reason, VRChat doesn't also set the user object location properly...
                     // It took me literally, *hours* to figure this. I'm out.
@@ -162,7 +162,7 @@ class PipelineService : Service(), CoroutineScope {
                                 )
                             }
 
-                            feedManager.addFeed(
+                            FeedManager.addFeed(
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = friend.userId
                                     friendName = friend.user.displayName
@@ -198,7 +198,7 @@ class PipelineService : Service(), CoroutineScope {
                                     "${friend.world.name} (${result.instanceType}) US"
                                 }
 
-                                feedManager.addFeed(
+                                FeedManager.addFeed(
                                     FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
                                         .apply {
                                             friendId = friend.userId
@@ -211,7 +211,7 @@ class PipelineService : Service(), CoroutineScope {
                         }
                     }
 
-                    friendManager.updateFriend(friend.user)
+                    FriendManager.updateFriend(friend.user)
                 }
 
                 is UserLocation -> {
@@ -219,20 +219,27 @@ class PipelineService : Service(), CoroutineScope {
                     val user = msg.obj as UserLocation
 
                     val status = StatusHelper.getStatusFromString(user.user.status)
+                    val location = LocationHelper.parseLocationIntent(user.location)
+                    val isAndroid = user.user.lastPlatform == "android"
 
-                    if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                        // gateway?.sendPresence(status.toString(), "Currently in ${user.world.name}")
-                    } else {
-                        // gateway?.sendPresence(status.toString(), "User is in private instance.")
+                    launch {
+                        val instance = api.getInstance(user.location)
+                        if (isAndroid) {
+                            if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
+                                // instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance?.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance?.nUsers} of ${instance?.capacity})") }
+                            } else {
+                                // gateway?.sendPresence(status.toString(), "User location is hidden.")
+                            }
+                        }
                     }
                 }
 
                 is FriendDelete -> {
                     val friend = msg.obj as FriendDelete
-                    val cachedFriend = friendManager.getFriend(friend.userId)
+                    val cachedFriend = FriendManager.getFriend(friend.userId)
 
                     if (cachedFriend != null) {
-                        feedManager.addFeed(
+                        FeedManager.addFeed(
                             FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
                                 friendId = friend.userId
                                 friendName = cachedFriend.displayName
@@ -249,7 +256,7 @@ class PipelineService : Service(), CoroutineScope {
                         )
                     }
 
-                    friendManager.removeFriend(friend.userId)
+                    FriendManager.removeFriend(friend.userId)
                 }
 
                 is FriendAdd -> {
@@ -263,7 +270,7 @@ class PipelineService : Service(), CoroutineScope {
                         channel = NotificationManager.CHANNEL_STATUS_ID
                     )
 
-                    feedManager.addFeed(
+                    FeedManager.addFeed(
                         FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
                             friendId = friend.userId
                             friendName = friend.user.displayName
@@ -271,7 +278,7 @@ class PipelineService : Service(), CoroutineScope {
                                 friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                         })
 
-                    friendManager.addFriend(friend.user)
+                    FriendManager.addFriend(friend.user)
                 }
 
                 is Notification -> {
@@ -283,7 +290,7 @@ class PipelineService : Service(), CoroutineScope {
 
                             when (notification.type) {
                                 "friendRequest" -> {
-                                    feedManager.addFeed(
+                                    FeedManager.addFeed(
                                         FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST)
                                             .apply {
                                                 friendId = notification.senderUserId
@@ -329,17 +336,17 @@ class PipelineService : Service(), CoroutineScope {
                     if (!token.isNullOrEmpty()) {
                         api.getFriends().let { friends ->
                             if (friends != null) {
-                                friendManager.setFriends(friends)
+                                FriendManager.setFriends(friends)
                             }
                         }
 
                         api.getFriends(true).let { friends ->
                             if (friends != null) {
-                                val onlineFriends = friendManager.getFriends()
+                                val onlineFriends = FriendManager.getFriends()
                                 for (offline in friends) {
                                     onlineFriends.add(offline)
                                 }
-                                friendManager.setFriends(onlineFriends)
+                                FriendManager.setFriends(onlineFriends)
                             }
                         }
 
