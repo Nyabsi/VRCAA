@@ -246,7 +246,7 @@ class ApiContext(
         )
 
         return if (result is Response) {
-            if (result.body?.string()?.contains("emailOtp") == true) {
+            if (result?.body?.string()?.contains("emailOtp") == true) {
                 Pair(TwoFactorType.EMAIL_OTP, result.headers["Set-Cookie"].toString())
             } else {
                 Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
@@ -269,8 +269,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Auth::class.java)?.token
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Auth::class.java)?.token
     }
 
     suspend fun verifyAccount(token: String, type: TwoFactorType, code: String): String? {
@@ -357,8 +357,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), User::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), User::class.java)
     }
 
     suspend fun getFriends(offline: Boolean = false): Friends? {
@@ -375,8 +375,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Friends::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Friends::class.java)
     }
 
     suspend fun getFriend(userId: String): LimitedUser? {
@@ -393,8 +393,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), LimitedUser::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), LimitedUser::class.java)
     }
 
     suspend fun getUser(userId: String): LimitedUser? {
@@ -411,8 +411,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), LimitedUser::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), LimitedUser::class.java)
     }
 
     // Intent is compromised of <worldId>:<InstanceId>:<Nonce>
@@ -431,8 +431,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Instance::class.java)
+        result as Response??
+        return Gson().fromJson(result?.body?.string(), Instance::class.java)
     }
 
     suspend fun InviteSelfToInstance(intent: String){
@@ -464,8 +464,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Worlds::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Worlds::class.java)
     }
 
     suspend fun getWorlds(
@@ -487,8 +487,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Worlds::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Worlds::class.java)
     }
 
     suspend fun getWorld(id: String): World? {
@@ -505,8 +505,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), World::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), World::class.java)
     }
 
     suspend fun getUsers(username: String, n: Int = 50): Users? {
@@ -523,8 +523,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Users::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Users::class.java)
     }
 
     suspend fun getFavorites(type: String, n: Int = 50): Favorites? {
@@ -541,8 +541,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Favorites::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Favorites::class.java)
     }
 
     suspend fun getNotifications(): Notifications? {
@@ -559,8 +559,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Notifications::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Notifications::class.java)
     }
 
     suspend fun selectAvatar(avatarId: String): User? {
@@ -577,8 +577,8 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), User::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), User::class.java)
     }
 
     suspend fun getAvatar(avatarId: String): Avatar? {
@@ -595,7 +595,7 @@ class ApiContext(
             body = null
         )
 
-        result as Response
-        return Gson().fromJson(result.body?.string(), Avatar::class.java)
+        result as Response?
+        return Gson().fromJson(result?.body?.string(), Avatar::class.java)
     }
 }
