@@ -40,23 +40,23 @@ class SearchResultScreenModel(
 
     private fun getContent() {
         screenModelScope.launch {
-            api.getWorlds(
+            worlds = api.getWorlds(
                 query = query,
                 featured = false,
                 n = 50,
                 sort = "relevance"
-            ).let { worlds = it }
+            )
 
-            api.getUsers(
+            users = api.getUsers(
                 username = query,
                 n = 50
-            ).let { users = it }
+            )
 
-            avatarProvider.search(
+            avatars = avatarProvider.search(
                 "search",
                 query,
                 5000 // Not used
-            ).let { avatars = it }
+            )
 
             mutableState.value = SearchState.Result(worlds, users, avatars)
         }
