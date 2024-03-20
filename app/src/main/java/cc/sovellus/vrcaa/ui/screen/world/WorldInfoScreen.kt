@@ -162,48 +162,50 @@ class WorldInfoScreen(
 
     @Composable
     fun ShowInfo(world: World) {
-        Column(
+        LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            world.let {
-                WorldCard(
-                    url = it.imageUrl,
-                    name = it.name,
-                    author = "By ${it.authorName}"
-                )
+            item {
+                world.let {
+                    WorldCard(
+                        url = it.imageUrl,
+                        name = it.name,
+                        author = "By ${it.authorName}"
+                    )
+                }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    SubHeader(title = stringResource(R.string.world_label_description))
+                    Description(text = world.description)
+
+                    val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                    val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+
+                    val createdAtFormatted = parser.parse(world.createdAt)
+                        ?.let { formatter.format(it) }
+
+                    val updatedAtFormatted = parser.parse(world.updatedAt)
+                        ?.let { formatter.format(it) }
+
+                    SubHeader(title = stringResource(R.string.world_title_created_at))
+                    Description(text = createdAtFormatted)
+
+                    SubHeader(title = stringResource(R.string.world_title_updated_at))
+                    Description(text = updatedAtFormatted)
+
+                    SubHeader(title = stringResource(R.string.world_label_tags))
+                    BadgesFromTags(
+                        tags = world.tags,
+                        tagPropertyName = "author_tag",
+                        localizationResourceInt = R.string.world_text_no_tags
+                    )
+                }
             }
-        }
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.Start
-        ) {
-            SubHeader(title = stringResource(R.string.world_label_description))
-            Description(text = world.description)
-
-            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-            val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
-
-            val createdAtFormatted = parser.parse(world.createdAt)
-                ?.let { formatter.format(it) }
-
-            val updatedAtFormatted = parser.parse(world.updatedAt)
-                ?.let { formatter.format(it) }
-
-            SubHeader(title = stringResource(R.string.world_title_created_at))
-            Description(text = createdAtFormatted)
-
-            SubHeader(title = stringResource(R.string.world_title_updated_at))
-            Description(text = updatedAtFormatted)
-
-            SubHeader(title = stringResource(R.string.world_label_tags))
-            BadgesFromTags(
-                tags = world.tags,
-                tagPropertyName = "author_tag",
-                localizationResourceInt = R.string.world_text_no_tags
-            )
         }
     }
 
