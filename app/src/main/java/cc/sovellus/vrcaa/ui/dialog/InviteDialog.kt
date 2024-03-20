@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.world
+package cc.sovellus.vrcaa.ui.dialog
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

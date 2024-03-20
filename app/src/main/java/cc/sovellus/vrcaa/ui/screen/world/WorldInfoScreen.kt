@@ -47,6 +47,7 @@ import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreenModel.WorldInfoState
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
+import cc.sovellus.vrcaa.ui.dialog.InviteDialog
 import java.text.SimpleDateFormat
 import java.util.Locale
 
