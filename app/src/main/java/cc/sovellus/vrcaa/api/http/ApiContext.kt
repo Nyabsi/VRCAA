@@ -245,18 +245,14 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                if (result.body?.string()?.contains("emailOtp") == true) {
-                    Pair(TwoFactorType.EMAIL_OTP, result.headers["Set-Cookie"].toString())
-                } else {
-                    Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
-                }
+        return if (result is Response) {
+            if (result.body?.string()?.contains("emailOtp") == true) {
+                Pair(TwoFactorType.EMAIL_OTP, result.headers["Set-Cookie"].toString())
+            } else {
+                Pair(TwoFactorType.TOTP, result.headers["Set-Cookie"].toString())
             }
-
-            else -> {
-                null
-            }
+        } else {
+            null
         }
     }
 
@@ -273,15 +269,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Auth::class.java).token
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Auth::class.java)?.token
     }
 
     suspend fun verifyAccount(token: String, type: TwoFactorType, code: String): String? {
@@ -351,15 +340,7 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                true
-            }
-
-            else -> {
-                false
-            }
-        }
+        return result is Response
     }
 
     suspend fun getSelf(): User? {
@@ -376,15 +357,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), User::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), User::class.java)
     }
 
     suspend fun getFriends(offline: Boolean = false): Friends? {
@@ -401,15 +375,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Friends::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Friends::class.java)
     }
 
     suspend fun getFriend(userId: String): LimitedUser? {
@@ -426,15 +393,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), LimitedUser::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), LimitedUser::class.java)
     }
 
     suspend fun getUser(userId: String): LimitedUser? {
@@ -451,15 +411,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), LimitedUser::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), LimitedUser::class.java)
     }
 
     // Intent is compromised of <worldId>:<InstanceId>:<Nonce>
@@ -478,15 +431,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Instance::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Instance::class.java)
     }
 
     suspend fun InviteSelfToInstance(intent: String){
@@ -518,15 +464,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Worlds::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Worlds::class.java)
     }
 
     suspend fun getWorlds(
@@ -548,15 +487,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Worlds::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Worlds::class.java)
     }
 
     suspend fun getWorld(id: String): World? {
@@ -573,33 +505,8 @@ class ApiContext(
             body = null
         )
 
-        val response = result as Response
-        return Gson().fromJson(response.body?.string(), World::class.java)
-    }
-
-    suspend fun getAvatars(featured: Boolean = true, n: Int = 50): Avatars? {
-
-        val headers = Headers.Builder()
-
-        headers["Cookie"] = cookies
-        headers["User-Agent"] = userAgent
-
-        val result = doRequest(
-            method = "GET",
-            url = "$apiBase/avatars?featured=$featured&n=$n",
-            headers = headers.build(),
-            body = null
-        )
-
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Avatars::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), World::class.java)
     }
 
     suspend fun getUsers(username: String, n: Int = 50): Users? {
@@ -616,15 +523,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Users::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Users::class.java)
     }
 
     suspend fun getFavorites(type: String, n: Int = 50): Favorites? {
@@ -641,15 +541,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Favorites::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Favorites::class.java)
     }
 
     suspend fun getNotifications(): Notifications? {
@@ -666,15 +559,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Notifications::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Notifications::class.java)
     }
 
     suspend fun selectAvatar(avatarId: String): User? {
@@ -691,15 +577,8 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), User::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), User::class.java)
     }
 
     suspend fun getAvatar(avatarId: String): Avatar? {
@@ -716,14 +595,7 @@ class ApiContext(
             body = null
         )
 
-        return when (result) {
-            is Response -> {
-                Gson().fromJson(result.body?.string(), Avatar::class.java)
-            }
-
-            else -> {
-                null
-            }
-        }
+        result as Response
+        return Gson().fromJson(result.body?.string(), Avatar::class.java)
     }
 }
