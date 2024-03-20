@@ -64,6 +64,7 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val friend = msg.obj as FriendOnline
+                    friend.user.location = "" // make sure location exists
 
                     if (notificationManager.isOnWhitelist(friend.userId) &&
                         notificationManager.isIntentEnabled(
@@ -349,6 +350,12 @@ class PipelineService : Service(), CoroutineScope {
                                 FriendManager.setFriends(onlineFriends)
                             }
                         }
+
+                        // make sure location always exists no matter what, we don't want issue with that stuff...
+                        val modifiedFriends = FriendManager.getFriends()
+                        for (friend in modifiedFriends) { friend.location = "" }
+                        FriendManager.setFriends(modifiedFriends)
+
 
                         pipeline = PipelineContext(token)
                         pipeline?.connect()
