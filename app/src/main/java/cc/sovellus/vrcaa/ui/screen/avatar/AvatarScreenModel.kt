@@ -28,6 +28,11 @@ class AvatarScreenModel(
     private var avatar: Avatar? = null
 
     init {
+        mutableState.value = AvatarState.Loading
+        fetchAvatar(avatarId)
+    }
+
+    private fun fetchAvatar(avatarId: String) {
         screenModelScope.launch {
             avatar = api.getAvatar(avatarId)
             mutableState.value = AvatarState.Result(avatar)
