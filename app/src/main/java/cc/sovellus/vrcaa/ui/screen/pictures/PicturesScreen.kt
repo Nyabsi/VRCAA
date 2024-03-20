@@ -44,7 +44,7 @@ class PicturesScreen : Screen {
                             model = path.absolutePath,
                             contentDescription = stringResource(R.string.preview_image_description),
                             modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Fit,
+                            contentScale = ContentScale.FillBounds,
                             loading = placeholder(R.drawable.image_placeholder),
                             failure = placeholder(R.drawable.image_placeholder)
                         )
