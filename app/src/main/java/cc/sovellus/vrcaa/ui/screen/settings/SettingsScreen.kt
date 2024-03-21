@@ -97,7 +97,7 @@ class SettingsScreen : Screen {
                     ) {
                         Text(text = stringResource(R.string.logout_button_text))
                     }
-                    Text(text = "Running on ${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}), ${BuildConfig.GIT_BRANCH} (${BuildConfig.GIT_HASH})")
+                    Text(text = "${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}), ${BuildConfig.GIT_BRANCH} (${BuildConfig.GIT_HASH})")
                 }
             }
         )
