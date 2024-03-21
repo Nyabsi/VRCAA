@@ -371,7 +371,6 @@ class PipelineService : Service(), CoroutineScope {
             .setContentTitle(application.getString(R.string.app_name))
             .setContentText(application.getString(R.string.service_notification))
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
-            .setOngoing(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
