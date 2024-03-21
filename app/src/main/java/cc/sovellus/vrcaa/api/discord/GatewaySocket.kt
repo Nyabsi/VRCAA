@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.api.websocket
+package cc.sovellus.vrcaa.api.discord
 
 import android.util.ArrayMap
 import android.util.Log

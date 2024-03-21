@@ -39,3 +39,11 @@ internal var SharedPreferences.notificationWhitelist: NotificationManager.Notifi
 internal var SharedPreferences.invalidCookie: Boolean
     get() = getBoolean("isExpiredSession", false)
     set(it) = edit { putBoolean("isExpiredSession", it) }
+
+internal var SharedPreferences.discordToken: String
+    get() = getString("discordToken", "")!!
+    set(it) = edit { putString("discordToken", it) }
+
+internal var SharedPreferences.richPresenceEnabled: Boolean
+    get() = getBoolean("richPresenceEnabled", false)
+    set(it) = edit { putBoolean("richPresenceEnabled", it) }

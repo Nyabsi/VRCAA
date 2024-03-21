@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.service
 
 import android.app.Service
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Build
 import android.os.Handler
@@ -14,7 +15,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.websocket.GatewaySocket
+import cc.sovellus.vrcaa.api.discord.GatewaySocket
 import cc.sovellus.vrcaa.api.websocket.PipelineContext
 import cc.sovellus.vrcaa.api.websocket.models.FriendAdd
 import cc.sovellus.vrcaa.api.websocket.models.FriendDelete
@@ -25,6 +26,8 @@ import cc.sovellus.vrcaa.api.websocket.models.Notification
 import cc.sovellus.vrcaa.api.websocket.models.UserLocation
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
+import cc.sovellus.vrcaa.helper.discordToken
+import cc.sovellus.vrcaa.helper.richPresenceEnabled
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
@@ -46,6 +49,8 @@ class PipelineService : Service(), CoroutineScope {
 
     private var pipeline: PipelineContext? = null
     private var gateway: GatewaySocket? = null
+
+    private lateinit var preferences: SharedPreferences
 
     private val listener = object : PipelineContext.SocketListener {
         override fun onMessage(message: Any?) {
@@ -214,20 +219,18 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is UserLocation -> {
-                    // self updated and reported !!!
                     val user = msg.obj as UserLocation
 
                     val status = StatusHelper.getStatusFromString(user.user.status)
                     val location = LocationHelper.parseLocationIntent(user.location)
-                    val isAndroid = user.user.lastPlatform == "android"
 
-                    launch {
-                        val instance = api.getInstance(user.location)
-                        if (isAndroid) {
+                    if (preferences.richPresenceEnabled) {
+                        launch {
+                            val instance = api.getInstance(user.location)
                             if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                                // instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance?.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance?.nUsers} of ${instance?.capacity})") }
+                                instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance?.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})") }
                             } else {
-                                // gateway?.sendPresence(status.toString(), "User location is hidden.")
+                                gateway?.sendPresence(status.toString(), "User location is hidden.")
                             }
                         }
                     }
@@ -328,6 +331,7 @@ class PipelineService : Service(), CoroutineScope {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         this.notificationManager = NotificationManager(this)
+        this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         launch {
             withContext(Dispatchers.Main) {
@@ -352,6 +356,11 @@ class PipelineService : Service(), CoroutineScope {
                         pipeline = PipelineContext(token)
                         pipeline?.connect()
                         pipeline?.setListener(listener)
+
+                        if (preferences.richPresenceEnabled) {
+                            gateway = GatewaySocket(preferences.discordToken)
+                            gateway?.connect()
+                        }
                     }
                 }
             }
@@ -380,6 +389,9 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onDestroy() {
         pipeline?.disconnect()
+        if (preferences.richPresenceEnabled) {
+            gateway?.disconnect()
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {
