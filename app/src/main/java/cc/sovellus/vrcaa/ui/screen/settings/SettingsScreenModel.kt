@@ -6,6 +6,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.http.ApiContext
 import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.helper.invalidCookie
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
@@ -17,10 +18,13 @@ class SettingsScreenModel(
 
     fun doLogout() {
         screenModelScope.launch {
-            api.logout()
             val intent = Intent(context, PipelineService::class.java)
             context.stopService(intent)
+
+            api.logout()
+
             preferences.cookies = ""
+            preferences.invalidCookie = true
         }
     }
 }

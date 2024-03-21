@@ -26,10 +26,6 @@ internal var SharedPreferences.twoFactorAuth: String
     get() = getString("TwoFactorAuth", "")!!
     set(it) = edit { putString("TwoFactorAuth", it) }
 
-internal var SharedPreferences.isExpiredSession: Boolean
-    get() = getBoolean("isExpiredSession", false)
-    set(it) = edit { putBoolean("isExpiredSession", it) }
-
 internal var SharedPreferences.notificationWhitelist: NotificationManager.NotificationPermissions
     get() {
         val result = getString("notificationWhitelist", "")
@@ -39,3 +35,7 @@ internal var SharedPreferences.notificationWhitelist: NotificationManager.Notifi
         return NotificationManager.NotificationPermissions()
     }
     set(it) = edit { putString("notificationWhitelist", Gson().toJson(it)) }
+
+internal var SharedPreferences.invalidCookie: Boolean
+    get() = getBoolean("isExpiredSession", false)
+    set(it) = edit { putBoolean("isExpiredSession", it) }

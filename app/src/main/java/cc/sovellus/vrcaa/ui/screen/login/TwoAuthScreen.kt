@@ -28,8 +28,7 @@ import cc.sovellus.vrcaa.api.http.ApiContext
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
 
 class TwoAuthScreen(
-    private val otpType: ApiContext.TwoFactorType,
-    private val token: String
+    private val otpType: ApiContext.TwoFactorType
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -41,7 +40,7 @@ class TwoAuthScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(context) }
+        val screenModel = navigator.rememberNavigatorScreenModel { TwoAuthScreenModel(context, otpType, navigator) }
 
         Column(
             modifier = Modifier
@@ -69,7 +68,7 @@ class TwoAuthScreen(
                     .width(200.dp)
                     .padding(1.dp),
                 onClick = {
-                    screenModel.doVerify(otpType, token, navigator)
+                    screenModel.verify()
                 }
             ) {
                 Text(text = stringResource(R.string.auth_button_text))

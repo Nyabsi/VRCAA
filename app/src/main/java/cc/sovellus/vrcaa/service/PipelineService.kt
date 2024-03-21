@@ -37,7 +37,7 @@ import kotlinx.coroutines.withContext
 
 class PipelineService : Service(), CoroutineScope {
 
-    override val coroutineContext = Dispatchers.Main + SupervisorJob()
+    override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -64,7 +64,7 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val friend = msg.obj as FriendOnline
-                    friend.user.location = "" // make sure location exists
+                    friend.user.location = ""
 
                     if (notificationManager.isOnWhitelist(friend.userId) &&
                         notificationManager.isIntentEnabled(
@@ -80,13 +80,11 @@ class PipelineService : Service(), CoroutineScope {
                         )
                     }
 
-                    FeedManager.addFeed(
-                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
-                            friendId = friend.userId
-                            friendName = friend.user.displayName
-                            friendPictureUrl =
-                                friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                        })
+                    FeedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                        friendId = friend.userId
+                        friendName = friend.user.displayName
+                        friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                    })
 
                     if (FriendManager.getFriend(friend.userId) == null) {
                         FriendManager.addFriend(friend.user)
@@ -350,12 +348,6 @@ class PipelineService : Service(), CoroutineScope {
                                 FriendManager.setFriends(onlineFriends)
                             }
                         }
-
-                        // make sure location always exists no matter what, we don't want issue with that stuff...
-                        val modifiedFriends = FriendManager.getFriends()
-                        for (friend in modifiedFriends) { friend.location = "" }
-                        FriendManager.setFriends(modifiedFriends)
-
 
                         pipeline = PipelineContext(token)
                         pipeline?.connect()

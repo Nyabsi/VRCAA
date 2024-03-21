@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -37,7 +38,8 @@ class UserProfileScreenModel(
                     if (it.isFriend &&
                         it.location.isNotEmpty() &&
                         it.location != "private" &&
-                        it.location != "traveling") {
+                        it.location != "traveling" &&
+                        it.location != "offline") {
                         instance = api.getInstance(it.location)
                     }
                 }
