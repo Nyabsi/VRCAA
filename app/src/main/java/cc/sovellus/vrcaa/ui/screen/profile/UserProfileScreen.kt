@@ -45,6 +45,7 @@ import cc.sovellus.vrcaa.ui.screen.notifications.ManageNotificationsScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreenModel.UserProfileState
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class UserProfileScreen(
@@ -127,6 +128,7 @@ class UserProfileScreen(
                                                 text = { Text("Manage notifications") }
                                             )
                                         }
+
                                     }
                                 }
                             }

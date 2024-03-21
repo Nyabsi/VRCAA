@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -23,6 +25,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -39,6 +42,7 @@ import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.dialog.UpdatedDialog
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
@@ -46,6 +50,8 @@ import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.PicturesTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
+import kotlinx.coroutines.launch
+import java.io.File
 
 class MainScreen : Screen {
 
@@ -56,8 +62,23 @@ class MainScreen : Screen {
     override fun Content() {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
+        val context: Context = LocalContext.current
 
         val model = navigator.rememberNavigatorScreenModel { MainScreenModel() }
+
+        if (model.hasUpdate.value) {
+            UpdatedDialog(
+                onDismiss = {
+                    model.hasUpdate.value = false
+                },
+                onConfirmation = {
+                    model.hasUpdate.value = false
+                    model.update(context)
+                },
+                title = "New update available!",
+                description = "Do you wish to update the application?"
+            )
+        }
 
         TabNavigator(
             HomeTab,

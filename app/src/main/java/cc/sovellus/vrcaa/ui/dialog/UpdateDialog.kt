@@ -1,12 +1,15 @@
 package cc.sovellus.vrcaa.ui.dialog
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun InviteDialog(
+fun UpdatedDialog(
     onDismiss: () -> Unit,
     onConfirmation: () -> Unit,
     title: String,
@@ -19,6 +22,9 @@ fun InviteDialog(
         text = {
             Text(text = description)
         },
+        icon = {
+          Icon(imageVector = Icons.Filled.Info, contentDescription = "Update")
+        },
         onDismissRequest = {
             onDismiss()
         },
@@ -28,7 +34,7 @@ fun InviteDialog(
                     onConfirmation()
                 }
             ) {
-                Text("OK")
+                Text("Yes")
             }
         },
         dismissButton = {
@@ -37,7 +43,7 @@ fun InviteDialog(
                     onDismiss()
                 }
             ) {
-                Text("Cancel")
+                Text("No")
             }
         }
     )

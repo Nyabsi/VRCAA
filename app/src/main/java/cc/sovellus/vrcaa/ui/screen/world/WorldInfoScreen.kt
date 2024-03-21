@@ -47,7 +47,7 @@ import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreenModel.WorldInfoState
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
-import cc.sovellus.vrcaa.ui.dialog.InviteDialog
+import cc.sovellus.vrcaa.ui.dialog.GenericDialog
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -214,7 +214,7 @@ class WorldInfoScreen(
         val dialogState = remember { mutableStateOf(false) }
 
         if (dialogState.value) {
-            InviteDialog(
+            GenericDialog(
                 onDismiss = { dialogState.value = false },
                 onConfirmation = {
                     dialogState.value = false
