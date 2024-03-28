@@ -7,10 +7,12 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.updater.AutoUpdater
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 
+@OptIn(DelicateCoroutinesApi::class)
 class MainScreenModel : ScreenModel {
 
     var isSearchActive = mutableStateOf(false)
@@ -18,11 +20,12 @@ class MainScreenModel : ScreenModel {
     var tonalElevation = mutableStateOf(16.dp)
     var searchHistory = mutableListOf<String>()
 
-    private val updater = AutoUpdater()
     var hasUpdate = mutableStateOf(false)
 
     init {
-        hasUpdate.value = updater.checkForUpdates()
+        screenModelScope.launch {
+            hasUpdate.value = AutoUpdater.checkForUpdates()
+        }
     }
 
     fun enterSearchMode() {
@@ -52,8 +55,8 @@ class MainScreenModel : ScreenModel {
     fun update(context: Context) {
         val update = File(context.filesDir, "temp.apk")
         screenModelScope.launch {
-            if (updater.downloadUpdate(update)) {
-                updater.installUpdate(context, update)
+            if (AutoUpdater.downloadUpdate(update)) {
+                AutoUpdater.installUpdate(context, update)
             } else {
                 Toast.makeText(
                     context,

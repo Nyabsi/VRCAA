@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.main
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -50,8 +49,6 @@ import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.PicturesTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
-import kotlinx.coroutines.launch
-import java.io.File
 
 class MainScreen : Screen {
 
