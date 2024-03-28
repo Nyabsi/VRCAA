@@ -131,7 +131,7 @@
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_translate_description">View the libraries VRCAA was built on.</string>
+    <string name="about_page_translate_description">Help translating VRCAA to your language.</string>
     <string name="about_page_battery_optimizations_title">Click here to disable battery optimizations</string>
     <string name="about_page_battery_optimizations_description">Some phone models may require this to be used, for proper functionality.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
