@@ -2,12 +2,10 @@ package cc.sovellus.vrcaa.ui.models.avatar
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.http.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 

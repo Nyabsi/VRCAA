@@ -19,7 +19,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.api.http.ApiContext
+import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
 import cc.sovellus.vrcaa.helper.isMyServiceRunning
 import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.service.PipelineService
@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        ApiManager.set(ApiContext(this))
+        ApiManager.set(VRChatApi(this))
 
         if (checkForCookies()) {
             if (!isMyServiceRunning(PipelineService::class.java)) {

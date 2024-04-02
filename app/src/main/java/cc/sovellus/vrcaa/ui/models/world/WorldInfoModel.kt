@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.http.models.Instance
-import cc.sovellus.vrcaa.api.http.models.Instances
-import cc.sovellus.vrcaa.api.http.models.World
+import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.http.models.Instances
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 

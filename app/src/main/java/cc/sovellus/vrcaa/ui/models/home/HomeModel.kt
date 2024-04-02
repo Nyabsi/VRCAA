@@ -5,10 +5,9 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.http.models.Friends
-import cc.sovellus.vrcaa.api.http.models.Worlds
+import cc.sovellus.vrcaa.api.vrchat.http.models.Friends
+import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeScreenModel(

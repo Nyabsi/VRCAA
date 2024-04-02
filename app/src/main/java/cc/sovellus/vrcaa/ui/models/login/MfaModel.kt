@@ -9,7 +9,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.http.ApiContext
+import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
@@ -17,14 +17,14 @@ import kotlinx.coroutines.launch
 
 class MfaModel(
     private val context: Context,
-    private val otpType: ApiContext.MfaType,
+    private val otpType: VRChatApi.MfaType,
     private val navigator: Navigator
 ) : ScreenModel {
 
     var code: MutableState<String> = mutableStateOf("")
 
     init {
-        if (otpType == ApiContext.MfaType.NONE) {
+        if (otpType == VRChatApi.MfaType.NONE) {
             val intent = Intent(context, PipelineService::class.java)
             context.startForegroundService(intent)
 

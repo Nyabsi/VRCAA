@@ -15,15 +15,15 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.GatewaySocket
-import cc.sovellus.vrcaa.api.websocket.PipelineContext
-import cc.sovellus.vrcaa.api.websocket.models.FriendAdd
-import cc.sovellus.vrcaa.api.websocket.models.FriendDelete
-import cc.sovellus.vrcaa.api.websocket.models.FriendLocation
-import cc.sovellus.vrcaa.api.websocket.models.FriendOffline
-import cc.sovellus.vrcaa.api.websocket.models.FriendOnline
-import cc.sovellus.vrcaa.api.websocket.models.Notification
-import cc.sovellus.vrcaa.api.websocket.models.UserLocation
+import cc.sovellus.vrcaa.api.discord.websocket.GatewaySocket
+import cc.sovellus.vrcaa.api.vrchat.websocket.PipelineWebSocket
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendAdd
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendDelete
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendLocation
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOffline
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOnline
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.UserLocation
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.discordToken
@@ -32,7 +32,6 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
-import extensions.wu.seal.PropertySuffixSupport.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -49,10 +48,10 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var notificationManager: NotificationManager
     private lateinit var preferences: SharedPreferences
 
-    private var pipeline: PipelineContext? = null
+    private var pipeline: PipelineWebSocket? = null
     private var gateway: GatewaySocket? = null
 
-    private val listener = object : PipelineContext.SocketListener {
+    private val listener = object : PipelineWebSocket.SocketListener {
         override fun onMessage(message: Any?) {
             if (message != null) {
                 serviceHandler?.obtainMessage()?.also { msg ->
@@ -325,7 +324,7 @@ class PipelineService : Service(), CoroutineScope {
 
         launch {
             api.getAuth()?.let { token ->
-                pipeline = PipelineContext(token)
+                pipeline = PipelineWebSocket(token)
 
                 pipeline?.connect()
                 pipeline?.setListener(listener)

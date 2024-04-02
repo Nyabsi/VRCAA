@@ -1,15 +1,15 @@
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.api.http.ApiContext
+import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
 
 object ApiManager {
 
-    @Volatile lateinit var api: ApiContext
+    @Volatile lateinit var api: VRChatApi
 
     @Synchronized
-    fun set(apiContext: ApiContext) {
+    fun set(api: VRChatApi) {
         synchronized(this) {
-            api = apiContext
+            this.api = api
         }
     }
 }

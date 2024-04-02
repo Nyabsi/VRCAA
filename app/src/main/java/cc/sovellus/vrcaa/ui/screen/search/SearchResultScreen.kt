@@ -49,9 +49,9 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
-import cc.sovellus.vrcaa.api.http.models.Users
-import cc.sovellus.vrcaa.api.http.models.Worlds
+import cc.sovellus.vrcaa.api.vrchat.avatars.models.JustHPartyAvatars
+import cc.sovellus.vrcaa.api.vrchat.http.models.Users
+import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen

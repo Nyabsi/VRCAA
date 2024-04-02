@@ -24,12 +24,12 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.http.ApiContext
+import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
 import cc.sovellus.vrcaa.ui.models.login.MfaModel
 
 class MfaScreen(
-    private val otpType: ApiContext.MfaType
+    private val otpType: VRChatApi.MfaType
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -52,7 +52,7 @@ class MfaScreen(
         ) {
 
             Text(
-                text = if (otpType == ApiContext.MfaType.EMAIL_OTP) {
+                text = if (otpType == VRChatApi.MfaType.EMAIL_OTP) {
                     stringResource(R.string.auth_text_email)
                 } else {
                     stringResource(R.string.auth_text_app)
