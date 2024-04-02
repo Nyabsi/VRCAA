@@ -32,6 +32,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
+import extensions.wu.seal.PropertySuffixSupport.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -40,17 +41,16 @@ import kotlinx.coroutines.withContext
 
 class PipelineService : Service(), CoroutineScope {
 
-    override val coroutineContext = Dispatchers.IO + SupervisorJob()
+    override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
     private lateinit var notificationManager: NotificationManager
+    private lateinit var preferences: SharedPreferences
 
     private var pipeline: PipelineContext? = null
     private var gateway: GatewaySocket? = null
-
-    private lateinit var preferences: SharedPreferences
 
     private val listener = object : PipelineContext.SocketListener {
         override fun onMessage(message: Any?) {
@@ -69,7 +69,7 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val friend = msg.obj as FriendOnline
-                    friend.user.location = ""
+                    friend.user.location = friend.travelingToLocation
 
                     if (notificationManager.isOnWhitelist(friend.userId) &&
                         notificationManager.isIntentEnabled(
@@ -91,9 +91,10 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
 
-                    if (FriendManager.getFriend(friend.userId) == null) {
+                    if (FriendManager.getFriend(friend.userId) == null)
                         FriendManager.addFriend(friend.user)
-                    }
+                    else
+                        FriendManager.updateFriend(friend.user)
                 }
 
                 is FriendOffline -> {
@@ -135,16 +136,12 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendLocation -> {
 
                     val friend = msg.obj as FriendLocation
-                    val cachedFriend = FriendManager.getFriend(friend.userId)
+                    val oldFriend = FriendManager.getFriend(friend.userId)
 
-                    // For some reason, VRChat doesn't also set the user object location properly...
-                    // It took me literally, *hours* to figure this. I'm out.
-                    friend.user.location = friend.location
-
-                    if (cachedFriend != null) {
+                    if (oldFriend != null) {
                         if (
                             StatusHelper.getStatusFromString(friend.user.status) !=
-                            StatusHelper.getStatusFromString(cachedFriend.status)
+                            StatusHelper.getStatusFromString(oldFriend.status)
                         ) {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
                                 notificationManager.isIntentEnabled(
@@ -156,8 +153,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status)
                                         .format(
-                                            cachedFriend.displayName,
-                                            StatusHelper.getStatusFromString(cachedFriend.status)
+                                            oldFriend.displayName,
+                                            StatusHelper.getStatusFromString(oldFriend.status)
                                                 .toString(),
                                             StatusHelper.getStatusFromString(friend.user.status)
                                                 .toString()
@@ -170,10 +167,8 @@ class PipelineService : Service(), CoroutineScope {
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = friend.userId
                                     friendName = friend.user.displayName
-                                    friendPictureUrl =
-                                        friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                    friendStatus =
-                                        StatusHelper.getStatusFromString(friend.user.status)
+                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                    friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                                 }
                             )
                         } else {
@@ -194,35 +189,30 @@ class PipelineService : Service(), CoroutineScope {
                                     )
                                 }
 
-                                val result = LocationHelper.parseLocationIntent(friend.location)
-
-                                val locationFormatted = if (result.regionId.isNotEmpty()) {
-                                    "${friend.world.name} (${result.instanceType}) ${result.regionId.uppercase()}"
-                                } else {
-                                    "${friend.world.name} (${result.instanceType}) US"
+                                launch {
+                                    FeedManager.addFeed(
+                                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
+                                            .apply {
+                                                friendId = friend.userId
+                                                friendName = friend.user.displayName
+                                                travelDestination = LocationHelper.getReadableLocation(friend.location)
+                                                friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                            }
+                                    )
                                 }
 
-                                FeedManager.addFeed(
-                                    FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
-                                        .apply {
-                                            friendId = friend.userId
-                                            friendName = friend.user.displayName
-                                            travelDestination = locationFormatted
-                                            friendPictureUrl =
-                                                friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                        })
+                                // This guarantees the user will have valid location.
+                                FriendManager.updateFriend(friend.user)
                             }
                         }
                     }
-
-                    FriendManager.updateFriend(friend.user)
                 }
 
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
                     val status = StatusHelper.getStatusFromString(user.user.status)
-                    val location = LocationHelper.parseLocationIntent(user.location)
+                    val location = LocationHelper.parseLocationInfo(user.location)
 
                     if (preferences.richPresenceEnabled) {
                         launch {
@@ -334,34 +324,15 @@ class PipelineService : Service(), CoroutineScope {
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         launch {
-            withContext(Dispatchers.Main) {
-                api.getAuth().let { token ->
-                    if (!token.isNullOrEmpty()) {
-                        api.getFriends().let { friends ->
-                            if (friends != null) {
-                                FriendManager.setFriends(friends)
-                            }
-                        }
+            api.getAuth()?.let { token ->
+                pipeline = PipelineContext(token)
 
-                        api.getFriends(true).let { friends ->
-                            if (friends != null) {
-                                val onlineFriends = FriendManager.getFriends()
-                                for (offline in friends) {
-                                    onlineFriends.add(offline)
-                                }
-                                FriendManager.setFriends(onlineFriends)
-                            }
-                        }
+                pipeline?.connect()
+                pipeline?.setListener(listener)
 
-                        pipeline = PipelineContext(token)
-                        pipeline?.connect()
-                        pipeline?.setListener(listener)
-
-                        if (preferences.richPresenceEnabled) {
-                            gateway = GatewaySocket(preferences.discordToken)
-                            gateway?.connect()
-                        }
-                    }
+                if (preferences.richPresenceEnabled) {
+                    gateway = GatewaySocket(preferences.discordToken)
+                    gateway?.connect()
                 }
             }
         }

@@ -8,7 +8,7 @@ object FriendManager {
     @Volatile private var syncedFriends: MutableList<LimitedUser> = ArrayList()
 
     interface FriendListener {
-        fun onUpdateFriends(friends: MutableList<LimitedUser>, offline: Boolean)
+        fun onUpdateFriends(friends: MutableList<LimitedUser>)
     }
 
     @Synchronized
@@ -30,7 +30,7 @@ object FriendManager {
         if (syncedFriends.find { it.id == friend.id } == null) {
             synchronized(friend) {
                 syncedFriends.add(friend)
-                friendListener?.onUpdateFriends(syncedFriends, false)
+                friendListener?.onUpdateFriends(syncedFriends)
             }
         }
     }
@@ -44,7 +44,7 @@ object FriendManager {
                 syncedFriends.remove(friend)
             }
 
-            friendListener?.onUpdateFriends(syncedFriends, false)
+            friendListener?.onUpdateFriends(syncedFriends)
         }
     }
 
@@ -59,7 +59,7 @@ object FriendManager {
             tmp?.let {
                 syncedFriends.set(syncedFriends.indexOf(tmp), friend)
             }
-            friendListener?.onUpdateFriends(syncedFriends, false)
+            friendListener?.onUpdateFriends(syncedFriends)
         }
     }
 

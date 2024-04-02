@@ -40,6 +40,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
+import cc.sovellus.vrcaa.ui.models.settings.RichPresenceScreenModel
 
 class RichPresenceScreen : Screen {
 

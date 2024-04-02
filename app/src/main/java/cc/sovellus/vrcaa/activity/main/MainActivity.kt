@@ -24,7 +24,7 @@ import cc.sovellus.vrcaa.helper.isMyServiceRunning
 import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
-import cc.sovellus.vrcaa.ui.screen.main.MainScreen
+import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
 
 class MainActivity : ComponentActivity() {
@@ -121,7 +121,7 @@ class MainActivity : ComponentActivity() {
             screen = if (!checkForCookies()) {
                 LoginScreen()
             } else {
-                MainScreen()
+                NavigationScreen()
             },
             disposeBehavior = NavigatorDisposeBehavior(
                 disposeNestedNavigators = false,

@@ -21,6 +21,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -41,11 +44,11 @@ import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.notifications.ManageNotificationsScreen
-import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreenModel.UserProfileState
+import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
+import cc.sovellus.vrcaa.ui.models.profile.UserProfileScreenModel.UserProfileState
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
+import cc.sovellus.vrcaa.ui.models.profile.UserProfileScreenModel
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class UserProfileScreen(
@@ -80,6 +83,8 @@ class UserProfileScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
+        var isMenuExpanded by remember { mutableStateOf(false) }
+
         if (profile == null) {
             Toast.makeText(
                 context,
@@ -100,7 +105,7 @@ class UserProfileScreen(
                             }
                         },
                         actions = {
-                            IconButton(onClick = { model.isMenuExpanded.value = true }) {
+                            IconButton(onClick = { isMenuExpanded = true }) {
                                 Icon(
                                     imageVector = Icons.Filled.MoreVert,
                                     contentDescription = stringResource(R.string.preview_image_description)
@@ -110,20 +115,20 @@ class UserProfileScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     DropdownMenu(
-                                        expanded = model.isMenuExpanded.value,
-                                        onDismissRequest = { model.isMenuExpanded.value = false },
+                                        expanded = isMenuExpanded,
+                                        onDismissRequest = { isMenuExpanded = false },
                                         offset = DpOffset(0.dp, 0.dp)
                                     ) {
                                         if (profile.isFriend) {
                                             DropdownMenuItem(
                                                 onClick = {
                                                     navigator.push(
-                                                        ManageNotificationsScreen(
+                                                        NotificationScreen(
                                                             profile.id,
                                                             profile.displayName
                                                         )
                                                     )
-                                                    model.isMenuExpanded.value = false
+                                                    isMenuExpanded = false
                                                 },
                                                 text = { Text("Manage notifications") }
                                             )

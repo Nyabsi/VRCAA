@@ -26,6 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -41,7 +45,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.api.http.models.LimitedUser
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
-import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendListState
+import cc.sovellus.vrcaa.ui.models.friends.FriendsScreenModel
+import cc.sovellus.vrcaa.ui.models.friends.FriendsScreenModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import java.util.UUID
@@ -73,9 +78,8 @@ class FriendsScreen : Screen {
     ) {
 
         val context = LocalContext.current
-        val stateRefresh = rememberPullRefreshState(
-            model.isRefreshing.value,
-            onRefresh = { model.refreshFriends(context) })
+
+        val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
 
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)

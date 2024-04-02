@@ -60,7 +60,7 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
             failure = placeholder(R.drawable.image_placeholder)
         )
 
-        val result = LocationHelper.parseLocationIntent(profile.location)
+        val result = LocationHelper.parseLocationInfo(profile.location!!)
 
         Row(
             verticalAlignment = Alignment.CenterVertically,

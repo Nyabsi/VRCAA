@@ -1,19 +1,16 @@
 package cc.sovellus.vrcaa.ui.screen.login
 
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,56 +24,77 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.components.input.PasswordInput
-import cc.sovellus.vrcaa.ui.components.input.TextInput
-import cc.sovellus.vrcaa.ui.models.login.LoginScreenModel
+import cc.sovellus.vrcaa.api.http.ApiContext
+import cc.sovellus.vrcaa.ui.components.input.CodeInput
+import cc.sovellus.vrcaa.ui.models.login.MfaModel
 
-class LoginScreen : Screen {
+class MfaScreen(
+    private val otpType: ApiContext.MfaType
+) : Screen {
 
     override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
 
+
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = LoginScreenModel(context, navigator)
-
-        var passwordVisibility by remember { mutableStateOf(false) }
+        val screenModel = navigator.rememberNavigatorScreenModel { MfaModel(context, otpType, navigator) }
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 16.dp),
+                .fillMaxHeight()
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = stringResource(R.string.login_text))
 
-            TextInput(
-                title = stringResource(R.string.login_label_username),
-                input = screenModel.username
+            Text(
+                text = if (otpType == ApiContext.MfaType.EMAIL_OTP) {
+                    stringResource(R.string.auth_text_email)
+                } else {
+                    stringResource(R.string.auth_text_app)
+                }
             )
 
-            PasswordInput(
-                title = stringResource(R.string.login_label_password),
-                input = screenModel.password,
-                visible = passwordVisibility,
-                onVisibilityChange = {
-                    passwordVisibility = !passwordVisibility
-                }
+            CodeInput(
+                input = screenModel.code
             )
 
             Button(
                 modifier = Modifier
                     .height(48.dp)
-                    .width(200.dp),
+                    .width(200.dp)
+                    .padding(1.dp),
                 onClick = {
-                    screenModel.doLogin()
+                    screenModel.verify()
                 }
             ) {
-                Text(text = stringResource(R.string.login_button_text))
+                Text(text = stringResource(R.string.auth_button_text))
+            }
+
+            Button(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(200.dp)
+                    .padding(1.dp),
+                onClick = {
+                    val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                    if (clipboard?.hasPrimaryClip() == true) {
+                        val clipData = clipboard.primaryClip
+                        if ((clipData?.itemCount ?: 0) > 0) {
+                            val clipItem = clipData?.getItemAt(0)
+                            val clipText = clipItem?.text?.toString()
+                            if (clipText?.length == 6) {
+                                screenModel.code.value = clipText
+                            }
+                        }
+                    }
+                }
+            ) {
+                Text(text = "Paste")
             }
         }
 

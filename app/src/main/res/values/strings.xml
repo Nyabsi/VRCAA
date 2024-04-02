@@ -138,6 +138,7 @@
 
     <!-- API -->
     <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+    <string name="api_avatar_select_failed">"Failed to select avatar."</string>
 
     <!-- Discord Rich Presence -->
     <string name="discord_login_title">Login to Discord</string>

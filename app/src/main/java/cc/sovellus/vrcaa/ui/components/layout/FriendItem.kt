@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.http.models.LimitedUser
+import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -31,7 +32,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
         },
         overlineContent = { Text(friend.displayName) },
         supportingContent = {
-            Text(text = if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { friend.location }, maxLines = 1)
+            (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { friend.location })?.let { Text(text = it, maxLines = 1) }
         },
         leadingContent = {
             GlideImage(

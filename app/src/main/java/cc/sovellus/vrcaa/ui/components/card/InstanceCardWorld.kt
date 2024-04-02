@@ -15,7 +15,7 @@ import cc.sovellus.vrcaa.helper.LocationHelper
 
 @Composable
 fun InstanceCardWorld(intent: String, instance: Instance, onClick: () -> Unit) {
-    val result = LocationHelper.parseLocationIntent(intent)
+    val result = LocationHelper.parseLocationInfo(intent)
     ListItem(
         headlineContent = {
             Text("Capacity: ${instance.nUsers}/${instance.world.capacity}, Can Join: ${instance.hasCapacityForYou}")

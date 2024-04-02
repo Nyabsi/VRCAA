@@ -21,6 +21,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,8 +40,9 @@ import cc.sovellus.vrcaa.api.http.models.Avatar
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreenModel.AvatarState
+import cc.sovellus.vrcaa.ui.models.avatar.AvatarScreenModel.AvatarState
 import cc.sovellus.vrcaa.ui.components.card.AvatarCard
+import cc.sovellus.vrcaa.ui.models.avatar.AvatarScreenModel
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -52,7 +56,6 @@ class AvatarScreen(
     @Composable
     override fun Content() {
         val context = LocalContext.current
-
         val model = rememberScreenModel { AvatarScreenModel(context, avatarId) }
 
         val state by model.state.collectAsState()
@@ -69,6 +72,8 @@ class AvatarScreen(
     private fun DisplayResult(avatar: Avatar?, model: AvatarScreenModel) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
+
+        var isMenuExpanded by remember { mutableStateOf(false) }
 
         if (avatar == null) {
             Toast.makeText(
@@ -90,7 +95,7 @@ class AvatarScreen(
                             }
                         },
                         actions = {
-                            IconButton(onClick = { model.isMenuExpanded.value = true }) {
+                            IconButton(onClick = { isMenuExpanded = true }) {
                                 Icon(
                                     imageVector = Icons.Filled.MoreVert,
                                     contentDescription = stringResource(R.string.preview_image_description)
@@ -100,23 +105,23 @@ class AvatarScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     DropdownMenu(
-                                        expanded = model.isMenuExpanded.value,
-                                        onDismissRequest = { model.isMenuExpanded.value = false },
+                                        expanded = isMenuExpanded,
+                                        onDismissRequest = { isMenuExpanded = false },
                                         offset = DpOffset(0.dp, 0.dp)
                                     ) {
                                         DropdownMenuItem(
                                             onClick = {
-                                                model.selectAvatar()
-
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.avatar_dropdown_toast_select_avatar),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+                                                if (model.selectAvatar()) {
+                                                    Toast.makeText(
+                                                        context,
+                                                        context.getString(R.string.avatar_dropdown_toast_select_avatar),
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
                                             },
                                             text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
                                         )
-                                        // TODO: when implementing favorites, check here if it's favorited or not.
+                                        // TODO: when implementing favorites, check here if it's favorite or not.
                                         DropdownMenuItem(
                                             onClick = {
                                                 Toast.makeText(

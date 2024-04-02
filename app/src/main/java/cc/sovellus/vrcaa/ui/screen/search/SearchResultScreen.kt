@@ -52,10 +52,11 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.http.models.Users
 import cc.sovellus.vrcaa.api.http.models.Worlds
+import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
+import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel.SearchState
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage

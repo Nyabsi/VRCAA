@@ -33,9 +33,8 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ApiContext(
-    private val context: Context // this is not a good idea, TODO: figure how to not pass context onto ApiContext
+    private val context: Context
 ) : BaseClient() {
-
 
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", 0)
 
@@ -47,7 +46,7 @@ class ApiContext(
         cookies = preferences.cookies
     }
 
-    enum class TwoFactorType { NONE, EMAIL_OTP, OTP, TOTP }
+    enum class MfaType { NONE, EMAIL_OTP, OTP, TOTP }
 
     private fun invalidateSession() {
 
@@ -125,7 +124,7 @@ class ApiContext(
 
 
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun getToken(username: String, password: String): TwoFactorType? {
+    suspend fun getToken(username: String, password: String): MfaType? {
 
         val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
 
@@ -154,7 +153,7 @@ class ApiContext(
                 preferences.twoFactorAuth = cookies.substring(cookies.indexOf("twoFactorAuth="), cookies.indexOf(";", cookies.indexOf("twoFactorAuth=")))
                 this.cookies = cookies
                 preferences.invalidCookie = false
-                return TwoFactorType.NONE
+                return MfaType.NONE
             } else {
                 // this is double encoded because I could not figure better way to handle headers.
                 val cookies = response.split('~')[0]
@@ -164,9 +163,9 @@ class ApiContext(
                 this.cookies = cookies
 
                 if (body.contains("emailOtp")) {
-                    return TwoFactorType.EMAIL_OTP
+                    return MfaType.EMAIL_OTP
                 } else {
-                    return TwoFactorType.TOTP
+                    return MfaType.TOTP
                 }
             }
         }
@@ -191,7 +190,7 @@ class ApiContext(
         return Gson().fromJson(response, Auth::class.java)?.token
     }
 
-    suspend fun verifyAccount(type: TwoFactorType, code: String): Boolean {
+    suspend fun verifyAccount(type: MfaType, code: String): Boolean {
 
         val headers = Headers.Builder()
 
@@ -199,7 +198,7 @@ class ApiContext(
         headers["User-Agent"] = userAgent
 
         return when (type) {
-            TwoFactorType.EMAIL_OTP -> {
+            MfaType.EMAIL_OTP -> {
 
                 val body = Gson().toJson(Code(code))
 
@@ -222,7 +221,7 @@ class ApiContext(
                 return false
             }
 
-            TwoFactorType.TOTP -> {
+            MfaType.TOTP -> {
 
                 val body = Gson().toJson(Code(code))
 
@@ -340,8 +339,6 @@ class ApiContext(
     // Intent is compromised of <worldId>:<InstanceId>:<Nonce>
     // NOTE: `<Nonce>` is only used for private instances.
     suspend fun getInstance(intent: String): Instance? {
-
-        Log.d("VRCAA", intent)
 
         val headers = Headers.Builder()
 

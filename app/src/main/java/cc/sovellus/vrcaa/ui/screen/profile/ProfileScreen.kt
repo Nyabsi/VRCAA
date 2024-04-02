@@ -24,9 +24,10 @@ import cc.sovellus.vrcaa.api.http.models.User
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.profile.ProfileScreenModel.ProfileState
+import cc.sovellus.vrcaa.ui.models.profile.ProfileScreenModel.ProfileState
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
+import cc.sovellus.vrcaa.ui.models.profile.ProfileScreenModel
 
 class ProfileScreen : Screen {
 
@@ -70,7 +71,7 @@ class ProfileScreen : Screen {
                     ) {
                         profile.let {
                             ProfileCard(
-                                thumbnailUrl = it.currentAvatarThumbnailImageUrl,
+                                thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarThumbnailImageUrl },
                                 displayName = it.displayName,
                                 statusDescription = it.statusDescription,
                                 trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),

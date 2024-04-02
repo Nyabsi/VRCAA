@@ -45,9 +45,10 @@ import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreenModel.WorldInfoState
+import cc.sovellus.vrcaa.ui.models.world.WorldInfoScreenModel.WorldInfoState
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
-import cc.sovellus.vrcaa.ui.dialog.GenericDialog
+import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
+import cc.sovellus.vrcaa.ui.models.world.WorldInfoScreenModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
