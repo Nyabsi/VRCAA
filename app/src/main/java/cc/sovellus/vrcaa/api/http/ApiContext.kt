@@ -125,7 +125,7 @@ class ApiContext(
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun getToken(username: String, password: String): TwoFactorType? {
 
-        val token = Base64.encode((URLEncoder.encode(username) + ":" + URLEncoder.encode(password)).toByteArray())
+        val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
 
         val headers = Headers.Builder()
 
