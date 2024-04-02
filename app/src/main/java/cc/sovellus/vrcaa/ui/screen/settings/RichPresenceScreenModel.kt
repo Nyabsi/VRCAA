@@ -6,7 +6,10 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordApi
+import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
+import cc.sovellus.vrcaa.api.discord.models.DiscordTicket
 import cc.sovellus.vrcaa.helper.discordToken
 import cc.sovellus.vrcaa.helper.richPresenceEnabled
 import cc.sovellus.vrcaa.service.PipelineService
@@ -17,17 +20,55 @@ class RichPresenceScreenModel(
 ) : ScreenModel {
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
 
-    var username = mutableStateOf("") // preferences.userCredentials.first.let { it ?: "" }
-    var password = mutableStateOf("") // preferences.userCredentials.second.let { it ?: "" }
+    var username = mutableStateOf("")
+    var password = mutableStateOf("")
     var visibility = mutableStateOf(false)
     var token = mutableStateOf(preferences.discordToken)
     var enabled = mutableStateOf(preferences.richPresenceEnabled)
+    var ticket = mutableStateOf("")
+    var code = mutableStateOf("")
+    var mfa = mutableStateOf(false)
 
     fun login() {
         screenModelScope.launch {
-            DiscordApi().login(username.value, password.value)?.let {
-                preferences.discordToken = it.token
-                token.value = it.token
+            when (val result = DiscordApi().login(username.value, password.value)) {
+                is DiscordLogin -> {
+                    preferences.discordToken = result.token
+                    token.value = result.token
+                }
+
+                is DiscordTicket -> {
+                    ticket.value = result.ticket
+                    mfa.value = true
+                }
+
+                else -> {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.discord_login_toast_wrong_credentials),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    fun mfa() {
+        screenModelScope.launch {
+            when (val result = DiscordApi().mfa(ticket.value, code.value)) {
+                is DiscordLogin -> {
+                    preferences.discordToken = result.token
+                    token.value = result.token
+                    mfa.value = false
+                }
+
+                else -> {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.discord_login_toast_wrong_code),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -48,7 +89,7 @@ class RichPresenceScreenModel(
 
         Toast.makeText(
             context,
-            "restarted service to take effect.",
+            context.getString(R.string.discord_login_restarted_service_toast),
             Toast.LENGTH_LONG
         ).show()
     }

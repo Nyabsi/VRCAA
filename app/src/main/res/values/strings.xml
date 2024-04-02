@@ -138,4 +138,19 @@
 
     <!-- API -->
     <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+
+    <!-- Discord Rich Presence -->
+    <string name="discord_login_title">Login to Discord</string>
+    <string name="discord_login_title_verify">Verify 2FA</string>
+    <string name="discord_login_label_username">Username</string>
+    <string name="discord_login_label_password">Password</string>
+    <string name="discord_login_toast_wrong_credentials">Username or password is invalid.</string>
+    <string name="discord_login_toast_wrong_code">The MFA code is wrong.</string>
+    <string name="discord_login_button_login">Login</string>
+    <string name="discord_login_button_verify">Verify</string>
+    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
+    <string name="discord_login_label_enable">Rich Presence</string>
+    <string name="discord_login_description_enable">Show your current status in discord.</string>
+    <string name="discord_login_label_logout">Logout</string>
+    <string name="discord_login_description_logout">Revoke your access token.</string>
 </resources>

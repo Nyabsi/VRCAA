@@ -117,6 +117,8 @@ class ApiContext(
             Result.UnknownMethod -> {
                 throw RuntimeException("doRequest was called with unsupported method, supported methods are GET, POST and PUT.")
             }
+
+            else -> { null }
         }
     }
 

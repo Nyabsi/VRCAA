@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.api.base
 
+import android.util.Log
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -20,6 +21,7 @@ open class BaseClient {
         data class Succeeded(val response: Response, val body: String) : Result()
         data class UnhandledResult(val response: Response) : Result()
         data object RateLimited : Result()
+        data object InvalidRequest : Result()
         data object Unauthorized : Result()
         data object InternalError : Result()
         data object UnknownMethod : Result()
@@ -30,6 +32,7 @@ open class BaseClient {
     ): Result = when (response.code) {
         200 -> Result.Succeeded(response, response.body?.string().toString())
         429 -> Result.RateLimited
+        400 -> Result.InvalidRequest
         401 -> Result.Unauthorized
         500 -> Result.InternalError
         else -> Result.UnhandledResult(response)

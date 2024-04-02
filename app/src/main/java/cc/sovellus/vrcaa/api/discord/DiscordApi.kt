@@ -4,6 +4,7 @@ import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.base.BaseClient
 import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
+import cc.sovellus.vrcaa.api.discord.models.DiscordTicket
 import com.google.gson.Gson
 import okhttp3.Headers
 
@@ -34,7 +35,7 @@ class DiscordApi : BaseClient() {
         }
     }
 
-    suspend fun login(username: String, password: String): DiscordLogin? {
+    suspend fun login(username: String, password: String): Any? {
         val headers = Headers.Builder()
         headers["User-Agent"] = userAgent
 
@@ -48,6 +49,34 @@ class DiscordApi : BaseClient() {
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, DiscordLogin::class.java)
+
+        return if (result == Result.InvalidRequest) {
+            null
+        }
+        else {
+            val ticket = Gson().fromJson(response, DiscordTicket::class.java)
+            ticket ?: Gson().fromJson(response, DiscordLogin::class.java)
+        }
+    }
+
+    suspend fun mfa(ticket: String, code: String): DiscordLogin? {
+        val headers = Headers.Builder()
+        headers["User-Agent"] = userAgent
+
+        val body = "{\"code\":\"$code\",\"ticket\":\"$ticket\",\"login_source\":null,\"gift_code_sku_id\":null}"
+
+        val result = doRequest(
+            method = "POST",
+            url = "$apiBase/auth/mfa/totp",
+            headers = headers.build(),
+            body = body
+        )
+
+        val response = handleRequest(result)
+
+        return if (result == Result.InvalidRequest)
+            null
+        else
+            Gson().fromJson(response, DiscordLogin::class.java)
     }
 }
