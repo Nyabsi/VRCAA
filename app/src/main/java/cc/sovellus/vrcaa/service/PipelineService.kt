@@ -237,7 +237,8 @@ class PipelineService : Service(), CoroutineScope {
                                 friendPictureUrl =
                                     cachedFriend.userIcon.ifEmpty { cachedFriend.currentAvatarImageUrl }
 
-                            })
+                            }
+                        )
 
                         notificationManager.pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_removed),
@@ -289,15 +290,11 @@ class PipelineService : Service(), CoroutineScope {
                                                 friendPictureUrl =
                                                     sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }
                                                         .toString()
-                                            })
-                                }
-
-                                else -> {
-                                    Log.d(
-                                        "VRCAA",
-                                        "Received unknown notificationType: ${notification.type}"
+                                            }
                                     )
                                 }
+
+                                else -> {}
                             }
                         }
                     }
