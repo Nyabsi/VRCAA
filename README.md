@@ -1,6 +1,6 @@
 # <img src="https://github.com/Nyabsi/vrcaa/assets/43046474/a90fb8bf-6017-410c-9def-93a8a43682cb" height="24" width="24"> VRChat Android Assistant
 
-> NOTE: VRCAA is still under development, you should report issues if you find them to our discord, or at [issue tracker](https://github.com/Nyabsi/VRCAA/issues)
+> NOTE: VRChat Android Assistant is still under development, you should report issues if you find them to our discord, or at [issue tracker](https://github.com/Nyabsi/VRCAA/issues)
 
 VRChat Android Assistant offers a convenient solution for managing your VRChat experience on the go. With this tool, users can efficiently handle profile customization, friend interactions, and stay informed about the latest events, all from their Android device, without relying on the VRChat game client.
 
@@ -10,7 +10,7 @@ You can join our discord [here](https://discord.gg/tJf7aD8uDr)!
 
 # Disclaimer
 
-VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRCAA does NOT store nor collect ANY data out of the scope of YOUR device. The author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
+VRChat Android Assistant is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRChat Android Assistant does NOT store nor collect ANY data out of the scope of YOUR device. The author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
 
 VRChat Android Assistant is EXTERNAL modification and does not MODIFY or MANIPULATE the game, it is not against the ToS of VRChat, you can read more about that at [here](https://hello.vrchat.com/legal).
 
@@ -20,7 +20,7 @@ VRChat Android Assistant is EXTERNAL modification and does not MODIFY or MANIPUL
 
 # Translations
 
-Are you multilangual? help translating VRCAA for your language, at [Crowdin](https://crowdin.com/project/vrcaa)!
+Are you multilangual? help translating VRChat Android Assistant for your language, at [Crowdin](https://crowdin.com/project/vrcaa)!
 
 # Acknowledgements
 
