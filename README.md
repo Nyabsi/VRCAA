@@ -12,6 +12,8 @@ You can join our discord [here](https://discord.gg/tJf7aD8uDr)!
 
 VRCAA is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRCAA does NOT store nor collect ANY data out of the scope of YOUR device. The author of this application is not liable for any damage caused by the application, use the application AT YOUR OWN RISK.
 
+VRChat Android Assistant is EXTERNAL modification and does not MODIFY or MANIPULATE the game, it is not against the ToS of VRChat, you can read more about that at [here](https://hello.vrchat.com/legal).
+
 # Showcase
 
 > TBA
