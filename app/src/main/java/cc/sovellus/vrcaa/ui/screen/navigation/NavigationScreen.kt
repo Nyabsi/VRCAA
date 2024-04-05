@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,6 +51,7 @@ import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.PicturesTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
+import cc.sovellus.vrcaa.ui.tabs.SettingsTab
 
 class NavigationScreen : Screen {
 
@@ -89,86 +91,90 @@ class NavigationScreen : Screen {
         ) {
             Scaffold(
                 topBar = {
-                    SearchBar(
-                        query = model.searchText.value,
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.main_search_placeholder),
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        },
-                        onQueryChange = { model.searchText.value = it; },
-                        onSearch = {
-                            model.existSearchMode()
-                            navigator.push(SearchResultScreen(model.searchText.value))
-                        },
-                        active = model.isSearchActive.value,
-                        onActiveChange = {
-                            if (it) {
-                                model.enterSearchMode()
-                            } else {
-                                model.existSearchMode()
-                            }
-                        },
-                        tonalElevation = model.tonalElevation.value,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        trailingIcon = {
-                            if (model.isSearchActive.value) {
-                                IconButton(onClick = { model.clearSearchText() }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Close,
-                                        contentDescription = stringResource(R.string.preview_image_description)
-                                    )
-                                }
-                            } else {
-                                IconButton(onClick = { navigator.push(SettingsScreen()) }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Settings,
-                                        contentDescription = stringResource(R.string.preview_image_description)
-                                    )
-                                }
-                            }
-                        },
-                        leadingIcon = {
-                            if (model.isSearchActive.value) {
-                                IconButton(onClick = { model.existSearchMode() }) {
-                                    Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = stringResource(R.string.preview_image_description)
-                                    )
-                                }
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Filled.Search,
-                                    contentDescription = stringResource(R.string.preview_image_description)
+                    /* blacklist Pictures and Settings tabs. */
+                    if (it.current.options.index.toInt() != 4 &&
+                        it.current.options.index.toInt() != 5) {
+                        SearchBar(
+                            query = model.searchText.value,
+                            placeholder = {
+                                Text(
+                                    text = stringResource(R.string.main_search_placeholder),
+                                    overflow = TextOverflow.Ellipsis
                                 )
-                            }
-                        }
-                    ) {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            items(model.searchHistory.size) {
-                                val item = model.searchHistory.reversed()[it]
-                                ListItem(
-                                    leadingContent = {
+                            },
+                            onQueryChange = { model.searchText.value = it; },
+                            onSearch = {
+                                model.existSearchMode()
+                                navigator.push(SearchResultScreen(model.searchText.value))
+                            },
+                            active = model.isSearchActive.value,
+                            onActiveChange = {
+                                if (it) {
+                                    model.enterSearchMode()
+                                } else {
+                                    model.existSearchMode()
+                                }
+                            },
+                            tonalElevation = model.tonalElevation.value,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            trailingIcon = {
+                                if (model.isSearchActive.value) {
+                                    IconButton(onClick = { model.clearSearchText() }) {
                                         Icon(
-                                            imageVector = Icons.Filled.History,
+                                            imageVector = Icons.Filled.Close,
                                             contentDescription = stringResource(R.string.preview_image_description)
                                         )
-                                    },
-                                    headlineContent = {
-                                        Text(text = item)
-                                    },
-                                    modifier = Modifier.clickable(
-                                        onClick = {
-                                            model.existSearchMode()
-                                            navigator.push(SearchResultScreen(item))
-                                        }
+                                    }
+                                } else {
+                                    IconButton(onClick = { }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.MoreVert,
+                                            contentDescription = stringResource(R.string.preview_image_description)
+                                        )
+                                    }
+                                }
+                            },
+                            leadingIcon = {
+                                if (model.isSearchActive.value) {
+                                    IconButton(onClick = { model.existSearchMode() }) {
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                            contentDescription = stringResource(R.string.preview_image_description)
+                                        )
+                                    }
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Filled.Search,
+                                        contentDescription = stringResource(R.string.preview_image_description)
                                     )
-                                )
+                                }
+                            }
+                        ) {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                items(model.searchHistory.size) {
+                                    val item = model.searchHistory.reversed()[it]
+                                    ListItem(
+                                        leadingContent = {
+                                            Icon(
+                                                imageVector = Icons.Filled.History,
+                                                contentDescription = stringResource(R.string.preview_image_description)
+                                            )
+                                        },
+                                        headlineContent = {
+                                            Text(text = item)
+                                        },
+                                        modifier = Modifier.clickable(
+                                            onClick = {
+                                                model.existSearchMode()
+                                                navigator.push(SearchResultScreen(item))
+                                            }
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
@@ -192,6 +198,7 @@ class NavigationScreen : Screen {
                         NavigationBarItem(FeedTab)
                         if (BuildConfig.FLAVOR == "quest") { NavigationBarItem(PicturesTab) }
                         NavigationBarItem(ProfileTab)
+                        NavigationBarItem(SettingsTab)
                     }
                 }
             )

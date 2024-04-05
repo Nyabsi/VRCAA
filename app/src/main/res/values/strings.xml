@@ -69,6 +69,7 @@
     <string name="tabs_label_home">Home</string>
     <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_profile">Profile</string>
+    <string name="tabs_label_settings">Settings</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
 
