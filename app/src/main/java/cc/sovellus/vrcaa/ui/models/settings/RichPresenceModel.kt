@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.http.models.DiscordApi
+import cc.sovellus.vrcaa.api.discord.http.DiscordApi
 import cc.sovellus.vrcaa.api.discord.http.models.DiscordLogin
 import cc.sovellus.vrcaa.api.discord.http.models.DiscordTicket
 import cc.sovellus.vrcaa.helper.discordToken

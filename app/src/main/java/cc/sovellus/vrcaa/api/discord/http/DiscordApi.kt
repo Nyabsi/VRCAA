@@ -1,8 +1,10 @@
-package cc.sovellus.vrcaa.api.discord.http.models
+package cc.sovellus.vrcaa.api.discord.http
 
 import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.base.BaseClient
+import cc.sovellus.vrcaa.api.discord.http.models.DiscordLogin
+import cc.sovellus.vrcaa.api.discord.http.models.DiscordTicket
 import com.google.gson.Gson
 import okhttp3.Headers
 
