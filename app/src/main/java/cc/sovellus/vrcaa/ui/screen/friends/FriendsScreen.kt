@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonOff
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Web
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -78,7 +79,7 @@ class FriendsScreen : Screen {
         val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
 
         val options = stringArrayResource(R.array.friend_selection_options)
-        val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.PersonOff)
+        val icons = listOf(Icons.Filled.Star, Icons.Filled.Web, Icons.Filled.Person, Icons.Filled.PersonOff)
 
         Box(
             Modifier
@@ -123,8 +124,9 @@ class FriendsScreen : Screen {
 
                 when (model.currentIndex.intValue) {
                     0 -> ShowFriendsFavorite(favoriteFriends)
-                    1 -> ShowFriends(model, true)
-                    2 -> ShowFriends(model, false)
+                    1 -> ShowFriendsOnWebsite(model)
+                    2 -> ShowFriends(model)
+                    3 -> ShowFriendsOffline(model)
                 }
             }
 
@@ -155,8 +157,7 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSortedStatus =
-                    friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
                 val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
 
                 items(
@@ -176,9 +177,8 @@ class FriendsScreen : Screen {
     }
 
     @Composable
-    fun ShowFriends(
-        model: FriendsScreenModel,
-        online: Boolean
+    fun ShowFriendsOnWebsite(
+        model: FriendsScreenModel
     ) {
         val friends = model.friends.collectAsState()
 
@@ -198,28 +198,99 @@ class FriendsScreen : Screen {
                     .padding(1.dp)
             ) {
                 val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsFiltered = sortedFriends.filter { it.location == "offline" && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
 
                 items(
-                    sortedFriends.count(),
+                    friendsFiltered.count(),
                     key = { UUID.randomUUID() }
                 ) {
                     val navigator = LocalNavigator.currentOrThrow
-                    val friend = sortedFriends[it]
+                    val friend = friendsFiltered[it]
 
-                    if (online && (StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline))
-                    {
-                        FriendItem(
-                            friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                        )
-                    } else {
-                        if (!online && (StatusHelper.getStatusFromString(friend.status) == StatusHelper.Status.Offline)) {
-                            FriendItem(
-                                friend = friend,
-                                callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                            )
-                        }
-                    }
+                    FriendItem(
+                        friend = friend,
+                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun ShowFriends(
+        model: FriendsScreenModel
+    ) {
+        val friends = model.friends.collectAsState()
+
+        if (friends.value.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
+        } else {
+            LazyColumn(
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(1.dp)
+            ) {
+                val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsFiltered = sortedFriends.filter { it.location != "offline" &&  StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+
+                items(
+                    friendsFiltered.count(),
+                    key = { UUID.randomUUID() }
+                ) {
+                    val navigator = LocalNavigator.currentOrThrow
+                    val friend = friendsFiltered[it]
+
+                    FriendItem(
+                        friend = friend,
+                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun ShowFriendsOffline(
+        model: FriendsScreenModel
+    ) {
+        val friends = model.friends.collectAsState()
+
+        if (friends.value.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
+        } else {
+            LazyColumn(
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(1.dp)
+            ) {
+                val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                val friendsFiltered = sortedFriends.filter { it.location == "offline" &&  StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline }
+
+                items(
+                    friendsFiltered.count(),
+                    key = { UUID.randomUUID() }
+                ) {
+                    val navigator = LocalNavigator.currentOrThrow
+                    val friend = friendsFiltered[it]
+
+                    FriendItem(
+                        friend = friend,
+                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                    )
                 }
             }
         }
