@@ -126,13 +126,13 @@
     <string name="discord_login_title_verify">Verify 2FA</string>
     <string name="discord_login_label_username">Username</string>
     <string name="discord_login_label_password">Password</string>
-    <string name="discord_login_toast_wrong_credentials">Username or password is invalid.</string>
-    <string name="discord_login_toast_wrong_code">The MFA code is wrong.</string>
-    <string name="discord_login_button_login">Login</string>
-    <string name="discord_login_button_verify">Verify</string>
+    <string name="discord_login_toast_wrong_credentials">사용자 이름 또는 비밀번호가 올바르지 않아요.</string>
+    <string name="discord_login_toast_wrong_code">추가 인증 코드가 올바르지 않아요.</string>
+    <string name="discord_login_button_login">로그인</string>
+    <string name="discord_login_button_verify">인증</string>
     <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable">Rich Presence</string>
+    <string name="discord_login_label_enable">활동 상태</string>
     <string name="discord_login_description_enable">Show your current status in discord.</string>
-    <string name="discord_login_label_logout">Logout</string>
+    <string name="discord_login_label_logout">로그아웃</string>
     <string name="discord_login_description_logout">Revoke your access token.</string>
 </resources>
