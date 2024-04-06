@@ -2,19 +2,22 @@ package cc.sovellus.vrcaa.ui.models.settings
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
 import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.helper.enableUpdates
 import cc.sovellus.vrcaa.helper.invalidCookie
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
 class SettingsScreenModel(
     private val context: Context
 ) : ScreenModel {
-    private val api = VRChatApi(context)
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
+
+    val enableUpdates = mutableStateOf(preferences.enableUpdates)
 
     fun doLogout() {
         screenModelScope.launch {
@@ -26,5 +29,10 @@ class SettingsScreenModel(
             preferences.cookies = ""
             preferences.invalidCookie = true
         }
+    }
+
+    fun toggleUpdate(state: Boolean) {
+        enableUpdates.value = state
+        preferences.enableUpdates = state
     }
 }
