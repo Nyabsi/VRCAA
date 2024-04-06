@@ -28,6 +28,16 @@ class PipelineWebSocket(
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
     private var shouldReconnect: Boolean = false
 
+    private val restartWorker: Runnable = Runnable {
+        Thread.sleep(RESTART_INTERVAL)
+
+        disconnect()
+        Thread.sleep(100)
+        connect()
+    }
+
+    private var restartThread: Thread = Thread(restartWorker)
+
     interface SocketListener {
         fun onMessage(message: Any?)
     }
@@ -146,15 +156,21 @@ class PipelineWebSocket(
             .build()
 
         socket = client.newWebSocket(request, listener)
+        restartThread.start()
     }
 
     fun disconnect() {
         shouldReconnect = false
-        socket.close(1000, "bye")
+        socket.close(1000, "")
         client.dispatcher.executorService.shutdown()
+        restartThread.interrupt()
     }
 
     fun setListener(listener: SocketListener) {
         socketListener = listener
+    }
+
+    companion object {
+        private const val RESTART_INTERVAL: Long = 1800000
     }
 }
