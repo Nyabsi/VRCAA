@@ -235,7 +235,7 @@ class SearchResultScreen(
         if (worlds == null) {
             Toast.makeText(
                 context,
-                "Failed to fetch worlds due to API error, try again.",
+                stringResource(R.string.search_failed_to_fetch_worlds_message),
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -281,7 +281,7 @@ class SearchResultScreen(
         if (users == null) {
             Toast.makeText(
                 context,
-                "Failed to fetch users due to API error, try again.",
+                stringResource(R.string.search_failed_to_fetch_users_message),
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -326,7 +326,7 @@ class SearchResultScreen(
         if (avatars == null) {
             Toast.makeText(
                 context,
-                "Failed to fetch avatars due to API error, try again.",
+                stringResource(R.string.search_failed_to_fetch_avatars_message),
                 Toast.LENGTH_SHORT
             ).show()
         } else {

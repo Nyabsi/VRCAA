@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -86,7 +87,7 @@ class WorldInfoScreen(
         if (world == null) {
             Toast.makeText(
                 context,
-                "World is private, or it doesn't exist.",
+                stringResource(R.string.world_toast_not_found),
                 Toast.LENGTH_SHORT
             ).show()
             navigator.pop()
@@ -108,7 +109,7 @@ class WorldInfoScreen(
                 },
                 content = {
 
-                    val options =  arrayOf("Info", "Instances") // stringArrayResource(R.array.search_selection_options)
+                    val options =  stringArrayResource(R.array.world_selection_options)
                     val icons = listOf(Icons.Filled.Cabin, Icons.Filled.LocationOn)
 
                     Column(
@@ -173,7 +174,7 @@ class WorldInfoScreen(
                     WorldCard(
                         url = it.imageUrl,
                         name = it.name,
-                        author = "By ${it.authorName}"
+                        author = stringResource(R.string.world_author_label).format(it.authorName)
                     )
                 }
                 Column(
@@ -221,8 +222,8 @@ class WorldInfoScreen(
                     dialogState.value = false
                     model.selfInvite()
                 },
-                title = "Are you sure?",
-                description = "You're about to send invite to yourself onto this instance, do you really want to do that?"
+                title = stringResource(R.string.world_instance_invite_dialog_title),
+                description = stringResource(R.string.world_instance_invite_dialog_description)
             )
         }
 
@@ -233,7 +234,7 @@ class WorldInfoScreen(
         ) {
             if (instances.isEmpty()) {
                 item {
-                    Text(text = "No public instances")
+                    Text(stringResource(R.string.world_instance_no_public_instances_message))
                 }
             } else {
                 items(instances.size) {

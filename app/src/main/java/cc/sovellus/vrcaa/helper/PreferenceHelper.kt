@@ -47,3 +47,23 @@ internal var SharedPreferences.discordToken: String
 internal var SharedPreferences.richPresenceEnabled: Boolean
     get() = getBoolean("richPresenceEnabled", false)
     set(it) = edit { putBoolean("richPresenceEnabled", it) }
+
+internal var SharedPreferences.enableUpdates: Boolean
+    get() = getBoolean("updatesEnabled", true)
+    set(it) = edit { putBoolean("updatesEnabled", it) }
+
+internal var SharedPreferences.searchFeaturedWorlds: Boolean
+    get() = getBoolean("searchFeaturedWorlds", false)
+    set(it) = edit { putBoolean("searchFeaturedWorlds", it) }
+
+internal var SharedPreferences.sortWorlds: String
+    get() = getString("sortWorlds", "relevance")!!
+    set(it) = edit { putString("sortWorlds", it) }
+
+internal var SharedPreferences.worldsAmount: Int
+    get() = getInt("worldsAmount", 50)
+    set(it) = edit { putInt("worldsAmount", it) }
+
+internal var SharedPreferences.usersAmount: Int
+    get() = getInt("usersAmount", 50)
+    set(it) = edit { putInt("usersAmount", it) }

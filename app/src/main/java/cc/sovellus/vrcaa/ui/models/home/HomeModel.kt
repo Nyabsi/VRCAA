@@ -5,9 +5,11 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friends
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeScreenModel(
@@ -59,11 +61,12 @@ class HomeScreenModel(
 
             isRefreshing.value = true
             fetchContent()
+            delay(500)
             isRefreshing.value = false
 
             Toast.makeText(
                 context,
-                "Refreshed at glance view.",
+                context.getString(R.string.home_toast_updated_info),
                 Toast.LENGTH_SHORT
             ).show()
         }

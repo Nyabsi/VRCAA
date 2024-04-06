@@ -237,7 +237,7 @@ class NavigationScreen : Screen {
                                         OutlinedButton(onClick = {
                                             model.resetSettings()
                                         }) {
-                                            Text("Reset")
+                                            Text(stringResource(R.string.search_filter_button_reset))
                                         }
                                     }, trailingContent = {
                                         Button(onClick = {
@@ -250,13 +250,13 @@ class NavigationScreen : Screen {
                                                 }
                                             }
                                         }) {
-                                            Text("Apply")
+                                            Text(stringResource(R.string.search_filter_button_apply))
                                         }
                                     }, headlineContent = { })
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Worlds") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_worlds)) },
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.Cabin,
@@ -271,7 +271,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Featured") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_featured)) },
                                         trailingContent = {
                                             Switch(
                                                 checked = model.featuredWorlds.value,
@@ -292,7 +292,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Sort By") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_sort_by)) },
                                         trailingContent = {
                                             val options = listOf("popularity", "heat", "trust", "shuffle", "random", "favorites", " reportScore", "reportCount", "publicationDate", "labsPublicationDate", "created", "updated", "order", "relevance", "magic", "name")
                                             ComboInput(options = options, selection = model.sortWorlds)
@@ -301,7 +301,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Amount") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_count)) },
                                         trailingContent = {
                                             OutlinedTextField(
                                                 value = model.worldsAmount.intValue.toString(),
@@ -316,7 +316,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Users") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_users)) },
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.People,
@@ -331,7 +331,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Amount") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_users_count)) },
                                         trailingContent = {
                                             OutlinedTextField(
                                                 value = model.usersAmount.intValue.toString(),
@@ -346,7 +346,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Groups") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_groups)) },
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.Groups,
@@ -361,7 +361,7 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text("Not implemented.") },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_groups_not_implemented_temp)) },
                                     )
                                 }
                             }

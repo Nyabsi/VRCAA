@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instances
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
@@ -45,7 +46,7 @@ class WorldInfoScreenModel(
                         if (it == null) {
                             Toast.makeText(
                                 context,
-                                "Failed to fetch instance due to API error, try again.",
+                                context.getString(R.string.world_instance_failed_to_fetch_instance_message),
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {

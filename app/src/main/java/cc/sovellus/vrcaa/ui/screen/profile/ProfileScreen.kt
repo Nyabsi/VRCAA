@@ -57,7 +57,7 @@ class ProfileScreen : Screen {
         if (profile == null) {
             Toast.makeText(
                 context,
-                "User doesn't exist.",
+                stringResource(R.string.profile_user_not_found_message),
                 Toast.LENGTH_SHORT
             ).show()
             navigator.pop()

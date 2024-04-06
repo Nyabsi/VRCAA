@@ -18,10 +18,10 @@ fun InstanceCardWorld(intent: String, instance: Instance, onClick: () -> Unit) {
     val result = LocationHelper.parseLocationInfo(intent)
     ListItem(
         headlineContent = {
-            Text("Capacity: ${instance.nUsers}/${instance.world.capacity}, Can Join: ${instance.hasCapacityForYou}")
+            Text("Capacity: ${instance.nUsers}/${instance.world.capacity}, ${result.instanceType}")
         },
         overlineContent = {
-            Text("${instance.world.name} #${instance.name} (${result.instanceType})")
+            Text("${instance.world.name} #${instance.name}")
         },
         trailingContent = {
             if (result.regionId.isNotEmpty()) {

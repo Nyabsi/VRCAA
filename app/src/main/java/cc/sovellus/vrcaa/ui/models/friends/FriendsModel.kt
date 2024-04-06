@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
@@ -90,7 +91,7 @@ class FriendsScreenModel(
 
             Toast.makeText(
                 context,
-                "Refreshed favorite friends list.",
+                context.getString(R.string.friend_refreshed_favorites_message),
                 Toast.LENGTH_SHORT
             ).show()
         }

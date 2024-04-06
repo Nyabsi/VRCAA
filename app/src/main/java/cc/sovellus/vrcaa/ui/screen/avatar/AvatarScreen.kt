@@ -78,7 +78,7 @@ class AvatarScreen(
         if (avatar == null) {
             Toast.makeText(
                 context,
-                "The avatar is either private or invalid!",
+                stringResource(R.string.avatar_toast_avatar_not_found_message),
                 Toast.LENGTH_SHORT
             ).show()
             navigator.pop()

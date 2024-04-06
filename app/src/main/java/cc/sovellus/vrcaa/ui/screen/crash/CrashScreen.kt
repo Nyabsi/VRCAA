@@ -21,7 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import cc.sovellus.vrcaa.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +37,7 @@ fun CrashScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("The application crashed :<") }
+                title = { Text(stringResource(R.string.crash_title_text)) }
             )
         },
         content = { padding ->
@@ -67,14 +69,14 @@ fun CrashScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = { onRestart() }) {
-                    Text(text = "Restart")
+                    Text(text = stringResource(R.string.crash_button_restart_text))
                 }
                 Button(onClick = {
                     val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
                     val clip = ClipData.newPlainText("Crash Log", exception.toString())
                     clipboard?.setPrimaryClip(clip)
                 }) {
-                    Text(text = "Copy Log")
+                    Text(text = stringResource(R.string.crash_button_copy_log_text))
                 }
                 Button(onClick = {
                     val intent = Intent(
@@ -83,7 +85,7 @@ fun CrashScreen(
                     )
                     context.startActivity(intent)
                 }) {
-                    Text(text = "Report Issue")
+                    Text(text = stringResource(R.string.crash_button_report_text))
                 }
             }
         },

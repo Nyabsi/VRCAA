@@ -28,7 +28,7 @@ fun GenericDialog(
                     onConfirmation()
                 }
             ) {
-                Text("OK")
+                Text("Ok")
             }
         },
         dismissButton = {

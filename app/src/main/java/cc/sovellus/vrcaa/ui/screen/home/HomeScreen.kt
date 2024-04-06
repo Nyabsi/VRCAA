@@ -93,7 +93,7 @@ class HomeScreen : Screen {
                     if (friends == null) {
                         Toast.makeText(
                             context,
-                            "Failed to fetch friends due to API error, try again.",
+                            stringResource(R.string.home_failed_to_fetch_friends_message),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -121,7 +121,7 @@ class HomeScreen : Screen {
                     if (lastVisited == null) {
                         Toast.makeText(
                             context,
-                            "Failed to fetch worlds due to API error, try again.",
+                            stringResource(R.string.home_failed_to_fetch_worlds_message),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -149,7 +149,7 @@ class HomeScreen : Screen {
                     if (offlineFriends == null) {
                         Toast.makeText(
                             context,
-                            "Failed to fetch friends due to API error, try again.",
+                            stringResource(R.string.home_failed_to_fetch_friends_message),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -177,7 +177,7 @@ class HomeScreen : Screen {
                     if (featuredWorlds == null) {
                         Toast.makeText(
                             context,
-                            "Failed to fetch friends due to API error, try again.",
+                            stringResource(R.string.home_failed_to_fetch_friends_message),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
