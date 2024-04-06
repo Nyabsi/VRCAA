@@ -1,12 +1,14 @@
 package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -14,19 +16,45 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Cabin
+import androidx.compose.material.icons.outlined.Groups
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.People
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Update
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -43,8 +71,10 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.components.dialog.UpdatedDialog
+import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.models.navigation.NavigationScreenModel
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
+import cc.sovellus.vrcaa.ui.screen.settings.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
@@ -52,6 +82,7 @@ import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.PicturesTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 import cc.sovellus.vrcaa.ui.tabs.SettingsTab
+import kotlinx.coroutines.launch
 
 class NavigationScreen : Screen {
 
@@ -64,7 +95,7 @@ class NavigationScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel() }
+        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
 
         if (model.hasUpdate.value) {
             UpdatedDialog(
@@ -75,8 +106,8 @@ class NavigationScreen : Screen {
                     model.hasUpdate.value = false
                     model.update(context)
                 },
-                title = "New update available!",
-                description = "Do you wish to update the application?"
+                title = stringResource(R.string.update_dialog_title),
+                description = stringResource(R.string.update_dialog_description)
             )
         }
 
@@ -89,6 +120,10 @@ class NavigationScreen : Screen {
                 )
             }
         ) {
+            val sheetState = rememberModalBottomSheetState()
+            var showBottomSheet by remember { mutableStateOf(false) }
+            val scope = rememberCoroutineScope()
+
             Scaffold(
                 topBar = {
                     /* blacklist Pictures and Settings tabs. */
@@ -128,7 +163,7 @@ class NavigationScreen : Screen {
                                         )
                                     }
                                 } else {
-                                    IconButton(onClick = { }) {
+                                    IconButton(onClick = { showBottomSheet = true }) {
                                         Icon(
                                             imageVector = Icons.Filled.MoreVert,
                                             contentDescription = stringResource(R.string.preview_image_description)
@@ -179,14 +214,158 @@ class NavigationScreen : Screen {
                         }
                     }
                 },
-                content = {
+                content = { padding ->
                     Column(
                         modifier = Modifier.padding(
-                            top = it.calculateTopPadding(),
-                            bottom = it.calculateBottomPadding()
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
                         )
                     ) {
                         CurrentTab()
+                    }
+
+                    if (showBottomSheet) {
+                        ModalBottomSheet(
+                            onDismissRequest = {
+                                showBottomSheet = false
+                            },
+                            sheetState = sheetState
+                        ) {
+                            LazyColumn {
+                                item {
+                                    ListItem(leadingContent = {
+                                        OutlinedButton(onClick = {
+                                            model.resetSettings()
+                                        }) {
+                                            Text("Reset")
+                                        }
+                                    }, trailingContent = {
+                                        Button(onClick = {
+                                            scope.launch {
+                                                model.applySettings()
+                                                sheetState.hide()
+                                            }.invokeOnCompletion {
+                                                if (!sheetState.isVisible) {
+                                                    showBottomSheet = false
+                                                }
+                                            }
+                                        }) {
+                                            Text("Apply")
+                                        }
+                                    }, headlineContent = { })
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Worlds") },
+                                        leadingContent = {
+                                            Icon(
+                                                imageVector = Icons.Outlined.Cabin,
+                                                contentDescription = "Localized description"
+                                            )
+                                        }
+                                    )
+                                    HorizontalDivider(
+                                        color = Color.Gray,
+                                        thickness = 0.5.dp
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Featured") },
+                                        trailingContent = {
+                                            Switch(
+                                                checked = model.featuredWorlds.value,
+                                                onCheckedChange = { state ->
+                                                    run {
+                                                        model.featuredWorlds.value = state
+                                                    }
+                                                },
+                                                colors = SwitchDefaults.colors(
+                                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                                    uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                                                )
+                                            )
+                                        }
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Sort By") },
+                                        trailingContent = {
+                                            val options = listOf("popularity", "heat", "trust", "shuffle", "random", "favorites", " reportScore", "reportCount", "publicationDate", "labsPublicationDate", "created", "updated", "order", "relevance", "magic", "name")
+                                            ComboInput(options = options, selection = model.sortWorlds)
+                                        }
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Amount") },
+                                        trailingContent = {
+                                            OutlinedTextField(
+                                                value = model.worldsAmount.intValue.toString(),
+                                                onValueChange = {
+                                                    model.worldsAmount.intValue = it.toIntOrNull() ?: 0
+                                                },
+                                                singleLine = true,
+                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                                            )
+                                        }
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Users") },
+                                        leadingContent = {
+                                            Icon(
+                                                imageVector = Icons.Outlined.People,
+                                                contentDescription = "Localized description"
+                                            )
+                                        }
+                                    )
+                                    HorizontalDivider(
+                                        color = Color.Gray,
+                                        thickness = 0.5.dp
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Amount") },
+                                        trailingContent = {
+                                            OutlinedTextField(
+                                                value = model.usersAmount.intValue.toString(),
+                                                onValueChange = {
+                                                    model.worldsAmount.intValue = it.toIntOrNull() ?: model.worldsAmount.intValue
+                                                },
+                                                singleLine = true,
+                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                                            )
+                                        }
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Groups") },
+                                        leadingContent = {
+                                            Icon(
+                                                imageVector = Icons.Outlined.Groups,
+                                                contentDescription = "Localized description"
+                                            )
+                                        }
+                                    )
+                                    HorizontalDivider(
+                                        color = Color.Gray,
+                                        thickness = 0.5.dp
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text("Not implemented.") },
+                                    )
+                                }
+                            }
+                        }
                     }
                 },
                 bottomBar = {
