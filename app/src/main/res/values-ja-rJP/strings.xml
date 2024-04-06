@@ -3,62 +3,94 @@
     <!-- Universal Strings -->
     <string name="result_not_found">釣れた魚が居ないのでボウズのようです。</string>
     <string name="legal_disclaimer">"VRCAAはVRChat社ならびに関連会社によって承認されておりません。"</string>
-    <!-- FriendsScreen -->
+    <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>お気に入り</item>
-        <item>オンライン</item>
-        <item>オフライン</item>
+        <item>Website</item>
+        <item>Online</item>
+        <item>Offline</item>
     </string-array>
-    <!-- HomeScreen -->
+    <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
+    <!-- Home -->
     <string name="home_active_friends">アクティブ</string>
     <string name="home_recently_visited">最近訪れたワールド</string>
     <string name="home_featured_avatars">注目のアバター</string>
     <string name="home_offline_friends">オフライン</string>
     <string name="home_featured_worlds">注目のワールド</string>
-    <!-- LoginScreen -->
+    <string name="home_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
+    <string name="home_failed_to_fetch_friends_message">Failed to fetch friends, try again.</string>
+    <string name="home_toast_updated_info">Refreshed friends and worlds.</string>
+    <!-- Login -->
     <string name="login_text">VRC Android Assistantへのログイン</string>
     <string name="login_label_username">ユーザー名 or メールアドレス</string>
     <string name="login_label_password">パスワード</string>
     <string name="login_button_text">ログイン</string>
     <string name="login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
     <string name="login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
-    <!-- TwoAuthScreen -->
+    <!-- Two Auth -->
     <string name="auth_text_email">メールで送信されたコードを入力して下さい。</string>
     <string name="auth_text_app">2段階認証アプリに表示されているコードを入力して下さい。</string>
     <string name="auth_label_code">認証コード</string>
     <string name="auth_button_text">認証</string>
-    <!-- MainScreen -->
+    <!-- Main -->
     <string name="main_search_placeholder">&gt;ワールド・ユーザー・アバターの検索</string>
-    <!-- Placeholder Strings -->
-    <string name="not_implemented_title">準備中</string>
-    <string name="not_implemented_text">このページは準備中です。後日ご確認下さい。</string>
-    <!-- Profile Strings -->
+    <!-- Profile -->
     <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">プロフィール</string>
     <string name="profile_label_languages">言語</string>
     <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
     <string name="profile_text_no_languages">言語の記載が有りません。</string>
-    <!-- Search Strings -->
+    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
+    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
+    <!-- Search -->
     <string name="search_text_result">検索結果：</string>
+    <string name="search_filter_category_worlds">Worlds</string>
+    <string name="search_filter_category_worlds_featured">Featured</string>
+    <string name="search_filter_category_worlds_sort_by">Sort By</string>
+    <string name="search_filter_category_worlds_count">Count</string>
+    <string name="search_filter_category_users">Users</string>
+    <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_groups">Groups</string>
+    <string name="search_filter_category_groups_not_implemented_temp">Not implemented.</string>
+    <string name="search_filter_button_reset">Reset</string>
+    <string name="search_filter_button_apply">Apply</string>
     <string-array name="search_selection_options">
         <item>ワールド</item>
         <item>ユーザー</item>
         <item>アバター</item>
     </string-array>
+    <string name="search_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
+    <string name="search_failed_to_fetch_users_message">Failed to fetch users, try again.</string>
+    <string name="search_failed_to_fetch_avatars_message">Failed to fetch avatars, try again.</string>
     <!-- Settings -->
-    <string name="license_title">オープンソースライセンス</string>
-    <string name="logout_button_text">ログアウト</string>
+    <string name="settings_item_check_updates">Check for updates</string>
+    <string name="settings_item_about">About</string>
+    <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
+    <string name="settings_item_logout">Logout</string>
     <!-- Worlds -->
     <string name="world_label_description">情報</string>
     <string name="world_label_tags">タグ</string>
     <string name="world_text_no_description">情報の記載が有りません。</string>
     <string name="world_text_no_tags">タグの記載が有りません。</string>
+    <string name="world_title_created_at">作成日時</string>
+    <string name="world_title_updated_at">最終更新日時</string>
+    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string-array name="world_selection_options">
+        <item>Info</item>
+        <item>Instances</item>
+    </string-array>
+    <string name="world_author_label">By %1$s</string>
+    <string name="world_instance_invite_dialog_title">Are you sure?</string>
+    <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
+    <string name="world_instance_no_public_instances_message">No public instances</string>
+    <string name="world_instance_failed_to_fetch_instance_message">Failed to fetch instance, try again.</string>
+    <!-- Tabs -->
     <string name="tabs_label_friends">フレンド</string>
     <string name="tabs_label_home">ホーム</string>
     <string name="tabs_label_feed">フィード</string>
     <string name="tabs_label_profile">プロフィール</string>
-    <string name="world_title_created_at">作成日時</string>
-    <string name="world_title_updated_at">最終更新日時</string>
+    <string name="tabs_label_pictures">Pictures</string>
+    <string name="tabs_label_settings">Settings</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
     <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
@@ -91,6 +123,7 @@
     <string name="avatar_title_content_labels">コンテンツラベル</string>
     <string name="avatar_text_author">By %1$s</string>
     <string name="avatar_text_content_labels_not_found">このアバターにコンテンツラベルの登録は有りません。</string>
+    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid!</string>
     <!-- Feed -->
     <string name="feed_online_label">オンライン</string>
     <string name="feed_online_text">さんがオンラインになりました。</string>
@@ -115,9 +148,34 @@
     <string name="about_page_open_source_licenses_description">VRCAAが利用しているライブラリを確認する。</string>
     <string name="about_page_translate_title">飜訳への協力</string>
     <string name="about_page_translate_description">VRCAAの飜訳への協力はこちらから。</string>
-    <string name="about_page_battery_optimizations_title">バッテリーの最適化</string>
-    <string name="about_page_battery_optimizations_description">一部の機種において、この機能の設定が必要です。</string>
+    <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
+    <string name="about_page_battery_optimizations_description">Only use if this if you have to.</string>
     <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
+    <string name="license_title">オープンソースライセンス</string>
     <!-- API -->
     <string name="api_session_has_expired_text">セッションが切れました、再ログインしてください。</string>
+    <string name="api_avatar_select_failed">"Failed to select avatar."</string>
+    <!-- Discord Rich Presence -->
+    <string name="discord_login_title">Login to Discord</string>
+    <string name="discord_login_title_verify">Verify 2FA</string>
+    <string name="discord_login_label_username">Username</string>
+    <string name="discord_login_label_password">Password</string>
+    <string name="discord_login_toast_wrong_credentials">Username or password is invalid.</string>
+    <string name="discord_login_toast_wrong_code">The MFA code is wrong.</string>
+    <string name="discord_login_button_login">Login</string>
+    <string name="discord_login_button_verify">Verify</string>
+    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
+    <string name="discord_login_label_enable">Rich Presence</string>
+    <string name="discord_login_description_enable">Show your current status in discord.</string>
+    <string name="discord_login_label_logout">Logout</string>
+    <string name="discord_login_description_logout">Revoke your access token.</string>
+    <!-- Auto Updater (Nightly) -->
+    <string name="update_dialog_title">New update available!</string>
+    <string name="update_dialog_description">Do you wish to update the application?</string>
+    <string name="update_toast_failed_update">Failed to automatically download update…</string>
+    <!-- Crash -->
+    <string name="crash_title_text">The application crashed :(</string>
+    <string name="crash_button_restart_text">Restart</string>
+    <string name="crash_button_copy_log_text">Copy Log</string>
+    <string name="crash_button_report_text">Report Issue</string>
 </resources>
