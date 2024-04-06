@@ -33,7 +33,7 @@
     <string name="not_implemented_title">Not Implemented</string>
     <string name="not_implemented_text">This page is not implemented yet, come back later!</string>
     <!-- Profile Strings -->
-    <string name="profile_label_current_location">Current Location</string>
+    <string name="profile_label_current_location">현재 위치</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">No description specified.</string>
@@ -114,25 +114,25 @@
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_translate_description">Help translating VRCAA to your language.</string>
+    <string name="about_page_translate_description">VRCAA를 여러분의 언어로 번역해주세요!</string>
     <string name="about_page_battery_optimizations_title">Click here to disable battery optimizations</string>
     <string name="about_page_battery_optimizations_description">Some phone models may require this to be used, for proper functionality.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
-    <string name="api_avatar_select_failed">"Failed to select avatar."</string>
+    <string name="api_session_has_expired_text">세션이 만료되었어요. 다시 로그인해 주세요.</string>
+    <string name="api_avatar_select_failed">"아바타를 선택할 수 없어요."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Login to Discord</string>
-    <string name="discord_login_title_verify">Verify 2FA</string>
-    <string name="discord_login_label_username">Username</string>
-    <string name="discord_login_label_password">Password</string>
+    <string name="discord_login_title">Discord로 로그인</string>
+    <string name="discord_login_title_verify">2차 인증</string>
+    <string name="discord_login_label_username">사용자 이름</string>
+    <string name="discord_login_label_password">암호</string>
     <string name="discord_login_toast_wrong_credentials">사용자 이름 또는 비밀번호가 올바르지 않아요.</string>
     <string name="discord_login_toast_wrong_code">추가 인증 코드가 올바르지 않아요.</string>
     <string name="discord_login_button_login">로그인</string>
     <string name="discord_login_button_verify">인증</string>
     <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
     <string name="discord_login_label_enable">활동 상태</string>
-    <string name="discord_login_description_enable">Show your current status in discord.</string>
+    <string name="discord_login_description_enable">Discord에서 활동 상태 보이기.</string>
     <string name="discord_login_label_logout">로그아웃</string>
-    <string name="discord_login_description_logout">Revoke your access token.</string>
+    <string name="discord_login_description_logout">엑세스 토큰 비활성화.</string>
 </resources>
