@@ -18,6 +18,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import okhttp3.internal.wait
 
 class PipelineWebSocket(
     token: String
@@ -36,7 +37,7 @@ class PipelineWebSocket(
         connect()
     }
 
-    private var restartThread: Thread = Thread(restartWorker)
+    private var restartThread: Thread? = null
 
     interface SocketListener {
         fun onMessage(message: Any?)
@@ -156,14 +157,15 @@ class PipelineWebSocket(
             .build()
 
         socket = client.newWebSocket(request, listener)
-        restartThread.start()
+
+        restartThread?.interrupt()
+        restartThread = Thread(restartWorker)
+        restartThread?.start()
     }
 
     fun disconnect() {
         shouldReconnect = false
         socket.close(1000, "")
-        client.dispatcher.executorService.shutdown()
-        restartThread.interrupt()
     }
 
     fun setListener(listener: SocketListener) {
