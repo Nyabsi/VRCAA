@@ -1,6 +1,8 @@
 package cc.sovellus.vrcaa.ui.components.layout
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
@@ -25,11 +27,13 @@ import com.bumptech.glide.integration.compose.placeholder
 fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
     ListItem(
         headlineContent = {
+            Text(friend.displayName)
+        },
+        overlineContent = {
             Text(friend.statusDescription.ifEmpty {
                 StatusHelper.getStatusFromString(friend.status).toString()
             }, maxLines = 1)
         },
-        overlineContent = { Text(friend.displayName) },
         supportingContent = {
             (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { friend.location })?.let { Text(text = it, maxLines = 1) }
         },
@@ -38,7 +42,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
                 contentDescription = stringResource(R.string.preview_image_description),
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(56.dp)
                     .clip(RoundedCornerShape(50)),
                 contentScale = ContentScale.FillBounds,
                 alignment = Alignment.Center,
@@ -47,9 +51,15 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
             )
         },
         trailingContent = {
-            Badge(
-                containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier.size(16.dp)
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.size(20.dp)
+            ) {
+                Badge(
+                    containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier.size(20.dp).align(Alignment.CenterHorizontally)
+                )
+            }
         },
         modifier = Modifier.clickable(
             onClick = {
