@@ -74,14 +74,18 @@ class AvatarScreen(
         val context = LocalContext.current
 
         var isMenuExpanded by remember { mutableStateOf(false) }
+        var exitOnce by remember { mutableStateOf(false) }
 
         if (avatar == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.avatar_toast_avatar_not_found_message),
-                Toast.LENGTH_SHORT
-            ).show()
-            navigator.pop()
+            if (!exitOnce) {
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.avatar_toast_avatar_not_found_message),
+                    Toast.LENGTH_SHORT
+                ).show()
+                navigator.pop()
+                exitOnce = true
+            }
         } else {
             Scaffold(
                 topBar = {
