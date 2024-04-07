@@ -8,6 +8,7 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -91,7 +92,7 @@ class AboutScreen : Screen {
                             contentAlignment = Alignment.TopCenter
                         ) {
                             GlideImage(
-                                model = R.drawable.ic_notification_icon,
+                                model = if (isSystemInDarkTheme()) { R.drawable.logo_dark } else { R.drawable.logo_white },
                                 contentDescription = stringResource(R.string.preview_image_description),
                                 contentScale = ContentScale.FillHeight,
                                 alignment = Alignment.Center,
