@@ -69,18 +69,6 @@ class MfaScreen(
                     .width(200.dp)
                     .padding(1.dp),
                 onClick = {
-                    screenModel.verify()
-                }
-            ) {
-                Text(text = stringResource(R.string.auth_button_text))
-            }
-
-            Button(
-                modifier = Modifier
-                    .height(48.dp)
-                    .width(200.dp)
-                    .padding(1.dp),
-                onClick = {
                     val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                     if (clipboard?.hasPrimaryClip() == true) {
                         val clipData = clipboard.primaryClip
@@ -94,7 +82,19 @@ class MfaScreen(
                     }
                 }
             ) {
-                Text(text = "Paste")
+                Text(text = stringResource(R.string.auth_button_paste))
+            }
+
+            Button(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(200.dp)
+                    .padding(1.dp),
+                onClick = {
+                    screenModel.verify()
+                }
+            ) {
+                Text(text = stringResource(R.string.auth_button_text))
             }
         }
 
