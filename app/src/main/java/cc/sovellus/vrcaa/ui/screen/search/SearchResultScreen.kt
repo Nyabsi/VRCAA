@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.CardDefaults
@@ -50,6 +51,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.avatars.models.JustHPartyAvatars
+import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel
@@ -57,6 +59,7 @@ import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel.SearchState
+import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -83,6 +86,7 @@ class SearchResultScreen(
                 result.worlds,
                 result.users,
                 result.avatars,
+                result.groups,
                 model
             )
 
@@ -96,6 +100,7 @@ class SearchResultScreen(
         worlds: Worlds?,
         users: Users?,
         avatars: JustHPartyAvatars?,
+        groups: Groups?,
         model: SearchResultScreenModel
     ) {
 
@@ -118,7 +123,7 @@ class SearchResultScreen(
             content = {
 
                 val options = stringArrayResource(R.array.search_selection_options)
-                val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person, Icons.Filled.Visibility)
+                val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person, Icons.Filled.Visibility, Icons.Filled.Groups)
 
                 Column(
                     modifier = Modifier
@@ -164,6 +169,7 @@ class SearchResultScreen(
                         0 -> ShowWorlds(worlds)
                         1 -> ShowUsers(users)
                         2 -> ShowAvatars(avatars)
+                        3 -> ShowGroups(groups)
                     }
                 }
             }
@@ -363,6 +369,59 @@ class SearchResultScreen(
                                     count = null
                                 ) {
                                     navigator.push(AvatarScreen(avatar.id))
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun ShowGroups(groups: Groups?) {
+        val context = LocalContext.current
+
+        if (groups == null) {
+            Toast.makeText(
+                context,
+                stringResource(R.string.search_failed_to_fetch_avatars_message),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val navigator = LocalNavigator.currentOrThrow
+
+                if (groups.isEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = stringResource(R.string.result_not_found))
+                    }
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        contentPadding = PaddingValues(
+                            start = 12.dp,
+                            top = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        ),
+                        content = {
+                            items(groups.size) {
+                                val group = groups[it]
+                                RowItem(
+                                    name = group.name,
+                                    url = group.bannerUrl,
+                                    count = null
+                                ) {
+                                    navigator.push(GroupScreen(group.id))
                                 }
                             }
                         }

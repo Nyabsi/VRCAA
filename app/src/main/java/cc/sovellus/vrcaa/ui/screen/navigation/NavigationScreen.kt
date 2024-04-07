@@ -361,7 +361,17 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_groups_not_implemented_temp)) },
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_groups_count)) },
+                                        trailingContent = {
+                                            OutlinedTextField(
+                                                value = model.usersAmount.intValue.toString(),
+                                                onValueChange = {
+                                                    model.worldsAmount.intValue = it.toIntOrNull() ?: model.worldsAmount.intValue
+                                                },
+                                                singleLine = true,
+                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                                            )
+                                        }
                                     )
                                 }
                             }

@@ -15,10 +15,14 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Code
 import cc.sovellus.vrcaa.api.vrchat.http.models.Favorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friends
+import cc.sovellus.vrcaa.api.vrchat.http.models.Group
+import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
+import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notifications
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
+import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
@@ -518,5 +522,128 @@ class VRChatApi(
 
         val response = handleRequest(result)
         return Gson().fromJson(response, Avatar::class.java)
+    }
+
+    suspend fun getGroups(query: String, n: Int): Groups? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/groups?query=$query&n=$n",
+            headers = headers.build(),
+            body = null
+        )
+
+        val response = handleRequest(result)
+        return Gson().fromJson(response, Groups::class.java)
+    }
+
+    suspend fun getGroups(userId: String): UserGroups? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/users/$userId/groups",
+            headers = headers.build(),
+            body = null
+        )
+
+        val response = handleRequest(result)
+        return Gson().fromJson(response, UserGroups::class.java)
+    }
+
+    suspend fun getGroup(groupId: String): Group? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/groups/$groupId?includeRoles=true&purpose=group",
+            headers = headers.build(),
+            body = null
+        )
+
+        val response = handleRequest(result)
+        return Gson().fromJson(response, Group::class.java)
+    }
+
+    suspend fun joinGroup(groupId: String): Boolean {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "POST",
+            url = "$apiBase/groups/$groupId/join?confirmOverrideBlock=false",
+            headers = headers.build(),
+            body = null
+        )
+
+        return result is Result.Succeeded
+    }
+
+    suspend fun leaveGroup(groupId: String): Boolean {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "POST",
+            url = "$apiBase/groups/$groupId/leave",
+            headers = headers.build(),
+            body = null
+        )
+
+        return result is Result.Succeeded
+    }
+
+    suspend fun withdrawGroupJoinRequest(groupId: String): Boolean {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "DELETE",
+            url = "$apiBase/groups/$groupId/requests",
+            headers = headers.build(),
+            body = null
+        )
+
+        return result is Result.Succeeded
+    }
+
+    suspend fun getGroupInstances(groupId: String): GroupInstances? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/groups/$groupId/instances",
+            headers = headers.build(),
+            body = null
+        )
+
+        val response = handleRequest(result)
+        return Gson().fromJson(response, GroupInstances::class.java)
     }
 }

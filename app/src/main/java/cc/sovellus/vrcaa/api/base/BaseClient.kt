@@ -82,6 +82,17 @@ open class BaseClient {
                 handleRequest(response)
             }
 
+            "DELETE" -> {
+                val request = Request.Builder()
+                    .headers(headers = headers)
+                    .url(url)
+                    .delete(requestBody)
+                    .build()
+
+                val response = client.newCall(request).await()
+                handleRequest(response)
+            }
+
             else -> { Result.UnknownMethod }
         }
     }

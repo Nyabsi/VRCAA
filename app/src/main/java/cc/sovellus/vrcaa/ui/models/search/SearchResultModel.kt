@@ -7,6 +7,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.avatars.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.vrchat.avatars.providers.JustHPartyProvider
+import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.helper.searchFeaturedWorlds
@@ -30,13 +31,15 @@ class SearchResultScreenModel(
         data class Result(
             val worlds: Worlds?,
             val users: Users?,
-            val avatars: JustHPartyAvatars?
+            val avatars: JustHPartyAvatars?,
+            val groups: Groups?
         ) : SearchState()
     }
 
     private var worlds: Worlds? = null
     private var users: Users? = null
     private var avatars: JustHPartyAvatars? = null
+    private var groups: Groups? = null
 
     var currentIndex = mutableIntStateOf(0)
 
@@ -65,7 +68,12 @@ class SearchResultScreenModel(
                 5000 // Not used
             )
 
-            mutableState.value = SearchState.Result(worlds, users, avatars)
+            groups = api.getGroups(
+                query,
+                100 // TODO: shit.
+            )
+
+            mutableState.value = SearchState.Result(worlds, users, avatars, groups)
         }
     }
 }

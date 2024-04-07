@@ -49,6 +49,7 @@ import cc.sovellus.vrcaa.ui.models.profile.UserProfileScreenModel.UserProfileSta
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.models.profile.UserProfileScreenModel
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class UserProfileScreen(
@@ -133,7 +134,15 @@ class UserProfileScreen(
                                                 text = { Text(stringResource(R.string.profile_user_dropdown_manage_notifications)) }
                                             )
                                         }
-
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                navigator.push(
+                                                    UserGroupsScreen(profile.displayName, profile.id)
+                                                )
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.profile_user_dropdown_view_groups)) }
+                                        )
                                     }
                                 }
                             }

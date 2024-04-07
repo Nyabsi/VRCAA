@@ -67,3 +67,7 @@ internal var SharedPreferences.worldsAmount: Int
 internal var SharedPreferences.usersAmount: Int
     get() = getInt("usersAmount", 50)
     set(it) = edit { putInt("usersAmount", it) }
+
+internal var SharedPreferences.groupsAmount: Int
+    get() = getInt("groupsAmount", 50)
+    set(it) = edit { putInt("groupsAmount", it) }

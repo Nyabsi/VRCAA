@@ -8,10 +8,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.updater.AutoUpdater
 import cc.sovellus.vrcaa.helper.enableUpdates
+import cc.sovellus.vrcaa.helper.groupsAmount
 import cc.sovellus.vrcaa.helper.searchFeaturedWorlds
 import cc.sovellus.vrcaa.helper.sortWorlds
 import cc.sovellus.vrcaa.helper.usersAmount
@@ -38,6 +40,7 @@ class NavigationScreenModel(
     var sortWorlds = mutableStateOf(preferences.sortWorlds)
     var worldsAmount = mutableIntStateOf(preferences.worldsAmount)
     var usersAmount = mutableIntStateOf(preferences.usersAmount)
+    var groupsAmount = mutableIntStateOf(preferences.groupsAmount)
 
     val updater = AutoUpdater(context)
 
@@ -46,7 +49,7 @@ class NavigationScreenModel(
     init {
         screenModelScope.launch {
 
-            if (preferences.enableUpdates) {
+            if (preferences.enableUpdates && !BuildConfig.DEBUG) {
                 hasUpdate.value = updater.checkForUpdates()
             }
 
@@ -103,6 +106,8 @@ class NavigationScreenModel(
         worldsAmount.intValue = 50
         preferences.usersAmount = 50
         usersAmount.intValue = 50
+        preferences.groupsAmount = 50
+        groupsAmount.intValue = 50
 
         Toast.makeText(
             context,
@@ -116,6 +121,7 @@ class NavigationScreenModel(
         preferences.sortWorlds = sortWorlds.value
         preferences.worldsAmount = worldsAmount.intValue
         preferences.usersAmount = usersAmount.intValue
+        preferences.groupsAmount = groupsAmount.intValue
 
         Toast.makeText(
             context,
