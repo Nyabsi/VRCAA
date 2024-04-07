@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.components.input
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cc.sovellus.vrcaa.ui.theme.isSystemDarkMode
 
 @Composable
 fun CodeInput(
@@ -58,7 +58,7 @@ fun CodeInput(
                             .width(50.dp)
                             .height(60.dp)
                             .border(
-                                1.dp, if (isSystemDarkMode()) {
+                                1.dp, if (isSystemInDarkTheme()) {
                                     Color.White
                                 } else {
                                     Color.Black
