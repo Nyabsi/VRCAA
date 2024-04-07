@@ -20,7 +20,6 @@ import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
-import cc.sovellus.vrcaa.helper.isMyServiceRunning
 import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
@@ -96,10 +95,8 @@ class MainActivity : ComponentActivity() {
 
         ApiManager.set(VRChatApi(this)).also {
             if (checkForCookies()) {
-                if (!isMyServiceRunning(PipelineService::class.java)) {
-                    val intent = Intent(this, PipelineService::class.java)
-                    startForegroundService(intent)
-                }
+                val intent = Intent(this, PipelineService::class.java)
+                startForegroundService(intent)
             }
         }
 
