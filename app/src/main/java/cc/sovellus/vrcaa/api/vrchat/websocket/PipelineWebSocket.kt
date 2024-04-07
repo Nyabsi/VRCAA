@@ -33,7 +33,6 @@ class PipelineWebSocket(
         Thread.sleep(RESTART_INTERVAL)
 
         disconnect()
-        Thread.sleep(100)
         connect()
     }
 
@@ -52,6 +51,9 @@ class PipelineWebSocket(
             ) {
                 Log.d("VRCAA", "Connected to the VRChat pipeline.")
                 shouldReconnect = true
+
+                restartThread = Thread(restartWorker)
+                restartThread?.start()
             }
 
             override fun onMessage(
@@ -123,7 +125,7 @@ class PipelineWebSocket(
             override fun onClosed(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-
+                restartThread?.interrupt()
             }
 
             override fun onFailure(
@@ -139,6 +141,7 @@ class PipelineWebSocket(
                 }
 
                 if (shouldReconnect) {
+                    Thread.sleep(RECONNECTION_INTERVAL) // wait 3 seconds before reconnecting.
                     connect()
                 }
             }
@@ -157,10 +160,6 @@ class PipelineWebSocket(
             .build()
 
         socket = client.newWebSocket(request, listener)
-
-        restartThread?.interrupt()
-        restartThread = Thread(restartWorker)
-        restartThread?.start()
     }
 
     fun disconnect() {
@@ -174,5 +173,6 @@ class PipelineWebSocket(
 
     companion object {
         private const val RESTART_INTERVAL: Long = 1800000
+        private const val RECONNECTION_INTERVAL: Long = 3000
     }
 }
