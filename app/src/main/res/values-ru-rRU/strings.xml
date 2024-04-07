@@ -173,6 +173,10 @@
     <string name="update_dialog_title">New update available!</string>
     <string name="update_dialog_description">Do you wish to update the application?</string>
     <string name="update_toast_failed_update">Failed to automatically download update…</string>
+    <string name="update_notification_title_ongoing">Downloading update..</string>
+    <string name="update_notification_title_done">Downloading complete.</string>
+    <string name="update_notification_action_cancel">Cancel</string>
+    <string name="update_notification_action_install">Install</string>
     <!-- Crash -->
     <string name="crash_title_text">The application crashed :(</string>
     <string name="crash_button_restart_text">Restart</string>
