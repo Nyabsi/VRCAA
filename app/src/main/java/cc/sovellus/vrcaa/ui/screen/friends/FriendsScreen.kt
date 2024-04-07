@@ -79,7 +79,7 @@ class FriendsScreen : Screen {
         val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
 
         val options = stringArrayResource(R.array.friend_selection_options)
-        val icons = listOf(Icons.Filled.Star, Icons.Filled.Web, Icons.Filled.Person, Icons.Filled.PersonOff)
+        val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
 
         Box(
             Modifier
@@ -124,8 +124,8 @@ class FriendsScreen : Screen {
 
                 when (model.currentIndex.intValue) {
                     0 -> ShowFriendsFavorite(favoriteFriends)
-                    1 -> ShowFriendsOnWebsite(model)
-                    2 -> ShowFriends(model)
+                    1 -> ShowFriends(model)
+                    2 -> ShowFriendsOnWebsite(model)
                     3 -> ShowFriendsOffline(model)
                 }
             }
