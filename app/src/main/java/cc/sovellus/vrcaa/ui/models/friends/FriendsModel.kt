@@ -62,7 +62,7 @@ class FriendsScreenModel(
         screenModelScope.launch {
             api.getFavorites("friend")?.let {
                 it.forEach { favorite ->
-                    api.getFriend(favorite.favoriteId)
+                    api.getFriend(favorite.id)
                         ?.let { friend -> favoriteFriends.add(friend) }
                 }
                 parseReadableLocation(favoriteFriends)
