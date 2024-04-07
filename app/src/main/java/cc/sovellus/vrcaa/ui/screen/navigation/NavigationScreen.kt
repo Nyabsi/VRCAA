@@ -364,9 +364,9 @@ class NavigationScreen : Screen {
                                         headlineContent = { Text(stringResource(R.string.search_filter_category_groups_count)) },
                                         trailingContent = {
                                             OutlinedTextField(
-                                                value = model.usersAmount.intValue.toString(),
+                                                value = model.groupsAmount.intValue.toString(),
                                                 onValueChange = {
-                                                    model.worldsAmount.intValue = it.toIntOrNull() ?: model.worldsAmount.intValue
+                                                    model.groupsAmount.intValue = it.toIntOrNull() ?: model.groupsAmount.intValue
                                                 },
                                                 singleLine = true,
                                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
