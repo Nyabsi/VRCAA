@@ -125,7 +125,7 @@ class PipelineWebSocket(
             override fun onClosed(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                restartThread?.interrupt()
+
             }
 
             override fun onFailure(
