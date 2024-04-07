@@ -39,6 +39,7 @@ class NavigationScreenModel(
     var worldsAmount = mutableIntStateOf(preferences.worldsAmount)
     var usersAmount = mutableIntStateOf(preferences.usersAmount)
 
+    val updater = AutoUpdater(context)
 
     var hasUpdate = mutableStateOf(false)
 
@@ -46,7 +47,7 @@ class NavigationScreenModel(
         screenModelScope.launch {
 
             if (preferences.enableUpdates) {
-                hasUpdate.value = AutoUpdater.checkForUpdates()
+                hasUpdate.value = true // updater.checkForUpdates()
             }
 
             val friends: MutableList<LimitedUser> = ArrayList()
@@ -81,11 +82,9 @@ class NavigationScreenModel(
     }
 
     fun update(context: Context) {
-        val update = File(context.filesDir, "temp.apk")
+       // val update =
         screenModelScope.launch {
-            if (AutoUpdater.downloadUpdate(update)) {
-                AutoUpdater.installUpdate(context, update)
-            } else {
+            if (!updater.downloadUpdate()) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.update_toast_failed_update),
