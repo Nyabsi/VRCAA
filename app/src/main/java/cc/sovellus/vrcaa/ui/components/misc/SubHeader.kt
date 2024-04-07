@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun SubHeader(title: String) {
     Text(
-        modifier = Modifier.padding(top = 6.dp, start = 24.dp),
+        modifier = Modifier.padding(start = 24.dp),
         text = title,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
