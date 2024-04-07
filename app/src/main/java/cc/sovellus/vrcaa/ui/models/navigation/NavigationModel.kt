@@ -47,7 +47,7 @@ class NavigationScreenModel(
         screenModelScope.launch {
 
             if (preferences.enableUpdates) {
-                hasUpdate.value = true // updater.checkForUpdates()
+                hasUpdate.value = updater.checkForUpdates()
             }
 
             val friends: MutableList<LimitedUser> = ArrayList()
