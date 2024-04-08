@@ -32,7 +32,7 @@
     <string name="auth_text_app">2段階認証アプリに表示されているコードを入力して下さい。</string>
     <string name="auth_label_code">認証コード</string>
     <string name="auth_button_text">認証</string>
-    <string name="auth_button_paste">Verify</string>
+    <string name="auth_button_paste">Paste</string>
     <!-- Main -->
     <string name="main_search_placeholder">&gt;ワールド・ユーザー・アバターの検索</string>
     <!-- Profile -->
