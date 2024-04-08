@@ -336,7 +336,7 @@ class NavigationScreen : Screen {
                                             OutlinedTextField(
                                                 value = model.usersAmount.intValue.toString(),
                                                 onValueChange = {
-                                                    model.worldsAmount.intValue = it.toIntOrNull() ?: model.worldsAmount.intValue
+                                                    model.usersAmount.intValue = it.toIntOrNull() ?: model.usersAmount.intValue
                                                 },
                                                 singleLine = true,
                                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)

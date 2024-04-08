@@ -306,8 +306,26 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
+
+        this.notificationManager = NotificationManager(this)
+        this.preferences = getSharedPreferences("vrcaa_prefs", 0)
+
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
+
+            launch {
+                api.getAuth()?.let { token ->
+                    pipeline = PipelineWebSocket(token)
+
+                    pipeline?.connect()
+                    pipeline?.setListener(listener)
+
+                    if (preferences.richPresenceEnabled) {
+                        gateway = GatewaySocket(preferences.discordToken)
+                        gateway?.connect()
+                    }
+                }
+            }
 
             serviceLooper = looper
             serviceHandler = ServiceHandler(looper)
@@ -315,23 +333,6 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        this.notificationManager = NotificationManager(this)
-        this.preferences = getSharedPreferences("vrcaa_prefs", 0)
-
-        launch {
-            api.getAuth()?.let { token ->
-                pipeline = PipelineWebSocket(token)
-
-                pipeline?.connect()
-                pipeline?.setListener(listener)
-
-                if (preferences.richPresenceEnabled) {
-                    gateway = GatewaySocket(preferences.discordToken)
-                    gateway?.connect()
-                }
-            }
-        }
 
         val builder = NotificationCompat.Builder(this, NotificationManager.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
@@ -350,7 +351,7 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
     override fun onDestroy() {
