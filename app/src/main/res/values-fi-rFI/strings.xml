@@ -32,7 +32,7 @@
     <string name="auth_text_app">Syötä autentikointisovelluksen antama koodi</string>
     <string name="auth_label_code">Kaksivaiheisen todennuksen koodi</string>
     <string name="auth_button_text">Vahvista</string>
-    <string name="auth_button_paste">Verify</string>
+    <string name="auth_button_paste">Paste</string>
     <!-- Main -->
     <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
     <!-- Profile -->
