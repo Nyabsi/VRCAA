@@ -208,5 +208,5 @@
     <string name="group_page_toast_leave_group_fail">グループの離脱に失敗しました。</string>
     <string name="group_user_no_groups_message">このユーザーはどのグループにも所属していません。</string>
     <string name="group_user_failed_to_fetch_groups">グループ情報の取得に失敗しました。再試行してください。</string>
-    <string name="group_user_viewing_groups_username">%1$s\さんのグループ一覧</string>
+    <string name="group_user_viewing_groups_username">%1$s さんのグループ一覧</string>
 </resources>
