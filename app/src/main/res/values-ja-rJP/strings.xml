@@ -51,9 +51,9 @@
     <string name="search_filter_category_worlds_sort_by">ソート</string>
     <string name="search_filter_category_worlds_count">Count</string>
     <string name="search_filter_category_users">ユーザー</string>
-    <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_users_count">表示数</string>
     <string name="search_filter_category_groups">グループ</string>
-    <string name="search_filter_category_groups_count">Count</string>
+    <string name="search_filter_category_groups_count">表示数</string>
     <string name="search_filter_button_reset">リセット</string>
     <string name="search_filter_button_apply">適用</string>
     <string-array name="search_selection_options">
@@ -92,7 +92,7 @@
     <string name="tabs_label_home">ホーム</string>
     <string name="tabs_label_feed">フィード</string>
     <string name="tabs_label_profile">プロフィール</string>
-    <string name="tabs_label_pictures">Pictures</string>
+    <string name="tabs_label_pictures">ピクチャー</string>
     <string name="tabs_label_settings">設定</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
@@ -194,14 +194,14 @@
     <string name="group_page_label_description">詳細</string>
     <string name="group_page_label_rules">ルール</string>
     <string name="group_page_dropdown_view_author">作者のプロフィールを確認</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
+    <string name="group_page_dropdown_request_invite">参加を申請する</string>
+    <string name="group_page_dropdown_request_invite_cancel">参加申請をキャンセルする</string>
     <string name="group_page_dropdown_join_group">グループへ参加する</string>
     <string name="group_page_dropdown_leave_group">グループを離脱する</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
+    <string name="group_page_toast_invite_requested">参加申請を完了しました。</string>
+    <string name="group_page_toast_invite_requested_fail">参加申請に失敗しました。</string>
+    <string name="group_page_toast_invite_requested_cancel">参加申請をキャンセルしました。</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">参加申請のキャンセルに失敗しました。</string>
     <string name="group_page_toast_join_group">グループへ参加しました。</string>
     <string name="group_page_toast_join_group_fail">グループへの参加に失敗しました。/string>
     <string name="group_page_toast_leave_group">グループを離脱しました。</string>
