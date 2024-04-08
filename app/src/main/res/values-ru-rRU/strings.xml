@@ -32,7 +32,7 @@
     <string name="auth_text_app">Введите код из вашего приложения для двухфакторной аутентификации</string>
     <string name="auth_label_code">Код двухфакторной аутентификации</string>
     <string name="auth_button_text">Подтвердить</string>
-    <string name="auth_button_paste">Verify</string>
+    <string name="auth_button_paste">Paste</string>
     <!-- Main -->
     <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
     <!-- Profile -->
