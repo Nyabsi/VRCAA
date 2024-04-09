@@ -68,7 +68,8 @@ class MainActivity : ComponentActivity() {
         ApiManager.set(VRChatApi(this)).also {
             if (checkForCookies()) {
                 val intent = Intent(this, PipelineService::class.java)
-                startForegroundService(intent)
+                stopService(intent)
+                startService(intent)
             }
         }
 

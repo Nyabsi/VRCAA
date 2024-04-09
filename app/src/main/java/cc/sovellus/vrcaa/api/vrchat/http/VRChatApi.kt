@@ -118,7 +118,7 @@ class VRChatApi(
             }
 
             Result.UnknownMethod -> {
-                throw RuntimeException("doRequest was called with unsupported method, supported methods are GET, POST and PUT.")
+                throw RuntimeException("doRequest was called with unsupported method, supported methods are GET, POST, PUT and DELETE.")
             }
 
             else -> { null }

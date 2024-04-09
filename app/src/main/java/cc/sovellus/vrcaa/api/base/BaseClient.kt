@@ -10,7 +10,11 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
+import okio.Timeout
 import ru.gildor.coroutines.okhttp.await
+import java.net.ConnectException
+import java.net.UnknownHostException
+import java.util.concurrent.TimeoutException
 
 open class BaseClient {
     /* inherited classes don't need to access the client variable */
@@ -25,6 +29,9 @@ open class BaseClient {
         data object Unauthorized : Result()
         data object InternalError : Result()
         data object UnknownMethod : Result()
+        data object Timeout : Result()
+        data object NoInternet : Result()
+        data object FailedResolveHost : Result()
     }
 
     private fun handleRequest(
@@ -48,52 +55,60 @@ open class BaseClient {
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
 
-        return when (method) {
-            "GET" -> {
-                val request = Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .get()
-                    .build()
+        return try {
+             when (method) {
+                "GET" -> {
+                    val request = Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .get()
+                        .build()
 
-                val response = client.newCall(request).await()
-                handleRequest(response)
+                    val response = client.newCall(request).await()
+                    handleRequest(response)
+                }
+
+                "POST" -> {
+                    val request = Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .post(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).await()
+                    handleRequest(response)
+                }
+
+                "PUT" -> {
+                    val request = Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .put(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).await()
+                    handleRequest(response)
+                }
+
+                "DELETE" -> {
+                    val request = Request.Builder()
+                        .headers(headers = headers)
+                        .url(url)
+                        .delete(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).await()
+                    handleRequest(response)
+                }
+
+                else -> { Result.UnknownMethod }
             }
-
-            "POST" -> {
-                val request = Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .post(requestBody)
-                    .build()
-
-                val response = client.newCall(request).await()
-                handleRequest(response)
-            }
-
-            "PUT" -> {
-                val request = Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .put(requestBody)
-                    .build()
-
-                val response = client.newCall(request).await()
-                handleRequest(response)
-            }
-
-            "DELETE" -> {
-                val request = Request.Builder()
-                    .headers(headers = headers)
-                    .url(url)
-                    .delete(requestBody)
-                    .build()
-
-                val response = client.newCall(request).await()
-                handleRequest(response)
-            }
-
-            else -> { Result.UnknownMethod }
+        } catch (_: TimeoutException) {
+            Result.Timeout
+        } catch (_: ConnectException) {
+            Result.NoInternet
+        } catch (_: UnknownHostException) {
+            Result.FailedResolveHost
         }
     }
 }
