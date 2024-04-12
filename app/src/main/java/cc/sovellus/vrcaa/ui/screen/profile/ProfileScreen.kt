@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +30,7 @@ import cc.sovellus.vrcaa.ui.models.profile.ProfileScreenModel.ProfileState
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.models.profile.ProfileScreenModel
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 
 class ProfileScreen : Screen {
 
@@ -76,7 +79,11 @@ class ProfileScreen : Screen {
                                 statusDescription = it.statusDescription,
                                 trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
                                 statusColor = StatusHelper.getStatusFromString(it.status).toColor()
-                            )
+                            ) {
+                                navigator.parent?.parent?.push(
+                                    UserGroupsScreen(profile.displayName, profile.id)
+                                )
+                            }
                         }
                     }
                 }

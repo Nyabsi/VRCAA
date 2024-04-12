@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.card
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,7 +33,8 @@ fun ProfileCard(
     displayName: String,
     statusDescription: String,
     trustRankColor: Color,
-    statusColor: Color
+    statusColor: Color,
+    callback: (() -> Unit?)? = null
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -42,6 +44,11 @@ fun ProfileCard(
             .height(270.dp)
             .fillMaxWidth()
             .padding(16.dp)
+            .clickable(onClick = {
+                if (callback != null) {
+                    callback()
+                }
+            })
     ) {
 
         GlideImage(
