@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.websocket.GatewaySocket
+import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.websocket.PipelineWebSocket
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendDelete
@@ -315,6 +316,12 @@ class PipelineService : Service(), CoroutineScope {
 
             launch {
                 api?.getAuth()?.let { token ->
+
+                    val friends: MutableList<LimitedUser> = ArrayList()
+                    api?.getFriends()?.let { friends += it }
+                    api?.getFriends(true)?.let { friends += it }
+                    FriendManager.setFriends(friends)
+
                     pipeline = PipelineWebSocket(token)
 
                     pipeline?.connect()

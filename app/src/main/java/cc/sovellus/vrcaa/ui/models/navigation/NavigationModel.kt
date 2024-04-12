@@ -52,11 +52,6 @@ class NavigationScreenModel(
             if (preferences.enableUpdates && !BuildConfig.DEBUG) {
                 hasUpdate.value = updater.checkForUpdates()
             }
-
-            val friends: MutableList<LimitedUser> = ArrayList()
-            api?.getFriends()?.let { friends += it }
-            api?.getFriends(true)?.let { friends += it }
-            FriendManager.setFriends(friends)
         }
     }
 
