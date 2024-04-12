@@ -202,6 +202,7 @@ class PipelineService : Service(), CoroutineScope {
                                 }
 
                                 // This guarantees the user will have valid location.
+                                friend.user.location = friend.location
                                 FriendManager.updateFriend(friend.user)
                             }
                         }
