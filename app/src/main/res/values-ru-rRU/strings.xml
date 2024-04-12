@@ -209,4 +209,6 @@
     <string name="group_user_no_groups_message">User is not apart of any groups.</string>
     <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <!-- Misc -->
+    <string name="misc_loading_label_text">Loading…</string>
 </resources>
