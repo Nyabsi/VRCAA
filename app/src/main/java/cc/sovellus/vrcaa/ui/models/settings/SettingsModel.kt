@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.helper.authToken
+import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.enableUpdates
 import cc.sovellus.vrcaa.helper.invalidCookie
 import cc.sovellus.vrcaa.manager.ApiManager.api
@@ -26,7 +26,7 @@ class SettingsScreenModel(
 
             api?.logout()
 
-            preferences.authToken = ""
+            preferences.cookies = ""
             preferences.invalidCookie = true
         }
     }
