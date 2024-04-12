@@ -248,6 +248,7 @@ class GroupScreen(
                 ) {
                     group.let {
                         GroupCard(
+                            groupName = it.name,
                             discriminator = it.discriminator,
                             shortCode = it.shortCode,
                             bannerUrl = it.bannerUrl,

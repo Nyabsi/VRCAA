@@ -37,6 +37,7 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun GroupCard(
+    groupName: String,
     shortCode: String,
     discriminator: String,
     bannerUrl: String,
@@ -60,6 +61,7 @@ fun GroupCard(
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy((-50).dp),
+            modifier = Modifier.height(220.dp).fillMaxSize()
         ) {
             item {
                 Column(
@@ -100,10 +102,14 @@ fun GroupCard(
                         )
                     }
                 }
+            }
+
+            item {
                 Text(
-                    text = "Lorem Ipsum",
-                    modifier = Modifier.padding(bottom = -8.dp),
-                    fontWeight = FontWeight.Bold,
+                    text = groupName,
+                    modifier = Modifier.padding(start = 104.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
                     textAlign = TextAlign.Start
                 )
             }
@@ -117,7 +123,7 @@ fun GroupCard(
                     .padding(start = 16.dp)
                     .weight(0.80f),
                 textAlign = TextAlign.Start,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.Bold
             )
             Text(
                 text = "$totalMembers",
@@ -125,7 +131,7 @@ fun GroupCard(
                     .padding(end = 8.dp)
                     .weight(0.20f),
                 textAlign = TextAlign.End,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.Bold
             )
             Icon(
                 modifier = Modifier.padding(end = 16.dp),

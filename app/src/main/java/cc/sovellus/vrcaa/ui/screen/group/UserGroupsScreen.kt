@@ -110,6 +110,7 @@ class UserGroupsScreen(
                                 items(groups.size) {
                                     val group = groups[it]
                                     GroupCard(
+                                        groupName = group.name,
                                         shortCode = group.shortCode,
                                         discriminator = group.discriminator,
                                         bannerUrl = group.bannerUrl,
