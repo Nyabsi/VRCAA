@@ -39,7 +39,7 @@ fun ProfileCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(280.dp)
+            .height(270.dp)
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -57,7 +57,7 @@ fun ProfileCard(
 
         Text(
             text = displayName,
-            modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+            modifier = Modifier.padding(start = 12.dp, top = 4.dp),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Left,

@@ -31,7 +31,7 @@ fun WorldCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(320.dp)
+            .height(270.dp)
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -41,7 +41,7 @@ fun WorldCard(
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(160.dp),
             contentScale = ContentScale.Crop,
             loading = placeholder(R.drawable.image_placeholder),
             failure = placeholder(R.drawable.image_placeholder)

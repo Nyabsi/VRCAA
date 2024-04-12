@@ -32,7 +32,7 @@ fun AvatarCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(320.dp)
+            .height(270.dp)
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -42,7 +42,7 @@ fun AvatarCard(
             contentDescription = stringResource(R.string.preview_image_description),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(160.dp),
             contentScale = ContentScale.Crop,
             loading = placeholder(R.drawable.image_placeholder),
             failure = placeholder(R.drawable.image_placeholder)
@@ -50,14 +50,14 @@ fun AvatarCard(
 
         Text(
             text = name,
-            modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+            modifier = Modifier.padding(start = 12.dp, top = 4.dp),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Left,
         )
 
         Text(
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = 12.dp),
             text = "By $authorName",
             textAlign = TextAlign.Left,
             fontWeight = FontWeight.SemiBold,

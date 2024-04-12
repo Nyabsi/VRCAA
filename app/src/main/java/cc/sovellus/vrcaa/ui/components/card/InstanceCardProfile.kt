@@ -39,7 +39,7 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(220.dp)
+            .height(270.dp)
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(
@@ -54,7 +54,7 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
             contentDescription = stringResource(R.string.preview_image_description),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp),
+                .height(160.dp),
             contentScale = ContentScale.Crop,
             loading = placeholder(R.drawable.image_placeholder),
             failure = placeholder(R.drawable.image_placeholder)
@@ -65,7 +65,6 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.padding(4.dp)
         ) {
             Text(
                 text = "${instance.world.name} (${instance.name}) ${result.instanceType} ${instance.nUsers}/${instance.world.capacity}",
@@ -73,7 +72,8 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                 textAlign = TextAlign.Left,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(start = 12.dp)
             )
             if (result.regionId.isNotEmpty()) {
                 when (result.regionId.lowercase()) {
