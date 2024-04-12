@@ -93,7 +93,7 @@ object LocationHelper: CoroutineScope {
     suspend fun getReadableLocation(location: String): String {
         val info = parseLocationInfo(location)
 
-        val instance: Instance? = api.getInstance(location)
+        val instance: Instance? = api?.getInstance(location)
 
         instance?.let {
             val result = "${it.world.name} (${it.name}) ${info.instanceType} "

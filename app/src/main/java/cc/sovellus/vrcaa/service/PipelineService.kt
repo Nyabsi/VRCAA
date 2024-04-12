@@ -126,7 +126,7 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     launch {
-                        api.getUser(friend.userId)?.let { user ->
+                        api?.getUser(friend.userId)?.let { user ->
                             FriendManager.updateFriend(user)
                         }
                     }
@@ -215,7 +215,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (preferences.richPresenceEnabled) {
                         launch {
-                            val instance = api.getInstance(user.location)
+                            val instance = api?.getInstance(user.location)
                             if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
                                 instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance?.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})") }
                             } else {
@@ -278,7 +278,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     launch {
                         withContext(Dispatchers.Main) {
-                            val sender = api.getUser(notification.senderUserId)
+                            val sender = api?.getUser(notification.senderUserId)
 
                             when (notification.type) {
                                 "friendRequest" -> {
@@ -314,7 +314,7 @@ class PipelineService : Service(), CoroutineScope {
             start()
 
             launch {
-                api.getAuth()?.let { token ->
+                api?.getAuth()?.let { token ->
                     pipeline = PipelineWebSocket(token)
 
                     pipeline?.connect()

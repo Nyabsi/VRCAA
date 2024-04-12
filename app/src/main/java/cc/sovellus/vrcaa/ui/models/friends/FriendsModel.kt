@@ -60,9 +60,9 @@ class FriendsScreenModel(
     // TODO: add special flag to "Favorite" friends.
     private fun fetchFavorites() {
         screenModelScope.launch {
-            api.getFavorites("friend")?.let {
+            api?.getFavorites("friend")?.let {
                 it.forEach { favorite ->
-                    api.getFriend(favorite.id)
+                    api?.getFriend(favorite.id)
                         ?.let { friend -> favoriteFriends.add(friend) }
                 }
                 parseReadableLocation(favoriteFriends)

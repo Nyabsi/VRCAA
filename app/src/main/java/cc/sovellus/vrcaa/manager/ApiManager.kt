@@ -1,10 +1,12 @@
 package cc.sovellus.vrcaa.manager
 
+import android.annotation.SuppressLint
 import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
 
 object ApiManager {
 
-    @Volatile lateinit var api: VRChatApi
+    @SuppressLint("StaticFieldLeak")
+    @Volatile var api: VRChatApi? = null
 
     @Synchronized
     fun set(api: VRChatApi) {

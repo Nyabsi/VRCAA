@@ -42,10 +42,10 @@ class HomeScreenModel(
     private fun fetchContent() {
         screenModelScope.launch {
 
-            friends = api.getFriends()
-            lastVisited = api.getRecentWorlds()
-            offlineFriends = api.getFriends(true)
-            featuredWorlds = api.getWorlds()
+            friends = api?.getFriends()
+            lastVisited = api?.getRecentWorlds()
+            offlineFriends = api?.getFriends(true)
+            featuredWorlds = api?.getWorlds()
 
             mutableState.value = HomeState.Result(
                 friends = friends,

@@ -29,7 +29,7 @@ class UserProfileScreenModel(
 
     private fun fetchProfile() {
         screenModelScope.launch {
-            api.getUser(userId).let {
+            api?.getUser(userId).let {
                 if (it != null) {
                     it.location?.let { location ->
                         if (it.isFriend &&
@@ -37,7 +37,7 @@ class UserProfileScreenModel(
                             location != "private" &&
                             location != "traveling" &&
                             location != "offline") {
-                            instance = api.getInstance(location)
+                            instance = api?.getInstance(location)
                         }
                     }
                 }

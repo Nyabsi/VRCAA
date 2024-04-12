@@ -26,7 +26,7 @@ class ProfileScreenModel(
 
     private fun fetchProfile() {
         screenModelScope.launch {
-            profile = api.getSelf()
+            profile = api?.getSelf()
             mutableState.value = ProfileState.Result(profile)
         }
     }

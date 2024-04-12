@@ -50,14 +50,14 @@ class SearchResultScreenModel(
 
     private fun getContent() {
         screenModelScope.launch {
-            worlds = api.getWorlds(
+            worlds = api?.getWorlds(
                 query = query,
                 featured = preferences.searchFeaturedWorlds,
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds
             )
 
-            users = api.getUsers(
+            users = api?.getUsers(
                 username = query,
                 n = preferences.usersAmount
             )
@@ -68,7 +68,7 @@ class SearchResultScreenModel(
                 5000 // Not used
             )
 
-            groups = api.getGroups(
+            groups = api?.getGroups(
                 query,
                 100 // TODO: shit.
             )

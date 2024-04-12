@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -52,7 +53,9 @@ fun GroupCard(
             .padding(16.dp)
             .fillMaxSize()
             .clickable(onClick = {
-                if (callback != null) { callback() }
+                if (callback != null) {
+                    callback()
+                }
             })
     ) {
         LazyColumn(
@@ -97,6 +100,12 @@ fun GroupCard(
                         )
                     }
                 }
+                Text(
+                    text = "Lorem Ipsum",
+                    modifier = Modifier.padding(bottom = -8.dp),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                )
             }
         }
         Row(
@@ -104,13 +113,17 @@ fun GroupCard(
         ) {
             Text(
                 text = "$shortCode.$discriminator",
-                modifier = Modifier.padding(start = 16.dp).weight(0.80f),
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(0.80f),
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold
             )
             Text(
                 text = "$totalMembers",
-                modifier = Modifier.padding(end = 8.dp).weight(0.20f),
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .weight(0.20f),
                 textAlign = TextAlign.End,
                 fontWeight = FontWeight.SemiBold
             )

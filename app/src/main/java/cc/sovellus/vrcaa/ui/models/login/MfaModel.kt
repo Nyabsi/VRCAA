@@ -35,7 +35,7 @@ class MfaModel(
 
     fun verify() {
         screenModelScope.launch {
-            if (api.verifyAccount(otpType, code.value)) {
+            if (api?.verifyAccount(otpType, code.value) == true) {
                 val intent = Intent(context, PipelineService::class.java)
                 context.startForegroundService(intent)
 

@@ -37,15 +37,15 @@ class GroupScreenModel(
     private fun fetchGroup() {
         mutableState.value = GroupState.Loading
         screenModelScope.launch {
-            group = api.getGroup(groupId)
-            instances = api.getGroupInstances(groupId)
+            group = api?.getGroup(groupId)
+            instances = api?.getGroupInstances(groupId)
             mutableState.value = GroupState.Result(group, instances)
         }
     }
 
     fun withdrawInvite() {
         screenModelScope.launch {
-            if (api.withdrawGroupJoinRequest(groupId)) {
+            if (api?.withdrawGroupJoinRequest(groupId) == true) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.group_page_toast_invite_requested_cancel),
@@ -64,7 +64,7 @@ class GroupScreenModel(
 
     fun joinGroup(open: Boolean) {
         screenModelScope.launch {
-            if (api.joinGroup(groupId)) {
+            if (api?.joinGroup(groupId) == true) {
                 Toast.makeText(
                     context,
                     if (open) {
@@ -91,7 +91,7 @@ class GroupScreenModel(
 
     fun leaveGroup() {
         screenModelScope.launch {
-            if (api.leaveGroup(groupId)) {
+            if (api?.leaveGroup(groupId) == true) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.group_page_toast_leave_group),
@@ -110,7 +110,7 @@ class GroupScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api.InviteSelfToInstance(clickedInstance.value)
+            api?.InviteSelfToInstance(clickedInstance.value)
         }
     }
 }

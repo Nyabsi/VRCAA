@@ -54,8 +54,8 @@ class NavigationScreenModel(
             }
 
             val friends: MutableList<LimitedUser> = ArrayList()
-            api.getFriends()?.let { friends += it }
-            api.getFriends(true)?.let { friends += it }
+            api?.getFriends()?.let { friends += it }
+            api?.getFriends(true)?.let { friends += it }
             FriendManager.setFriends(friends)
         }
     }

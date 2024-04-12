@@ -37,12 +37,12 @@ class WorldInfoScreenModel(
 
     private fun getProfile() {
         screenModelScope.launch {
-            world = api.getWorld(id)
+            world = api?.getWorld(id)
 
             val instanceMap = world?.instances?.map { Instances(it[0].toString(), it[1].toString().toDouble()) }
             if (instanceMap != null) {
                 for (instance in instanceMap) {
-                    api.getInstance("${world?.id}:${instance.intent}").let {
+                    api?.getInstance("${world?.id}:${instance.intent}").let {
                         if (it == null) {
                             Toast.makeText(
                                 context,
@@ -61,7 +61,7 @@ class WorldInfoScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api.InviteSelfToInstance(clickedInstance.value)
+            api?.InviteSelfToInstance(clickedInstance.value)
         }
     }
 }
