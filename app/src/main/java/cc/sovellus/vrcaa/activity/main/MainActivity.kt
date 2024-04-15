@@ -20,6 +20,7 @@ import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
+import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
@@ -29,7 +30,7 @@ import cc.sovellus.vrcaa.ui.theme.Theme
 class MainActivity : ComponentActivity() {
 
     private fun checkForCookies(): Boolean {
-        return !getSharedPreferences("vrcaa_prefs", 0).getString("cookies", "").isNullOrBlank()
+        return getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).cookies.isNotBlank()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,13 +66,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        ApiManager.set(VRChatApi(this)).also {
-            if (checkForCookies()) {
-                val intent = Intent(this, PipelineService::class.java)
-                stopService(intent)
-                startService(intent)
-            }
-        }
+        ApiManager.set(VRChatApi(this))
 
         setContent {
             Theme {
@@ -88,7 +83,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Content() {
         Navigator(
-            screen = if (!checkForCookies()) {
+            screen = if (checkForCookies()) {
                 LoginScreen()
             } else {
                 NavigationScreen()

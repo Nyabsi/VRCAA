@@ -91,6 +91,10 @@ object LocationHelper: CoroutineScope {
     }
 
     suspend fun getReadableLocation(location: String): String {
+
+        if (location == "traveling")
+            return "User is traveling.."
+
         val info = parseLocationInfo(location)
 
         val instance: Instance? = api?.getInstance(location)

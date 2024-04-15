@@ -11,7 +11,6 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
@@ -200,13 +199,13 @@ class PipelineService : Service(), CoroutineScope {
                                             }
                                     )
                                 }
-
-                                // This guarantees the user will have valid location.
-                                friend.user.location = friend.location
-                                FriendManager.updateFriend(friend.user)
                             }
                         }
                     }
+
+                    // This guarantees the user will have valid location.
+                    friend.user.location = friend.location
+                    FriendManager.updateFriend(friend.user)
                 }
 
                 is UserLocation -> {
@@ -309,12 +308,22 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
 
+        isAliveAndWell = true
+
         this.notificationManager = NotificationManager(this)
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
+            serviceLooper = looper
+            serviceHandler = ServiceHandler(looper)
+        }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        if (isAliveAndWell) {
             launch {
                 api?.getAuth()?.let { token ->
 
@@ -334,13 +343,7 @@ class PipelineService : Service(), CoroutineScope {
                     }
                 }
             }
-
-            serviceLooper = looper
-            serviceHandler = ServiceHandler(looper)
         }
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         val builder = NotificationCompat.Builder(this, NotificationManager.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
@@ -363,9 +366,12 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onDestroy() {
-        pipeline?.disconnect()
-        if (preferences.richPresenceEnabled) {
-            gateway?.disconnect()
+        if (isAliveAndWell) {
+            pipeline?.disconnect()
+            if (preferences.richPresenceEnabled) {
+                gateway?.disconnect()
+            }
+            isAliveAndWell = false
         }
     }
 
@@ -375,5 +381,6 @@ class PipelineService : Service(), CoroutineScope {
 
     companion object {
         private const val NOTIFICATION_ID = 42069
+        var isAliveAndWell = false
     }
 }
