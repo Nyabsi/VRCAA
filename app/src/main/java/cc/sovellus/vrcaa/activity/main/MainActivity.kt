@@ -84,9 +84,9 @@ class MainActivity : ComponentActivity() {
     fun Content() {
         Navigator(
             screen = if (checkForCookies()) {
-                LoginScreen()
-            } else {
                 NavigationScreen()
+            } else {
+                LoginScreen()
             },
             disposeBehavior = NavigatorDisposeBehavior(
                 disposeNestedNavigators = false,
