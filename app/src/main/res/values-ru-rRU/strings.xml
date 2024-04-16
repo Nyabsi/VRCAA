@@ -12,7 +12,7 @@
     </string-array>
     <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
     <!-- Home -->
-    <string name="home_active_friends">Активные друзья</string>
+    <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Недавно посещенные</string>
     <string name="home_featured_avatars">Рекомендуемые аватары</string>
     <string name="home_offline_friends">Друзья не в сети</string>
@@ -43,7 +43,9 @@
     <string name="profile_text_no_languages">Язык не указан.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
+    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
     <string name="profile_user_not_found_message">User doesn\'t exist.</string>
+    <string name="profile_user_avatar_private">Avatar is private!</string>
     <!-- Search -->
     <string name="search_text_result">Результаты по</string>
     <string name="search_filter_category_worlds">Worlds</string>
@@ -211,4 +213,7 @@
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
     <!-- Misc -->
     <string name="misc_loading_label_text">Loading…</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_edit_profile">Edit Profile</string>
 </resources>
