@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -78,12 +82,9 @@ class ProfileScreen : Screen {
                                 displayName = it.displayName,
                                 statusDescription = it.statusDescription,
                                 trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                statusColor = StatusHelper.getStatusFromString(it.status).toColor()
-                            ) {
-                                navigator.parent?.parent?.push(
-                                    UserGroupsScreen(profile.displayName, profile.id)
-                                )
-                            }
+                                statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                                userId = it.id
+                            )
                         }
                     }
                 }

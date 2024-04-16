@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.card
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,9 +9,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +26,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -34,8 +45,11 @@ fun ProfileCard(
     statusDescription: String,
     trustRankColor: Color,
     statusColor: Color,
-    callback: (() -> Unit?)? = null
+    userId: String = ""
 ) {
+    val navigator = LocalNavigator.currentOrThrow
+    var isMenuExpanded by remember { mutableStateOf(false) }
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -44,11 +58,11 @@ fun ProfileCard(
             .height(270.dp)
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = {
-                if (callback != null) {
-                    callback()
-                }
-            })
+            .clickable(onClick =
+            {
+                if (userId.isNotEmpty()) isMenuExpanded = true
+            }
+            )
     ) {
 
         GlideImage(
@@ -83,6 +97,22 @@ fun ProfileCard(
                 fontWeight = FontWeight.SemiBold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
+            )
+        }
+
+        DropdownMenu(
+            expanded = isMenuExpanded,
+            onDismissRequest = { isMenuExpanded = false },
+            offset = DpOffset(12.dp, (-30).dp)
+        ) {
+            DropdownMenuItem(
+                onClick = {
+                    navigator.parent?.parent?.push(
+                        UserGroupsScreen(displayName, userId)
+                    )
+                    isMenuExpanded = false
+                },
+                text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
             )
         }
     }

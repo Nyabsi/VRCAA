@@ -249,4 +249,8 @@
     <!-- Misc -->
     <string name="misc_loading_label_text">Loading…</string>
 
+    <!-- User -->
+    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_edit_profile">Edit Profile</string>
+
 </resources>
