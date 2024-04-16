@@ -43,9 +43,9 @@
     <string name="profile_text_no_languages">言語の記載が有りません。</string>
     <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
     <string name="profile_user_dropdown_view_groups">グループの表示</string>
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
+    <string name="profile_user_dropdown_view_avatar">アバター詳細を表示</string>
     <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
+    <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
     <string name="search_filter_category_worlds">ワールド</string>
@@ -126,7 +126,7 @@
     <string name="avatar_title_created_at">作成日時</string>
     <string name="avatar_title_updated_at">最終更新日時</string>
     <string name="avatar_title_content_labels">コンテンツラベル</string>
-    <string name="avatar_text_author">By %1$s</string>
+    <string name="avatar_text_author">作者： %1$s</string>
     <string name="avatar_text_content_labels_not_found">このアバターにコンテンツラベルの登録は有りません。</string>
     <string name="avatar_toast_avatar_not_found_message">アバターが存在しないか、プライベートの為、取得に失敗しました。</string>
     <!-- Feed -->
@@ -212,10 +212,10 @@
     <string name="group_page_toast_leave_group_fail">グループの離脱に失敗しました。</string>
     <string name="group_user_no_groups_message">このユーザーはどのグループにも所属していません。</string>
     <string name="group_user_failed_to_fetch_groups">グループ情報の取得に失敗しました。再試行してください。</string>
-    <string name="group_user_viewing_groups_username">%1$s\さんのグループ一覧</string>
+    <string name="group_user_viewing_groups_username">%1$s さんのグループ一覧</string>
     <!-- Misc -->
-    <string name="misc_loading_label_text">Loading…</string>
+    <string name="misc_loading_label_text">少女祈祷中…</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">View Groups</string>
-    <string name="user_dropdown_edit_profile">Edit Profile</string>
+    <string name="user_dropdown_view_groups">所属グループを表示</string>
+    <string name="user_dropdown_edit_profile">プロフィールを編集</string>
 </resources>
