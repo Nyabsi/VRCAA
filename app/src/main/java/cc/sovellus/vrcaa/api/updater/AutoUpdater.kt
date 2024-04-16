@@ -28,7 +28,7 @@ class AutoUpdater(
 
     private suspend fun getLatestCommitHash(): String {
         val request = Request.Builder()
-            .url("https://api.github.com/repos/$author/$repo/ref/tags/latest")
+            .url("https://api.github.com/repos/$author/$repo/git/ref/tags/latest")
             .get()
             .build()
 
