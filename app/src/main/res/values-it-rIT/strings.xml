@@ -7,19 +7,19 @@
     <string-array name="friend_selection_options">
         <item>Favorite</item>
         <item>Online</item>
-        <item>Website</item>
+        <item>Sito web</item>
         <item>Offline</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
     <!-- Home -->
-    <string name="home_active_friends">Active Friends</string>
+    <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Recently Visited</string>
     <string name="home_featured_avatars">Featured Avatars</string>
     <string name="home_offline_friends">Offline Friends</string>
     <string name="home_featured_worlds">Featured Worlds</string>
-    <string name="home_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="home_failed_to_fetch_friends_message">Failed to fetch friends, try again.</string>
-    <string name="home_toast_updated_info">Refreshed friends and worlds.</string>
+    <string name="home_failed_to_fetch_worlds_message">Impossibile recuperare i mondi, riprovare tra poco.</string>
+    <string name="home_failed_to_fetch_friends_message">Impossibile recuperare gli amici, riprovare tra poco.</string>
+    <string name="home_toast_updated_info">Messo a giorno amici e mondi.</string>
     <!-- Login -->
     <string name="login_text">Login to VRC Android Assistant</string>
     <string name="login_label_username">Username or E-Mail Address</string>
@@ -32,30 +32,32 @@
     <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_label_code">2FA Code</string>
     <string name="auth_button_text">Verify</string>
-    <string name="auth_button_paste">Verify</string>
+    <string name="auth_button_paste">Incolla</string>
     <!-- Main -->
     <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
     <!-- Profile -->
-    <string name="profile_label_current_location">Current Location</string>
+    <string name="profile_label_current_location">Posizione attuale</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">No description specified.</string>
     <string name="profile_text_no_languages">No languages specified.</string>
-    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
-    <string name="profile_user_dropdown_view_groups">View Groups</string>
-    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
+    <string name="profile_user_dropdown_manage_notifications">Gestire le notifiche</string>
+    <string name="profile_user_dropdown_view_groups">Visualizza gruppi</string>
+    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
+    <string name="profile_user_not_found_message">L\'utente non esiste.</string>
+    <string name="profile_user_avatar_private">Avatar is private!</string>
     <!-- Search -->
     <string name="search_text_result">Results for</string>
-    <string name="search_filter_category_worlds">Worlds</string>
-    <string name="search_filter_category_worlds_featured">Featured</string>
-    <string name="search_filter_category_worlds_sort_by">Sort By</string>
-    <string name="search_filter_category_worlds_count">Count</string>
-    <string name="search_filter_category_users">Users</string>
+    <string name="search_filter_category_worlds">Mondi</string>
+    <string name="search_filter_category_worlds_featured">In Evidenza</string>
+    <string name="search_filter_category_worlds_sort_by">Ordina per</string>
+    <string name="search_filter_category_worlds_count">Quantità di mondi</string>
+    <string name="search_filter_category_users">Utenti</string>
     <string name="search_filter_category_users_count">Count</string>
-    <string name="search_filter_category_groups">Groups</string>
+    <string name="search_filter_category_groups">Gruppi</string>
     <string name="search_filter_category_groups_count">Count</string>
-    <string name="search_filter_button_reset">Reset</string>
-    <string name="search_filter_button_apply">Apply</string>
+    <string name="search_filter_button_reset">Resetta</string>
+    <string name="search_filter_button_apply">Applica</string>
     <string-array name="search_selection_options">
         <item>Worlds</item>
         <item>Users</item>
@@ -209,4 +211,9 @@
     <string name="group_user_no_groups_message">User is not apart of any groups.</string>
     <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <!-- Misc -->
+    <string name="misc_loading_label_text">Loading…</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_edit_profile">Edit Profile</string>
 </resources>
