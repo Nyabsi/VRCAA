@@ -75,11 +75,6 @@ class SettingsScreen : Screen {
                         failure = placeholder(R.drawable.image_placeholder)
                     )
                 }
-
-                HorizontalDivider(
-                    color = Color.Gray,
-                    thickness = 0.5.dp
-                )
             }
             item {
                 ListItem(

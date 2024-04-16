@@ -79,7 +79,7 @@ class AboutScreen : Screen {
                     title = { Text(text = stringResource(R.string.about_page_title)) }
                 )
             },
-            content = { it ->
+            content = {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth().padding(bottom = it.calculateBottomPadding(), top = it.calculateTopPadding()),
