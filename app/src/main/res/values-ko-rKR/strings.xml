@@ -12,7 +12,7 @@
     </string-array>
     <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
     <!-- Home -->
-    <string name="home_active_friends">활성 친구</string>
+    <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">최근 방문</string>
     <string name="home_featured_avatars">추천 아바타</string>
     <string name="home_offline_friends">오프라인 친구</string>
@@ -32,7 +32,7 @@
     <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_label_code">2차 인증 코드</string>
     <string name="auth_button_text">인증</string>
-    <string name="auth_button_paste">Verify</string>
+    <string name="auth_button_paste">Paste</string>
     <!-- Main -->
     <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
     <!-- Profile -->
@@ -43,7 +43,9 @@
     <string name="profile_text_no_languages">언어 없음.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
+    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
     <string name="profile_user_not_found_message">User doesn\'t exist.</string>
+    <string name="profile_user_avatar_private">Avatar is private!</string>
     <!-- Search -->
     <string name="search_text_result">검색 결과:</string>
     <string name="search_filter_category_worlds">Worlds</string>
@@ -209,4 +211,9 @@
     <string name="group_user_no_groups_message">User is not apart of any groups.</string>
     <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <!-- Misc -->
+    <string name="misc_loading_label_text">Loading…</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_edit_profile">Edit Profile</string>
 </resources>
