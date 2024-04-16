@@ -7,6 +7,7 @@ import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendLocation
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOffline
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOnline
+import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.NotificationV2
 import cc.sovellus.vrcaa.api.vrchat.websocket.models.UpdateModel
@@ -89,6 +90,11 @@ class PipelineWebSocket(
 
                     "friend-add" -> {
                         val friend = Gson().fromJson(update.content, FriendAdd::class.java)
+                        socketListener?.onMessage(friend)
+                    }
+
+                    "friend-update" -> {
+                        val friend = Gson().fromJson(update.content, FriendUpdate::class.java)
                         socketListener?.onMessage(friend)
                     }
 
