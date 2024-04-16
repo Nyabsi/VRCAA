@@ -16,7 +16,7 @@
     <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
 
     <!-- Home -->
-    <string name="home_active_friends">Active Friends</string>
+    <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Recently Visited</string>
     <string name="home_featured_avatars">Featured Avatars</string>
     <string name="home_offline_friends">Offline Friends</string>
