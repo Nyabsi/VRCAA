@@ -14,6 +14,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Auth
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Code
 import cc.sovellus.vrcaa.api.vrchat.http.models.Favorites
+import cc.sovellus.vrcaa.api.vrchat.http.models.FileMetadata
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friends
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
@@ -645,5 +646,23 @@ class VRChatApi(
 
         val response = handleRequest(result)
         return Gson().fromJson(response, GroupInstances::class.java)
+    }
+
+    suspend fun getFileMetadata(fileId: String): FileMetadata? {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/file/$fileId",
+            headers = headers.build(),
+            body = null
+        )
+
+        val response = handleRequest(result)
+        return Gson().fromJson(response, FileMetadata::class.java)
     }
 }

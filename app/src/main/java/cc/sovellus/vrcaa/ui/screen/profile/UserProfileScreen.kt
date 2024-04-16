@@ -49,6 +49,7 @@ import cc.sovellus.vrcaa.ui.models.profile.UserProfileScreenModel.UserProfileSta
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.models.profile.UserProfileScreenModel
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
@@ -142,6 +143,25 @@ class UserProfileScreen(
                                                 isMenuExpanded = false
                                             },
                                             text = { Text(stringResource(R.string.profile_user_dropdown_view_groups)) }
+                                        )
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                model.findAvatar { avatarId ->
+                                                    if (avatarId == null)  {
+                                                        Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.profile_user_avatar_private),
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    } else {
+                                                        navigator.push(
+                                                            AvatarScreen(avatarId)
+                                                        )
+                                                    }
+                                                }
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.profile_user_dropdown_view_avatar)) }
                                         )
                                     }
                                 }
