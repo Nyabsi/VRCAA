@@ -6,13 +6,13 @@
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Suosikit</item>
-        <item>Online</item>
-        <item>Website</item>
+        <item>Paikalla</item>
+        <item>Sivulla</item>
         <item>Ei paikalla</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">Päivitetyt suosikkiystävät.</string>
     <!-- Home -->
-    <string name="home_active_friends">Aktiiviset Ystävät</string>
+    <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
     <string name="home_featured_avatars">Suositellut Hahmot</string>
     <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
@@ -32,7 +32,7 @@
     <string name="auth_text_app">Syötä autentikointisovelluksen antama koodi</string>
     <string name="auth_label_code">Kaksivaiheisen todennuksen koodi</string>
     <string name="auth_button_text">Vahvista</string>
-    <string name="auth_button_paste">Verify</string>
+    <string name="auth_button_paste">Liitä</string>
     <!-- Main -->
     <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
     <!-- Profile -->
@@ -42,8 +42,10 @@
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
     <string name="profile_text_no_languages">Kieliä ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
-    <string name="profile_user_dropdown_view_groups">View Groups</string>
+    <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
+    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
+    <string name="profile_user_avatar_private">Avatar is private!</string>
     <!-- Search -->
     <string name="search_text_result">Tulokset kohteelle</string>
     <string name="search_filter_category_worlds">Maailmat</string>
@@ -53,14 +55,14 @@
     <string name="search_filter_category_users">Käyttäjät</string>
     <string name="search_filter_category_users_count">Määrä</string>
     <string name="search_filter_category_groups">Ryhmät</string>
-    <string name="search_filter_category_groups_count">Count</string>
+    <string name="search_filter_category_groups_count">Määrä</string>
     <string name="search_filter_button_reset">Nollaa</string>
     <string name="search_filter_button_apply">Käytä</string>
     <string-array name="search_selection_options">
         <item>Maailmat</item>
         <item>Käyttäjät</item>
         <item>Hahmot</item>
-        <item>Groups</item>
+        <item>Ryhmät</item>
     </string-array>
     <string name="search_failed_to_fetch_worlds_message">Maailmojen noutaminen epäonnistui, yritä uudelleen.</string>
     <string name="search_failed_to_fetch_users_message">Ystävien noutaminen epäonnistui, yritä uudelleen.</string>
@@ -176,10 +178,10 @@
     <string name="update_dialog_title">Uusi päivitys saatavilla!</string>
     <string name="update_dialog_description">Haluatko päivittää tämän sovelluksen?</string>
     <string name="update_toast_failed_update">Automaattinen päivitys epäonnistui…</string>
-    <string name="update_notification_title_ongoing">Downloading update..</string>
-    <string name="update_notification_title_done">Downloading complete.</string>
-    <string name="update_notification_action_cancel">Cancel</string>
-    <string name="update_notification_action_install">Install</string>
+    <string name="update_notification_title_ongoing">Ladataan päivitystä..</string>
+    <string name="update_notification_title_done">Lataus on valmis.</string>
+    <string name="update_notification_action_cancel">Peruuta</string>
+    <string name="update_notification_action_install">Asenna</string>
     <!-- Crash -->
     <string name="crash_title_text">Sovellus kaatui :(</string>
     <string name="crash_button_restart_text">Uudelleenkäynnistä</string>
@@ -187,26 +189,31 @@
     <string name="crash_button_report_text">Ilmoita ongelma</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
-        <item>Info</item>
-        <item>Instances</item>
+        <item>Tietoja</item>
+        <item>Instanssit</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_toast_not_found_message">Ryhmää ei löydetty, oletko varma, että se on olemassa?</string>
+    <string name="group_page_label_description">Kuvaus</string>
+    <string name="group_page_label_rules">Säännöt</string>
+    <string name="group_page_dropdown_view_author">Näytä Tekijän Profiili</string>
+    <string name="group_page_dropdown_request_invite">Pyydä Kutsu</string>
+    <string name="group_page_dropdown_request_invite_cancel">Peruuta Kutsupyyntö</string>
+    <string name="group_page_dropdown_join_group">Liity ryhmään</string>
+    <string name="group_page_dropdown_leave_group">Eroa ryhmästä</string>
+    <string name="group_page_toast_invite_requested">Lähetä kutsupyyntö.</string>
+    <string name="group_page_toast_invite_requested_fail">Kutsun pyyntö epäonnistui.</string>
+    <string name="group_page_toast_invite_requested_cancel">Kutsupyyntö peruutettu.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Pyynnön peruuttaminen epäonnistui.</string>
+    <string name="group_page_toast_join_group">Liityt ryhmään.</string>
+    <string name="group_page_toast_join_group_fail">Ryhmään liittyminen epäonnistui.</string>
+    <string name="group_page_toast_leave_group">Poistut ryhmästä.</string>
+    <string name="group_page_toast_leave_group_fail">Ryhmästä poistuminen epäonnistui.</string>
+    <string name="group_user_no_groups_message">Käyttäjä ei ole minkään ryhmän jäsen.</string>
+    <string name="group_user_failed_to_fetch_groups">Ryhmien noutaminen epäonnistui, yritä uudelleen.</string>
+    <string name="group_user_viewing_groups_username">%1$s:n Ryhmät</string>
+    <!-- Misc -->
+    <string name="misc_loading_label_text">Ladataan…</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_edit_profile">Edit Profile</string>
 </resources>
