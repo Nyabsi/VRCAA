@@ -12,7 +12,7 @@
     </string-array>
     <string name="friend_refreshed_favorites_message">Päivitetyt suosikkiystävät.</string>
     <!-- Home -->
-    <string name="home_active_friends">Aktiiviset Ystävät</string>
+    <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
     <string name="home_featured_avatars">Suositellut Hahmot</string>
     <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
@@ -43,7 +43,9 @@
     <string name="profile_text_no_languages">Kieliä ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
+    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
+    <string name="profile_user_avatar_private">Avatar is private!</string>
     <!-- Search -->
     <string name="search_text_result">Tulokset kohteelle</string>
     <string name="search_filter_category_worlds">Maailmat</string>
@@ -211,4 +213,7 @@
     <string name="group_user_viewing_groups_username">%1$s:n Ryhmät</string>
     <!-- Misc -->
     <string name="misc_loading_label_text">Ladataan…</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_edit_profile">Edit Profile</string>
 </resources>
