@@ -8,7 +8,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.updater.models.Commits
+import cc.sovellus.vrcaa.api.updater.models.GitRef
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -28,13 +28,13 @@ class AutoUpdater(
 
     private suspend fun getLatestCommitHash(): String {
         val request = Request.Builder()
-            .url("https://api.github.com/repos/$author/$repo/commits")
+            .url("https://api.github.com/repos/$author/$repo/ref/tags/latest")
             .get()
             .build()
 
         val response = client.newCall(request).await()
-        val data = Gson().fromJson(response.body?.string()!!, Commits::class.java)
-        return data[0].sha.substring(0, 7)
+        val data = Gson().fromJson(response.body?.string()!!, GitRef::class.java)
+        return data.objectX.sha.substring(0, 7)
     }
 
     suspend fun checkForUpdates(): Boolean {
