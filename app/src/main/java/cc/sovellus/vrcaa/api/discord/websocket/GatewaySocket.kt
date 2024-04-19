@@ -45,10 +45,12 @@ class GatewaySocket(
     private var sessionId = ""
     private var shouldResume: Boolean = false
 
-    private var heartbeatThread: Thread = Thread {
+    private val heartbeatRunnable = Runnable {
         Thread.sleep(interval)
         sendHeartbeat()
     }
+
+    private lateinit var heartbeatThread: Thread
 
     private val listener by lazy {
         object : WebSocketListener() {
@@ -79,9 +81,11 @@ class GatewaySocket(
                     10 -> {
                         val hello = Gson().fromJson(payload.d, Hello::class.java)
                         interval = hello.heartbeatInterval
+                        heartbeatThread = Thread(heartbeatRunnable)
                         heartbeatThread.start()
                     }
                     11 -> {
+                        heartbeatThread = Thread(heartbeatRunnable)
                         heartbeatThread.start()
                     }
                     else -> {
