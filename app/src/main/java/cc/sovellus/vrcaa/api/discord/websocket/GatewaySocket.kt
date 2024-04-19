@@ -168,8 +168,11 @@ class GatewaySocket(
 
         assets["small_text"] = status.toString()
 
+        if (since.toInt() == 0)
+            since = System.currentTimeMillis()
+
         val timestamps = ArrayMap<String, Any>()
-        timestamps["start"] = System.currentTimeMillis()
+        timestamps["start"] = since
 
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
