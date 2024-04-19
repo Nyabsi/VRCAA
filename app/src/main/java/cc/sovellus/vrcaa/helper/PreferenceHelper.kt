@@ -71,3 +71,11 @@ internal var SharedPreferences.usersAmount: Int
 internal var SharedPreferences.groupsAmount: Int
     get() = getInt("groupsAmount", 50)
     set(it) = edit { putInt("groupsAmount", it) }
+
+internal var SharedPreferences.richPresenceWarningAcknowledged: Boolean
+    get() = getBoolean("richPresenceWarningAcknowledged", false)
+    set(it) = edit { putBoolean("richPresenceWarningAcknowledged", it) }
+
+internal var SharedPreferences.richPresenceWebhookUrl: String
+    get() = getString("richPresenceWebhookUrl", "")!!
+    set(it) = edit { putString("richPresenceWebhookUrl", it) }
