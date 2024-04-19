@@ -7,12 +7,12 @@ import cc.sovellus.vrcaa.api.discord.proxy.models.WebHookResponse
 import com.google.gson.Gson
 import okhttp3.Headers
 
-class DiscordMediaProxy  : BaseClient() {
+class DiscordMediaProxy(
+    private val webHookUrl: String
+)  : BaseClient() {
 
     private val apiBase: String = "https://discord.com/api/v9"
     private val userAgent: String = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0"
-    private val webHookToken = ""
-    private val webHookChannel =  0
 
     private fun handleRequest(result: Result): String? {
         return when (result) {
@@ -48,7 +48,7 @@ class DiscordMediaProxy  : BaseClient() {
 
         val result = doRequest(
             method = "POST",
-            url = "$apiBase/webhooks/$webHookChannel/$webHookToken?wait=true",
+            url = "$webHookUrl?wait=true",
             headers = headers.build(),
             body = body
         )

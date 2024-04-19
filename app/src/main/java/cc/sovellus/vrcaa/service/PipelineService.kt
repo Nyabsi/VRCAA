@@ -28,6 +28,7 @@ import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.discordToken
 import cc.sovellus.vrcaa.helper.richPresenceEnabled
+import cc.sovellus.vrcaa.helper.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
@@ -338,7 +339,7 @@ class PipelineService : Service(), CoroutineScope {
                     pipeline?.setListener(listener)
 
                     if (preferences.richPresenceEnabled) {
-                        gateway = GatewaySocket(preferences.discordToken)
+                        gateway = GatewaySocket(preferences.discordToken, preferences.richPresenceWebhookUrl)
                         gateway?.connect()
                     }
                 }

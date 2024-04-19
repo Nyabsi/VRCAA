@@ -25,14 +25,15 @@ import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
 
 class GatewaySocket(
-    private val token: String
+    private val token: String,
+    private val webHookUrl: String
 ): CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private lateinit var socket: WebSocket
     private val client: OkHttpClient by lazy { OkHttpClient() }
-    private val mp = DiscordMediaProxy()
+    private val mp = DiscordMediaProxy(webHookUrl)
     private val gson = GsonBuilder().serializeNulls().create()
     private val inflater = Inflater()
 
@@ -152,7 +153,11 @@ class GatewaySocket(
 
         val assets = ArrayMap<String, String>()
 
-        assets["large_image"] = mp.convertImageUrl(url)?.ifEmpty { APP_ASSET_LARGE_ICON }
+        if (webHookUrl.isEmpty())
+            assets["large_image"] =  APP_ASSET_LARGE_ICON
+        else
+            assets["large_image"] = mp.convertImageUrl(url)?.ifEmpty { APP_ASSET_LARGE_ICON }
+
         assets["large_text"] = "Powered by VRCAA"
 
         assets["small_image"] = when(status) {

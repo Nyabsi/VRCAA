@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,6 +27,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,6 +40,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.components.dialog.InputDialog
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
@@ -54,6 +58,21 @@ class RichPresenceScreen : Screen {
         val context = LocalContext.current
 
         val model = navigator.rememberNavigatorScreenModel { RichPresenceScreenModel(context) }
+        val dialogState = remember { mutableStateOf(false) }
+
+        if (dialogState.value) {
+            InputDialog(
+                onDismiss = {
+                    dialogState.value = false
+                },
+                onConfirmation = {
+                    dialogState.value = false
+                    model.setWebSocket()
+                },
+                title = "Set Webhook Url",
+                text = model.websocket
+            )
+        }
 
         Scaffold(
             topBar = {
@@ -85,7 +104,7 @@ class RichPresenceScreen : Screen {
                                 leadingContent = {
                                     Icon(
                                         imageVector = Icons.Filled.Image,
-                                        contentDescription = "Localized description"
+                                        contentDescription = null
                                     )
                                 },
                                 trailingContent = {
@@ -105,7 +124,22 @@ class RichPresenceScreen : Screen {
                                 },
                                 modifier = Modifier.clickable(
                                     onClick = {
-                                        navigator.push(LicensesScreen())
+                                        model.toggle()
+                                    }
+                                )
+                            )
+                            ListItem(
+                                headlineContent = { Text("Set Webhook Url") },
+                                supportingContent = { Text("Required for world thumbnail support (Optional)") },
+                                leadingContent = {
+                                    Icon(
+                                        imageVector = Icons.Filled.ImageSearch,
+                                        contentDescription = null
+                                    )
+                                },
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        dialogState.value = true
                                     }
                                 )
                             )
@@ -115,7 +149,7 @@ class RichPresenceScreen : Screen {
                                 leadingContent = {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.Logout,
-                                        contentDescription = "Localized description"
+                                        contentDescription = null
                                     )
                                 },
                                 modifier = Modifier.clickable(

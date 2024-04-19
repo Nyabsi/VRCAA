@@ -12,6 +12,7 @@ import cc.sovellus.vrcaa.api.discord.http.models.DiscordLogin
 import cc.sovellus.vrcaa.api.discord.http.models.DiscordTicket
 import cc.sovellus.vrcaa.helper.discordToken
 import cc.sovellus.vrcaa.helper.richPresenceEnabled
+import cc.sovellus.vrcaa.helper.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,7 @@ class RichPresenceScreenModel(
     var ticket = mutableStateOf("")
     var code = mutableStateOf("")
     var mfa = mutableStateOf(false)
+    var websocket = mutableStateOf(preferences.richPresenceWebhookUrl)
 
     fun login() {
         screenModelScope.launch {
@@ -76,6 +78,10 @@ class RichPresenceScreenModel(
     fun revoke() {
         preferences.discordToken = ""
         token.value = ""
+    }
+
+    fun setWebSocket() {
+        preferences.richPresenceWebhookUrl = websocket.value
     }
 
     fun toggle() {
