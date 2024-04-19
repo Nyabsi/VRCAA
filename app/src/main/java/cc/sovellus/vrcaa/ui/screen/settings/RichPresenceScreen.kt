@@ -129,8 +129,8 @@ class RichPresenceScreen : Screen {
                                 )
                             )
                             ListItem(
-                                headlineContent = { Text("Set Webhook Url") },
-                                supportingContent = { Text("Required for world thumbnail support (Optional)") },
+                                headlineContent = { Text(stringResource(R.string.discord_login_label_set_webhook)) },
+                                supportingContent = { Text(stringResource(R.string.discord_login_description_set_webhook)) },
                                 leadingContent = {
                                     Icon(
                                         imageVector = Icons.Filled.ImageSearch,
