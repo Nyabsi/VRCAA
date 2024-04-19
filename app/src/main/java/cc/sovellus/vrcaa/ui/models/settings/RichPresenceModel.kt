@@ -85,7 +85,7 @@ class RichPresenceScreenModel(
         val intent = Intent(context, PipelineService::class.java)
 
         context.stopService(intent)
-        context.startForegroundService(intent)
+        context.startService(intent)
 
         Toast.makeText(
             context,

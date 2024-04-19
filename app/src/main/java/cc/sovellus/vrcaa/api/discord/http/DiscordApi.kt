@@ -6,6 +6,8 @@ import cc.sovellus.vrcaa.api.base.BaseClient
 import cc.sovellus.vrcaa.api.discord.http.models.DiscordLogin
 import cc.sovellus.vrcaa.api.discord.http.models.DiscordTicket
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
 import okhttp3.Headers
 
 class DiscordApi : BaseClient() {
@@ -35,7 +37,7 @@ class DiscordApi : BaseClient() {
         }
     }
 
-    suspend fun login(username: String, password: String): Any? {
+    suspend fun login(username: String, password: String): Any {
         val headers = Headers.Builder()
         headers["User-Agent"] = userAgent
 
@@ -51,11 +53,14 @@ class DiscordApi : BaseClient() {
         val response = handleRequest(result)
 
         return if (result == Result.InvalidRequest) {
-            null
-        }
-        else {
-            val ticket = Gson().fromJson(response, DiscordTicket::class.java)
-            ticket ?: Gson().fromJson(response, DiscordLogin::class.java)
+            false
+        } else {
+            val login = Gson().fromJson(response, DiscordLogin::class.java)
+            if (login.token == null) {
+                Gson().fromJson(response, DiscordTicket::class.java)
+            } else {
+                login
+            }
         }
     }
 
