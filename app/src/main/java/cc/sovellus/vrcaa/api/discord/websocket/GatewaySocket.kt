@@ -41,7 +41,6 @@ class GatewaySocket(
 
     private var sequence: Int = 0
     private var interval: Long = 0
-    private var since: Long = 0
     private var sessionId = ""
     private var shouldResume: Boolean = false
 
@@ -168,11 +167,8 @@ class GatewaySocket(
 
         assets["small_text"] = status.toString()
 
-        if (since.toInt() == 0)
-            since = System.currentTimeMillis()
-
         val timestamps = ArrayMap<String, Any>()
-        timestamps["start"] = since
+        timestamps["start"] = System.currentTimeMillis()
 
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
