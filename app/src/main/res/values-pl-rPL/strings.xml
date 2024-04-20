@@ -11,6 +11,9 @@
         <item>Niedostępny</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">Odświeżono ulubionych znajomych.</string>
+    <!-- Generic re-used strings -->
+    <string name="generic_label_languages">Languages</string>
+    <string name="generic_label_no_languages_found">No languages specified.</string>
     <!-- Home -->
     <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Ostatnio odwiedzone</string>
@@ -38,9 +41,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Aktualna lokalizacja</string>
     <string name="profile_label_biography">O mnie</string>
-    <string name="profile_label_languages">Języki</string>
     <string name="profile_text_no_biography">Brak opisu.</string>
-    <string name="profile_text_no_languages">Nie określono języka.</string>
     <string name="profile_user_dropdown_manage_notifications">Zarządzanie powiadomieniami</string>
     <string name="profile_user_dropdown_view_groups">Wyświetl grupy</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
