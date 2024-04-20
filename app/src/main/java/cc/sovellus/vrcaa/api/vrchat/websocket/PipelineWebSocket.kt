@@ -125,24 +125,18 @@ class PipelineWebSocket(
             override fun onClosing(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-
+                if (shouldReconnect) {
+                    Thread.sleep(RECONNECTION_INTERVAL) // wait 3 seconds before reconnecting.
+                    connect()
+                }
             }
-
-            override fun onClosed(
-                webSocket: WebSocket, code: Int, reason: String
-            ) {
-
-            }
-
+            
             override fun onFailure(
                 webSocket: WebSocket, t: Throwable, response: Response?
             ) {
                 when (response?.code) {
                     401 -> {
                         shouldReconnect = false
-                    }
-                    500 -> {
-                        // possibly wait?
                     }
                 }
 
