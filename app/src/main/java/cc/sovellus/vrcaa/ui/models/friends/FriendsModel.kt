@@ -37,9 +37,8 @@ class FriendsScreenModel(
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
-            var newList = friends.toList()
+            val newList = friends.toList()
             screenModelScope.launch {
-                newList = parseReadableLocation(newList)
                 friendsStateFlow.update { newList }
             }
         }
@@ -48,10 +47,6 @@ class FriendsScreenModel(
     init {
         mutableState.value = FriendListState.Loading
         FriendManager.setFriendListener(listener)
-
-        screenModelScope.launch {
-            FriendManager.setFriends(parseReadableLocation(FriendManager.getFriends().toList()).toMutableList())
-        }
 
         fetchFavorites()
         mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
@@ -65,19 +60,8 @@ class FriendsScreenModel(
                     api?.getFriend(favorite.id)
                         ?.let { friend -> favoriteFriends.add(friend) }
                 }
-                parseReadableLocation(favoriteFriends)
             }
         }
-    }
-
-    suspend fun parseReadableLocation(users: List<LimitedUser>): List<LimitedUser> {
-        for (user in users) {
-            user.location?.let {
-                if (it.contains("wrld_"))
-                    user.location = LocationHelper.getReadableLocation(it)
-            }
-        }
-        return users
     }
 
     fun refreshFriends(context: Context) {

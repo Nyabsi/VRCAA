@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.vrchat.http.models
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class LimitedUser(
@@ -47,7 +46,9 @@ data class LimitedUser(
     @SerializedName("userIcon")
     val userIcon: String,
     @SerializedName("location")
-    var location: String?,
+    var location: String,
     @SerializedName("imageUrl")
-    val imageUrl: String
+    val imageUrl: String,
+    @Transient
+    var world: World?
 )

@@ -195,7 +195,7 @@ class PipelineService : Service(), CoroutineScope {
                                             .apply {
                                                 friendId = friend.userId
                                                 friendName = friend.user.displayName
-                                                travelDestination = LocationHelper.getReadableLocation(friend.location)
+                                                travelDestination = LocationHelper.getReadableLocation(friend.location, friend.world.name)
                                                 friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                                             }
                                     )
@@ -206,6 +206,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     // This guarantees the user will have valid location.
                     friend.user.location = friend.location
+                    friend.user.world = friend.world
                     FriendManager.updateFriend(friend.user)
                 }
 
@@ -331,6 +332,18 @@ class PipelineService : Service(), CoroutineScope {
                     val friends: MutableList<LimitedUser> = ArrayList()
                     api?.getFriends()?.let { friends += it }
                     api?.getFriends(true)?.let { friends += it }
+
+                    for (friend in friends) {
+                        friend.location.let { intent ->
+                            if (intent.contains("wrld_")) {
+                                val info = LocationHelper.parseLocationInfo(friend.location)
+                                api?.getWorld(info.worldId)?.let {
+                                    friend.world = it
+                                }
+                            }
+                        }
+                    }
+
                     FriendManager.setFriends(friends)
 
                     pipeline = PipelineWebSocket(token)
