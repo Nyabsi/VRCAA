@@ -11,6 +11,9 @@
         <item>Offline</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
+    <!-- Generic re-used strings -->
+    <string name="generic_label_languages">Languages</string>
+    <string name="generic_label_no_languages_found">No languages specified.</string>
     <!-- Home -->
     <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Recently Visited</string>
@@ -38,9 +41,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
