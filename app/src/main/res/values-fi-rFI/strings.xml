@@ -11,6 +11,9 @@
         <item>Ei paikalla</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">Päivitetyt suosikkiystävät.</string>
+    <!-- Generic re-used strings -->
+    <string name="generic_label_languages">Languages</string>
+    <string name="generic_label_no_languages_found">No languages specified.</string>
     <!-- Home -->
     <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
@@ -38,9 +41,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
     <string name="profile_label_biography">Kuvaus</string>
-    <string name="profile_label_languages">Kielet</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
-    <string name="profile_text_no_languages">Kieliä ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
