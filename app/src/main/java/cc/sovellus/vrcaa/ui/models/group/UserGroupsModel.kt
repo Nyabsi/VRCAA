@@ -3,8 +3,7 @@ package cc.sovellus.vrcaa.ui.models.group
 import android.content.Context
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
-import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroups
+import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 

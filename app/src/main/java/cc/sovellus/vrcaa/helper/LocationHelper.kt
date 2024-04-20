@@ -1,7 +1,5 @@
 package cc.sovellus.vrcaa.helper
 
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.manager.ApiManager.api
 import extensions.wu.seal.PropertySuffixSupport.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -43,6 +43,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.richPresenceWarningAcknowledged
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.models.settings.SettingsScreenModel
+import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
+import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder

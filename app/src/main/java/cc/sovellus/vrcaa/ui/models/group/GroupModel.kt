@@ -7,8 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.Group
-import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
+import cc.sovellus.vrcaa.api.vrchat.models.Group
+import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -110,7 +110,7 @@ class GroupScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api?.InviteSelfToInstance(clickedInstance.value)
+            api?.inviteSelfToInstance(clickedInstance.value)
         }
     }
 }

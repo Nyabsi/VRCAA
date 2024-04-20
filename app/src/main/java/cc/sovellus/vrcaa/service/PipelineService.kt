@@ -14,16 +14,16 @@ import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.websocket.GatewaySocket
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
-import cc.sovellus.vrcaa.api.vrchat.websocket.PipelineWebSocket
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendAdd
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendDelete
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendLocation
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOffline
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOnline
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.Notification
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.UserLocation
+import cc.sovellus.vrcaa.api.discord.DiscordGateway
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendLocation
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOffline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOnline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.discordToken
@@ -49,10 +49,10 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var notificationManager: NotificationManager
     private lateinit var preferences: SharedPreferences
 
-    private var pipeline: PipelineWebSocket? = null
-    private var gateway: GatewaySocket? = null
+    private var pipeline: VRChatPipeline? = null
+    private var gateway: DiscordGateway? = null
 
-    private val listener = object : PipelineWebSocket.SocketListener {
+    private val listener = object : VRChatPipeline.SocketListener {
         override fun onMessage(message: Any?) {
             if (message != null) {
                 serviceHandler?.obtainMessage()?.also { msg ->
@@ -346,13 +346,13 @@ class PipelineService : Service(), CoroutineScope {
 
                     FriendManager.setFriends(friends)
 
-                    pipeline = PipelineWebSocket(token)
+                    pipeline = VRChatPipeline(token)
 
                     pipeline?.connect()
                     pipeline?.setListener(listener)
 
                     if (preferences.richPresenceEnabled) {
-                        gateway = GatewaySocket(preferences.discordToken, preferences.richPresenceWebhookUrl)
+                        gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
                         gateway?.connect()
                     }
                 }
