@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.settings
 
 import android.content.Context.MODE_PRIVATE
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -42,7 +44,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.richPresenceWarningAcknowledged
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
-import cc.sovellus.vrcaa.ui.models.settings.SettingsScreenModel
+import cc.sovellus.vrcaa.ui.models.settings.SettingsModel
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -61,7 +63,7 @@ class SettingsScreen : Screen {
         val context = LocalContext.current
         val preferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
-        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { SettingsModel(context) }
         val dialogState = remember { mutableStateOf(false) }
 
         val title = buildAnnotatedString {
@@ -118,13 +120,11 @@ class SettingsScreen : Screen {
                         .padding(8.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    GlideImage(
-                        model = if (isSystemInDarkTheme()) { R.drawable.logo_dark } else { R.drawable.logo_white },
-                        contentDescription = stringResource(R.string.preview_image_description),
+                    Image(
+                        painter = if (isSystemInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
+                        contentDescription = null,
                         contentScale = ContentScale.FillHeight,
-                        alignment = Alignment.Center,
-                        loading = placeholder(R.drawable.image_placeholder),
-                        failure = placeholder(R.drawable.image_placeholder)
+                        alignment = Alignment.Center
                     )
                 }
             }

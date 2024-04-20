@@ -42,8 +42,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
-import cc.sovellus.vrcaa.ui.models.friends.FriendsScreenModel
-import cc.sovellus.vrcaa.ui.models.friends.FriendsScreenModel.FriendListState
+import cc.sovellus.vrcaa.ui.models.friends.FriendsModel
+import cc.sovellus.vrcaa.ui.models.friends.FriendsModel.FriendListState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import java.util.UUID
@@ -57,7 +57,7 @@ class FriendsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { FriendsModel(context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -71,7 +71,7 @@ class FriendsScreen : Screen {
     @Composable
     private fun RenderList(
         favoriteFriends: List<LimitedUser>,
-        model: FriendsScreenModel
+        model: FriendsModel
     ) {
 
         val context = LocalContext.current
@@ -178,7 +178,7 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsOnWebsite(
-        model: FriendsScreenModel
+        model: FriendsModel
     ) {
         val friends = model.friends.collectAsState()
 
@@ -218,7 +218,7 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriends(
-        model: FriendsScreenModel
+        model: FriendsModel
     ) {
         val friends = model.friends.collectAsState()
 
@@ -258,7 +258,7 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsOffline(
-        model: FriendsScreenModel
+        model: FriendsModel
     ) {
         val friends = model.friends.collectAsState()
 

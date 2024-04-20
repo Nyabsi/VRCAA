@@ -13,10 +13,10 @@ import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class WorldInfoScreenModel(
+class WorldInfoModel(
     private val context: Context,
     private val id: String
-) : StateScreenModel<WorldInfoScreenModel.WorldInfoState>(WorldInfoState.Init) {
+) : StateScreenModel<WorldInfoModel.WorldInfoState>(WorldInfoState.Init) {
 
     sealed class WorldInfoState {
         data object Init : WorldInfoState()

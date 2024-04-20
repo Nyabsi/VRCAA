@@ -12,9 +12,9 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class HomeScreenModel(
+class HomeModel(
     private val context: Context
-) : StateScreenModel<HomeScreenModel.HomeState>(HomeState.Init) {
+) : StateScreenModel<HomeModel.HomeState>(HomeState.Init) {
 
     sealed class HomeState {
         data object Init : HomeState()

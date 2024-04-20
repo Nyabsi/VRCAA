@@ -14,7 +14,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.ui.screen.login.MfaScreen
 import kotlinx.coroutines.launch
 
-class LoginScreenModel(
+class LoginModel(
     private val context: Context,
     private val navigator: Navigator
 ) : ScreenModel {

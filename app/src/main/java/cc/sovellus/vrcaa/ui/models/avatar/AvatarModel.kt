@@ -9,10 +9,10 @@ import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class AvatarScreenModel(
+class AvatarModel(
     private val context: Context,
     avatarId: String
-) : StateScreenModel<AvatarScreenModel.AvatarState>(AvatarState.Init) {
+) : StateScreenModel<AvatarModel.AvatarState>(AvatarState.Init) {
 
     sealed class AvatarState {
         data object Init : AvatarState()

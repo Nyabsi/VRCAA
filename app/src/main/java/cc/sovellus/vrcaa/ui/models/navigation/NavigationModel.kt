@@ -20,7 +20,7 @@ import cc.sovellus.vrcaa.helper.worldsAmount
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class NavigationScreenModel(
+class NavigationModel(
     private val context: Context
 ) : ScreenModel {
 

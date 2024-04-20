@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.helper
 
+import android.util.Log
 import extensions.wu.seal.PropertySuffixSupport.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,13 +25,18 @@ object LocationHelper: CoroutineScope {
     )
 
     // Reference from https://github.com/vrcx-team/VRCX/blob/master/html/src/app.js#L699-L804
-    fun parseLocationInfo(intent: String): LocationInfo {
+    fun parseLocationInfo(intent: String, isInstance: Boolean = false): LocationInfo {
 
         val result = LocationInfo()
 
         val intents = intent.split('~')
-        result.worldId = intents[0].split(':')[0]
-        result.instanceId = intents[0].split(':')[1]
+
+        if (!isInstance) {
+            result.worldId = intents[0].split(':')[0]
+            result.instanceId = intents[0].split(':')[1]
+        } else {
+            result.instanceId = intents[0]
+        }
 
         for (i in intents) {
 
@@ -79,8 +85,10 @@ object LocationHelper: CoroutineScope {
                     if (result.groupAccessType.isNotEmpty()) {
                         if (result.groupAccessType == "public") {
                             result.groupAccessType = "Public"
+                            result.instanceType = "Group (Public)"
                         } else {
                             result.groupAccessType = "Plus"
+                            result.instanceType = "Group (Plus)"
                         }
                     }
                 }

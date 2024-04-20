@@ -16,7 +16,7 @@ import cc.sovellus.vrcaa.helper.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
-class RichPresenceScreenModel(
+class RichPresenceModel(
     private val context: Context
 ) : ScreenModel {
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)

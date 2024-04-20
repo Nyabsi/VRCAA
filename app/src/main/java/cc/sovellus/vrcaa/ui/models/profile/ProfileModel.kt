@@ -7,9 +7,9 @@ import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class ProfileScreenModel(
+class ProfileModel(
     private val context: Context
-) : StateScreenModel<ProfileScreenModel.ProfileState>(ProfileState.Init) {
+) : StateScreenModel<ProfileModel.ProfileState>(ProfileState.Init) {
 
     sealed class ProfileState {
         data object Init : ProfileState()

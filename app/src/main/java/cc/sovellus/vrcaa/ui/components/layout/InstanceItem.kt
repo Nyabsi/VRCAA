@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.components.card
+package cc.sovellus.vrcaa.ui.components.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -14,8 +14,8 @@ import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.helper.LocationHelper
 
 @Composable
-fun InstanceCardWorld(intent: String, instance: Instance, onClick: () -> Unit) {
-    val result = LocationHelper.parseLocationInfo(intent)
+fun InstanceItem(intent: String, instance: Instance, onClick: () -> Unit) {
+    val result = LocationHelper.parseLocationInfo(intent, true)
     ListItem(
         headlineContent = {
             Text("Capacity: ${instance.nUsers}/${instance.world.capacity}, ${result.instanceType}")
