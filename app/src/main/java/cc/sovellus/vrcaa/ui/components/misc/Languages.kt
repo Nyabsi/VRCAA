@@ -12,18 +12,18 @@ import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 
 @Composable
-fun Languages(languages: List<String>) {
+fun Languages(languages: List<String>, isGroup: Boolean = false) {
     Row(
         modifier = Modifier.padding(start = 24.dp)
     ) {
         var wasEvenOneFoundFlag = false
         languages.let {
             for (language in languages) {
-                if (language.contains("language_")) {
+                if (language.contains("language_") or isGroup) {
                     if (!wasEvenOneFoundFlag)
                         wasEvenOneFoundFlag = true
 
-                    when (language.substring("language_".length)) {
+                    when (if (isGroup) { language } else { language.substring("language_".length) }) {
                         "eng" -> Image(
                             painter = painterResource(R.drawable.flag_gb),
                             contentDescription = "User Language flag",

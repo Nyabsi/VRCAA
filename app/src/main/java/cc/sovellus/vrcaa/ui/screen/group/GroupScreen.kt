@@ -51,6 +51,7 @@ import cc.sovellus.vrcaa.ui.components.card.GroupCard
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardGroup
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.models.group.GroupScreenModel
@@ -270,6 +271,9 @@ class GroupScreen(
 
                     SubHeader(title = stringResource(R.string.group_page_label_rules))
                     Description(text = group.rules)
+
+                    SubHeader(title = stringResource(R.string.profile_label_languages))
+                    Languages(languages = group.languages, true)
                 }
             }
         }
