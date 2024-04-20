@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -104,7 +105,11 @@ class WorldInfoScreen(
                             }
                         },
 
-                        title = { Text(text = world.name) }
+                        title = { Text(
+                            text = world.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        ) }
                     )
                 },
                 content = {

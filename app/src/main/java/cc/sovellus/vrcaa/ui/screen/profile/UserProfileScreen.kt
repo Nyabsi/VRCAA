@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -167,7 +168,11 @@ class UserProfileScreen(
                                 }
                             }
                         },
-                        title = { Text(text = profile.displayName) }
+                        title = { Text(
+                            text = profile.displayName,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        ) }
                     )
                 },
                 content = { padding ->

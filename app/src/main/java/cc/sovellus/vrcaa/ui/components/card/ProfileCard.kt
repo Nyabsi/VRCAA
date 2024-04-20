@@ -80,7 +80,9 @@ fun ProfileCard(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Left,
-            color = trustRankColor
+            color = trustRankColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Row(

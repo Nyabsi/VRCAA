@@ -54,6 +54,8 @@ fun AvatarCard(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Left,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Text(
