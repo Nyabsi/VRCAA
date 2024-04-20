@@ -51,7 +51,7 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                     callback()
                 })
     ) {
-        val result = LocationHelper.parseLocationInfo(profile.location!!)
+        val result = LocationHelper.parseLocationInfo(profile.location)
         
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -75,17 +75,23 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(8.dp)
             ) {
+                Text(
+                    text = instance.world.name,
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.padding(end = 6.dp)
                 ) {
                     Text(
-                        text = instance.world.name,
+                        text = "${result.instanceType} #${instance.name}",
                         textAlign = TextAlign.Left,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
-                        overflow = TextOverflow.Clip,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     // TODO: move this away from UI
@@ -125,13 +131,6 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                         )
                     }
                 }
-                Text(
-                    text = "${result.instanceType} #${instance.name}",
-                    textAlign = TextAlign.Left,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
                 Text(
                     text = "(${instance.nUsers} of ${instance.world.capacity})",
                     textAlign = TextAlign.Left,
