@@ -9,6 +9,7 @@ import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.enableUpdates
 import cc.sovellus.vrcaa.helper.invalidCookie
+import cc.sovellus.vrcaa.helper.twoFactorAuth
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class SettingsScreenModel(
 
             api?.logout()
 
+            preferences.twoFactorAuth = ""
             preferences.cookies = ""
             preferences.invalidCookie = true
 
