@@ -27,7 +27,7 @@ class FriendsScreenModel(
         data class Result(val favoriteFriends: List<LimitedUser>) : FriendListState()
     }
 
-    private var friendsStateFlow = MutableStateFlow(FriendManager.getFriends().toList())
+    private var friendsStateFlow = MutableStateFlow(listOf<LimitedUser>())
     private var favoriteFriends = mutableListOf<LimitedUser>()
 
     var friends = friendsStateFlow.asStateFlow()
@@ -45,10 +45,16 @@ class FriendsScreenModel(
 
     init {
         mutableState.value = FriendListState.Loading
-        FriendManager.setFriendListener(listener)
 
+        FriendManager.setFriendListener(listener)
         fetchFavorites()
-        mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
+
+        screenModelScope.launch {
+            while (FriendManager.getFriends().isEmpty())
+                delay(10)
+            friendsStateFlow.update { FriendManager.getFriends() }
+            mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
+        }
     }
 
     // TODO: add special flag to "Favorite" friends.
