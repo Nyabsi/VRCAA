@@ -47,15 +47,11 @@ import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.models.settings.SettingsModel
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 
 class SettingsScreen : Screen {
 
     override val key = uniqueScreenKey
 
-    @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     override fun Content() {
 

@@ -19,7 +19,7 @@ data class User(
     @SerializedName("bio")
     val bio: String,
     @SerializedName("bioLinks")
-    val bioLinks: List<Any>,
+    val bioLinks: List<String>,
     @SerializedName("currentAvatar")
     val currentAvatar: String,
     @SerializedName("currentAvatarAssetUrl")

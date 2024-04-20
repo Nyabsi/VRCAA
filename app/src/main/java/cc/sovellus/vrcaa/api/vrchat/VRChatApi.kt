@@ -661,4 +661,26 @@ class VRChatApi(
         val response = handleRequest(result)
         return Gson().fromJson(response, FileMetadata::class.java)
     }
+
+    suspend fun updateProfile(id: String, status: String, description: String, bio: String, bioLinks: List<String>): Boolean {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val body = "{\"status\":\"$status\",\"statusDescription\":\"$description\",\"bio\":\"${bio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(bioLinks)}}"
+
+        val result = doRequest(
+            method = "PUT",
+            url = "$apiBase/users/$id",
+            headers = headers.build(),
+            body = body
+        )
+
+        Log.d("VRCAA", body)
+
+        val response = handleRequest(result)
+        return response != null
+    }
 }

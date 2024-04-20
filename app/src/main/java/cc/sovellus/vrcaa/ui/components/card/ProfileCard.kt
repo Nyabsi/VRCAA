@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.card
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -48,6 +50,15 @@ fun ProfileCard(
 ) {
     val navigator = LocalNavigator.currentOrThrow
     var isMenuExpanded by remember { mutableStateOf(false) }
+    var isEditingProfile by remember { mutableStateOf(false) }
+
+    if (isEditingProfile) {
+        ProfileEditDialog(
+            onDismiss = { isEditingProfile = false },
+            onConfirmation = { isEditingProfile = false },
+            title = "Edit Profile"
+        )
+    }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -112,6 +123,13 @@ fun ProfileCard(
                     isMenuExpanded = false
                 },
                 text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
+            )
+            DropdownMenuItem(
+                onClick = {
+                    isMenuExpanded = false
+                    isEditingProfile = true
+                },
+                text = { Text("Edit Profile") }
             )
         }
     }
