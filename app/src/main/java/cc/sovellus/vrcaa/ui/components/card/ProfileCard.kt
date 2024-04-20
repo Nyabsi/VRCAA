@@ -55,14 +55,12 @@ fun ProfileCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(270.dp)
+            .height(280.dp)
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick =
-            {
+            .clickable(onClick = {
                 if (userId.isNotEmpty()) isMenuExpanded = true
-            }
-            )
+            })
     ) {
 
         GlideImage(
