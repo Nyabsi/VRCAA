@@ -132,7 +132,7 @@ class SettingsScreen : Screen {
                     leadingContent = {
                         Icon(
                             imageVector = Icons.Outlined.Update,
-                            contentDescription = "Localized description"
+                            contentDescription = null
                         )
                     },
                     trailingContent = {
@@ -146,12 +146,7 @@ class SettingsScreen : Screen {
                                 uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                             )
                         )
-                    },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            navigator.parent?.parent?.push(AboutScreen())
-                        }
-                    )
+                    }
                 )
                 HorizontalDivider(
                     color = Color.Gray,
@@ -181,7 +176,7 @@ class SettingsScreen : Screen {
                     leadingContent = {
                         Icon(
                             imageVector = Icons.Outlined.Image,
-                            contentDescription = "Localized description"
+                            contentDescription = null
                         )
                     },
                     modifier = Modifier.clickable(
@@ -200,7 +195,7 @@ class SettingsScreen : Screen {
                     leadingContent = {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.Logout,
-                            contentDescription = "Localized description"
+                            contentDescription = null
                         )
                     },
                     modifier = Modifier.clickable(
