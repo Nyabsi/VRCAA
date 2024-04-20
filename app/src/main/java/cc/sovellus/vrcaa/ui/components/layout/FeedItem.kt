@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -36,7 +37,7 @@ fun FeedItem(
 
     ListItem(
         headlineContent = {
-            Text(text)
+            Text(text, maxLines = 2, overflow = TextOverflow.Ellipsis)
         },
         leadingContent = {
             GlideImage(
