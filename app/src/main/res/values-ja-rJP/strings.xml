@@ -11,6 +11,9 @@
         <item>オフライン</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">お気に入りのフレンド一覧を更新しました。</string>
+    <!-- Generic re-used strings -->
+    <string name="generic_label_languages">Languages</string>
+    <string name="generic_label_no_languages_found">No languages specified.</string>
     <!-- Home -->
     <string name="home_active_friends">アクティブ</string>
     <string name="home_recently_visited">最近訪れたワールド</string>
@@ -38,9 +41,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">現在のインスタンス</string>
     <string name="profile_label_biography">プロフィール</string>
-    <string name="profile_label_languages">言語</string>
     <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
-    <string name="profile_text_no_languages">言語の記載が有りません。</string>
     <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
     <string name="profile_user_dropdown_view_groups">グループの表示</string>
     <string name="profile_user_dropdown_view_avatar">アバター詳細を表示</string>
