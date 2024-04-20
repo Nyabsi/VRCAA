@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -30,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getSystemService
@@ -83,13 +85,11 @@ class AboutScreen : Screen {
                                 .fillMaxWidth(),
                             contentAlignment = Alignment.TopCenter
                         ) {
-                            GlideImage(
-                                model = if (isSystemInDarkTheme()) { R.drawable.logo_dark } else { R.drawable.logo_white },
-                                contentDescription = stringResource(R.string.preview_image_description),
+                            Image(
+                                painter = if (isSystemInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
+                                contentDescription = null,
                                 contentScale = ContentScale.FillHeight,
-                                alignment = Alignment.Center,
-                                loading = placeholder(R.drawable.image_placeholder),
-                                failure = placeholder(R.drawable.image_placeholder)
+                                alignment = Alignment.Center
                             )
                         }
 

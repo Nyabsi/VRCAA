@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.misc
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -44,8 +46,8 @@ class LoadingIndicatorScreen : Screen {
                     .fillMaxWidth(),
                 contentAlignment = Alignment.TopCenter
             ) {
-                GlideImage(
-                    model = if (isSystemInDarkTheme()) { R.drawable.logo_dark } else { R.drawable.logo_white },
+                Image(
+                    painter = if (isSystemInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
                     contentDescription = null,
                     contentScale = ContentScale.FillHeight,
                     alignment = Alignment.Center
