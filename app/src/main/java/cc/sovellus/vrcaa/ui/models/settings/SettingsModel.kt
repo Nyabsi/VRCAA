@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.helper.cookies
 import cc.sovellus.vrcaa.helper.enableUpdates
 import cc.sovellus.vrcaa.helper.invalidCookie
@@ -21,13 +22,19 @@ class SettingsScreenModel(
 
     fun doLogout() {
         screenModelScope.launch {
-            val intent = Intent(context, PipelineService::class.java)
+            var intent: Intent?
+
+            intent = Intent(context, PipelineService::class.java)
             context.stopService(intent)
 
             api?.logout()
 
             preferences.cookies = ""
             preferences.invalidCookie = true
+
+            intent = Intent(context, MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
         }
     }
 
