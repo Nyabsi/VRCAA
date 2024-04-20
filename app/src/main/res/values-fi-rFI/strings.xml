@@ -170,10 +170,12 @@
     <string name="discord_login_button_login">Kirjaudu sisään</string>
     <string name="discord_login_button_verify">Vahvista</string>
     <string name="discord_login_restarted_service_toast">Palvelu uudelleenkäynnistetty voimaan ottoa varten.</string>
-    <string name="discord_login_label_enable">Rich Presence</string>
-    <string name="discord_login_description_enable">Näytä tämänhetkinen tilasi discord:ssa.</string>
+    <string name="discord_login_label_enable">Enable Rich Presence</string>
+    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
+    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
+    <string name="discord_login_description_enable">Shows your current status in discord</string>
     <string name="discord_login_label_logout">Kirjaudu ulos</string>
-    <string name="discord_login_description_logout">Peruuta käyttöoikeutesi.</string>
+    <string name="discord_login_description_logout">Revoke your access token</string>
     <!-- Auto Updater (Nightly) -->
     <string name="update_dialog_title">Uusi päivitys saatavilla!</string>
     <string name="update_dialog_description">Haluatko päivittää tämän sovelluksen?</string>

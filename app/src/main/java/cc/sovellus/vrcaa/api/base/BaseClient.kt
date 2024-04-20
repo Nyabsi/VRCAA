@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.base
 
-import android.util.Log
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -10,7 +9,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
-import okio.Timeout
 import ru.gildor.coroutines.okhttp.await
 import java.net.ConnectException
 import java.net.UnknownHostException

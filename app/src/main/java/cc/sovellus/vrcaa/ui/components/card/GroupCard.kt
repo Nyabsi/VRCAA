@@ -25,9 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -110,7 +110,8 @@ fun GroupCard(
                     modifier = Modifier.padding(start = 104.dp),
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

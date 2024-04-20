@@ -1,7 +1,7 @@
 package cc.sovellus.vrcaa.manager
 
 import android.annotation.SuppressLint
-import cc.sovellus.vrcaa.api.vrchat.http.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 
 object ApiManager {
 

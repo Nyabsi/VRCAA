@@ -5,11 +5,11 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.vrchat.avatars.models.JustHPartyAvatars
-import cc.sovellus.vrcaa.api.vrchat.avatars.providers.JustHPartyProvider
-import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
-import cc.sovellus.vrcaa.api.vrchat.http.models.Users
-import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
+import cc.sovellus.vrcaa.api.justhparty.models.JustHPartyAvatars
+import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
+import cc.sovellus.vrcaa.api.vrchat.models.Groups
+import cc.sovellus.vrcaa.api.vrchat.models.Users
+import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.helper.searchFeaturedWorlds
 import cc.sovellus.vrcaa.helper.sortWorlds
 import cc.sovellus.vrcaa.helper.usersAmount
@@ -18,7 +18,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
 class SearchResultScreenModel(
-    private val context: Context,
+    context: Context,
     private val query: String
 ) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
 

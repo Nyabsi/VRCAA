@@ -3,9 +3,9 @@ package cc.sovellus.vrcaa.ui.models.profile
 import android.content.Context
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.vrchat.avatars.providers.JustHPartyProvider
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
+import cc.sovellus.vrcaa.api.vrchat.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -32,16 +32,14 @@ class UserProfileScreenModel(
 
     private fun fetchProfile() {
         screenModelScope.launch {
-            api?.getUser(userId).let {
-                if (it != null) {
-                    it.location?.let { location ->
-                        if (it.isFriend &&
-                            location.isNotEmpty() &&
-                            location != "private" &&
-                            location != "traveling" &&
-                            location != "offline") {
-                            instance = api?.getInstance(location)
-                        }
+            api?.getUser(userId)?.let {
+                it.location.let { location ->
+                    if (it.isFriend &&
+                        location.isNotEmpty() &&
+                        location != "private" &&
+                        location != "traveling" &&
+                        location != "offline") {
+                        instance = api?.getInstance(location)
                     }
                 }
                 profile = it

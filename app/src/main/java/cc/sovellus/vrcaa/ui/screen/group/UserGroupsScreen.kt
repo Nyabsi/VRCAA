@@ -30,7 +30,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroups
+import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.ui.components.card.GroupCard
 import cc.sovellus.vrcaa.ui.models.group.UserGroupsModel
 import cc.sovellus.vrcaa.ui.models.group.UserGroupsModel.UserGroupsState

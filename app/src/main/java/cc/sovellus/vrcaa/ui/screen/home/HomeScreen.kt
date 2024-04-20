@@ -26,8 +26,8 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.Friends
-import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
+import cc.sovellus.vrcaa.api.vrchat.models.Friends
+import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.WorldRow

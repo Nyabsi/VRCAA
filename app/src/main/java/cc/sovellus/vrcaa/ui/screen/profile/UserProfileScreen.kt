@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -38,8 +39,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
@@ -167,7 +168,11 @@ class UserProfileScreen(
                                 }
                             }
                         },
-                        title = { Text(text = profile.displayName) }
+                        title = { Text(
+                            text = profile.displayName,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        ) }
                     )
                 },
                 content = { padding ->

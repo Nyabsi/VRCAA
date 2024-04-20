@@ -10,11 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.helper.LocationHelper
 
 @Composable
-fun InstanceCardGroup(world: GroupInstances.GroupInstance.World, intent: String, members: Int, instanceId: String, onClick: () -> Unit) {
+fun InstanceCardGroup(world: World, intent: String, members: Int, instanceId: String, onClick: () -> Unit) {
     val result = LocationHelper.parseLocationInfo(intent)
     ListItem(
         headlineContent = {

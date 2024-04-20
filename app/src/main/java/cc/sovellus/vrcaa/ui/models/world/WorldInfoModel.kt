@@ -7,9 +7,9 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instances
-import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.api.vrchat.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.models.Instances
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -61,7 +61,7 @@ class WorldInfoScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api?.InviteSelfToInstance(clickedInstance.value)
+            api?.inviteSelfToInstance(clickedInstance.value)
         }
     }
 }

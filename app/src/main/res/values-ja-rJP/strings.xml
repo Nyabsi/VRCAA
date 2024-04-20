@@ -170,10 +170,12 @@
     <string name="discord_login_button_login">ログイン</string>
     <string name="discord_login_button_verify">認証</string>
     <string name="discord_login_restarted_service_toast">サービスを再起動し、有効化しました。</string>
-    <string name="discord_login_label_enable">リッチプレゼンス</string>
-    <string name="discord_login_description_enable">discordで現在のステータスを表示する。</string>
+    <string name="discord_login_label_enable">Enable Rich Presence</string>
+    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
+    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
+    <string name="discord_login_description_enable">Shows your current status in discord</string>
     <string name="discord_login_label_logout">ログアウト</string>
-    <string name="discord_login_description_logout">アクセストークンを無効化する。</string>
+    <string name="discord_login_description_logout">Revoke your access token</string>
     <!-- Auto Updater (Nightly) -->
     <string name="update_dialog_title">更新が見つかりました！</string>
     <string name="update_dialog_description">アプリをアップデートしますか？</string>

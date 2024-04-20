@@ -10,7 +10,6 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.updater.AutoUpdater
 import cc.sovellus.vrcaa.helper.enableUpdates
 import cc.sovellus.vrcaa.helper.groupsAmount
@@ -18,12 +17,8 @@ import cc.sovellus.vrcaa.helper.searchFeaturedWorlds
 import cc.sovellus.vrcaa.helper.sortWorlds
 import cc.sovellus.vrcaa.helper.usersAmount
 import cc.sovellus.vrcaa.helper.worldsAmount
-import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.FriendManager
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
 
 class NavigationScreenModel(
     private val context: Context

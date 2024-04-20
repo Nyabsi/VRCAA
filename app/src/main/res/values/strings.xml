@@ -198,10 +198,12 @@
     <string name="discord_login_button_login">Login</string>
     <string name="discord_login_button_verify">Verify</string>
     <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable">Rich Presence</string>
-    <string name="discord_login_description_enable">Show your current status in discord.</string>
+    <string name="discord_login_label_enable">Enable Rich Presence</string>
+    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
+    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
+    <string name="discord_login_description_enable">Shows your current status in discord</string>
     <string name="discord_login_label_logout">Logout</string>
-    <string name="discord_login_description_logout">Revoke your access token.</string>
+    <string name="discord_login_description_logout">Revoke your access token</string>
     
     <!-- Auto Updater (Nightly) -->
     <string name="update_dialog_title">New update available!</string>

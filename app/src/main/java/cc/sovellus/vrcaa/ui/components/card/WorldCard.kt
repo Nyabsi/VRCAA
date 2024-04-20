@@ -53,7 +53,9 @@ fun WorldCard(
             modifier = Modifier.padding(start = 8.dp, top = 4.dp),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Left
+            textAlign = TextAlign.Left,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Text(

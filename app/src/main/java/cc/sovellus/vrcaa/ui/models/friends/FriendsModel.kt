@@ -7,8 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.LocationHelper
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.delay
@@ -28,7 +27,7 @@ class FriendsScreenModel(
         data class Result(val favoriteFriends: List<LimitedUser>) : FriendListState()
     }
 
-    private var friendsStateFlow = MutableStateFlow(FriendManager.getFriends().toList())
+    private var friendsStateFlow = MutableStateFlow(listOf<LimitedUser>())
     private var favoriteFriends = mutableListOf<LimitedUser>()
 
     var friends = friendsStateFlow.asStateFlow()
@@ -37,9 +36,8 @@ class FriendsScreenModel(
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
-            var newList = friends.toList()
+            val newList = friends.toList()
             screenModelScope.launch {
-                newList = parseReadableLocation(newList)
                 friendsStateFlow.update { newList }
             }
         }
@@ -47,14 +45,16 @@ class FriendsScreenModel(
 
     init {
         mutableState.value = FriendListState.Loading
+
         FriendManager.setFriendListener(listener)
+        fetchFavorites()
 
         screenModelScope.launch {
-            FriendManager.setFriends(parseReadableLocation(FriendManager.getFriends().toList()).toMutableList())
+            while (FriendManager.getFriends().isEmpty())
+                delay(10)
+            friendsStateFlow.update { FriendManager.getFriends() }
+            mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
         }
-
-        fetchFavorites()
-        mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
     }
 
     // TODO: add special flag to "Favorite" friends.
@@ -65,19 +65,8 @@ class FriendsScreenModel(
                     api?.getFriend(favorite.id)
                         ?.let { friend -> favoriteFriends.add(friend) }
                 }
-                parseReadableLocation(favoriteFriends)
             }
         }
-    }
-
-    suspend fun parseReadableLocation(users: List<LimitedUser>): List<LimitedUser> {
-        for (user in users) {
-            user.location?.let {
-                if (it.contains("wrld_"))
-                    user.location = LocationHelper.getReadableLocation(it)
-            }
-        }
-        return users
     }
 
     fun refreshFriends(context: Context) {

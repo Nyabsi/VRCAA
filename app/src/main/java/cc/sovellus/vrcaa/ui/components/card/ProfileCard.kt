@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.components.card
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,14 +54,12 @@ fun ProfileCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(270.dp)
+            .height(280.dp)
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick =
-            {
+            .clickable(onClick = {
                 if (userId.isNotEmpty()) isMenuExpanded = true
-            }
-            )
+            })
     ) {
 
         GlideImage(
@@ -82,7 +79,9 @@ fun ProfileCard(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Left,
-            color = trustRankColor
+            color = trustRankColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Row(

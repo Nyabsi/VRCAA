@@ -1,7 +1,5 @@
 package cc.sovellus.vrcaa.helper
 
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.manager.ApiManager.api
 import extensions.wu.seal.PropertySuffixSupport.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +11,7 @@ object LocationHelper: CoroutineScope {
 
     data class LocationInfo(
         var worldId: String = "",
+        var instanceId: String = "",
         var hiddenId: String = "",
         var privateId: String = "",
         var friendId: String = "",
@@ -31,6 +30,7 @@ object LocationHelper: CoroutineScope {
 
         val intents = intent.split('~')
         result.worldId = intents[0].split(':')[0]
+        result.instanceId = intents[0].split(':')[1]
 
         for (i in intents) {
 
@@ -90,21 +90,15 @@ object LocationHelper: CoroutineScope {
         return result
     }
 
-    suspend fun getReadableLocation(location: String): String {
+    fun getReadableLocation(location: String, worldName: String): String {
 
-        if (location == "traveling")
-            return "User is traveling.."
+        if (!location.contains("wrld_"))
+            return location
 
         val info = parseLocationInfo(location)
 
-        val instance: Instance? = api?.getInstance(location)
-
-        instance?.let {
-            val result = "${it.world.name} (${it.name}) ${info.instanceType} "
-            if (info.regionId.isNotEmpty()) location.append(info.regionId)
-            return result
-        }
-
-        return ""
+        val result = "$worldName #${info.instanceId} ${info.instanceType} "
+        if (info.regionId.isNotEmpty()) location.append(info.regionId)
+        return result
     }
 }

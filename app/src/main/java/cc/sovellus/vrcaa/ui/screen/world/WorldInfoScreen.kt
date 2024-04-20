@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -39,8 +40,8 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.api.vrchat.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardWorld
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
@@ -104,7 +105,11 @@ class WorldInfoScreen(
                             }
                         },
 
-                        title = { Text(text = world.name) }
+                        title = { Text(
+                            text = world.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        ) }
                     )
                 },
                 content = {

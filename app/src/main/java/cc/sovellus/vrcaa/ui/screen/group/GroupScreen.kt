@@ -30,13 +30,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -45,16 +45,17 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.Group
-import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
+import cc.sovellus.vrcaa.api.vrchat.models.Group
+import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
 import cc.sovellus.vrcaa.ui.components.card.GroupCard
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardGroup
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.models.group.GroupScreenModel
 import cc.sovellus.vrcaa.ui.models.group.GroupScreenModel.GroupState
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 
 class GroupScreen(
@@ -177,7 +178,11 @@ class GroupScreen(
                                 }
                             }
                         },
-                        title = { Text(text = group.name) }
+                        title = { Text(
+                            text = group.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        ) }
                     )
                 },
                 content = {
@@ -270,6 +275,9 @@ class GroupScreen(
 
                     SubHeader(title = stringResource(R.string.group_page_label_rules))
                     Description(text = group.rules)
+
+                    SubHeader(title = stringResource(R.string.profile_label_languages))
+                    Languages(languages = group.languages, true)
                 }
             }
         }

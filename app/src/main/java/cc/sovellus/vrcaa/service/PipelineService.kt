@@ -14,20 +14,21 @@ import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.websocket.GatewaySocket
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
-import cc.sovellus.vrcaa.api.vrchat.websocket.PipelineWebSocket
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendAdd
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendDelete
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendLocation
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOffline
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.FriendOnline
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.Notification
-import cc.sovellus.vrcaa.api.vrchat.websocket.models.UserLocation
+import cc.sovellus.vrcaa.api.discord.DiscordGateway
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendLocation
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOffline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOnline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.discordToken
 import cc.sovellus.vrcaa.helper.richPresenceEnabled
+import cc.sovellus.vrcaa.helper.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
@@ -48,10 +49,10 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var notificationManager: NotificationManager
     private lateinit var preferences: SharedPreferences
 
-    private var pipeline: PipelineWebSocket? = null
-    private var gateway: GatewaySocket? = null
+    private var pipeline: VRChatPipeline? = null
+    private var gateway: DiscordGateway? = null
 
-    private val listener = object : PipelineWebSocket.SocketListener {
+    private val listener = object : VRChatPipeline.SocketListener {
         override fun onMessage(message: Any?) {
             if (message != null) {
                 serviceHandler?.obtainMessage()?.also { msg ->
@@ -194,7 +195,7 @@ class PipelineService : Service(), CoroutineScope {
                                             .apply {
                                                 friendId = friend.userId
                                                 friendName = friend.user.displayName
-                                                travelDestination = LocationHelper.getReadableLocation(friend.location)
+                                                travelDestination = LocationHelper.getReadableLocation(friend.location, friend.world.name)
                                                 friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                                             }
                                     )
@@ -205,6 +206,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     // This guarantees the user will have valid location.
                     friend.user.location = friend.location
+                    friend.user.world = friend.world
                     FriendManager.updateFriend(friend.user)
                 }
 
@@ -218,9 +220,9 @@ class PipelineService : Service(), CoroutineScope {
                         launch {
                             val instance = api?.getInstance(user.location)
                             if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                                instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance?.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})") }
+                                instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
                             } else {
-                                gateway?.sendPresence(status.toString(), "User location is hidden.")
+                                gateway?.sendPresence(status.toString(), "User location is hidden.", null, status)
                             }
                         }
                     }
@@ -330,15 +332,27 @@ class PipelineService : Service(), CoroutineScope {
                     val friends: MutableList<LimitedUser> = ArrayList()
                     api?.getFriends()?.let { friends += it }
                     api?.getFriends(true)?.let { friends += it }
+
+                    for (friend in friends) {
+                        friend.location.let { intent ->
+                            if (intent.contains("wrld_")) {
+                                val info = LocationHelper.parseLocationInfo(friend.location)
+                                api?.getWorld(info.worldId)?.let {
+                                    friend.world = it
+                                }
+                            }
+                        }
+                    }
+
                     FriendManager.setFriends(friends)
 
-                    pipeline = PipelineWebSocket(token)
+                    pipeline = VRChatPipeline(token)
 
                     pipeline?.connect()
                     pipeline?.setListener(listener)
 
                     if (preferences.richPresenceEnabled) {
-                        gateway = GatewaySocket(preferences.discordToken)
+                        gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
                         gateway?.connect()
                     }
                 }
