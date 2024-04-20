@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class FriendsScreenModel(
+class FriendsModel(
     private val
     context: Context
-) : StateScreenModel<FriendsScreenModel.FriendListState>(FriendListState.Init) {
+) : StateScreenModel<FriendsModel.FriendListState>(FriendListState.Init) {
 
     sealed class FriendListState {
         data object Init : FriendListState()

@@ -44,7 +44,7 @@ import cc.sovellus.vrcaa.ui.components.dialog.InputDialog
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
-import cc.sovellus.vrcaa.ui.models.presence.RichPresenceScreenModel
+import cc.sovellus.vrcaa.ui.models.presence.RichPresenceModel
 
 class RichPresenceScreen : Screen {
 
@@ -57,7 +57,7 @@ class RichPresenceScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { RichPresenceScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { RichPresenceModel(context) }
         val dialogState = remember { mutableStateOf(false) }
 
         if (dialogState.value) {

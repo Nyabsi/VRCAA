@@ -12,10 +12,10 @@ import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class GroupScreenModel(
+class GroupModel(
     private val context: Context,
     private val groupId: String
-) : StateScreenModel<GroupScreenModel.GroupState>(GroupState.Init) {
+) : StateScreenModel<GroupModel.GroupState>(GroupState.Init) {
 
     sealed class GroupState {
         data object Init : GroupState()

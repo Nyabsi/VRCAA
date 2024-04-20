@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class FeedScreenModel : ScreenModel {
+class FeedModel : ScreenModel {
     private var feedStateFlow = MutableStateFlow(FeedManager.getFeed().toList())
     var feed = feedStateFlow.asStateFlow()
 

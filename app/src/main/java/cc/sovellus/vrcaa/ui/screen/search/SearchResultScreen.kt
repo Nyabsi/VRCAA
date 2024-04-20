@@ -54,11 +54,11 @@ import cc.sovellus.vrcaa.api.justhparty.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.vrchat.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
-import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel
+import cc.sovellus.vrcaa.ui.models.search.SearchResultModel
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import cc.sovellus.vrcaa.ui.models.search.SearchResultScreenModel.SearchState
+import cc.sovellus.vrcaa.ui.models.search.SearchResultModel.SearchState
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -76,7 +76,7 @@ class SearchResultScreen(
 
         val context = LocalContext.current
 
-        val model = rememberScreenModel { SearchResultScreenModel(context, query) }
+        val model = rememberScreenModel { SearchResultModel(context, query) }
 
         val state by model.state.collectAsState()
 
@@ -101,7 +101,7 @@ class SearchResultScreen(
         users: Users?,
         avatars: JustHPartyAvatars?,
         groups: Groups?,
-        model: SearchResultScreenModel
+        model: SearchResultModel
     ) {
 
         val navigator = LocalNavigator.currentOrThrow

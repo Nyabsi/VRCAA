@@ -23,7 +23,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
-import cc.sovellus.vrcaa.ui.models.feed.FeedScreenModel
+import cc.sovellus.vrcaa.ui.models.feed.FeedModel
 
 class FeedScreen : Screen {
 
@@ -32,7 +32,7 @@ class FeedScreen : Screen {
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { FeedScreenModel() }
+        val model = navigator.rememberNavigatorScreenModel { FeedModel() }
 
         val feed = model.feed.collectAsState()
 

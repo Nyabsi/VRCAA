@@ -17,10 +17,10 @@ import cc.sovellus.vrcaa.helper.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class SearchResultScreenModel(
+class SearchResultModel(
     context: Context,
     private val query: String
-) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
+) : StateScreenModel<SearchResultModel.SearchState>(SearchState.Init) {
 
     private val avatarProvider = JustHPartyProvider()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)

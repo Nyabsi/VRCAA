@@ -40,9 +40,9 @@ import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.models.avatar.AvatarScreenModel.AvatarState
+import cc.sovellus.vrcaa.ui.models.avatar.AvatarModel.AvatarState
 import cc.sovellus.vrcaa.ui.components.card.AvatarCard
-import cc.sovellus.vrcaa.ui.models.avatar.AvatarScreenModel
+import cc.sovellus.vrcaa.ui.models.avatar.AvatarModel
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -56,7 +56,7 @@ class AvatarScreen(
     @Composable
     override fun Content() {
         val context = LocalContext.current
-        val model = rememberScreenModel { AvatarScreenModel(context, avatarId) }
+        val model = rememberScreenModel { AvatarModel(context, avatarId) }
 
         val state by model.state.collectAsState()
 
@@ -69,7 +69,7 @@ class AvatarScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun DisplayResult(avatar: Avatar?, model: AvatarScreenModel) {
+    private fun DisplayResult(avatar: Avatar?, model: AvatarModel) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 

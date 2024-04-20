@@ -25,8 +25,8 @@ import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.models.profile.ProfileScreenModel
-import cc.sovellus.vrcaa.ui.models.profile.ProfileScreenModel.ProfileState
+import cc.sovellus.vrcaa.ui.models.profile.ProfileModel
+import cc.sovellus.vrcaa.ui.models.profile.ProfileModel.ProfileState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 
 class ProfileScreen : Screen {
@@ -38,7 +38,7 @@ class ProfileScreen : Screen {
 
         val context = LocalContext.current
 
-        val model = rememberScreenModel { ProfileScreenModel(context) }
+        val model = rememberScreenModel { ProfileModel(context) }
 
         val state by model.state.collectAsState()
 

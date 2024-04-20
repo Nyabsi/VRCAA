@@ -9,10 +9,10 @@ import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class UserProfileScreenModel(
+class UserProfileModel(
     private val context: Context,
     private val userId: String
-) : StateScreenModel<UserProfileScreenModel.UserProfileState>(UserProfileState.Init) {
+) : StateScreenModel<UserProfileModel.UserProfileState>(UserProfileState.Init) {
 
     sealed class UserProfileState {
         data object Init : UserProfileState()

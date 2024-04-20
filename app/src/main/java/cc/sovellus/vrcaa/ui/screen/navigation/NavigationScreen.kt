@@ -63,7 +63,7 @@ import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.components.dialog.UpdatedDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
-import cc.sovellus.vrcaa.ui.models.navigation.NavigationScreenModel
+import cc.sovellus.vrcaa.ui.models.navigation.NavigationModel
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
@@ -84,7 +84,7 @@ class NavigationScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { NavigationModel(context) }
 
         if (model.hasUpdate.value) {
             UpdatedDialog(

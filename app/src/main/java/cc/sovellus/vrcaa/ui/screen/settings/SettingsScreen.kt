@@ -42,7 +42,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.richPresenceWarningAcknowledged
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
-import cc.sovellus.vrcaa.ui.models.settings.SettingsScreenModel
+import cc.sovellus.vrcaa.ui.models.settings.SettingsModel
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -61,7 +61,7 @@ class SettingsScreen : Screen {
         val context = LocalContext.current
         val preferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
-        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { SettingsModel(context) }
         val dialogState = remember { mutableStateOf(false) }
 
         val title = buildAnnotatedString {

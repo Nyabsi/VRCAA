@@ -14,7 +14,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
-class SettingsScreenModel(
+class SettingsModel(
     private val context: Context
 ) : ScreenModel {
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
