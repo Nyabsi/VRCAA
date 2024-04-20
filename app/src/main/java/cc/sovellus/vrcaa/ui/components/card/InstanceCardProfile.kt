@@ -49,8 +49,7 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
             .clickable(
                 onClick = {
                     callback()
-                }
-            )
+                })
     ) {
         val result = LocationHelper.parseLocationInfo(profile.location!!)
         
@@ -87,7 +86,6 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Clip,
-                        modifier = Modifier.weight(0.80f, false)
                     )
 
                     // TODO: move this away from UI
@@ -95,34 +93,34 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                         when (result.regionId.lowercase()) {
                             "eu" -> Image(
                                 painter = painterResource(R.drawable.flag_eu),
-                                modifier = Modifier.weight(0.20f),
+                                modifier = Modifier.padding(start = 6.dp),
                                 contentDescription = "Region flag"
                             )
                             "jp" -> Image(
                                 painter = painterResource(R.drawable.flag_jp),
-                                modifier = Modifier.weight(0.20f),
+                                modifier = Modifier.padding(start = 6.dp),
                                 contentDescription = "Region flag"
                             )
                             "us" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
-                                modifier = Modifier.weight(0.20f),
+                                modifier = Modifier.padding(start = 6.dp),
                                 contentDescription = "Region flag"
                             )
                             "use" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
-                                modifier = Modifier.weight(0.20f),
+                                modifier = Modifier.padding(start = 6.dp),
                                 contentDescription = "Region flag"
                             )
                             "usw" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
-                                modifier = Modifier.weight(0.20f),
+                                modifier = Modifier.padding(start = 6.dp),
                                 contentDescription = "Region flag"
                             )
                         }
                     } else {
                         Image(
                             painter = painterResource(R.drawable.flag_us),
-                            modifier = Modifier.weight(0.10f),
+                            modifier = Modifier.padding(start = 6.dp),
                             contentDescription = "Region flag",
                         )
                     }
