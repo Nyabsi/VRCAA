@@ -678,8 +678,6 @@ class VRChatApi(
             body = body
         )
 
-        Log.d("VRCAA", body)
-
         val response = handleRequest(result)
         return response != null
     }
