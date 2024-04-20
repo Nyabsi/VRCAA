@@ -77,6 +77,8 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                 modifier = Modifier.padding(8.dp)
             ) {
                 Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.padding(end = 6.dp)
                 ) {
                     Text(
@@ -84,7 +86,8 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                         textAlign = TextAlign.Left,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Clip,
+                        modifier = Modifier.weight(0.80f, false)
                     )
 
                     // TODO: move this away from UI
@@ -92,34 +95,34 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                         when (result.regionId.lowercase()) {
                             "eu" -> Image(
                                 painter = painterResource(R.drawable.flag_eu),
-                                modifier = Modifier.padding(start = 8.dp),
+                                modifier = Modifier.weight(0.20f),
                                 contentDescription = "Region flag"
                             )
                             "jp" -> Image(
                                 painter = painterResource(R.drawable.flag_jp),
-                                modifier = Modifier.padding(start = 8.dp),
+                                modifier = Modifier.weight(0.20f),
                                 contentDescription = "Region flag"
                             )
                             "us" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
-                                modifier = Modifier.padding(start = 8.dp),
+                                modifier = Modifier.weight(0.20f),
                                 contentDescription = "Region flag"
                             )
                             "use" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
-                                modifier = Modifier.padding(start = 8.dp),
+                                modifier = Modifier.weight(0.20f),
                                 contentDescription = "Region flag"
                             )
                             "usw" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
-                                modifier = Modifier.padding(start = 8.dp),
+                                modifier = Modifier.weight(0.20f),
                                 contentDescription = "Region flag"
                             )
                         }
                     } else {
                         Image(
                             painter = painterResource(R.drawable.flag_us),
-                            modifier = Modifier.padding(start = 8.dp),
+                            modifier = Modifier.weight(0.10f),
                             contentDescription = "Region flag",
                         )
                     }
