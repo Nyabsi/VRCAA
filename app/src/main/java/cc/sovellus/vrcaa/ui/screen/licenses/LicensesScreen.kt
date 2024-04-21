@@ -38,7 +38,7 @@ class LicensesScreen : Screen {
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go Back"
+                                contentDescription = null
                             )
                         }
                     },

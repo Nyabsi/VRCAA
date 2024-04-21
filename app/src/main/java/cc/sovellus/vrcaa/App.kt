@@ -14,6 +14,7 @@ class App : Application() {
     companion object {
         const val sharedPreferenceKey = "vrcaa_prefs"
     }
+
     override fun onCreate() {
         super.onCreate()
 

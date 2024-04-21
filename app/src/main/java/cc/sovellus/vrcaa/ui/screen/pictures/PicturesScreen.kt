@@ -42,7 +42,7 @@ class PicturesScreen : Screen {
                         Text(text = path.name)
                         GlideImage(
                             model = path.absolutePath,
-                            contentDescription = stringResource(R.string.preview_image_description),
+                            contentDescription = null,
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.FillBounds,
                             loading = placeholder(R.drawable.image_placeholder),

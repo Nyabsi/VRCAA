@@ -158,7 +158,7 @@ class SettingsScreen : Screen {
                     leadingContent = {
                         Icon(
                             imageVector = Icons.Outlined.Info,
-                            contentDescription = "Localized description"
+                            contentDescription = null
                         )
                     },
                     modifier = Modifier.clickable(

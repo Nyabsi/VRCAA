@@ -51,7 +51,7 @@ class AboutScreen : Screen {
     override val key = uniqueScreenKey
 
     @SuppressLint("BatteryLife")
-    @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
@@ -65,7 +65,7 @@ class AboutScreen : Screen {
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go Back"
+                                contentDescription = null
                             )
                         }
                     },

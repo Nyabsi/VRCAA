@@ -113,7 +113,7 @@ class SearchResultScreen(
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.preview_image_description)
+                                contentDescription = null
                             )
                         }
                     },
