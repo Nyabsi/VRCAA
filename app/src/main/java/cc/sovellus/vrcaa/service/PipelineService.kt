@@ -91,10 +91,17 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
                     })
 
+                    // this check can only happen if you get a new friend, and the friend is not yet tracked.
                     if (FriendManager.getFriend(friend.userId) == null)
+                    {
                         FriendManager.addFriend(friend.user)
+                    }
                     else
+                    {
+                        val cachedFriend = FriendManager.getFriend(friend.userId)
+                        friend.user.isFavorite = cachedFriend?.isFavorite == true
                         FriendManager.updateFriend(friend.user)
+                    }
                 }
 
                 is FriendOffline -> {
@@ -128,6 +135,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     launch {
                         api?.getUser(friend.userId)?.let { user ->
+                            user.isFavorite = cachedFriend?.isFavorite == true
                             FriendManager.updateFriend(user)
                         }
                     }
@@ -136,12 +144,12 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendLocation -> {
 
                     val friend = msg.obj as FriendLocation
-                    val oldFriend = FriendManager.getFriend(friend.userId)
+                    val cachedFriend = FriendManager.getFriend(friend.userId)
 
-                    if (oldFriend != null) {
+                    if (cachedFriend != null) {
                         if (
                             StatusHelper.getStatusFromString(friend.user.status) !=
-                            StatusHelper.getStatusFromString(oldFriend.status)
+                            StatusHelper.getStatusFromString(cachedFriend.status)
                         ) {
                             if (notificationManager.isOnWhitelist(friend.userId) &&
                                 notificationManager.isIntentEnabled(
@@ -153,8 +161,8 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status)
                                         .format(
-                                            oldFriend.displayName,
-                                            StatusHelper.getStatusFromString(oldFriend.status)
+                                            cachedFriend.displayName,
+                                            StatusHelper.getStatusFromString(cachedFriend.status)
                                                 .toString(),
                                             StatusHelper.getStatusFromString(friend.user.status)
                                                 .toString()
@@ -207,6 +215,7 @@ class PipelineService : Service(), CoroutineScope {
                     // This guarantees the user will have valid location.
                     friend.user.location = friend.location
                     friend.user.world = friend.world
+                    friend.user.isFavorite = cachedFriend?.isFavorite == true
                     FriendManager.updateFriend(friend.user)
                 }
 
