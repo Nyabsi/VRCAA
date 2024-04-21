@@ -333,6 +333,8 @@ class PipelineService : Service(), CoroutineScope {
                     api?.getFriends()?.let { friends += it }
                     api?.getFriends(true)?.let { friends += it }
 
+                    val favorites = api?.getFavorites("friend")
+
                     for (friend in friends) {
                         friend.location.let { intent ->
                             if (intent.contains("wrld_")) {
@@ -341,6 +343,10 @@ class PipelineService : Service(), CoroutineScope {
                                     friend.world = it
                                 }
                             }
+                        }
+
+                        favorites?.find { it.favoriteId == friend.id }?.let {
+                            friend.isFavorite = true
                         }
                     }
 

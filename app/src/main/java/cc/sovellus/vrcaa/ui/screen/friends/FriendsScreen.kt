@@ -60,89 +60,79 @@ class FriendsScreen : Screen {
         val model = navigator.rememberNavigatorScreenModel { FriendsModel(context) }
         val state by model.state.collectAsState()
 
-        when (val result = state) {
+        when (state) {
             is FriendListState.Loading -> LoadingIndicatorScreen().Content()
-            is FriendListState.Result -> RenderList(result.favoriteFriends, model)
+            is FriendListState.Result -> RenderList(model)
             else -> {}
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun RenderList(
-        favoriteFriends: List<LimitedUser>,
-        model: FriendsModel
+        model: FriendsModel,
     ) {
 
         val context = LocalContext.current
 
-        val stateRefresh = rememberPullRefreshState(model.isRefreshing.value, onRefresh = { model.refreshFriends(context) })
-
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
 
-        Box(
-            Modifier
-                .pullRefresh(stateRefresh)
-                .fillMaxSize()
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            MultiChoiceSegmentedButtonRow(
                 modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp)
             ) {
-                MultiChoiceSegmentedButtonRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp)
-                ) {
-                    options.forEachIndexed { index, label ->
-                        SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = options.size
-                            ),
-                            icon = {
-                                SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
-                                    Icon(
-                                        imageVector = icons[index],
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                    )
-                                }
-                            },
-                            onCheckedChange = {
-                                model.currentIndex.intValue = index
-                            },
-                            checked = index == model.currentIndex.intValue
-                        ) {
-                            Text(text = label, softWrap = true, maxLines = 1)
-                        }
+                options.forEachIndexed { index, label ->
+                    SegmentedButton(
+                        shape = SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = options.size
+                        ),
+                        icon = {
+                            SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                                Icon(
+                                    imageVector = icons[index],
+                                    contentDescription = null,
+                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                )
+                            }
+                        },
+                        onCheckedChange = {
+                            model.currentIndex.intValue = index
+                        },
+                        checked = index == model.currentIndex.intValue
+                    ) {
+                        Text(text = label, softWrap = true, maxLines = 1)
                     }
-                }
-
-                when (model.currentIndex.intValue) {
-                    0 -> ShowFriendsFavorite(favoriteFriends)
-                    1 -> ShowFriends(model)
-                    2 -> ShowFriendsOnWebsite(model)
-                    3 -> ShowFriendsOffline(model)
                 }
             }
 
-            PullRefreshIndicator(
-                model.isRefreshing.value,
-                stateRefresh,
-                Modifier.align(Alignment.TopCenter)
-            )
+            when (model.currentIndex.intValue) {
+                0 -> ShowFriendsFavorite(model)
+                1 -> ShowFriends(model)
+                2 -> ShowFriendsOnWebsite(model)
+                3 -> ShowFriendsOffline(model)
+            }
         }
     }
 
     @Composable
     fun ShowFriendsFavorite(
-        friends: List<LimitedUser>
+        model: FriendsModel
     ) {
-        if (friends.isEmpty()) {
+        val friends = model.friends.collectAsState()
+        val favoriteFriendsFilter = friends.value.filter { it.isFavorite }
+        val friendsSortedStatus = favoriteFriendsFilter.sortedBy { StatusHelper.getStatusFromString(it.status) }
+        val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
+
+        if (friendsFiltered.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -157,9 +147,6 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val friendsSortedStatus = friends.sortedBy { StatusHelper.getStatusFromString(it.status) }
-                val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
-
                 items(
                     friendsFiltered.count(),
                     key = { UUID.randomUUID() }
@@ -181,8 +168,10 @@ class FriendsScreen : Screen {
         model: FriendsModel
     ) {
         val friends = model.friends.collectAsState()
+        val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+        val friendsFiltered = sortedFriends.filter { it.location == "offline" && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
 
-        if (friends.value.isEmpty()) {
+        if (friendsFiltered.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -197,9 +186,6 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
-                val friendsFiltered = sortedFriends.filter { it.location == "offline" && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-
                 items(
                     friendsFiltered.count(),
                     key = { UUID.randomUUID() }
@@ -221,8 +207,10 @@ class FriendsScreen : Screen {
         model: FriendsModel
     ) {
         val friends = model.friends.collectAsState()
+        val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+        val friendsFiltered = sortedFriends.filter { it.location != "offline" &&  StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
 
-        if (friends.value.isEmpty()) {
+        if (friendsFiltered.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -237,9 +225,6 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
-                val friendsFiltered = sortedFriends.filter { it.location != "offline" &&  StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-
                 items(
                     friendsFiltered.count(),
                     key = { UUID.randomUUID() }
@@ -261,8 +246,10 @@ class FriendsScreen : Screen {
         model: FriendsModel
     ) {
         val friends = model.friends.collectAsState()
+        val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+        val friendsFiltered = sortedFriends.filter { it.location == "offline" &&  StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline }
 
-        if (friends.value.isEmpty()) {
+        if (friendsFiltered.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -277,9 +264,6 @@ class FriendsScreen : Screen {
                     .fillMaxHeight()
                     .padding(1.dp)
             ) {
-                val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
-                val friendsFiltered = sortedFriends.filter { it.location == "offline" &&  StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline }
-
                 items(
                     friendsFiltered.count(),
                     key = { UUID.randomUUID() }

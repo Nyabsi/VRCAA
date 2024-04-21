@@ -24,14 +24,12 @@ class FriendsModel(
     sealed class FriendListState {
         data object Init : FriendListState()
         data object Loading : FriendListState()
-        data class Result(val favoriteFriends: List<LimitedUser>) : FriendListState()
+        data object Result : FriendListState()
     }
 
     private var friendsStateFlow = MutableStateFlow(listOf<LimitedUser>())
-    private var favoriteFriends = mutableListOf<LimitedUser>()
-
     var friends = friendsStateFlow.asStateFlow()
-    val isRefreshing = mutableStateOf(false)
+
     var currentIndex = mutableIntStateOf(0)
 
     private val listener = object : FriendManager.FriendListener {
@@ -47,42 +45,12 @@ class FriendsModel(
         mutableState.value = FriendListState.Loading
 
         FriendManager.setFriendListener(listener)
-        fetchFavorites()
 
         screenModelScope.launch {
             while (FriendManager.getFriends().isEmpty())
                 delay(10)
             friendsStateFlow.update { FriendManager.getFriends() }
-            mutableState.value = FriendListState.Result(favoriteFriends = favoriteFriends)
-        }
-    }
-
-    // TODO: add special flag to "Favorite" friends.
-    private fun fetchFavorites() {
-        screenModelScope.launch {
-            api?.getFavorites("friend")?.let {
-                it.forEach { favorite ->
-                    api?.getFriend(favorite.id)
-                        ?.let { friend -> favoriteFriends.add(friend) }
-                }
-            }
-        }
-    }
-
-    fun refreshFriends(context: Context) {
-        screenModelScope.launch {
-            favoriteFriends.clear()
-
-            isRefreshing.value = true
-            fetchFavorites()
-            delay(500)
-            isRefreshing.value = false
-
-            Toast.makeText(
-                context,
-                context.getString(R.string.friend_refreshed_favorites_message),
-                Toast.LENGTH_SHORT
-            ).show()
+            mutableState.value = FriendListState.Result
         }
     }
 }
