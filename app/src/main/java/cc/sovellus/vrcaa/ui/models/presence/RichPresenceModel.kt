@@ -19,17 +19,22 @@ import kotlinx.coroutines.launch
 class RichPresenceModel(
     private val context: Context
 ) : ScreenModel {
+
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
+
+    private var ticket = mutableStateOf("")
+
+    var token = mutableStateOf(preferences.discordToken)
+    var enabled = mutableStateOf(preferences.richPresenceEnabled)
+    var websocket = mutableStateOf(preferences.richPresenceWebhookUrl)
+
+    var visibility = mutableStateOf(false)
 
     var username = mutableStateOf("")
     var password = mutableStateOf("")
-    var visibility = mutableStateOf(false)
-    var token = mutableStateOf(preferences.discordToken)
-    var enabled = mutableStateOf(preferences.richPresenceEnabled)
-    private var ticket = mutableStateOf("")
-    var code = mutableStateOf("")
+
     var mfa = mutableStateOf(false)
-    var websocket = mutableStateOf(preferences.richPresenceWebhookUrl)
+    var code = mutableStateOf("")
 
     fun login() {
         screenModelScope.launch {
