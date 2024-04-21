@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.helper
+package cc.sovellus.vrcaa.extension
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
