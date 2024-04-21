@@ -23,9 +23,9 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
-import cc.sovellus.vrcaa.helper.cookies
-import cc.sovellus.vrcaa.helper.invalidCookie
-import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.extension.cookies
+import cc.sovellus.vrcaa.extension.invalidCookie
+import cc.sovellus.vrcaa.extension.twoFactorAuth
 import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import okhttp3.Headers

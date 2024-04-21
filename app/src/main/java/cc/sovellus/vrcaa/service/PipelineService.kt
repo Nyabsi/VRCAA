@@ -26,9 +26,9 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
-import cc.sovellus.vrcaa.helper.discordToken
-import cc.sovellus.vrcaa.helper.richPresenceEnabled
-import cc.sovellus.vrcaa.helper.richPresenceWebhookUrl
+import cc.sovellus.vrcaa.extension.discordToken
+import cc.sovellus.vrcaa.extension.richPresenceEnabled
+import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager

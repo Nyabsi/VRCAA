@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import cc.sovellus.vrcaa.activity.crash.CrashActivity
 import cc.sovellus.vrcaa.activity.crash.GlobalExceptionHandler
-import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.extension.cookies
 import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.service.PipelineService
 

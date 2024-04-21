@@ -1,14 +1,8 @@
 package cc.sovellus.vrcaa.helper
 
-import android.util.Log
 import extensions.wu.seal.PropertySuffixSupport.append
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 
-object LocationHelper: CoroutineScope {
-
-    override val coroutineContext = Dispatchers.Main + SupervisorJob()
+object LocationHelper {
 
     data class LocationInfo(
         var worldId: String = "",
@@ -85,10 +79,10 @@ object LocationHelper: CoroutineScope {
                     if (result.groupAccessType.isNotEmpty()) {
                         if (result.groupAccessType == "public") {
                             result.groupAccessType = "Public"
-                            result.instanceType = "Group (Public)"
+                            result.instanceType = "Group"
                         } else {
                             result.groupAccessType = "Plus"
-                            result.instanceType = "Group (Plus)"
+                            result.instanceType = "Group+"
                         }
                     }
                 }

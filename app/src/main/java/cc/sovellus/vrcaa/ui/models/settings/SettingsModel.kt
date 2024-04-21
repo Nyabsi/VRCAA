@@ -6,10 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.activity.main.MainActivity
-import cc.sovellus.vrcaa.helper.cookies
-import cc.sovellus.vrcaa.helper.enableUpdates
-import cc.sovellus.vrcaa.helper.invalidCookie
-import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.extension.cookies
+import cc.sovellus.vrcaa.extension.enableUpdates
+import cc.sovellus.vrcaa.extension.invalidCookie
+import cc.sovellus.vrcaa.extension.twoFactorAuth
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch

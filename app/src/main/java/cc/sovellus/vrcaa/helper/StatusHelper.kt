@@ -2,7 +2,7 @@ package cc.sovellus.vrcaa.helper
 
 import androidx.compose.ui.graphics.Color
 
-class StatusHelper {
+object StatusHelper {
     enum class Status {
         JoinMe,
         Active,
@@ -31,15 +31,13 @@ class StatusHelper {
         }
     }
 
-    companion object {
-        fun getStatusFromString(status: String): Status {
-            return when (status) {
-                "join me" -> Status.JoinMe
-                "active" -> Status.Active
-                "ask me" -> Status.AskMe
-                "busy" -> Status.Busy
-                else -> Status.Offline
-            }
+    fun getStatusFromString(status: String): Status {
+        return when (status) {
+            "join me" -> Status.JoinMe
+            "active" -> Status.Active
+            "ask me" -> Status.AskMe
+            "busy" -> Status.Busy
+            else -> Status.Offline
         }
     }
 }
