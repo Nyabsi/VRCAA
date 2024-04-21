@@ -10,6 +10,7 @@ import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
+import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
 import cc.sovellus.vrcaa.extension.usersAmount
@@ -70,7 +71,7 @@ class SearchResultModel(
 
             groups = api?.getGroups(
                 query,
-                100 // TODO: shit.
+                preferences.groupsAmount
             )
 
             mutableState.value = SearchState.Result(worlds, users, avatars, groups)
