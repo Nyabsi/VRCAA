@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.helper
+package cc.sovellus.vrcaa.extension
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -18,11 +18,11 @@ internal var SharedPreferences.userCredentials: Pair<String?, String?>
         putString("userCredentials_password", it.second)
     }
 
-internal var SharedPreferences.cookies: String
+internal var SharedPreferences.authToken: String
     get() = getString("cookies", "")!!
     set(it) = edit { putString("cookies", it) }
 
-internal var SharedPreferences.twoFactorAuth: String
+internal var SharedPreferences.twoFactorToken: String
     get() = getString("TwoFactorAuth", "")!!
     set(it) = edit { putString("TwoFactorAuth", it) }
 
@@ -36,7 +36,7 @@ internal var SharedPreferences.notificationWhitelist: NotificationManager.Notifi
     }
     set(it) = edit { putString("notificationWhitelist", Gson().toJson(it)) }
 
-internal var SharedPreferences.invalidCookie: Boolean
+internal var SharedPreferences.isSessionExpired: Boolean
     get() = getBoolean("isExpiredSession", false)
     set(it) = edit { putBoolean("isExpiredSession", it) }
 
@@ -48,7 +48,7 @@ internal var SharedPreferences.richPresenceEnabled: Boolean
     get() = getBoolean("richPresenceEnabled", false)
     set(it) = edit { putBoolean("richPresenceEnabled", it) }
 
-internal var SharedPreferences.enableUpdates: Boolean
+internal var SharedPreferences.updatesEnabled: Boolean
     get() = getBoolean("updatesEnabled", true)
     set(it) = edit { putBoolean("updatesEnabled", it) }
 

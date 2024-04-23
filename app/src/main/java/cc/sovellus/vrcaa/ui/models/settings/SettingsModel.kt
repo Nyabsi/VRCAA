@@ -6,10 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.activity.main.MainActivity
-import cc.sovellus.vrcaa.helper.cookies
-import cc.sovellus.vrcaa.helper.enableUpdates
-import cc.sovellus.vrcaa.helper.invalidCookie
-import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.extension.updatesEnabled
+import cc.sovellus.vrcaa.extension.isSessionExpired
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ class SettingsModel(
 ) : ScreenModel {
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
 
-    val enableUpdates = mutableStateOf(preferences.enableUpdates)
+    val enableUpdates = mutableStateOf(preferences.updatesEnabled)
 
     fun doLogout() {
         screenModelScope.launch {
@@ -30,9 +30,9 @@ class SettingsModel(
 
             api?.logout()
 
-            preferences.twoFactorAuth = ""
-            preferences.cookies = ""
-            preferences.invalidCookie = true
+            preferences.twoFactorToken = ""
+            preferences.authToken = ""
+            preferences.isSessionExpired = true
 
             intent = Intent(context, MainActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -42,6 +42,6 @@ class SettingsModel(
 
     fun toggleUpdate(state: Boolean) {
         enableUpdates.value = state
-        preferences.enableUpdates = state
+        preferences.updatesEnabled = state
     }
 }

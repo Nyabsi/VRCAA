@@ -10,26 +10,31 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordApi
 import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
 import cc.sovellus.vrcaa.api.discord.models.DiscordTicket
-import cc.sovellus.vrcaa.helper.discordToken
-import cc.sovellus.vrcaa.helper.richPresenceEnabled
-import cc.sovellus.vrcaa.helper.richPresenceWebhookUrl
+import cc.sovellus.vrcaa.extension.discordToken
+import cc.sovellus.vrcaa.extension.richPresenceEnabled
+import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
 class RichPresenceModel(
     private val context: Context
 ) : ScreenModel {
+
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
+
+    private var ticket = mutableStateOf("")
+
+    var token = mutableStateOf(preferences.discordToken)
+    var enabled = mutableStateOf(preferences.richPresenceEnabled)
+    var websocket = mutableStateOf(preferences.richPresenceWebhookUrl)
+
+    var visibility = mutableStateOf(false)
 
     var username = mutableStateOf("")
     var password = mutableStateOf("")
-    var visibility = mutableStateOf(false)
-    var token = mutableStateOf(preferences.discordToken)
-    var enabled = mutableStateOf(preferences.richPresenceEnabled)
-    private var ticket = mutableStateOf("")
-    var code = mutableStateOf("")
+
     var mfa = mutableStateOf(false)
-    var websocket = mutableStateOf(preferences.richPresenceWebhookUrl)
+    var code = mutableStateOf("")
 
     fun login() {
         screenModelScope.launch {

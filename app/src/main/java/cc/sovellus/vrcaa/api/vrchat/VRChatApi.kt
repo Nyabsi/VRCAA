@@ -23,9 +23,9 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
-import cc.sovellus.vrcaa.helper.cookies
-import cc.sovellus.vrcaa.helper.invalidCookie
-import cc.sovellus.vrcaa.helper.twoFactorAuth
+import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.extension.isSessionExpired
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -44,15 +44,15 @@ class VRChatApi(
     private var cookies: String = ""
 
     init {
-        cookies = preferences.cookies
+        cookies = preferences.authToken
     }
 
     enum class MfaType { NONE, EMAIL_OTP, OTP, TOTP }
 
     private fun invalidateSession() {
 
-        preferences.cookies = ""
-        preferences.invalidCookie = true
+        preferences.authToken = ""
+        preferences.isSessionExpired = true
 
         val serviceIntent = Intent(context, PipelineService::class.java)
         context.stopService(serviceIntent)
@@ -109,7 +109,7 @@ class VRChatApi(
             }
 
             Result.Unauthorized -> {
-                if (!isAuthorization && !preferences.invalidCookie)
+                if (!isAuthorization && !preferences.isSessionExpired)
                     invalidateSession()
                 null
             }
@@ -134,8 +134,8 @@ class VRChatApi(
         headers["Authorization"] = "Basic $token"
         headers["User-Agent"] = userAgent
 
-        if (preferences.twoFactorAuth.isNotEmpty())
-            headers["Cookie"] = preferences.twoFactorAuth
+        if (preferences.twoFactorToken.isNotEmpty())
+            headers["Cookie"] = preferences.twoFactorToken
 
         val result = doRequest(
             method = "GET",
@@ -150,17 +150,17 @@ class VRChatApi(
 
             if (!response.contains("requiresTwoFactorAuth")) {
                 val cookies = response.split('~')[0]
-                preferences.cookies = cookies
-                preferences.twoFactorAuth = cookies.substring(cookies.indexOf("twoFactorAuth="), cookies.indexOf(";", cookies.indexOf("twoFactorAuth=")))
+                preferences.authToken = cookies
+                preferences.twoFactorToken = cookies.substring(cookies.indexOf("twoFactorAuth="), cookies.indexOf(";", cookies.indexOf("twoFactorAuth=")))
                 this.cookies = cookies
-                preferences.invalidCookie = false
+                preferences.isSessionExpired = false
                 return MfaType.NONE
             } else {
                 // this is double encoded because I could not figure better way to handle headers.
                 val cookies = response.split('~')[0]
                 val body = response.split('~')[1]
 
-                preferences.cookies = cookies
+                preferences.authToken = cookies
                 this.cookies = cookies
 
                 if (body.contains("emailOtp")) {
@@ -214,9 +214,9 @@ class VRChatApi(
 
                 response?.let {
                     val cookie = response.split('~')[0]
-                    preferences.invalidCookie = false
-                    preferences.cookies = "${preferences.cookies} $cookie"
-                    preferences.twoFactorAuth = cookie
+                    preferences.isSessionExpired = false
+                    preferences.authToken = "${preferences.authToken} $cookie"
+                    preferences.twoFactorToken = cookie
                     return true
                 }
                 return false
@@ -237,9 +237,9 @@ class VRChatApi(
 
                 response?.let {
                     val cookie = response.split('~')[0]
-                    preferences.invalidCookie = false
-                    preferences.cookies = "${preferences.cookies} $cookie"
-                    preferences.twoFactorAuth = cookie
+                    preferences.isSessionExpired = false
+                    preferences.authToken = "${preferences.authToken} $cookie"
+                    preferences.twoFactorToken = cookie
                     return true
                 }
                 return false
@@ -660,5 +660,25 @@ class VRChatApi(
 
         val response = handleRequest(result)
         return Gson().fromJson(response, FileMetadata::class.java)
+    }
+
+    suspend fun updateProfile(id: String, status: String, description: String, bio: String, bioLinks: List<String>): Boolean {
+
+        val headers = Headers.Builder()
+
+        headers["Cookie"] = cookies
+        headers["User-Agent"] = userAgent
+
+        val body = "{\"status\":\"$status\",\"statusDescription\":\"$description\",\"bio\":\"${bio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(bioLinks)}}"
+
+        val result = doRequest(
+            method = "PUT",
+            url = "$apiBase/users/$id",
+            headers = headers.build(),
+            body = body
+        )
+
+        val response = handleRequest(result)
+        return response != null
     }
 }

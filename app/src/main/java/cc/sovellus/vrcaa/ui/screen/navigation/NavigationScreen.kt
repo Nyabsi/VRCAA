@@ -148,14 +148,13 @@ class NavigationScreen : Screen {
                                     IconButton(onClick = { model.clearSearchText() }) {
                                         Icon(
                                             imageVector = Icons.Filled.Close,
-                                            contentDescription = stringResource(R.string.preview_image_description)
-                                        )
+                                            contentDescription = null                                        )
                                     }
                                 } else {
                                     IconButton(onClick = { showBottomSheet = true }) {
                                         Icon(
                                             imageVector = Icons.Filled.MoreVert,
-                                            contentDescription = stringResource(R.string.preview_image_description)
+                                            contentDescription = null
                                         )
                                     }
                                 }
@@ -165,13 +164,13 @@ class NavigationScreen : Screen {
                                     IconButton(onClick = { model.existSearchMode() }) {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = stringResource(R.string.preview_image_description)
+                                            contentDescription = null
                                         )
                                     }
                                 } else {
                                     Icon(
                                         imageVector = Icons.Filled.Search,
-                                        contentDescription = stringResource(R.string.preview_image_description)
+                                        contentDescription = null
                                     )
                                 }
                             }
@@ -185,7 +184,7 @@ class NavigationScreen : Screen {
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Filled.History,
-                                                contentDescription = stringResource(R.string.preview_image_description)
+                                                contentDescription = null
                                             )
                                         },
                                         headlineContent = {
@@ -249,7 +248,7 @@ class NavigationScreen : Screen {
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.Cabin,
-                                                contentDescription = "Localized description"
+                                                contentDescription = null
                                             )
                                         }
                                     )
@@ -309,8 +308,7 @@ class NavigationScreen : Screen {
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.People,
-                                                contentDescription = "Localized description"
-                                            )
+                                                contentDescription = null                                            )
                                         }
                                     )
                                     HorizontalDivider(
@@ -339,8 +337,7 @@ class NavigationScreen : Screen {
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.Groups,
-                                                contentDescription = "Localized description"
-                                            )
+                                                contentDescription = null                                            )
                                         }
                                     )
                                     HorizontalDivider(

@@ -19,7 +19,7 @@ import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
-import cc.sovellus.vrcaa.helper.cookies
+import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
@@ -28,7 +28,7 @@ import cc.sovellus.vrcaa.ui.theme.Theme
 class MainActivity : ComponentActivity() {
 
     private fun checkForCookies(): Boolean {
-        return getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).cookies.isNotBlank()
+        return getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken.isNotBlank()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

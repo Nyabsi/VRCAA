@@ -68,8 +68,6 @@ class UserGroupsScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        var isMenuExpanded by remember { mutableStateOf(false) }
-
         if (groups == null) {
             Toast.makeText(
                 context,

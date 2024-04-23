@@ -11,12 +11,12 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.updater.AutoUpdater
-import cc.sovellus.vrcaa.helper.enableUpdates
-import cc.sovellus.vrcaa.helper.groupsAmount
-import cc.sovellus.vrcaa.helper.searchFeaturedWorlds
-import cc.sovellus.vrcaa.helper.sortWorlds
-import cc.sovellus.vrcaa.helper.usersAmount
-import cc.sovellus.vrcaa.helper.worldsAmount
+import cc.sovellus.vrcaa.extension.updatesEnabled
+import cc.sovellus.vrcaa.extension.groupsAmount
+import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
+import cc.sovellus.vrcaa.extension.sortWorlds
+import cc.sovellus.vrcaa.extension.usersAmount
+import cc.sovellus.vrcaa.extension.worldsAmount
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -44,7 +44,7 @@ class NavigationModel(
     init {
         screenModelScope.launch {
 
-            if (preferences.enableUpdates && !BuildConfig.DEBUG) {
+            if (preferences.updatesEnabled && !BuildConfig.DEBUG) {
                 hasUpdate.value = updater.checkForUpdates()
             }
         }

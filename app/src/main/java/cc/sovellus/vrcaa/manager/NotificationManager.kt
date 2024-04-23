@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.notificationWhitelist
+import cc.sovellus.vrcaa.extension.notificationWhitelist
 import com.google.gson.annotations.SerializedName
 
 class NotificationManager(
