@@ -69,7 +69,6 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val friend = msg.obj as FriendOnline
-                    friend.user.location = friend.travelingToLocation
 
                     if (notificationManager.isOnWhitelist(friend.userId) &&
                         notificationManager.isIntentEnabled(
