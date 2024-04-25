@@ -22,6 +22,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendLocation
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOffline
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOnline
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
 import cc.sovellus.vrcaa.helper.LocationHelper
@@ -145,6 +146,47 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = msg.obj as FriendLocation
                     val cachedFriend = FriendManager.getFriend(friend.userId)
 
+                    // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
+                    // We want to show it only once, so only show when the travelling is done.
+                    if (friend.travelingToLocation.isEmpty()) {
+                        if (notificationManager.isOnWhitelist(friend.userId) &&
+                            notificationManager.isIntentEnabled(
+                                friend.userId,
+                                NotificationManager.Intents.FRIEND_FLAG_LOCATION
+                            )
+                        ) {
+                            notificationManager.pushNotification(
+                                title = application.getString(R.string.notification_service_title_location),
+                                content = application.getString(R.string.notification_service_description_location)
+                                    .format(friend.user.displayName, friend.world.name),
+                                channel = NotificationManager.CHANNEL_LOCATION_ID
+                            )
+                        }
+
+                        launch {
+                            FeedManager.addFeed(
+                                FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
+                                    .apply {
+                                        friendId = friend.userId
+                                        friendName = friend.user.displayName
+                                        travelDestination = LocationHelper.getReadableLocation(friend.location, friend.world.name)
+                                        friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                    }
+                            )
+                        }
+                    }
+
+                    // This guarantees the user will have valid location.
+                    friend.user.location = friend.location
+                    friend.user.world = friend.world
+                    friend.user.isFavorite = cachedFriend?.isFavorite == true
+                    FriendManager.updateFriend(friend.user)
+                }
+
+                is FriendUpdate -> {
+                    val friend = msg.obj as FriendLocation
+                    val cachedFriend = FriendManager.getFriend(friend.userId)
+
                     if (cachedFriend != null) {
                         if (
                             StatusHelper.getStatusFromString(friend.user.status) !=
@@ -174,48 +216,14 @@ class PipelineService : Service(), CoroutineScope {
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = friend.userId
                                     friendName = friend.user.displayName
-                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                    friendStatus = StatusHelper.getStatusFromString(friend.user.status)
+                                    friendPictureUrl =
+                                        friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                    friendStatus =
+                                        StatusHelper.getStatusFromString(friend.user.status)
                                 }
                             )
-                        } else {
-                            // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
-                            // We want to show it only once, so only show when the travelling is done.
-                            if (friend.travelingToLocation.isEmpty()) {
-                                if (notificationManager.isOnWhitelist(friend.userId) &&
-                                    notificationManager.isIntentEnabled(
-                                        friend.userId,
-                                        NotificationManager.Intents.FRIEND_FLAG_LOCATION
-                                    )
-                                ) {
-                                    notificationManager.pushNotification(
-                                        title = application.getString(R.string.notification_service_title_location),
-                                        content = application.getString(R.string.notification_service_description_location)
-                                            .format(friend.user.displayName, friend.world.name),
-                                        channel = NotificationManager.CHANNEL_LOCATION_ID
-                                    )
-                                }
-
-                                launch {
-                                    FeedManager.addFeed(
-                                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
-                                            .apply {
-                                                friendId = friend.userId
-                                                friendName = friend.user.displayName
-                                                travelDestination = LocationHelper.getReadableLocation(friend.location, friend.world.name)
-                                                friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                            }
-                                    )
-                                }
-                            }
                         }
                     }
-
-                    // This guarantees the user will have valid location.
-                    friend.user.location = friend.location
-                    friend.user.world = friend.world
-                    friend.user.isFavorite = cachedFriend?.isFavorite == true
-                    FriendManager.updateFriend(friend.user)
                 }
 
                 is UserLocation -> {
