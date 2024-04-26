@@ -1,17 +1,33 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import android.widget.Toast
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -22,12 +38,15 @@ import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
+import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.models.profile.ProfileModel
 import cc.sovellus.vrcaa.ui.models.profile.ProfileModel.ProfileState
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import kotlinx.coroutines.launch
 
 class ProfileScreen : Screen {
 
@@ -44,15 +63,18 @@ class ProfileScreen : Screen {
 
         when (val result = state) {
             is ProfileState.Loading -> LoadingIndicatorScreen().Content()
-            is ProfileState.Result -> RenderProfile((result.profile))
+            is ProfileState.Result -> RenderProfile(result.profile, model)
             else -> {}
         }
     }
 
     @Composable
-    private fun RenderProfile(profile: User?) {
+    private fun RenderProfile(profile: User?, model: ProfileModel) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
+
+        var isMenuExpanded by remember { mutableStateOf(false) }
+        var isEditingProfile by remember { mutableStateOf(false) }
 
         if (profile == null) {
             Toast.makeText(
@@ -62,6 +84,18 @@ class ProfileScreen : Screen {
             ).show()
             navigator.pop()
         } else {
+
+            if (isEditingProfile) {
+                ProfileEditDialog(
+                    onDismiss = { isEditingProfile = false },
+                    onConfirmation = {
+                        isEditingProfile = false
+                        model.updateProfile()
+                    },
+                    title = stringResource(R.string.profile_edit_dialog_title_edit_profile)
+                )
+            }
+
             LazyColumn {
                 item {
                     Column(
@@ -70,14 +104,47 @@ class ProfileScreen : Screen {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         profile.let {
-                            ProfileCard(
-                                thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarThumbnailImageUrl },
-                                displayName = it.displayName,
-                                statusDescription = it.statusDescription,
-                                trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                userId = it.id
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .pointerInput(Unit) {
+                                        detectTapGestures(
+                                            onTap = {
+                                                isMenuExpanded = true
+                                            }
+                                        )
+                                    }
+                            ) {
+                                ProfileCard(
+                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                    displayName = it.displayName,
+                                    statusDescription = it.statusDescription,
+                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                    statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                                )
+
+                                DropdownMenu(
+                                    expanded = isMenuExpanded,
+                                    onDismissRequest = { isMenuExpanded = false },
+                                    offset = DpOffset(24.dp, 0.dp)
+                                ) {
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            navigator.parent?.parent?.push(
+                                                UserGroupsScreen(profile.displayName, profile.id)
+                                            )
+                                            isMenuExpanded = false
+                                        },
+                                        text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
+                                    )
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            isMenuExpanded = false
+                                            isEditingProfile = true
+                                        },
+                                        text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) }
+                                    )
+                                }
+                            }
                         }
                     }
                 }

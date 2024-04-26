@@ -266,4 +266,6 @@
 
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
+
+    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
 </resources>
