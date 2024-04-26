@@ -15,8 +15,8 @@ import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendLocation
@@ -25,11 +25,11 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOnline
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
-import cc.sovellus.vrcaa.helper.LocationHelper
-import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
+import cc.sovellus.vrcaa.helper.LocationHelper
+import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
@@ -70,6 +70,7 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val friend = msg.obj as FriendOnline
+                    friend.user.location = friend.location ?: "private"
 
                     if (notificationManager.isOnWhitelist(friend.userId) &&
                         notificationManager.isIntentEnabled(
@@ -100,6 +101,7 @@ class PipelineService : Service(), CoroutineScope {
                     {
                         val cachedFriend = FriendManager.getFriend(friend.userId)
                         friend.user.isFavorite = cachedFriend?.isFavorite == true
+                        friend.user.world = cachedFriend?.world
                         FriendManager.updateFriend(friend.user)
                     }
                 }
@@ -184,7 +186,7 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is FriendUpdate -> {
-                    val friend = msg.obj as FriendLocation
+                    val friend = msg.obj as FriendUpdate
                     val cachedFriend = FriendManager.getFriend(friend.userId)
 
                     if (cachedFriend != null) {
@@ -202,7 +204,7 @@ class PipelineService : Service(), CoroutineScope {
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status)
                                         .format(
-                                            cachedFriend.displayName,
+                                            friend.user.displayName,
                                             StatusHelper.getStatusFromString(cachedFriend.status)
                                                 .toString(),
                                             StatusHelper.getStatusFromString(friend.user.status)
@@ -216,14 +218,16 @@ class PipelineService : Service(), CoroutineScope {
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = friend.userId
                                     friendName = friend.user.displayName
-                                    friendPictureUrl =
-                                        friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
-                                    friendStatus =
-                                        StatusHelper.getStatusFromString(friend.user.status)
+                                    friendPictureUrl = friend.user.userIcon.ifEmpty { friend.user.currentAvatarImageUrl }
+                                    friendStatus = StatusHelper.getStatusFromString(friend.user.status)
                                 }
                             )
                         }
                     }
+
+                    friend.user.isFavorite = cachedFriend?.isFavorite == true
+                    friend.user.world = cachedFriend?.world
+                    FriendManager.updateFriend(friend.user)
                 }
 
                 is UserLocation -> {
