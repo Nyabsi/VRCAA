@@ -19,9 +19,8 @@ class FriendsModel : ScreenModel {
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
-            val newList = friends.toList()
             screenModelScope.launch {
-                friendsStateFlow.update { newList }
+                friendsStateFlow.update { friends }
             }
         }
     }
@@ -31,8 +30,8 @@ class FriendsModel : ScreenModel {
 
         screenModelScope.launch {
             while (FriendManager.getFriends().isEmpty())
-                delay(10)
-            friendsStateFlow.update { FriendManager.getFriends().toList() }
+                delay(1)
+            friendsStateFlow.update { FriendManager.getFriends() }
         }
     }
 }

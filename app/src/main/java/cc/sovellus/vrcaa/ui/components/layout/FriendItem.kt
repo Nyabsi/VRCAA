@@ -36,7 +36,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
             }, maxLines = 1)
         },
         supportingContent = {
-            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { LocationHelper.getReadableLocation(friend.location, friend.world?.name.toString()) }), maxLines = 1)
+            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { LocationHelper.getReadableLocation(friend.location, friend.worldName) }), maxLines = 1)
         },
         leadingContent = {
             GlideImage(
