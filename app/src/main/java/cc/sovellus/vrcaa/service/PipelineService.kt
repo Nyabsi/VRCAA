@@ -313,47 +313,47 @@ class PipelineService : Service(), CoroutineScope {
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
-            launch {
-                val friends: MutableList<LimitedUser> = ArrayList()
-
-                api?.getFriends()?.let { friends += it }
-                api?.getFriends(true)?.let { friends += it }
-
-                val favorites = api?.getFavorites("friend")
-
-                for (friend in friends) {
-                    friend.location.let { intent ->
-                        if (intent.contains("wrld_")) {
-                            val info = LocationHelper.parseLocationInfo(friend.location)
-                            api?.getWorld(info.worldId)?.let { friend.worldName = it.name }
-                        } else {
-                            friend.worldName = ""
-                        }
-                    }
-
-                    favorites?.find { it.favoriteId == friend.id }?.let { friend.isFavorite = true }
-                }
-
-                FriendManager.setFriends(friends).also {
-                    api?.getAuth()?.let { token ->
-                        pipeline = VRChatPipeline(token)
-                        pipeline?.connect()
-                        pipeline?.setListener(listener)
-                    }
-
-                    if (preferences.richPresenceEnabled) {
-                        gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
-                        gateway?.connect()
-                    }
-                }
-            }
-
             serviceLooper = looper
             serviceHandler = ServiceHandler(looper)
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        launch {
+            val friends: MutableList<LimitedUser> = ArrayList()
+
+            api?.getFriends()?.let { friends += it }
+            api?.getFriends(true)?.let { friends += it }
+
+            val favorites = api?.getFavorites("friend")
+
+            for (friend in friends) {
+                friend.location.let { intent ->
+                    if (intent.contains("wrld_")) {
+                        val info = LocationHelper.parseLocationInfo(friend.location)
+                        api?.getWorld(info.worldId)?.let { friend.worldName = it.name }
+                    } else {
+                        friend.worldName = ""
+                    }
+                }
+
+                favorites?.find { it.favoriteId == friend.id }?.let { friend.isFavorite = true }
+            }
+
+            FriendManager.setFriends(friends).also {
+                api?.getAuth()?.let { token ->
+                    pipeline = VRChatPipeline(token)
+                    pipeline?.connect()
+                    pipeline?.setListener(listener)
+                }
+
+                if (preferences.richPresenceEnabled) {
+                    gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
+                    gateway?.connect()
+                }
+            }
+        }
 
         val builder = NotificationCompat.Builder(this, NotificationManager.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
