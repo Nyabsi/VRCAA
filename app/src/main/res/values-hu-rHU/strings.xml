@@ -218,4 +218,14 @@
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
+    <!-- Profile Edit Dialog -->
+    <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_bio">Bio</string>
+    <string name="profile_edit_dialog_title_bio_links">Bio Links</string>
+    <string name="profile_edit_dialog_button_update">Update</string>
+    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
+    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
 </resources>

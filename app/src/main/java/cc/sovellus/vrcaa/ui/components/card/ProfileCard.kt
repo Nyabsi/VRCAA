@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.components.card
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -46,19 +44,8 @@ fun ProfileCard(
     statusDescription: String,
     trustRankColor: Color,
     statusColor: Color,
-    userId: String = ""
 ) {
     val navigator = LocalNavigator.currentOrThrow
-    var isMenuExpanded by remember { mutableStateOf(false) }
-    var isEditingProfile by remember { mutableStateOf(false) }
-
-    if (isEditingProfile) {
-        ProfileEditDialog(
-            onDismiss = { isEditingProfile = false },
-            onConfirmation = { isEditingProfile = false },
-            title = "Edit Profile"
-        )
-    }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -68,9 +55,6 @@ fun ProfileCard(
             .height(280.dp)
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = {
-                if (userId.isNotEmpty()) isMenuExpanded = true
-            })
     ) {
 
         GlideImage(
@@ -107,29 +91,6 @@ fun ProfileCard(
                 fontWeight = FontWeight.SemiBold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
-            )
-        }
-
-        DropdownMenu(
-            expanded = isMenuExpanded,
-            onDismissRequest = { isMenuExpanded = false },
-            offset = DpOffset(12.dp, (-30).dp)
-        ) {
-            DropdownMenuItem(
-                onClick = {
-                    navigator.parent?.parent?.push(
-                        UserGroupsScreen(displayName, userId)
-                    )
-                    isMenuExpanded = false
-                },
-                text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
-            )
-            DropdownMenuItem(
-                onClick = {
-                    isMenuExpanded = false
-                    isEditingProfile = true
-                },
-                text = { Text("Edit Profile") }
             )
         }
     }

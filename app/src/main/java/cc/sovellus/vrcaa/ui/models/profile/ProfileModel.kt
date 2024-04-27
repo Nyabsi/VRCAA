@@ -30,4 +30,12 @@ class ProfileModel(
             mutableState.value = ProfileState.Result(profile)
         }
     }
+
+    fun updateProfile() {
+        screenModelScope.launch {
+            mutableState.value = ProfileState.Loading
+            profile = api?.getSelf()
+            mutableState.value = ProfileState.Result(profile)
+        }
+    }
 }

@@ -19,11 +19,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -43,7 +45,7 @@ fun ProfileEditDialog(
     val description = remember { mutableStateOf("") }
     val bio = remember { mutableStateOf("") }
     val id = remember { mutableStateOf("") }
-    var bioLinks = remember { mutableStateListOf("", "", "") }
+    val bioLinks = remember { mutableStateListOf("", "", "") }
     val options = listOf("join me", "active", "ask me", "busy")
 
     LaunchedEffect(Unit) {
@@ -74,7 +76,7 @@ fun ProfileEditDialog(
             ) {
                 item {
                     Text(
-                        text = "Status",
+                        text = stringResource(R.string.profile_edit_dialog_title_status),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Left,
@@ -87,7 +89,7 @@ fun ProfileEditDialog(
                 }
                 item {
                     Text(
-                        text = "Status Description",
+                        text = stringResource(R.string.profile_edit_dialog_title_status_description),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Left,
@@ -104,7 +106,7 @@ fun ProfileEditDialog(
                 }
                 item {
                     Text(
-                        text = "Bio",
+                        text = stringResource(R.string.profile_edit_dialog_title_bio),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Left,
@@ -121,7 +123,7 @@ fun ProfileEditDialog(
                 }
                 item {
                     Text(
-                        text = "Bio",
+                        text = stringResource(R.string.profile_edit_dialog_title_bio_links),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Left,
@@ -163,7 +165,7 @@ fun ProfileEditDialog(
                 onClick = {
                     Toast.makeText(
                         context,
-                        "Updated profile.",
+                        context.getString(R.string.profile_edit_dialog_toast_updated),
                         Toast.LENGTH_LONG
                     ).show()
                     coroutineScope.launch {
@@ -173,7 +175,7 @@ fun ProfileEditDialog(
                     }
                 }
             ) {
-                Text("Update")
+                Text(stringResource(R.string.profile_edit_dialog_button_update))
             }
         },
         dismissButton = {
@@ -181,13 +183,13 @@ fun ProfileEditDialog(
                 onClick = {
                     Toast.makeText(
                         context,
-                        "Changes were discarded.",
+                        context.getString(R.string.profile_edit_dialog_toast_cancelled),
                         Toast.LENGTH_LONG
                     ).show()
                     onDismiss()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.profile_edit_dialog_button_cancel))
             }
         }
     )

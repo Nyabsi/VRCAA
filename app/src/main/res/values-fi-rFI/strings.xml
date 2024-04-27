@@ -38,9 +38,9 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
     <string name="profile_label_biography">Kuvaus</string>
-    <string name="profile_label_languages">Kielet</string>
+    <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
-    <string name="profile_text_no_languages">Kieliä ei ole määritelty.</string>
+    <string name="profile_text_no_languages">No languages specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
@@ -218,4 +218,14 @@
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
+    <!-- Profile Edit Dialog -->
+    <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_bio">Bio</string>
+    <string name="profile_edit_dialog_title_bio_links">Bio Links</string>
+    <string name="profile_edit_dialog_button_update">Update</string>
+    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
+    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
 </resources>
