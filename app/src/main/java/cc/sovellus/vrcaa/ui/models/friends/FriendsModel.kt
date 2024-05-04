@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FriendsModel : ScreenModel {
-    private var friendsStateFlow = MutableStateFlow(listOf<LimitedUser>())
+    private var friendsStateFlow = MutableStateFlow(FriendManager.getFriends())
     var friends = friendsStateFlow.asStateFlow()
 
     var currentIndex = mutableIntStateOf(0)
@@ -27,11 +27,5 @@ class FriendsModel : ScreenModel {
 
     init {
         FriendManager.setFriendListener(listener)
-
-        screenModelScope.launch {
-            while (FriendManager.getFriends().isEmpty())
-                delay(1)
-            friendsStateFlow.update { FriendManager.getFriends() }
-        }
     }
 }

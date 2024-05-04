@@ -22,6 +22,7 @@ object FriendManager {
     fun setFriends(friends: MutableList<LimitedUser>) {
         synchronized(friends) {
             this.friends = friends
+            friendListener?.onUpdateFriends(FriendManager.friends)
         }
     }
 
