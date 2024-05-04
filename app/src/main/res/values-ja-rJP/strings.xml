@@ -38,9 +38,9 @@
     <!-- Profile -->
     <string name="profile_label_current_location">現在のインスタンス</string>
     <string name="profile_label_biography">プロフィール</string>
-    <string name="profile_label_languages">Languages</string>
+    <string name="profile_label_languages">言語</string>
     <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
+    <string name="profile_text_no_languages">言語の記載が有りません。</string>
     <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
     <string name="profile_user_dropdown_view_groups">グループの表示</string>
     <string name="profile_user_dropdown_view_avatar">アバター詳細を表示</string>
@@ -51,7 +51,7 @@
     <string name="search_filter_category_worlds">ワールド</string>
     <string name="search_filter_category_worlds_featured">注目</string>
     <string name="search_filter_category_worlds_sort_by">ソート</string>
-    <string name="search_filter_category_worlds_count">Count</string>
+    <string name="search_filter_category_worlds_count">表示数</string>
     <string name="search_filter_category_users">ユーザー</string>
     <string name="search_filter_category_users_count">表示数</string>
     <string name="search_filter_category_groups">グループ</string>
@@ -219,13 +219,13 @@
     <string name="user_dropdown_view_groups">所属グループを表示</string>
     <string name="user_dropdown_edit_profile">プロフィールを編集</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
-    <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Bio Links</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="profile_edit_dialog_title_status">ステータス</string>
+    <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
+    <string name="profile_edit_dialog_title_bio">プロフィール</string>
+    <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
+    <string name="profile_edit_dialog_button_update">アップデート</string>
+    <string name="profile_edit_dialog_button_cancel">キャンセル</string>
+    <string name="profile_edit_dialog_toast_updated">プロフィールを更新しました。</string>
+    <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
+    <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
 </resources>
