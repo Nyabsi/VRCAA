@@ -9,6 +9,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.ui.screen.login.MfaScreen
@@ -26,7 +28,7 @@ class LoginModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            api?.getToken(username.value, password.value).let { result ->
+            api.getToken(username.value, password.value).let { result ->
                 if (result == null) {
                     Toast.makeText(
                         context,
@@ -35,7 +37,7 @@ class LoginModel(
                     ).show()
                 } else {
                     preferences.userCredentials = Pair(username.value, password.value)
-                    navigator.push(MfaScreen(result))
+                    navigator.push(MfaScreen(result.mfaType))
                 }
             }
         }

@@ -268,4 +268,6 @@
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
 
     <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+
+    <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
 </resources>

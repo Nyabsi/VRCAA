@@ -1,14 +1,8 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.api.base.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.models.FileMetadata
 import cc.sovellus.vrcaa.api.vrchat.models.Friends
@@ -26,7 +20,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.isSessionExpired
 import cc.sovellus.vrcaa.extension.twoFactorToken
-import cc.sovellus.vrcaa.service.PipelineService
+import cc.sovellus.vrcaa.manager.FriendManager
 import com.google.gson.Gson
 import okhttp3.Headers
 import java.net.URLEncoder
@@ -34,41 +28,38 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class VRChatApi(
-    private val context: Context
+    private val token: String
 ) : BaseClient() {
-
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", 0)
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
     private var cookies: String = ""
 
     init {
-        cookies = preferences.authToken
+        cookies = token
+    }
+
+    @Volatile private var listener: SessionListener? = null
+
+    interface SessionListener {
+        fun onSessionInvalidate()
+        fun onRemindUserOfLimits()
+    }
+
+    @Synchronized
+    fun setSessionListener(listener: SessionListener) {
+        synchronized(listener) {
+            this.listener = listener
+        }
     }
 
     enum class MfaType { NONE, EMAIL_OTP, OTP, TOTP }
 
-    private fun invalidateSession() {
+    data class AccountInfo(val mfaType: MfaType, val token: String, val twoAuth: String = "")
 
-        preferences.authToken = ""
-        preferences.isSessionExpired = true
+    data class AuthCredentials(val token: String)
 
-        val serviceIntent = Intent(context, PipelineService::class.java)
-        context.stopService(serviceIntent)
-
-        Toast.makeText(
-            context,
-            context.getString(R.string.api_session_has_expired_text),
-            Toast.LENGTH_LONG
-        ).show()
-
-        val intent = Intent(context, MainActivity::class.java)
-        intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
-    }
-
-    private fun handleRequest(result: Result, isAuthorization: Boolean = false): String? {
+    private fun handleRequest(result: Result): String? {
         return when (result) {
              is Result.Succeeded -> {
                 if (BuildConfig.DEBUG)
@@ -90,27 +81,13 @@ class VRChatApi(
                 null
             }
 
-            Result.InternalError -> {
-                Toast.makeText(
-                    context,
-                    "Server responded with Internal Error. Please try again, or check https://status.vrchat.com/",
-                    Toast.LENGTH_LONG
-                ).show()
-                null
-            }
-
             Result.RateLimited -> {
-                Toast.makeText(
-                    context,
-                    "You are being rate-limited, please wait a while before sending another request.",
-                    Toast.LENGTH_LONG
-                ).show()
+                listener?.onRemindUserOfLimits()
                 null
             }
 
             Result.Unauthorized -> {
-                if (!isAuthorization && !preferences.isSessionExpired)
-                    invalidateSession()
+                listener?.onSessionInvalidate()
                 null
             }
 
@@ -122,10 +99,8 @@ class VRChatApi(
         }
     }
 
-
-
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun getToken(username: String, password: String): MfaType? {
+    suspend fun getToken(username: String, password: String, twoAuth: String = ""): AccountInfo? {
 
         val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
 
@@ -134,8 +109,8 @@ class VRChatApi(
         headers["Authorization"] = "Basic $token"
         headers["User-Agent"] = userAgent
 
-        if (preferences.twoFactorToken.isNotEmpty())
-            headers["Cookie"] = preferences.twoFactorToken
+        if (twoAuth.isNotEmpty())
+            headers["Cookie"] = twoAuth
 
         val result = doRequest(
             method = "GET",
@@ -144,30 +119,18 @@ class VRChatApi(
             body = null
         )
 
-        val response = handleRequest(result, true)
+        val response = handleRequest(result)
 
         response?.let {
+            val cookies = response.split('~')[0]
+            val body = response.split('~')[1]
 
-            if (!response.contains("requiresTwoFactorAuth")) {
-                val cookies = response.split('~')[0]
-                preferences.authToken = cookies
-                preferences.twoFactorToken = cookies.substring(cookies.indexOf("twoFactorAuth="), cookies.indexOf(";", cookies.indexOf("twoFactorAuth=")))
-                this.cookies = cookies
-                preferences.isSessionExpired = false
-                return MfaType.NONE
+            this.cookies = cookies
+
+            if (body.contains("emailOtp")) {
+                return AccountInfo(MfaType.EMAIL_OTP, cookies)
             } else {
-                // this is double encoded because I could not figure better way to handle headers.
-                val cookies = response.split('~')[0]
-                val body = response.split('~')[1]
-
-                preferences.authToken = cookies
-                this.cookies = cookies
-
-                if (body.contains("emailOtp")) {
-                    return MfaType.EMAIL_OTP
-                } else {
-                    return MfaType.TOTP
-                }
+                return AccountInfo(MfaType.TOTP, cookies)
             }
         }
 
@@ -191,7 +154,7 @@ class VRChatApi(
         return Gson().fromJson(response, cc.sovellus.vrcaa.api.vrchat.models.Auth::class.java)?.token
     }
 
-    suspend fun verifyAccount(type: MfaType, code: String): Boolean {
+    suspend fun verifyAccount(type: MfaType, code: String): AuthCredentials? {
 
         val headers = Headers.Builder()
 
@@ -214,12 +177,9 @@ class VRChatApi(
 
                 response?.let {
                     val cookie = response.split('~')[0]
-                    preferences.isSessionExpired = false
-                    preferences.authToken = "${preferences.authToken} $cookie"
-                    preferences.twoFactorToken = cookie
-                    return true
+                    return AuthCredentials("${this.cookies} $cookie")
                 }
-                return false
+                return null
             }
 
             MfaType.TOTP -> {
@@ -237,15 +197,12 @@ class VRChatApi(
 
                 response?.let {
                     val cookie = response.split('~')[0]
-                    preferences.isSessionExpired = false
-                    preferences.authToken = "${preferences.authToken} $cookie"
-                    preferences.twoFactorToken = cookie
-                    return true
+                    return AuthCredentials("${this.cookies} $cookie")
                 }
-                return false
+                return null
             }
 
-            else -> { false }
+            else -> { null }
         }
     }
 

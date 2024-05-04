@@ -95,7 +95,7 @@ object LocationHelper {
     fun getReadableLocation(location: String?, worldName: String): String {
 
         if (location == null)
-            return "invalid" // sometimes before the page loads, it may be "null" so this prevents crash
+            return "private" // sometimes before the page loads, it may be "null" so this prevents crash
 
         if (!location.contains("wrld_"))
             return location

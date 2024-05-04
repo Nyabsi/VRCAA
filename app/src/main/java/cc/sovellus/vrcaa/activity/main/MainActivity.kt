@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        ApiManager.set(VRChatApi(this))
+        ApiManager.set(VRChatApi(getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken))
 
         setContent {
             Theme {
