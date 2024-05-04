@@ -57,7 +57,7 @@ class VRChatApi(
 
     data class AccountInfo(val mfaType: MfaType, val token: String, val twoAuth: String = "")
 
-    data class AuthCredentials(val token: String)
+    data class AuthCredentials(val token: String, val twoAuth: String)
 
     private fun handleRequest(result: Result): String? {
         return when (result) {
@@ -100,7 +100,7 @@ class VRChatApi(
     }
 
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun getToken(username: String, password: String, twoAuth: String = ""): AccountInfo? {
+    suspend fun getToken(username: String, password: String, twoAuth: String): AccountInfo? {
 
         val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
 
@@ -177,7 +177,7 @@ class VRChatApi(
 
                 response?.let {
                     val cookie = response.split('~')[0]
-                    return AuthCredentials("${this.cookies} $cookie")
+                    return AuthCredentials("${this.cookies} $cookie", cookie)
                 }
                 return null
             }
@@ -197,7 +197,7 @@ class VRChatApi(
 
                 response?.let {
                     val cookie = response.split('~')[0]
-                    return AuthCredentials("${this.cookies} $cookie")
+                    return AuthCredentials("${this.cookies} $cookie", cookie)
                 }
                 return null
             }

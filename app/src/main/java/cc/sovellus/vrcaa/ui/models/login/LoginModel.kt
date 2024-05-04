@@ -28,7 +28,7 @@ class LoginModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            api.getToken(username.value, password.value).let { result ->
+            api.getToken(username.value, password.value, preferences.twoFactorToken).let { result ->
                 if (result == null) {
                     Toast.makeText(
                         context,
