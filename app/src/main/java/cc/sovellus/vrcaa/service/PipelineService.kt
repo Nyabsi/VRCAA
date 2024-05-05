@@ -162,6 +162,9 @@ class PipelineService : Service(), CoroutineScope {
                         }
                         FriendManager.updateLocation(update.userId, update.location, update.world.name)
                     }
+
+                    if (!update.location.contains("wrld_"))
+                        FriendManager.updateLocation(update.userId, update.location, null)
                 }
 
                 is FriendUpdate -> {
