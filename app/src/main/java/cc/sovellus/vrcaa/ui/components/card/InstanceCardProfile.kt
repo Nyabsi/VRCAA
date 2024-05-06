@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
@@ -36,7 +37,14 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -> Unit) {
-    SubHeader(title = stringResource(id = R.string.profile_label_current_location))
+    Text(
+        modifier = Modifier.padding(start = 16.dp, top = 4.dp),
+        text = stringResource(id = R.string.profile_label_current_location),
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Left,
+        overflow = TextOverflow.Ellipsis
+    )
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

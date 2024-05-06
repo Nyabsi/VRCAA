@@ -14,7 +14,7 @@ import cc.sovellus.vrcaa.R
 @Composable
 fun Languages(languages: List<String>, isGroup: Boolean = false) {
     Row(
-        modifier = Modifier.padding(start = 24.dp)
+        modifier = Modifier.padding(start = 12.dp)
     ) {
         var wasEvenOneFoundFlag = false
         languages.let {
@@ -200,6 +200,12 @@ fun Languages(languages: List<String>, isGroup: Boolean = false) {
 
                         "kvk" -> Image(
                             painter = painterResource(R.drawable.flag_kr),
+                            contentDescription = null,
+                            modifier = Modifier.padding(2.dp)
+                        )
+
+                        "zxx" -> Image(
+                            painter = painterResource(R.drawable.flag_fi), // this is temporary, I mean it, okay... I need to make a proper flag for this.
                             contentDescription = null,
                             modifier = Modifier.padding(2.dp)
                         )

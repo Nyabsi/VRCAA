@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,8 +15,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -266,18 +269,39 @@ class GroupScreen(
 
             item {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    SubHeader(title = stringResource(R.string.group_page_label_description))
-                    Description(text = group.description)
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                    ) {
+                        SubHeader(title = stringResource(R.string.group_page_label_description))
+                        Description(text = group.description)
+                    }
 
-                    SubHeader(title = stringResource(R.string.group_page_label_rules))
-                    Description(text = group.rules)
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                    ) {
+                        SubHeader(title = stringResource(R.string.group_page_label_rules))
+                        Description(text = group.rules)
+                    }
 
-                    SubHeader(title = stringResource(R.string.profile_label_languages))
-                    Languages(languages = group.languages, true)
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                    ) {
+                        SubHeader(title = stringResource(R.string.profile_label_languages))
+                        Languages(languages = group.languages, true)
+                    }
                 }
             }
         }

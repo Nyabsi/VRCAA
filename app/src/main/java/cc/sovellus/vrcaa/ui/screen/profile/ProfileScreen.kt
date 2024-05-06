@@ -5,12 +5,17 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -151,15 +156,29 @@ class ProfileScreen : Screen {
 
                 item {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.Start
                     ) {
-                        SubHeader(title = stringResource(R.string.profile_label_biography))
-                        Description(text = profile.bio)
+                        ElevatedCard(
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                        ) {
+                            SubHeader(title = stringResource(R.string.profile_label_biography))
+                            Description(text = profile.bio)
+                        }
 
-                        SubHeader(title = stringResource(R.string.profile_label_languages))
-                        Languages(languages = profile.tags)
+                        ElevatedCard(
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            modifier = Modifier.padding(bottom = 16.dp).height(70.dp).fillMaxWidth(),
+                        ) {
+                            SubHeader(title = stringResource(R.string.profile_label_languages))
+                            Languages(languages = profile.tags)
+                        }
                     }
                 }
             }

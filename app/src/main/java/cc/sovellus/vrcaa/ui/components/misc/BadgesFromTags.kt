@@ -18,7 +18,7 @@ fun BadgesFromTags(
     localizationResourceInt: Int
 ) {
     Row(
-        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 8.dp)
+        modifier = Modifier.padding(start = 12.dp, end = 24.dp, top = 8.dp, bottom = 8.dp)
     ) {
         tags.let {
             var found = false

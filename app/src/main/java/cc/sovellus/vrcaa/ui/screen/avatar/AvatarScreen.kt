@@ -10,8 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -172,36 +174,43 @@ class AvatarScreen(
 
                         item {
                             Column(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.Start
                             ) {
-                                SubHeader(title = stringResource(R.string.avatar_title_description))
-                                Description(text = avatar.description)
+                                ElevatedCard(
+                                    elevation = CardDefaults.cardElevation(
+                                        defaultElevation = 6.dp
+                                    ),
+                                    modifier = Modifier.fillMaxWidth(),
+                                ) {
+                                    SubHeader(title = stringResource(R.string.avatar_title_description))
+                                    Description(text = avatar.description)
 
-                                val parser =
-                                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                                val formatter =
-                                    SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+                                    val parser =
+                                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                                    val formatter =
+                                        SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
 
-                                val createdAtFormatted = parser.parse(avatar.createdAt)
-                                    ?.let { formatter.format(it) }
+                                    val createdAtFormatted = parser.parse(avatar.createdAt)
+                                        ?.let { formatter.format(it) }
 
-                                val updatedAtFormatted = parser.parse(avatar.updatedAt)
-                                    ?.let { formatter.format(it) }
+                                    val updatedAtFormatted = parser.parse(avatar.updatedAt)
+                                        ?.let { formatter.format(it) }
 
-                                SubHeader(title = stringResource(R.string.avatar_title_created_at))
-                                Description(text = createdAtFormatted)
+                                    SubHeader(title = stringResource(R.string.avatar_title_created_at))
+                                    Description(text = createdAtFormatted)
 
-                                SubHeader(title = stringResource(R.string.avatar_title_updated_at))
-                                Description(text = updatedAtFormatted)
+                                    SubHeader(title = stringResource(R.string.avatar_title_updated_at))
+                                    Description(text = updatedAtFormatted)
 
-                                SubHeader(title = stringResource(R.string.avatar_title_content_labels))
-                                BadgesFromTags(
-                                    tags = avatar.tags,
-                                    tagPropertyName = "content",
-                                    localizationResourceInt = R.string.avatar_text_content_labels_not_found
-                                )
+                                    SubHeader(title = stringResource(R.string.avatar_title_content_labels))
+                                    BadgesFromTags(
+                                        tags = avatar.tags,
+                                        tagPropertyName = "content",
+                                        localizationResourceInt = R.string.avatar_text_content_labels_not_found
+                                    )
+                                }
                             }
                         }
                     }
