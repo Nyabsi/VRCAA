@@ -28,11 +28,11 @@ class SettingsModel(
             intent = Intent(context, PipelineService::class.java)
             context.stopService(intent)
 
-            api?.logout()
+            api.logout()
 
             preferences.twoFactorToken = ""
             preferences.authToken = ""
-            preferences.isSessionExpired = true
+            preferences.isSessionExpired = false
 
             intent = Intent(context, MainActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
