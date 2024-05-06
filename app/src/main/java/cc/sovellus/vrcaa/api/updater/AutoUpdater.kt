@@ -59,6 +59,7 @@ class AutoUpdater(
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.update_notification_title_ongoing))
             .setSmallIcon(R.drawable.ic_notification_icon)
+            .setSilent(true)
 
         val totalBytes = response.body?.contentLength() ?: -1
         var bytesDownloaded: Long = 0
