@@ -59,7 +59,6 @@ object FriendManager {
             val it = friends.find { it.id == friend.id }
             it?.let {
                 friend.isFavorite = it.isFavorite
-                friend.worldName = it.worldName
                 friends.set(friends.indexOf(it), friend)
             }
             friendListener?.onUpdateFriends(friends)
@@ -67,14 +66,11 @@ object FriendManager {
     }
 
     @Synchronized
-    fun updateLocation(userId: String, location: String, worldName: String?) {
+    fun updateLocation(userId: String, location: String) {
         synchronized(friends) {
             val it = friends.find { it.id == userId }
             it?.let {
                 it.location = location
-                if (!worldName.isNullOrEmpty())
-                    it.worldName = worldName
-                friends.set(friends.indexOf(it), it)
             }
             friendListener?.onUpdateFriends(friends)
         }

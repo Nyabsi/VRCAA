@@ -32,14 +32,14 @@ class UserProfileModel(
 
     private fun fetchProfile() {
         screenModelScope.launch {
-            api?.getUser(userId)?.let {
+            api.getUser(userId)?.let {
                 it.location.let { location ->
                     if (it.isFriend &&
                         location.isNotEmpty() &&
                         location != "private" &&
                         location != "traveling" &&
                         location != "offline") {
-                        instance = api?.getInstance(location)
+                        instance = api.getInstance(location)
                     }
                 }
                 profile = it
@@ -55,7 +55,7 @@ class UserProfileModel(
                 val url = it.currentAvatarImageUrl
                 val fileId = url.substring(url.indexOf("file_"), url.lastIndexOf("/file") - 2)
 
-                api?.getFileMetadata(fileId)?.let { metadata ->
+                api.getFileMetadata(fileId)?.let { metadata ->
                     var name = metadata.name
 
                     name = name.substring(9) // skip first 9 characters, not required.

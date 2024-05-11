@@ -68,18 +68,15 @@ class ProfileScreen : Screen {
 
         when (val result = state) {
             is ProfileState.Loading -> LoadingIndicatorScreen().Content()
-            is ProfileState.Result -> RenderProfile(result.profile, model)
+            is ProfileState.Result -> RenderProfile(result.profile)
             else -> {}
         }
     }
 
     @Composable
-    private fun RenderProfile(profile: User?, model: ProfileModel) {
+    private fun RenderProfile(profile: User?) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
-
-        var isMenuExpanded by remember { mutableStateOf(false) }
-        var isEditingProfile by remember { mutableStateOf(false) }
 
         if (profile == null) {
             Toast.makeText(
@@ -90,17 +87,6 @@ class ProfileScreen : Screen {
             navigator.pop()
         } else {
 
-            if (isEditingProfile) {
-                ProfileEditDialog(
-                    onDismiss = { isEditingProfile = false },
-                    onConfirmation = {
-                        isEditingProfile = false
-                        model.updateProfile()
-                    },
-                    title = stringResource(R.string.profile_edit_dialog_title_edit_profile)
-                )
-            }
-
             LazyColumn {
                 item {
                     Column(
@@ -109,47 +95,13 @@ class ProfileScreen : Screen {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         profile.let {
-                            Box(
-                                modifier = Modifier
-                                    .pointerInput(Unit) {
-                                        detectTapGestures(
-                                            onTap = {
-                                                isMenuExpanded = true
-                                            }
-                                        )
-                                    }
-                            ) {
-                                ProfileCard(
-                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                    displayName = it.displayName,
-                                    statusDescription = it.statusDescription,
-                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                    statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                )
-
-                                DropdownMenu(
-                                    expanded = isMenuExpanded,
-                                    onDismissRequest = { isMenuExpanded = false },
-                                    offset = DpOffset(24.dp, 0.dp)
-                                ) {
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            navigator.parent?.parent?.push(
-                                                UserGroupsScreen(profile.displayName, profile.id)
-                                            )
-                                            isMenuExpanded = false
-                                        },
-                                        text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
-                                    )
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            isMenuExpanded = false
-                                            isEditingProfile = true
-                                        },
-                                        text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) }
-                                    )
-                                }
-                            }
+                            ProfileCard(
+                                thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                displayName = it.displayName,
+                                statusDescription = it.statusDescription,
+                                trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                            )
                         }
                     }
                 }
@@ -164,7 +116,7 @@ class ProfileScreen : Screen {
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 6.dp
                             ),
-                            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 70.dp),
                         ) {
                             SubHeader(title = stringResource(R.string.profile_label_biography))
                             Description(text = profile.bio)

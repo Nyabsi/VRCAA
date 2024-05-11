@@ -17,25 +17,9 @@ class ProfileModel(
         data class Result(val profile: User?) : ProfileState()
     }
 
-    private var profile: User? = null
+    private var profile: User? = api.cache.getProfile()
 
     init {
-        mutableState.value = ProfileState.Loading
-        fetchProfile()
-    }
-
-    private fun fetchProfile() {
-        screenModelScope.launch {
-            profile = api?.getSelf()
-            mutableState.value = ProfileState.Result(profile)
-        }
-    }
-
-    fun updateProfile() {
-        screenModelScope.launch {
-            mutableState.value = ProfileState.Loading
-            profile = api?.getSelf()
-            mutableState.value = ProfileState.Result(profile)
-        }
+        mutableState.value = ProfileState.Result(profile)
     }
 }

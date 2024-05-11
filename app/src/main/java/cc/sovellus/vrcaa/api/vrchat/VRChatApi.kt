@@ -53,6 +53,8 @@ class VRChatApi(
         }
     }
 
+    var cache: VRChatCache = VRChatCache(this)
+
     enum class MfaType { NONE, EMAIL_OTP, OTP, TOTP }
 
     data class AccountInfo(val mfaType: MfaType, val token: String, val twoAuth: String = "")
@@ -619,7 +621,7 @@ class VRChatApi(
         return Gson().fromJson(response, FileMetadata::class.java)
     }
 
-    suspend fun updateProfile(id: String, status: String, description: String, bio: String, bioLinks: List<String>): Boolean {
+    suspend fun updateProfile(id: String, status: String, description: String, bio: String, bioLinks: List<String>): User? {
 
         val headers = Headers.Builder()
 
@@ -636,6 +638,6 @@ class VRChatApi(
         )
 
         val response = handleRequest(result)
-        return response != null
+        return Gson().fromJson(response, User::class.java)
     }
 }

@@ -92,7 +92,7 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarThumbnailImageUrl }
                     })
 
-                    FriendManager.updateLocation(update.userId, "private", null)
+                    FriendManager.updateLocation(update.userId, "private")
                     FriendManager.updateStatus(update.userId, update.user.status)
                 }
 
@@ -124,7 +124,7 @@ class PipelineService : Service(), CoroutineScope {
                                     friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                             })
 
-                        FriendManager.updateLocation(friend.id, "offline", null)
+                        FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
                     }
                 }
@@ -155,16 +155,16 @@ class PipelineService : Service(), CoroutineScope {
                                     .apply {
                                         friendId = update.userId
                                         friendName = update.user.displayName
-                                        travelDestination = LocationHelper.getReadableLocation(update.location, update.world.name)
+                                        travelDestination = LocationHelper.getReadableLocation(update.location)
                                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                                     }
                             )
                         }
-                        FriendManager.updateLocation(update.userId, update.location, update.world.name)
+                        FriendManager.updateLocation(update.userId, update.location)
                     }
 
                     if (!update.location.contains("wrld_"))
-                        FriendManager.updateLocation(update.userId, update.location, null)
+                        FriendManager.updateLocation(update.userId, update.location)
                 }
 
                 is FriendUpdate -> {
@@ -323,37 +323,15 @@ class PipelineService : Service(), CoroutineScope {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         launch {
-            val friends: MutableList<LimitedUser> = ArrayList()
-
-            api.getFriends()?.let { friends += it }
-            api.getFriends(true)?.let { friends += it }
-
-            val favorites = api.getFavorites("friend")
-
-            for (friend in friends) {
-                friend.location.let { intent ->
-                    if (intent.contains("wrld_")) {
-                        val info = LocationHelper.parseLocationInfo(friend.location)
-                        api.getWorld(info.worldId)?.let { friend.worldName = it.name }
-                    } else {
-                        friend.worldName = ""
-                    }
-                }
-
-                favorites?.find { it.favoriteId == friend.id }?.let { friend.isFavorite = true }
+            api.getAuth()?.let { token ->
+                pipeline = VRChatPipeline(token)
+                pipeline?.connect()
+                pipeline?.setListener(listener)
             }
 
-            FriendManager.setFriends(friends).also {
-                api.getAuth()?.let { token ->
-                    pipeline = VRChatPipeline(token)
-                    pipeline?.connect()
-                    pipeline?.setListener(listener)
-                }
-
-                if (preferences.richPresenceEnabled) {
-                    gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
-                    gateway?.connect()
-                }
+            if (preferences.richPresenceEnabled) {
+                gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
+                gateway?.connect()
             }
         }
 

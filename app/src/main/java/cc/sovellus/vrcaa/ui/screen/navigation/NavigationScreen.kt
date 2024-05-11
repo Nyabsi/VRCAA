@@ -1,7 +1,9 @@
 package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +20,8 @@ import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,6 +38,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,12 +46,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -61,9 +68,14 @@ import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.dialog.UpdatedDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.models.navigation.NavigationModel
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
+import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
@@ -111,13 +123,14 @@ class NavigationScreen : Screen {
         ) {
             val sheetState = rememberModalBottomSheetState()
             var showBottomSheet by remember { mutableStateOf(false) }
+            var isMenuExpanded by remember { mutableStateOf(false) }
+            var isEditingProfile by remember { mutableStateOf(false) }
+
             val scope = rememberCoroutineScope()
 
             Scaffold(
                 topBar = {
-                    /* blacklist Pictures and Settings tabs. */
-                    if (it.current.options.index.toInt() != 4 &&
-                        it.current.options.index.toInt() != 5) {
+                    if (it.current.options.index.toInt() == 0) {
                         SearchBar(
                             query = model.searchText.value,
                             placeholder = {
@@ -201,6 +214,87 @@ class NavigationScreen : Screen {
                             }
                         }
                     }
+                    else if (it.current.options.index.toInt() == 1) {
+                        TopAppBar(
+                            title = { Text(
+                                text = "Friends",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
+                    else if (it.current.options.index.toInt() == 2) {
+                        TopAppBar(
+                            actions = {
+                                IconButton(onClick = { isMenuExpanded = true }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.MoreVert,
+                                        contentDescription = null
+                                    )
+                                    Box(
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        DropdownMenu(
+                                            expanded = isMenuExpanded,
+                                            onDismissRequest = { isMenuExpanded = false },
+                                            offset = DpOffset(0.dp, 0.dp)
+                                        ) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    isEditingProfile = true
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) }
+                                            )
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    api.cache.getProfile()?.let {
+                                                        navigator.push(
+                                                            UserGroupsScreen(it.displayName, it.id)
+                                                        )
+                                                    }
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
+                                            )
+                                        }
+                                    }
+                                }
+                            },
+                            title = { Text(
+                                text = "Profile",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
+                    else if (it.current.options.index.toInt() == 3) {
+                        TopAppBar(
+                            title = { Text(
+                                text = "Feed",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
+                    else if (it.current.options.index.toInt() == 4) {
+                        TopAppBar(
+                            title = { Text(
+                                text = "Pictures",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
+                    else if (it.current.options.index.toInt() == 5) {
+                        TopAppBar(
+                            title = { Text(
+                                text = "Settings",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
                 },
                 content = { padding ->
                     Column(
@@ -209,6 +303,16 @@ class NavigationScreen : Screen {
                             bottom = padding.calculateBottomPadding()
                         )
                     ) {
+                        if (isEditingProfile) {
+                            ProfileEditDialog(
+                                onDismiss = { isEditingProfile = false },
+                                onConfirmation = {
+                                    isEditingProfile = false
+                                },
+                                title = stringResource(R.string.profile_edit_dialog_title_edit_profile)
+                            )
+                        }
+
                         CurrentTab()
                     }
 

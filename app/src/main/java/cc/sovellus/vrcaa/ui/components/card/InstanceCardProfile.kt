@@ -37,20 +37,12 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -> Unit) {
-    Text(
-        modifier = Modifier.padding(start = 16.dp, top = 4.dp),
-        text = stringResource(id = R.string.profile_label_current_location),
-        fontSize = 24.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Left,
-        overflow = TextOverflow.Ellipsis
-    )
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(150.dp)
+            .height(180.dp)
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(
@@ -59,7 +51,9 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                 })
     ) {
         val result = LocationHelper.parseLocationInfo(profile.location)
-        
+
+        SubHeader(title = stringResource(id = R.string.profile_label_current_location))
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -89,12 +83,19 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
+                Text(
+                    text = "${result.instanceType} #${instance.name}",
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = "${result.instanceType} #${instance.name}",
+                        text = "(${instance.nUsers} of ${instance.world.capacity})",
                         textAlign = TextAlign.Left,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -138,13 +139,6 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
                         )
                     }
                 }
-                Text(
-                    text = "(${instance.nUsers} of ${instance.world.capacity})",
-                    textAlign = TextAlign.Left,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
             }
         }
     }

@@ -9,6 +9,10 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +30,13 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
+
+    val location = remember { mutableStateOf("") }
+
+    LaunchedEffect(location) {
+        location.value = LocationHelper.getReadableLocation(friend.location)
+    }
+
     ListItem(
         headlineContent = {
             Text(friend.displayName)
@@ -36,7 +47,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
             }, maxLines = 1)
         },
         supportingContent = {
-            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { LocationHelper.getReadableLocation(friend.location, friend.worldName) }), maxLines = 1)
+            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { location.value }), maxLines = 1)
         },
         leadingContent = {
             GlideImage(
@@ -58,7 +69,9 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
                 modifier = Modifier.size(20.dp)
             ) {
                 Badge(
-                    containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier.size(20.dp).align(Alignment.CenterHorizontally)
+                    containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier
+                        .size(20.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
             }
         },

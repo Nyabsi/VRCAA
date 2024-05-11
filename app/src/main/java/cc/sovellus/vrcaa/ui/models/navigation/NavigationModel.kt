@@ -15,6 +15,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.main.MainActivity
 import cc.sovellus.vrcaa.api.updater.AutoUpdater
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.updatesEnabled
 import cc.sovellus.vrcaa.extension.groupsAmount
