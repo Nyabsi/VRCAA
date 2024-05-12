@@ -26,9 +26,6 @@ class App : Application() {
         // Initialize notification channels
         NotificationManager.createNotificationChannels(this)
 
-        // Set VRChatApi target here to the correct auth token regardless of it's validity.
-        ApiManager.set(VRChatApi(getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken))
-
         // if we have cookie, start service here.
         if (getSharedPreferences(sharedPreferenceKey, MODE_PRIVATE).authToken.isNotBlank()) {
             val intent = Intent(this, PipelineService::class.java)
