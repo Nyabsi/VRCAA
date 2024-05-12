@@ -156,6 +156,7 @@
     <string name="about_page_battery_optimizations_title">Poista akun optimointi käytöstä</string>
     <string name="about_page_battery_optimizations_description">Käytä tätä vain, jos joudut tekemään niin.</string>
     <string name="about_page_battery_optimizations_toast">Akun optimointi on jo pois käytöstä!</string>
+    <string name="about_page_crash_title">Crash the application.</string>
     <string name="license_title">Avoimen lähdekoodin lisenssit</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Istuntosi on vanhentunut, ole hyvä ja kirjaudu uudelleen.</string>
