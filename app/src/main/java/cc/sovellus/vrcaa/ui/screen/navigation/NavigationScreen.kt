@@ -217,7 +217,7 @@ class NavigationScreen : Screen {
                     else if (it.current.options.index.toInt() == 1) {
                         TopAppBar(
                             title = { Text(
-                                text = "Friends",
+                                text = stringResource(id = R.string.tabs_label_friends),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }
@@ -262,7 +262,7 @@ class NavigationScreen : Screen {
                                 }
                             },
                             title = { Text(
-                                text = "Profile",
+                                text = stringResource(id = R.string.tabs_label_profile),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }
@@ -271,7 +271,7 @@ class NavigationScreen : Screen {
                     else if (it.current.options.index.toInt() == 3) {
                         TopAppBar(
                             title = { Text(
-                                text = "Feed",
+                                text = stringResource(id = R.string.tabs_label_feed),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }
@@ -280,7 +280,7 @@ class NavigationScreen : Screen {
                     else if (it.current.options.index.toInt() == 4) {
                         TopAppBar(
                             title = { Text(
-                                text = "Pictures",
+                                text = stringResource(id = R.string.tabs_label_pictures),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }
@@ -289,7 +289,7 @@ class NavigationScreen : Screen {
                     else if (it.current.options.index.toInt() == 5) {
                         TopAppBar(
                             title = { Text(
-                                text = "Settings",
+                                text = stringResource(id = R.string.tabs_label_settings),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }
