@@ -182,6 +182,7 @@
     <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
     <string name="about_page_battery_optimizations_description">Only use if this if you have to.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
+    <string name="about_page_crash_title">Crash the application.</string>
     <string name="license_title">Open Source Licenses</string>
 
     <!-- API -->

@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Intent
 import cc.sovellus.vrcaa.activity.crash.CrashActivity
 import cc.sovellus.vrcaa.activity.crash.GlobalExceptionHandler
+import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.service.PipelineService
 
@@ -23,6 +25,9 @@ class App : Application() {
 
         // Initialize notification channels
         NotificationManager.createNotificationChannels(this)
+
+        // Set VRChatApi target here to the correct auth token regardless of it's validity.
+        ApiManager.set(VRChatApi(getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken))
 
         // if we have cookie, start service here.
         if (getSharedPreferences(sharedPreferenceKey, MODE_PRIVATE).authToken.isNotBlank()) {

@@ -192,6 +192,16 @@ class AboutScreen : Screen {
                             )
                         )
                     }
+                    item {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.about_page_crash_title)) },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    throw RuntimeException("You killed it :(")
+                                }
+                            )
+                        )
+                    }
                 }
             }
         )
