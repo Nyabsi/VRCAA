@@ -94,7 +94,7 @@ class HomeScreen : Screen {
                         )
                     }
                 }
-                Spacer(modifier = Modifier.padding(2.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
             }
 
             item {
@@ -113,7 +113,7 @@ class HomeScreen : Screen {
                         )
                     }
                 }
-                Spacer(modifier = Modifier.padding(2.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
             }
 
             item {
@@ -134,7 +134,7 @@ class HomeScreen : Screen {
                         )
                     }
                 }
-                Spacer(modifier = Modifier.padding(2.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
             }
 
             item {
