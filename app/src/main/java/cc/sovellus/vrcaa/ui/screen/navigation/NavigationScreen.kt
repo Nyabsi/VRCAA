@@ -3,9 +3,11 @@ package cc.sovellus.vrcaa.ui.screen.navigation
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -132,85 +134,88 @@ class NavigationScreen : Screen {
             Scaffold(
                 topBar = {
                     if (it.current.options.index.toInt() == 0) {
-                        SearchBar(
-                            query = model.searchText.value,
-                            placeholder = {
-                                Text(
-                                    text = stringResource(R.string.main_search_placeholder),
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            },
-                            onQueryChange = { model.searchText.value = it; },
-                            onSearch = {
-                                model.existSearchMode()
-                                navigator.push(SearchResultScreen(model.searchText.value))
-                            },
-                            active = model.isSearchActive.value,
-                            onActiveChange = {
-                                if (it) {
-                                    model.enterSearchMode()
-                                } else {
-                                    model.existSearchMode()
-                                }
-                            },
-                            tonalElevation = model.tonalElevation.value,
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            trailingIcon = {
-                                if (model.isSearchActive.value) {
-                                    IconButton(onClick = { model.clearSearchText() }) {
-                                        Icon(
-                                            imageVector = Icons.Filled.Close,
-                                            contentDescription = null                                        )
-                                    }
-                                } else {
-                                    IconButton(onClick = { showBottomSheet = true }) {
-                                        Icon(
-                                            imageVector = Icons.Filled.MoreVert,
-                                            contentDescription = null
-                                        )
-                                    }
-                                }
-                            },
-                            leadingIcon = {
-                                if (model.isSearchActive.value) {
-                                    IconButton(onClick = { model.existSearchMode() }) {
-                                        Icon(
-                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = null
-                                        )
-                                    }
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Filled.Search,
-                                        contentDescription = null
-                                    )
-                                }
-                            }
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            LazyColumn(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                items(model.searchHistory.size) {
-                                    val item = model.searchHistory.reversed()[it]
-                                    ListItem(
-                                        leadingContent = {
+                            SearchBar(
+                                query = model.searchText.value,
+                                placeholder = {
+                                    Text(
+                                        text = stringResource(R.string.main_search_placeholder),
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                },
+                                onQueryChange = { model.searchText.value = it; },
+                                onSearch = {
+                                    model.existSearchMode()
+                                    navigator.push(SearchResultScreen(model.searchText.value))
+                                },
+                                active = model.isSearchActive.value,
+                                onActiveChange = {
+                                    if (it) {
+                                        model.enterSearchMode()
+                                    } else {
+                                        model.existSearchMode()
+                                    }
+                                },
+                                tonalElevation = model.tonalElevation.value,
+                                trailingIcon = {
+                                    if (model.isSearchActive.value) {
+                                        IconButton(onClick = { model.clearSearchText() }) {
                                             Icon(
-                                                imageVector = Icons.Filled.History,
+                                                imageVector = Icons.Filled.Close,
+                                                contentDescription = null                                        )
+                                        }
+                                    } else {
+                                        IconButton(onClick = { showBottomSheet = true }) {
+                                            Icon(
+                                                imageVector = Icons.Filled.MoreVert,
                                                 contentDescription = null
                                             )
-                                        },
-                                        headlineContent = {
-                                            Text(text = item)
-                                        },
-                                        modifier = Modifier.clickable(
-                                            onClick = {
-                                                model.existSearchMode()
-                                                navigator.push(SearchResultScreen(item))
-                                            }
+                                        }
+                                    }
+                                },
+                                leadingIcon = {
+                                    if (model.isSearchActive.value) {
+                                        IconButton(onClick = { model.existSearchMode() }) {
+                                            Icon(
+                                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Filled.Search,
+                                            contentDescription = null
                                         )
-                                    )
+                                    }
+                                }
+                            ) {
+                                LazyColumn(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    items(model.searchHistory.size) {
+                                        val item = model.searchHistory.reversed()[it]
+                                        ListItem(
+                                            leadingContent = {
+                                                Icon(
+                                                    imageVector = Icons.Filled.History,
+                                                    contentDescription = null
+                                                )
+                                            },
+                                            headlineContent = {
+                                                Text(text = item)
+                                            },
+                                            modifier = Modifier.clickable(
+                                                onClick = {
+                                                    model.existSearchMode()
+                                                    navigator.push(SearchResultScreen(item))
+                                                }
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }
