@@ -77,61 +77,67 @@ class HomeScreen : Screen {
                 .padding(16.dp)
         ) {
             item {
-                HorizontalRow(
-                    title = stringResource(R.string.home_active_friends)
-                ) {
-                    val filteredFriends = friends.filter { it.location != "offline" }
-                    items(
-                        filteredFriends.size,
-                        key = { UUID.randomUUID() }
+                if (friends.isNotEmpty()) {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_active_friends)
                     ) {
-                        val friend = filteredFriends[it]
-                        RoundedRowItem(
-                            name = friend.displayName,
-                            url = friend.userIcon.ifEmpty { friend.imageUrl },
-                            status = friend.status,
-                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                        )
+                        val filteredFriends = friends.filter { it.location != "offline" }
+                        items(
+                            filteredFriends.size,
+                            key = { UUID.randomUUID() }
+                        ) {
+                            val friend = filteredFriends[it]
+                            RoundedRowItem(
+                                name = friend.displayName,
+                                url = friend.userIcon.ifEmpty { friend.imageUrl },
+                                status = friend.status,
+                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
             }
 
             item {
-                HorizontalRow(
-                    title = stringResource(R.string.home_recently_visited)
-                ) {
-                    items(
-                        lastVisited.size,
+                if (lastVisited.isNotEmpty()) {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_recently_visited)
                     ) {
-                        val world = lastVisited[it]
-                        WorldRow(
-                            name = world.name,
-                            url = world.imageUrl,
-                            count = world.occupants,
-                            onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
-                        )
+                        items(
+                            lastVisited.size,
+                        ) {
+                            val world = lastVisited[it]
+                            WorldRow(
+                                name = world.name,
+                                url = world.imageUrl,
+                                count = world.occupants,
+                                onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
             }
 
             item {
-                HorizontalRow(
-                    title = stringResource(R.string.home_offline_friends)
-                ) {
-                    val filteredFriends = friends.filter { it.location == "offline" }
-                    items(
-                        filteredFriends.size,
-                        key = { UUID.randomUUID() }
+                if (friends.isNotEmpty()) {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_offline_friends)
                     ) {
-                        val friend = filteredFriends[it]
-                        WorldRow(
-                            name = friend.displayName,
-                            url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
-                            count = null,
-                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                        )
+                        val filteredFriends = friends.filter { it.location == "offline" }
+                        items(
+                            filteredFriends.size,
+                            key = { UUID.randomUUID() }
+                        ) {
+                            val friend = filteredFriends[it]
+                            WorldRow(
+                                name = friend.displayName,
+                                url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
+                                count = null,
+                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
