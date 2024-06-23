@@ -49,6 +49,8 @@ data class LimitedUser(
     var location: String,
     @SerializedName("imageUrl")
     val imageUrl: String,
+    @SerializedName("worldId")
+    val worldId: String,
     @Transient
     var isFavorite: Boolean
 )

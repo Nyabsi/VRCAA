@@ -12,24 +12,18 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.activity.main.MainActivity
+import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.updater.AutoUpdater
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
-import cc.sovellus.vrcaa.api.vrchat.models.User
-import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.updatesEnabled
 import cc.sovellus.vrcaa.extension.groupsAmount
-import cc.sovellus.vrcaa.extension.isSessionExpired
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
-import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NavigationModel(
@@ -55,23 +49,18 @@ class NavigationModel(
 
     private val listener = object : VRChatApi.SessionListener {
         override fun onSessionInvalidate() {
-            if (!preferences.isSessionExpired) {
-                preferences.isSessionExpired = true
-                preferences.authToken = ""
+            val serviceIntent = Intent(context, PipelineService::class.java)
+            context.stopService(serviceIntent)
 
-                val serviceIntent = Intent(context, PipelineService::class.java)
-                context.stopService(serviceIntent)
+            Toast.makeText(
+                context,
+                context.getString(R.string.api_session_has_expired_text),
+                Toast.LENGTH_LONG
+            ).show()
 
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.api_session_has_expired_text),
-                    Toast.LENGTH_LONG
-                ).show()
-
-                val intent = Intent(context, MainActivity::class.java)
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
-            }
+            val intent = Intent(context, MainActivity::class.java)
+            intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
         }
 
         override fun onRemindUserOfLimits() {

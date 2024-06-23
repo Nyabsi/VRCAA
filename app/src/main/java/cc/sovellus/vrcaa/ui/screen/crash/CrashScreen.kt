@@ -29,7 +29,7 @@ import cc.sovellus.vrcaa.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CrashScreen(
-    exception: Throwable?,
+    exception: String,
     onRestart: () -> Unit
 ) {
     val context = LocalContext.current
@@ -54,7 +54,7 @@ fun CrashScreen(
             ) {
                 item {
                     Text(
-                        text = exception.toString(),
+                        text = exception,
                         softWrap = true,
                         overflow = TextOverflow.Ellipsis
                     )

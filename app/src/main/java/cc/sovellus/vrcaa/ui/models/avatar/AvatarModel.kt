@@ -31,7 +31,7 @@ class AvatarModel(
 
     private fun fetchAvatar(avatarId: String) {
         screenModelScope.launch {
-            avatar = api?.getAvatar(avatarId)
+            avatar = api.getAvatar(avatarId)
             mutableState.value = AvatarState.Result(avatar)
         }
     }
@@ -45,7 +45,7 @@ class AvatarModel(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                avatar?.id?.let { api?.selectAvatar(it) }
+                avatar?.id?.let { api.selectAvatar(it) }
             }
         }
 

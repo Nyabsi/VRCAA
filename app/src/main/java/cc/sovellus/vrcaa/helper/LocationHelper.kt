@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.helper
 
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import extensions.wu.seal.PropertySuffixSupport.append
 
 object LocationHelper {
@@ -96,14 +97,14 @@ object LocationHelper {
     suspend fun getReadableLocation(location: String?): String {
 
         if (location == null)
-            return "private" // sometimes before the page loads, it may be "null" so this prevents crash
+            return "private"
 
         if (!location.contains("wrld_"))
             return location
 
         val info = parseLocationInfo(location)
 
-        val result = "${api.cache.getCachedWorld(info.worldId)} #${info.instanceId} ${info.instanceType} "
+        val result = "${cache.getWorld(info.worldId)} #${info.instanceId} ${info.instanceType} "
         if (info.regionId.isNotEmpty()) location.append(info.regionId)
         return result
     }

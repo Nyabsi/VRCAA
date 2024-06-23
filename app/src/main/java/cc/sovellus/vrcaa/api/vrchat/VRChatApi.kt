@@ -18,7 +18,6 @@ import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.isSessionExpired
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.FriendManager
 import com.google.gson.Gson
@@ -27,17 +26,11 @@ import java.net.URLEncoder
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class VRChatApi(
-    private val token: String
-) : BaseClient() {
+class VRChatApi : BaseClient() {
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
     private var cookies: String = ""
-
-    init {
-        cookies = token
-    }
 
     @Volatile private var listener: SessionListener? = null
 
@@ -53,9 +46,7 @@ class VRChatApi(
         }
     }
 
-    var cache: VRChatCache = VRChatCache(this)
-
-    enum class MfaType { NONE, EMAIL_OTP, OTP, TOTP }
+    enum class MfaType { NONE, EMAIL_OTP, TOTP }
 
     data class AccountInfo(val mfaType: MfaType, val token: String, val twoAuth: String = "")
 
@@ -101,6 +92,10 @@ class VRChatApi(
         }
     }
 
+    fun setToken(token: String) {
+        cookies = token
+    }
+
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun getToken(username: String, password: String, twoAuth: String): AccountInfo? {
 
@@ -128,6 +123,9 @@ class VRChatApi(
             val body = response.split('~')[1]
 
             this.cookies = cookies
+
+            if (!body.contains("requiresTwoFactorAuth"))
+                return AccountInfo(MfaType.NONE, cookies)
 
             if (body.contains("emailOtp")) {
                 return AccountInfo(MfaType.EMAIL_OTP, cookies)

@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.activity.crash
+package cc.sovellus.vrcaa
 
 import android.content.Context
 import android.content.Intent
@@ -17,19 +17,6 @@ class GlobalExceptionHandler private constructor(
     private val activityToBeLaunched: Class<*>,
 ) : Thread.UncaughtExceptionHandler {
 
-    object ThrowableSerializer : KSerializer<Throwable> {
-        override val descriptor: SerialDescriptor =
-            PrimitiveSerialDescriptor("Throwable", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): Throwable {
-            return Throwable(message = decoder.decodeString())
-        }
-
-        override fun serialize(encoder: Encoder, value: Throwable) {
-            return encoder.encodeString(value.stackTraceToString())
-        }
-    }
-
     override fun uncaughtException(thread: Thread, exception: Throwable) {
         try {
             launchActivity(applicationContext, activityToBeLaunched, exception)
@@ -45,7 +32,7 @@ class GlobalExceptionHandler private constructor(
         exception: Throwable,
     ) {
         val intent = Intent(applicationContext, activity).apply {
-            putExtra(INTENT_EXTRA, Json.encodeToString(ThrowableSerializer, exception))
+            putExtra(INTENT_EXTRA, exception.stackTraceToString())
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
@@ -67,12 +54,8 @@ class GlobalExceptionHandler private constructor(
             Thread.setDefaultUncaughtExceptionHandler(handler)
         }
 
-        fun getThrowableFromIntent(intent: Intent): Throwable? {
-            return try {
-                Json.decodeFromString(ThrowableSerializer, intent.getStringExtra(INTENT_EXTRA)!!)
-            } catch (e: Exception) {
-                null
-            }
+        fun getThrowableFromIntent(intent: Intent): String {
+            return intent.getStringExtra(INTENT_EXTRA)!!
         }
     }
 }

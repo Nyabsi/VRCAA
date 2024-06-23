@@ -1,7 +1,7 @@
-package cc.sovellus.vrcaa.activity.main
-
+package cc.sovellus.vrcaa.activity
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -17,38 +17,16 @@ import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
-import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.manager.ApiManager
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
-import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
 
-class MainActivity : ComponentActivity() {
-
-    private fun checkForCookies(): Boolean {
-        return getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken.isNotBlank()
-    }
+class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-
-        if (BuildConfig.FLAVOR == "quest") {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    0
-                )
-            }
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(
@@ -64,15 +42,22 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        ApiManager.set(VRChatApi(getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken))
+        val token = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken
+        api.setToken(token)
 
-        setContent {
-            Theme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Content()
+        if (token.isNotBlank()) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.extras?.putString("cookie", token)
+            startActivity(intent)
+        } else {
+            setContent {
+                Theme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        Content()
+                    }
                 }
             }
         }
@@ -81,15 +66,12 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Content() {
         Navigator(
-            screen = if (checkForCookies()) {
-                NavigationScreen()
-            } else {
-                LoginScreen()
-            },
+            screen = LoginScreen(),
             disposeBehavior = NavigatorDisposeBehavior(
                 disposeNestedNavigators = false,
                 disposeSteps = true
-            )
+            ),
+            onBackPressed = { false },
         ) { navigator ->
             SlideTransition(navigator)
         }

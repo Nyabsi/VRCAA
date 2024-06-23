@@ -36,10 +36,6 @@ internal var SharedPreferences.notificationWhitelist: NotificationManager.Notifi
     }
     set(it) = edit { putString("notificationWhitelist", Gson().toJson(it)) }
 
-internal var SharedPreferences.isSessionExpired: Boolean
-    get() = getBoolean("isExpiredSession", false)
-    set(it) = edit { putBoolean("isExpiredSession", it) }
-
 internal var SharedPreferences.discordToken: String
     get() = getString("discordToken", "")!!
     set(it) = edit { putString("discordToken", it) }

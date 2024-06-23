@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.activity.crash
+package cc.sovellus.vrcaa.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import cc.sovellus.vrcaa.activity.main.MainActivity
+import cc.sovellus.vrcaa.GlobalExceptionHandler
 import cc.sovellus.vrcaa.ui.screen.crash.CrashScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
 

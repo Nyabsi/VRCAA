@@ -5,10 +5,10 @@ import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.activity.main.MainActivity
+import cc.sovellus.vrcaa.activity.LoginActivity
+import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.updatesEnabled
-import cc.sovellus.vrcaa.extension.isSessionExpired
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
@@ -32,9 +32,8 @@ class SettingsModel(
 
             preferences.twoFactorToken = ""
             preferences.authToken = ""
-            preferences.isSessionExpired = false
 
-            intent = Intent(context, MainActivity::class.java)
+            intent = Intent(context, LoginActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }

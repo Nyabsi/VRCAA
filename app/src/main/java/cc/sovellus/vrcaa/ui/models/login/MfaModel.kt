@@ -11,6 +11,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
@@ -51,11 +52,8 @@ class MfaModel(
                 preferences.authToken = result.token
                 preferences.twoFactorToken = result.twoAuth
 
-                val intent = Intent(context, PipelineService::class.java)
-                context.startForegroundService(intent)
-
-                navigator.popUntilRoot()
-                navigator.replace(NavigationScreen())
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
             }
         }
     }

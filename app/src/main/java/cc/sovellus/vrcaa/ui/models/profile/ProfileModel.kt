@@ -5,6 +5,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import kotlinx.coroutines.launch
 
 class ProfileModel(
@@ -17,7 +18,7 @@ class ProfileModel(
         data class Result(val profile: User?) : ProfileState()
     }
 
-    private var profile: User? = api.cache.getProfile()
+    private var profile: User? = cache.getProfile()
 
     init {
         mutableState.value = ProfileState.Result(profile)

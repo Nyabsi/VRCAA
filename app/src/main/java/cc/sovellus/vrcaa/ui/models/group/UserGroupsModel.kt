@@ -27,7 +27,7 @@ class UserGroupsModel(
     private fun fetchGroups() {
         mutableState.value = UserGroupsState.Loading
         screenModelScope.launch {
-            groups = api?.getGroups(userId)
+            groups = api.getGroups(userId)
             mutableState.value = UserGroupsState.Result(groups)
         }
     }

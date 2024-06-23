@@ -1,16 +1,9 @@
 package cc.sovellus.vrcaa.manager
 
-import android.annotation.SuppressLint
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.VRChatCache
 
 object ApiManager {
-
-    @Volatile lateinit var api: VRChatApi
-
-    @Synchronized
-    fun set(api: VRChatApi) {
-        synchronized(this) {
-            this.api = api
-        }
-    }
+    val api by lazy { VRChatApi() }
+    val cache = VRChatCache()
 }

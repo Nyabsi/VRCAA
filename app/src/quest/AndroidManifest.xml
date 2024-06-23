@@ -27,21 +27,7 @@
         <meta-data android:name="com.oculus.supportedDevices" android:value="quest|quest2|cambria|eureka"/>
 
         <activity
-            android:name=".activity.crash.CrashActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            android:configChanges="density|keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|uiMode"
-            android:launchMode="singleTask"
-            android:resizeableActivity="true"
-            android:screenOrientation="landscape"
-            android:fitsSystemWindows="true">
-            <intent-filter>
-                <category android:name="com.oculus.intent.category.2D" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activity.main.MainActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
             android:configChanges="density|keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|uiMode"
@@ -54,6 +40,36 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.oculus.intent.category.2D" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.CrashActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:configChanges="density|keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|uiMode"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:screenOrientation="landscape"
+            android:fitsSystemWindows="true">
+            <intent-filter>
+                <category android:name="com.oculus.intent.category.2D" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:configChanges="density|keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|uiMode"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:screenOrientation="landscape"
+            android:fitsSystemWindows="true"
+            android:requestLegacyExternalStorage="true">
+            <intent-filter>
+                <category android:name="com.oculus.intent.category.2D" />
             </intent-filter>
         </activity>
 

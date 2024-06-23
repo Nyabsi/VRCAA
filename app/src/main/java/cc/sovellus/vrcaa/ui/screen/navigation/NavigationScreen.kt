@@ -69,6 +69,7 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.dialog.UpdatedDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -248,7 +249,7 @@ class NavigationScreen : Screen {
                                             )
                                             DropdownMenuItem(
                                                 onClick = {
-                                                    api.cache.getProfile()?.let {
+                                                    cache.getProfile()?.let {
                                                         navigator.push(
                                                             UserGroupsScreen(it.displayName, it.id)
                                                         )

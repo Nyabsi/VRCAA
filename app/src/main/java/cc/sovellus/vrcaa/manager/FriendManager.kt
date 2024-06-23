@@ -4,7 +4,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 
 object FriendManager {
 
-    @Volatile private var friendListener: FriendListener? = null
+    @Volatile private var friendListeners: MutableList<FriendListener> = mutableListOf()
     @Volatile private var friends: MutableList<LimitedUser> = ArrayList()
 
     interface FriendListener {
@@ -12,9 +12,9 @@ object FriendManager {
     }
 
     @Synchronized
-    fun setFriendListener(listener: FriendListener) {
+    fun addFriendListener(listener: FriendListener) {
         synchronized(listener) {
-            friendListener = listener
+            friendListeners.add(listener)
         }
     }
 
@@ -22,7 +22,9 @@ object FriendManager {
     fun setFriends(friends: MutableList<LimitedUser>) {
         synchronized(friends) {
             this.friends = friends
-            friendListener?.onUpdateFriends(FriendManager.friends)
+            friendListeners.map {
+                it.onUpdateFriends(friends)
+            }
         }
     }
 
@@ -31,7 +33,9 @@ object FriendManager {
         if (friends.find { it.id == friend.id } == null) {
             synchronized(friend) {
                 friends.add(friend)
-                friendListener?.onUpdateFriends(friends)
+                friendListeners.map {
+                    it.onUpdateFriends(friends)
+                }
             }
         }
     }
@@ -45,7 +49,9 @@ object FriendManager {
                 friends.remove(friend)
             }
 
-            friendListener?.onUpdateFriends(friends)
+            friendListeners.map {
+                it.onUpdateFriends(friends)
+            }
         }
     }
 
@@ -61,7 +67,10 @@ object FriendManager {
                 friend.isFavorite = it.isFavorite
                 friends.set(friends.indexOf(it), friend)
             }
-            friendListener?.onUpdateFriends(friends)
+
+            friendListeners.map {
+                it.onUpdateFriends(friends)
+            }
         }
     }
 
@@ -72,7 +81,10 @@ object FriendManager {
             it?.let {
                 it.location = location
             }
-            friendListener?.onUpdateFriends(friends)
+
+            friendListeners.map {
+                it.onUpdateFriends(friends)
+            }
         }
     }
 
@@ -84,7 +96,10 @@ object FriendManager {
                 it.status = status
                 friends.set(friends.indexOf(it), it)
             }
-            friendListener?.onUpdateFriends(friends)
+
+            friendListeners.map {
+                it.onUpdateFriends(friends)
+            }
         }
     }
 

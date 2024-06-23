@@ -1,15 +1,20 @@
 package cc.sovellus.vrcaa.ui.models.home
 
 import android.content.Context
-import android.widget.Toast
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Friends
+import cc.sovellus.vrcaa.api.vrchat.VRChatCache
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import kotlinx.coroutines.delay
+import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.FriendManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeModel(
@@ -20,19 +25,35 @@ class HomeModel(
         data object Init : HomeState()
         data object Loading : HomeState()
         data class Result(
-            val friends: Friends?,
-            val lastVisited: Worlds?,
-            val offlineFriends: Friends?,
+            val friends: StateFlow<MutableList<LimitedUser>>,
+            val lastVisitedWorlds: StateFlow<MutableList<World>>,
             val featuredWorlds: Worlds?
         ) : HomeState()
     }
 
-    private var friends: Friends? = null
-    private var lastVisited: Worlds? = null
-    private var offlineFriends: Friends? = null
     private var featuredWorlds: Worlds? = null
 
-    val isRefreshing = mutableStateOf(false)
+    private var friendsStateFlow = MutableStateFlow(mutableListOf<LimitedUser>())
+    var friends = friendsStateFlow.asStateFlow()
+
+    private var lastVisitedStateFlow = MutableStateFlow(mutableListOf<World>())
+    var lastVisitedWorlds = lastVisitedStateFlow.asStateFlow()
+
+    var currentIndex = mutableIntStateOf(0)
+
+    private val listener = object : FriendManager.FriendListener {
+        override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
+            screenModelScope.launch {
+                friendsStateFlow.update { friends }
+            }
+        }
+    }
+
+    private val cacheListener = object : VRChatCache.CacheListener {
+        override fun updatedLastVisited(worlds: MutableList<World>) {
+            lastVisitedStateFlow.update { worlds }
+        }
+    }
 
     init {
         mutableState.value = HomeState.Loading
@@ -42,33 +63,18 @@ class HomeModel(
     private fun fetchContent() {
         screenModelScope.launch {
 
-            friends = api?.getFriends()
-            lastVisited = api?.getRecentWorlds()
-            offlineFriends = api?.getFriends(true)
-            featuredWorlds = api?.getWorlds()
+            FriendManager.addFriendListener(listener)
+            friendsStateFlow.update { FriendManager.getFriends() }
+
+            cache.setCacheListener(cacheListener)
+            lastVisitedStateFlow.update { cache.getRecent() }
+            featuredWorlds = api.getWorlds()
 
             mutableState.value = HomeState.Result(
                 friends = friends,
-                lastVisited = lastVisited,
-                offlineFriends = offlineFriends,
+                lastVisitedWorlds = lastVisitedWorlds,
                 featuredWorlds = featuredWorlds
             )
-        }
-    }
-
-    fun refreshHome(context: Context) {
-        screenModelScope.launch {
-
-            isRefreshing.value = true
-            fetchContent()
-            delay(500)
-            isRefreshing.value = false
-
-            Toast.makeText(
-                context,
-                context.getString(R.string.home_toast_updated_info),
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 }

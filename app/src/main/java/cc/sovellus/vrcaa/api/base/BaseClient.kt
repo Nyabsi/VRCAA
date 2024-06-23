@@ -22,14 +22,12 @@ open class BaseClient {
     sealed class Result {
         data class Succeeded(val response: Response, val body: String) : Result()
         data class UnhandledResult(val response: Response) : Result()
+        data class ClientExceptionResult(val response: String) : Result()
         data object RateLimited : Result()
         data object InvalidRequest : Result()
         data object Unauthorized : Result()
         data object InternalError : Result()
         data object UnknownMethod : Result()
-        data object Timeout : Result()
-        data object NoInternet : Result()
-        data object FailedResolveHost : Result()
     }
 
     private fun handleRequest(
@@ -101,12 +99,8 @@ open class BaseClient {
 
                 else -> { Result.UnknownMethod }
             }
-        } catch (_: TimeoutException) {
-            Result.Timeout
-        } catch (_: ConnectException) {
-            Result.NoInternet
-        } catch (_: UnknownHostException) {
-            Result.FailedResolveHost
+        } catch (e: Exception) {
+            Result.ClientExceptionResult(e.message.toString())
         }
     }
 }

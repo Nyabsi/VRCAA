@@ -32,6 +32,7 @@ import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
@@ -216,6 +217,8 @@ class PipelineService : Service(), CoroutineScope {
                     val status = StatusHelper.getStatusFromString(user.user.status)
                     val location = LocationHelper.parseLocationInfo(user.location)
 
+                    cache.addRecent(user.world)
+
                     if (preferences.richPresenceEnabled) {
                         launch {
                             val instance = api.getInstance(user.location)
@@ -352,7 +355,7 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
-        return START_NOT_STICKY
+        return START_STICKY_COMPATIBILITY
     }
 
     override fun onDestroy() {
