@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
@@ -47,7 +48,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
             }, maxLines = 1)
         },
         supportingContent = {
-            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { location.value }), maxLines = 1)
+            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { location.value }), maxLines = 1, overflow = TextOverflow.Ellipsis)
         },
         leadingContent = {
             GlideImage(
