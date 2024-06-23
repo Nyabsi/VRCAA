@@ -5,5 +5,5 @@ import cc.sovellus.vrcaa.api.vrchat.VRChatCache
 
 object ApiManager {
     val api by lazy { VRChatApi() }
-    val cache = VRChatCache()
+    val cache by lazy { VRChatCache() }
 }
