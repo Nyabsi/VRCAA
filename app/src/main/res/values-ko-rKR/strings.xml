@@ -156,6 +156,7 @@
     <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
     <string name="about_page_battery_optimizations_description">Only use if this if you have to.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
+    <string name="about_page_crash_title">Crash the application.</string>
     <string name="license_title">오픈소스 라이선스</string>
     <!-- API -->
     <string name="api_session_has_expired_text">세션이 만료되었어요. 다시 로그인해 주세요.</string>
@@ -228,4 +229,5 @@
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
     <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
 </resources>
