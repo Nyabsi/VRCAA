@@ -26,7 +26,7 @@ class FriendWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
 
         withContext(Dispatchers.IO) {
-            api.let { friendCount = it?.getFriends()?.size ?: 0 }
+           // api.let { friendCount = it.getFriends()?.size ?: 0 }
         }
 
         provideContent {

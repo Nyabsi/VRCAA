@@ -1,11 +1,11 @@
-package cc.sovellus.vrcaa.ui.models.notification
+package cc.sovellus.vrcaa.ui.screen.notification
 
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.manager.NotificationManager
 
-class NotificationModel(
+class NotificationScreenModel(
     context: Context,
     private val friendId: String
 ) : ScreenModel {

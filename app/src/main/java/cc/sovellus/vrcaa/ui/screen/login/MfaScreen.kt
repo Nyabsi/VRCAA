@@ -26,7 +26,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
-import cc.sovellus.vrcaa.ui.models.login.MfaModel
 
 class MfaScreen(
     private val otpType: VRChatApi.MfaType
@@ -41,7 +40,7 @@ class MfaScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { MfaModel(context, otpType, navigator) }
+        val screenModel = navigator.rememberNavigatorScreenModel { MfaScreenModel(context, otpType) }
 
         Column(
             modifier = Modifier

@@ -1,13 +1,11 @@
 package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,15 +68,11 @@ import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.dialog.UpdatedDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
-import cc.sovellus.vrcaa.ui.models.navigation.NavigationModel
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
-import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
@@ -99,7 +93,7 @@ class NavigationScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { NavigationModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
 
         if (model.hasUpdate.value) {
             UpdatedDialog(
@@ -152,7 +146,7 @@ class NavigationScreen : Screen {
                                     model.existSearchMode()
                                     navigator.push(SearchResultScreen(model.searchText.value))
                                 },
-                                active = model.isSearchActive.value,
+                                active = model.searchModeActivated.value,
                                 onActiveChange = {
                                     if (it) {
                                         model.enterSearchMode()
@@ -160,9 +154,8 @@ class NavigationScreen : Screen {
                                         model.existSearchMode()
                                     }
                                 },
-                                tonalElevation = model.tonalElevation.value,
                                 trailingIcon = {
-                                    if (model.isSearchActive.value) {
+                                    if (model.searchModeActivated.value) {
                                         IconButton(onClick = { model.clearSearchText() }) {
                                             Icon(
                                                 imageVector = Icons.Filled.Close,
@@ -178,7 +171,7 @@ class NavigationScreen : Screen {
                                     }
                                 },
                                 leadingIcon = {
-                                    if (model.isSearchActive.value) {
+                                    if (model.searchModeActivated.value) {
                                         IconButton(onClick = { model.existSearchMode() }) {
                                             Icon(
                                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -475,9 +468,7 @@ class NavigationScreen : Screen {
                     }
                 },
                 bottomBar = {
-                    NavigationBar(
-                        tonalElevation = model.tonalElevation.value
-                    ) {
+                    NavigationBar {
                         NavigationBarItem(HomeTab)
                         NavigationBarItem(FriendsTab)
                         NavigationBarItem(FeedTab)

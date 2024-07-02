@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.friends
+package cc.sovellus.vrcaa.ui.screen.friends
 
 import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class FriendsModel : ScreenModel {
+class FriendsScreenModel : ScreenModel {
     private var friendsStateFlow = MutableStateFlow(mutableListOf<LimitedUser>())
     var friends = friendsStateFlow.asStateFlow()
 

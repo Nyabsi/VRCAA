@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.presence
+package cc.sovellus.vrcaa.ui.screen.presence
 
 import android.content.Context
 import android.content.Intent
@@ -16,7 +16,7 @@ import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
-class RichPresenceModel(
+class RichPresenceScreenModel(
     private val context: Context
 ) : ScreenModel {
 

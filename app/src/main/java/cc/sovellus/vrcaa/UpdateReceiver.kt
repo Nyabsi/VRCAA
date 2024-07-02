@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.api.updater
+package cc.sovellus.vrcaa
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -35,7 +35,7 @@ class UpdateReceiver : BroadcastReceiver() {
 
             context?.let { ctx ->
                 val notifyManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notifyManager.cancel(AutoUpdater.notificationId)
+                notifyManager.cancel(AutoUpdater.NOTIFICATION_ID)
             }
         }
     }

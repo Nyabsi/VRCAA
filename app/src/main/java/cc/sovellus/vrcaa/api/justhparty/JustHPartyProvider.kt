@@ -1,52 +1,64 @@
 package cc.sovellus.vrcaa.api.justhparty
 
-import android.util.Log
-import cc.sovellus.vrcaa.api.justhparty.models.JustHPartyAvatars
+import cc.sovellus.vrcaa.api.BaseClient
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import okhttp3.Headers
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import ru.gildor.coroutines.okhttp.await
 import java.net.URLEncoder
 
-class JustHPartyProvider {
+class JustHPartyProvider : BaseClient() {
 
-    private val client: OkHttpClient by lazy { OkHttpClient() }
-
-    private val apiUrl = "https://avtr.just-h.party/vrcx_search.php"
-    private val userAgent = "VRCAA/0.1"
-    private val referer = "vrcaa.sovellus.cc"
-
-    private suspend fun sendRequest(urlParams: String): String? {
+    private suspend fun sendRequest(params: String): String?
+    {
         val headers = Headers.Builder()
+        headers["User-Agent"] = "VRCAA/0.1"
+        headers["Referer"] = "vrcaa.sovellus.cc"
 
-        headers["User-Agent"] = userAgent
-        headers["Referer"] = referer
+        val result = doRequest(
+            method = "GET",
+            url = "https://avtr.just-h.party/vrcx_search.php$params",
+            headers = headers,
+            body = null
+        )
 
-        val request =
-            Request.Builder()
-                .headers(headers = headers.build())
-                .url("${apiUrl}${urlParams}")
-                .get()
-                .build()
-
-        val response = client.newCall(request).await()
-
-        return when (response.code) {
-            200 -> response.body?.string()
+        return when (result) {
+            is Result.Succeeded -> {
+                return result.body
+            }
             else -> {
-                Log.d("VRCAA", "Failed to fetch avatar data from provider, code: ${response.code} and body is ${response.body?.string()}")
                 null
             }
         }
     }
 
-    suspend fun search(type: String, query: String, n: Int): JustHPartyAvatars? {
+    suspend fun search(type: String, query: String, n: Int): ArrayList<Avatar>?
+    {
         return when (val result = sendRequest("?${type}=${URLEncoder.encode(query)}&n=5000")) {
             is String -> {
-                Gson().fromJson(result, JustHPartyAvatars::class.java)
+                Gson().fromJson(result, Avatars::class.java)
             }
             else -> null
         }
     }
+
+    class Avatars : ArrayList<Avatar>()
+
+    data class Avatar(
+        @SerializedName("authorId")
+        val authorId: String,
+        @SerializedName("authorName")
+        val authorName: String,
+        @SerializedName("description")
+        val description: String,
+        @SerializedName("id")
+        val id: String,
+        @SerializedName("imageUrl")
+        val imageUrl: Any?,
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("releaseStatus")
+        val releaseStatus: String,
+        @SerializedName("thumbnailImageUrl")
+        val thumbnailImageUrl: String
+    )
 }

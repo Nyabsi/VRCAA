@@ -50,10 +50,8 @@ import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
-import cc.sovellus.vrcaa.ui.models.profile.UserProfileModel.UserProfileState
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
-import cc.sovellus.vrcaa.ui.models.profile.UserProfileModel
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
@@ -67,9 +65,7 @@ class UserProfileScreen(
     @Composable
     override fun Content() {
 
-        val context = LocalContext.current
-
-        val model = rememberScreenModel { UserProfileModel(context, userId) }
+        val model = rememberScreenModel { UserProfileScreenModel(userId) }
 
         val state by model.state.collectAsState()
 
@@ -85,7 +81,7 @@ class UserProfileScreen(
     fun RenderProfile(
         profile: LimitedUser?,
         instance: Instance?,
-        model: UserProfileModel
+        model: UserProfileScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current

@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.navigation
+package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.content.Context
 import android.content.Intent
@@ -7,14 +7,12 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.LoginActivity
-import cc.sovellus.vrcaa.activity.MainActivity
-import cc.sovellus.vrcaa.api.updater.AutoUpdater
+import cc.sovellus.vrcaa.AutoUpdater
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.updatesEnabled
 import cc.sovellus.vrcaa.extension.groupsAmount
@@ -24,18 +22,16 @@ import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class NavigationModel(
+class NavigationScreenModel(
     private val context: Context
 ) : ScreenModel {
 
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
 
-    var isSearchActive = mutableStateOf(false)
+    var searchModeActivated = mutableStateOf(false)
     var searchText = mutableStateOf("")
-    var tonalElevation = mutableStateOf(16.dp)
     var searchHistory = mutableListOf<String>()
 
     var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
@@ -71,18 +67,13 @@ class NavigationModel(
 
     fun enterSearchMode() {
         screenModelScope.launch {
-            tonalElevation.value = 0.dp
-            delay(100)
-            isSearchActive.value = true
+            searchModeActivated.value = true
         }
     }
 
     fun existSearchMode() {
         screenModelScope.launch {
-            isSearchActive.value = false
-            delay(160)
-            tonalElevation.value = 16.dp
-
+            searchModeActivated.value = false
             if (searchText.value.isNotEmpty())
                 searchHistory.add(searchText.value)
             clearSearchText()
@@ -94,7 +85,6 @@ class NavigationModel(
     }
 
     fun update(context: Context) {
-       // val update =
         screenModelScope.launch {
             if (!updater.downloadUpdate()) {
                 Toast.makeText(

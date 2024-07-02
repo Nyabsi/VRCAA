@@ -37,7 +37,6 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
-import cc.sovellus.vrcaa.ui.models.friends.FriendsModel
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import java.util.UUID
 
@@ -50,7 +49,7 @@ class FriendsScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
 
-        val model = navigator.rememberNavigatorScreenModel { FriendsModel() }
+        val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel() }
         val friends = model.friends.collectAsState()
 
         val options = stringArrayResource(R.array.friend_selection_options)

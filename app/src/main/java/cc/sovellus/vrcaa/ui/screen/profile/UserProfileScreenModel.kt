@@ -1,6 +1,5 @@
-package cc.sovellus.vrcaa.ui.models.profile
+package cc.sovellus.vrcaa.ui.screen.profile
 
-import android.content.Context
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
@@ -9,16 +8,15 @@ import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class UserProfileModel(
-    private val context: Context,
-    private val userId: String
-) : StateScreenModel<UserProfileModel.UserProfileState>(UserProfileState.Init) {
+sealed class UserProfileState {
+    data object Init : UserProfileState()
+    data object Loading : UserProfileState()
+    data class Result(val profile: LimitedUser?, val instance: Instance?) : UserProfileState()
+}
 
-    sealed class UserProfileState {
-        data object Init : UserProfileState()
-        data object Loading : UserProfileState()
-        data class Result(val profile: LimitedUser?, val instance: Instance?) : UserProfileState()
-    }
+class UserProfileScreenModel(
+    private val userId: String
+) : StateScreenModel<UserProfileState>(UserProfileState.Init) {
 
     private val avatarProvider = JustHPartyProvider()
 

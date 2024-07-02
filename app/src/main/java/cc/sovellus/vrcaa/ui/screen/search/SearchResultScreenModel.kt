@@ -1,11 +1,10 @@
-package cc.sovellus.vrcaa.ui.models.search
+package cc.sovellus.vrcaa.ui.screen.search
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.justhparty.models.JustHPartyAvatars
 import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
@@ -18,10 +17,10 @@ import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class SearchResultModel(
+class SearchResultScreenModel(
     context: Context,
     private val query: String
-) : StateScreenModel<SearchResultModel.SearchState>(SearchState.Init) {
+) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
 
     private val avatarProvider = JustHPartyProvider()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
@@ -32,14 +31,14 @@ class SearchResultModel(
         data class Result(
             val worlds: Worlds?,
             val users: Users?,
-            val avatars: JustHPartyAvatars?,
+            val avatars: ArrayList<JustHPartyProvider.Avatar>?,
             val groups: Groups?
         ) : SearchState()
     }
 
     private var worlds: Worlds? = null
     private var users: Users? = null
-    private var avatars: JustHPartyAvatars? = null
+    private var avatars: ArrayList<JustHPartyProvider.Avatar>? = null
     private var groups: Groups? = null
 
     var currentIndex = mutableIntStateOf(0)
@@ -51,14 +50,14 @@ class SearchResultModel(
 
     private fun getContent() {
         screenModelScope.launch {
-            worlds = api?.getWorlds(
+            worlds = api.getWorlds(
                 query = query,
                 featured = preferences.searchFeaturedWorlds,
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds
             )
 
-            users = api?.getUsers(
+            users = api.getUsers(
                 username = query,
                 n = preferences.usersAmount
             )
@@ -69,7 +68,7 @@ class SearchResultModel(
                 5000 // Not used
             )
 
-            groups = api?.getGroups(
+            groups = api.getGroups(
                 query,
                 preferences.groupsAmount
             )

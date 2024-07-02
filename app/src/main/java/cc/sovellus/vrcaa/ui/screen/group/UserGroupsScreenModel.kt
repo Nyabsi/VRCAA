@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.group
+package cc.sovellus.vrcaa.ui.screen.group
 
 import android.content.Context
 import cafe.adriel.voyager.core.model.StateScreenModel
@@ -7,16 +7,16 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class UserGroupsModel(
+sealed class UserGroupsState {
+    data object Init : UserGroupsState()
+    data object Loading : UserGroupsState()
+    data class Result(val groups: UserGroups?) : UserGroupsState()
+}
+
+class UserGroupsScreenModel(
     private val context: Context,
     private val userId: String
-) : StateScreenModel<UserGroupsModel.UserGroupsState>(UserGroupsState.Init) {
-
-    sealed class UserGroupsState {
-        data object Init : UserGroupsState()
-        data object Loading : UserGroupsState()
-        data class Result(val groups: UserGroups?) : UserGroupsState()
-    }
+) : StateScreenModel<UserGroupsState>(UserGroupsState.Init) {
 
     private var groups: UserGroups? = null
 

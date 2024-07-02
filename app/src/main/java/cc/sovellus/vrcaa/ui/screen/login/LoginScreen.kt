@@ -28,7 +28,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
-import cc.sovellus.vrcaa.ui.models.login.LoginModel
 
 class LoginScreen : Screen {
 
@@ -40,7 +39,7 @@ class LoginScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = LoginModel(context, navigator)
+        val screenModel = LoginScreenModel(context, navigator)
 
         var passwordVisibility by remember { mutableStateOf(false) }
 

@@ -161,6 +161,8 @@ class PipelineService : Service(), CoroutineScope {
                                     }
                             )
                         }
+
+                        cache.addWorld(update.worldId, update.world.name)
                         FriendManager.updateLocation(update.userId, update.location)
                     }
 

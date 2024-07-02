@@ -1,9 +1,8 @@
 package cc.sovellus.vrcaa.api.vrchat
 
 import android.util.Log
-import android.widget.Toast
 import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.api.base.BaseClient
+import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.models.FileMetadata
 import cc.sovellus.vrcaa.api.vrchat.models.Friends
 import cc.sovellus.vrcaa.api.vrchat.models.Group
@@ -17,9 +16,6 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
-import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.twoFactorToken
-import cc.sovellus.vrcaa.manager.FriendManager
 import com.google.gson.Gson
 import okhttp3.Headers
 import java.net.URLEncoder
@@ -31,7 +27,6 @@ class VRChatApi : BaseClient() {
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
 
-    @Volatile private var cookies: String = ""
     @Volatile private var listener: SessionListener? = null
 
     interface SessionListener {
@@ -45,11 +40,13 @@ class VRChatApi : BaseClient() {
         }
     }
 
-    enum class MfaType { NONE, EMAIL_OTP, TOTP }
+    enum class MfaType {
+        NONE,
+        EMAIL_OTP,
+        TOTP
+    }
 
     data class AccountInfo(val mfaType: MfaType, val token: String, val twoAuth: String = "")
-
-    data class AuthCredentials(val token: String, val twoAuth: String)
 
     private fun handleRequest(result: Result): String? {
         return when (result) {
@@ -58,6 +55,9 @@ class VRChatApi : BaseClient() {
                     Log.d("VRCAA", result.body)
 
                 var cookies = ""
+
+                 if (result.body == "[]")
+                     return null
 
                 if (result.response.headers("Set-Cookie").isNotEmpty()) {
                     for (cookie in result.response.headers("Set-Cookie")) { cookies += "$cookie " }
@@ -74,13 +74,10 @@ class VRChatApi : BaseClient() {
             }
 
             Result.RateLimited -> {
-                // listener?.onRemindUserOfLimits()
                 null
             }
 
             Result.Unauthorized -> {
-                Log.d("VRCAA", "wtfbruh")
-                Log.d("VRCAA", cookies)
                 listener?.onSessionInvalidate()
                 null
             }
@@ -89,17 +86,20 @@ class VRChatApi : BaseClient() {
                 throw RuntimeException("doRequest was called with unsupported method, supported methods are GET, POST, PUT and DELETE.")
             }
 
+            Result.NotModified -> {
+                null
+            }
+
             else -> { null }
         }
     }
 
-    @Synchronized
     fun setToken(token: String) {
-        cookies = token
+        setAuthorization(AuthorizationType.Cookie, token)
     }
 
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun getToken(username: String, password: String, twoAuth: String): AccountInfo? {
+    suspend fun getToken(username: String, password: String): AccountInfo? {
 
         val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
 
@@ -108,13 +108,10 @@ class VRChatApi : BaseClient() {
         headers["Authorization"] = "Basic $token"
         headers["User-Agent"] = userAgent
 
-        if (twoAuth.isNotEmpty())
-            headers["Cookie"] = twoAuth
-
         val result = doRequest(
             method = "GET",
             url = "$apiBase/auth/user",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -123,8 +120,6 @@ class VRChatApi : BaseClient() {
         response?.let {
             val cookies = response.split('~')[0]
             val body = response.split('~')[1]
-
-            this.cookies = cookies
 
             if (!body.contains("requiresTwoFactorAuth"))
                 return AccountInfo(MfaType.NONE, cookies)
@@ -142,13 +137,12 @@ class VRChatApi : BaseClient() {
     suspend fun getAuth(): String? {
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/auth",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -156,11 +150,10 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, cc.sovellus.vrcaa.api.vrchat.models.Auth::class.java)?.token
     }
 
-    suspend fun verifyAccount(type: MfaType, code: String): AuthCredentials? {
+    suspend fun verifyAccount(type: MfaType, code: String): String? {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         return when (type) {
@@ -171,15 +164,14 @@ class VRChatApi : BaseClient() {
                 val result = doRequest(
                     method = "POST",
                     url = "$apiBase/auth/twofactorauth/emailotp/verify",
-                    headers = headers.build(),
+                    headers = headers,
                     body = body
                 )
 
                 val response = handleRequest(result)
 
                 response?.let {
-                    val cookie = response.split('~')[0]
-                    return AuthCredentials("${this.cookies} $cookie", cookie)
+                    return response.split('~')[0]
                 }
                 return null
             }
@@ -191,15 +183,14 @@ class VRChatApi : BaseClient() {
                 val result = doRequest(
                     method = "POST",
                     url = "$apiBase/auth/twofactorauth/totp/verify",
-                    headers = headers.build(),
+                    headers = headers,
                     body = body
                 )
 
                 val response = handleRequest(result)
 
                 response?.let {
-                    val cookie = response.split('~')[0]
-                    return AuthCredentials("${this.cookies} $cookie", cookie)
+                    return response.split('~')[0]
                 }
                 return null
             }
@@ -211,13 +202,12 @@ class VRChatApi : BaseClient() {
     suspend fun logout(): Boolean {
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "PUT",
             url = "$apiBase/logout",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -228,13 +218,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/auth/user",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -242,17 +231,16 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, User::class.java)
     }
 
-    suspend fun getFriends(offline: Boolean = false): Friends? {
+    suspend fun getFriends(offline: Boolean, n: Int, offset: Int): Friends? {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/auth/user/friends?offline=$offline",
-            headers = headers.build(),
+            url = "$apiBase/auth/user/friends?offline=$offline&n=$n&offset=$offset",
+            headers = headers,
             body = null
         )
 
@@ -264,13 +252,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/users/$userId",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -282,13 +269,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/users/$userId",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -298,17 +284,16 @@ class VRChatApi : BaseClient() {
 
     // Intent is compromised of <worldId>:<InstanceId>:<Nonce>
     // NOTE: `<Nonce>` is only used for private instances.
-    suspend fun getInstance(intent: String): Instance? {
+    suspend fun getInstance(intent: String): Instance {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/instances/$intent",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -320,13 +305,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         doRequest(
             method = "POST",
             url = "$apiBase/invite/myself/to/$intent",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
     }
@@ -335,13 +319,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/worlds/recent?featured=false",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -358,13 +341,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/worlds?featured=$featured&n=$n&sort=$sort&search=$query",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -372,17 +354,16 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, Worlds::class.java)
     }
 
-    suspend fun getWorld(id: String): World? {
+    suspend fun getWorld(id: String): World {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/worlds/$id",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -394,13 +375,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/users?search=$username&n=$n",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -412,13 +392,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/favorites?type=$type&n=$n", // TODO: if ever needed, implement "tag"
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -430,13 +409,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/auth/user/notifications",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -448,13 +426,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "PUT",
             url = "$apiBase/avatars/${avatarId}/select",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -466,13 +443,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/avatars/${avatarId}",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -484,13 +460,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/groups?query=$query&n=$n",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -502,13 +477,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/users/$userId/groups",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -520,13 +494,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/groups/$groupId?includeRoles=true&purpose=group",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -538,13 +511,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "POST",
             url = "$apiBase/groups/$groupId/join?confirmOverrideBlock=false",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -555,13 +527,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "POST",
             url = "$apiBase/groups/$groupId/leave",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -572,13 +543,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "DELETE",
             url = "$apiBase/groups/$groupId/requests",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -589,13 +559,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/groups/$groupId/instances",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -607,13 +576,12 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val result = doRequest(
             method = "GET",
             url = "$apiBase/file/$fileId",
-            headers = headers.build(),
+            headers = headers,
             body = null
         )
 
@@ -625,7 +593,6 @@ class VRChatApi : BaseClient() {
 
         val headers = Headers.Builder()
 
-        headers["Cookie"] = cookies
         headers["User-Agent"] = userAgent
 
         val body = "{\"status\":\"$status\",\"statusDescription\":\"$description\",\"bio\":\"${bio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(bioLinks)}}"
@@ -633,7 +600,7 @@ class VRChatApi : BaseClient() {
         val result = doRequest(
             method = "PUT",
             url = "$apiBase/users/$id",
-            headers = headers.build(),
+            headers = headers,
             body = body
         )
 

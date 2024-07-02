@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.home
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,8 +24,6 @@ import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.WorldRow
-import cc.sovellus.vrcaa.ui.models.home.HomeModel
-import cc.sovellus.vrcaa.ui.models.home.HomeModel.HomeState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
@@ -43,7 +40,7 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { HomeModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { HomeModel() }
         val state by model.state.collectAsState()
 
         when (val result = state) {

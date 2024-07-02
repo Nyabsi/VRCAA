@@ -94,7 +94,7 @@ object LocationHelper {
         return result
     }
 
-    suspend fun getReadableLocation(location: String?): String {
+    fun getReadableLocation(location: String?): String {
 
         if (location == null)
             return "private"

@@ -17,9 +17,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,8 +29,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.ui.components.card.GroupCard
-import cc.sovellus.vrcaa.ui.models.group.UserGroupsModel
-import cc.sovellus.vrcaa.ui.models.group.UserGroupsModel.UserGroupsState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 
 class UserGroupsScreen(
@@ -48,7 +43,7 @@ class UserGroupsScreen(
 
         val context = LocalContext.current
 
-        val model = rememberScreenModel { UserGroupsModel(context, userId) }
+        val model = rememberScreenModel { UserGroupsScreenModel(context, userId) }
 
         val state by model.state.collectAsState()
 

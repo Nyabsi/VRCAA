@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.login
+package cc.sovellus.vrcaa.ui.screen.login
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -12,13 +12,11 @@ import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
-import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.ui.screen.login.MfaScreen
 import kotlinx.coroutines.launch
 
-class LoginModel(
+class LoginScreenModel(
     private val context: Context,
     private val navigator: Navigator
 ) : ScreenModel {
@@ -30,7 +28,7 @@ class LoginModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            api.getToken(username.value, password.value, preferences.twoFactorToken).let { result ->
+            api.getToken(username.value, password.value).let { result ->
                 if (result == null) {
                     Toast.makeText(
                         context,

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,11 +49,9 @@ import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.models.world.WorldInfoModel.WorldInfoState
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.layout.InstanceItem
-import cc.sovellus.vrcaa.ui.models.world.WorldInfoModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -66,10 +63,7 @@ class WorldInfoScreen(
 
     @Composable
     override fun Content() {
-
-        val context = LocalContext.current
-
-        val model = rememberScreenModel { WorldInfoModel(context, worldId) }
+        val model = rememberScreenModel { WorldInfoScreenModel(worldId) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -84,7 +78,7 @@ class WorldInfoScreen(
     fun MultiChoiceHandler(
         world: World?,
         instances: MutableList<Pair<String, Instance>>,
-        model: WorldInfoModel
+        model: WorldInfoScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -143,7 +137,7 @@ class WorldInfoScreen(
                                         count = options.size
                                     ),
                                     icon = {
-                                        SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                                        SegmentedButtonDefaults.Icon(active = index == model.currentTabIndex.intValue) {
                                             Icon(
                                                 imageVector = icons[index],
                                                 contentDescription = null,
@@ -152,16 +146,16 @@ class WorldInfoScreen(
                                         }
                                     },
                                     onCheckedChange = {
-                                        model.currentIndex.intValue = index
+                                        model.currentTabIndex.intValue = index
                                     },
-                                    checked = index == model.currentIndex.intValue
+                                    checked = index == model.currentTabIndex.intValue
                                 ) {
                                     Text(text = label, softWrap = true, maxLines = 1)
                                 }
                             }
                         }
 
-                        when (model.currentIndex.intValue) {
+                        when (model.currentTabIndex.intValue) {
                             0 -> ShowInfo(world)
                             1 -> ShowInstances(instances, model)
                         }
@@ -228,7 +222,7 @@ class WorldInfoScreen(
     }
 
     @Composable
-    fun ShowInstances(instances: MutableList<Pair<String, Instance>>, model: WorldInfoModel) {
+    fun ShowInstances(instances: MutableList<Pair<String, Instance>>, model: WorldInfoScreenModel) {
         val dialogState = remember { mutableStateOf(false) }
 
         if (dialogState.value) {
@@ -260,7 +254,7 @@ class WorldInfoScreen(
                         instance = instance.second,
                         onClick = {
                             dialogState.value = true
-                            model.clickedInstance.value = instance.second.id
+                            model.selectedInstanceId.value = instance.second.id
                         }
                     )
                 }

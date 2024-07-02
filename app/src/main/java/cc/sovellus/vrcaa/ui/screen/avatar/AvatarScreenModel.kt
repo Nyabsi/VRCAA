@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.avatar
+package cc.sovellus.vrcaa.ui.screen.avatar
 
 import android.content.Context
 import android.widget.Toast
@@ -9,18 +9,18 @@ import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class AvatarModel(
+sealed class AvatarState {
+    data object Init : AvatarState()
+    data object Loading : AvatarState()
+    data class Result(
+        val avatar: Avatar?
+    ) : AvatarState()
+}
+
+class AvatarScreenModel(
     private val context: Context,
     avatarId: String
-) : StateScreenModel<AvatarModel.AvatarState>(AvatarState.Init) {
-
-    sealed class AvatarState {
-        data object Init : AvatarState()
-        data object Loading : AvatarState()
-        data class Result(
-            val avatar: Avatar?
-        ) : AvatarState()
-    }
+) : StateScreenModel<AvatarState>(AvatarState.Init) {
 
     private var avatar: Avatar? = null
 
@@ -48,7 +48,6 @@ class AvatarModel(
                 avatar?.id?.let { api.selectAvatar(it) }
             }
         }
-
         return avatar != null
     }
 }

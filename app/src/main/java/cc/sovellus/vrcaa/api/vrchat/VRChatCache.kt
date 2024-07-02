@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.Cache
 import kotlin.coroutines.CoroutineContext
 
 class VRChatCache : CoroutineScope {
@@ -18,35 +17,65 @@ class VRChatCache : CoroutineScope {
         get() = Dispatchers.Main + Job()
 
     private var profile: User? = null
-    private var friends: MutableList<LimitedUser> = ArrayList()
     private var worlds: MutableMap<String, String> = mutableMapOf()
     private var recentWorlds: MutableList<World> = mutableListOf()
     private var listener: CacheListener? = null
 
     interface CacheListener {
         fun updatedLastVisited(worlds: MutableList<World>)
+        fun initialCacheCreated()
     }
 
     init {
         launch {
             profile = api.getSelf()
 
-            api.getFriends()?.let { friends += it }
-            api.getFriends(true)?.let { friends += it }
-
             val favorites = api.getFavorites("friend")
+            val friendList: MutableList<LimitedUser> = ArrayList()
 
-            for (friend in friends) {
-                favorites?.find {
-                    it.favoriteId == friend.id
-                }?.let {
-                    friend.isFavorite = true
+            val n = 50; var offset = 0
+            var friends = api.getFriends(false, n, offset)
+
+            while (friends != null) {
+                friends.forEach { friend ->
+                    favorites?.find {
+                        it.favoriteId == friend.id
+                    }?.let {
+                        friend.isFavorite = true
+                    }
+
+                    if (friend.location.contains("wrld_")) {
+                        val world = api.getWorld(friend.location.split(":")[0])
+                        worlds[world.id] = world.name
+                    }
+
+                    friendList.add(friend)
                 }
+
+                offset += n
+                friends = api.getFriends(false, n, offset)
             }
 
-            FriendManager.setFriends(friends)
+            offset = 0
+            friends = api.getFriends(true, n, offset)
 
+            while (friends != null) {
+                friends.forEach { friend ->
+                    favorites?.find {
+                        it.favoriteId == friend.id
+                    }?.let {
+                        friend.isFavorite = true
+                    }
 
+                    friendList.add(friend)
+                }
+
+                offset += n
+                friends = api.getFriends(false, n, offset)
+            }
+
+            FriendManager.setFriends(friendList)
+            listener?.initialCacheCreated()
         }
     }
 
@@ -54,14 +83,12 @@ class VRChatCache : CoroutineScope {
         this.listener = listener
     }
 
-    suspend fun getWorld(worldId: String): String {
-        if (!worlds.contains(worldId)) {
-            api.getWorld(worldId)?.let { world ->
-                worlds[worldId] = world.name
-                return world.name
-            }
-        }
+    fun getWorld(worldId: String): String {
         return worlds[worldId].toString()
+    }
+
+    fun addWorld(worldId: String, name: String) {
+        worlds[worldId] = name
     }
 
     fun getProfile(): User? {
@@ -81,9 +108,5 @@ class VRChatCache : CoroutineScope {
     fun addRecent(world: World) {
         recentWorlds += world
         listener?.updatedLastVisited(recentWorlds)
-    }
-
-    fun getFriends(): MutableList<LimitedUser> {
-        return friends
     }
 }

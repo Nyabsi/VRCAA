@@ -50,15 +50,14 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.justhparty.models.JustHPartyAvatars
+import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
-import cc.sovellus.vrcaa.ui.models.search.SearchResultModel
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import cc.sovellus.vrcaa.ui.models.search.SearchResultModel.SearchState
+import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -76,7 +75,7 @@ class SearchResultScreen(
 
         val context = LocalContext.current
 
-        val model = rememberScreenModel { SearchResultModel(context, query) }
+        val model = rememberScreenModel { SearchResultScreenModel(context, query) }
 
         val state by model.state.collectAsState()
 
@@ -99,9 +98,9 @@ class SearchResultScreen(
     fun MultiChoiceHandler(
         worlds: Worlds?,
         users: Users?,
-        avatars: JustHPartyAvatars?,
+        avatars: ArrayList<JustHPartyProvider.Avatar>?,
         groups: Groups?,
-        model: SearchResultModel
+        model: SearchResultScreenModel
     ) {
 
         val navigator = LocalNavigator.currentOrThrow
@@ -326,7 +325,7 @@ class SearchResultScreen(
     }
 
     @Composable
-    private fun ShowAvatars(avatars: JustHPartyAvatars?) {
+    private fun ShowAvatars(avatars: ArrayList<JustHPartyProvider.Avatar>?) {
         val context = LocalContext.current
 
         if (avatars == null) {

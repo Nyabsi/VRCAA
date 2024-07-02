@@ -56,8 +56,6 @@ import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.models.group.GroupModel
-import cc.sovellus.vrcaa.ui.models.group.GroupModel.GroupState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 
@@ -72,7 +70,7 @@ class GroupScreen(
 
         val context = LocalContext.current
 
-        val model = rememberScreenModel { GroupModel(context, groupId) }
+        val model = rememberScreenModel { GroupScreenModel(context, groupId) }
 
         val state by model.state.collectAsState()
 
@@ -88,7 +86,7 @@ class GroupScreen(
     fun MultiChoiceHandler(
         group: Group?,
         instances: GroupInstances?,
-        model: GroupModel
+        model: GroupScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -309,7 +307,7 @@ class GroupScreen(
 
     @Composable
     private fun ShowGroupInstances(
-        model: GroupModel,
+        model: GroupScreenModel,
         instances: GroupInstances?
     ) {
         val dialogState = remember { mutableStateOf(false) }

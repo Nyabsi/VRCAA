@@ -2,7 +2,7 @@ package cc.sovellus.vrcaa.api.discord
 
 import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.api.base.BaseClient
+import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
 import cc.sovellus.vrcaa.api.discord.models.DiscordTicket
 import com.google.gson.Gson
@@ -36,6 +36,7 @@ class DiscordApi : BaseClient() {
     }
 
     suspend fun login(username: String, password: String): Any {
+        
         val headers = Headers.Builder()
         headers["User-Agent"] = userAgent
 
@@ -44,7 +45,7 @@ class DiscordApi : BaseClient() {
         val result = doRequest(
             method = "POST",
             url = "$apiBase/auth/login",
-            headers = headers.build(),
+            headers = headers,
             body = body
         )
 
@@ -54,11 +55,7 @@ class DiscordApi : BaseClient() {
             false
         } else {
             val login = Gson().fromJson(response, DiscordLogin::class.java)
-            if (login.token == null) {
-                Gson().fromJson(response, DiscordTicket::class.java)
-            } else {
-                login
-            }
+            login
         }
     }
 
@@ -71,7 +68,7 @@ class DiscordApi : BaseClient() {
         val result = doRequest(
             method = "POST",
             url = "$apiBase/auth/mfa/totp",
-            headers = headers.build(),
+            headers = headers,
             body = body
         )
 

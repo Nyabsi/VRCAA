@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.models.group
+package cc.sovellus.vrcaa.ui.screen.group
 
 import android.content.Context
 import android.widget.Toast
@@ -12,17 +12,16 @@ import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class GroupModel(
+sealed class GroupState {
+    data object Init : GroupState()
+    data object Loading : GroupState()
+    data class Result(val group: Group?, val instances: GroupInstances?) : GroupState()
+}
+
+class GroupScreenModel(
     private val context: Context,
     private val groupId: String
-) : StateScreenModel<GroupModel.GroupState>(GroupState.Init) {
-
-    sealed class GroupState {
-        data object Init : GroupState()
-        data object Loading : GroupState()
-        data class Result(val group: Group?, val instances: GroupInstances?) : GroupState()
-    }
-
+) : StateScreenModel<GroupState>(GroupState.Init) {
     private var group: Group? = null
     private var instances: GroupInstances? = null
 

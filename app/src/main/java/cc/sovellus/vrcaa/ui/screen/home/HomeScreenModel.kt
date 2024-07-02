@@ -1,7 +1,5 @@
-package cc.sovellus.vrcaa.ui.models.home
+package cc.sovellus.vrcaa.ui.screen.home
 
-import android.content.Context
-import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.VRChatCache
@@ -17,19 +15,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeModel(
-    private val context: Context
-) : StateScreenModel<HomeModel.HomeState>(HomeState.Init) {
+sealed class HomeState {
+    data object Init : HomeState()
+    data object Loading : HomeState()
+    data class Result(
+        val friends: StateFlow<MutableList<LimitedUser>>,
+        val lastVisitedWorlds: StateFlow<MutableList<World>>,
+        val featuredWorlds: Worlds?
+    ) : HomeState()
+}
 
-    sealed class HomeState {
-        data object Init : HomeState()
-        data object Loading : HomeState()
-        data class Result(
-            val friends: StateFlow<MutableList<LimitedUser>>,
-            val lastVisitedWorlds: StateFlow<MutableList<World>>,
-            val featuredWorlds: Worlds?
-        ) : HomeState()
-    }
+class HomeModel : StateScreenModel<HomeState>(HomeState.Init) {
 
     private var featuredWorlds: Worlds? = null
 
@@ -51,11 +47,15 @@ class HomeModel(
         override fun updatedLastVisited(worlds: MutableList<World>) {
             lastVisitedStateFlow.update { worlds }
         }
+
+        override fun initialCacheCreated() {
+            fetchContent()
+        }
     }
 
     init {
         mutableState.value = HomeState.Loading
-        fetchContent()
+        cache.setCacheListener(cacheListener)
     }
 
     private fun fetchContent() {
@@ -64,7 +64,6 @@ class HomeModel(
             FriendManager.addFriendListener(listener)
             friendsStateFlow.update { FriendManager.getFriends() }
 
-            cache.setCacheListener(cacheListener)
             lastVisitedStateFlow.update { cache.getRecent() }
             featuredWorlds = api.getWorlds()
 

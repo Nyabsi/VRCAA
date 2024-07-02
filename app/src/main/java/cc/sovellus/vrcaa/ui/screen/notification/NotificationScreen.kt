@@ -30,7 +30,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.NotificationManager
-import cc.sovellus.vrcaa.ui.models.notification.NotificationModel
 
 class NotificationScreen(
     private val friendId: String,
@@ -46,7 +45,7 @@ class NotificationScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = rememberScreenModel { NotificationModel(context, friendId) }
+        val model = rememberScreenModel { NotificationScreenModel(context, friendId) }
 
         Scaffold(
             topBar = {
