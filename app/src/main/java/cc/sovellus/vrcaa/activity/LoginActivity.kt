@@ -55,6 +55,7 @@ class LoginActivity : ComponentActivity() {
         }
 
         val token = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken
+        api.setToken(token)
 
         if (token.isNotBlank() && invalidSession == null) {
             val intent = Intent(this, MainActivity::class.java)

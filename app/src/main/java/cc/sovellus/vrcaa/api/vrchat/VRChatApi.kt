@@ -16,6 +16,8 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
+import cc.sovellus.vrcaa.extension.twoFactorToken
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import com.google.gson.Gson
 import okhttp3.Headers
 import java.net.URLEncoder
@@ -99,7 +101,7 @@ class VRChatApi : BaseClient() {
     }
 
     @OptIn(ExperimentalEncodingApi::class)
-    suspend fun getToken(username: String, password: String): AccountInfo? {
+    suspend fun getToken(username: String, password: String, twoFactor: String): AccountInfo? {
 
         val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
 
@@ -107,6 +109,9 @@ class VRChatApi : BaseClient() {
 
         headers["Authorization"] = "Basic $token"
         headers["User-Agent"] = userAgent
+
+        if (twoFactor.isNotEmpty())
+            api.setToken(twoFactor)
 
         val result = doRequest(
             method = "GET",
@@ -120,6 +125,8 @@ class VRChatApi : BaseClient() {
         response?.let {
             val cookies = response.split('~')[0]
             val body = response.split('~')[1]
+
+            api.setToken(cookies)
 
             if (!body.contains("requiresTwoFactorAuth"))
                 return AccountInfo(MfaType.NONE, cookies)

@@ -78,7 +78,7 @@
             android:foregroundServiceType="dataSync"/>
 
         <receiver
-            android:name=".api.updater.UpdateReceiver"
+            android:name=".UpdateReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

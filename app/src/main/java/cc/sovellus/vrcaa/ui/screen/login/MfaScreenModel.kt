@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -34,7 +35,7 @@ class MfaScreenModel(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                preferences.authToken = result
+                preferences.twoFactorToken = result
                 val intent = Intent(context, MainActivity::class.java)
                 context.startActivity(intent)
             }

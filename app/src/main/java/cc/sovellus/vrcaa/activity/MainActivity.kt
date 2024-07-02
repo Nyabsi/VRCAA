@@ -33,9 +33,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val token = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken
-        api.setToken(token)
-
         val intent = Intent(this, PipelineService::class.java)
         startService(intent)
 

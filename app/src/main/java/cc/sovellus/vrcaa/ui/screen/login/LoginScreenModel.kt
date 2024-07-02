@@ -12,6 +12,8 @@ import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -28,7 +30,7 @@ class LoginScreenModel(
 
     fun doLogin() {
         screenModelScope.launch {
-            api.getToken(username.value, password.value).let { result ->
+            api.getToken(username.value, password.value, preferences.twoFactorToken).let { result ->
                 if (result == null) {
                     Toast.makeText(
                         context,
@@ -38,6 +40,7 @@ class LoginScreenModel(
                 } else {
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
+                        preferences.authToken = result.token
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
                     } else {
