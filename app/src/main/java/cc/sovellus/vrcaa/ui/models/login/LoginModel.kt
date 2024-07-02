@@ -41,7 +41,6 @@ class LoginModel(
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
                         val intent = Intent(context, MainActivity::class.java)
-                        intent.extras?.putString("cookie", result.token)
                         context.startActivity(intent)
                     } else {
                         preferences.userCredentials = Pair(username.value, password.value)

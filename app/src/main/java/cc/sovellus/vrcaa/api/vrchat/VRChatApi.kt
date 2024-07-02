@@ -30,13 +30,12 @@ class VRChatApi : BaseClient() {
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
-    private var cookies: String = ""
 
+    @Volatile private var cookies: String = ""
     @Volatile private var listener: SessionListener? = null
 
     interface SessionListener {
         fun onSessionInvalidate()
-        fun onRemindUserOfLimits()
     }
 
     @Synchronized
@@ -75,11 +74,13 @@ class VRChatApi : BaseClient() {
             }
 
             Result.RateLimited -> {
-                listener?.onRemindUserOfLimits()
+                // listener?.onRemindUserOfLimits()
                 null
             }
 
             Result.Unauthorized -> {
+                Log.d("VRCAA", "wtfbruh")
+                Log.d("VRCAA", cookies)
                 listener?.onSessionInvalidate()
                 null
             }
@@ -92,6 +93,7 @@ class VRChatApi : BaseClient() {
         }
     }
 
+    @Synchronized
     fun setToken(token: String) {
         cookies = token
     }

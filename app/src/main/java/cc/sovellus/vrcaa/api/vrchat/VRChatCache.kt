@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class VRChatCache : CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO + Job()
+        get() = Dispatchers.Main + Job()
 
     private var profile: User? = null
     private var friends: MutableList<LimitedUser> = ArrayList()

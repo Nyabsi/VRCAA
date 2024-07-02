@@ -37,9 +37,7 @@ class HomeModel(
     var friends = friendsStateFlow.asStateFlow()
 
     private var lastVisitedStateFlow = MutableStateFlow(mutableListOf<World>())
-    var lastVisitedWorlds = lastVisitedStateFlow.asStateFlow()
-
-    var currentIndex = mutableIntStateOf(0)
+    private var lastVisitedWorlds = lastVisitedStateFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {

@@ -68,7 +68,6 @@ class HomeScreen : Screen {
         val lastVisited = lastVisitedFlow.collectAsState().value
 
         val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
 
         LazyColumn(
             modifier = Modifier
@@ -89,7 +88,7 @@ class HomeScreen : Screen {
                             val friend = filteredFriends[it]
                             RoundedRowItem(
                                 name = friend.displayName,
-                                url = friend.userIcon.ifEmpty { friend.imageUrl },
+                                url = friend.userIcon.ifEmpty { friend.currentAvatarThumbnailImageUrl },
                                 status = friend.status,
                                 onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                             )
@@ -144,13 +143,7 @@ class HomeScreen : Screen {
             }
 
             item {
-                if (featuredWorlds == null) {
-                    Toast.makeText(
-                        context,
-                        stringResource(R.string.home_failed_to_fetch_friends_message),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
+                if (featuredWorlds != null) {
                     HorizontalRow(
                         title = stringResource(R.string.home_featured_worlds)
                     ) {

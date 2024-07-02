@@ -12,6 +12,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.activity.LoginActivity
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.updater.AutoUpdater
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
@@ -52,23 +53,9 @@ class NavigationModel(
             val serviceIntent = Intent(context, PipelineService::class.java)
             context.stopService(serviceIntent)
 
-            Toast.makeText(
-                context,
-                context.getString(R.string.api_session_has_expired_text),
-                Toast.LENGTH_LONG
-            ).show()
-
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, LoginActivity::class.java)
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
-        }
-
-        override fun onRemindUserOfLimits() {
-            Toast.makeText(
-                context,
-                context.getString(R.string.api_toast_rate_limited_message),
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
 
