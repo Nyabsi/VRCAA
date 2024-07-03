@@ -51,7 +51,7 @@ fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
                 modifier = Modifier
                     .size(56.dp)
                     .clip(RoundedCornerShape(50)),
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
                 loading = placeholder(R.drawable.image_placeholder),
                 failure = placeholder(R.drawable.image_placeholder)
