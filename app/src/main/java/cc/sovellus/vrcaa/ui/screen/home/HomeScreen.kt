@@ -37,26 +37,19 @@ class HomeScreen : Screen {
         val recent = model.recentlyVisited.collectAsState().value
         val featured = model.featuredWorlds.collectAsState().value
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(16.dp)
-        ) {
-            item {
-                HorizontalRow(
-                    title = stringResource(R.string.home_active_friends)
-                ) {
-                    if (friends.isEmpty()) {
-                        items(5) {
-                            RoundedRowItem(
-                                name = "Loading",
-                                url = R.drawable.icon_placeholder,
-                                status = "offline",
-                                onClick = { }
-                            )
-                        }
-                    } else {
+        if (friends.isEmpty() || recent.isEmpty() || featured.isEmpty()) {
+            LoadingIndicatorScreen().Content()
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(16.dp)
+            ) {
+                item {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_active_friends)
+                    ) {
                         val filteredFriends = friends.filter { it.location != "offline" }
                         items(filteredFriends, key = { it.id }) { friend ->
                             RoundedRowItem(
@@ -67,23 +60,12 @@ class HomeScreen : Screen {
                             )
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.padding(4.dp))
+                    Spacer(modifier = Modifier.padding(4.dp))
 
-                HorizontalRow(
-                    title = stringResource(R.string.home_recently_visited)
-                ) {
-                    if (recent.isEmpty()) {
-                        items(5) {
-                            WorldRow(
-                                name = "Loading",
-                                url = R.drawable.image_placeholder,
-                                count = null,
-                                onClick = { }
-                            )
-                        }
-                    } else {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_recently_visited)
+                    ) {
                         items(recent, key = { it.id }) { world ->
                             WorldRow(
                                 name = world.name,
@@ -93,23 +75,12 @@ class HomeScreen : Screen {
                             )
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.padding(4.dp))
+                    Spacer(modifier = Modifier.padding(4.dp))
 
-                HorizontalRow(
-                    title = stringResource(R.string.home_offline_friends)
-                ) {
-                    if (friends.isEmpty()) {
-                        items(5) {
-                            WorldRow(
-                                name = "Loading",
-                                url = R.drawable.image_placeholder,
-                                count = null,
-                                onClick = { }
-                            )
-                        }
-                    } else {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_offline_friends)
+                    ) {
                         val filteredFriends = friends.filter { it.location == "offline" }
                         items(filteredFriends, key = { it.id }) { friend ->
                             WorldRow(
@@ -120,23 +91,12 @@ class HomeScreen : Screen {
                             )
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.padding(4.dp))
+                    Spacer(modifier = Modifier.padding(4.dp))
 
-                HorizontalRow(
-                    title = stringResource(R.string.home_featured_worlds)
-                ) {
-                    if (friends.isEmpty()) {
-                        items(5) {
-                            WorldRow(
-                                name = "Loading",
-                                url = R.drawable.image_placeholder,
-                                count = null,
-                                onClick = { }
-                            )
-                        }
-                    } else {
+                    HorizontalRow(
+                        title = stringResource(R.string.home_featured_worlds)
+                    ) {
                         items(featured, key = { it.id }) { world ->
                             WorldRow(
                                 name = world.name,
