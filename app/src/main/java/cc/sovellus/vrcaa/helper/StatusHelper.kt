@@ -15,7 +15,7 @@ object StatusHelper {
                 JoinMe -> Color(66, 201, 255)
                 Active -> Color(81, 229, 125)
                 AskMe -> Color(232, 130, 52)
-                Busy -> Color(91, 11, 11)
+                Busy -> Color(120, 11, 11)
                 else -> Color.Gray
             }
         }
