@@ -90,7 +90,7 @@ class PipelineService : Service(), CoroutineScope {
                     FeedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarThumbnailImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                     })
 
                     FriendManager.updateLocation(update.userId, "private")
