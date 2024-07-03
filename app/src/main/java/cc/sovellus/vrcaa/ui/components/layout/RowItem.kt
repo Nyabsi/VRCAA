@@ -29,7 +29,7 @@ import com.bumptech.glide.integration.compose.placeholder
 fun WorldRow(
     name: String,
     count: Int?,
-    url: String,
+    url: Any,
     onClick: () -> Unit
 ) {
     ElevatedCard(

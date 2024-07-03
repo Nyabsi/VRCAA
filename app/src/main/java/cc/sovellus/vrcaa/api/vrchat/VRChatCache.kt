@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.api.vrchat
 
+import android.util.Log
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -19,10 +20,12 @@ class VRChatCache : CoroutineScope {
     private var profile: User? = null
     private var worlds: MutableMap<String, String> = mutableMapOf()
     private var recentWorlds: MutableList<World> = mutableListOf()
-    private var listener: CacheListener? = null
+
+    @Volatile private var listener: CacheListener? = null
+    @Volatile var isCachedLoaded: Boolean = false
 
     interface CacheListener {
-        fun updatedLastVisited(worlds: MutableList<World>)
+        fun updatedLastVisited(worlds: List<World>)
         fun initialCacheCreated()
     }
 
@@ -79,8 +82,11 @@ class VRChatCache : CoroutineScope {
         }
     }
 
+    @Synchronized
     fun setCacheListener(listener: CacheListener) {
-        this.listener = listener
+        synchronized(listener) {
+            this.listener = listener
+        }
     }
 
     fun getWorld(worldId: String): String {
@@ -105,8 +111,12 @@ class VRChatCache : CoroutineScope {
         return recentWorlds
     }
 
+    @Synchronized
     fun addRecent(world: World) {
-        recentWorlds += world
-        listener?.updatedLastVisited(recentWorlds)
+        synchronized(world) {
+            recentWorlds.removeIf { it.id == world.id }
+            recentWorlds.add(0, world)
+            listener?.updatedLastVisited(recentWorlds)
+        }
     }
 }

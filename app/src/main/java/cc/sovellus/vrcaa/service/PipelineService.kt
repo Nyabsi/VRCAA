@@ -225,7 +225,7 @@ class PipelineService : Service(), CoroutineScope {
                         launch {
                             val instance = api.getInstance(user.location)
                             if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                                instance?.world?.name?.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                                instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
                             } else {
                                 gateway?.sendPresence(status.toString(), "User location is hidden.", null, status)
                             }

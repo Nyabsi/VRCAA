@@ -8,7 +8,7 @@ object FriendManager {
     @Volatile private var friends: MutableList<LimitedUser> = ArrayList()
 
     interface FriendListener {
-        fun onUpdateFriends(friends: MutableList<LimitedUser>)
+        fun onUpdateFriends(friends: List<LimitedUser>)
     }
 
     @Synchronized

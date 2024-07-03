@@ -25,7 +25,7 @@ import com.bumptech.glide.integration.compose.placeholder
 @Composable
 fun RoundedRowItem(
     name: String,
-    url: String,
+    url: Any,
     status: String,
     onClick: () -> Unit
 ) {

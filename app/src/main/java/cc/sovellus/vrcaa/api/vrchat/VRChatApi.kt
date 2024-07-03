@@ -344,7 +344,7 @@ class VRChatApi : BaseClient() {
         featured: Boolean = false,
         n: Int = 50,
         sort: String = "relevance"
-    ): Worlds? {
+    ): Worlds {
 
         val headers = Headers.Builder()
 
