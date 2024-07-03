@@ -26,7 +26,7 @@ class VRChatCache : CoroutineScope {
     @Volatile var isCachedLoaded: Boolean = false
 
     interface CacheListener {
-        fun updatedLastVisited(worlds: List<World>)
+        fun updatedLastVisited(worlds: MutableList<World>)
         fun initialCacheCreated()
     }
 

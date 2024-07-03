@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeScreenModel : ScreenModel {
@@ -27,14 +28,14 @@ class HomeScreenModel : ScreenModel {
     var recentlyVisited = recentlyVisitedFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
-        override fun onUpdateFriends(friends: List<LimitedUser>) {
-            friendsListFlow.value = friends
+        override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
+            friendsListFlow.update { friends }
         }
     }
 
     private val cacheListener = object : VRChatCache.CacheListener {
-        override fun updatedLastVisited(worlds: List<World>) {
-            recentlyVisitedFlow.value = worlds
+        override fun updatedLastVisited(worlds: MutableList<World>) {
+            recentlyVisitedFlow.update { worlds }
         }
 
         override fun initialCacheCreated() {
