@@ -18,6 +18,7 @@ class VRChatCache : CoroutineScope {
         get() = Dispatchers.Main + Job()
 
     private var profile: User? = null
+    private var currentWorld: World? = null
     private var worlds: MutableMap<String, String> = mutableMapOf()
     private var recentWorlds: MutableList<World> = mutableListOf()
 
@@ -97,6 +98,10 @@ class VRChatCache : CoroutineScope {
         worlds[worldId] = name
     }
 
+    fun getCurrentWorld(): World? {
+        return currentWorld
+    }
+
     fun getProfile(): User? {
         return profile
     }
@@ -114,6 +119,7 @@ class VRChatCache : CoroutineScope {
     @Synchronized
     fun addRecent(world: World) {
         synchronized(world) {
+            currentWorld = world
             recentWorlds.removeIf { it.id == world.id }
             recentWorlds.add(0, world)
             listener?.updatedLastVisited(recentWorlds)

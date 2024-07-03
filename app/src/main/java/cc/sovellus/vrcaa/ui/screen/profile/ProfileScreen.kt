@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,11 +28,14 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
+import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class ProfileScreen : Screen {
 
@@ -65,20 +69,21 @@ class ProfileScreen : Screen {
             navigator.pop()
         } else {
 
-            LazyColumn {
+            LazyColumn(modifier = Modifier.padding(16.dp).fillMaxWidth().fillMaxHeight()) {
                 item {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         profile.let {
                             ProfileCard(
                                 thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                iconUrl = it.userIcon.ifEmpty { it.currentAvatarImageUrl },
                                 displayName = it.displayName,
                                 statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
                                 trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
                                 statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                                tags = profile.tags
                             )
                         }
                     }
@@ -86,7 +91,6 @@ class ProfileScreen : Screen {
 
                 item {
                     Column(
-                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.Start
                     ) {
@@ -94,20 +98,10 @@ class ProfileScreen : Screen {
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 6.dp
                             ),
-                            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 70.dp),
+                            modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 300.dp),
                         ) {
                             SubHeader(title = stringResource(R.string.profile_label_biography))
                             Description(text = profile.bio)
-                        }
-
-                        ElevatedCard(
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 6.dp
-                            ),
-                            modifier = Modifier.padding(bottom = 16.dp).height(70.dp).fillMaxWidth(),
-                        ) {
-                            SubHeader(title = stringResource(R.string.profile_label_languages))
-                            Languages(languages = profile.tags)
                         }
                     }
                 }

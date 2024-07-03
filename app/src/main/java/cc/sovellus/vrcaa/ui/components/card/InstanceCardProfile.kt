@@ -42,9 +42,8 @@ fun InstanceCardProfile(profile: LimitedUser, instance: Instance, callback: () -
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(180.dp)
+            .height(160.dp)
             .fillMaxWidth()
-            .padding(16.dp)
             .clickable(
                 onClick = {
                     callback()
