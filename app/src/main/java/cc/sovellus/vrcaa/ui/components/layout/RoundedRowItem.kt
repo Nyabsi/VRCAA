@@ -34,7 +34,7 @@ fun RoundedRowItem(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.clickable(
             onClick = { onClick() }
-        ).size(90.dp)
+        ).size(100.dp)
     ) {
         Badge(
             containerColor = StatusHelper.getStatusFromString(status).toColor(), modifier = Modifier.size(72.dp).align(Alignment.CenterHorizontally)

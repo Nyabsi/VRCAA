@@ -50,7 +50,7 @@ class HomeScreen : Screen {
                     if (friends.isEmpty()) {
                         items(5) {
                             RoundedRowItem(
-                                name = "Loading.",
+                                name = "Loading",
                                 url = R.drawable.icon_placeholder,
                                 status = "offline",
                                 onClick = { }
@@ -79,7 +79,7 @@ class HomeScreen : Screen {
                             WorldRow(
                                 name = "Loading",
                                 url = R.drawable.image_placeholder,
-                                count = 0,
+                                count = null,
                                 onClick = { }
                             )
                         }
@@ -105,7 +105,7 @@ class HomeScreen : Screen {
                             WorldRow(
                                 name = "Loading",
                                 url = R.drawable.image_placeholder,
-                                count = 0,
+                                count = null,
                                 onClick = { }
                             )
                         }
@@ -132,7 +132,7 @@ class HomeScreen : Screen {
                             WorldRow(
                                 name = "Loading",
                                 url = R.drawable.image_placeholder,
-                                count = 0,
+                                count = null,
                                 onClick = { }
                             )
                         }
