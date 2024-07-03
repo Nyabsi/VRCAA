@@ -76,7 +76,6 @@ class NavigationScreenModel(
             searchModeActivated.value = false
             if (searchText.value.isNotEmpty())
                 searchHistory.add(searchText.value)
-            clearSearchText()
         }
     }
 

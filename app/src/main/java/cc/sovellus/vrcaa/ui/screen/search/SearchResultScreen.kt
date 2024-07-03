@@ -199,7 +199,7 @@ class SearchResultScreen(
                 modifier = Modifier
                     .height(120.dp)
                     .width(200.dp),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillBounds,
                 alignment = Alignment.Center,
                 loading = placeholder(R.drawable.image_placeholder),
                 failure = placeholder(R.drawable.image_placeholder)
@@ -211,14 +211,14 @@ class SearchResultScreen(
                 Text(
                     text = name,
                     textAlign = TextAlign.Start,
-                    modifier = Modifier.weight(0.80f),
+                    modifier = Modifier.weight(0.70f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (count != null) {
                     Text(
                         text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                            .weight(0.20f)
+                            .weight(0.30f)
                             .padding(end = 2.dp)
                     )
                     Icon(

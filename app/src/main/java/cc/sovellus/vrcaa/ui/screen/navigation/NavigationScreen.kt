@@ -145,6 +145,7 @@ class NavigationScreen : Screen {
                                 onSearch = {
                                     model.existSearchMode()
                                     navigator.push(SearchResultScreen(model.searchText.value))
+                                    model.clearSearchText()
                                 },
                                 active = model.searchModeActivated.value,
                                 onActiveChange = {
