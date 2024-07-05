@@ -98,8 +98,8 @@
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
-    <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
-    <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
+    <string name="notification_service_title_online">Friend has came online!</string>
+    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
     <string name="notification_service_title_offline">Kaverisi meni pois :(</string>
     <string name="notification_service_description_offline">Ystäväsi, %1$s on tullut paikalle!</string>
     <string name="notification_service_title_location">Kaveri vaihtoi sijaintia!</string>
@@ -216,6 +216,9 @@
     <string name="group_user_viewing_groups_username">%1$s:n Ryhmät</string>
     <!-- Misc -->
     <string name="misc_loading_label_text">Ladataan…</string>
+    <string name="misc_no_internet_title">No Internet Connection</string>
+    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_label">Restart</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
