@@ -18,24 +18,28 @@ import kotlinx.coroutines.launch
 
 class HomeScreenModel : ScreenModel {
 
-    private var featuredWorldsFlow = MutableStateFlow<List<World>>(listOf())
+    private var featuredWorldsFlow = MutableStateFlow(listOf<World>())
     var featuredWorlds = featuredWorldsFlow.asStateFlow()
 
-    private var friendsListFlow = MutableStateFlow<List<LimitedUser>>(listOf())
+    private var friendsListFlow = MutableStateFlow(listOf<LimitedUser>())
     var friendsList = friendsListFlow.asStateFlow()
 
-    private var recentlyVisitedFlow = MutableStateFlow<List<World>>(listOf())
+    private var recentlyVisitedFlow = MutableStateFlow(listOf<World>())
     var recentlyVisited = recentlyVisitedFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
-            friendsListFlow.update { friends }
+            friendsListFlow.update {
+                friends.map { it.copy() }
+            }
         }
     }
 
     private val cacheListener = object : VRChatCache.CacheListener {
         override fun updatedLastVisited(worlds: MutableList<World>) {
-            recentlyVisitedFlow.update { worlds }
+            recentlyVisitedFlow.update {
+                worlds.map { it.copy() }
+            }
         }
 
         override fun initialCacheCreated() {
@@ -56,7 +60,9 @@ class HomeScreenModel : ScreenModel {
             FriendManager.addFriendListener(listener)
             friendsListFlow.value = FriendManager.getFriends()
             recentlyVisitedFlow.value = cache.getRecent()
-            featuredWorldsFlow.value = api.getWorlds()
+            api.getWorlds()?.let {
+                featuredWorldsFlow.value = it
+            }
         }
     }
 }
