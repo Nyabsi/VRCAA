@@ -121,8 +121,8 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
 
-    <string name="notification_service_title_online">Friend has come online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has come online!</string>
+    <string name="notification_service_title_online">Friend has came online!</string>
+    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
     <string name="notification_service_title_offline">Friend has gone offline!</string>
     <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
     <string name="notification_service_title_location">Friend changed location!</string>
@@ -251,6 +251,9 @@
 
     <!-- Misc -->
     <string name="misc_loading_label_text">Loading…</string>
+    <string name="misc_no_internet_title">No Internet Connection</string>
+    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_label">Restart</string>
 
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>

@@ -10,6 +10,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
 import ru.gildor.coroutines.okhttp.await
+import java.net.UnknownHostException
 
 open class BaseClient {
     /* inherited classes don't need to access the client variable */
@@ -121,7 +122,7 @@ open class BaseClient {
                     Result.UnknownMethod
                 }
             }
-        } catch (e: Exception) {
+        } catch (e: UnknownHostException) {
             Result.ClientExceptionResult(e.message.toString())
         }
     }

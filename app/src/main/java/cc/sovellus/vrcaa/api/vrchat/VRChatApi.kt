@@ -33,6 +33,7 @@ class VRChatApi : BaseClient() {
 
     interface SessionListener {
         fun onSessionInvalidate()
+        fun noInternet()
     }
 
     @Synchronized
@@ -72,6 +73,11 @@ class VRChatApi : BaseClient() {
             is Result.UnhandledResult -> {
                 if (BuildConfig.DEBUG)
                     Log.d("VRCAA", "Unknown response type from server, ${result.response.code}")
+                null
+            }
+
+            is Result.ClientExceptionResult -> {
+                listener?.noInternet()
                 null
             }
 
@@ -344,7 +350,7 @@ class VRChatApi : BaseClient() {
         featured: Boolean = false,
         n: Int = 50,
         sort: String = "relevance"
-    ): Worlds {
+    ): Worlds? {
 
         val headers = Headers.Builder()
 

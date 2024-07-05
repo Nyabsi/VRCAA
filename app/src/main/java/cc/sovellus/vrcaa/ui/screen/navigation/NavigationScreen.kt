@@ -1,6 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,6 +57,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.finishAffinity
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -68,8 +71,10 @@ import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.activity.LoginActivity
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
+import cc.sovellus.vrcaa.ui.components.dialog.SingleButtonDialog
 import cc.sovellus.vrcaa.ui.components.dialog.UpdatedDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
@@ -106,6 +111,19 @@ class NavigationScreen : Screen {
                 },
                 title = stringResource(R.string.update_dialog_title),
                 description = stringResource(R.string.update_dialog_description)
+            )
+        }
+
+        if (model.hasNoInternet.value) {
+            SingleButtonDialog(
+                onClick = {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                },
+                title = stringResource(R.string.misc_no_internet_title),
+                description = stringResource(R.string.misc_no_internet_description),
+                label = stringResource(R.string.misc_no_internet_label)
             )
         }
 

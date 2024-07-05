@@ -43,6 +43,7 @@ class NavigationScreenModel(
     val updater = AutoUpdater(context)
 
     var hasUpdate = mutableStateOf(false)
+    var hasNoInternet = mutableStateOf(false)
 
     private val listener = object : VRChatApi.SessionListener {
         override fun onSessionInvalidate() {
@@ -52,6 +53,10 @@ class NavigationScreenModel(
             val intent = Intent(context, LoginActivity::class.java)
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
+        }
+
+        override fun noInternet() {
+            hasNoInternet.value = true
         }
     }
 
