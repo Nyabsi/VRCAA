@@ -7,17 +7,21 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class FeedScreenModel : ScreenModel {
-    private var feedStateFlow = MutableStateFlow(mutableListOf<FeedManager.Feed>())
+    private var feedStateFlow = MutableStateFlow(listOf<FeedManager.Feed>())
     var feed = feedStateFlow.asStateFlow()
 
     private val listener = object : FeedManager.FeedListener {
         override fun onReceiveUpdate(list: MutableList<FeedManager.Feed>) {
-            feedStateFlow.update { list }
+            feedStateFlow.update {
+                list.map { it.copy() }
+            }
         }
     }
 
     init {
         FeedManager.setFeedListener(listener)
-        feedStateFlow.update { FeedManager.getFeed() }
+
+        val feed = FeedManager.getFeed()
+        if (feed.isNotEmpty()) feedStateFlow.value = feed
     }
 }

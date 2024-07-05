@@ -21,15 +21,16 @@ object FeedManager {
         FRIEND_FEED_ADDED
     }
 
-    data class Feed(val type: FeedType) {
-        var feedId: UUID = UUID.randomUUID()
-        var friendId: String = ""
-        var friendName: String = ""
-        var friendPictureUrl: String = ""
-        var friendStatus: StatusHelper.Status = StatusHelper.Status.Offline
-        var travelDestination: String = ""
+    data class Feed(
+        val type: FeedType,
+        var feedId: UUID = UUID.randomUUID(),
+        var friendId: String = "",
+        var friendName: String = "",
+        var friendPictureUrl: String = "",
+        var friendStatus: StatusHelper.Status = StatusHelper.Status.Offline,
+        var travelDestination: String = "",
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
-    }
+    )
 
     interface FeedListener {
         fun onReceiveUpdate(list: MutableList<Feed>)
