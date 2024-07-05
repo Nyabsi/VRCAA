@@ -5,66 +5,61 @@ import com.google.gson.annotations.SerializedName
 
 data class World(
     @SerializedName("authorId")
-    val authorId: String,
+    var authorId: String = "",
     @SerializedName("authorName")
-    val authorName: String,
+    var authorName: String = "",
     @SerializedName("capacity")
-    val capacity: Int,
+    var capacity: Int = 0,
     @SerializedName("created_at")
-    val createdAt: String,
-    @SerializedName("featured")
-    val featured: Boolean,
-    @SerializedName("favorites")
-    val favorites: Int,
-    @SerializedName("heat")
-    val heat: Int,
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("imageUrl")
-    val imageUrl: String,
-    @SerializedName("labsPublicationDate")
-    val labsPublicationDate: String,
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("occupants")
-    val occupants: Int,
-    @SerializedName("organization")
-    val organization: String,
-    @SerializedName("popularity")
-    val popularity: Int,
-    @SerializedName("privateOccupants")
-    val privateOccupants: Int,
-    @SerializedName("publicOccupants")
-    val publicOccupants: Int,
-    @SerializedName("publicationDate")
-    val publicationDate: String,
-    @SerializedName("recommendedCapacity")
-    val recommendedCapacity: Int,
-    @SerializedName("releaseStatus")
-    val releaseStatus: String,
-    @SerializedName("tags")
-    val tags: List<String>,
-    @SerializedName("thumbnailImageUrl")
-    val thumbnailImageUrl: String,
-    @SerializedName("udonProducts")
-    val udonProducts: List<String>,
-    @SerializedName("unityPackages")
-    val unityPackages: List<UnityPackage>,
-    @SerializedName("updated_at")
-    val updatedAt: String,
+    var createdAt: String = "",
     @SerializedName("description")
-    val description: String,
-    @SerializedName("version")
-    val version: Int,
-    @SerializedName("visits")
-    val visits: Int,
+    var description: String = "",
+    @SerializedName("favorites")
+    var favorites: Int = 0,
+    @SerializedName("featured")
+    var featured: Boolean = false,
+    @SerializedName("heat")
+    var heat: Int = 0,
+    @SerializedName("id")
+    var id: String = "",
+    @SerializedName("imageUrl")
+    var imageUrl: String = "",
     @SerializedName("instances")
-    val instances: List<Array<Any>>
-) {
-    data class UnityPackage(
-        @SerializedName("platform")
-        val platform: String,
-        @SerializedName("unityVersion")
-        val unityVersion: String
-    )
-}
+    var instances: List<List<Any>> = listOf(),
+    @SerializedName("labsPublicationDate")
+    var labsPublicationDate: String = "",
+    @SerializedName("name")
+    var name: String = "",
+    @SerializedName("occupants")
+    var occupants: Int = 0,
+    @SerializedName("organization")
+    var organization: String = "",
+    @SerializedName("popularity")
+    var popularity: Int = 0,
+    @SerializedName("previewYoutubeId")
+    var previewYoutubeId: Any? = Any(),
+    @SerializedName("privateOccupants")
+    var privateOccupants: Int = 0,
+    @SerializedName("publicOccupants")
+    var publicOccupants: Int = 0,
+    @SerializedName("publicationDate")
+    var publicationDate: String = "",
+    @SerializedName("recommendedCapacity")
+    var recommendedCapacity: Int = 0,
+    @SerializedName("releaseStatus")
+    var releaseStatus: String = "",
+    @SerializedName("tags")
+    var tags: List<String> = listOf(),
+    @SerializedName("thumbnailImageUrl")
+    var thumbnailImageUrl: String = "",
+    @SerializedName("udonProducts")
+    var udonProducts: List<Any> = listOf(),
+    @SerializedName("unityPackages")
+    var unityPackages: List<UnityPackage> = listOf(),
+    @SerializedName("updated_at")
+    var updatedAt: String = "",
+    @SerializedName("version")
+    var version: Int = 0,
+    @SerializedName("visits")
+    var visits: Int = 0
+)

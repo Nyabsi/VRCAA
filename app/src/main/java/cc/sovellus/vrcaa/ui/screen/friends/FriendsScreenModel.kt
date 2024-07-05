@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FriendsScreenModel : ScreenModel {
-    private var friendsStateFlow = MutableStateFlow(mutableListOf<LimitedUser>())
+    private var friendsStateFlow = MutableStateFlow(listOf<LimitedUser>())
     var friends = friendsStateFlow.asStateFlow()
 
     var currentIndex = mutableIntStateOf(0)
@@ -19,7 +19,7 @@ class FriendsScreenModel : ScreenModel {
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
             screenModelScope.launch {
-                friendsStateFlow.update { friends }
+                friendsStateFlow.update { friends.toList() }
             }
         }
     }

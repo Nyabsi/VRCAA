@@ -16,7 +16,6 @@ import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
 import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendLocation
@@ -30,7 +29,6 @@ import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
-import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FeedManager
@@ -135,7 +133,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
-                    if (update.travelingToLocation.isEmpty()) {
+                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null) {
                         if (notificationManager.isOnWhitelist(update.userId) &&
                             notificationManager.isIntentEnabled(
                                 update.userId,
@@ -150,23 +148,25 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
-                        launch {
-                            FeedManager.addFeed(
-                                FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
-                                    .apply {
-                                        friendId = update.userId
-                                        friendName = update.user.displayName
-                                        travelDestination = LocationHelper.getReadableLocation(update.location)
-                                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                                    }
-                            )
+                        if (update.user.location != update.location) {
+                            launch {
+                                FeedManager.addFeed(
+                                    FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
+                                        .apply {
+                                            friendId = update.userId
+                                            friendName = update.user.displayName
+                                            travelDestination = LocationHelper.getReadableLocation(update.location)
+                                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                                        }
+                                )
+                            }
                         }
-
-                        cache.addWorld(update.worldId, update.world.name)
-                        FriendManager.updateLocation(update.userId, update.location)
                     }
 
-                    if (!update.location.contains("wrld_"))
+                    if (update.world != null)
+                        cache.addWorld(update.worldId, update.world.name)
+
+                    if (update.location != null)
                         FriendManager.updateLocation(update.userId, update.location)
                 }
 

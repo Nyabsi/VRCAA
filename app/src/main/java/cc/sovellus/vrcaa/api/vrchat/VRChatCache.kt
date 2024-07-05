@@ -79,6 +79,9 @@ class VRChatCache : CoroutineScope {
             }
 
             FriendManager.setFriends(friendList)
+
+            api.getRecentWorlds()?.let { world -> recentWorlds += world }
+
             listener?.initialCacheCreated()
         }
     }
@@ -110,9 +113,7 @@ class VRChatCache : CoroutineScope {
         this.profile = profile
     }
 
-    suspend fun getRecent(): MutableList<World> {
-        if (recentWorlds.isEmpty())
-            api.getRecentWorlds()?.let { world -> recentWorlds += world }
+    fun getRecent(): MutableList<World> {
         return recentWorlds
     }
 

@@ -40,8 +40,8 @@ object FeedManager {
     fun addFeed(feed: Feed) {
         synchronized(feedList) {
             feedList.add(feed)
-            feedListener?.onReceiveUpdate(feedList)
         }
+        feedListener?.onReceiveUpdate(feedList)
     }
 
     @Synchronized

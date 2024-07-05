@@ -52,6 +52,7 @@ class NavigationScreenModel(
 
             val intent = Intent(context, LoginActivity::class.java)
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+            intent.extras?.putBoolean("INVALID_SESSION", true)
             context.startActivity(intent)
         }
 

@@ -35,8 +35,8 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import java.util.UUID

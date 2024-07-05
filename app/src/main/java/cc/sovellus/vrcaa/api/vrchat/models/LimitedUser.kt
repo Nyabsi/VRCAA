@@ -1,56 +1,77 @@
 package cc.sovellus.vrcaa.api.vrchat.models
 
+
 import com.google.gson.annotations.SerializedName
 
 data class LimitedUser(
     @SerializedName("allowAvatarCopying")
-    val allowAvatarCopying: Boolean,
+    var allowAvatarCopying: Boolean = false,
+    @SerializedName("badges")
+    var badges: List<Any> = listOf(),
     @SerializedName("bio")
-    val bio: String,
+    var bio: String = "",
     @SerializedName("bioLinks")
-    val bioLinks: List<Any>,
+    var bioLinks: List<String> = listOf(),
     @SerializedName("currentAvatarImageUrl")
-    val currentAvatarImageUrl: String,
+    var currentAvatarImageUrl: String = "",
     @SerializedName("currentAvatarTags")
-    val currentAvatarTags: List<Any>,
+    var currentAvatarTags: List<Any> = listOf(),
     @SerializedName("currentAvatarThumbnailImageUrl")
-    val currentAvatarThumbnailImageUrl: String,
+    var currentAvatarThumbnailImageUrl: String = "",
     @SerializedName("date_joined")
-    val dateJoined: String,
+    var dateJoined: String = "",
     @SerializedName("developerType")
-    val developerType: String,
+    var developerType: String = "",
     @SerializedName("displayName")
-    val displayName: String,
+    var displayName: String = "",
     @SerializedName("friendKey")
-    val friendKey: String,
+    var friendKey: String = "",
+    @SerializedName("friendRequestStatus")
+    var friendRequestStatus: String = "",
     @SerializedName("id")
-    val id: String,
+    var id: String = "",
+    @SerializedName("instanceId")
+    var instanceId: String = "",
     @SerializedName("isFriend")
-    val isFriend: Boolean,
+    var isFriend: Boolean = false,
     @SerializedName("last_activity")
-    val lastActivity: String,
+    var lastActivity: String = "",
     @SerializedName("last_login")
-    val lastLogin: String,
+    var lastLogin: String = "",
+    @SerializedName("last_mobile")
+    var lastMobile: Any? = Any(),
     @SerializedName("last_platform")
-    val lastPlatform: String,
-    @SerializedName("profilePicOverride")
-    val profilePicOverride: String,
-    @SerializedName("state")
-    val state: String,
-    @SerializedName("status")
-    var status: String,
-    @SerializedName("statusDescription")
-    val statusDescription: String,
-    @SerializedName("tags")
-    val tags: List<String>,
-    @SerializedName("userIcon")
-    val userIcon: String,
+    var lastPlatform: String = "",
     @SerializedName("location")
-    var location: String,
-    @SerializedName("imageUrl")
-    val imageUrl: String,
+    var location: String = "",
+    @SerializedName("note")
+    var note: String = "",
+    @SerializedName("platform")
+    var platform: String = "",
+    @SerializedName("profilePicOverride")
+    var profilePicOverride: String = "",
+    @SerializedName("profilePicOverrideThumbnail")
+    var profilePicOverrideThumbnail: String = "",
+    @SerializedName("pronouns")
+    var pronouns: String = "",
+    @SerializedName("state")
+    var state: String = "",
+    @SerializedName("status")
+    var status: String = "",
+    @SerializedName("statusDescription")
+    var statusDescription: String = "",
+    @SerializedName("tags")
+    var tags: List<String> = listOf(),
+    @SerializedName("travelingToInstance")
+    var travelingToInstance: String = "",
+    @SerializedName("travelingToLocation")
+    var travelingToLocation: String = "",
+    @SerializedName("travelingToWorld")
+    var travelingToWorld: String = "",
+    @SerializedName("userIcon")
+    var userIcon: String = "",
     @SerializedName("worldId")
-    val worldId: String,
+    var worldId: String = "",
     @Transient
     var isFavorite: Boolean
 )

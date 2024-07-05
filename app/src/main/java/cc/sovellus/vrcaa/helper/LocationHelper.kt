@@ -94,11 +94,7 @@ object LocationHelper {
         return result
     }
 
-    fun getReadableLocation(location: String?): String {
-
-        if (location == null)
-            return "private"
-
+    fun getReadableLocation(location: String): String {
         if (!location.contains("wrld_"))
             return location
 

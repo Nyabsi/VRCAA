@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.UpdateUser
 
 object FriendManager {
 
@@ -60,17 +61,26 @@ object FriendManager {
     }
 
     @Synchronized
-    fun updateFriend(friend: LimitedUser) {
+    fun updateFriend(friend: UpdateUser) {
         synchronized(friend) {
             val it = friends.find { it.id == friend.id }
             it?.let {
-                friend.isFavorite = it.isFavorite
-                friends.set(friends.indexOf(it), friend)
+                it.status = friend.status
+                it.statusDescription = friend.statusDescription
+                it.bio = friend.bio
+                it.bioLinks = it.bioLinks
+                it.tags = friend.tags
+                it.profilePicOverride = friend.profilePicOverride
+                it.profilePicOverrideThumbnail = friend.profilePicOverrideThumbnail
+                it.pronouns = friend.pronouns
+                it.displayName = friend.displayName
+                it.userIcon = friend.userIcon
+                it.state = friend.state
+                friends.set(friends.indexOf(it), it)
             }
-
-            friendListeners.map {
-                it.onUpdateFriends(friends)
-            }
+        }
+        friendListeners.map {
+            it.onUpdateFriends(friends)
         }
     }
 
@@ -81,10 +91,9 @@ object FriendManager {
             it?.let {
                 it.location = location
             }
-
-            friendListeners.map {
-                it.onUpdateFriends(friends)
-            }
+        }
+        friendListeners.map {
+            it.onUpdateFriends(friends)
         }
     }
 
@@ -96,10 +105,9 @@ object FriendManager {
                 it.status = status
                 friends.set(friends.indexOf(it), it)
             }
-
-            friendListeners.map {
-                it.onUpdateFriends(friends)
-            }
+        }
+        friendListeners.map {
+            it.onUpdateFriends(friends)
         }
     }
 

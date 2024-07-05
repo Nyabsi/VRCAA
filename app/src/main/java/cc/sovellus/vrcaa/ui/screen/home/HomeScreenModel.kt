@@ -29,17 +29,13 @@ class HomeScreenModel : ScreenModel {
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<LimitedUser>) {
-            friendsListFlow.update {
-                friends.map { it.copy() }
-            }
+            friendsListFlow.update { friends.toList() }
         }
     }
 
     private val cacheListener = object : VRChatCache.CacheListener {
         override fun updatedLastVisited(worlds: MutableList<World>) {
-            recentlyVisitedFlow.update {
-                worlds.map { it.copy() }
-            }
+            recentlyVisitedFlow.update { worlds.toList() }
         }
 
         override fun initialCacheCreated() {
