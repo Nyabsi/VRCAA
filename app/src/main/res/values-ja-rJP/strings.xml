@@ -98,8 +98,8 @@
     <string name="tabs_label_settings">設定</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
-    <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
-    <string name="notification_service_description_online">フレンドの %1$s さんがオンラインになりました。</string>
+    <string name="notification_service_title_online">Friend has came online!</string>
+    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
     <string name="notification_service_title_offline">フレンドがオフラインになりました。</string>
     <string name="notification_service_description_offline">フレンドの %1$s さんがオフラインになりました。</string>
     <string name="notification_service_title_location">フレンドが別インスタンスへ移動しました。</string>
@@ -216,6 +216,9 @@
     <string name="group_user_viewing_groups_username">%1$s さんのグループ一覧</string>
     <!-- Misc -->
     <string name="misc_loading_label_text">少女祈祷中…</string>
+    <string name="misc_no_internet_title">No Internet Connection</string>
+    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_label">Restart</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">所属グループを表示</string>
     <string name="user_dropdown_edit_profile">プロフィールを編集</string>
