@@ -98,8 +98,8 @@
     <string name="tabs_label_settings">Settings</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
-    <string name="notification_service_title_online">Freund ist jetzt online!</string>
-    <string name="notification_service_description_online">Dein Freund, %1$s ist jetzt online!</string>
+    <string name="notification_service_title_online">Friend has came online!</string>
+    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
     <string name="notification_service_title_offline">Freund ist jetzt offline!</string>
     <string name="notification_service_description_offline">Dein Freund %1$s ist jetzt offline!</string>
     <string name="notification_service_title_location">Freund hat seinen Standort geändert!</string>
@@ -216,6 +216,9 @@
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
     <!-- Misc -->
     <string name="misc_loading_label_text">Loading…</string>
+    <string name="misc_no_internet_title">No Internet Connection</string>
+    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_label">Restart</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
