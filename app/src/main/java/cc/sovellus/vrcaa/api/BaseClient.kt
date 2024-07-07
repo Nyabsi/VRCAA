@@ -55,19 +55,22 @@ open class BaseClient {
         url: String,
         headers: Headers.Builder,
         body: String?,
+        ignoreAuthorization: Boolean = false
     ): Result {
 
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
 
-        when (authorizationType) {
-            AuthorizationType.Cookie -> {
-                headers["Cookie"] = credentials
+        if (!ignoreAuthorization) {
+            when (authorizationType) {
+                AuthorizationType.Cookie -> {
+                    headers["Cookie"] = credentials
+                }
+                AuthorizationType.Bearer -> {
+                    headers["Authorization"] = "Bearer $credentials"
+                }
+                else -> {}
             }
-            AuthorizationType.Bearer -> {
-                headers["Authorization"] = "Bearer $credentials"
-            }
-            else -> {}
         }
 
         val finalHeaders = headers.build()

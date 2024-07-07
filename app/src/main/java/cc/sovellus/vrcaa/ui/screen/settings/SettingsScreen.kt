@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.Construction
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem

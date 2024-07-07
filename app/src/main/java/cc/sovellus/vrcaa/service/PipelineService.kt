@@ -34,11 +34,13 @@ import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.widgets.FriendWidgetReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class PipelineService : Service(), CoroutineScope {
 
@@ -168,6 +170,9 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (update.location != null)
                         FriendManager.updateLocation(update.userId, update.location)
+
+                    val intent = Intent(baseContext, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                    sendBroadcast(intent)
                 }
 
                 is FriendUpdate -> {

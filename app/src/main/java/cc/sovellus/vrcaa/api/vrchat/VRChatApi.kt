@@ -11,6 +11,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.Notifications
+import cc.sovellus.vrcaa.api.vrchat.models.SteamCount
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
@@ -616,5 +617,40 @@ class VRChatApi : BaseClient() {
 
         val response = handleRequest(result)
         return Gson().fromJson(response, User::class.java)
+    }
+
+    suspend fun getVisits(): Int {
+
+        val headers = Headers.Builder()
+
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/visits",
+            headers = headers,
+            body = null
+        )
+
+        val response = handleRequest(result)
+        return response?.toInt() ?: -1
+    }
+
+    suspend fun getSteamConcurrent(): Int {
+
+        val headers = Headers.Builder()
+
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?format=json&appid=438100",
+            headers = headers,
+            body = null,
+            ignoreAuthorization = true
+        )
+
+        val response = handleRequest(result)
+        return Gson().fromJson(response, SteamCount::class.java).response.playerCount
     }
 }

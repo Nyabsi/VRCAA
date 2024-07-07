@@ -135,11 +135,6 @@ class NotificationManager(
         private const val CHANNEL_STATUS_NAME = "Status Notifications"
         private const val CHANNEL_STATUS_DESCRIPTION = "Friend Status Notifications"
 
-        // Update Channel
-        const val CHANNEL_UPDATE_ID = "VRCAA_notifications_upd"
-        private const val CHANNEL_UPDATE_NAME = "VRCAA Updates"
-        private const val CHANNEL_UPDATE_DESCRIPTION = "Shows progress indicator for updates"
-
         @SuppressLint("NewApi")
         fun createNotificationChannels(context: Context) {
 
@@ -195,16 +190,6 @@ class NotificationManager(
             }
 
             notificationManager.createNotificationChannel(statusChannel)
-
-            val updateChannel = NotificationChannel(
-                CHANNEL_UPDATE_ID,
-                CHANNEL_UPDATE_NAME,
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = CHANNEL_UPDATE_DESCRIPTION
-            }
-
-            notificationManager.createNotificationChannel(updateChannel)
         }
     }
 }

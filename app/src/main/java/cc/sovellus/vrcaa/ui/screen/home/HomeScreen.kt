@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -33,7 +34,8 @@ class HomeScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { HomeScreenModel() }
+        val context = LocalContext.current
+        val model = navigator.rememberNavigatorScreenModel { HomeScreenModel(context) }
 
         val friends = model.friendsList.collectAsState().value
         val recent = model.recentlyVisited.collectAsState().value

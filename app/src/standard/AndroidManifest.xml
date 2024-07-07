@@ -52,7 +52,7 @@
             android:name=".service.PipelineService"
             android:foregroundServiceType="dataSync"/>
 
-        <receiver android:name=".ui.widgets.FriendWidgetReceiver"
+        <receiver android:name=".widgets.FriendWidgetReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

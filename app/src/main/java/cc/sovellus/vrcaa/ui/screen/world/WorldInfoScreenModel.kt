@@ -1,14 +1,10 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.models.Instances
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch

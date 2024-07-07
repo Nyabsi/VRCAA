@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.group
 
-import android.content.Context
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.models.UserGroups

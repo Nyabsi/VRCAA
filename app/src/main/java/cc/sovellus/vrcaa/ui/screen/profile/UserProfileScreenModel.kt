@@ -6,7 +6,6 @@ import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.launch
 
 sealed class UserProfileState {

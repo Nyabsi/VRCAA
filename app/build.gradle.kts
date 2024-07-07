@@ -118,6 +118,7 @@ dependencies {
     implementation("com.sealwu.jsontokotlin:library:3.7.4")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("cafe.adriel.voyager:voyager-navigator:1.1.0-beta02")
     implementation("cafe.adriel.voyager:voyager-screenmodel:1.1.0-beta02")
     implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.1.0-beta02")
