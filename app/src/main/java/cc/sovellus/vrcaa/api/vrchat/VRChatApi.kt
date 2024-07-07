@@ -17,7 +17,6 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
-import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import com.google.gson.Gson
 import okhttp3.Headers
