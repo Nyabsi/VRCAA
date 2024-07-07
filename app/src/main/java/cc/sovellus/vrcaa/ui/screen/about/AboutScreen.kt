@@ -155,20 +155,6 @@ class AboutScreen : Screen {
                     }
                     item {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.about_page_translate_title)) },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    val intent = Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("https://crowdin.com/project/vrcaa")
-                                    )
-                                    context.startActivity(intent)
-                                }
-                            )
-                        )
-                    }
-                    item {
-                        ListItem(
                             headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title)) },
                             modifier = Modifier.clickable(
                                 onClick = {
@@ -188,16 +174,6 @@ class AboutScreen : Screen {
                                             ).show()
                                         }
                                     }
-                                }
-                            )
-                        )
-                    }
-                    item {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.about_page_crash_title)) },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    throw RuntimeException("You killed it :(")
                                 }
                             )
                         )

@@ -31,7 +31,7 @@ class CrashActivity : ComponentActivity() {
                         exception = exception,
                         onRestart = {
                             finishAffinity()
-                            startActivity(Intent(this@CrashActivity, MainActivity::class.java))
+                            startActivity(Intent(this@CrashActivity, LoginActivity::class.java))
                         }
                     )
                 }

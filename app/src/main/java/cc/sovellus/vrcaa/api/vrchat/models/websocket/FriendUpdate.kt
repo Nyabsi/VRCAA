@@ -1,10 +1,11 @@
 package cc.sovellus.vrcaa.api.vrchat.models.websocket
 
+import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import com.google.gson.annotations.SerializedName
 
 data class FriendUpdate(
     @SerializedName("user")
-    val user: UpdateUser,
+    val user: Friend,
     @SerializedName("userId")
     val userId: String
 )

@@ -2,13 +2,6 @@ package cc.sovellus.vrcaa
 
 import android.content.Context
 import android.content.Intent
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.Json
 import kotlin.system.exitProcess
 
 class GlobalExceptionHandler private constructor(

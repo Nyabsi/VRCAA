@@ -95,6 +95,7 @@ object LocationHelper {
     }
 
     fun getReadableLocation(location: String): String {
+
         if (!location.contains("wrld_"))
             return location
 

@@ -31,7 +31,7 @@ object StatusHelper {
         }
     }
 
-    fun getStatusFromString(status: String): Status {
+    fun getStatusFromString(status: String?): Status {
         return when (status) {
             "join me" -> Status.JoinMe
             "active" -> Status.Active

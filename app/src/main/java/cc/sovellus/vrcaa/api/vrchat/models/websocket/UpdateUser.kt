@@ -5,51 +5,51 @@ import com.google.gson.annotations.SerializedName
 
 data class UpdateUser(
     @SerializedName("allowAvatarCopying")
-    val allowAvatarCopying: Boolean,
+    val allowAvatarCopying: Boolean?,
     @SerializedName("bio")
-    val bio: String,
+    val bio: String?,
     @SerializedName("bioLinks")
-    val bioLinks: List<Any>,
+    val bioLinks: List<Any>?,
     @SerializedName("currentAvatarImageUrl")
-    val currentAvatarImageUrl: String,
+    val currentAvatarImageUrl: String?,
     @SerializedName("currentAvatarTags")
-    val currentAvatarTags: List<String>,
+    val currentAvatarTags: List<String>?,
     @SerializedName("currentAvatarThumbnailImageUrl")
-    val currentAvatarThumbnailImageUrl: String,
+    val currentAvatarThumbnailImageUrl: String?,
     @SerializedName("date_joined")
-    val dateJoined: String,
+    val dateJoined: String?,
     @SerializedName("developerType")
-    val developerType: String,
+    val developerType: String?,
     @SerializedName("displayName")
-    val displayName: String,
+    val displayName: String?,
     @SerializedName("friendKey")
-    val friendKey: String,
+    val friendKey: String?,
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("isFriend")
-    val isFriend: Boolean,
+    val isFriend: Boolean?,
     @SerializedName("last_activity")
-    val lastActivity: String,
+    val lastActivity: String?,
     @SerializedName("last_login")
-    val lastLogin: String,
+    val lastLogin: String?,
     @SerializedName("last_mobile")
     val lastMobile: Any?,
     @SerializedName("last_platform")
-    val lastPlatform: String,
+    val lastPlatform: String?,
     @SerializedName("profilePicOverride")
-    val profilePicOverride: String,
+    val profilePicOverride: String?,
     @SerializedName("profilePicOverrideThumbnail")
-    val profilePicOverrideThumbnail: String,
+    val profilePicOverrideThumbnail: String?,
     @SerializedName("pronouns")
-    val pronouns: String,
+    val pronouns: String?,
     @SerializedName("state")
-    val state: String,
+    val state: String?,
     @SerializedName("status")
-    val status: String,
+    val status: String?,
     @SerializedName("statusDescription")
-    val statusDescription: String,
+    val statusDescription: String?,
     @SerializedName("tags")
-    val tags: List<String>,
+    val tags: List<String>?,
     @SerializedName("userIcon")
-    val userIcon: String
+    val userIcon: String?
 )

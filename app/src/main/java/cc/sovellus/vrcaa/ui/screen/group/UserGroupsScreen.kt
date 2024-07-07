@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,10 +41,7 @@ class UserGroupsScreen(
 
     @Composable
     override fun Content() {
-
-        val context = LocalContext.current
-
-        val model = rememberScreenModel { UserGroupsScreenModel(context, userId) }
+        val model = rememberScreenModel { UserGroupsScreenModel(userId) }
 
         val state by model.state.collectAsState()
 
@@ -69,6 +67,10 @@ class UserGroupsScreen(
                 stringResource(R.string.group_user_failed_to_fetch_groups),
                 Toast.LENGTH_SHORT
             ).show()
+
+            LaunchedEffect(userId) {
+                navigator.pop()
+            }
         } else {
             Scaffold(
                 topBar = {
@@ -86,7 +88,12 @@ class UserGroupsScreen(
                 },
                 content = { padding ->
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {

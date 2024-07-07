@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.api.vrchat
 
+import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -21,8 +22,8 @@ class VRChatCache : CoroutineScope {
     private var worlds: MutableList<World> = mutableListOf()
     private var recentWorlds: MutableList<World> = mutableListOf()
 
-    @Volatile private var listener: CacheListener? = null
-    @Volatile var isCachedLoaded: Boolean = false
+    private var listener: CacheListener? = null
+    var isCachedLoaded: Boolean = false
 
     interface CacheListener {
         fun updatedLastVisited(worlds: MutableList<World>)
@@ -34,7 +35,7 @@ class VRChatCache : CoroutineScope {
             profile = api.getSelf()
 
             val favorites = api.getFavorites("friend")
-            val friendList: MutableList<LimitedUser> = ArrayList()
+            val friendList: MutableList<Friend> = ArrayList()
 
             val n = 50; var offset = 0
             var friends = api.getFriends(false, n, offset)
@@ -85,11 +86,8 @@ class VRChatCache : CoroutineScope {
         }
     }
 
-    @Synchronized
     fun setCacheListener(listener: CacheListener) {
-        synchronized(listener) {
-            this.listener = listener
-        }
+        this.listener = listener
     }
 
     fun getWorld(worldId: String): String {
@@ -128,13 +126,10 @@ class VRChatCache : CoroutineScope {
         return recentWorlds
     }
 
-    @Synchronized
     fun addRecent(world: World) {
-        synchronized(world) {
-            currentWorld = world
-            recentWorlds.removeIf { it.id == world.id }
-            recentWorlds.add(0, world)
-            listener?.updatedLastVisited(recentWorlds)
-        }
+        currentWorld = world
+        recentWorlds.removeIf { it.id == world.id }
+        recentWorlds.add(0, world)
+        listener?.updatedLastVisited(recentWorlds)
     }
 }

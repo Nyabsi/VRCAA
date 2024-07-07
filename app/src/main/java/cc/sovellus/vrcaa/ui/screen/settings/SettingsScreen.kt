@@ -1,6 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.settings
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material.icons.outlined.Construction
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Update
@@ -122,6 +126,54 @@ class SettingsScreen : Screen {
                         alignment = Alignment.Center
                     )
                 }
+            }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.about_page_developer_mode)) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.Construction,
+                            contentDescription = null
+                        )
+                    },
+                    trailingContent = {
+                        Switch(
+                            checked = false, // model.enableUpdates.value
+                            onCheckedChange = { state ->  }, // model.toggleUpdate(state)
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                            )
+                        )
+                    }
+                )
+            }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.about_page_translate_title)) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Filled.Translate,
+                            contentDescription = null
+                        )
+                    },
+                    modifier = Modifier.clickable(
+                        onClick = {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://crowdin.com/project/vrcaa")
+                            )
+                            context.startActivity(intent)
+                        }
+                    )
+                )
+
+                HorizontalDivider(
+                    color = Color.Gray,
+                    thickness = 0.5.dp
+                )
             }
             item {
 

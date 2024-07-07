@@ -35,7 +35,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -103,13 +103,9 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsFavorite(
-        friends: State<List<LimitedUser>>
+        friends: State<List<Friend>>
     ) {
-        val favoriteFriendsFilter = friends.value.filter { it.isFavorite }
-        val friendsSortedStatus = favoriteFriendsFilter.sortedBy { StatusHelper.getStatusFromString(it.status) }
-        val friendsFiltered = friendsSortedStatus.filter { it.location != "offline" }
-
-        if (friendsFiltered.isEmpty()) {
+        if (friends.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -118,6 +114,7 @@ class FriendsScreen : Screen {
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
+            val navigator = LocalNavigator.currentOrThrow
             LazyColumn(
                 Modifier
                     .fillMaxWidth()
@@ -125,12 +122,13 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friendsFiltered, key = { it.id }) { friend ->
-                    val navigator = LocalNavigator.currentOrThrow
-                    FriendItem(
-                        friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                    )
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                    if (friend.isFavorite && friend.location != "offline") {
+                        FriendItem(
+                            friend = friend,
+                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        )
+                    }
                 }
             }
         }
@@ -138,12 +136,9 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsOnWebsite(
-        friends: State<List<LimitedUser>>
+        friends: State<List<Friend>>
     ) {
-        val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
-        val friendsFiltered = sortedFriends.filter { it.location == "offline" && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-
-        if (friendsFiltered.isEmpty()) {
+        if (friends.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -152,6 +147,7 @@ class FriendsScreen : Screen {
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
+            val navigator = LocalNavigator.currentOrThrow
             LazyColumn(
                 Modifier
                     .fillMaxWidth()
@@ -159,13 +155,13 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friendsFiltered, key = { it.id }) { friend ->
-                    val navigator = LocalNavigator.currentOrThrow
-
-                    FriendItem(
-                        friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                    )
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                    if (friend.location == "offline" && StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) {
+                        FriendItem(
+                            friend = friend,
+                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        )
+                    }
                 }
             }
         }
@@ -173,13 +169,9 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriends(
-        friends: State<List<LimitedUser>>
+        friends: State<List<Friend>>
     ) {
-        val favoriteFriendsFilter = friends.value.filter { !it.isFavorite }
-        val sortedFriends = favoriteFriendsFilter.sortedBy { StatusHelper.getStatusFromString(it.status) }
-        val friendsFiltered = sortedFriends.filter { it.location != "offline" &&  StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-
-        if (friendsFiltered.isEmpty()) {
+        if (friends.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -188,6 +180,7 @@ class FriendsScreen : Screen {
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
+            val navigator = LocalNavigator.currentOrThrow
             LazyColumn(
                 Modifier
                     .fillMaxWidth()
@@ -195,13 +188,13 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friendsFiltered, key = { it.id }) { friend ->
-                    val navigator = LocalNavigator.currentOrThrow
-
-                    FriendItem(
-                        friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                    )
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                    if (!friend.isFavorite && friend.location != "offline" && StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) {
+                        FriendItem(
+                            friend = friend,
+                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        )
+                    }
                 }
             }
         }
@@ -209,12 +202,9 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsOffline(
-        friends: State<List<LimitedUser>>
+        friends: State<List<Friend>>
     ) {
-        val sortedFriends = friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
-        val friendsFiltered = sortedFriends.filter { it.location == "offline" &&  StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline }
-
-        if (friendsFiltered.isEmpty()) {
+        if (friends.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -223,6 +213,7 @@ class FriendsScreen : Screen {
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
+            val navigator = LocalNavigator.currentOrThrow
             LazyColumn(
                 Modifier
                     .fillMaxWidth()
@@ -230,13 +221,13 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friendsFiltered, key = { it.id }) { friend ->
-                    val navigator = LocalNavigator.currentOrThrow
-
-                    FriendItem(
-                        friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                    )
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                    if (friend.location == "offline" && StatusHelper.getStatusFromString(friend.status) == StatusHelper.Status.Offline) {
+                        FriendItem(
+                            friend = friend,
+                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        )
+                    }
                 }
             }
         }

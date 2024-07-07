@@ -183,6 +183,7 @@
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
     <string name="about_page_crash_title">Kill the application</string>
     <string name="license_title">Open Source Licenses</string>
+    <string name="about_page_developer_mode">Enable Developer Mode</string>
 
     <!-- API -->
     <string name="api_session_has_expired_text">Your session has expired, please login again.</string>

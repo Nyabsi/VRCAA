@@ -202,8 +202,9 @@ class PipelineService : Service(), CoroutineScope {
                             FeedManager.addFeed(
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = update.userId
-                                    friendName = update.user.displayName
+                                    friendName = update.user.displayName.toString()
                                     friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                                        .toString()
                                     friendStatus = StatusHelper.getStatusFromString(update.user.status)
                                 }
                             )
@@ -295,8 +296,7 @@ class PipelineService : Service(), CoroutineScope {
                                                 friendId = notification.senderUserId
                                                 friendName = notification.senderUsername
                                                 friendPictureUrl =
-                                                    sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }
-                                                        .toString()
+                                                    sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
                                             }
                                     )
                                 }

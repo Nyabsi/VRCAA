@@ -14,7 +14,6 @@ sealed class UserGroupsState {
 }
 
 class UserGroupsScreenModel(
-    private val context: Context,
     private val userId: String
 ) : StateScreenModel<UserGroupsState>(UserGroupsState.Init) {
 

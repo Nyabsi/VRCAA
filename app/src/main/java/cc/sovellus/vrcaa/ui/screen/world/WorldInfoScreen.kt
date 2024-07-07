@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -52,6 +51,7 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.layout.InstanceItem
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -117,7 +117,9 @@ class WorldInfoScreen(
 
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight()
                             .padding(
                                 top = it.calculateTopPadding(),
                                 bottom = it.calculateBottomPadding()
@@ -128,7 +130,6 @@ class WorldInfoScreen(
                         MultiChoiceSegmentedButtonRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp)
                         ) {
                             options.forEachIndexed { index, label ->
                                 SegmentedButton(
@@ -177,11 +178,12 @@ class WorldInfoScreen(
                     WorldCard(
                         url = it.imageUrl,
                         name = it.name,
-                        author = stringResource(R.string.world_author_label).format(it.authorName)
+                        author = stringResource(R.string.world_author_label).format(it.authorName),
+                        packages = it.unityPackages
                     )
                 }
                 Column(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start,
                 ) {
@@ -189,11 +191,18 @@ class WorldInfoScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                        modifier = Modifier.padding(bottom = 16.dp)
                     ) {
                         SubHeader(title = stringResource(R.string.world_label_description))
                         Description(text = world.description)
+                    }
 
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    ) {
                         val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
                         val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
 
@@ -208,6 +217,15 @@ class WorldInfoScreen(
 
                         SubHeader(title = stringResource(R.string.world_title_updated_at))
                         Description(text = updatedAtFormatted)
+
+                        SubHeader(title = "Visits")
+                        Description(text = NumberFormat.getInstance().format(world.visits))
+
+                        SubHeader(title = "Favorites")
+                        Description(text = NumberFormat.getInstance().format(world.favorites))
+
+                        SubHeader(title = "Capacity")
+                        Description(text = "${world.recommendedCapacity} (${world.capacity})")
 
                         SubHeader(title = stringResource(R.string.world_label_tags))
                         BadgesFromTags(
@@ -244,7 +262,12 @@ class WorldInfoScreen(
         ) {
             if (instances.isEmpty()) {
                 item {
-                    Text(stringResource(R.string.world_instance_no_public_instances_message))
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(stringResource(R.string.world_instance_no_public_instances_message))
+                    }
                 }
             } else {
                 items(instances.size) {

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -24,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,19 +42,18 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.StatusHelper
-import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
-import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.helper.StatusHelper
+import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
-import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
-import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
+import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class UserProfileScreen(
@@ -95,7 +94,10 @@ class UserProfileScreen(
                 stringResource(R.string.profile_user_not_found_message),
                 Toast.LENGTH_SHORT
             ).show()
-            navigator.pop()
+
+            LaunchedEffect(userId) {
+                navigator.pop()
+            }
         } else {
             Scaffold(
                 topBar = {

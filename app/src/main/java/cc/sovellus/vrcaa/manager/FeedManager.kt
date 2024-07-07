@@ -7,8 +7,8 @@ import java.util.UUID
 
 object FeedManager {
 
-    @Volatile private var feedListener: FeedListener? = null
-    @Volatile private var feedList: MutableList<Feed> = ArrayList()
+    private var feedListener: FeedListener? = null
+    private var feedList: MutableList<Feed> = ArrayList()
 
     enum class FeedType {
         FRIEND_FEED_UNKNOWN,
@@ -36,25 +36,16 @@ object FeedManager {
         fun onReceiveUpdate(list: MutableList<Feed>)
     }
 
-    @Synchronized
     fun addFeed(feed: Feed) {
-        synchronized(feedList) {
-            feedList.add(feed)
-        }
+        feedList.add(feed)
         feedListener?.onReceiveUpdate(feedList)
     }
 
-    @Synchronized
     fun getFeed(): MutableList<Feed> {
-        synchronized(feedList) {
-            return feedList
-        }
+        return feedList
     }
 
-    @Synchronized
     fun setFeedListener(listener: FeedListener) {
-        synchronized(listener) {
-            feedListener = listener
-        }
+        feedListener = listener
     }
 }

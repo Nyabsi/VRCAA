@@ -17,20 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cc.sovellus.vrcaa.R
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 
 class LoadingIndicatorScreen : Screen {
 
     override val key = uniqueScreenKey
 
-    @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     override fun Content() {
         Column(

@@ -9,10 +9,6 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -30,7 +26,7 @@ import com.bumptech.glide.integration.compose.placeholder
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun FriendItem(friend: LimitedUser, callback: () -> Unit) {
+fun FriendItem(friend: Friend, callback: () -> Unit) {
 
     ListItem(
         headlineContent = {

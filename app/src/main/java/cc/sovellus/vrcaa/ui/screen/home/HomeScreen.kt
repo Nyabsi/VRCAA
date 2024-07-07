@@ -17,6 +17,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
@@ -51,7 +52,7 @@ class HomeScreen : Screen {
                         title = stringResource(R.string.home_active_friends)
                     ) {
                         val filteredFriends = friends.filter { it.location != "offline" }
-                        items(filteredFriends, key = { it.id }) { friend ->
+                        items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { it.id }) { friend ->
                             RoundedRowItem(
                                 name = friend.displayName,
                                 url = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
@@ -70,7 +71,7 @@ class HomeScreen : Screen {
                             WorldRow(
                                 name = world.name,
                                 url = world.imageUrl,
-                                count = null,
+                                count = world.occupants,
                                 onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                             )
                         }

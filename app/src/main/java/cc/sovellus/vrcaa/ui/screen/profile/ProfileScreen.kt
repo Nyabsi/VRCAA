@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CardDefaults
@@ -28,14 +27,10 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
-import cc.sovellus.vrcaa.manager.ApiManager.cache
-import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
-import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class ProfileScreen : Screen {
 

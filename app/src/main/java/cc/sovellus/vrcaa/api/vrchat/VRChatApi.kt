@@ -29,18 +29,15 @@ class VRChatApi : BaseClient() {
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
 
-    @Volatile private var listener: SessionListener? = null
+    private var listener: SessionListener? = null
 
     interface SessionListener {
         fun onSessionInvalidate()
         fun noInternet()
     }
 
-    @Synchronized
     fun setSessionListener(listener: SessionListener) {
-        synchronized(listener) {
-            this.listener = listener
-        }
+        this.listener = listener
     }
 
     enum class MfaType {
