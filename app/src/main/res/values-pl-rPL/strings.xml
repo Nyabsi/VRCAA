@@ -17,6 +17,7 @@
     <string name="home_featured_avatars">Wyróżnione awatary</string>
     <string name="home_offline_friends">Nieaktywni znajomi</string>
     <string name="home_featured_worlds">Wyróżnione światy</string>
+    <string name="home_friend_locations">Friend Locations</string>
     <string name="home_failed_to_fetch_worlds_message">Nie udało się pobrać światów, spróbuj ponownie.</string>
     <string name="home_failed_to_fetch_friends_message">Nie udało się pobrać znajomych, spróbuj ponownie.</string>
     <string name="home_toast_updated_info">Odświeżono znajomych i światy.</string>
@@ -128,7 +129,7 @@
     <string name="avatar_title_content_labels">Content Labels</string>
     <string name="avatar_text_author">By %1$s</string>
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
-    <string name="avatar_toast_avatar_not_found_message">Awatar jest prywatny lub nieprawidłowy!</string>
+    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
     <!-- Feed -->
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">has come online.</string>
@@ -147,17 +148,16 @@
     <!-- About -->
     <string name="about_page_title">About</string>
     <string name="about_page_version_title">You\'re currently running on version: %1$s</string>
-    <string name="about_page_version_description">Click here to check if you\'re on latest version.</string>
-    <string name="about_page_version_toast_message">Sorry, this is not implemented yet!</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
     <string name="about_page_translate_description">Pomóż w tłumaczeniu VRCAA na twój język.</string>
     <string name="about_page_battery_optimizations_title">Wyłącz optymalizację baterii</string>
     <string name="about_page_battery_optimizations_description">Stosować tylko wtedy, gdy jest to konieczne.</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled!</string>
-    <string name="about_page_crash_title">Crash the application.</string>
+    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_crash_title">Kill the application</string>
     <string name="license_title">Open Source Licenses</string>
+    <string name="about_page_developer_mode">Enable Developer Mode</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Twoja sesja wygasła. Zaloguj się ponownie.</string>
     <string name="api_avatar_select_failed">"Nie udało się wybrać awatara."</string>
@@ -177,18 +177,10 @@
     <string name="discord_login_description_enable">Shows your current status in discord</string>
     <string name="discord_login_label_logout">Logout</string>
     <string name="discord_login_description_logout">Revoke your access token</string>
-    <!-- Auto Updater (Nightly) -->
-    <string name="update_dialog_title">New update available!</string>
-    <string name="update_dialog_description">Do you wish to update the application?</string>
-    <string name="update_toast_failed_update">Failed to automatically download update…</string>
-    <string name="update_notification_title_ongoing">Downloading update..</string>
-    <string name="update_notification_title_done">Downloading complete.</string>
-    <string name="update_notification_action_cancel">Cancel</string>
-    <string name="update_notification_action_install">Install</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application crashed :(</string>
+    <string name="crash_title_text">The application encountered fatal error.</string>
     <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Log</string>
+    <string name="crash_button_copy_log_text">Copy Information</string>
     <string name="crash_button_report_text">Report Issue</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
