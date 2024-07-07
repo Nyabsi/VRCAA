@@ -100,20 +100,6 @@ class NavigationScreen : Screen {
 
         val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
 
-        if (model.hasUpdate.value) {
-            UpdatedDialog(
-                onDismiss = {
-                    model.hasUpdate.value = false
-                },
-                onConfirmation = {
-                    model.hasUpdate.value = false
-                    model.update(context)
-                },
-                title = stringResource(R.string.update_dialog_title),
-                description = stringResource(R.string.update_dialog_description)
-            )
-        }
-
         if (model.hasNoInternet.value) {
             SingleButtonDialog(
                 onClick = {

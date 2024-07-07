@@ -13,7 +13,6 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.LoginActivity
-import cc.sovellus.vrcaa.AutoUpdater
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.updatesEnabled
 import cc.sovellus.vrcaa.extension.groupsAmount
@@ -34,17 +33,13 @@ class NavigationScreenModel(
     var searchModeActivated = mutableStateOf(false)
     var searchText = mutableStateOf("")
     var searchHistory = mutableListOf<String>()
+    var hasNoInternet = mutableStateOf(false)
 
     var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
     var sortWorlds = mutableStateOf(preferences.sortWorlds)
     var worldsAmount = mutableIntStateOf(preferences.worldsAmount)
     var usersAmount = mutableIntStateOf(preferences.usersAmount)
     var groupsAmount = mutableIntStateOf(preferences.groupsAmount)
-
-    val updater = AutoUpdater(context)
-
-    var hasUpdate = mutableStateOf(false)
-    var hasNoInternet = mutableStateOf(false)
 
     private val listener = object : VRChatApi.SessionListener {
         override fun onSessionInvalidate() {
@@ -66,12 +61,6 @@ class NavigationScreenModel(
 
     init {
         api.setSessionListener(listener)
-
-        screenModelScope.launch {
-            if (preferences.updatesEnabled && !BuildConfig.DEBUG) {
-                hasUpdate.value = updater.checkForUpdates()
-            }
-        }
     }
 
     fun enterSearchMode() {
@@ -90,18 +79,6 @@ class NavigationScreenModel(
 
     fun clearSearchText() {
         searchText.value = ""
-    }
-
-    fun update(context: Context) {
-        screenModelScope.launch {
-            if (!updater.downloadUpdate()) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.update_toast_failed_update),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     fun resetSettings() {

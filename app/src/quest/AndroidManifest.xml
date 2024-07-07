@@ -76,25 +76,5 @@
         <service
             android:name=".service.PipelineService"
             android:foregroundServiceType="dataSync"/>
-
-        <receiver
-            android:name=".UpdateReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="CUSTOM_ACTION_UPDATE_CANCEL"/>
-                <action android:name="CUSTOM_ACTION_UPDATE_INSTALL"/>
-            </intent-filter>
-        </receiver>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="cc.sovellus.vrcaa"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
     </application>
 </manifest>
