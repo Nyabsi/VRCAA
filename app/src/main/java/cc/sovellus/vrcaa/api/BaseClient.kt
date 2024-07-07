@@ -122,7 +122,7 @@ open class BaseClient {
                     Result.UnknownMethod
                 }
             }
-        } catch (e: UnknownHostException) {
+        } catch (e: Exception) {
             Result.ClientExceptionResult(e.message.toString())
         }
     }
