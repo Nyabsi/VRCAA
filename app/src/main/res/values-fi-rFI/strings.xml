@@ -17,6 +17,7 @@
     <string name="home_featured_avatars">Suositellut Hahmot</string>
     <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
     <string name="home_featured_worlds">Suositellut Maailmat</string>
+    <string name="home_friend_locations">Friend Locations</string>
     <string name="home_failed_to_fetch_worlds_message">Maailmojen noutaminen epäonnistui, yritä uudelleen.</string>
     <string name="home_failed_to_fetch_friends_message">Ystävien noutaminen epäonnistui, yritä uudelleen.</string>
     <string name="home_toast_updated_info">Päivitetyt ystävät ja maailmat.</string>
@@ -128,7 +129,7 @@
     <string name="avatar_title_content_labels">Sisällön Tunnisteet</string>
     <string name="avatar_text_author">Tekijä: %1$s</string>
     <string name="avatar_text_content_labels_not_found">Hahmo ei ole määritetty sisältövaroituksia.</string>
-    <string name="avatar_toast_avatar_not_found_message">Hahmo on joko yksityinen tai virheellinen!</string>
+    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
     <!-- Feed -->
     <string name="feed_online_label">Paikalla</string>
     <string name="feed_online_text">on tullut paikalle.</string>
@@ -147,17 +148,16 @@
     <!-- About -->
     <string name="about_page_title">Tietoja</string>
     <string name="about_page_version_title">Käytät parhaillaan versiota %1$s</string>
-    <string name="about_page_version_description">Klikkaa tästä tarkistaaksesi, käytätkö uusinta versiota.</string>
-    <string name="about_page_version_toast_message">Valitettavasti tätä ei ole vielä toteutettu!</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
     <string name="about_page_open_source_licenses_description">Katso kirjastot minkä päälle VRCAA on rakennettu.</string>
     <string name="about_page_translate_title">Avusta Kääntämisessä</string>
     <string name="about_page_translate_description">Katso kirjastot minkä päälle VRCAA on rakennettu.</string>
     <string name="about_page_battery_optimizations_title">Poista akun optimointi käytöstä</string>
     <string name="about_page_battery_optimizations_description">Käytä tätä vain, jos joudut tekemään niin.</string>
-    <string name="about_page_battery_optimizations_toast">Akun optimointi on jo pois käytöstä!</string>
-    <string name="about_page_crash_title">Crash the application.</string>
+    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_crash_title">Kill the application</string>
     <string name="license_title">Avoimen lähdekoodin lisenssit</string>
+    <string name="about_page_developer_mode">Enable Developer Mode</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Istuntosi on vanhentunut, ole hyvä ja kirjaudu uudelleen.</string>
     <string name="api_avatar_select_failed">"Avatarin valinta epäonnistui."</string>
@@ -177,18 +177,10 @@
     <string name="discord_login_description_enable">Shows your current status in discord</string>
     <string name="discord_login_label_logout">Kirjaudu ulos</string>
     <string name="discord_login_description_logout">Revoke your access token</string>
-    <!-- Auto Updater (Nightly) -->
-    <string name="update_dialog_title">Uusi päivitys saatavilla!</string>
-    <string name="update_dialog_description">Haluatko päivittää tämän sovelluksen?</string>
-    <string name="update_toast_failed_update">Automaattinen päivitys epäonnistui…</string>
-    <string name="update_notification_title_ongoing">Ladataan päivitystä..</string>
-    <string name="update_notification_title_done">Lataus on valmis.</string>
-    <string name="update_notification_action_cancel">Peruuta</string>
-    <string name="update_notification_action_install">Asenna</string>
     <!-- Crash -->
-    <string name="crash_title_text">Sovellus kaatui :(</string>
+    <string name="crash_title_text">The application encountered fatal error.</string>
     <string name="crash_button_restart_text">Uudelleenkäynnistä</string>
-    <string name="crash_button_copy_log_text">Kopioi Logi</string>
+    <string name="crash_button_copy_log_text">Copy Information</string>
     <string name="crash_button_report_text">Ilmoita ongelma</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
