@@ -124,33 +124,6 @@ class SettingsScreen : Screen {
                 }
             }
             item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_check_updates)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Update,
-                            contentDescription = null
-                        )
-                    },
-                    trailingContent = {
-                        Switch(
-                            checked = model.enableUpdates.value,
-                            onCheckedChange = { state -> model.toggleUpdate(state) },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-                            )
-                        )
-                    }
-                )
-                HorizontalDivider(
-                    color = Color.Gray,
-                    thickness = 0.5.dp
-                )
-            }
-            item {
 
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.settings_item_about)) },

@@ -2,7 +2,6 @@ package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
@@ -10,11 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.bundleOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.LoginActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
-import cc.sovellus.vrcaa.extension.updatesEnabled
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds

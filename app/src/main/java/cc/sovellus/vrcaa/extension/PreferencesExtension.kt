@@ -44,10 +44,6 @@ internal var SharedPreferences.richPresenceEnabled: Boolean
     get() = getBoolean("richPresenceEnabled", false)
     set(it) = edit { putBoolean("richPresenceEnabled", it) }
 
-internal var SharedPreferences.updatesEnabled: Boolean
-    get() = getBoolean("updatesEnabled", true)
-    set(it) = edit { putBoolean("updatesEnabled", it) }
-
 internal var SharedPreferences.searchFeaturedWorlds: Boolean
     get() = getBoolean("searchFeaturedWorlds", false)
     set(it) = edit { putBoolean("searchFeaturedWorlds", it) }
