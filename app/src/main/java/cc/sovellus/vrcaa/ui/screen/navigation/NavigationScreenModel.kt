@@ -1,7 +1,9 @@
 package cc.sovellus.vrcaa.ui.screen.navigation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
@@ -20,6 +22,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
+
 class NavigationScreenModel(
     private val context: Context
 ) : ScreenModel {
@@ -30,6 +33,7 @@ class NavigationScreenModel(
     var searchText = mutableStateOf("")
     var searchHistory = mutableListOf<String>()
     var hasNoInternet = mutableStateOf(false)
+    var invalidSession = mutableStateOf(false)
 
     var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
     var sortWorlds = mutableStateOf(preferences.sortWorlds)
@@ -39,15 +43,24 @@ class NavigationScreenModel(
 
     private val listener = object : VRChatApi.SessionListener {
         override fun onSessionInvalidate() {
-            val serviceIntent = Intent(context, PipelineService::class.java)
-            context.stopService(serviceIntent)
+            if (!invalidSession.value) {
+                invalidSession.value = true
 
-            val bundle = bundleOf()
-            bundle.putBoolean("INVALID_SESSION", true)
+                val serviceIntent = Intent(context, PipelineService::class.java)
+                context.stopService(serviceIntent)
 
-            val intent = Intent(context, LoginActivity::class.java)
-            intent.putExtras(bundle)
-            context.startActivity(intent)
+                val bundle = bundleOf()
+                bundle.putBoolean("INVALID_SESSION", true)
+
+                val intent = Intent(context, LoginActivity::class.java)
+                intent.putExtras(bundle)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+
+                if (context is Activity) {
+                    context.finish()
+                }
+            }
         }
 
         override fun noInternet() {

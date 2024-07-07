@@ -21,6 +21,7 @@
     <string name="home_featured_avatars">Featured Avatars</string>
     <string name="home_offline_friends">Offline Friends</string>
     <string name="home_featured_worlds">Featured Worlds</string>
+    <string name="home_friend_locations">Friend Locations</string>
 
     <string name="home_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
     <string name="home_failed_to_fetch_friends_message">Failed to fetch friends, try again.</string>

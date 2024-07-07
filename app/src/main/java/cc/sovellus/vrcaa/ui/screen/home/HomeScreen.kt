@@ -17,6 +17,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.WorldRow
@@ -35,9 +36,8 @@ class HomeScreen : Screen {
 
         val friends = model.friendsList.collectAsState().value
         val recent = model.recentlyVisited.collectAsState().value
-        val featured = model.featuredWorlds.collectAsState().value
 
-        if (friends.isEmpty() || recent.isEmpty() || featured.isEmpty()) {
+        if (friends.isEmpty() || recent.isEmpty()) {
             LoadingIndicatorScreen().Content()
         } else {
             LazyColumn(
@@ -95,15 +95,19 @@ class HomeScreen : Screen {
                     Spacer(modifier = Modifier.padding(4.dp))
 
                     HorizontalRow(
-                        title = stringResource(R.string.home_featured_worlds)
+                        title = stringResource(R.string.home_friend_locations)
                     ) {
-                        items(featured, key = { it.id }) { world ->
-                            WorldRow(
-                                name = world.name,
-                                url = world.imageUrl,
-                                count = world.occupants,
-                                onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
-                            )
+                        val friendLocations = friends.filter { it.location.contains("wrld_") }
+                        items(friendLocations, key = { it.id }) { friend ->
+                            val world = cache.getWorldObject(friend.location.split(':')[0])
+                            if (world != null) {
+                                WorldRow(
+                                    name = world.name,
+                                    url = world.thumbnailImageUrl,
+                                    count = world.occupants,
+                                    onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                                )
+                            }
                         }
                     }
                 }

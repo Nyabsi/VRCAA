@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.util.Log
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -19,7 +18,7 @@ class VRChatCache : CoroutineScope {
 
     private var profile: User? = null
     private var currentWorld: World? = null
-    private var worlds: MutableMap<String, String> = mutableMapOf()
+    private var worlds: MutableList<World> = mutableListOf()
     private var recentWorlds: MutableList<World> = mutableListOf()
 
     @Volatile private var listener: CacheListener? = null
@@ -50,7 +49,7 @@ class VRChatCache : CoroutineScope {
 
                     if (friend.location.contains("wrld_")) {
                         val world = api.getWorld(friend.location.split(":")[0])
-                        worlds[world.id] = world.name
+                        worlds.add(world)
                     }
 
                     friendList.add(friend)
@@ -94,11 +93,23 @@ class VRChatCache : CoroutineScope {
     }
 
     fun getWorld(worldId: String): String {
-        return worlds[worldId].toString()
+        val world = worlds.find { it.id == worldId }
+        if (world != null)
+            return world.name
+        return "null"
     }
 
-    fun addWorld(worldId: String, name: String) {
-        worlds[worldId] = name
+    fun getWorldObject(worldId: String): World? {
+        val world = worlds.find { it.id == worldId }
+        if (world != null)
+            return world
+        return null
+    }
+
+    fun addWorld(world: World) {
+        val exists = worlds.find { it.id != world.id }
+        if (exists != null)
+            worlds.add(world)
     }
 
     fun getCurrentWorld(): World? {
