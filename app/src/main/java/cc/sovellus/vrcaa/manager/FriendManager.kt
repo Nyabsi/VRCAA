@@ -72,6 +72,7 @@ object FriendManager {
         val it = friends.find { it.id == userId }
         it?.let {
             it.location = location
+            friends.set(friends.indexOf(it), it)
         }
         friendListeners.map {
             it.onUpdateFriends(friends)

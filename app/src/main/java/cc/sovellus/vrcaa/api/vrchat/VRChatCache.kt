@@ -75,7 +75,7 @@ class VRChatCache : CoroutineScope {
                 }
 
                 offset += n
-                friends = api.getFriends(false, n, offset)
+                friends = api.getFriends(true, n, offset)
             }
 
             FriendManager.setFriends(friendList)
