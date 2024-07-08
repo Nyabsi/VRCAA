@@ -130,6 +130,7 @@ class WorldInfoScreen(
                         MultiChoiceSegmentedButtonRow(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(bottom = 16.dp),
                         ) {
                             options.forEachIndexed { index, label ->
                                 SegmentedButton(
