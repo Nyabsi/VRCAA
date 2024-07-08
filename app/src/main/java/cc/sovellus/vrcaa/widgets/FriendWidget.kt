@@ -97,7 +97,7 @@ class FriendWidget : GlanceAppWidget() {
                             val bitmap = images[friend.id]
                             Image(ImageProvider(bitmap!!), contentDescription = null, modifier = GlanceModifier.size(48.dp).cornerRadius(50.dp))
                             Column {
-                                Text(text = "${friend.displayName} is current at", modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
+                                Text(text = friend.displayName, modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
                                 Text(text = LocationHelper.getReadableLocation(friend.location), modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
                             }
                         }
