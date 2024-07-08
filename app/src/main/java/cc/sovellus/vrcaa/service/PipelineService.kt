@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.service
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
@@ -49,6 +50,7 @@ class PipelineService : Service(), CoroutineScope {
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
+    private lateinit var context: Context
     private lateinit var notificationManager: NotificationManager
     private lateinit var preferences: SharedPreferences
 
@@ -162,6 +164,9 @@ class PipelineService : Service(), CoroutineScope {
                                         }
                                 )
                             }
+
+                            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                            context.sendBroadcast(intent)
                         }
                     }
 
@@ -316,6 +321,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
 
+        this.context = this
         this.notificationManager = NotificationManager(this)
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
