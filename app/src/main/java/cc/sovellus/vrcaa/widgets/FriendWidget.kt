@@ -39,16 +39,15 @@ import kotlinx.coroutines.withContext
 
 class FriendWidget : GlanceAppWidget() {
 
-    private lateinit var friends: MutableList<Friend>
+    private var friends: MutableList<Friend> = mutableListOf()
     private var images: MutableMap<String, Bitmap> = mutableMapOf()
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
 
-        friends = FriendManager.getFriends().filter {
-            it.location.contains("wrld_")
-        }.toMutableList()
-
         withContext(Dispatchers.IO) {
+            friends = FriendManager.getFriends().filter {
+                it.location.contains("wrld_")
+            }.toMutableList()
             context.loadImages()
         }
 
@@ -66,39 +65,54 @@ class FriendWidget : GlanceAppWidget() {
                 .background(imageProvider = ImageProvider(R.drawable.widget_background))
                 .padding(16.dp),
         ) {
-            Column(
-                horizontalAlignment = Alignment.Horizontal.Start,
-                modifier = GlanceModifier
-                    .padding(4.dp),
-            ) {
-                Text(
-                    text = "Active friends: ${friends.count()}",
-                    style = TextStyle(textAlign = TextAlign.Start, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                )
-            }
-            LazyColumn(
-                horizontalAlignment = Alignment.Horizontal.Start,
-                modifier = GlanceModifier
-                    .padding(top =  24.dp),
-            ) {
-                items(friends) { friend ->
-                    Box(
-                        modifier = GlanceModifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.Vertical.CenterVertically,
-                            modifier = GlanceModifier.fillMaxWidth()
-                                .background(imageProvider = ImageProvider(R.drawable.widget_background_accent))
-                                .padding(8.dp)
-                                .cornerRadius(10.dp)
+            if (friends.isEmpty()) {
+                LazyColumn(
+                    horizontalAlignment = Alignment.Horizontal.Start
+                ) {
+                    items(3) {
+                        Box(
+                            modifier = GlanceModifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
                         ) {
-                            val bitmap = images[friend.id]
-                            Image(ImageProvider(bitmap!!), contentDescription = null, modifier = GlanceModifier.size(48.dp).cornerRadius(50.dp))
-                            Column {
-                                Text(text = friend.displayName, modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
-                                Text(text = LocationHelper.getReadableLocation(friend.location), modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
+                            Row(
+                                verticalAlignment = Alignment.Vertical.CenterVertically,
+                                modifier = GlanceModifier.fillMaxWidth()
+                                    .background(imageProvider = ImageProvider(R.drawable.widget_background_accent))
+                                    .padding(8.dp)
+                                    .cornerRadius(10.dp)
+                            ) {
+                                Image(ImageProvider(R.drawable.icon_placeholder), contentDescription = null, modifier = GlanceModifier.size(48.dp).cornerRadius(50.dp))
+                                Column {
+                                    Text(text = "Loading...", modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                LazyColumn(
+                    horizontalAlignment = Alignment.Horizontal.Start
+                ) {
+                    items(friends) { friend ->
+                        Box(
+                            modifier = GlanceModifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.Vertical.CenterVertically,
+                                modifier = GlanceModifier.fillMaxWidth()
+                                    .background(imageProvider = ImageProvider(R.drawable.widget_background_accent))
+                                    .padding(8.dp)
+                                    .cornerRadius(10.dp)
+                            ) {
+                                val bitmap = images[friend.id]
+                                Image(ImageProvider(bitmap!!), contentDescription = null, modifier = GlanceModifier.size(48.dp).cornerRadius(50.dp))
+                                Column {
+                                    Text(text = friend.displayName, modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
+                                    Text(text = LocationHelper.getReadableLocation(friend.location), modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
+                                }
                             }
                         }
                     }

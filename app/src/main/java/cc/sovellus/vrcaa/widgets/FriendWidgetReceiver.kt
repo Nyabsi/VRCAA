@@ -14,26 +14,18 @@ class FriendWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = FriendWidget()
     private val coroutineScope = MainScope()
 
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-        this.update(context)
-    }
-
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "FRIEND_LOCATION_UPDATE") {
             this.update(context)
         }
+        super.onReceive(context, intent)
     }
 
     private fun update(context: Context) {
         coroutineScope.launch {
-            val glance = GlanceAppWidgetManager(context).getGlanceIds(FriendWidget::class.java).firstOrNull()
-            glance?.let {
-                glanceAppWidget.update(context, it)
+            val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(FriendWidget::class.java)
+            glanceIds.forEach { glance ->
+                glanceAppWidget.update(context, glance)
             }
         }
     }
