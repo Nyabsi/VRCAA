@@ -49,13 +49,13 @@ fun ProfileCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(260.dp)
+            .height(270.dp)
             .fillMaxWidth()
     ) {
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy((-50).dp),
-            modifier = Modifier.height(260.dp).fillMaxSize()
+            modifier = Modifier.height(270.dp).fillMaxSize()
         ) {
             item {
                 GlideImage(
@@ -122,7 +122,7 @@ fun ProfileCard(
                 ) {
                     Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
                     Text(
-                        modifier = Modifier.padding(start = 12.dp),
+                        modifier = Modifier.padding(start = 8.dp),
                         text = statusDescription,
                         textAlign = TextAlign.Left,
                         fontWeight = FontWeight.SemiBold,
