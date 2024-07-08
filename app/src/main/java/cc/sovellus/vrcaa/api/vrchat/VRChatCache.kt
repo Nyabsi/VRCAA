@@ -1,9 +1,10 @@
 package cc.sovellus.vrcaa.api.vrchat
 
+import android.util.Log
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.CoroutineScope
@@ -25,12 +26,7 @@ class VRChatCache : CoroutineScope {
     private var listener: CacheListener? = null
     var isCachedLoaded: Boolean = false
 
-    interface CacheListener {
-        fun updatedLastVisited(worlds: MutableList<World>)
-        fun initialCacheCreated()
-    }
-
-    init {
+    private val cacheWorker: Runnable = Runnable {
         launch {
             profile = api.getSelf()
 
@@ -78,12 +74,27 @@ class VRChatCache : CoroutineScope {
                 friends = api.getFriends(true, n, offset)
             }
 
-            FriendManager.setFriends(friendList)
-
             api.getRecentWorlds()?.let { world -> recentWorlds += world }
 
-            listener?.initialCacheCreated()
+            FriendManager.setFriends(friendList)
+
+            if (!isCachedLoaded) {
+                listener?.initialCacheCreated()
+            }
         }
+        Thread.sleep(1800000)
+    }
+
+    private var cacheThread: Thread? = null
+
+    interface CacheListener {
+        fun updatedLastVisited(worlds: MutableList<World>)
+        fun initialCacheCreated()
+    }
+
+    init {
+        cacheThread = Thread(cacheWorker)
+        cacheThread?.start()
     }
 
     fun setCacheListener(listener: CacheListener) {
@@ -108,10 +119,6 @@ class VRChatCache : CoroutineScope {
         val exists = worlds.find { it.id != world.id }
         if (exists != null)
             worlds.add(world)
-    }
-
-    fun getCurrentWorld(): World? {
-        return currentWorld
     }
 
     fun getProfile(): User? {
