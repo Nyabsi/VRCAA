@@ -4,7 +4,7 @@
 
 VRChat Android Assistant offers a convenient solution for managing your VRChat experience on the go. With this tool, users can efficiently handle profile customization, friend interactions, and stay informed about the latest events, all from their Android device, without relying on the VRChat game client.
 
-[Click here to Download](https://github.com/Nyabsi/VRCAA/releases/download/latest/VRCAA-signed.apk)
+[Click here to Download](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-signed.apk)
 
 # Showcase
 
