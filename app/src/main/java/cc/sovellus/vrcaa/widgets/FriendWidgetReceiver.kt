@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.widgets
 
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import androidx.glance.appwidget.GlanceAppWidget
@@ -12,6 +13,15 @@ import kotlinx.coroutines.launch
 class FriendWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = FriendWidget()
     private val coroutineScope = MainScope()
+
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        this.update(context)
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "FRIEND_LOCATION_UPDATE") {
