@@ -170,9 +170,6 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (update.location != null)
                         FriendManager.updateLocation(update.userId, update.location)
-
-                    val intent = Intent(baseContext, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                    sendBroadcast(intent)
                 }
 
                 is FriendUpdate -> {
