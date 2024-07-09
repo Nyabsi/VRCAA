@@ -8,8 +8,7 @@ VRChat Android Assistant offers a convenient solution for managing your VRChat e
 
 # Showcase
 
-> TBA
-
+![banner](https://github.com/Nyabsi/VRCAA/assets/43046474/c42078c2-43d0-4e56-86be-b08ab452e41e)
 
 # Translations
 
