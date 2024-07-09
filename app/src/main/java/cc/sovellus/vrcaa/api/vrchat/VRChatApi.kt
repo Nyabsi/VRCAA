@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.api.vrchat
 import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
+import cc.sovellus.vrcaa.api.vrchat.models.Favorites
 import cc.sovellus.vrcaa.api.vrchat.models.FileMetadata
 import cc.sovellus.vrcaa.api.vrchat.models.Friends
 import cc.sovellus.vrcaa.api.vrchat.models.Group
@@ -398,7 +399,7 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, Users::class.java)
     }
 
-    suspend fun getFavorites(type: String, n: Int = 50): cc.sovellus.vrcaa.api.vrchat.models.Favorites? {
+    suspend fun getFavorites(type: String, n: Int, offset: Int): Favorites? {
 
         val headers = Headers.Builder()
 
@@ -406,13 +407,13 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/favorites?type=$type&n=$n", // TODO: if ever needed, implement "tag"
+            url = "$apiBase/favorites?type=$type&n=$n&offset=$offset", // TODO: if ever needed, implement "tag"
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, cc.sovellus.vrcaa.api.vrchat.models.Favorites::class.java)
+        return Gson().fromJson(response, Favorites::class.java)
     }
 
     suspend fun getNotifications(): Notifications? {

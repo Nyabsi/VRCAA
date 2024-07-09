@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.api.vrchat
 
 import android.util.Log
+import cc.sovellus.vrcaa.api.vrchat.models.Favorites
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -30,15 +31,27 @@ class VRChatCache : CoroutineScope {
         launch {
             profile = api.getSelf()
 
-            val favorites = api.getFavorites("friend")
             val friendList: MutableList<Friend> = ArrayList()
+            val favoriteList: MutableList<Favorites.FavoritesItem> = ArrayList()
 
             val n = 50; var offset = 0
+            var favorites = api.getFavorites("friend", n, offset)
+
+            while (favorites != null) {
+                favorites.forEach { favorite ->
+                    favoriteList.add(favorite)
+                }
+                offset += n
+                favorites = api.getFavorites("friend", n, offset)
+            }
+
+            offset = 0
+
             var friends = api.getFriends(false, n, offset)
 
             while (friends != null) {
                 friends.forEach { friend ->
-                    favorites?.find {
+                    favoriteList.find {
                         it.favoriteId == friend.id
                     }?.let {
                         friend.isFavorite = true
@@ -61,7 +74,7 @@ class VRChatCache : CoroutineScope {
 
             while (friends != null) {
                 friends.forEach { friend ->
-                    favorites?.find {
+                    favoriteList.find {
                         it.favoriteId == friend.id
                     }?.let {
                         friend.isFavorite = true
