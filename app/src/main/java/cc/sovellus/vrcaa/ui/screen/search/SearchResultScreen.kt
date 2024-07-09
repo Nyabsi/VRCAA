@@ -199,7 +199,7 @@ class SearchResultScreen(
                 modifier = Modifier
                     .height(120.dp)
                     .width(200.dp),
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
                 loading = placeholder(R.drawable.image_placeholder),
                 failure = placeholder(R.drawable.image_placeholder)
