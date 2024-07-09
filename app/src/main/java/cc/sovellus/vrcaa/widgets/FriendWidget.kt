@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.widgets
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
@@ -10,7 +11,9 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalSize
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
@@ -42,6 +45,10 @@ class FriendWidget : GlanceAppWidget() {
     private var friends: MutableList<Friend> = mutableListOf()
     private var images: MutableMap<String, Bitmap> = mutableMapOf()
 
+    override val sizeMode: SizeMode = SizeMode.Responsive(
+        setOf(MINIFIED_LIST, EXTENDED_LIST)
+    )
+
     override suspend fun provideGlance(context: Context, id: GlanceId) {
 
         withContext(Dispatchers.IO) {
@@ -53,13 +60,16 @@ class FriendWidget : GlanceAppWidget() {
 
         provideContent {
             GlanceTheme {
-                Content()
+                when (LocalSize.current) {
+                    MINIFIED_LIST -> WidgetFriendList(showIcons = false)
+                    EXTENDED_LIST -> WidgetFriendList(showIcons = true)
+                }
             }
         }
     }
 
     @Composable
-    private fun Content() {
+    private fun WidgetFriendList(showIcons: Boolean) {
         Box(
             modifier = GlanceModifier.fillMaxSize()
                 .background(imageProvider = ImageProvider(R.drawable.widget_background))
@@ -79,10 +89,12 @@ class FriendWidget : GlanceAppWidget() {
                                 verticalAlignment = Alignment.Vertical.CenterVertically,
                                 modifier = GlanceModifier.fillMaxWidth()
                                     .background(imageProvider = ImageProvider(R.drawable.widget_background_accent))
-                                    .padding(8.dp)
+                                    .padding(4.dp)
                                     .cornerRadius(10.dp)
                             ) {
-                                Image(ImageProvider(R.drawable.icon_placeholder), contentDescription = null, modifier = GlanceModifier.size(48.dp).cornerRadius(50.dp))
+                                if (showIcons) {
+                                    Image(ImageProvider(R.drawable.icon_placeholder), contentDescription = null, modifier = GlanceModifier.size(32.dp).cornerRadius(50.dp))
+                                }
                                 Column {
                                     Text(text = "Loading...", modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
                                 }
@@ -104,11 +116,13 @@ class FriendWidget : GlanceAppWidget() {
                                 verticalAlignment = Alignment.Vertical.CenterVertically,
                                 modifier = GlanceModifier.fillMaxWidth()
                                     .background(imageProvider = ImageProvider(R.drawable.widget_background_accent))
-                                    .padding(8.dp)
+                                    .padding(4.dp)
                                     .cornerRadius(10.dp)
                             ) {
-                                val bitmap = images[friend.id]
-                                Image(ImageProvider(bitmap!!), contentDescription = null, modifier = GlanceModifier.size(48.dp).cornerRadius(50.dp))
+                                if (showIcons) {
+                                    val bitmap = images[friend.id]
+                                    Image(ImageProvider(bitmap!!), contentDescription = null, modifier = GlanceModifier.size(32.dp).cornerRadius(50.dp))
+                                }
                                 Column {
                                     Text(text = friend.displayName, modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
                                     Text(text = LocationHelper.getReadableLocation(friend.location), modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
@@ -131,5 +145,10 @@ class FriendWidget : GlanceAppWidget() {
                 .get()
             images[it.id] = bitmap
         }
+    }
+
+    companion object {
+        private val MINIFIED_LIST = DpSize(110.dp, 0.dp)
+        private val EXTENDED_LIST = DpSize(180.dp, 0.dp)
     }
 }

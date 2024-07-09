@@ -2,6 +2,8 @@
     android:description="@string/widget_name_friend_list"
     android:minWidth="110dp"
     android:minHeight="40dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen">
