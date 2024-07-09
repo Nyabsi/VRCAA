@@ -129,6 +129,9 @@ class PipelineService : Service(), CoroutineScope {
 
                         FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
+
+                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                        context.sendBroadcast(intent)
                     }
                 }
 
