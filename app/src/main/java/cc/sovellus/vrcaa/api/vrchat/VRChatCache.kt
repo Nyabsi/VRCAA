@@ -102,23 +102,17 @@ class VRChatCache : CoroutineScope {
     }
 
     fun getWorld(worldId: String): String {
-        val world = worlds.find { it.id == worldId }
-        if (world != null)
-            return world.name
-        return "null"
+        return worlds.find { it.id == worldId }?.name ?: "null"
     }
 
     fun getWorldObject(worldId: String): World? {
-        val world = worlds.find { it.id == worldId }
-        if (world != null)
-            return world
-        return null
+        return worlds.find { it.id == worldId }
     }
 
     fun addWorld(world: World) {
-        val exists = worlds.find { it.id != world.id }
-        if (exists != null)
+        if (!worlds.contains(world)) {
             worlds.add(world)
+        }
     }
 
     fun getProfile(): User? {
