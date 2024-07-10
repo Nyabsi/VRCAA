@@ -18,7 +18,6 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
@@ -103,8 +102,7 @@ class HomeScreen : Screen {
                     ) {
                         val friendLocations = friends.filter { it.location.contains("wrld_") }
                         items(friendLocations, key = { it.id }) { friend ->
-                            val worldInfo = LocationHelper.parseLocationInfo(friend.location, false)
-                            val world = cache.getWorldObject(worldInfo.worldId)
+                            val world = cache.getWorldObject(friend.location.split(':')[0])
                             if (world != null) {
                                 WorldRow(
                                     name = world.name,

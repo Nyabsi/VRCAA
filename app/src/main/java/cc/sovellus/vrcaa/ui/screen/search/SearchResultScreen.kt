@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
@@ -263,7 +262,8 @@ class SearchResultScreen(
                         bottom = 16.dp
                     ),
                     content = {
-                        items(worlds, key = { it.id }) { world ->
+                        items(worlds.size) {
+                            val world = worlds[it]
                             RowItem(
                                 name = world.name,
                                 url = world.imageUrl,
@@ -308,7 +308,8 @@ class SearchResultScreen(
                         bottom = 16.dp
                     ),
                     content = {
-                        items(users, key = { it.id }) { user ->
+                        items(users.size) {
+                            val user = users[it]
                             RowItem(
                                 name = user.displayName,
                                 url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
@@ -359,7 +360,8 @@ class SearchResultScreen(
                             bottom = 16.dp
                         ),
                         content = {
-                            items(avatars, key = { it.id }) { avatar ->
+                            items(avatars.size) {
+                                val avatar = avatars[it]
                                 RowItem(
                                     name = avatar.name,
                                     url = avatar.thumbnailImageUrl,
@@ -411,7 +413,8 @@ class SearchResultScreen(
                             bottom = 16.dp
                         ),
                         content = {
-                            items(groups, key = { it.id }) { group ->
+                            items(groups.size) {
+                                val group = groups[it]
                                 RowItem(
                                     name = group.name,
                                     url = group.bannerUrl,
