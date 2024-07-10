@@ -122,7 +122,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { it.id }) { friend ->
                     if (friend.isFavorite && friend.location != "offline") {
                         FriendItem(
                             friend = friend,
@@ -155,7 +155,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { it.id }) { friend ->
                     if (friend.location == "offline" && StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) {
                         FriendItem(
                             friend = friend,
@@ -188,7 +188,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { it.id }) { friend ->
                     if (!friend.isFavorite && friend.location != "offline" && StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) {
                         FriendItem(
                             friend = friend,
@@ -221,7 +221,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                items(friends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { it.id }) { friend ->
                     if (friend.location == "offline" && StatusHelper.getStatusFromString(friend.status) == StatusHelper.Status.Offline) {
                         FriendItem(
                             friend = friend,
