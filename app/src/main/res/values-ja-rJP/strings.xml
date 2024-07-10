@@ -17,7 +17,7 @@
     <string name="home_featured_avatars">注目のアバター</string>
     <string name="home_offline_friends">オフライン</string>
     <string name="home_featured_worlds">注目のワールド</string>
-    <string name="home_friend_locations">Friend Locations</string>
+    <string name="home_friend_locations">フレンドのインスタンス</string>
     <string name="home_failed_to_fetch_worlds_message">ワールドの取得に失敗しました。再試行してください。</string>
     <string name="home_failed_to_fetch_friends_message">フレンド一覧の取得に失敗しました。再試行してください。</string>
     <string name="home_toast_updated_info">ワールドとフレンドの一覧を更新しました。</string>
@@ -226,5 +226,5 @@
     <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
     <string name="api_toast_rate_limited_message">レートリミット制限中です。しばらく経ってから再試行してください。</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
+    <string name="widget_name_friend_list">現在のフレンドのインスタンスを確認する</string>
 </resources>
