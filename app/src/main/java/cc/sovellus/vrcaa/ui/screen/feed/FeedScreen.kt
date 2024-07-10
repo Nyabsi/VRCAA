@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -43,10 +44,9 @@ class FeedScreen : Screen {
             state = rememberLazyListState()
         ) {
             items(
-                feed.value.count(),
-                key = { item -> feed.value.reversed()[item].feedId })
-            {
-                val item = feed.value.reversed()[it]
+                feed.value,
+                key = { it.feedId })
+            { item ->
                 when (item.type) {
                     FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
                         val text = buildAnnotatedString {
