@@ -170,10 +170,9 @@ fun ProfileEditDialog(
                         Toast.LENGTH_LONG
                     ).show()
                     coroutineScope.launch {
-                        user = api.updateProfile(id.value, status.value, description.value, bio.value, bioLinks).also {
-                            onConfirmation()
-                            cache.updateProfile(user)
-                        }
+                        user = api.updateProfile(id.value, status.value, description.value, bio.value, bioLinks)
+                        cache.updateProfile(user)
+                        onConfirmation()
                     }
                 }
             ) {

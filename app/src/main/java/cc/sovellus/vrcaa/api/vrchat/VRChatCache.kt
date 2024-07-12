@@ -28,9 +28,9 @@ class VRChatCache : CoroutineScope {
     private var recentlyVisited: MutableList<WorldCache> = mutableListOf()
 
     interface CacheListener {
-        fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>)
-        fun cacheUpdated()
-        fun profileUpdated()
+        fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) { }
+        fun cacheUpdated() { }
+        fun profileUpdated() { }
     }
 
     private var listeners: MutableList<CacheListener?> = mutableListOf()

@@ -38,8 +38,6 @@ class HomeScreenModel(context: Context) : ScreenModel {
             context.sendBroadcast(intent)
             fetchContent()
         }
-
-        override fun profileUpdated() { /* ... */ }
     }
 
     init {
