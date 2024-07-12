@@ -3,8 +3,10 @@ package cc.sovellus.vrcaa.api.vrchat
 import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
+import cc.sovellus.vrcaa.api.vrchat.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.models.Favorites
 import cc.sovellus.vrcaa.api.vrchat.models.FileMetadata
+import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.Friends
 import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
@@ -242,7 +244,12 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, User::class.java)
     }
 
-    suspend fun getFriends(offline: Boolean, n: Int, offset: Int): Friends? {
+    suspend fun getFriends(
+        offline: Boolean,
+        n: Int = 50,
+        offset: Int = 0,
+        friends: ArrayList<Friend> = arrayListOf()
+    ): ArrayList<Friend> {
 
         val headers = Headers.Builder()
 
@@ -256,24 +263,18 @@ class VRChatApi : BaseClient() {
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, Friends::class.java)
-    }
 
-    suspend fun getFriend(userId: String): LimitedUser? {
+        val temp: ArrayList<Friend> = friends
+        val json = Gson().fromJson(response, Friends::class.java)
+        json?.forEach { friend ->
+            temp.add(friend)
+        }
 
-        val headers = Headers.Builder()
-
-        headers["User-Agent"] = userAgent
-
-        val result = doRequest(
-            method = "GET",
-            url = "$apiBase/users/$userId",
-            headers = headers,
-            body = null
-        )
-
-        val response = handleRequest(result)
-        return Gson().fromJson(response, LimitedUser::class.java)
+        return if (json == null) {
+            friends
+        } else {
+            getFriends(offline, n, offset + n, temp)
+        }
     }
 
     suspend fun getUser(userId: String): LimitedUser? {
@@ -345,10 +346,13 @@ class VRChatApi : BaseClient() {
 
     suspend fun getWorlds(
         query: String = "",
+        limit: Int,
         featured: Boolean = false,
+        sort: String = "relevance",
         n: Int = 50,
-        sort: String = "relevance"
-    ): Worlds? {
+        offset: Int = 0,
+        worlds: ArrayList<World> = arrayListOf()
+    ): ArrayList<World> {
 
         val headers = Headers.Builder()
 
@@ -356,13 +360,24 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/worlds?featured=$featured&n=$n&sort=$sort&search=$query",
+            url = "$apiBase/worlds?featured=$featured&n=$n&sort=$sort&search=$query&offset=$offset",
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, Worlds::class.java)
+
+        val temp: ArrayList<World> = worlds
+        val json = Gson().fromJson(response, Worlds::class.java)
+        json?.forEach { world ->
+            temp.add(world)
+        }
+
+        return if (json == null || limit == (offset + n)) {
+            worlds
+        } else {
+            getWorlds(query, limit, featured, sort, n, offset + n, worlds)
+        }
     }
 
     suspend fun getWorld(id: String): World {
@@ -382,7 +397,13 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, World::class.java)
     }
 
-    suspend fun getUsers(username: String, n: Int = 50): Users? {
+    suspend fun getUsers(
+        username: String,
+        limit: Int,
+        n: Int = 50,
+        offset: Int = 0,
+        users: ArrayList<LimitedUser> = arrayListOf()
+    ): ArrayList<LimitedUser> {
 
         val headers = Headers.Builder()
 
@@ -390,16 +411,32 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/users?search=$username&n=$n",
+            url = "$apiBase/users?search=$username&n=$n&offset=$offset",
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, Users::class.java)
+
+        val temp: ArrayList<LimitedUser> = users
+        val json = Gson().fromJson(response, Users::class.java)
+        json?.forEach { user ->
+            temp.add(user)
+        }
+
+        return if (json == null  || limit == (offset + n)) {
+            users
+        } else {
+            getUsers(username, limit, n, offset + n, temp)
+        }
     }
 
-    suspend fun getFavorites(type: String, n: Int, offset: Int): Favorites? {
+    suspend fun getFavorites(
+        type: String,
+        n: Int = 50,
+        offset: Int = 0,
+        favorites: ArrayList<Favorite> = arrayListOf()
+    ): ArrayList<Favorite> {
 
         val headers = Headers.Builder()
 
@@ -407,13 +444,24 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/favorites?type=$type&n=$n&offset=$offset", // TODO: if ever needed, implement "tag"
+            url = "$apiBase/favorites?type=$type&n=$n&offset=$offset",
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, Favorites::class.java)
+
+        val temp: ArrayList<Favorite> = favorites
+        val json = Gson().fromJson(response, Favorites::class.java)
+        json?.forEach { favorite ->
+            temp.add(favorite)
+        }
+
+        return if (json == null) {
+            favorites
+        } else {
+            getFavorites(type, n, offset + n, temp)
+        }
     }
 
     suspend fun getNotifications(): Notifications? {
@@ -467,7 +515,13 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, cc.sovellus.vrcaa.api.vrchat.models.Avatar::class.java)
     }
 
-    suspend fun getGroups(query: String, n: Int): Groups? {
+    suspend fun getGroups(
+        query: String,
+        limit: Int,
+        n: Int = 50,
+        offset: Int = 0,
+        groups: ArrayList<Group> = arrayListOf()
+    ): ArrayList<Group> {
 
         val headers = Headers.Builder()
 
@@ -475,16 +529,32 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/groups?query=$query&n=$n",
+            url = "$apiBase/groups?query=$query&n=$n&offset=$offset",
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, Groups::class.java)
+
+        val temp: ArrayList<Group> = groups
+        val json = Gson().fromJson(response, Groups::class.java)
+        json?.forEach { group ->
+            temp.add(group)
+        }
+
+        return if (json == null  || limit == (offset + n)) {
+            groups
+        } else {
+            getGroups(query, limit, n, offset + n, groups)
+        }
     }
 
-    suspend fun getGroups(userId: String): UserGroups? {
+    suspend fun getUserGroups(
+        userId: String,
+        n: Int = 50,
+        offset: Int = 0,
+        groups: ArrayList<UserGroups.Group> = arrayListOf()
+    ): ArrayList<UserGroups.Group> {
 
         val headers = Headers.Builder()
 
@@ -492,13 +562,24 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/users/$userId/groups",
+            url = "$apiBase/users/$userId/groups&n=$n&offset=$offset",
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, UserGroups::class.java)
+
+        val temp: ArrayList<UserGroups.Group> = groups
+        val json = Gson().fromJson(response, UserGroups::class.java)
+        json?.forEach { group ->
+            temp.add(group)
+        }
+
+        return if (json == null) {
+            groups
+        } else {
+            getUserGroups(userId, n, offset + n, groups)
+        }
     }
 
     suspend fun getGroup(groupId: String): Group? {

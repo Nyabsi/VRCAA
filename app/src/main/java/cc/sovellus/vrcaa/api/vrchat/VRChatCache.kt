@@ -1,11 +1,8 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.util.Log
-import cc.sovellus.vrcaa.api.vrchat.models.Favorites
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
-import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.CoroutineScope
@@ -19,80 +16,82 @@ class VRChatCache : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
 
-    private var profile: User? = null
-    private var currentWorld: World? = null
-    private var worlds: MutableList<World> = mutableListOf()
-    private var recentWorlds: MutableList<World> = mutableListOf()
+    data class WorldCache(
+        val id: String,
+        val name: String,
+        val thumbnailUrl: String,
+        val occupants: Int
+    )
 
-    private var listener: CacheListener? = null
-    var isCachedLoaded: Boolean = false
+    private var profile: User? = null
+    private var worldCache: MutableList<WorldCache> = mutableListOf()
+    private var recentlyVisited: MutableList<WorldCache> = mutableListOf()
+
+    interface CacheListener {
+        fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>)
+        fun cacheUpdated()
+        fun profileUpdated()
+    }
+
+    private var listeners: MutableList<CacheListener?> = mutableListOf()
+
+    fun addCacheListener(listener: CacheListener) {
+        this.listeners.add(listener)
+    }
 
     private val cacheWorker: Runnable = Runnable {
         launch {
             profile = api.getSelf()
 
-            val friendList: MutableList<Friend> = ArrayList()
-            val favoriteList: MutableList<Favorites.FavoritesItem> = ArrayList()
+            val friendList: MutableList<Friend> = mutableListOf()
 
-            val n = 50; var offset = 0
-            var favorites = api.getFavorites("friend", n, offset)
+            val favorites = api.getFavorites("friend")
+            var friends = api.getFriends(false)
 
-            while (favorites != null) {
-                favorites.forEach { favorite ->
-                    favoriteList.add(favorite)
+            friends.forEach { friend->
+                favorites.find { favorite ->
+                    favorite.favoriteId == friend.id
+                }?.let {
+                    friend.isFavorite = true
                 }
-                offset += n
-                favorites = api.getFavorites("friend", n, offset)
+                if (friend.location.contains("wrld_")) {
+                    val world = api.getWorld(friend.location.split(":")[0])
+                    val cache = WorldCache(
+                        id = world.id,
+                        name = world.name,
+                        thumbnailUrl = world.thumbnailImageUrl,
+                        occupants = world.occupants
+                    )
+                    worldCache.add(cache)
+                }
+                friendList.add(friend)
             }
 
-            offset = 0
+            friends = api.getFriends(true)
 
-            var friends = api.getFriends(false, n, offset)
-
-            while (friends != null) {
-                friends.forEach { friend ->
-                    favoriteList.find {
-                        it.favoriteId == friend.id
-                    }?.let {
-                        friend.isFavorite = true
-                    }
-
-                    if (friend.location.contains("wrld_")) {
-                        val world = api.getWorld(friend.location.split(":")[0])
-                        worlds.add(world)
-                    }
-
-                    friendList.add(friend)
+            friends.forEach { friend->
+                favorites.find { favorite ->
+                    favorite.favoriteId == friend.id
+                }?.let {
+                    friend.isFavorite = true
                 }
-
-                offset += n
-                friends = api.getFriends(false, n, offset)
+                friendList.add(friend)
             }
 
-            offset = 0
-            friends = api.getFriends(true, n, offset)
-
-            while (friends != null) {
-                friends.forEach { friend ->
-                    favoriteList.find {
-                        it.favoriteId == friend.id
-                    }?.let {
-                        friend.isFavorite = true
-                    }
-
-                    friendList.add(friend)
-                }
-
-                offset += n
-                friends = api.getFriends(true, n, offset)
+            api.getRecentWorlds()?.forEach { world->
+                val cache = WorldCache(
+                    id = world.id,
+                    name = world.name,
+                    thumbnailUrl = world.thumbnailImageUrl,
+                    occupants = world.occupants
+                )
+                recentlyVisited.add(cache)
             }
-
-            api.getRecentWorlds()?.let { world -> recentWorlds += world }
 
             FriendManager.setFriends(friendList)
 
-            if (!isCachedLoaded) {
-                listener?.initialCacheCreated()
+            listeners.forEach { listener ->
+                listener?.cacheUpdated()
             }
         }
         Thread.sleep(1800000)
@@ -100,50 +99,74 @@ class VRChatCache : CoroutineScope {
 
     private var cacheThread: Thread? = null
 
-    interface CacheListener {
-        fun updatedLastVisited(worlds: MutableList<World>)
-        fun initialCacheCreated()
-    }
-
     init {
         cacheThread = Thread(cacheWorker)
         cacheThread?.start()
     }
 
-    fun setCacheListener(listener: CacheListener) {
-        this.listener = listener
+    fun worldExists(worldId: String): Boolean {
+        return worldCache.contains(worldCache.find { it.id == worldId })
     }
 
-    fun getWorld(worldId: String): String {
-        return worlds.find { it.id == worldId }?.name ?: "null"
-    }
-
-    fun getWorldObject(worldId: String): World? {
-        return worlds.find { it.id == worldId }
+    fun getWorld(worldId: String): WorldCache {
+        return worldCache.find { it.id == worldId } ?:
+            WorldCache(
+                id = "invalid",
+                name = "Invalid World",
+                thumbnailUrl = "",
+                occupants = -1
+            )
     }
 
     fun addWorld(world: World) {
-        if (!worlds.contains(world)) {
-            worlds.add(world)
-        }
+        val cache = WorldCache(
+            id = world.id,
+            name = world.name,
+            thumbnailUrl = world.thumbnailImageUrl,
+            occupants = world.occupants
+        )
+        worldCache.add(cache)
+    }
+
+    fun updateWorld(world: World) {
+        val cache = WorldCache(
+            id = world.id,
+            name = world.name,
+            thumbnailUrl = world.thumbnailImageUrl,
+            occupants = world.occupants
+        )
+        val index = worldCache.indexOf(worldCache.find { it.id == world.id })
+        worldCache[index] = cache
     }
 
     fun getProfile(): User? {
         return profile
     }
 
-    fun setProfile(profile: User?) {
+    fun updateProfile(profile: User?) {
         this.profile = profile
+        listeners.forEach { listener ->
+            listener?.profileUpdated()
+        }
     }
 
-    fun getRecent(): MutableList<World> {
-        return recentWorlds
+    fun getRecentlyVisited(): MutableList<WorldCache> {
+        return recentlyVisited
     }
 
-    fun addRecent(world: World) {
-        currentWorld = world
-        recentWorlds.removeIf { it.id == world.id }
-        recentWorlds.add(0, world)
-        listener?.updatedLastVisited(recentWorlds)
+    fun addRecentlyVisited(world: World) {
+        recentlyVisited.removeIf { it.id == world.id }
+        recentlyVisited.add(
+            0,
+            WorldCache(
+                id = world.id,
+                name = world.name,
+                thumbnailUrl = world.thumbnailImageUrl,
+                occupants = world.occupants
+            )
+        )
+        listeners.forEach { listener ->
+            listener?.recentlyVisitedUpdated(recentlyVisited)
+        }
     }
 }

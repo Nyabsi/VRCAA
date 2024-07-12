@@ -2,13 +2,14 @@ package cc.sovellus.vrcaa.ui.screen.search
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
-import cc.sovellus.vrcaa.api.vrchat.models.Groups
-import cc.sovellus.vrcaa.api.vrchat.models.Users
-import cc.sovellus.vrcaa.api.vrchat.models.Worlds
+import cc.sovellus.vrcaa.api.vrchat.models.Group
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
@@ -29,17 +30,17 @@ class SearchResultScreenModel(
         data object Init : SearchState()
         data object Loading : SearchState()
         data class Result(
-            val worlds: Worlds?,
-            val users: Users?,
+            val worlds: ArrayList<World>?,
+            val users: MutableList<LimitedUser>?,
             val avatars: ArrayList<JustHPartyProvider.Avatar>?,
-            val groups: Groups?
+            val groups: ArrayList<Group>?
         ) : SearchState()
     }
 
-    private var worlds: Worlds? = null
-    private var users: Users? = null
+    private var worlds: ArrayList<World>? = null
+    private var users: MutableList<LimitedUser>? = null
     private var avatars: ArrayList<JustHPartyProvider.Avatar>? = null
-    private var groups: Groups? = null
+    private var groups: ArrayList<Group>? = null
 
     var currentIndex = mutableIntStateOf(0)
 
@@ -51,15 +52,17 @@ class SearchResultScreenModel(
     private fun getContent() {
         screenModelScope.launch {
             worlds = api.getWorlds(
-                query = query,
-                featured = preferences.searchFeaturedWorlds,
-                n = preferences.worldsAmount,
-                sort = preferences.sortWorlds
+                query,
+                preferences.worldsAmount,
+                preferences.searchFeaturedWorlds,
+                preferences.sortWorlds
             )
+
+            Log.d("VRCAA", "total found worlds is actually ${worlds!!.size}")
 
             users = api.getUsers(
                 username = query,
-                n = preferences.usersAmount
+                preferences.usersAmount
             )
 
             avatars = avatarProvider.search(

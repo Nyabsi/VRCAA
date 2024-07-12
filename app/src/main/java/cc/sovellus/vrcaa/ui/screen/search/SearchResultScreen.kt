@@ -51,9 +51,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
-import cc.sovellus.vrcaa.api.vrchat.models.Groups
-import cc.sovellus.vrcaa.api.vrchat.models.Users
-import cc.sovellus.vrcaa.api.vrchat.models.Worlds
+import cc.sovellus.vrcaa.api.vrchat.models.Group
+import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -96,10 +96,10 @@ class SearchResultScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(
-        worlds: Worlds?,
-        users: Users?,
+        worlds: ArrayList<World>?,
+        users: MutableList<LimitedUser>?,
         avatars: ArrayList<JustHPartyProvider.Avatar>?,
-        groups: Groups?,
+        groups: ArrayList<Group>?,
         model: SearchResultScreenModel
     ) {
 
@@ -232,7 +232,7 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowWorlds(
-        worlds: Worlds?
+        worlds: ArrayList<World>?
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -278,7 +278,7 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowUsers(
-        users: Users?
+        users: MutableList<LimitedUser>?
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -378,7 +378,7 @@ class SearchResultScreen(
     }
 
     @Composable
-    private fun ShowGroups(groups: Groups?) {
+    private fun ShowGroups(groups: ArrayList<Group>?) {
         val context = LocalContext.current
 
         if (groups == null) {

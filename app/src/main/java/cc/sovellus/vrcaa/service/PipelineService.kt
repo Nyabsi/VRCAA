@@ -173,11 +173,16 @@ class PipelineService : Service(), CoroutineScope {
                         }
                     }
 
-                    if (update.world != null)
-                        cache.addWorld(update.world)
+                    update.world?.let {
+                        if (cache.worldExists(it.id))
+                            cache.updateWorld(update.world)
+                        else
+                            cache.addWorld(update.world)
+                    }
 
-                    if (update.location != null)
+                    update.location?.let {
                         FriendManager.updateLocation(update.userId, update.location)
+                    }
                 }
 
                 is FriendUpdate -> {
@@ -230,7 +235,7 @@ class PipelineService : Service(), CoroutineScope {
                     val status = StatusHelper.getStatusFromString(user.user.status)
                     val location = LocationHelper.parseLocationInfo(user.location)
 
-                    cache.addRecent(user.world)
+                    cache.addRecentlyVisited(user.world)
 
                     if (preferences.richPresenceEnabled) {
                         launch {

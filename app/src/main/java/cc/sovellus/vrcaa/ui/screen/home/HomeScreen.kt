@@ -72,7 +72,7 @@ class HomeScreen : Screen {
                         items(recent, key = { it.id }) { world ->
                             WorldRow(
                                 name = world.name,
-                                url = world.imageUrl,
+                                url = world.thumbnailUrl,
                                 count = world.occupants,
                                 onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                             )
@@ -102,11 +102,11 @@ class HomeScreen : Screen {
                     ) {
                         val friendLocations = friends.filter { it.location.contains("wrld_") }
                         items(friendLocations, key = { it.id }) { friend ->
-                            val world = cache.getWorldObject(friend.location.split(':')[0])
+                            val world = cache.getWorld(friend.location.split(':')[0])
                             if (world != null) {
                                 WorldRow(
                                     name = world.name,
-                                    url = world.thumbnailImageUrl,
+                                    url = world.thumbnailUrl,
                                     count = world.occupants,
                                     onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                                 )
