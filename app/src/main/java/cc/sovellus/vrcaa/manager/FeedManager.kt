@@ -2,7 +2,9 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.UUID
+import kotlin.time.Duration.Companion.milliseconds
 
 
 object FeedManager {
@@ -11,7 +13,6 @@ object FeedManager {
     private var feedList: MutableList<Feed> = ArrayList()
 
     enum class FeedType {
-        FRIEND_FEED_UNKNOWN,
         FRIEND_FEED_ONLINE,
         FRIEND_FEED_OFFLINE,
         FRIEND_FEED_LOCATION,
@@ -37,8 +38,18 @@ object FeedManager {
     }
 
     fun addFeed(feed: Feed) {
-        feedList.add(feed)
-        feedListener?.onReceiveUpdate(feedList)
+        val previousFeed = feedList.find { it.type == feed.type && it.friendId == feed.friendId }
+        if (previousFeed != null) {
+            val prev: Long = previousFeed.feedTimestamp.toEpochSecond(ZoneOffset.UTC).milliseconds.inWholeMilliseconds
+            val next: Long = feed.feedTimestamp.toEpochSecond(ZoneOffset.UTC).milliseconds.inWholeMilliseconds
+            if (prev < (next + 1000)) {
+                feedList.add(feed)
+                feedListener?.onReceiveUpdate(feedList)
+            }
+        } else {
+            feedList.add(feed)
+            feedListener?.onReceiveUpdate(feedList)
+        }
     }
 
     fun getFeed(): MutableList<Feed> {
