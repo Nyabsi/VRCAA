@@ -167,6 +167,20 @@ class UserProfileScreen(
                                             },
                                             text = { Text(stringResource(R.string.profile_user_dropdown_view_avatar)) }
                                         )
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                if (instance != null) {
+                                                    model.inviteToFriend(profile.location)
+                                                    Toast.makeText(
+                                                        context,
+                                                        context.getString(R.string.profile_user_toast_invite_sent),
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.profile_user_dropdown_invite_self)) }
+                                        )
                                     }
                                 }
                             }

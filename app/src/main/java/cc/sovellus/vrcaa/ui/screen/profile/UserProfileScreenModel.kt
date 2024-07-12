@@ -73,4 +73,10 @@ class UserProfileScreenModel(
             }
         }
     }
+
+    fun inviteToFriend(intent: String) {
+        screenModelScope.launch {
+            api.inviteSelfToInstance(intent)
+        }
+    }
 }
