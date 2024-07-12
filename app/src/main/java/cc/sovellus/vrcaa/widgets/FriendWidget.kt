@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.widgets
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,48 +62,29 @@ class FriendWidget : GlanceAppWidget() {
         provideContent {
             GlanceTheme {
                 when (LocalSize.current) {
-                    MINIFIED_LIST -> WidgetFriendList(showIcons = false)
-                    EXTENDED_LIST -> WidgetFriendList(showIcons = true)
+                    MINIFIED_LIST -> WidgetFriendList(context, showIcons = false)
+                    EXTENDED_LIST -> WidgetFriendList(context, showIcons = true)
                 }
             }
         }
     }
 
     @Composable
-    private fun WidgetFriendList(showIcons: Boolean) {
-        Box(
-            modifier = GlanceModifier.fillMaxSize()
-                .background(imageProvider = ImageProvider(R.drawable.widget_background))
-                .padding(16.dp),
-        ) {
-            if (friends.isEmpty()) {
-                LazyColumn(
-                    horizontalAlignment = Alignment.Horizontal.Start
-                ) {
-                    items(3) {
-                        Box(
-                            modifier = GlanceModifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.Vertical.CenterVertically,
-                                modifier = GlanceModifier.fillMaxWidth()
-                                    .background(imageProvider = ImageProvider(R.drawable.widget_background_accent))
-                                    .padding(4.dp)
-                                    .cornerRadius(10.dp)
-                            ) {
-                                if (showIcons) {
-                                    Image(ImageProvider(R.drawable.icon_placeholder), contentDescription = null, modifier = GlanceModifier.size(32.dp).cornerRadius(50.dp))
-                                }
-                                Column {
-                                    Text(text = "Loading...", modifier = GlanceModifier.padding(horizontal = 4.dp), maxLines = 1)
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
+    private fun WidgetFriendList(context: Context, showIcons: Boolean) {
+        if (friends.isEmpty()) {
+            Box(
+                modifier = GlanceModifier.fillMaxSize()
+                    .background(imageProvider = ImageProvider(R.drawable.widget_background)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(text = context.applicationContext.getString(R.string.widget_name_loading_text))
+            }
+        } else {
+            Box(
+                modifier = GlanceModifier.fillMaxSize()
+                    .background(imageProvider = ImageProvider(R.drawable.widget_background))
+                    .padding(16.dp),
+            ) {
                 LazyColumn(
                     horizontalAlignment = Alignment.Horizontal.Start
                 ) {

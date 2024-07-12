@@ -269,4 +269,5 @@
 
     <!-- Widgets -->
     <string name="widget_name_friend_list">See current friend locations</string>
+    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
 </resources>
