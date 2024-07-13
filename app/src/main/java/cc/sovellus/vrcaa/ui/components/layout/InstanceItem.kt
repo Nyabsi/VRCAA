@@ -15,7 +15,7 @@ import cc.sovellus.vrcaa.helper.LocationHelper
 
 @Composable
 fun InstanceItem(intent: String, instance: Instance, onClick: () -> Unit) {
-    val result = LocationHelper.parseLocationInfo(intent, true)
+    val result = LocationHelper.parseLocationInfo(intent)
     ListItem(
         headlineContent = {
             Text("Capacity: ${instance.nUsers}/${instance.world.capacity}, ${result.instanceType}")

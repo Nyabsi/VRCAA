@@ -21,13 +21,13 @@ object LocationHelper {
     )
 
     // Reference from https://github.com/vrcx-team/VRCX/blob/master/html/src/app.js#L699-L804
-    fun parseLocationInfo(intent: String, isInstance: Boolean = false): LocationInfo {
+    fun parseLocationInfo(intent: String): LocationInfo {
 
         val result = LocationInfo()
 
         val intents = intent.split('~')
 
-        if (!isInstance) {
+        if (intents[0].contains("wrld_")) {
             result.worldId = intents[0].split(':')[0]
             result.instanceId = intents[0].split(':')[1]
         } else {
