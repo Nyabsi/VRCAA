@@ -16,6 +16,7 @@ import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import kotlinx.coroutines.launch
 
 class LoginScreenModel(
@@ -40,6 +41,7 @@ class LoginScreenModel(
                 } else {
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
+                        cache.forceCacheRefresh()
                         preferences.authToken = result.token
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)

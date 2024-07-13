@@ -14,6 +14,7 @@ import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import kotlinx.coroutines.launch
 
 class MfaScreenModel(
@@ -34,6 +35,7 @@ class MfaScreenModel(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                cache.forceCacheRefresh()
                 preferences.twoFactorToken = result
                 val intent = Intent(context, MainActivity::class.java)
                 context.startActivity(intent)
