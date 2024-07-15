@@ -41,16 +41,16 @@
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_languages">Lingue</string>
     <string name="profile_text_no_biography">Nessuna descrizione specificata.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
+    <string name="profile_text_no_languages">Nessuna lingua specificata.</string>
     <string name="profile_user_dropdown_manage_notifications">Gestire le notifiche</string>
     <string name="profile_user_dropdown_view_groups">Visualizza gruppi</string>
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
+    <string name="profile_user_dropdown_view_avatar">Visualizza Avatar</string>
     <string name="profile_user_dropdown_invite_self">Invite myself</string>
     <string name="profile_user_not_found_message">L\'utente non esiste.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
+    <string name="profile_user_avatar_private">Avatar privato!</string>
+    <string name="profile_user_toast_invite_sent">Invito inviato! Controlla il tuo client.</string>
     <!-- Search -->
-    <string name="search_text_result">Results for</string>
+    <string name="search_text_result">Risultati per</string>
     <string name="search_filter_category_worlds">Mondi</string>
     <string name="search_filter_category_worlds_featured">In Evidenza</string>
     <string name="search_filter_category_worlds_sort_by">Ordina per</string>
@@ -62,27 +62,27 @@
     <string name="search_filter_button_reset">Resetta</string>
     <string name="search_filter_button_apply">Applica</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
-        <item>Avatars</item>
-        <item>Groups</item>
+        <item>Mondi</item>
+        <item>Utenti</item>
+        <item>Avatar</item>
+        <item>Gruppi</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="search_failed_to_fetch_users_message">Failed to fetch users, try again.</string>
-    <string name="search_failed_to_fetch_avatars_message">Failed to fetch avatars, try again.</string>
+    <string name="search_failed_to_fetch_worlds_message">Impossibile recuperare i mondi, riprova più tardi.</string>
+    <string name="search_failed_to_fetch_users_message">Impossibile recuperare gli utenti, riprova più tardi.</string>
+    <string name="search_failed_to_fetch_avatars_message">Impossibile recuperare gli avatar, riprova più tardi.</string>
     <!-- Settings -->
-    <string name="settings_item_check_updates">Check for updates</string>
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_logout">Logout</string>
+    <string name="settings_item_check_updates">Controlla aggiornamenti</string>
+    <string name="settings_item_about">Informazioni</string>
+    <string name="settings_item_rich_presence">Rich Presence (Sperimentale)</string>
+    <string name="settings_item_logout">Esci</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_description">No description specified.</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_label_description">Descrizione</string>
+    <string name="world_label_tags">Tag</string>
+    <string name="world_text_no_description">Nessuna descrizione specificata.</string>
+    <string name="world_text_no_tags">L\'autore non ha fornito tag.</string>
+    <string name="world_title_created_at">Data di creazione</string>
+    <string name="world_title_updated_at">Ultimo aggiornamento</string>
+    <string name="world_toast_not_found">Il mondo è privato o non esiste.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
         <item>Instances</item>
@@ -136,14 +136,14 @@
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">has come online.</string>
     <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">has gone offline.</string>
+    <string name="feed_offline_text">{0} è offline.</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
-    <string name="feed_status_label">Status</string>
-    <string name="feed_status_text">changed status to</string>
-    <string name="feed_added_label">Friend Added</string>
-    <string name="feed_added_text">added you as friend.</string>
-    <string name="feed_removed_label">Friend Removed</string>
+    <string name="feed_location_text">è andato a</string>
+    <string name="feed_status_label">Stato</string>
+    <string name="feed_status_text">{0} ha modificato lo stato in {1}</string>
+    <string name="feed_added_label">Amico aggiunto</string>
+    <string name="feed_added_text">ti ha aggiunto come amico.</string>
+    <string name="feed_removed_label">Amico rimosso</string>
     <string name="feed_removed_text">has removed you as friend.</string>
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
