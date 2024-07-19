@@ -43,6 +43,7 @@ class HomeScreenModel(context: Context) : ScreenModel {
     init {
         FriendManager.addFriendListener(listener)
         cache.addCacheListener(cacheListener)
+        fetchContent()
     }
 
     private fun fetchContent() {
