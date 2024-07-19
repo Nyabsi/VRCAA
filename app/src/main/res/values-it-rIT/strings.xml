@@ -2,53 +2,55 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="legal_disclaimer">"VRCAA non è approvato da VRChat Inc. o da alcuno dei suoi affiliati."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
-        <item>Favorite</item>
+        <item>Preferiti</item>
         <item>Online</item>
         <item>Sito web</item>
         <item>Offline</item>
     </string-array>
-    <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
+    <string name="friend_refreshed_favorites_message">Amici preferiti aggiornati.</string>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
-    <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_featured_avatars">Featured Avatars</string>
-    <string name="home_offline_friends">Offline Friends</string>
-    <string name="home_featured_worlds">Featured Worlds</string>
+    <string name="home_active_friends">Amici Online</string>
+    <string name="home_recently_visited">Visitati di recente</string>
+    <string name="home_featured_avatars">Avatar in primo piano</string>
+    <string name="home_offline_friends">Amici offline</string>
+    <string name="home_featured_worlds">Mondi in primo piano</string>
     <string name="home_friend_locations">Friend Locations</string>
     <string name="home_failed_to_fetch_worlds_message">Impossibile recuperare i mondi, riprovare tra poco.</string>
     <string name="home_failed_to_fetch_friends_message">Impossibile recuperare gli amici, riprovare tra poco.</string>
     <string name="home_toast_updated_info">Messo a giorno amici e mondi.</string>
     <!-- Login -->
-    <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
+    <string name="login_text">Accedi a VRC Android Assistant</string>
+    <string name="login_label_username">Nome utente o indirizzo mail</string>
     <string name="login_label_password">Password</string>
-    <string name="login_button_text">Login</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
-    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
+    <string name="login_button_text">Accedi</string>
+    <string name="login_toast_wrong_credentials">Nome utente o password errati.</string>
+    <string name="login_toast_wrong_code">Impossibile verificare, controlla nuovamente il codice.</string>
     <!-- Two Auth -->
-    <string name="auth_text_email">Input the code sent to your e-mail</string>
-    <string name="auth_text_app">Input the code from your Authenticator app</string>
-    <string name="auth_label_code">2FA Code</string>
-    <string name="auth_button_text">Verify</string>
+    <string name="auth_text_email">Inserisci il codice inviato alla tua e-mail</string>
+    <string name="auth_text_app">Inserisci il codice dalla tua app di autenticazione</string>
+    <string name="auth_label_code">Codice di verifica a due fattori</string>
+    <string name="auth_button_text">Verifica</string>
     <string name="auth_button_paste">Incolla</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
+    <string name="main_search_placeholder">Cerca mondi, utenti e avatar…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Posizione attuale</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_languages">Languages</string>
-    <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
+    <string name="profile_label_languages">Lingue</string>
+    <string name="profile_text_no_biography">Nessuna descrizione specificata.</string>
+    <string name="profile_text_no_languages">Nessuna lingua specificata.</string>
     <string name="profile_user_dropdown_manage_notifications">Gestire le notifiche</string>
     <string name="profile_user_dropdown_view_groups">Visualizza gruppi</string>
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
+    <string name="profile_user_dropdown_view_avatar">Visualizza Avatar</string>
+    <string name="profile_user_dropdown_invite_self">Invite myself</string>
     <string name="profile_user_not_found_message">L\'utente non esiste.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
+    <string name="profile_user_avatar_private">Avatar privato!</string>
+    <string name="profile_user_toast_invite_sent">Invito inviato! Controlla il tuo client.</string>
     <!-- Search -->
-    <string name="search_text_result">Results for</string>
+    <string name="search_text_result">Risultati per</string>
     <string name="search_filter_category_worlds">Mondi</string>
     <string name="search_filter_category_worlds_featured">In Evidenza</string>
     <string name="search_filter_category_worlds_sort_by">Ordina per</string>
@@ -60,27 +62,27 @@
     <string name="search_filter_button_reset">Resetta</string>
     <string name="search_filter_button_apply">Applica</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
-        <item>Avatars</item>
-        <item>Groups</item>
+        <item>Mondi</item>
+        <item>Utenti</item>
+        <item>Avatar</item>
+        <item>Gruppi</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="search_failed_to_fetch_users_message">Failed to fetch users, try again.</string>
-    <string name="search_failed_to_fetch_avatars_message">Failed to fetch avatars, try again.</string>
+    <string name="search_failed_to_fetch_worlds_message">Impossibile recuperare i mondi, riprova più tardi.</string>
+    <string name="search_failed_to_fetch_users_message">Impossibile recuperare gli utenti, riprova più tardi.</string>
+    <string name="search_failed_to_fetch_avatars_message">Impossibile recuperare gli avatar, riprova più tardi.</string>
     <!-- Settings -->
-    <string name="settings_item_check_updates">Check for updates</string>
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_logout">Logout</string>
+    <string name="settings_item_check_updates">Controlla aggiornamenti</string>
+    <string name="settings_item_about">Informazioni</string>
+    <string name="settings_item_rich_presence">Rich Presence (Sperimentale)</string>
+    <string name="settings_item_logout">Esci</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_description">No description specified.</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_label_description">Descrizione</string>
+    <string name="world_label_tags">Tag</string>
+    <string name="world_text_no_description">Nessuna descrizione specificata.</string>
+    <string name="world_text_no_tags">L\'autore non ha fornito tag.</string>
+    <string name="world_title_created_at">Data di creazione</string>
+    <string name="world_title_updated_at">Ultimo aggiornamento</string>
+    <string name="world_toast_not_found">Il mondo è privato o non esiste.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
         <item>Instances</item>
@@ -134,14 +136,14 @@
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">has come online.</string>
     <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">has gone offline.</string>
+    <string name="feed_offline_text">{0} è offline.</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
-    <string name="feed_status_label">Status</string>
-    <string name="feed_status_text">changed status to</string>
-    <string name="feed_added_label">Friend Added</string>
-    <string name="feed_added_text">added you as friend.</string>
-    <string name="feed_removed_label">Friend Removed</string>
+    <string name="feed_location_text">è andato a</string>
+    <string name="feed_status_label">Stato</string>
+    <string name="feed_status_text">{0} ha modificato lo stato in {1}</string>
+    <string name="feed_added_label">Amico aggiunto</string>
+    <string name="feed_added_text">ti ha aggiunto come amico.</string>
+    <string name="feed_removed_label">Amico rimosso</string>
     <string name="feed_removed_text">has removed you as friend.</string>
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
@@ -227,4 +229,5 @@
     <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">See current friend locations</string>
+    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
 </resources>

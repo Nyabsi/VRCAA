@@ -45,8 +45,10 @@
     <string name="profile_user_dropdown_manage_notifications">Zarządzanie powiadomieniami</string>
     <string name="profile_user_dropdown_view_groups">Wyświetl grupy</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
+    <string name="profile_user_dropdown_invite_self">Invite myself</string>
     <string name="profile_user_not_found_message">Użytkownik nie istnieje.</string>
     <string name="profile_user_avatar_private">Avatar is private!</string>
+    <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
     <!-- Search -->
     <string name="search_text_result">Wyniki dla</string>
     <string name="search_filter_category_worlds">Światy</string>
@@ -227,4 +229,5 @@
     <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">See current friend locations</string>
+    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
 </resources>
