@@ -1,0 +1,18 @@
+New:
+
+- Added option to Invite yourself in Friends's profile, if they are in valid instance
+
+Fixes:
+
+- UI doesn't update when changing profile information
+- Application crashing when attempting to parse user location(s)
+- Home screen may not load content after restarting UI
+- Cache may not reload after expired session
+
+Misc:
+
+- Improve HTTP request handling on slower connections
+- Decrease memory usage when caching world information
+- More Italian translation strings (Credit: AlphieAlph)
+
+If you enjoy using VRCAA, please consider contributing through Github or Crowdin!
