@@ -90,7 +90,7 @@ class MainActivity : ComponentActivity() {
                 disposeNestedNavigators = false,
                 disposeSteps = false
             ),
-            onBackPressed = { false }
+            onBackPressed = { true }
         ) { navigator ->
             SlideTransition(navigator = navigator)
         }
