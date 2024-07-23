@@ -124,7 +124,6 @@ dependencies {
     implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.1.0-beta02")
     implementation("cafe.adriel.voyager:voyager-tab-navigator:1.1.0-beta02")
     implementation("cafe.adriel.voyager:voyager-transitions:1.1.0-beta02")
-    implementation("cafe.adriel.voyager:voyager-livedata:1.1.0-alpha02")
     implementation("androidx.activity:activity-ktx:1.9.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
     implementation("androidx.compose.material:material:1.6.8")
