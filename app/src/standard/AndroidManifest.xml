@@ -24,19 +24,7 @@
         >
 
         <activity
-            android:name=".activity.LoginActivity"
-            android:exported="true"
-            android:theme="@style/Theme.VRCAA"
-            android:fitsSystemWindows="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".activity.CrashActivity"
-            android:exported="true"
             android:theme="@style/Theme.VRCAA"
             android:fitsSystemWindows="true">
         </activity>
@@ -46,6 +34,10 @@
             android:exported="true"
             android:theme="@style/Theme.VRCAA"
             android:fitsSystemWindows="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <service
@@ -53,13 +45,14 @@
             android:foregroundServiceType="dataSync"/>
 
         <receiver android:name=".widgets.FriendWidgetReceiver"
-            android:exported="true">
+            android:exported="true"
+        >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/friend_widget" />
+                android:resource="@xml/friend_widget"/>
         </receiver>
     </application>
 </manifest>

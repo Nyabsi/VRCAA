@@ -19,11 +19,11 @@ import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
-import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
+import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
 
@@ -33,8 +33,38 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val intent = Intent(this, PipelineService::class.java)
-        startService(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
+            }
+        }
+
+        val invalidSession = intent.extras?.getBoolean("INVALID_SESSION")
+        val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
+
+        if (invalidSession == true) {
+            Toast.makeText(
+                this,
+                getString(R.string.api_session_has_expired_text),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        val token = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE).authToken
+        api.setToken(token)
+
+        if (token.isNotBlank() && invalidSession == null) {
+            val intent = Intent(this, PipelineService::class.java)
+            startService(intent)
+        }
 
         setContent {
             Theme {
@@ -42,22 +72,27 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Content()
+                    Content(invalidSession == null || terminateSession == null)
                 }
             }
         }
     }
 
     @Composable
-    fun Content() {
+    fun Content(authenticated: Boolean) {
         Navigator(
-            screen = NavigationScreen(),
+            screen = if (authenticated) {
+                NavigationScreen()
+            } else {
+                LoginScreen()
+            },
             disposeBehavior = NavigatorDisposeBehavior(
                 disposeNestedNavigators = false,
-                disposeSteps = true
-            )
+                disposeSteps = false
+            ),
+            onBackPressed = { false }
         ) { navigator ->
-            SlideTransition(navigator)
+            SlideTransition(navigator = navigator)
         }
     }
 }

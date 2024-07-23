@@ -38,6 +38,7 @@ class MfaScreenModel(
                 cache.forceCacheRefresh()
                 preferences.twoFactorToken = result
                 val intent = Intent(context, MainActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }
         }

@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.bundleOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.activity.LoginActivity
+import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
@@ -52,9 +52,8 @@ class NavigationScreenModel(
                 val bundle = bundleOf()
                 bundle.putBoolean("INVALID_SESSION", true)
 
-                val intent = Intent(context, LoginActivity::class.java)
+                val intent = Intent(context, MainActivity::class.java)
                 intent.putExtras(bundle)
-                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
 
                 if (context is Activity) {
