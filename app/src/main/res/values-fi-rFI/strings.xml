@@ -213,6 +213,7 @@
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
     <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_exit_toast_label">Press again to quit.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
