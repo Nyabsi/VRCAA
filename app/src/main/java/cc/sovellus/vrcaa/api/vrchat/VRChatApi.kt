@@ -550,10 +550,7 @@ class VRChatApi : BaseClient() {
     }
 
     suspend fun getUserGroups(
-        userId: String,
-        n: Int = 50,
-        offset: Int = 0,
-        groups: ArrayList<UserGroups.Group> = arrayListOf()
+        userId: String
     ): ArrayList<UserGroups.Group> {
 
         val headers = Headers.Builder()
@@ -562,24 +559,20 @@ class VRChatApi : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "$apiBase/users/$userId/groups&n=$n&offset=$offset",
+            url = "$apiBase/users/$userId/groups",
             headers = headers,
             body = null
         )
 
         val response = handleRequest(result)
 
-        val temp: ArrayList<UserGroups.Group> = groups
+        val groups: ArrayList<UserGroups.Group> = arrayListOf()
         val json = Gson().fromJson(response, UserGroups::class.java)
         json?.forEach { group ->
-            temp.add(group)
+            groups.add(group)
         }
 
-        return if (json == null) {
-            groups
-        } else {
-            getUserGroups(userId, n, offset + n, groups)
-        }
+        return groups
     }
 
     suspend fun getGroup(groupId: String): Group? {
