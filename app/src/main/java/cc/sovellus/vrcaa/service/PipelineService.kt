@@ -138,6 +138,17 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendLocation -> {
                     val update = msg.obj as FriendLocation
 
+                    update.world?.let {
+                        if (cache.worldExists(it.id))
+                            cache.updateWorld(update.world)
+                        else
+                            cache.addWorld(update.world)
+                    }
+
+                    update.location?.let {
+                        FriendManager.updateLocation(update.userId, update.location)
+                    }
+
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
                     if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null) {
@@ -155,33 +166,20 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
-                        if (update.user.location != update.location) {
-                            launch {
-                                FeedManager.addFeed(
-                                    FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
-                                        .apply {
-                                            friendId = update.userId
-                                            friendName = update.user.displayName
-                                            travelDestination = LocationHelper.getReadableLocation(update.user.location)
-                                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                                        }
-                                )
-                            }
-
-                            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                            context.sendBroadcast(intent)
+                        launch {
+                            FeedManager.addFeed(
+                                FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
+                                    .apply {
+                                        friendId = update.userId
+                                        friendName = update.user.displayName
+                                        travelDestination = LocationHelper.getReadableLocation(update.location)
+                                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                                    }
+                            )
                         }
-                    }
 
-                    update.world?.let {
-                        if (cache.worldExists(it.id))
-                            cache.updateWorld(update.world)
-                        else
-                            cache.addWorld(update.world)
-                    }
-
-                    update.location?.let {
-                        FriendManager.updateLocation(update.userId, update.location)
+                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                        context.sendBroadcast(intent)
                     }
                 }
 
@@ -217,7 +215,7 @@ class PipelineService : Service(), CoroutineScope {
                             FeedManager.addFeed(
                                 FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                     friendId = update.userId
-                                    friendName = update.user.displayName.toString()
+                                    friendName = update.user.displayName
                                     friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                                         .toString()
                                     friendStatus = StatusHelper.getStatusFromString(update.user.status)
