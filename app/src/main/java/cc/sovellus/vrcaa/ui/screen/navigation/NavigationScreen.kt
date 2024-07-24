@@ -133,11 +133,12 @@ class NavigationScreen : Screen {
             BackHandler(
                 enabled = true,
                 onBack = {
+                    pressBackCounter++
                     if (model.tabHistory.isNotEmpty())
                     {
                         val tab = model.tabHistory.last()
                         tabNavigator.current = tab
-                        model.tabHistory.removeIf { it.key == tab.key }
+                        model.tabHistory.removeLast()
                         pressBackCounter = 0
                     }
                     else
@@ -157,7 +158,6 @@ class NavigationScreen : Screen {
                             ).show()
                         }
                     }
-                    pressBackCounter++
                 }
             )
 
