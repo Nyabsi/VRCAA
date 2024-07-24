@@ -1,0 +1,22 @@
+New:
+
+- French Translation (credit: guerryer)
+
+Fixes:
+
+- Now you can navigate back through tabs & sections
+- UI state may not recompose
+- User groups didn't load due to bad request
+- user location was empty in Feed
+- Don't show duplicate Friend Locations
+- Prevent duplicate Feed events
+
+Changes:
+
+- Favorite friends are now shown regardless of status
+- Friend Locations is now above Offline Friends
+
+Misc:
+
+- change PipelineService type to specialUse
+- target Android 15
