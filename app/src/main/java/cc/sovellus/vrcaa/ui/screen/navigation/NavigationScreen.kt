@@ -3,14 +3,12 @@ package cc.sovellus.vrcaa.ui.screen.navigation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -68,7 +66,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
@@ -113,7 +110,8 @@ class NavigationScreen : Screen {
         }
 
         val tabs = listOf(HomeTab, FriendsTab, FeedTab, ProfileTab, SettingsTab)
-        var previousTab by remember { mutableStateOf(tabs[0]) }
+        // Yes, I know. This is not supposed to re-cause composition.
+        val tabHistory = mutableListOf<Tab>()
 
         TabNavigator(
             HomeTab,
@@ -137,9 +135,11 @@ class NavigationScreen : Screen {
             BackHandler(
                 enabled = true,
                 onBack = {
-                    if (previousTab != tabNavigator.current)
+                    if (tabHistory.isNotEmpty())
                     {
-                        tabNavigator.current = previousTab
+                        val tab = tabHistory.last()
+                        tabNavigator.current = tab
+                        tabHistory.removeIf { it.key == tab.key }
                         pressBackCounter = 0
                     }
                     else
@@ -511,7 +511,7 @@ class NavigationScreen : Screen {
                             NavigationBarItem(
                                 selected = tabNavigator.current.key == tab.key,
                                 onClick = {
-                                    previousTab = tabNavigator.current
+                                    tabHistory.add(tabNavigator.current)
                                     tabNavigator.current = tab
                                 },
                                 icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
