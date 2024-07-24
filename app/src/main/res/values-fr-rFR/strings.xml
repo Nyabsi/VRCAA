@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="result_not_found">Il n\'y a rien d\'autre que des poulets ici !</string>
+    <string name="legal_disclaimer">"VRCAA n'est pas endossée par VRChat Inc. ou l'une de ses sociétés affiliées."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
-        <item>Favorite</item>
+        <item>Favoris</item>
         <item>Connecté</item>
         <item>Site Web</item>
         <item>Déconnecté</item>
@@ -62,8 +62,8 @@
     <string name="search_filter_button_reset">Réinitialiser</string>
     <string name="search_filter_button_apply">Appliquer</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
+        <item>Mondes</item>
+        <item>Utilisateurs</item>
         <item>Avatars</item>
         <item>Groupes</item>
     </string-array>
@@ -77,50 +77,50 @@
     <string name="settings_item_logout">Se déconnecter</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_description">No description specified.</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
+    <string name="world_label_tags">Mots-clés</string>
+    <string name="world_text_no_description">Aucune description spécifiée.</string>
+    <string name="world_text_no_tags">L\'auteur n\'a pas fourni de mots-clés.</string>
+    <string name="world_title_created_at">Date de création</string>
+    <string name="world_title_updated_at">Dernière mise à jour</string>
     <string name="world_toast_not_found">Monde privé ou il n\'existe pas.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
         <item>Instances</item>
     </string-array>
     <string name="world_author_label">De %1$s</string>
-    <string name="world_instance_invite_dialog_title">Êtes-vous sûr(e) ?</string>
+    <string name="world_instance_invite_dialog_title">Êtes-vous sûr ?</string>
     <string name="world_instance_invite_dialog_description">Vous êtes sur le point de vous envoyer une invitation pour cette instance, voulez-vous continuer ?</string>
     <string name="world_instance_no_public_instances_message">Aucune instance publique</string>
     <string name="world_instance_failed_to_fetch_instance_message">Impossible de récupérer l\'instance, veuillez réessayer.</string>
     <!-- Tabs -->
-    <string name="tabs_label_friends">Friends</string>
-    <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
+    <string name="tabs_label_friends">Amis</string>
+    <string name="tabs_label_home">Domicile</string>
+    <string name="tabs_label_feed">Activité</string>
+    <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
     <string name="tabs_label_settings">Paramètres</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="notification_service_title_online">Friend has came online!</string>
+    <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
+    <string name="notification_service_title_online">Ami connecté !</string>
     <string name="notification_service_description_online">Votre ami %1$s, est connecté !</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
-    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
-    <string name="notification_service_title_location">Friend changed location!</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
-    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
-    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
-    <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
-    <string name="notification_title_player">\'s Notifications</string>
-    <string name="notification_label_enable">Enable Notifications</string>
-    <string name="notification_label_intent_online">Online Notifications</string>
-    <string name="notification_label_intent_offline">Offline Notifications</string>
-    <string name="notification_label_intent_location">Location Notifications</string>
-    <string name="notification_label_intent_status">Status Change Notifications</string>
-    <string name="notification_service_title_status">Friend changed status!</string>
-    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
+    <string name="notification_service_title_offline">Ami déconnecté !</string>
+    <string name="notification_service_description_offline">Votre ami, %1$s s\'est déconnecté !</string>
+    <string name="notification_service_title_location">Ami a changé d\'instance !</string>
+    <string name="notification_service_description_location">Votre ami, %1$s est allé à %2$s.</string>
+    <string name="notification_service_title_friend_removed">Votre ami vous a supprimé de ça liste d\'ami.</string>
+    <string name="notification_service_description_friend_removed">Votre ami, %1$s n\'est plus votre ami :(</string>
+    <string name="notification_service_title_friend_added">Vous avez un nouvel ami !</string>
+    <string name="notification_service_description_friend_added">%1$s est maintenant votre ami !</string>
+    <string name="notification_title_player">Notifications</string>
+    <string name="notification_label_enable">Activer les notifications</string>
+    <string name="notification_label_intent_online">En ligne</string>
+    <string name="notification_label_intent_offline">Hors-ligne</string>
+    <string name="notification_label_intent_location">Emplacement</string>
+    <string name="notification_label_intent_status">Changement de statut</string>
+    <string name="notification_service_title_status">Ami a changé de statut !</string>
+    <string name="notification_service_description_status">Votre ami, %1$s a changé de statut de %2$s pour %3$s.</string>
     <!-- Avatars -->
-    <string name="avatar_dropdown_label_select">Change to Avatar</string>
+    <string name="avatar_dropdown_label_select">Changer d\'avatar</string>
     <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
     <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
     <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
