@@ -11,6 +11,7 @@ class FriendsScreenModel : ScreenModel {
     private var friendsStateFlow = MutableStateFlow(listOf<Friend>())
     var friends = friendsStateFlow.asStateFlow()
 
+    var navigationStack = mutableListOf<Int>()
     var currentIndex = mutableIntStateOf(0)
 
     private val listener = object : FriendManager.FriendListener {

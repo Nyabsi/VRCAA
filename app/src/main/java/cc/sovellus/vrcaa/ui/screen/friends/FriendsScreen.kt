@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -25,6 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
@@ -37,7 +42,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
-import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -57,6 +61,15 @@ class FriendsScreen : Screen {
 
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
+
+        BackHandler(
+            enabled = model.navigationStack.isNotEmpty(),
+            onBack = {
+                val index = model.navigationStack.last()
+                model.currentIndex.intValue = index
+                model.navigationStack.removeIf { it == index }
+            }
+        )
 
         Column(
             modifier = Modifier
@@ -86,6 +99,7 @@ class FriendsScreen : Screen {
                         },
                         onCheckedChange = {
                             model.currentIndex.intValue = index
+                            model.navigationStack.add(model.currentIndex.intValue)
                         },
                         checked = index == model.currentIndex.intValue
                     ) {
