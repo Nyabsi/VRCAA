@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
@@ -42,7 +43,7 @@ class SearchResultScreenModel(
     private var avatars: ArrayList<JustHPartyProvider.Avatar>? = null
     private var groups: ArrayList<Group>? = null
 
-    var navigationStack = mutableListOf<Int>()
+    var navigationStack = SnapshotStateList<Int>()
     var currentIndex = mutableIntStateOf(0)
 
     init {
