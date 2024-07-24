@@ -33,7 +33,7 @@
     <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_label_code">2FA Code</string>
     <string name="auth_button_text">Verify</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_button_paste">Coller</string>
     <!-- Main -->
     <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
     <!-- Profile -->
