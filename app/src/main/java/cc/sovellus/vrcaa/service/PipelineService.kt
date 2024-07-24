@@ -40,6 +40,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 
 class PipelineService : Service(), CoroutineScope {
@@ -55,6 +58,14 @@ class PipelineService : Service(), CoroutineScope {
 
     private var pipeline: VRChatPipeline? = null
     private var gateway: DiscordGateway? = null
+
+    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
+
+    private var refreshTask: Runnable = Runnable {
+        pipeline?.disconnect()
+        pipeline?.connect()
+        cache.forceCacheRefresh()
+    }
 
     private val listener = object : VRChatPipeline.SocketListener {
         override fun onMessage(message: Any?) {
@@ -351,7 +362,6 @@ class PipelineService : Service(), CoroutineScope {
         launch {
             api.getAuth()?.let { token ->
                 pipeline = VRChatPipeline(token)
-                pipeline?.connect()
                 pipeline?.setListener(listener)
             }
 
@@ -360,6 +370,8 @@ class PipelineService : Service(), CoroutineScope {
                 gateway?.connect()
             }
         }
+
+        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
         val builder = NotificationCompat.Builder(this, NotificationManager.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
@@ -393,6 +405,8 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     companion object {
-        private const val NOTIFICATION_ID = 42069
+        private const val NOTIFICATION_ID: Int = 42069
+        private const val INITIAL_INTERVAL: Long = 1000
+        private const val RESTART_INTERVAL: Long = 1800000
     }
 }

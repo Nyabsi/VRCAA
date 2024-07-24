@@ -39,7 +39,7 @@ class VRChatCache : CoroutineScope {
         this.listeners.add(listener)
     }
 
-    private fun refreshCacheInternal() {
+    fun forceCacheRefresh() {
         launch {
             profile = api.getSelf()
 
@@ -94,22 +94,6 @@ class VRChatCache : CoroutineScope {
                 listener?.cacheUpdated()
             }
         }
-    }
-
-    private val cacheWorker: Runnable = Runnable {
-        refreshCacheInternal()
-        Thread.sleep(1800000)
-    }
-
-    private var cacheThread: Thread? = null
-
-    init {
-        cacheThread = Thread(cacheWorker)
-        cacheThread?.start()
-    }
-
-    fun forceCacheRefresh() {
-        refreshCacheInternal()
     }
 
     fun worldExists(worldId: String): Boolean {

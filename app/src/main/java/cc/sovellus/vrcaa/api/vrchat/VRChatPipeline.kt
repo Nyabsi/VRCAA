@@ -25,19 +25,10 @@ class VRChatPipeline(
     token: String
 ) {
 
-    private lateinit var socket: WebSocket
+    private var socket: WebSocket? = null
     private val client: OkHttpClient by lazy { OkHttpClient() }
     private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
     private var shouldReconnect: Boolean = false
-
-    private val restartWorker: Runnable = Runnable {
-        Thread.sleep(RESTART_INTERVAL)
-
-        disconnect()
-        connect()
-    }
-
-    private var restartThread: Thread? = null
 
     interface SocketListener {
         fun onMessage(message: Any?)
@@ -52,9 +43,6 @@ class VRChatPipeline(
             ) {
                 Log.d("VRCAA", "Connected to the VRChat pipeline.")
                 shouldReconnect = true
-
-                restartThread = Thread(restartWorker)
-                restartThread?.start()
             }
 
             override fun onMessage(
@@ -164,7 +152,7 @@ class VRChatPipeline(
 
     fun disconnect() {
         shouldReconnect = false
-        socket.close(1000, "")
+        socket?.close(1000, null)
     }
 
     fun setListener(listener: SocketListener) {
@@ -172,7 +160,6 @@ class VRChatPipeline(
     }
 
     companion object {
-        private const val RESTART_INTERVAL: Long = 1800000
         private const val RECONNECTION_INTERVAL: Long = 3000
     }
 }
