@@ -6,26 +6,26 @@
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favoris</item>
-        <item>Connecté</item>
+        <item>En ligne</item>
         <item>Site Web</item>
         <item>Déconnecté</item>
     </string-array>
     <string name="friend_refreshed_favorites_message">Amis favoris actualisés.</string>
     <!-- Home -->
-    <string name="home_active_friends">Amis connectés</string>
+    <string name="home_active_friends">Amis en ligne</string>
     <string name="home_recently_visited">Récemment visités</string>
     <string name="home_featured_avatars">Avatars en vedette</string>
-    <string name="home_offline_friends">Amis hors-ligne</string>
+    <string name="home_offline_friends">Amis hors ligne</string>
     <string name="home_featured_worlds">Mondes en vedette</string>
     <string name="home_friend_locations">Emplacements de vos amis</string>
-    <string name="home_failed_to_fetch_worlds_message">Impossible de récupérer les mondes, veuillez réessayer.</string>
-    <string name="home_failed_to_fetch_friends_message">Impossible de récupérer vos amis, veuillez réessayer.</string>
+    <string name="home_failed_to_fetch_worlds_message">Échec de la récupération des mondes, veuillez réessayer.</string>
+    <string name="home_failed_to_fetch_friends_message">Échec de la récupération de vos amis, veuillez réessayer.</string>
     <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
     <string name="login_text">Se connecter à l\'assistance VRC pour Android</string>
     <string name="login_label_username">Nom d\'utilisateur ou adresse email</string>
     <string name="login_label_password">Mot de passe</string>
-    <string name="login_button_text">Connexion</string>
+    <string name="login_button_text">Se connecter</string>
     <string name="login_toast_wrong_credentials">Nom d\'utilisateur ou mot de passe incorrect.</string>
     <string name="login_toast_wrong_code">Échec de la vérification, vérifier à nouveau le code.</string>
     <!-- Two Auth -->
@@ -67,13 +67,13 @@
         <item>Avatars</item>
         <item>Groupes</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Impossible de récupérer les mondes, veuillez réessayer.</string>
-    <string name="search_failed_to_fetch_users_message">Impossible de récupérer les utilisateurs, veuillez réessayer.</string>
-    <string name="search_failed_to_fetch_avatars_message">Impossible de récupérer les avatars, veuillez réessayer.</string>
+    <string name="search_failed_to_fetch_worlds_message">Échec de la récupération des mondes, veuillez réessayer.</string>
+    <string name="search_failed_to_fetch_users_message">Échec de la récupération des utilisateurs, veuillez réessayer.</string>
+    <string name="search_failed_to_fetch_avatars_message">Échec de la récupération des avatars, veuillez réessayer.</string>
     <!-- Settings -->
     <string name="settings_item_check_updates">Rechercher des mises à jour</string>
     <string name="settings_item_about">À propos</string>
-    <string name="settings_item_rich_presence">Présence riche (Expérimental)</string>
+    <string name="settings_item_rich_presence">Rich Presence (Expérimental)</string>
     <string name="settings_item_logout">Se déconnecter</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
@@ -87,11 +87,11 @@
         <item>Info</item>
         <item>Instances</item>
     </string-array>
-    <string name="world_author_label">De %1$s</string>
+    <string name="world_author_label">Fait par %1$s</string>
     <string name="world_instance_invite_dialog_title">Êtes-vous sûr ?</string>
     <string name="world_instance_invite_dialog_description">Vous êtes sur le point de vous envoyer une invitation pour cette instance, voulez-vous continuer ?</string>
     <string name="world_instance_no_public_instances_message">Aucune instance publique</string>
-    <string name="world_instance_failed_to_fetch_instance_message">Impossible de récupérer l\'instance, veuillez réessayer.</string>
+    <string name="world_instance_failed_to_fetch_instance_message">Échec de la récupération de l\'instance, veuillez réessayer.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Amis</string>
     <string name="tabs_label_home">Domicile</string>
@@ -107,7 +107,7 @@
     <string name="notification_service_description_offline">Votre ami, %1$s s\'est déconnecté !</string>
     <string name="notification_service_title_location">Ami a changé d\'instance !</string>
     <string name="notification_service_description_location">Votre ami, %1$s est allé à %2$s.</string>
-    <string name="notification_service_title_friend_removed">Votre ami vous a supprimé de ça liste d\'ami.</string>
+    <string name="notification_service_title_friend_removed">Votre ami vous a retiré de ses amis.</string>
     <string name="notification_service_description_friend_removed">Votre ami, %1$s n\'est plus votre ami :(</string>
     <string name="notification_service_title_friend_added">Vous avez un nouvel ami !</string>
     <string name="notification_service_description_friend_added">%1$s est maintenant votre ami !</string>
@@ -121,63 +121,63 @@
     <string name="notification_service_description_status">Votre ami, %1$s a changé de statut de %2$s pour %3$s.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Changer d\'avatar</string>
-    <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
-    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
-    <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
-    <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
+    <string name="avatar_dropdown_label_favorite">Ajouter aux favoris</string>
+    <string name="avatar_dropdown_label_remove_favorite">Supprimer des favoris</string>
+    <string name="avatar_dropdown_toast_not_implemented">Cette fonctionnalité n\'est pas encore implémentée ! Revenez plus tard.</string>
+    <string name="avatar_dropdown_toast_select_avatar">Avatar sélectionné !</string>
     <string name="avatar_title_description">Description</string>
-    <string name="avatar_title_created_at">Creation Date</string>
-    <string name="avatar_title_updated_at">Last Updated</string>
-    <string name="avatar_title_content_labels">Content Labels</string>
-    <string name="avatar_text_author">By %1$s</string>
-    <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
-    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
+    <string name="avatar_title_created_at">Date de création</string>
+    <string name="avatar_title_updated_at">Dernière mise à jour</string>
+    <string name="avatar_title_content_labels">Avertissements de contenu</string>
+    <string name="avatar_text_author">Fait par %1$s</string>
+    <string name="avatar_text_content_labels_not_found">Aucun avertissement de contenu n\'a été spécifié pour l\'avatar.</string>
+    <string name="avatar_toast_avatar_not_found_message">L\'avatar est soit privé ou invalide.</string>
     <!-- Feed -->
-    <string name="feed_online_label">Online</string>
-    <string name="feed_online_text">has come online.</string>
-    <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">has gone offline.</string>
+    <string name="feed_online_label">En ligne</string>
+    <string name="feed_online_text">est en ligne.</string>
+    <string name="feed_offline_label">Hors ligne</string>
+    <string name="feed_offline_text">est hors ligne.</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
-    <string name="feed_status_label">Status</string>
-    <string name="feed_status_text">changed status to</string>
-    <string name="feed_added_label">Friend Added</string>
-    <string name="feed_added_text">added you as friend.</string>
-    <string name="feed_removed_label">Friend Removed</string>
-    <string name="feed_removed_text">has removed you as friend.</string>
-    <string name="feed_friend_request_label">Friend Request</string>
-    <string name="feed_friend_request_text">wants to add you as friend.</string>
+    <string name="feed_location_text">est allé à</string>
+    <string name="feed_status_label">Statut</string>
+    <string name="feed_status_text">a changé de statut pour</string>
+    <string name="feed_added_label">Ami ajouté</string>
+    <string name="feed_added_text">vous a ajouté en tant qu\'ami.</string>
+    <string name="feed_removed_label">Ami supprimé</string>
+    <string name="feed_removed_text">vous a retiré de ses amis.</string>
+    <string name="feed_friend_request_label">Demande d\'ami</string>
+    <string name="feed_friend_request_text">veut vous ajouter comme ami.</string>
     <!-- About -->
-    <string name="about_page_title">About</string>
-    <string name="about_page_version_title">You\'re currently running on version: %1$s</string>
-    <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
-    <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
-    <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_translate_description">Help translating VRCAA to your language.</string>
-    <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
-    <string name="about_page_battery_optimizations_description">Only use if this if you have to.</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
-    <string name="about_page_crash_title">Kill the application</string>
-    <string name="license_title">Open Source Licenses</string>
-    <string name="about_page_developer_mode">Enable Developer Mode</string>
+    <string name="about_page_title">À propos</string>
+    <string name="about_page_version_title">Vous utilisez actuellement la version : %1$s</string>
+    <string name="about_page_open_source_licenses_title">Licences Open Source</string>
+    <string name="about_page_open_source_licenses_description">Voir les bibliothèques sur lesquelles VRCAA a été construit.</string>
+    <string name="about_page_translate_title">Contribuer à la traduction</string>
+    <string name="about_page_translate_description">Aidez-nous à traduire VRCAA dans votre langue.</string>
+    <string name="about_page_battery_optimizations_title">Désactiver les optimisations de la batterie</string>
+    <string name="about_page_battery_optimizations_description">Ne l\'utilisez qu\'en cas de nécessité.</string>
+    <string name="about_page_battery_optimizations_toast">Les optimisations de la batterie sont déjà désactivées.</string>
+    <string name="about_page_crash_title">Fermer l\'application</string>
+    <string name="license_title">Licences Open Source</string>
+    <string name="about_page_developer_mode">Activer le mode développeur</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
-    <string name="api_avatar_select_failed">"Failed to select avatar."</string>
+    <string name="api_session_has_expired_text">Votre session a expiré, veuillez vous reconnecter.</string>
+    <string name="api_avatar_select_failed">"Échec de la sélection de l'avatar."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Login to Discord</string>
-    <string name="discord_login_title_verify">Verify 2FA</string>
-    <string name="discord_login_label_username">Username</string>
-    <string name="discord_login_label_password">Password</string>
-    <string name="discord_login_toast_wrong_credentials">Username or password is invalid.</string>
-    <string name="discord_login_toast_wrong_code">The MFA code is wrong.</string>
-    <string name="discord_login_button_login">Login</string>
-    <string name="discord_login_button_verify">Verify</string>
-    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable">Enable Rich Presence</string>
+    <string name="discord_login_title">Se connecter à Discord</string>
+    <string name="discord_login_title_verify">Vérifier 2FA</string>
+    <string name="discord_login_label_username">Nom d’utilisateur</string>
+    <string name="discord_login_label_password">Mot de passe</string>
+    <string name="discord_login_toast_wrong_credentials">Nom d\'utilisateur ou mot de passe incorrect.</string>
+    <string name="discord_login_toast_wrong_code">Échec de la vérification, vérifier à nouveau le code.</string>
+    <string name="discord_login_button_login">Se connecter</string>
+    <string name="discord_login_button_verify">Vérifier</string>
+    <string name="discord_login_restarted_service_toast">Redémarrez le service pour prendre effet.</string>
+    <string name="discord_login_label_enable">Activé Rich Presence</string>
     <string name="discord_login_label_set_webhook">Set Webhook Url</string>
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable">Shows your current status in discord</string>
-    <string name="discord_login_label_logout">Logout</string>
+    <string name="discord_login_label_logout">Se déconnecter</string>
     <string name="discord_login_description_logout">Revoke your access token</string>
     <!-- Crash -->
     <string name="crash_title_text">The application encountered fatal error.</string>
@@ -191,23 +191,23 @@
     </string-array>
     <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
     <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
+    <string name="group_page_label_rules">Règles</string>
     <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
     <string name="group_page_dropdown_request_invite">Request Invite</string>
     <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
     <string name="group_page_dropdown_join_group">Join Group</string>
     <string name="group_page_dropdown_leave_group">Leave Group</string>
     <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
+    <string name="group_page_toast_invite_requested_fail">Échec de la demande d\'invitation.</string>
     <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Échec de l\'annulation de la demande d\'invitation.</string>
     <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
+    <string name="group_page_toast_join_group_fail">Échec de la participation au groupe.</string>
     <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
+    <string name="group_page_toast_leave_group_fail">Échec de la sortie du groupe.</string>
     <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_user_failed_to_fetch_groups">Échec de la récupération des groupes, veuillez réessayer.</string>
+    <string name="group_user_viewing_groups_username">Groupes de %1$s</string>
     <!-- Misc -->
     <string name="misc_loading_label_text">Loading…</string>
     <string name="misc_no_internet_title">No Internet Connection</string>
