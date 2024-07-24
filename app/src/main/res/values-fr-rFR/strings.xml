@@ -13,46 +13,46 @@
     <string name="friend_refreshed_favorites_message">Amis favoris actualisés.</string>
     <!-- Home -->
     <string name="home_active_friends">Amis connectés</string>
-    <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_featured_avatars">Featured Avatars</string>
-    <string name="home_offline_friends">Offline Friends</string>
-    <string name="home_featured_worlds">Featured Worlds</string>
+    <string name="home_recently_visited">Récemment visités</string>
+    <string name="home_featured_avatars">Avatars en vedette</string>
+    <string name="home_offline_friends">Amis hors-ligne</string>
+    <string name="home_featured_worlds">Mondes en vedette</string>
     <string name="home_friend_locations">Emplacements de vos amis</string>
     <string name="home_failed_to_fetch_worlds_message">Impossible de récupérer les mondes, veuillez réessayer.</string>
     <string name="home_failed_to_fetch_friends_message">Impossible de récupérer vos amis, veuillez réessayer.</string>
     <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
-    <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
-    <string name="login_label_password">Password</string>
-    <string name="login_button_text">Login</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
-    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
+    <string name="login_text">Se connecter à l\'assistance VRC pour Android</string>
+    <string name="login_label_username">Nom d\'utilisateur ou adresse email</string>
+    <string name="login_label_password">Mot de passe</string>
+    <string name="login_button_text">Connexion</string>
+    <string name="login_toast_wrong_credentials">Nom d\'utilisateur ou mot de passe incorrect.</string>
+    <string name="login_toast_wrong_code">Échec de la vérification, vérifier à nouveau le code.</string>
     <!-- Two Auth -->
-    <string name="auth_text_email">Input the code sent to your e-mail</string>
-    <string name="auth_text_app">Input the code from your Authenticator app</string>
-    <string name="auth_label_code">2FA Code</string>
-    <string name="auth_button_text">Verify</string>
+    <string name="auth_text_email">Entrez le code envoyé à votre email</string>
+    <string name="auth_text_app">Entrez le code de votre application d\'authentification</string>
+    <string name="auth_label_code">Code 2FA</string>
+    <string name="auth_button_text">Vérifié</string>
     <string name="auth_button_paste">Coller</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
+    <string name="main_search_placeholder">Rechercher des mondes, utilisateurs et avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Emplacement actuel</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_languages">Langues</string>
-    <string name="profile_text_no_biography">No description specified.</string>
+    <string name="profile_text_no_biography">Aucune description spécifiée.</string>
     <string name="profile_text_no_languages">Aucune langue spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
     <string name="profile_user_dropdown_view_groups">Affichés les groupes</string>
     <string name="profile_user_dropdown_view_avatar">Voir l\'avatar</string>
-    <string name="profile_user_dropdown_invite_self">Inviter moi-même</string>
+    <string name="profile_user_dropdown_invite_self">S\'inviter à l\'instance</string>
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
-    <string name="profile_user_avatar_private">L\'avatar est privé!</string>
+    <string name="profile_user_avatar_private">L\'avatar est privé !</string>
     <string name="profile_user_toast_invite_sent">Invitation envoyée ! Vérifiez votre client de jeu.</string>
     <!-- Search -->
-    <string name="search_text_result">Results for</string>
-    <string name="search_filter_category_worlds">Worlds</string>
-    <string name="search_filter_category_worlds_featured">Featured</string>
+    <string name="search_text_result">Résultats pour</string>
+    <string name="search_filter_category_worlds">Mondes</string>
+    <string name="search_filter_category_worlds_featured">En vedette</string>
     <string name="search_filter_category_worlds_sort_by">Trier par</string>
     <string name="search_filter_category_worlds_count">Quantité</string>
     <string name="search_filter_category_users">Utilisateurs</string>
@@ -87,22 +87,22 @@
         <item>Info</item>
         <item>Instances</item>
     </string-array>
-    <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
-    <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
-    <string name="world_instance_no_public_instances_message">No public instances</string>
-    <string name="world_instance_failed_to_fetch_instance_message">Failed to fetch instance, try again.</string>
+    <string name="world_author_label">De %1$s</string>
+    <string name="world_instance_invite_dialog_title">Êtes-vous sûr(e) ?</string>
+    <string name="world_instance_invite_dialog_description">Vous êtes sur le point de vous envoyer une invitation pour cette instance, voulez-vous continuer ?</string>
+    <string name="world_instance_no_public_instances_message">Aucune instance publique</string>
+    <string name="world_instance_failed_to_fetch_instance_message">Impossible de récupérer l\'instance, veuillez réessayer.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
     <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_pictures">Pictures</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_pictures">Photos</string>
+    <string name="tabs_label_settings">Paramètres</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
+    <string name="notification_service_description_online">Votre ami %1$s, est connecté !</string>
     <string name="notification_service_title_offline">Friend has gone offline!</string>
     <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
     <string name="notification_service_title_location">Friend changed location!</string>
