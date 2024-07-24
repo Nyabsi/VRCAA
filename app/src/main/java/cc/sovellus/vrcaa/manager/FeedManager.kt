@@ -1,9 +1,12 @@
 package cc.sovellus.vrcaa.manager
 
+import android.util.Log
+import cc.sovellus.vrcaa.extension.milliseconds
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
+import kotlin.math.abs
 import kotlin.time.Duration.Companion.milliseconds
 
 
@@ -38,11 +41,11 @@ object FeedManager {
     }
 
     fun addFeed(feed: Feed) {
-        val previousFeed = feedList.find { it.type == feed.type && it.friendId == feed.friendId }
-        if (previousFeed != null) {
-            val prev: Long = previousFeed.feedTimestamp.toEpochSecond(ZoneOffset.UTC).milliseconds.inWholeMilliseconds
-            val next: Long = feed.feedTimestamp.toEpochSecond(ZoneOffset.UTC).milliseconds.inWholeMilliseconds
-            if (prev < (next + 1000)) {
+        val lastFeed = feedList.findLast { it.type == feed.type && it.friendId == feed.friendId }
+        if (lastFeed != null) {
+            val last: Long = lastFeed.feedTimestamp.milliseconds
+            val incoming: Long = feed.feedTimestamp.milliseconds
+            if (abs(last - incoming) >= 1500) {
                 feedList.add(feed)
                 feedListener?.onReceiveUpdate(feedList)
             }
