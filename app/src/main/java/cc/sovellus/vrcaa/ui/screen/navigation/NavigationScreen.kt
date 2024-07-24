@@ -110,8 +110,6 @@ class NavigationScreen : Screen {
         }
 
         val tabs = listOf(HomeTab, FriendsTab, FeedTab, ProfileTab, SettingsTab)
-        // Yes, I know. This is not supposed to re-cause composition.
-        val tabHistory = mutableListOf<Tab>()
 
         TabNavigator(
             HomeTab,
@@ -135,11 +133,11 @@ class NavigationScreen : Screen {
             BackHandler(
                 enabled = true,
                 onBack = {
-                    if (tabHistory.isNotEmpty())
+                    if (model.tabHistory.isNotEmpty())
                     {
-                        val tab = tabHistory.last()
+                        val tab = model.tabHistory.last()
                         tabNavigator.current = tab
-                        tabHistory.removeIf { it.key == tab.key }
+                        model.tabHistory.removeIf { it.key == tab.key }
                         pressBackCounter = 0
                     }
                     else
@@ -511,7 +509,7 @@ class NavigationScreen : Screen {
                             NavigationBarItem(
                                 selected = tabNavigator.current.key == tab.key,
                                 onClick = {
-                                    tabHistory.add(tabNavigator.current)
+                                    model.tabHistory.add(tabNavigator.current)
                                     tabNavigator.current = tab
                                 },
                                 icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
