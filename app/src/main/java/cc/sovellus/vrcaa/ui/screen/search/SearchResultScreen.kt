@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.search
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -105,6 +106,15 @@ class SearchResultScreen(
 
         val navigator = LocalNavigator.currentOrThrow
 
+        BackHandler(
+            enabled = model.navigationStack.isNotEmpty(),
+            onBack = {
+                val index = model.navigationStack.last()
+                model.currentIndex.intValue = index
+                model.navigationStack.removeIf { it == index }
+            }
+        )
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -156,6 +166,7 @@ class SearchResultScreen(
                                 },
                                 onCheckedChange = {
                                     model.currentIndex.intValue = index
+                                    model.navigationStack.add(model.currentIndex.intValue)
                                 },
                                 checked = index == model.currentIndex.intValue
                             ) {
