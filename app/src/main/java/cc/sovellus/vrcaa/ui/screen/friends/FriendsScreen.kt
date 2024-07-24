@@ -67,7 +67,7 @@ class FriendsScreen : Screen {
             onBack = {
                 val index = model.navigationStack.last()
                 model.currentIndex.intValue = index
-                model.navigationStack.removeIf { it == index }
+                model.navigationStack.removeLast()
             }
         )
 
