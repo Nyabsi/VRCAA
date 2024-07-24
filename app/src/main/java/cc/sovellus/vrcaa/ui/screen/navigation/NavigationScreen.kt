@@ -146,6 +146,7 @@ class NavigationScreen : Screen {
                         {
                             if (context is Activity)
                                 context.finish()
+                            pressBackCounter = 0
                         }
                         else
                         {
