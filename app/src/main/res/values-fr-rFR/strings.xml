@@ -22,7 +22,7 @@
     <string name="home_failed_to_fetch_friends_message">Échec de la récupération de vos amis, veuillez réessayer.</string>
     <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
-    <string name="login_text">Se connecter à l\'assistance VRC pour Android</string>
+    <string name="login_text">Se connecter à l\'assistant VRC pour Android</string>
     <string name="login_label_username">Nom d\'utilisateur ou adresse email</string>
     <string name="login_label_password">Mot de passe</string>
     <string name="login_button_text">Se connecter</string>
@@ -192,43 +192,43 @@
     <string name="group_toast_not_found_message">Groupe introuvable, êtes-vous sûr qu\'il existe ?</string>
     <string name="group_page_label_description">Description</string>
     <string name="group_page_label_rules">Règles</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
+    <string name="group_page_dropdown_view_author">Voir le profil de l\'auteur</string>
+    <string name="group_page_dropdown_request_invite">Demander une invitation</string>
+    <string name="group_page_dropdown_request_invite_cancel">Annuler l\'invitation</string>
     <string name="group_page_dropdown_join_group">Rejoindre le groupe</string>
     <string name="group_page_dropdown_leave_group">Quitter le groupe</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Échec de la demande d\'invitation.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Échec de l\'annulation de la demande d\'invitation.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Échec de la participation au groupe.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Échec de la sortie du groupe.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
+    <string name="group_page_toast_invite_requested">Invitation envoyée.</string>
+    <string name="group_page_toast_invite_requested_fail">Échec de la requête d\'invitation.</string>
+    <string name="group_page_toast_invite_requested_cancel">Annuler l\'invitation.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Échec de l\'annulation de l\'invitation.</string>
+    <string name="group_page_toast_join_group">Groupe rejoint.</string>
+    <string name="group_page_toast_join_group_fail">Impossible de rejoindre le groupe.</string>
+    <string name="group_page_toast_leave_group">Groupe quitté.</string>
+    <string name="group_page_toast_leave_group_fail">Impossible de quitter le groupe.</string>
+    <string name="group_user_no_groups_message">L\'utilisateur ne fait partie d\'aucun groupe.</string>
     <string name="group_user_failed_to_fetch_groups">Échec de la récupération des groupes, veuillez réessayer.</string>
     <string name="group_user_viewing_groups_username">Groupes de %1$s</string>
     <!-- Misc -->
-    <string name="misc_loading_label_text">Loading…</string>
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_loading_label_text">Chargement…</string>
+    <string name="misc_no_internet_title">Pas de connexion internet</string>
+    <string name="misc_no_internet_description">Veuillez vous assurer que vous êtes connecté à internet, car cette application ne peut pas fonctionner sans connexion internet.</string>
+    <string name="misc_no_internet_label">Redémarrer</string>
+    <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">View Groups</string>
-    <string name="user_dropdown_edit_profile">Edit Profile</string>
+    <string name="user_dropdown_view_groups">Voir les groupes</string>
+    <string name="user_dropdown_edit_profile">Modifier votre profil</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Statut</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_status_description">Description du statut</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Liens</string>
     <string name="profile_edit_dialog_button_update">Mettre à jour</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
-    <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
+    <string name="profile_edit_dialog_button_cancel">Annuler</string>
+    <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
+    <string name="profile_edit_dialog_title_edit_profile">Modifier le profil</string>
+    <string name="api_toast_rate_limited_message">Vous avez fait trop de requêtes, veuillez patienter un instant avant d\'envoyer une autre.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list">Voir les emplacements actuels des amis</string>
+    <string name="widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>
 </resources>
