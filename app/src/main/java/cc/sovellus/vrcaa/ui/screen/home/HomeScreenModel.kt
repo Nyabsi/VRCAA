@@ -2,6 +2,8 @@ package cc.sovellus.vrcaa.ui.screen.home
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.VRChatCache
@@ -16,21 +18,21 @@ import kotlinx.coroutines.launch
 
 class HomeScreenModel(context: Context) : ScreenModel {
 
-    private var friendsListFlow = MutableStateFlow(listOf<Friend>())
+    private var friendsListFlow = MutableStateFlow(mutableStateListOf<Friend>())
     var friendsList = friendsListFlow.asStateFlow()
 
-    private var recentlyVisitedFlow = MutableStateFlow(listOf<WorldCache>())
+    private var recentlyVisitedFlow = MutableStateFlow(mutableStateListOf<WorldCache>())
     var recentlyVisited = recentlyVisitedFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: MutableList<Friend>) {
-            friendsListFlow.value = friends.toList()
+            friendsListFlow.value = friends.toMutableStateList()
         }
     }
 
     private val cacheListener = object : VRChatCache.CacheListener {
         override fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) {
-            recentlyVisitedFlow.value = worlds.toList()
+            recentlyVisitedFlow.value = worlds.toMutableStateList()
         }
 
         override fun cacheUpdated() {
@@ -48,8 +50,8 @@ class HomeScreenModel(context: Context) : ScreenModel {
 
     private fun fetchContent() {
         screenModelScope.launch {
-            friendsListFlow.value = FriendManager.getFriends()
-            recentlyVisitedFlow.value = cache.getRecentlyVisited()
+            friendsListFlow.value = FriendManager.getFriends().toMutableStateList()
+            recentlyVisitedFlow.value = cache.getRecentlyVisited().toMutableStateList()
         }
     }
 }
