@@ -13,7 +13,6 @@ import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
-import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
 import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
@@ -75,25 +74,30 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendOnline -> {
                     val update = msg.obj as FriendOnline
 
-                    if (notificationManager.isOnWhitelist(update.userId) &&
-                        notificationManager.isIntentEnabled(
-                            update.userId,
-                            NotificationManager.Intents.FRIEND_FLAG_ONLINE
-                        )
-                    ) {
-                        notificationManager.pushNotification(
-                            title = application.getString(R.string.notification_service_title_online),
-                            content = application.getString(R.string.notification_service_description_online)
-                                .format(update.user.displayName),
-                            channel = NotificationManager.CHANNEL_ONLINE_ID
-                        )
-                    }
-
-                    FeedManager.addFeed(FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                    })
+                    }
+
+                    if (!FeedManager.isDuplicate(feed))
+                    {
+                        if (notificationManager.isOnWhitelist(update.userId) &&
+                            notificationManager.isIntentEnabled(
+                                update.userId,
+                                NotificationManager.Intents.FRIEND_FLAG_ONLINE
+                            )
+                        ) {
+                            notificationManager.pushNotification(
+                                title = application.getString(R.string.notification_service_title_online),
+                                content = application.getString(R.string.notification_service_description_online)
+                                    .format(update.user.displayName),
+                                channel = NotificationManager.CHANNEL_ONLINE_ID
+                            )
+                        }
+
+                        FeedManager.addFeed(feed)
+                    }
 
                     FriendManager.updateLocation(update.userId, "private")
                     FriendManager.updateStatus(update.userId, update.user.status)
@@ -105,33 +109,36 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null) {
-                        if (notificationManager.isOnWhitelist(friend.id) &&
-                            notificationManager.isIntentEnabled(
-                                friend.id,
-                                NotificationManager.Intents.FRIEND_FLAG_OFFLINE
-                            )
-                        ) {
-                            notificationManager.pushNotification(
-                                title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline)
-                                    .format(friend.displayName),
-                                channel = NotificationManager.CHANNEL_OFFLINE_ID
-                            )
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                            friendId = friend.id
+                            friendName = friend.displayName
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                         }
 
-                        FeedManager.addFeed(
-                            FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                                friendId = friend.id
-                                friendName = friend.displayName
-                                friendPictureUrl =
-                                    friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
-                            })
+                        if (!FeedManager.isDuplicate(feed))
+                        {
+                            if (notificationManager.isOnWhitelist(friend.id) &&
+                                notificationManager.isIntentEnabled(
+                                    friend.id,
+                                    NotificationManager.Intents.FRIEND_FLAG_OFFLINE
+                                )
+                            ) {
+                                notificationManager.pushNotification(
+                                    title = application.getString(R.string.notification_service_title_offline),
+                                    content = application.getString(R.string.notification_service_description_offline)
+                                        .format(friend.displayName),
+                                    channel = NotificationManager.CHANNEL_OFFLINE_ID
+                                )
+                            }
+
+                            FeedManager.addFeed(feed)
+
+                            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                            context.sendBroadcast(intent)
+                        }
 
                         FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
-
-                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                        context.sendBroadcast(intent)
                     }
                 }
 
@@ -152,34 +159,34 @@ class PipelineService : Service(), CoroutineScope {
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
                     if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null) {
-                        if (notificationManager.isOnWhitelist(update.userId) &&
-                            notificationManager.isIntentEnabled(
-                                update.userId,
-                                NotificationManager.Intents.FRIEND_FLAG_LOCATION
-                            )
-                        ) {
-                            notificationManager.pushNotification(
-                                title = application.getString(R.string.notification_service_title_location),
-                                content = application.getString(R.string.notification_service_description_location)
-                                    .format(update.user.displayName, update.world.name),
-                                channel = NotificationManager.CHANNEL_LOCATION_ID
-                            )
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
+                            friendId = update.userId
+                            friendName = update.user.displayName
+                            travelDestination = LocationHelper.getReadableLocation(update.location)
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                         }
 
-                        launch {
-                            FeedManager.addFeed(
-                                FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION)
-                                    .apply {
-                                        friendId = update.userId
-                                        friendName = update.user.displayName
-                                        travelDestination = LocationHelper.getReadableLocation(update.location)
-                                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                                    }
-                            )
-                        }
+                        if (!FeedManager.isDuplicate(feed))
+                        {
+                            if (notificationManager.isOnWhitelist(update.userId) &&
+                                notificationManager.isIntentEnabled(
+                                    update.userId,
+                                    NotificationManager.Intents.FRIEND_FLAG_LOCATION
+                                )
+                            ) {
+                                notificationManager.pushNotification(
+                                    title = application.getString(R.string.notification_service_title_location),
+                                    content = application.getString(R.string.notification_service_description_location)
+                                        .format(update.user.displayName, update.world.name),
+                                    channel = NotificationManager.CHANNEL_LOCATION_ID
+                                )
+                            }
 
-                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                        context.sendBroadcast(intent)
+                            FeedManager.addFeed(feed)
+
+                            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                            context.sendBroadcast(intent)
+                        }
                     }
                 }
 
@@ -192,54 +199,53 @@ class PipelineService : Service(), CoroutineScope {
                             StatusHelper.getStatusFromString(update.user.status) !=
                             StatusHelper.getStatusFromString(friend.status)
                         ) {
-                            if (notificationManager.isOnWhitelist(update.userId) &&
-                                notificationManager.isIntentEnabled(
-                                    update.userId,
-                                    NotificationManager.Intents.FRIEND_FLAG_STATUS
-                                )
-                            ) {
-                                notificationManager.pushNotification(
-                                    title = application.getString(R.string.notification_service_title_status),
-                                    content = application.getString(R.string.notification_service_description_status)
-                                        .format(
-                                            update.user.displayName,
-                                            StatusHelper.getStatusFromString(friend.status)
-                                                .toString(),
-                                            StatusHelper.getStatusFromString(update.user.status)
-                                                .toString()
-                                        ),
-                                    channel = NotificationManager.CHANNEL_LOCATION_ID
-                                )
+                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
+                                friendId = update.userId
+                                friendName = update.user.displayName
+                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }.toString()
+                                friendStatus = StatusHelper.getStatusFromString(update.user.status)
                             }
 
-                            FeedManager.addFeed(
-                                FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
-                                    friendId = update.userId
-                                    friendName = update.user.displayName
-                                    friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                                        .toString()
-                                    friendStatus = StatusHelper.getStatusFromString(update.user.status)
+                            if (!FeedManager.isDuplicate(feed))
+                            {
+                                if (notificationManager.isOnWhitelist(update.userId) &&
+                                    notificationManager.isIntentEnabled(
+                                        update.userId,
+                                        NotificationManager.Intents.FRIEND_FLAG_STATUS
+                                    )
+                                ) {
+                                    notificationManager.pushNotification(
+                                        title = application.getString(R.string.notification_service_title_status),
+                                        content = application.getString(R.string.notification_service_description_status)
+                                            .format(
+                                                update.user.displayName,
+                                                StatusHelper.getStatusFromString(friend.status)
+                                                    .toString(),
+                                                StatusHelper.getStatusFromString(update.user.status)
+                                                    .toString()
+                                            ),
+                                        channel = NotificationManager.CHANNEL_LOCATION_ID
+                                    )
                                 }
-                            )
+                                FeedManager.addFeed(feed)
+                            }
                         }
+                        FriendManager.updateFriend(update.user)
                     }
-
-                    FriendManager.updateFriend(update.user)
                 }
 
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    val status = StatusHelper.getStatusFromString(user.user.status)
-                    val location = LocationHelper.parseLocationInfo(user.location)
-
                     cache.addRecentlyVisited(user.world)
 
                     if (preferences.richPresenceEnabled) {
+                        val status = StatusHelper.getStatusFromString(user.user.status)
+                        val location = LocationHelper.parseLocationInfo(user.location)
                         launch {
                             val instance = api.getInstance(user.location)
                             if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                                instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} ${if (BuildConfig.FLAVOR == "quest") { "(VR)" } else { "(Mobile)" }} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                                instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
                             } else {
                                 gateway?.sendPresence(status.toString(), "User location is hidden.", null, status)
                             }
@@ -252,46 +258,48 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null) {
-                        FeedManager.addFeed(
-                            FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
-                                friendId = update.userId
-                                friendName = friend.displayName
-                                friendPictureUrl =
-                                    friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
+                            friendId = update.userId
+                            friendName = friend.displayName
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                        }
 
-                            }
-                        )
+                        if (!FeedManager.isDuplicate(feed))
+                        {
+                            notificationManager.pushNotification(
+                                title = application.getString(R.string.notification_service_title_friend_removed),
+                                content = application.getString(R.string.notification_service_description_friend_removed)
+                                    .format(friend.displayName),
+                                channel = NotificationManager.CHANNEL_STATUS_ID
+                            )
 
-                        notificationManager.pushNotification(
-                            title = application.getString(R.string.notification_service_title_friend_removed),
-                            content = application.getString(R.string.notification_service_description_friend_removed)
-                                .format(friend.displayName),
-                            channel = NotificationManager.CHANNEL_STATUS_ID
-                        )
+                            FeedManager.addFeed(feed)
+                            FriendManager.removeFriend(update.userId)
+                        }
                     }
-
-                    FriendManager.removeFriend(update.userId)
                 }
 
                 is FriendAdd -> {
                     val update = msg.obj as FriendAdd
 
-                    notificationManager.pushNotification(
-                        title = application.getString(R.string.notification_service_title_friend_added),
-                        content = application.getString(R.string.notification_service_description_friend_added)
-                            .format(update.user.displayName),
-                        channel = NotificationManager.CHANNEL_STATUS_ID
-                    )
+                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
+                        friendId = update.userId
+                        friendName = update.user.displayName
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                    }
 
-                    FeedManager.addFeed(
-                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
-                            friendId = update.userId
-                            friendName = update.user.displayName
-                            friendPictureUrl =
-                                update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                        })
+                    if (!FeedManager.isDuplicate(feed))
+                    {
+                        notificationManager.pushNotification(
+                            title = application.getString(R.string.notification_service_title_friend_added),
+                            content = application.getString(R.string.notification_service_description_friend_added)
+                                .format(update.user.displayName),
+                            channel = NotificationManager.CHANNEL_STATUS_ID
+                        )
 
-                    FriendManager.addFriend(update.user)
+                        FeedManager.addFeed(feed)
+                        FriendManager.addFriend(update.user)
+                    }
                 }
 
                 is Notification -> {
@@ -303,15 +311,14 @@ class PipelineService : Service(), CoroutineScope {
 
                             when (notification.type) {
                                 "friendRequest" -> {
-                                    FeedManager.addFeed(
-                                        FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST)
-                                            .apply {
-                                                friendId = notification.senderUserId
-                                                friendName = notification.senderUsername
-                                                friendPictureUrl =
-                                                    sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
-                                            }
-                                    )
+                                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
+                                        friendId = notification.senderUserId
+                                        friendName = notification.senderUsername
+                                        friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
+                                    }
+
+                                    if (!FeedManager.isDuplicate(feed))
+                                        FeedManager.addFeed(feed)
                                 }
 
                                 else -> {}
