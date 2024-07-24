@@ -101,10 +101,10 @@
     <string name="tabs_label_settings">Paramètres</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
-    <string name="notification_service_title_online">Ami connecté !</string>
-    <string name="notification_service_description_online">Votre ami %1$s, est connecté !</string>
-    <string name="notification_service_title_offline">Ami déconnecté !</string>
-    <string name="notification_service_description_offline">Votre ami, %1$s s\'est déconnecté !</string>
+    <string name="notification_service_title_online">Un ami s\'est connecté !</string>
+    <string name="notification_service_description_online">%1$s est en ligne !</string>
+    <string name="notification_service_title_offline">Ami s\'est déconnecté !</string>
+    <string name="notification_service_description_offline">%1$s est hors ligne !</string>
     <string name="notification_service_title_location">Ami a changé d\'instance !</string>
     <string name="notification_service_description_location">Votre ami, %1$s est allé à %2$s.</string>
     <string name="notification_service_title_friend_removed">Votre ami vous a retiré de ses amis.</string>
@@ -114,7 +114,7 @@
     <string name="notification_title_player">Notifications</string>
     <string name="notification_label_enable">Activer les notifications</string>
     <string name="notification_label_intent_online">En ligne</string>
-    <string name="notification_label_intent_offline">Hors-ligne</string>
+    <string name="notification_label_intent_offline">Hors ligne</string>
     <string name="notification_label_intent_location">Emplacement</string>
     <string name="notification_label_intent_status">Changement de statut</string>
     <string name="notification_service_title_status">Ami a changé de statut !</string>
@@ -174,29 +174,29 @@
     <string name="discord_login_button_verify">Vérifier</string>
     <string name="discord_login_restarted_service_toast">Redémarrez le service pour prendre effet.</string>
     <string name="discord_login_label_enable">Activé Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_label_set_webhook">Définir l’URL du Webhook</string>
+    <string name="discord_login_description_set_webhook">Requis pour le support des miniatures du monde (facultatif)</string>
+    <string name="discord_login_description_enable">Affiche votre statut actuel dans discord</string>
     <string name="discord_login_label_logout">Se déconnecter</string>
-    <string name="discord_login_description_logout">Revoke your access token</string>
+    <string name="discord_login_description_logout">Révoquer votre jeton d’accès</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_title_text">L\'application a rencontré une erreur fatale.</string>
+    <string name="crash_button_restart_text">Redémarrer</string>
+    <string name="crash_button_copy_log_text">Copier l\'information</string>
+    <string name="crash_button_report_text">Signaler un problème</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
         <item>Info</item>
         <item>Instances</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
+    <string name="group_toast_not_found_message">Groupe introuvable, êtes-vous sûr qu\'il existe ?</string>
     <string name="group_page_label_description">Description</string>
     <string name="group_page_label_rules">Règles</string>
     <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
     <string name="group_page_dropdown_request_invite">Request Invite</string>
     <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
+    <string name="group_page_dropdown_join_group">Rejoindre le groupe</string>
+    <string name="group_page_dropdown_leave_group">Quitter le groupe</string>
     <string name="group_page_toast_invite_requested">Sent invite request.</string>
     <string name="group_page_toast_invite_requested_fail">Échec de la demande d\'invitation.</string>
     <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
@@ -218,11 +218,11 @@
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_status">Statut</string>
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Bio Links</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
+    <string name="profile_edit_dialog_title_bio_links">Liens</string>
+    <string name="profile_edit_dialog_button_update">Mettre à jour</string>
     <string name="profile_edit_dialog_button_cancel">Cancel</string>
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
