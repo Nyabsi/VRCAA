@@ -82,22 +82,6 @@ class HomeScreen : Screen {
                     Spacer(modifier = Modifier.padding(4.dp))
 
                     HorizontalRow(
-                        title = stringResource(R.string.home_offline_friends)
-                    ) {
-                        val filteredFriends = friends.filter { it.location == "offline" }
-                        items(filteredFriends, key = { it.id }) { friend ->
-                            WorldRow(
-                                name = friend.displayName,
-                                url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
-                                count = null,
-                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.padding(4.dp))
-
-                    HorizontalRow(
                         title = stringResource(R.string.home_friend_locations)
                     ) {
                         val friendLocations = friends.filter { it.location.contains("wrld_") }
@@ -108,6 +92,22 @@ class HomeScreen : Screen {
                                 url = world.thumbnailUrl,
                                 count = world.occupants,
                                 onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
+
+                    HorizontalRow(
+                        title = stringResource(R.string.home_offline_friends)
+                    ) {
+                        val filteredFriends = friends.filter { it.location == "offline" }
+                        items(filteredFriends, key = { it.id }) { friend ->
+                            WorldRow(
+                                name = friend.displayName,
+                                url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
+                                count = null,
+                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                             )
                         }
                     }
