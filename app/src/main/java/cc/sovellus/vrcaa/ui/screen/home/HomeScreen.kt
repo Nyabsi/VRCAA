@@ -101,18 +101,18 @@ class HomeScreen : Screen {
                         title = stringResource(R.string.home_friend_locations)
                     ) {
                         val friendLocations = friends.filter { it.location.contains("wrld_") }
-                        items(friendLocations, key = { it.id }) { friend ->
+                        items(friendLocations.distinctBy { it.location.split(':')[0] }, key = { it.id }) { friend ->
                             val world = cache.getWorld(friend.location.split(':')[0])
-                            if (world != null) {
-                                WorldRow(
-                                    name = world.name,
-                                    url = world.thumbnailUrl,
-                                    count = world.occupants,
-                                    onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
-                                )
-                            }
+                            WorldRow(
+                                name = world.name,
+                                url = world.thumbnailUrl,
+                                count = world.occupants,
+                                onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                            )
                         }
                     }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
                 }
             }
         }
