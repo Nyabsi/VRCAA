@@ -39,11 +39,6 @@ class VRChatPipeline(
 
     private var restartThread: Thread? = null
 
-    init {
-        restartThread = Thread(restartWorker)
-        restartThread?.start()
-    }
-
     interface SocketListener {
         fun onMessage(message: Any?)
     }
@@ -57,6 +52,9 @@ class VRChatPipeline(
             ) {
                 Log.d("VRCAA", "Connected to the VRChat pipeline.")
                 shouldReconnect = true
+
+                restartThread = Thread(restartWorker)
+                restartThread?.start()
             }
 
             override fun onMessage(
