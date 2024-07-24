@@ -165,8 +165,8 @@ class SearchResultScreen(
                                     }
                                 },
                                 onCheckedChange = {
-                                    model.currentIndex.intValue = index
                                     model.navigationStack.add(model.currentIndex.intValue)
+                                    model.currentIndex.intValue = index
                                 },
                                 checked = index == model.currentIndex.intValue
                             ) {
