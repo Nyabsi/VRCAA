@@ -213,7 +213,7 @@
     <string name="misc_no_internet_title">インターネット接続</string>
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
     <string name="misc_no_internet_label">再起動</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">所属グループを表示</string>
     <string name="user_dropdown_edit_profile">プロフィールを編集</string>
