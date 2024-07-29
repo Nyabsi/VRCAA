@@ -44,6 +44,7 @@ class VRChatCache : CoroutineScope {
             profile = api.getSelf()
 
             val friendList: MutableList<Friend> = mutableListOf()
+            val recentWorlds: MutableList<WorldCache> = mutableListOf()
 
             val favorites = api.getFavorites("friend")
             var friends = api.getFriends(false)
@@ -85,8 +86,10 @@ class VRChatCache : CoroutineScope {
                     thumbnailUrl = world.thumbnailImageUrl,
                     occupants = world.occupants
                 )
-                recentlyVisited.add(cache)
+                recentWorlds.add(cache)
             }
+
+            recentlyVisited = recentWorlds
 
             FriendManager.setFriends(friendList)
 
