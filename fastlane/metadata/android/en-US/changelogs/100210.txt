@@ -1,0 +1,3 @@
+Hotfix:
+
+- Application get stuck indefinitely loading if token is invalid.
