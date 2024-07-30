@@ -6,82 +6,82 @@
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Избранное</item>
-        <item>Online</item>
-        <item>Website</item>
-        <item>Offline</item>
+        <item>Онлайн</item>
+        <item>Веб-сайт</item>
+        <item>Офлайн</item>
     </string-array>
-    <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
+    <string name="friend_refreshed_favorites_message">Обновлены любимые друзья.</string>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Друзья онлайн</string>
     <string name="home_recently_visited">Недавно посещенные</string>
     <string name="home_featured_avatars">Рекомендуемые аватары</string>
     <string name="home_offline_friends">Друзья не в сети</string>
     <string name="home_featured_worlds">Рекомендуемые миры</string>
-    <string name="home_friend_locations">Friend Locations</string>
-    <string name="home_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="home_failed_to_fetch_friends_message">Failed to fetch friends, try again.</string>
-    <string name="home_toast_updated_info">Refreshed friends and worlds.</string>
+    <string name="home_friend_locations">Местонахождение друзей</string>
+    <string name="home_failed_to_fetch_worlds_message">Не удалось получить миры, попробуйте еще раз.</string>
+    <string name="home_failed_to_fetch_friends_message">Не удалось получить список друзей, попробуйте еще раз.</string>
+    <string name="home_toast_updated_info">Обновлены списки друзей и миров.</string>
     <!-- Login -->
     <string name="login_text">Войти в VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
+    <string name="login_label_username">Имя пользователя или адрес электронной почты</string>
     <string name="login_label_password">Пароль</string>
     <string name="login_button_text">Логин</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
-    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
+    <string name="login_toast_wrong_credentials">Неверное имя пользователя или пароль.</string>
+    <string name="login_toast_wrong_code">Проверка не удалась, проверьте код еще раз.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Введите код, отправленный на вашу эл. почту</string>
     <string name="auth_text_app">Введите код из вашего приложения для двухфакторной аутентификации</string>
     <string name="auth_label_code">Код двухфакторной аутентификации</string>
     <string name="auth_button_text">Подтвердить</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_button_paste">Вставить</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users and avatars…</string>
+    <string name="main_search_placeholder">Поиск миров, пользователей и аватаров…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Текущее расположение</string>
     <string name="profile_label_biography">О себе</string>
-    <string name="profile_label_languages">Languages</string>
+    <string name="profile_label_languages">Языки</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
-    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
-    <string name="profile_user_dropdown_view_groups">View Groups</string>
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
-    <string name="profile_user_dropdown_invite_self">Invite myself</string>
-    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
+    <string name="profile_text_no_languages">Языки не указанны.</string>
+    <string name="profile_user_dropdown_manage_notifications">Управление уведомлениями</string>
+    <string name="profile_user_dropdown_view_groups">Показать группы</string>
+    <string name="profile_user_dropdown_view_avatar">Показать аватары</string>
+    <string name="profile_user_dropdown_invite_self">Пригласить самого себя</string>
+    <string name="profile_user_not_found_message">Юзер не существует.</string>
+    <string name="profile_user_avatar_private">Аватар является приватным!</string>
+    <string name="profile_user_toast_invite_sent">Приглашение отправлено! Проверьте ваш клиент игры.</string>
     <!-- Search -->
     <string name="search_text_result">Результаты по</string>
-    <string name="search_filter_category_worlds">Worlds</string>
-    <string name="search_filter_category_worlds_featured">Featured</string>
-    <string name="search_filter_category_worlds_sort_by">Sort By</string>
-    <string name="search_filter_category_worlds_count">Count</string>
-    <string name="search_filter_category_users">Users</string>
-    <string name="search_filter_category_users_count">Count</string>
-    <string name="search_filter_category_groups">Groups</string>
-    <string name="search_filter_category_groups_count">Count</string>
-    <string name="search_filter_button_reset">Reset</string>
-    <string name="search_filter_button_apply">Apply</string>
+    <string name="search_filter_category_worlds">Миры</string>
+    <string name="search_filter_category_worlds_featured">Избранное</string>
+    <string name="search_filter_category_worlds_sort_by">Сортировать по</string>
+    <string name="search_filter_category_worlds_count">Количество</string>
+    <string name="search_filter_category_users">Юзеры</string>
+    <string name="search_filter_category_users_count">Количество</string>
+    <string name="search_filter_category_groups">Группы</string>
+    <string name="search_filter_category_groups_count">Количество</string>
+    <string name="search_filter_button_reset">Сброс</string>
+    <string name="search_filter_button_apply">Применить</string>
     <string-array name="search_selection_options">
         <item>Миры</item>
         <item>Пользователи</item>
         <item>Аватары</item>
-        <item>Groups</item>
+        <item>Группы</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="search_failed_to_fetch_users_message">Failed to fetch users, try again.</string>
-    <string name="search_failed_to_fetch_avatars_message">Failed to fetch avatars, try again.</string>
+    <string name="search_failed_to_fetch_worlds_message">Не удалось получить список миров, попробуйте еще раз.</string>
+    <string name="search_failed_to_fetch_users_message">Не удалось получить список юзеров, попробуйте еще раз.</string>
+    <string name="search_failed_to_fetch_avatars_message">Не удалось получить список аватаров, попробуйте еще раз.</string>
     <!-- Settings -->
-    <string name="settings_item_check_updates">Check for updates</string>
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_logout">Logout</string>
+    <string name="settings_item_check_updates">Проверить обновления</string>
+    <string name="settings_item_about">О программе</string>
+    <string name="settings_item_rich_presence">Rich Presence (экспериментальный)</string>
+    <string name="settings_item_logout">Выйти</string>
     <!-- Worlds -->
     <string name="world_label_description">Описание</string>
     <string name="world_label_tags">Теги</string>
     <string name="world_text_no_description">Описание не указано.</string>
     <string name="world_text_no_tags">Автор не предоставил теги.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
+    <string name="world_title_created_at">Дата создания</string>
+    <string name="world_title_updated_at">Последнее обновление</string>
     <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
