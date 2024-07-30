@@ -100,7 +100,7 @@
     <string name="tabs_label_pictures">Картинки</string>
     <string name="tabs_label_settings">Настройки</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA теперь следит за вашими друзьями на фоновом режиме.</string>
+    <string name="service_notification">VRCAA теперь следит за вашими друзьями в фоновом режиме.</string>
     <string name="notification_service_title_online">Друг появился в сети!</string>
     <string name="notification_service_description_online">Ваш друг, %1$s появился в сети!</string>
     <string name="notification_service_title_offline">Друг вышел из сети!</string>
