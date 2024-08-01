@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
@@ -56,10 +57,10 @@ import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
+import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
-import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -188,7 +189,7 @@ class SearchResultScreen(
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    private fun RowItem(
+    private fun SearchRowItem(
         name: String,
         url: String,
         count: Int?,
@@ -201,6 +202,8 @@ class SearchResultScreen(
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth()
+                .height(150.dp)
+                .width(200.dp)
                 .clickable(onClick = { onClick() })
         ) {
 
@@ -208,10 +211,10 @@ class SearchResultScreen(
                 model = url,
                 contentDescription = stringResource(R.string.preview_image_description),
                 modifier = Modifier
+                    .fillMaxWidth()
                     .height(120.dp)
                     .width(200.dp),
                 contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
                 loading = placeholder(R.drawable.image_placeholder),
                 failure = placeholder(R.drawable.image_placeholder)
             )
@@ -222,14 +225,12 @@ class SearchResultScreen(
                 Text(
                     text = name,
                     textAlign = TextAlign.Start,
-                    modifier = Modifier.weight(0.70f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (count != null) {
                     Text(
                         text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                            .weight(0.30f)
                             .padding(end = 2.dp)
                     )
                     Icon(
@@ -275,7 +276,7 @@ class SearchResultScreen(
                     content = {
                         items(worlds.size) {
                             val world = worlds[it]
-                            RowItem(
+                            SearchRowItem(
                                 name = world.name,
                                 url = world.imageUrl,
                                 count = world.occupants
@@ -321,7 +322,7 @@ class SearchResultScreen(
                     content = {
                         items(users.size) {
                             val user = users[it]
-                            RowItem(
+                            SearchRowItem(
                                 name = user.displayName,
                                 url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
                                 count = null
@@ -373,7 +374,7 @@ class SearchResultScreen(
                         content = {
                             items(avatars.size) {
                                 val avatar = avatars[it]
-                                RowItem(
+                                SearchRowItem(
                                     name = avatar.name,
                                     url = avatar.thumbnailImageUrl,
                                     count = null
@@ -399,44 +400,37 @@ class SearchResultScreen(
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                val navigator = LocalNavigator.currentOrThrow
+            val navigator = LocalNavigator.currentOrThrow
 
-                if (groups.isEmpty()) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = stringResource(R.string.result_not_found))
-                    }
-                } else {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        contentPadding = PaddingValues(
-                            start = 12.dp,
-                            top = 16.dp,
-                            end = 16.dp,
-                            bottom = 16.dp
-                        ),
-                        content = {
-                            items(groups.size) {
-                                val group = groups[it]
-                                RowItem(
-                                    name = group.name,
-                                    url = group.bannerUrl,
-                                    count = null
-                                ) {
-                                    navigator.push(GroupScreen(group.id))
-                                }
+            if (groups.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(R.string.result_not_found))
+                }
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(
+                        start = 12.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    ),
+                    content = {
+                        items(groups) {
+                            SearchRowItem(
+                                name = it.name,
+                                url = it.bannerUrl,
+                                count = null
+                            ) {
+                                navigator.push(GroupScreen(it.id))
                             }
                         }
-                    )
-                }
+                    }
+                )
             }
         }
     }
