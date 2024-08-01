@@ -26,7 +26,7 @@ import com.bumptech.glide.integration.compose.placeholder
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun WorldRow(
+fun RowItem(
     name: String,
     count: Int?,
     url: Any,

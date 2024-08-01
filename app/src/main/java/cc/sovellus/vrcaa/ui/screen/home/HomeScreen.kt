@@ -22,7 +22,7 @@ import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
-import cc.sovellus.vrcaa.ui.components.layout.WorldRow
+import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
@@ -70,7 +70,7 @@ class HomeScreen : Screen {
                         title = stringResource(R.string.home_recently_visited)
                     ) {
                         items(recent, key = { it.id }) { world ->
-                            WorldRow(
+                            RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
                                 count = world.occupants,
@@ -87,7 +87,7 @@ class HomeScreen : Screen {
                         val friendLocations = friends.filter { it.location.contains("wrld_") }
                         items(friendLocations.distinctBy { it.location.split(':')[0] }, key = { it.id }) { friend ->
                             val world = cache.getWorld(friend.location.split(':')[0])
-                            WorldRow(
+                            RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
                                 count = world.occupants,
@@ -103,7 +103,7 @@ class HomeScreen : Screen {
                     ) {
                         val filteredFriends = friends.filter { it.location == "offline" }
                         items(filteredFriends, key = { it.id }) { friend ->
-                            WorldRow(
+                            RowItem(
                                 name = friend.displayName,
                                 url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
                                 count = null,
