@@ -120,7 +120,7 @@ class FriendsScreen : Screen {
     ) {
         val favoriteFriends = friends.value.filter { it.isFavorite && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
         val favoriteFriendsInInstances = friends.value.filter { it.isFavorite && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val favoriteFriendsOffline = friends.value.filter { it.isFavorite && StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline }
+        val favoriteFriendsOffline = friends.value.filter { it.isFavorite && StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline && it.location == "offline" }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
             Column(
@@ -141,8 +141,7 @@ class FriendsScreen : Screen {
             ) {
                 if (favoriteFriendsInInstances.isNotEmpty()) {
                     items(
-                        favoriteFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status) },
-                        key = { UUID.randomUUID() }) { friend ->
+                        favoriteFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                         FriendItem(
                             friend = friend,
                             callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -157,8 +156,7 @@ class FriendsScreen : Screen {
                     }
 
                     items(
-                        favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) },
-                        key = { UUID.randomUUID() }) { friend ->
+                        favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                         FriendItem(
                             friend = friend,
                             callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -167,8 +165,7 @@ class FriendsScreen : Screen {
 
                 } else {
                     items(
-                        favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) },
-                        key = { UUID.randomUUID() }) { friend ->
+                        favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                         FriendItem(
                             friend = friend,
                             callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -187,8 +184,7 @@ class FriendsScreen : Screen {
                 }
 
                 items(
-                    favoriteFriendsOffline.sortedBy { StatusHelper.getStatusFromString(it.status) },
-                    key = { UUID.randomUUID() }) { friend ->
+                    favoriteFriendsOffline.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                     FriendItem(
                         friend = friend,
                         callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -220,7 +216,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }, key = { UUID.randomUUID() }) { friend ->
+                items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                     FriendItem(
                         friend = friend,
                         callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -256,7 +252,7 @@ class FriendsScreen : Screen {
             ) {
                 if (filteredFriendsInInstances.isNotEmpty())
                 {
-                    items(filteredFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status)  }, key = { UUID.randomUUID() }) { friend ->
+                    items(filteredFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                         FriendItem(
                             friend = friend,
                             callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -268,14 +264,14 @@ class FriendsScreen : Screen {
                             thickness = 0.5.dp
                         )
                     }
-                    items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }, key = { UUID.randomUUID() }) { friend ->
+                    items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                         FriendItem(
                             friend = friend,
                             callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                         )
                     }
                 } else {
-                    items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }, key = { UUID.randomUUID() }) { friend ->
+                    items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                         FriendItem(
                             friend = friend,
                             callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
@@ -309,7 +305,7 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { UUID.randomUUID() }) { friend ->
+                items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                     FriendItem(
                         friend = friend,
                         callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
