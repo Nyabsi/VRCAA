@@ -60,8 +60,6 @@ class SearchResultScreenModel(
                 preferences.sortWorlds
             )
 
-            Log.d("VRCAA", "total found worlds is actually ${worlds!!.size}")
-
             users = api.getUsers(
                 username = query,
                 preferences.usersAmount
