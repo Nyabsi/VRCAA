@@ -47,7 +47,7 @@ class LoginScreenModel(
                         context.startActivity(intent)
                     } else {
                         preferences.userCredentials = Pair(username.value, password.value)
-                        navigator.push(MfaScreen(result.mfaType))
+                        navigator.replace(MfaScreen(result.mfaType))
                     }
                 }
             }

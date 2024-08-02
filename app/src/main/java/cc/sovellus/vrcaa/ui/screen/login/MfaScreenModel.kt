@@ -9,17 +9,20 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.ui.screen.home.HomeScreen
 import kotlinx.coroutines.launch
 
 class MfaScreenModel(
     private val context: Context,
     private val otpType: VRChatApi.MfaType,
+    private val navigator: Navigator
 ) : ScreenModel {
 
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
@@ -37,9 +40,7 @@ class MfaScreenModel(
             } else {
                 cache.forceCacheRefresh()
                 preferences.twoFactorToken = result
-                val intent = Intent(context, MainActivity::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
+                navigator.replace(HomeScreen())
             }
         }
     }

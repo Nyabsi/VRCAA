@@ -40,7 +40,7 @@ class MfaScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { MfaScreenModel(context, otpType) }
+        val screenModel = navigator.rememberNavigatorScreenModel { MfaScreenModel(context, otpType, navigator) }
 
         Column(
             modifier = Modifier
