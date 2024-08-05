@@ -43,9 +43,9 @@
     <string name="profile_text_no_biography">Aucune description spécifiée.</string>
     <string name="profile_text_no_languages">Aucune langue spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
-    <string name="profile_user_dropdown_view_groups">Affichés les groupes</string>
+    <string name="profile_user_dropdown_view_groups">Afficher les groupes</string>
     <string name="profile_user_dropdown_view_avatar">Voir l\'avatar</string>
-    <string name="profile_user_dropdown_invite_self">S\'inviter à l\'instance</string>
+    <string name="profile_user_dropdown_invite_self">S\'envoyer une invitation</string>
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
     <string name="profile_user_avatar_private">L\'avatar est privé !</string>
     <string name="profile_user_toast_invite_sent">Invitation envoyée ! Regardez VRChat.</string>
