@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">Il n\'y a rien d\'autre que des poulets ici !</string>
-    <string name="legal_disclaimer">"VRCAA n'est pas une filiale de VRChat Inc. ou l'une de ses sociétés affiliées."</string>
+    <string name="legal_disclaimer">"VRCAA n'est pas endossée par VRChat Inc. ou l'une de ses sociétés affiliées."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favoris</item>
@@ -22,7 +22,7 @@
     <string name="home_failed_to_fetch_friends_message">Échec de l\'actualisation de la liste d\'ami, veuillez réessayer.</string>
     <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
-    <string name="login_text">Se connecter à VRC pour Android</string>
+    <string name="login_text">Se connecter à l\'assistant VRC pour Android</string>
     <string name="login_label_username">Nom d\'utilisateur ou adresse email</string>
     <string name="login_label_password">Mot de passe</string>
     <string name="login_button_text">Se connecter</string>
