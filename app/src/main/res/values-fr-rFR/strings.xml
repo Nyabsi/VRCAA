@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">Il n\'y a rien d\'autre que des poulets ici !</string>
-    <string name="legal_disclaimer">"VRCAA n'est pas endossée par VRChat Inc. ou l'une de ses sociétés affiliées."</string>
+    <string name="legal_disclaimer">"VRCAA n'est pas soutenu, approuvé ou affilié à VRChat Inc."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favoris</item>
@@ -18,24 +18,24 @@
     <string name="home_offline_friends">Amis hors ligne</string>
     <string name="home_featured_worlds">Mondes en vedette</string>
     <string name="home_friend_locations">Emplacements de vos amis</string>
-    <string name="home_failed_to_fetch_worlds_message">Échec de la récupération des mondes, veuillez réessayer.</string>
-    <string name="home_failed_to_fetch_friends_message">Échec de la récupération de vos amis, veuillez réessayer.</string>
+    <string name="home_failed_to_fetch_worlds_message">Échec dans l\'actualisation des mondes veuillez réessayer.</string>
+    <string name="home_failed_to_fetch_friends_message">Échec de l\'actualisation de la liste d\'ami, veuillez réessayer.</string>
     <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
-    <string name="login_text">Se connecter à l\'assistant VRC pour Android</string>
+    <string name="login_text">Se connecter à VRC Android Assistant</string>
     <string name="login_label_username">Nom d\'utilisateur ou adresse email</string>
     <string name="login_label_password">Mot de passe</string>
     <string name="login_button_text">Se connecter</string>
     <string name="login_toast_wrong_credentials">Nom d\'utilisateur ou mot de passe incorrect.</string>
     <string name="login_toast_wrong_code">Échec de la vérification, vérifier à nouveau le code.</string>
     <!-- Two Auth -->
-    <string name="auth_text_email">Entrez le code envoyé à votre email</string>
+    <string name="auth_text_email">Entrez le code envoyé sur votre email</string>
     <string name="auth_text_app">Entrez le code de votre application d\'authentification</string>
     <string name="auth_label_code">Code 2FA</string>
     <string name="auth_button_text">Vérifié</string>
     <string name="auth_button_paste">Coller</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Rechercher des mondes, utilisateurs et avatars…</string>
+    <string name="main_search_placeholder">Rechercher des mondes, utilisateurs ou avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Emplacement actuel</string>
     <string name="profile_label_biography">Bio</string>
@@ -43,12 +43,12 @@
     <string name="profile_text_no_biography">Aucune description spécifiée.</string>
     <string name="profile_text_no_languages">Aucune langue spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
-    <string name="profile_user_dropdown_view_groups">Affichés les groupes</string>
+    <string name="profile_user_dropdown_view_groups">Afficher les groupes</string>
     <string name="profile_user_dropdown_view_avatar">Voir l\'avatar</string>
-    <string name="profile_user_dropdown_invite_self">S\'inviter à l\'instance</string>
+    <string name="profile_user_dropdown_invite_self">S\'envoyer une invitation</string>
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
     <string name="profile_user_avatar_private">L\'avatar est privé !</string>
-    <string name="profile_user_toast_invite_sent">Invitation envoyée ! Vérifiez votre client de jeu.</string>
+    <string name="profile_user_toast_invite_sent">Invitation envoyée ! Regardez VRChat.</string>
     <!-- Search -->
     <string name="search_text_result">Résultats pour</string>
     <string name="search_filter_category_worlds">Mondes</string>
