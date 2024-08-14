@@ -35,7 +35,7 @@
     <string name="auth_button_text">Vérifié</string>
     <string name="auth_button_paste">Coller</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Rechercher des mondes, utilisateurs ou avatars…</string>
+    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Emplacement actuel</string>
     <string name="profile_label_biography">Bio</string>
@@ -220,7 +220,7 @@
     <string name="profile_edit_dialog_title_status">Statut</string>
     <string name="profile_edit_dialog_title_status_description">Description du statut</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Liens</string>
+    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
     <string name="profile_edit_dialog_button_update">Mettre à jour</string>
     <string name="profile_edit_dialog_button_cancel">Annuler</string>
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
