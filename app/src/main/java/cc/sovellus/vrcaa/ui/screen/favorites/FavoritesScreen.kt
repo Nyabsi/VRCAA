@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.favorites
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,6 +50,36 @@ class FavoritesScreen : Screen {
         val options = stringArrayResource(R.array.favorites_selection_options)
         val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person)
 
+        MultiChoiceSegmentedButtonRow(
+            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+        ) {
+            options.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = options.size
+                    ),
+                    icon = {
+                        SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                            Icon(
+                                imageVector = icons[index],
+                                contentDescription = null,
+                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                            )
+                        }
+                    },
+                    onCheckedChange = {
+                        model.currentIndex.intValue = index
+                    },
+                    checked = index == model.currentIndex.intValue
+                ) {
+                    Text(text = label, softWrap = true, maxLines = 1)
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.padding(4.dp))
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -56,36 +87,6 @@ class FavoritesScreen : Screen {
                 .padding(start = 16.dp, end = 16.dp)
         ) {
             item {
-                MultiChoiceSegmentedButtonRow(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    options.forEachIndexed { index, label ->
-                        SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = options.size
-                            ),
-                            icon = {
-                                SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
-                                    Icon(
-                                        imageVector = icons[index],
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                    )
-                                }
-                            },
-                            onCheckedChange = {
-                                model.currentIndex.intValue = index
-                            },
-                            checked = index == model.currentIndex.intValue
-                        ) {
-                            Text(text = label, softWrap = true, maxLines = 1)
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.padding(4.dp))
-
                 when (model.currentIndex.intValue) {
                     0 -> ShowWorlds(worldList)
                     1 -> ShowAvatars(avatarList)
@@ -109,6 +110,8 @@ class FavoritesScreen : Screen {
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.padding(4.dp))
         }
     }
 
@@ -127,6 +130,8 @@ class FavoritesScreen : Screen {
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.padding(4.dp))
         }
     }
 }
