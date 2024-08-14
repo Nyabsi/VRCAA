@@ -52,8 +52,6 @@ data class FavoriteWorld(
     var thumbnailImageUrl: String = "",
     @SerializedName("udonProducts")
     var udonProducts: List<String> = listOf(),
-    @SerializedName("unityPackages")
-    var unityPackages: List<UnityPackageXX> = listOf(),
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("version")

@@ -32,10 +32,6 @@ data class FavoriteAvatar(
     var thumbnailImageUrl: String = "",
     @SerializedName("unityPackageUrl")
     var unityPackageUrl: String = "",
-    @SerializedName("unityPackageUrlObject")
-    var unityPackageUrlObject: UnityPackageUrlObject? = UnityPackageUrlObject(),
-    @SerializedName("unityPackages")
-    var unityPackages: List<UnityPackageX> = listOf(),
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("version")
