@@ -2,7 +2,6 @@ package cc.sovellus.vrcaa.ui.screen.login
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
@@ -11,12 +10,11 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.ApiManager.cache
-import cc.sovellus.vrcaa.ui.screen.home.HomeScreen
+import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import kotlinx.coroutines.launch
 
 class MfaScreenModel(
@@ -40,7 +38,7 @@ class MfaScreenModel(
             } else {
                 cache.forceCacheRefresh()
                 preferences.twoFactorToken = result
-                navigator.replace(HomeScreen())
+                navigator.replace(NavigationScreen())
             }
         }
     }
