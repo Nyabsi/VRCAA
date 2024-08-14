@@ -99,7 +99,7 @@
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
     <string name="tabs_label_settings">Paramètres</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_favorites">Favoris</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
@@ -231,16 +231,16 @@
     <string name="widget_name_friend_list">Voir les emplacements actuels des amis</string>
     <string name="widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
+        <item>Mondes</item>
         <item>Avatars</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
+    <string name="favorite_label_add">Ajouter aux favoris</string>
+    <string name="favorite_label_remove">Retirer des favoris</string>
+    <string name="favorite_toast_favorite_added">%1$s a été ajouter aux favoris.</string>
+    <string name="favorite_toast_favorite_added_failed">L\'ajout de %1$s aux favoris a échoué.</string>
+    <string name="favorite_toast_favorite_removed">%1$s a été supprimé des favoris.</string>
+    <string name="favorite_toast_favorite_removed_failed">La suppression de %1$s des favoris a échoué.</string>
+    <string name="favorite_dialog_button_add">Ajouter</string>
+    <string name="favorite_dialog_button_cancel">Annuler</string>
+    <string name="favorite_dialog_title">"Ajouter aux favoris"</string>
 </resources>
