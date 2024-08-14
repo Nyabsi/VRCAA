@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.api.vrchat
 
 import android.util.Log
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
@@ -19,7 +20,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-
 
 class VRChatPipeline(
     token: String
@@ -41,7 +41,8 @@ class VRChatPipeline(
             override fun onOpen(
                 webSocket: WebSocket, response: Response
             ) {
-                Log.d("VRCAA", "Connected to the VRChat pipeline.")
+                if (BuildConfig.DEBUG)
+                    Log.d("VRCAA", "Connected to the VRChat pipeline.")
                 shouldReconnect = true
             }
 
@@ -102,10 +103,13 @@ class VRChatPipeline(
                         socketListener?.onMessage(notification)
                     }
 
-                    else -> {
-                        Log.d("VRCAA", "Got Unknown pipeline message (${update.type})")
-                        Log.d("VRCAA", update.content)
-                        socketListener?.onMessage(null)
+                    else ->
+                    {
+                        if (BuildConfig.DEBUG)
+                        {
+                            Log.d("VRCAA", "Got Unknown pipeline message (${update.type})")
+                            Log.d("VRCAA", update.content)
+                        }
                     }
                 }
             }
@@ -113,10 +117,8 @@ class VRChatPipeline(
             override fun onClosing(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                if (shouldReconnect) {
-                    Thread.sleep(RECONNECTION_INTERVAL) // wait 3 seconds before reconnecting.
-                    connect()
-                }
+                webSocket.close(1000, null)
+                shouldReconnect = false
             }
             
             override fun onFailure(
@@ -128,8 +130,10 @@ class VRChatPipeline(
                     }
                 }
 
-                if (shouldReconnect) {
-                    Thread.sleep(RECONNECTION_INTERVAL) // wait 3 seconds before reconnecting.
+                if (shouldReconnect)
+                {
+                    webSocket.close(1000, null)
+                    Thread.sleep(RECONNECTION_INTERVAL)
                     connect()
                 }
             }
@@ -139,6 +143,8 @@ class VRChatPipeline(
     private val pipelineUrl: String = "wss://pipeline.vrchat.cloud/?auth=${token}"
 
     fun connect() {
+        shouldReconnect = false
+
         val headers = Headers.Builder()
         headers["User-Agent"] = userAgent
 
@@ -150,16 +156,11 @@ class VRChatPipeline(
         socket = client.newWebSocket(request, listener)
     }
 
-    fun disconnect() {
-        shouldReconnect = false
-        socket?.close(1000, null)
-    }
-
     fun setListener(listener: SocketListener) {
         socketListener = listener
     }
 
     companion object {
-        private const val RECONNECTION_INTERVAL: Long = 3000
+        private const val RECONNECTION_INTERVAL: Long = 30000 // 30s
     }
 }
