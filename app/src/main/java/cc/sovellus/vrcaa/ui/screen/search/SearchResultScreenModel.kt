@@ -43,7 +43,6 @@ class SearchResultScreenModel(
     private var avatars: ArrayList<JustHPartyProvider.Avatar>? = null
     private var groups: ArrayList<Group>? = null
 
-    var navigationStack = SnapshotStateList<Int>()
     var currentIndex = mutableIntStateOf(0)
 
     init {

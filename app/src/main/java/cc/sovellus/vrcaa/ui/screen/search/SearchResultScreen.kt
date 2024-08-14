@@ -108,11 +108,9 @@ class SearchResultScreen(
         val navigator = LocalNavigator.currentOrThrow
 
         BackHandler(
-            enabled = model.navigationStack.isNotEmpty(),
+            enabled = model.currentIndex.intValue != 0,
             onBack = {
-                val index = model.navigationStack.last()
-                model.currentIndex.intValue = index
-                model.navigationStack.removeLast()
+                model.currentIndex.intValue = 0
             }
         )
 
@@ -166,7 +164,6 @@ class SearchResultScreen(
                                     }
                                 },
                                 onCheckedChange = {
-                                    model.navigationStack.add(model.currentIndex.intValue)
                                     model.currentIndex.intValue = index
                                 },
                                 checked = index == model.currentIndex.intValue
