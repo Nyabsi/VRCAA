@@ -62,8 +62,6 @@ class PipelineService : Service(), CoroutineScope {
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
     private var refreshTask: Runnable = Runnable {
-        pipeline?.disconnect()
-        pipeline?.connect()
         cache.forceCacheRefresh()
     }
 
