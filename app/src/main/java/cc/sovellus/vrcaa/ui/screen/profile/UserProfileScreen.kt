@@ -46,6 +46,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
@@ -180,6 +181,55 @@ class UserProfileScreen(
                                                     isMenuExpanded = false
                                                 },
                                                 text = { Text(stringResource(R.string.profile_user_dropdown_invite_self)) }
+                                            )
+                                        }
+                                        if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    model.removeFavorite { result ->
+                                                        if (result) {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_removed)
+                                                                    .format(profile.displayName),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        } else {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_removed_failed)
+                                                                    .format(profile.displayName),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.favorite_label_remove)) }
+                                            )
+                                        } else {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    model.addFavorite { result ->
+                                                        if (result) {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_added)
+                                                                    .format(profile.displayName),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        } else {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_added_failed)
+                                                                    .format(profile.displayName),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.favorite_label_add)) }
                                             )
                                         }
                                     }

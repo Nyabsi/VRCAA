@@ -6,6 +6,8 @@ import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.launch
 
 sealed class UserProfileState {
@@ -77,6 +79,28 @@ class UserProfileScreenModel(
     fun inviteToFriend(intent: String) {
         screenModelScope.launch {
             api.inviteSelfToInstance(intent)
+        }
+    }
+
+    fun addFavorite(callback: (result: Boolean) -> Unit) {
+        screenModelScope.launch {
+            profile?.let {
+                val result = FavoriteManager.addFavorite("friend", it.id, null, null)
+                if (result)
+                    FriendManager.setIsFavorite(it.id, true)
+                callback(result)
+            }
+        }
+    }
+
+    fun removeFavorite(callback: (result: Boolean) -> Unit) {
+        screenModelScope.launch {
+            profile?.let {
+                val result = FavoriteManager.removeFavorite("friend", it.id)
+                if (result)
+                    FriendManager.setIsFavorite(it.id, false)
+                callback(result)
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.manager
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
+import cc.sovellus.vrcaa.api.vrchat.models.FavoriteLimits
 import cc.sovellus.vrcaa.manager.ApiManager.api
 
 object FavoriteManager {
@@ -10,25 +11,33 @@ object FavoriteManager {
     data class FavoriteMetadata(
         val id: String,
         var favoriteId: String,
-        val name: String,
-        val thumbnailUrl: String
+        val name: String = "",
+        val thumbnailUrl: String = ""
     )
+
+    private var favoriteLimits: FavoriteLimits? = null
 
     private var worldList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
     private var avatarList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
+    private var friendList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
+
     private var tagToDisplayNameMap = mutableStateMapOf<String, String>()
 
-    suspend fun init()
+    suspend fun refresh()
     {
-        val limits = api.getFavoriteLimits()
+        favoriteLimits = api.getFavoriteLimits()
 
         // populate default lists
-        limits?.let {
+        favoriteLimits?.let {
             for (i in 0..<it.maxFavoriteGroups.world)
                 worldList["worlds${i+1}"] = SnapshotStateList()
 
             for (i in 0..<it.maxFavoriteGroups.avatar)
                 avatarList["avatars${i+1}"] = SnapshotStateList()
+
+            // This is just ...fucked up.
+            for (i in 0..<it.maxFavoriteGroups.friend)
+                friendList["group_${i}"] = SnapshotStateList()
         }
 
         val worldGroups = api.getFavoriteGroups("world")
@@ -49,6 +58,16 @@ object FavoriteManager {
                 avatarList[group.name]?.add(FavoriteMetadata(favorite.id, favorite.favoriteId, favorite.name, favorite.thumbnailImageUrl))
             }
             tagToDisplayNameMap[group.name] = group.displayName
+        }
+
+        val friendGroups = api.getFavoriteGroups("friend")
+
+        friendGroups?.forEach { group ->
+            val friends = api.getFavorites("friend", group.name)
+            friends.forEach { friend ->
+                FriendManager.setIsFavorite(friend.favoriteId, true)
+                friendList[group.name]?.add(FavoriteMetadata(id = friend.favoriteId, favoriteId = friend.id))
+            }
         }
     }
 
@@ -85,6 +104,15 @@ object FavoriteManager {
                 }
                 false
             }
+            "friend" -> {
+                friendList.forEach { group ->
+                    group.value.forEach { friend ->
+                        if (friend.id == id)
+                            return true
+                    }
+                }
+                false
+            }
             else -> false
         }
     }
@@ -109,23 +137,56 @@ object FavoriteManager {
                 }
                 Pair(null, "")
             }
+            "friend" -> {
+                friendList.forEach { group ->
+                    group.value.forEach { friend ->
+                        if (friend.id == id)
+                            return Pair(friend.favoriteId, group.key)
+                    }
+                }
+                Pair(null, "")
+            }
             else -> Pair(null, "")
         }
     }
 
-    suspend fun addFavorite(type: String, id: String, tag: String, metadata: FavoriteMetadata): Boolean {
+    suspend fun addFavorite(type: String, id: String, tag: String?, metadata: FavoriteMetadata?): Boolean {
 
-        val result = api.addFavorite(type, id, tag)
+        var groupTag = ""
+        if (tag == null) {
+            favoriteLimits?.let {
+                for (i in 0..<it.maxFavoriteGroups.friend)
+                {
+                    friendList["group_$i"]?.let { group ->
+                        if (group.size < it.maxFavoritesPerGroup.friend) {
+                            groupTag = "group_$i"
+                        }
+                    }
+
+                    if (groupTag.isNotEmpty())
+                        break
+                }
+            }
+        }
+
+        val result = api.addFavorite(type, id, tag ?: groupTag)
 
         result?.let {
             when (type) {
                 "world" -> {
-                    metadata.favoriteId = result.favoriteId
-                    worldList[tag]?.add(metadata)
+                    metadata?.let {
+                        metadata.favoriteId = result.favoriteId
+                        worldList[tag]?.add(metadata)
+                    }
                 }
                 "avatar" -> {
-                    metadata.favoriteId = result.favoriteId
-                    avatarList[tag]?.add(metadata)
+                    metadata?.let {
+                        metadata.favoriteId = result.favoriteId
+                        avatarList[tag]?.add(metadata)
+                    }
+                }
+                "friend" -> {
+                    friendList[id]?.add(FavoriteMetadata(id = id, favoriteId = result.favoriteId))
                 }
                 else -> {}
             }
@@ -138,17 +199,8 @@ object FavoriteManager {
         val favorite = getFavoriteId(type, id)
         favorite.first?.let { favoriteId ->
             val result = api.removeFavorite(favoriteId)
-            if (result) {
-                when (type) {
-                    "world" -> {
-                        worldList[favorite.second]?.removeIf { it.id == id }
-                    }
-                    "avatar" -> {
-                        avatarList[favorite.second]?.removeIf { it.id == id }
-                    }
-                    else -> {}
-                }
-            }
+            if (result)
+                avatarList[favorite.second]?.removeIf { it.id == id }
             return result
         }
         return false

@@ -1,8 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
-import cc.sovellus.vrcaa.api.vrchat.models.websocket.UpdateUser
 
 object FriendManager {
 
@@ -93,5 +91,17 @@ object FriendManager {
 
     fun getFriends(): MutableList<Friend> {
         return friends
+    }
+
+    fun setIsFavorite(userId: String, isFavorite: Boolean) {
+        val it = friends.find { it.id == userId }
+        it?.let {
+            it.isFavorite = isFavorite
+            friends.set(friends.indexOf(it), it)
+        }
+
+        friendListeners.map {
+            it.onUpdateFriends(friends)
+        }
     }
 }
