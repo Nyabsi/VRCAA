@@ -99,6 +99,7 @@
     <string name="tabs_label_profile">プロフィール</string>
     <string name="tabs_label_pictures">ピクチャー</string>
     <string name="tabs_label_settings">設定</string>
+    <string name="tabs_label_favorites">Favorites</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
     <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
@@ -121,9 +122,7 @@
     <string name="notification_service_description_status">フレンドの %1$s さんのステータスが( %2$s )から( %3$s )へ変更されました。</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">このアバターへ変更</string>
-    <string name="avatar_dropdown_label_favorite">お気に入りへ追加</string>
     <string name="avatar_dropdown_label_remove_favorite">お気に入りから削除</string>
-    <string name="avatar_dropdown_toast_not_implemented">この機能は準備中です。後日ご確認下さい。</string>
     <string name="avatar_dropdown_toast_select_avatar">アバターが選択されました。</string>
     <string name="avatar_title_description">情報</string>
     <string name="avatar_title_created_at">作成日時</string>
@@ -213,7 +212,7 @@
     <string name="misc_no_internet_title">インターネット接続</string>
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
     <string name="misc_no_internet_label">再起動</string>
-    <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
+    <string name="misc_exit_toast_label">Press again to quit.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">所属グループを表示</string>
     <string name="user_dropdown_edit_profile">プロフィールを編集</string>
@@ -231,4 +230,17 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">フレンドの現在地を表示する</string>
     <string name="widget_name_loading_text">少女祈祷中・・・</string>
+    <string-array name="favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
+    </string-array>
+    <string name="favorite_label_add">Add to favorites</string>
+    <string name="favorite_label_remove">Remove from favorites</string>
+    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
+    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
+    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
+    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
+    <string name="favorite_dialog_button_add">Add</string>
+    <string name="favorite_dialog_button_cancel">Cancel</string>
+    <string name="favorite_dialog_title">"Add Favorite"</string>
 </resources>
