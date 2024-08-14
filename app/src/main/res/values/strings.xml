@@ -101,7 +101,6 @@
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
     <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
-
     <string-array name="world_selection_options">
         <item>Info</item>
         <item>Instances</item>
@@ -120,6 +119,7 @@
     <string name="tabs_label_profile">Profile</string>
     <string name="tabs_label_pictures">Pictures</string>
     <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_favorites">Favorites</string>
 
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
@@ -145,9 +145,7 @@
 
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Change to Avatar</string>
-    <string name="avatar_dropdown_label_favorite">Add to Favorite</string>
     <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
-    <string name="avatar_dropdown_toast_not_implemented">This functionality is not implemented yet! Come back later.</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
     <string name="avatar_title_description">Description</string>
     <string name="avatar_title_created_at">Creation Date</string>
@@ -271,4 +269,19 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">See current friend locations</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+
+    <string-array name="favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
+    </string-array>
+
+    <string name="favorite_label_add">Add to favorites</string>
+    <string name="favorite_label_remove">Remove from favorites</string>
+    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
+    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
+    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
+    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
+    <string name="favorite_dialog_button_add">Add</string>
+    <string name="favorite_dialog_button_cancel">Cancel</string>
+    <string name="favorite_dialog_title">"Add Favorite"</string>
 </resources>

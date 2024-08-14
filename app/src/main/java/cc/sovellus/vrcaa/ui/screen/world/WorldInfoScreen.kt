@@ -50,11 +50,13 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
+import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.layout.InstanceItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -70,7 +72,8 @@ class WorldInfoScreen(
 
     @Composable
     override fun Content() {
-        val model = rememberScreenModel { WorldInfoScreenModel(worldId) }
+        val context = LocalContext.current
+        val model = rememberScreenModel { WorldInfoScreenModel(worldId, context) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -91,6 +94,7 @@ class WorldInfoScreen(
         val context = LocalContext.current
 
         var isMenuExpanded by remember { mutableStateOf(false) }
+        var favoriteDialogShown by remember { mutableStateOf(false) }
 
         if (world == null) {
             Toast.makeText(
@@ -140,6 +144,39 @@ class WorldInfoScreen(
                                             },
                                             text = { Text(stringResource(R.string.group_page_dropdown_view_author)) }
                                         )
+                                        if (FavoriteManager.isFavorite("world", world.id)) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    model.removeFavorite { result ->
+                                                        if (result) {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_removed)
+                                                                    .format(world.name),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        } else {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_removed_failed)
+                                                                    .format(world.name),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.favorite_label_remove)) }
+                                            )
+                                        } else {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    favoriteDialogShown = true
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.favorite_label_add)) }
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -147,6 +184,31 @@ class WorldInfoScreen(
                     )
                 },
                 content = {
+
+                    if (favoriteDialogShown) {
+                        FavoriteDialog(
+                            type = "world",
+                            id = world.id,
+                            metadata = FavoriteManager.FavoriteMetadata(world.id, "", world.name, world.thumbnailImageUrl),
+                            onDismiss = { favoriteDialogShown = false },
+                            onConfirmation = { result ->
+                                if (result) {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.favorite_toast_favorite_added).format(world.name),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.favorite_toast_favorite_added_failed).format(world.name),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                favoriteDialogShown = false
+                            }
+                        )
+                    }
 
                     val options =  stringArrayResource(R.array.world_selection_options)
                     val icons = listOf(Icons.Filled.Cabin, Icons.Filled.LocationOn)

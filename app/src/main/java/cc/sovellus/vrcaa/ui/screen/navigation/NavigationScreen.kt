@@ -77,6 +77,7 @@ import cc.sovellus.vrcaa.ui.components.dialog.SingleButtonDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
+import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
@@ -109,7 +110,7 @@ class NavigationScreen : Screen {
             )
         }
 
-        val tabs = listOf(HomeTab, FriendsTab, FeedTab, ProfileTab, SettingsTab)
+        val tabs = listOf(HomeTab, FriendsTab, FavoritesTab, FeedTab, ProfileTab, SettingsTab)
 
         TabNavigator(
             HomeTab,
@@ -162,7 +163,7 @@ class NavigationScreen : Screen {
 
             Scaffold(
                 topBar = {
-                    if (tabNavigator.current.options.index.toInt() == 0) {
+                    if (tabNavigator.current.options.index == HomeTab.options.index) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
                             verticalArrangement = Arrangement.Center,
@@ -249,7 +250,7 @@ class NavigationScreen : Screen {
                             }
                         }
                     }
-                    else if (tabNavigator.current.options.index.toInt() == 1) {
+                    else if (tabNavigator.current.options.index == FriendsTab.options.index) {
                         TopAppBar(
                             title = { Text(
                                 text = stringResource(id = R.string.tabs_label_friends),
@@ -258,7 +259,16 @@ class NavigationScreen : Screen {
                             ) }
                         )
                     }
-                    else if (tabNavigator.current.options.index.toInt() == 2) {
+                    else if (tabNavigator.current.options.index == FavoritesTab.options.index) {
+                        TopAppBar(
+                            title = { Text(
+                                text = stringResource(id = R.string.tabs_label_favorites),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
+                    else if (tabNavigator.current.options.index == ProfileTab.options.index) {
                         TopAppBar(
                             actions = {
                                 IconButton(onClick = { isMenuExpanded = true }) {
@@ -303,7 +313,7 @@ class NavigationScreen : Screen {
                             ) }
                         )
                     }
-                    else if (tabNavigator.current.options.index.toInt() == 3) {
+                    else if (tabNavigator.current.options.index == FeedTab.options.index) {
                         TopAppBar(
                             title = { Text(
                                 text = stringResource(id = R.string.tabs_label_feed),
@@ -312,16 +322,7 @@ class NavigationScreen : Screen {
                             ) }
                         )
                     }
-                    else if (tabNavigator.current.options.index.toInt() == 4) {
-                        TopAppBar(
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_pictures),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
-                    }
-                    else if (tabNavigator.current.options.index.toInt() == 5) {
+                    else if (tabNavigator.current.options.index == SettingsTab.options.index) {
                         TopAppBar(
                             title = { Text(
                                 text = stringResource(id = R.string.tabs_label_settings),

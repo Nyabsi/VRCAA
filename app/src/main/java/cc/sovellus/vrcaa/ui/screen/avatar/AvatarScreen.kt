@@ -40,10 +40,12 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.components.card.AvatarCard
+import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -75,6 +77,7 @@ class AvatarScreen(
         val context = LocalContext.current
 
         var isMenuExpanded by remember { mutableStateOf(false) }
+        var favoriteDialogShown by remember { mutableStateOf(false) }
         var exitOnce by remember { mutableStateOf(false) }
 
         if (avatar == null) {
@@ -126,17 +129,39 @@ class AvatarScreen(
                                             },
                                             text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
                                         )
-                                        // TODO: when implementing favorites, check here if it's favorite or not.
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.avatar_dropdown_toast_not_implemented),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            },
-                                            text = { Text(stringResource(R.string.avatar_dropdown_label_favorite)) }
-                                        )
+                                        if (FavoriteManager.isFavorite("avatar", avatar.id)) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    model.removeFavorite { result ->
+                                                        if (result) {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_removed)
+                                                                    .format(avatar.name),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        } else {
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.favorite_toast_favorite_removed_failed)
+                                                                    .format(avatar.name),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.favorite_label_remove)) }
+                                            )
+                                        } else {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    favoriteDialogShown = true
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.favorite_label_add)) }
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -147,6 +172,32 @@ class AvatarScreen(
                     )
                 },
                 content = { padding ->
+
+                    if (favoriteDialogShown) {
+                        FavoriteDialog(
+                            type = "avatar",
+                            id = avatar.id,
+                            metadata = FavoriteManager.FavoriteMetadata(avatar.id, "", avatar.name, avatar.thumbnailImageUrl),
+                            onDismiss = { favoriteDialogShown = false },
+                            onConfirmation = { result ->
+                                if (result) {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.favorite_toast_favorite_added).format(avatar.name),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.favorite_toast_favorite_added_failed).format(avatar.name),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                favoriteDialogShown = false
+                            }
+                        )
+                    }
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()

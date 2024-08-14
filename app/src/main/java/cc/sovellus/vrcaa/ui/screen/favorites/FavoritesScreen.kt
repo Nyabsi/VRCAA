@@ -1,0 +1,132 @@
+package cc.sovellus.vrcaa.ui.screen.favorites
+
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.snapshots.SnapshotStateMap
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
+import cc.sovellus.vrcaa.ui.components.layout.RowItem
+import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+
+class FavoritesScreen : Screen {
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { FavoritesScreenModel() }
+
+        val worldList = model.worldList.collectAsState()
+        val avatarList = model.avatarList.collectAsState()
+
+        val options = stringArrayResource(R.array.favorites_selection_options)
+        val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person)
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(start = 16.dp, end = 16.dp)
+        ) {
+            item {
+                MultiChoiceSegmentedButtonRow(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    options.forEachIndexed { index, label ->
+                        SegmentedButton(
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = options.size
+                            ),
+                            icon = {
+                                SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                                    Icon(
+                                        imageVector = icons[index],
+                                        contentDescription = null,
+                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                    )
+                                }
+                            },
+                            onCheckedChange = {
+                                model.currentIndex.intValue = index
+                            },
+                            checked = index == model.currentIndex.intValue
+                        ) {
+                            Text(text = label, softWrap = true, maxLines = 1)
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.padding(4.dp))
+
+                when (model.currentIndex.intValue) {
+                    0 -> ShowWorlds(worldList)
+                    1 -> ShowAvatars(avatarList)
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun ShowWorlds(worldList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
+        sortedWorldList.forEach { item ->
+            HorizontalRow(
+                title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
+            ) {
+                items(item.value) {
+                    RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
+                        navigator.parent?.parent?.push(WorldInfoScreen(it.id))
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun ShowAvatars(avatarList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
+        sortedAvatarList.forEach { item ->
+            HorizontalRow(
+                title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
+            ) {
+                items(item.value) {
+                    RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
+                        navigator.parent?.parent?.push(AvatarScreen(it.id))
+                    }
+                }
+            }
+        }
+    }
+}

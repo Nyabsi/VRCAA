@@ -1,12 +1,16 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
 sealed class WorldInfoState {
@@ -19,7 +23,8 @@ sealed class WorldInfoState {
 }
 
 class WorldInfoScreenModel(
-    private val id: String
+    private val id: String,
+    private val context: Context
 ) : StateScreenModel<WorldInfoState>(WorldInfoState.Init) {
 
     private lateinit var world: World
@@ -54,6 +59,13 @@ class WorldInfoScreenModel(
     fun selfInvite() {
         screenModelScope.launch {
             api.inviteSelfToInstance(selectedInstanceId.value)
+        }
+    }
+
+    fun removeFavorite(callback: (result: Boolean) -> Unit) {
+        screenModelScope.launch {
+            val result = FavoriteManager.removeFavorite("world", world.id)
+            callback(result)
         }
     }
 }

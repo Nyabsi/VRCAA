@@ -157,7 +157,7 @@ class VRChatPipeline(
     }
 
     fun disconnect() {
-        socket?.close(1000, "Connection closed");
+        socket?.close(1000, null)
     }
 
     fun setListener(listener: SocketListener) {

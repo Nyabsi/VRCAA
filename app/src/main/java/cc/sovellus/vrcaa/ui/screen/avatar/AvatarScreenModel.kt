@@ -7,6 +7,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
 sealed class AvatarState {
@@ -19,7 +20,7 @@ sealed class AvatarState {
 
 class AvatarScreenModel(
     private val context: Context,
-    avatarId: String
+    private val avatarId: String
 ) : StateScreenModel<AvatarState>(AvatarState.Init) {
 
     private var avatar: Avatar? = null
@@ -49,5 +50,12 @@ class AvatarScreenModel(
             }
         }
         return avatar != null
+    }
+
+    fun removeFavorite(callback: (result: Boolean) -> Unit) {
+        screenModelScope.launch {
+            val result = FavoriteManager.removeFavorite("avatar", avatarId)
+            callback(result)
+        }
     }
 }

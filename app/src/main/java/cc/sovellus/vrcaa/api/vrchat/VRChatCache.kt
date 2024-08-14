@@ -4,6 +4,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -92,6 +93,7 @@ class VRChatCache : CoroutineScope {
             recentlyVisited = recentWorlds
 
             FriendManager.setFriends(friendList)
+            FavoriteManager.init()
 
             listeners.forEach { listener ->
                 listener?.cacheUpdated()
