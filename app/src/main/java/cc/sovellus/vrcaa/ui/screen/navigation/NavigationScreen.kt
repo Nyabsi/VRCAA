@@ -133,29 +133,28 @@ class NavigationScreen : Screen {
             BackHandler(
                 enabled = true,
                 onBack = {
-                    pressBackCounter++
-                    if (model.tabHistory.isNotEmpty())
+                    if (pressBackCounter == 0 && tabNavigator.current != HomeTab)
                     {
-                        val tab = model.tabHistory.last()
-                        tabNavigator.current = tab
-                        model.tabHistory.removeLast()
-                        pressBackCounter = 0
+                        tabNavigator.current = HomeTab
+                    } else {
+                        pressBackCounter++
                     }
-                    else
+
+                    if (tabNavigator.current == HomeTab)
                     {
-                        if (pressBackCounter == 2)
-                        {
-                            if (context is Activity)
-                                context.finish()
-                            pressBackCounter = 0
-                        }
-                        else
+                        if (pressBackCounter == 1)
                         {
                             Toast.makeText(
                                 context,
                                 context.getString(R.string.misc_exit_toast_label),
                                 Toast.LENGTH_SHORT
                             ).show()
+                        }
+
+                        if (pressBackCounter == 2)
+                        {
+                            if (context is Activity)
+                                context.finish()
                         }
                     }
                 }
@@ -510,7 +509,6 @@ class NavigationScreen : Screen {
                             NavigationBarItem(
                                 selected = tabNavigator.current.key == tab.key,
                                 onClick = {
-                                    model.tabHistory.add(tabNavigator.current)
                                     tabNavigator.current = tab
                                 },
                                 icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
