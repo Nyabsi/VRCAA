@@ -63,7 +63,6 @@ class PipelineService : Service(), CoroutineScope {
 
     private var refreshTask: Runnable = Runnable {
         pipeline?.disconnect()
-        Thread.sleep(RECONNECTION_INTERVAL)
         pipeline?.connect()
         cache.forceCacheRefresh()
     }
