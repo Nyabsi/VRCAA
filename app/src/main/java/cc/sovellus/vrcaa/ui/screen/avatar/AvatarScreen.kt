@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -172,7 +173,7 @@ class AvatarScreen(
 
                         item {
                             Column(
-                                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
+                                modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp),
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.Start
                             ) {
@@ -180,7 +181,7 @@ class AvatarScreen(
                                     elevation = CardDefaults.cardElevation(
                                         defaultElevation = 6.dp
                                     ),
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
                                 ) {
                                     SubHeader(title = stringResource(R.string.avatar_title_description))
                                     Description(text = avatar.description)
