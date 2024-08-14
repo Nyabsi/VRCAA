@@ -62,6 +62,9 @@ class PipelineService : Service(), CoroutineScope {
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
     private var refreshTask: Runnable = Runnable {
+        pipeline?.disconnect()
+        Thread.sleep(RECONNECTION_INTERVAL)
+        pipeline?.connect()
         cache.forceCacheRefresh()
     }
 
@@ -406,5 +409,6 @@ class PipelineService : Service(), CoroutineScope {
         private const val NOTIFICATION_ID: Int = 42069
         private const val INITIAL_INTERVAL: Long = 1000
         private const val RESTART_INTERVAL: Long = 1800000
+        private const val RECONNECTION_INTERVAL: Long = 30000
     }
 }
