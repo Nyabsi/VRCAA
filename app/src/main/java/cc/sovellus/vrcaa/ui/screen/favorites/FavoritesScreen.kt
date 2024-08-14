@@ -101,17 +101,19 @@ class FavoritesScreen : Screen {
 
         val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
         sortedWorldList.forEach { item ->
-            HorizontalRow(
-                title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
-            ) {
-                items(item.value) {
-                    RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
-                        navigator.parent?.parent?.push(WorldInfoScreen(it.id))
+            if (item.value.size > 0) {
+                HorizontalRow(
+                    title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
+                ) {
+                    items(item.value) {
+                        RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
+                            navigator.parent?.parent?.push(WorldInfoScreen(it.id))
+                        }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
+            }
         }
     }
 
@@ -121,17 +123,19 @@ class FavoritesScreen : Screen {
 
         val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
         sortedAvatarList.forEach { item ->
-            HorizontalRow(
-                title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
-            ) {
-                items(item.value) {
-                    RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
-                        navigator.parent?.parent?.push(AvatarScreen(it.id))
+            if (item.value.size > 0) {
+                HorizontalRow(
+                    title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
+                ) {
+                    items(item.value) {
+                        RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
+                            navigator.parent?.parent?.push(AvatarScreen(it.id))
+                        }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
+            }
         }
     }
 }
