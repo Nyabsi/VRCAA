@@ -40,8 +40,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.World
-import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -123,7 +123,7 @@ class WorldsScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun DisplayResult(avatars: ArrayList<World>) {
+    private fun DisplayResult(worlds: ArrayList<World>) {
         val navigator = LocalNavigator.currentOrThrow
 
         Scaffold(
@@ -143,7 +143,7 @@ class WorldsScreen(
                 )
             },
             content = { padding ->
-                if (avatars.isEmpty()) {
+                if (worlds.isEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -176,14 +176,14 @@ class WorldsScreen(
                                 bottom = 16.dp
                             ),
                             content = {
-                                items(avatars.size) {
-                                    val avatar = avatars[it]
+                                items(worlds.size) {
+                                    val world = worlds[it]
                                     SearchRowItem(
-                                        name = avatar.name,
-                                        url = avatar.thumbnailImageUrl,
+                                        name = world.name,
+                                        url = world.thumbnailImageUrl,
                                         count = null
                                     ) {
-                                        navigator.push(AvatarScreen(avatar.id))
+                                        navigator.push(WorldInfoScreen(world.id))
                                     }
                                 }
                             }
