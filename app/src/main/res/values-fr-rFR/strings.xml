@@ -23,7 +23,7 @@
     <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
     <string name="login_text">Se connecter à VRC Android Assistant</string>
-    <string name="login_label_username">Nom d\'utilisateur ou adresse email</string>
+    <string name="login_label_username">Nom d\'utilisateur ou adresse e-mail</string>
     <string name="login_label_password">Mot de passe</string>
     <string name="login_button_text">Se connecter</string>
     <string name="login_toast_wrong_credentials">Nom d\'utilisateur ou mot de passe incorrect.</string>
@@ -95,7 +95,7 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Amis</string>
     <string name="tabs_label_home">Domicile</string>
-    <string name="tabs_label_activities">Activities</string>
+    <string name="tabs_label_activities">Activités</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
     <string name="tabs_label_settings">Paramètres</string>
@@ -214,9 +214,9 @@
     <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Voir les groupes</string>
-    <string name="user_dropdown_view_worlds">View Worlds</string>
-    <string name="user_dropdown_view_avatars">View Avatars</string>
-    <string name="user_dropdown_view_favorites">View Favorites</string>
+    <string name="user_dropdown_view_worlds">Voir les mondes</string>
+    <string name="user_dropdown_view_avatars">Voir les avatars</string>
+    <string name="user_dropdown_view_favorites">Voir les favoris</string>
     <string name="user_dropdown_edit_profile">Modifier votre profil</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Statut</string>
@@ -245,15 +245,15 @@
     <string name="favorite_dialog_button_add">Ajouter</string>
     <string name="favorite_dialog_button_cancel">Annuler</string>
     <string name="favorite_dialog_title">"Ajouter aux favoris"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
+    <string name="favorite_page_title">Afficher les favoris</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
-        <item>Feed</item>
+        <item>Flux</item>
         <item>Notifications</item>
-        <item>Group Activity</item>
+        <item>Activité de groupe</item>
     </string-array>
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">Monde de %1$s</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">Afficher les avatars</string>
 </resources>
