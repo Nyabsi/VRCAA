@@ -95,11 +95,10 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Amis</string>
     <string name="tabs_label_home">Domicile</string>
-    <string name="tabs_label_feed">Activité</string>
+    <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
     <string name="tabs_label_settings">Paramètres</string>
-    <string name="tabs_label_favorites">Favoris</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
@@ -215,6 +214,9 @@
     <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Voir les groupes</string>
+    <string name="user_dropdown_view_worlds">View Worlds</string>
+    <string name="user_dropdown_view_avatars">View Avatars</string>
+    <string name="user_dropdown_view_favorites">View Favorites</string>
     <string name="user_dropdown_edit_profile">Modifier votre profil</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Statut</string>
@@ -243,4 +245,15 @@
     <string name="favorite_dialog_button_add">Ajouter</string>
     <string name="favorite_dialog_button_cancel">Annuler</string>
     <string name="favorite_dialog_title">"Ajouter aux favoris"</string>
+    <string name="favorite_page_title">Showing Favorites</string>
+    <!-- Activities -->
+    <string-array name="activities_selection_options">
+        <item>Feed</item>
+        <item>Notifications</item>
+        <item>Group Activity</item>
+    </string-array>
+    <!-- Worlds -->
+    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <!-- Avatars -->
+    <string name="avatars_page_title">Viewing avatars</string>
 </resources>
