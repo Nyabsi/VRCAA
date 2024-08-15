@@ -153,7 +153,7 @@ class UserProfileScreen(
                                         )
                                         DropdownMenuItem(
                                             onClick = {
-                                                navigator.push(WorldsScreen(profile.id, false))
+                                                navigator.push(WorldsScreen(profile.displayName, profile.id, false))
                                                 isMenuExpanded = false
                                             },
                                             text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }

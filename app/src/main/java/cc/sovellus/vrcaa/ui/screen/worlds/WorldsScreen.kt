@@ -47,6 +47,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 
 class WorldsScreen(
+    private val username: String,
     private val userId: String,
     private val private: Boolean
 ) : Screen {
@@ -137,14 +138,19 @@ class WorldsScreen(
                         }
                     },
                     title = {
-                        Text(text = "Viewing worlds")
+                        Text(text = stringResource(R.string.worlds_page_title).format(username))
                     }
                 )
             },
             content = { padding ->
                 if (avatars.isEmpty()) {
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -152,7 +158,12 @@ class WorldsScreen(
                     }
                 } else {
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {

@@ -298,7 +298,7 @@ class NavigationScreen : Screen {
                                                 onClick = {
                                                     cache.getProfile()?.let {
                                                         navigator.push(
-                                                            WorldsScreen(it.id, true)
+                                                            WorldsScreen(it.displayName, it.id, true)
                                                         )
                                                     }
                                                     isMenuExpanded = false

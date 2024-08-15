@@ -294,4 +294,11 @@
         <item>Notifications</item>
         <item>Group Activity</item>
     </string-array>
+
+    <!-- Worlds -->
+    <string name="worlds_page_title">%1$s\'s Worlds</string>
+
+    <!-- Avatars -->
+    <string name="avatars_page_title">Viewing avatars</string>
+
 </resources>

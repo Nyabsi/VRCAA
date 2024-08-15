@@ -134,14 +134,19 @@ class AvatarsScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = "Viewing avatars")
+                        Text(text = stringResource(R.string.avatars_page_title))
                     }
                 )
             },
             content = { padding ->
                 if (avatars.isEmpty()) {
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -149,7 +154,12 @@ class AvatarsScreen : Screen {
                     }
                 } else {
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding()
+                            ),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
