@@ -35,7 +35,7 @@
     <string name="auth_button_text">Подтвердить</string>
     <string name="auth_button_paste">Вставить</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Поиск миров, пользователей и аватаров…</string>
+    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Текущее расположение</string>
     <string name="profile_label_biography">О себе</string>
@@ -220,7 +220,7 @@
     <string name="profile_edit_dialog_title_status">Статус</string>
     <string name="profile_edit_dialog_title_status_description">Описание статуса</string>
     <string name="profile_edit_dialog_title_bio">О себе</string>
-    <string name="profile_edit_dialog_title_bio_links">Био ссылки</string>
+    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
     <string name="profile_edit_dialog_button_update">Обновить</string>
     <string name="profile_edit_dialog_button_cancel">Отменить</string>
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>

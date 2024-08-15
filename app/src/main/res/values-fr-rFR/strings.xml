@@ -220,7 +220,7 @@
     <string name="profile_edit_dialog_title_status">Statut</string>
     <string name="profile_edit_dialog_title_status_description">Description du statut</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Liens</string>
+    <string name="profile_edit_dialog_title_bio_links">Liens sociaux</string>
     <string name="profile_edit_dialog_button_update">Mettre à jour</string>
     <string name="profile_edit_dialog_button_cancel">Annuler</string>
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>

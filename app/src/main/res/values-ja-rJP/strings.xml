@@ -35,7 +35,7 @@
     <string name="auth_button_text">認証</string>
     <string name="auth_button_paste">貼り付け</string>
     <!-- Main -->
-    <string name="main_search_placeholder">&gt;ワールド・ユーザー・アバターの検索</string>
+    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">現在のインスタンス</string>
     <string name="profile_label_biography">プロフィール</string>
@@ -220,7 +220,7 @@
     <string name="profile_edit_dialog_title_status">ステータス</string>
     <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
     <string name="profile_edit_dialog_title_bio">プロフィール</string>
-    <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
+    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
     <string name="profile_edit_dialog_button_update">変更</string>
     <string name="profile_edit_dialog_button_cancel">キャンセル</string>
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
