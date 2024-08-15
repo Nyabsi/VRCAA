@@ -95,11 +95,10 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Kaverit</string>
     <string name="tabs_label_home">Kotisivu</string>
-    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profiili</string>
     <string name="tabs_label_pictures">Kuvat</string>
     <string name="tabs_label_settings">Asetukset</string>
-    <string name="tabs_label_favorites">Favorites</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
@@ -215,6 +214,9 @@
     <string name="misc_exit_toast_label">Press again to quit.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_view_worlds">View Worlds</string>
+    <string name="user_dropdown_view_avatars">View Avatars</string>
+    <string name="user_dropdown_view_favorites">View Favorites</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
@@ -243,4 +245,15 @@
     <string name="favorite_dialog_button_add">Add</string>
     <string name="favorite_dialog_button_cancel">Cancel</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
+    <string name="favorite_page_title">Showing Favorites</string>
+    <!-- Activities -->
+    <string-array name="activities_selection_options">
+        <item>Feed</item>
+        <item>Notifications</item>
+        <item>Group Activity</item>
+    </string-array>
+    <!-- Worlds -->
+    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <!-- Avatars -->
+    <string name="avatars_page_title">Viewing avatars</string>
 </resources>
