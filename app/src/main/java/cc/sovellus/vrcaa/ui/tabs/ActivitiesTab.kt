@@ -1,7 +1,7 @@
 package cc.sovellus.vrcaa.ui.tabs
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.RssFeed
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -10,14 +10,14 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.screen.feed.FeedScreen
+import cc.sovellus.vrcaa.ui.screen.activities.ActivitiesScreen
 
-object FeedTab : Tab {
+object ActivitiesTab : Tab {
     override val options: TabOptions
         @Composable
         get() {
-            val icon = rememberVectorPainter(Icons.Filled.RssFeed)
-            val tabName = stringResource(R.string.tabs_label_feed)
+            val icon = rememberVectorPainter(Icons.Filled.BarChart)
+            val tabName = stringResource(R.string.tabs_label_activities)
 
             return remember {
                 TabOptions(
@@ -30,6 +30,6 @@ object FeedTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(FeedScreen())
+        Navigator(ActivitiesScreen())
     }
 }

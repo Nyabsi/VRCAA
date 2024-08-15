@@ -115,11 +115,10 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profile</string>
     <string name="tabs_label_pictures">Pictures</string>
     <string name="tabs_label_settings">Settings</string>
-    <string name="tabs_label_favorites">Favorites</string>
 
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
@@ -248,6 +247,9 @@
 
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_view_worlds">View Worlds</string>
+    <string name="user_dropdown_view_avatars">View Avatars</string>
+    <string name="user_dropdown_view_favorites">View Favorites</string>
     <string name="user_dropdown_edit_profile">Edit Profile</string>
 
     <!-- Profile Edit Dialog -->
@@ -284,4 +286,12 @@
     <string name="favorite_dialog_button_add">Add</string>
     <string name="favorite_dialog_button_cancel">Cancel</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
+    <string name="favorite_page_title">Showing Favorites</string>
+
+    <!-- Activities -->
+    <string-array name="activities_selection_options">
+        <item>Feed</item>
+        <item>Notifications</item>
+        <item>Group Activity</item>
+    </string-array>
 </resources>

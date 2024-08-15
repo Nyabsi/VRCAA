@@ -66,7 +66,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
@@ -75,10 +74,10 @@ import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.dialog.SingleButtonDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
+import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
-import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
-import cc.sovellus.vrcaa.ui.tabs.FeedTab
+import cc.sovellus.vrcaa.ui.tabs.ActivitiesTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
@@ -110,7 +109,7 @@ class NavigationScreen : Screen {
             )
         }
 
-        val tabs = listOf(HomeTab, FriendsTab, FavoritesTab, FeedTab, ProfileTab, SettingsTab)
+        val tabs = listOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab)
 
         TabNavigator(
             HomeTab,
@@ -259,15 +258,6 @@ class NavigationScreen : Screen {
                             ) }
                         )
                     }
-                    else if (tabNavigator.current.options.index == FavoritesTab.options.index) {
-                        TopAppBar(
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_favorites),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
-                    }
                     else if (tabNavigator.current.options.index == ProfileTab.options.index) {
                         TopAppBar(
                             actions = {
@@ -302,6 +292,27 @@ class NavigationScreen : Screen {
                                                 },
                                                 text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
                                             )
+                                            DropdownMenuItem(
+                                                onClick = {
+
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }
+                                            )
+                                            DropdownMenuItem(
+                                                onClick = {
+
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.user_dropdown_view_avatars)) }
+                                            )
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    navigator.push(FavoritesScreen())
+                                                    isMenuExpanded = false
+                                                },
+                                                text = { Text(stringResource(R.string.user_dropdown_view_favorites)) }
+                                            )
                                         }
                                     }
                                 }
@@ -313,10 +324,10 @@ class NavigationScreen : Screen {
                             ) }
                         )
                     }
-                    else if (tabNavigator.current.options.index == FeedTab.options.index) {
+                    else if (tabNavigator.current.options.index == ActivitiesTab.options.index) {
                         TopAppBar(
                             title = { Text(
-                                text = stringResource(id = R.string.tabs_label_feed),
+                                text = stringResource(id = R.string.tabs_label_activities),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }
