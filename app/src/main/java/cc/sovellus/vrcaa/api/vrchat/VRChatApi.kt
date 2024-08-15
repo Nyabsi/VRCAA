@@ -389,6 +389,42 @@ class VRChatApi : BaseClient() {
         }
     }
 
+    suspend fun getWorldsByUserId(
+        userId: String,
+        private: Boolean = false,
+        n: Int = 50,
+        offset: Int = 0,
+        worlds: ArrayList<World> = arrayListOf()
+    ): ArrayList<World> {
+
+        val headers = Headers.Builder()
+
+        headers["User-Agent"] = userAgent
+
+        val releaseStatus = if (private) { "all" } else { "public" }
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/worlds?releaseStatus=$releaseStatus&sort=updated&order=descending&userId=$userId&n=$n&offset=$offset",
+            headers = headers,
+            body = null
+        )
+
+        val response = handleRequest(result)
+
+        val temp: ArrayList<World> = worlds
+        val json = Gson().fromJson(response, Worlds::class.java)
+        json?.forEach { world ->
+            temp.add(world)
+        }
+
+        return if (json == null) {
+            worlds
+        } else {
+            getWorldsByUserId(userId, private, n, offset + n, worlds)
+        }
+    }
+
     suspend fun getWorld(id: String): World {
 
         val headers = Headers.Builder()

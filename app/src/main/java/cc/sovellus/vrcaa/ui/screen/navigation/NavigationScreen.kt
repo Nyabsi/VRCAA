@@ -78,6 +78,7 @@ import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
+import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.ActivitiesTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
@@ -295,7 +296,11 @@ class NavigationScreen : Screen {
                                             )
                                             DropdownMenuItem(
                                                 onClick = {
-
+                                                    cache.getProfile()?.let {
+                                                        navigator.push(
+                                                            WorldsScreen(it.id, true)
+                                                        )
+                                                    }
                                                     isMenuExpanded = false
                                                 },
                                                 text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }

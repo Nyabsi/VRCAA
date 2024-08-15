@@ -28,7 +28,6 @@ class GroupScreenModel(
     var currentIndex = mutableIntStateOf(0)
     var clickedInstance = mutableStateOf("")
 
-
     init {
         fetchGroup()
     }

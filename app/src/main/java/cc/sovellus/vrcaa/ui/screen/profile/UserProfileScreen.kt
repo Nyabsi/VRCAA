@@ -46,6 +46,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
+import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
@@ -56,6 +57,7 @@ import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 
 class UserProfileScreen(
     private val userId: String
@@ -148,6 +150,13 @@ class UserProfileScreen(
                                                 isMenuExpanded = false
                                             },
                                             text = { Text(stringResource(R.string.profile_user_dropdown_view_groups)) }
+                                        )
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                navigator.push(WorldsScreen(profile.id, false))
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }
                                         )
                                         DropdownMenuItem(
                                             onClick = {
