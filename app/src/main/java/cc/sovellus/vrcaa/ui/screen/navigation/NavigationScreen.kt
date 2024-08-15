@@ -74,6 +74,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.dialog.SingleButtonDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
+import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
@@ -301,7 +302,7 @@ class NavigationScreen : Screen {
                                             )
                                             DropdownMenuItem(
                                                 onClick = {
-
+                                                    navigator.push(AvatarsScreen())
                                                     isMenuExpanded = false
                                                 },
                                                 text = { Text(stringResource(R.string.user_dropdown_view_avatars)) }

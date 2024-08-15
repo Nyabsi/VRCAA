@@ -3,6 +3,8 @@ package cc.sovellus.vrcaa.api.vrchat
 import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
+import cc.sovellus.vrcaa.api.vrchat.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.models.Avatars
 import cc.sovellus.vrcaa.api.vrchat.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.models.FavoriteAdd
 import cc.sovellus.vrcaa.api.vrchat.models.FavoriteAvatar
@@ -89,7 +91,6 @@ class VRChatApi : BaseClient() {
             }
 
             Result.RateLimited -> {
-                Log.d("VRCAA", "cunt cunt cunt")
                 null
             }
 
@@ -103,7 +104,6 @@ class VRChatApi : BaseClient() {
             }
 
             Result.NotModified -> {
-                Log.d("VRCAA", "zat")
                 null
             }
 
@@ -702,6 +702,38 @@ class VRChatApi : BaseClient() {
 
         val response = handleRequest(result)
         return Gson().fromJson(response, cc.sovellus.vrcaa.api.vrchat.models.Avatar::class.java)
+    }
+
+    suspend fun getOwnAvatars(
+        n: Int = 50,
+        offset: Int = 0,
+        avatars: ArrayList<Avatar> = arrayListOf()
+    ): ArrayList<Avatar> {
+
+        val headers = Headers.Builder()
+
+        headers["User-Agent"] = userAgent
+
+        val result = doRequest(
+            method = "GET",
+            url = "$apiBase/avatars?releaseStatus=all&sort=updated&order=descending&user=me&n=$n&offset=$offset",
+            headers = headers,
+            body = null
+        )
+
+        val response = handleRequest(result)
+
+        val temp: ArrayList<Avatar> = avatars
+        val json = Gson().fromJson(response, Avatars::class.java)
+        json?.forEach { avatar ->
+            temp.add(avatar)
+        }
+
+        return if (json == null) {
+            avatars
+        } else {
+            getOwnAvatars(n, offset + n, temp)
+        }
     }
 
     suspend fun getGroups(
