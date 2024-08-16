@@ -160,6 +160,10 @@ class SettingsScreen : Screen {
                                 uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                             )
                         )
+                    },
+                    modifier = Modifier.clickable {
+                        model.developerMode.value = !model.developerMode.value
+                        preferences.developerMode = model.developerMode.value
                     }
                 )
             }
