@@ -101,6 +101,7 @@
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
     <string name="tabs_label_settings">Paramètres</string>
+    <string name="tabs_label_debug">Debug</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
@@ -258,4 +259,20 @@
     <string name="worlds_page_title">Monde de %1$s</string>
     <!-- Avatars -->
     <string name="avatars_page_title">Afficher les avatars</string>
+    <!-- Debug -->
+    <!-- Loading Texts -->
+    <string name="loading_text_profile">Loading profile…</string>
+    <string name="loading_text_online_friends">Loading online friends…</string>
+    <string name="loading_text_offline_friends">Loading offline friends…</string>
+    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_worlds">Loading worlds…</string>
+    <string name="loading_text_users">Loading users…</string>
+    <string name="loading_text_avatars">Loading avatars…</string>
+    <string name="loading_text_groups">Loading groups…</string>
+    <string name="loading_text_user">Loading user…</string>
+    <string name="loading_text_world">Loading world…</string>
+    <string name="loading_text_avatar">Loading avatar…</string>
+    <string name="loading_text_group">Loading group…</string>
+    <string name="loading_text_instances">Loading instances…</string>
 </resources>
