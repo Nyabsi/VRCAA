@@ -46,9 +46,8 @@ import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
-import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.ui.components.card.InstanceCardProfile
+import cc.sovellus.vrcaa.ui.components.card.InstanceCard
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
@@ -291,7 +290,7 @@ class UserProfileScreen(
                                     horizontalAlignment = Alignment.Start,
                                     modifier = Modifier.padding(top = 16.dp)
                                 ) {
-                                    InstanceCardProfile(profile = profile, instance = instance) {
+                                    InstanceCard(profile = profile, instance = instance) {
                                         navigator.push(WorldInfoScreen(instance.worldId))
                                     }
                                 }
