@@ -10,17 +10,11 @@
         <item>Sivulla</item>
         <item>Ei paikalla</item>
     </string-array>
-    <string name="friend_refreshed_favorites_message">Päivitetyt suosikkiystävät.</string>
     <!-- Home -->
     <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
-    <string name="home_featured_avatars">Suositellut Hahmot</string>
     <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
-    <string name="home_featured_worlds">Suositellut Maailmat</string>
     <string name="home_friend_locations">Friend Locations</string>
-    <string name="home_failed_to_fetch_worlds_message">Maailmojen noutaminen epäonnistui, yritä uudelleen.</string>
-    <string name="home_failed_to_fetch_friends_message">Ystävien noutaminen epäonnistui, yritä uudelleen.</string>
-    <string name="home_toast_updated_info">Päivitetyt ystävät ja maailmat.</string>
     <!-- Login -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
     <string name="login_label_username">Username or E-Mail Address</string>
@@ -31,7 +25,6 @@
     <!-- Two Auth -->
     <string name="auth_text_email">Syötä sähköpostiisi lähetetty koodi</string>
     <string name="auth_text_app">Syötä autentikointisovelluksen antama koodi</string>
-    <string name="auth_label_code">Kaksivaiheisen todennuksen koodi</string>
     <string name="auth_button_text">Vahvista</string>
     <string name="auth_button_paste">Liitä</string>
     <!-- Main -->
@@ -39,9 +32,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
     <string name="profile_label_biography">Kuvaus</string>
-    <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
@@ -69,18 +60,13 @@
         <item>Hahmot</item>
         <item>Ryhmät</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Maailmojen noutaminen epäonnistui, yritä uudelleen.</string>
-    <string name="search_failed_to_fetch_users_message">Ystävien noutaminen epäonnistui, yritä uudelleen.</string>
-    <string name="search_failed_to_fetch_avatars_message">Ystävien noutaminen epäonnistui, yritä uudelleen.</string>
     <!-- Settings -->
-    <string name="settings_item_check_updates">Tarkasta päivitykset</string>
     <string name="settings_item_about">Tietoja</string>
     <string name="settings_item_rich_presence">Rich Presence (kokeellinen)</string>
     <string name="settings_item_logout">Kirjaudu ulos</string>
     <!-- Worlds -->
     <string name="world_label_description">Kuvaus</string>
     <string name="world_label_tags">Tunnisteet</string>
-    <string name="world_text_no_description">Kuvausta ei ole määritelty.</string>
     <string name="world_text_no_tags">Kirjoittaja ei ole antanut tunnisteita.</string>
     <string name="world_title_created_at">Luonti Päivämäärä</string>
     <string name="world_title_updated_at">Viimeksi päivitetty</string>
@@ -101,7 +87,6 @@
     <string name="tabs_label_profile">Profiili</string>
     <string name="tabs_label_pictures">Kuvat</string>
     <string name="tabs_label_settings">Asetukset</string>
-    <string name="tabs_label_debug">Debug</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
@@ -150,15 +135,10 @@
     <string name="feed_friend_request_text">haluaa lisätä sinut ystäväksi.</string>
     <!-- About -->
     <string name="about_page_title">Tietoja</string>
-    <string name="about_page_version_title">Käytät parhaillaan versiota %1$s</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
-    <string name="about_page_open_source_licenses_description">Katso kirjastot minkä päälle VRCAA on rakennettu.</string>
     <string name="about_page_translate_title">Avusta Kääntämisessä</string>
-    <string name="about_page_translate_description">Katso kirjastot minkä päälle VRCAA on rakennettu.</string>
     <string name="about_page_battery_optimizations_title">Poista akun optimointi käytöstä</string>
-    <string name="about_page_battery_optimizations_description">Käytä tätä vain, jos joudut tekemään niin.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
-    <string name="about_page_crash_title">Kill the application</string>
     <string name="license_title">Avoimen lähdekoodin lisenssit</string>
     <string name="about_page_developer_mode">Enable Developer Mode</string>
     <!-- API -->
@@ -210,7 +190,6 @@
     <string name="group_user_failed_to_fetch_groups">Ryhmien noutaminen epäonnistui, yritä uudelleen.</string>
     <string name="group_user_viewing_groups_username">%1$s:n Ryhmät</string>
     <!-- Misc -->
-    <string name="misc_loading_label_text">Ladataan…</string>
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
     <string name="misc_no_internet_label">Restart</string>
@@ -220,7 +199,6 @@
     <string name="user_dropdown_view_worlds">View Worlds</string>
     <string name="user_dropdown_view_avatars">View Avatars</string>
     <string name="user_dropdown_view_favorites">View Favorites</string>
-    <string name="user_dropdown_edit_profile">Edit Profile</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
@@ -231,7 +209,6 @@
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
     <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
-    <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">See current friend locations</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
