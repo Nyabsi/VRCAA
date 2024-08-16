@@ -85,7 +85,6 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
-                    Log.d("VRCAA", "call to $url responded with ${response.code}")
                     handleRequest(response)
                 }
 
