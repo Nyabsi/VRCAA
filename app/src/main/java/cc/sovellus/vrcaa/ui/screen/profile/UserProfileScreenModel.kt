@@ -2,7 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.profile
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
+import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.manager.ApiManager.api
@@ -61,8 +61,8 @@ class UserProfileScreenModel(
                     name = name.substring(9) // skip first 9 characters, not required.
                     name = name.substring(0, name.indexOf('-') - 1)
 
-                    val avatars = avatarProvider.search("search", name, 5000)
-                    if (avatars != null) {
+                    val avatars = avatarProvider.search(name)
+                    if (avatars.isNotEmpty()) {
                        for (avatar in avatars) {
                            if (avatar.name == name && avatar.authorId == metadata.ownerId) {
                                callback(avatar.id)

@@ -52,7 +52,9 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
+import cc.sovellus.vrcaa.api.search.SearchAvatar
+import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
+import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -98,10 +100,10 @@ class SearchResultScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(
-        worlds: ArrayList<World>?,
-        users: MutableList<LimitedUser>?,
-        avatars: ArrayList<JustHPartyProvider.Avatar>?,
-        groups: ArrayList<Group>?,
+        worlds: ArrayList<World>,
+        users: MutableList<LimitedUser>,
+        avatars: ArrayList<SearchAvatar>,
+        groups: ArrayList<Group>,
         model: SearchResultScreenModel
     ) {
 
@@ -241,165 +243,90 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowWorlds(
-        worlds: ArrayList<World>?
+        worlds: ArrayList<World>
     ) {
         val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
 
-        if (worlds == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.search_failed_to_fetch_worlds_message),
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            if (worlds.isEmpty()) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = stringResource(R.string.result_not_found))
-                }
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(
-                        start = 12.dp,
-                        top = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    ),
-                    content = {
-                        items(worlds.size) {
-                            val world = worlds[it]
-                            SearchRowItem(
-                                name = world.name,
-                                url = world.imageUrl,
-                                count = world.occupants
-                            ) { navigator.push(WorldInfoScreen(world.id)) }
-                        }
-                    }
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun ShowUsers(
-        users: MutableList<LimitedUser>?
-    ) {
-        val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
-
-        if (users == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.search_failed_to_fetch_users_message),
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            if (users.isEmpty()) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = stringResource(R.string.result_not_found))
-                }
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(
-                        start = 12.dp,
-                        top = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    ),
-                    content = {
-                        items(users.size) {
-                            val user = users[it]
-                            SearchRowItem(
-                                name = user.displayName,
-                                url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
-                                count = null
-                            ) {
-                                navigator.push(UserProfileScreen(user.id))
-                            }
-                        }
-                    }
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun ShowAvatars(avatars: ArrayList<JustHPartyProvider.Avatar>?) {
-        val context = LocalContext.current
-
-        if (avatars == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.search_failed_to_fetch_avatars_message),
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
+        if (worlds.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val navigator = LocalNavigator.currentOrThrow
-
-                if (avatars.isEmpty()) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = stringResource(R.string.result_not_found))
-                    }
-                } else {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        contentPadding = PaddingValues(
-                            start = 12.dp,
-                            top = 16.dp,
-                            end = 16.dp,
-                            bottom = 16.dp
-                        ),
-                        content = {
-                            items(avatars.size) {
-                                val avatar = avatars[it]
-                                SearchRowItem(
-                                    name = avatar.name,
-                                    url = avatar.thumbnailImageUrl,
-                                    count = null
-                                ) {
-                                    navigator.push(AvatarScreen(avatar.id))
-                                }
-                            }
-                        }
-                    )
-                }
+                Text(text = stringResource(R.string.result_not_found))
             }
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(
+                    start = 12.dp,
+                    top = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                ),
+                content = {
+                    items(worlds.size) {
+                        val world = worlds[it]
+                        SearchRowItem(
+                            name = world.name,
+                            url = world.imageUrl,
+                            count = world.occupants
+                        ) { navigator.push(WorldInfoScreen(world.id)) }
+                    }
+                }
+            )
         }
     }
 
     @Composable
-    private fun ShowGroups(groups: ArrayList<Group>?) {
-        val context = LocalContext.current
+    private fun ShowUsers(
+        users: MutableList<LimitedUser>
+    ) {
+        val navigator = LocalNavigator.currentOrThrow
 
-        if (groups == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.search_failed_to_fetch_avatars_message),
-                Toast.LENGTH_SHORT
-            ).show()
+        if (users.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
         } else {
-            val navigator = LocalNavigator.currentOrThrow
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(
+                    start = 12.dp,
+                    top = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                ),
+                content = {
+                    items(users.size) {
+                        val user = users[it]
+                        SearchRowItem(
+                            name = user.displayName,
+                            url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
+                            count = null
+                        ) {
+                            navigator.push(UserProfileScreen(user.id))
+                        }
+                    }
+                }
+            )
+        }
+    }
 
-            if (groups.isEmpty()) {
+    @Composable
+    private fun ShowAvatars(avatars: ArrayList<SearchAvatar>) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (avatars.isEmpty()) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
@@ -417,18 +344,55 @@ class SearchResultScreen(
                         bottom = 16.dp
                     ),
                     content = {
-                        items(groups) {
+                        items(avatars.size) {
+                            val avatar = avatars[it]
                             SearchRowItem(
-                                name = it.name,
-                                url = it.bannerUrl,
+                                name = avatar.name,
+                                url = avatar.thumbnailImageUrl,
                                 count = null
                             ) {
-                                navigator.push(GroupScreen(it.id))
+                                navigator.push(AvatarScreen(avatar.id))
                             }
                         }
                     }
                 )
             }
+        }
+    }
+
+    @Composable
+    private fun ShowGroups(groups: ArrayList<Group>) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        if (groups.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(
+                    start = 12.dp,
+                    top = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                ),
+                content = {
+                    items(groups) {
+                        SearchRowItem(
+                            name = it.name,
+                            url = it.bannerUrl,
+                            count = null
+                        ) {
+                            navigator.push(GroupScreen(it.id))
+                        }
+                    }
+                }
+            )
         }
     }
 }

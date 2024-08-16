@@ -12,6 +12,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
@@ -39,6 +40,7 @@ class NavigationScreenModel(
     var worldsAmount = mutableIntStateOf(preferences.worldsAmount)
     var usersAmount = mutableIntStateOf(preferences.usersAmount)
     var groupsAmount = mutableIntStateOf(preferences.groupsAmount)
+    var avatarProvider = mutableStateOf(preferences.avatarProvider)
 
     private val listener = object : VRChatApi.SessionListener {
         override fun onSessionInvalidate() {
@@ -97,6 +99,8 @@ class NavigationScreenModel(
         worldsAmount.intValue = 50
         preferences.usersAmount = 50
         usersAmount.intValue = 50
+        avatarProvider.value = "avtrdb"
+        preferences.avatarProvider = "avtrdb"
         preferences.groupsAmount = 50
         groupsAmount.intValue = 50
 
@@ -113,6 +117,7 @@ class NavigationScreenModel(
         preferences.worldsAmount = worldsAmount.intValue
         preferences.usersAmount = usersAmount.intValue
         preferences.groupsAmount = groupsAmount.intValue
+        preferences.avatarProvider = avatarProvider.value
 
         Toast.makeText(
             context,

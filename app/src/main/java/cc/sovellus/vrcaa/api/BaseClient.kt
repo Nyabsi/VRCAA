@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.api
 
+import android.util.Log
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -84,6 +85,7 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
+                    Log.d("VRCAA", "call to $url responded with ${response.code}")
                     handleRequest(response)
                 }
 

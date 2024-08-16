@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -54,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -487,11 +489,37 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_avatars)) },
+                                        leadingContent = {
+                                            Icon(
+                                                imageVector = Icons.Outlined.Person,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    )
+                                    HorizontalDivider(
+                                        color = Color.Gray,
+                                        thickness = 0.5.dp
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_avatars_provider)) },
+                                        trailingContent = {
+                                            val options = listOf("avtrdb", "justhparty")
+                                            val optionsReadable = mapOf("avtrdb" to "avtrDB", "justhparty" to "Just-H Party")
+                                            ComboInput(options = options, selection = model.avatarProvider, readableOptions = optionsReadable)
+                                        }
+                                    )
+                                }
+                                item {
+                                    ListItem(
                                         headlineContent = { Text(stringResource(R.string.search_filter_category_groups)) },
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.Groups,
-                                                contentDescription = null                                            )
+                                                contentDescription = null
+                                            )
                                         }
                                     )
                                     HorizontalDivider(

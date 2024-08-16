@@ -7,10 +7,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.justhparty.JustHPartyProvider
+import cc.sovellus.vrcaa.api.search.SearchAvatar
+import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
+import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
@@ -24,24 +27,26 @@ class SearchResultScreenModel(
     private val query: String
 ) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
 
-    private val avatarProvider = JustHPartyProvider()
+    private val avtrDbProvider = AvtrDbProvider()
+    private val justHPartyProvider = JustHPartyProvider()
+
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
 
     sealed class SearchState {
         data object Init : SearchState()
         data object Loading : SearchState()
         data class Result(
-            val worlds: ArrayList<World>?,
-            val users: MutableList<LimitedUser>?,
-            val avatars: ArrayList<JustHPartyProvider.Avatar>?,
-            val groups: ArrayList<Group>?
+            val worlds: ArrayList<World>,
+            val users: MutableList<LimitedUser>,
+            val avatars: ArrayList<SearchAvatar>,
+            val groups: ArrayList<Group>
         ) : SearchState()
     }
 
-    private var worlds: ArrayList<World>? = null
-    private var users: MutableList<LimitedUser>? = null
-    private var avatars: ArrayList<JustHPartyProvider.Avatar>? = null
-    private var groups: ArrayList<Group>? = null
+    private var worlds: ArrayList<World> = arrayListOf()
+    private var users: MutableList<LimitedUser> = arrayListOf()
+    private var avatars: ArrayList<SearchAvatar> = arrayListOf()
+    private var groups: ArrayList<Group> = arrayListOf()
 
     var currentIndex = mutableIntStateOf(0)
 
@@ -64,11 +69,14 @@ class SearchResultScreenModel(
                 preferences.usersAmount
             )
 
-            avatars = avatarProvider.search(
-                "search",
-                query,
-                5000 // Not used
-            )
+            when (preferences.avatarProvider) {
+                "avtrdb" -> {
+                    avatars = avtrDbProvider.search(query)
+                }
+                "justhparty" -> {
+                    avatars = justHPartyProvider.search(query)
+                }
+            }
 
             groups = api.getGroups(
                 query,
