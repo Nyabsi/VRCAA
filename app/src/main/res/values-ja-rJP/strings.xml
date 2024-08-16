@@ -57,6 +57,8 @@
     <string name="search_filter_category_worlds_count">表示数</string>
     <string name="search_filter_category_users">ユーザー</string>
     <string name="search_filter_category_users_count">表示数</string>
+    <string name="search_filter_category_avatars">Avatars</string>
+    <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">グループ</string>
     <string name="search_filter_category_groups_count">表示数</string>
     <string name="search_filter_button_reset">リセット</string>
@@ -99,6 +101,7 @@
     <string name="tabs_label_profile">プロフィール</string>
     <string name="tabs_label_pictures">ピクチャー</string>
     <string name="tabs_label_settings">設定</string>
+    <string name="tabs_label_debug">Debug</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
     <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
@@ -246,6 +249,7 @@
     <string name="favorite_dialog_button_cancel">キャンセル</string>
     <string name="favorite_dialog_title">"お気に入りへ追加"</string>
     <string name="favorite_page_title">お気に入り一覧</string>
+  
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>フィード</item>
@@ -256,4 +260,26 @@
     <string name="worlds_page_title">%1$s さんのワールド</string>
     <!-- Avatars -->
     <string name="avatars_page_title">アバターを表示</string>
+
+    <!-- Debug -->
+    <string-array name="debug_selection_options" translatable="false">
+        <item>HTTP Traffic</item>
+        <item>Pipeline Traffic</item>
+    </string-array>
+  
+    <!-- Loading Texts -->
+    <string name="loading_text_profile">Loading profile…</string>
+    <string name="loading_text_online_friends">Loading online friends…</string>
+    <string name="loading_text_offline_friends">Loading offline friends…</string>
+    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_worlds">Loading worlds…</string>
+    <string name="loading_text_users">Loading users…</string>
+    <string name="loading_text_avatars">Loading avatars…</string>
+    <string name="loading_text_groups">Loading groups…</string>
+    <string name="loading_text_user">Loading user…</string>
+    <string name="loading_text_world">Loading world…</string>
+    <string name="loading_text_avatar">Loading avatar…</string>
+    <string name="loading_text_group">Loading group…</string>
+    <string name="loading_text_instances">Loading instances…</string>
 </resources>
