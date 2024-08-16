@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -29,15 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -46,14 +40,13 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.ui.components.card.AvatarCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -77,7 +70,7 @@ class AvatarScreen(
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun DisplayResult(avatar: Avatar?, model: AvatarScreenModel) {
         val navigator = LocalNavigator.currentOrThrow
@@ -217,45 +210,7 @@ class AvatarScreen(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        ElevatedCard(
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 6.dp
-                            ),
-                            modifier = Modifier
-                                .height(240.dp)
-                                .fillMaxWidth()
-                        ) {
-                            GlideImage(
-                                model = avatar.imageUrl,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(160.dp),
-                                contentScale = ContentScale.Crop,
-                                loading = placeholder(R.drawable.image_placeholder),
-                                failure = placeholder(R.drawable.image_placeholder)
-                            )
-
-                            Text(
-                                text = avatar.name,
-                                modifier = Modifier.padding(start = 12.dp, top = 4.dp),
-                                fontSize = 32.sp,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Left,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-
-                            Text(
-                                text = "By ${avatar.authorName}",
-                                modifier = Modifier.padding(start = 12.dp),
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Left,
-                                fontWeight = FontWeight.SemiBold,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
-                            )
-                        }
+                        AvatarCard(avatar)
 
                         Spacer(modifier = Modifier.padding(8.dp))
 
