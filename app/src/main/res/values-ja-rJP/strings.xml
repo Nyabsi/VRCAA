@@ -35,7 +35,7 @@
     <string name="auth_button_text">認証</string>
     <string name="auth_button_paste">貼り付け</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">ワールド・ユーザー・アバターの検索…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">現在のインスタンス</string>
     <string name="profile_label_biography">プロフィール</string>
@@ -211,18 +211,18 @@
     <string name="misc_no_internet_title">インターネット接続</string>
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
     <string name="misc_no_internet_label">再起動</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">所属グループを表示</string>
-    <string name="user_dropdown_view_worlds">View Worlds</string>
-    <string name="user_dropdown_view_avatars">View Avatars</string>
-    <string name="user_dropdown_view_favorites">View Favorites</string>
+    <string name="user_dropdown_view_worlds">製作ワールドを表示</string>
+    <string name="user_dropdown_view_avatars">製作アバターを表示</string>
+    <string name="user_dropdown_view_favorites">お気に入りを表示</string>
     <string name="user_dropdown_edit_profile">プロフィールを編集</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">ステータス</string>
     <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
     <string name="profile_edit_dialog_title_bio">プロフィール</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
+    <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
     <string name="profile_edit_dialog_button_update">変更</string>
     <string name="profile_edit_dialog_button_cancel">キャンセル</string>
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
@@ -233,27 +233,27 @@
     <string name="widget_name_friend_list">フレンドの現在地を表示する</string>
     <string name="widget_name_loading_text">少女祈祷中・・・</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>ワールド</item>
+        <item>アバター</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
+    <string name="favorite_label_add">お気に入りへ追加</string>
+    <string name="favorite_label_remove">お気に入りから削除</string>
+    <string name="favorite_toast_favorite_added">%1$s をお気に入りに追加しました。</string>
+    <string name="favorite_toast_favorite_added_failed">%1$s をお気に入りに追加するのに失敗しました。</string>
+    <string name="favorite_toast_favorite_removed">%1$s をお気に入りから削除しました。</string>
+    <string name="favorite_toast_favorite_removed_failed">%1$s をお気に入りから削除するのに失敗しました。</string>
+    <string name="favorite_dialog_button_add">追加</string>
+    <string name="favorite_dialog_button_cancel">キャンセル</string>
+    <string name="favorite_dialog_title">"お気に入りへ追加"</string>
+    <string name="favorite_page_title">お気に入り一覧</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
-        <item>Feed</item>
-        <item>Notifications</item>
-        <item>Group Activity</item>
+        <item>フィード</item>
+        <item>通知</item>
+        <item>グループ・アクティビティ</item>
     </string-array>
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">%1$s さんのワールド</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">アバターを表示</string>
 </resources>
