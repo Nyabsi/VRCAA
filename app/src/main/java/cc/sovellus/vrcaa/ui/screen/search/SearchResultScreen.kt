@@ -345,7 +345,7 @@ class SearchResultScreen(
                             val avatar = avatars[it]
                             SearchRowItem(
                                 name = avatar.name,
-                                url = avatar.thumbnailImageUrl,
+                                url = avatar.imageUrl,
                                 count = null
                             ) {
                                 navigator.push(AvatarScreen(avatar.id))

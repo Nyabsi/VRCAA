@@ -23,7 +23,7 @@ class AvtrDbProvider : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "https://api.avtrdb.com/v1/avatar/search?query=$query&page_size=$n&page=$offset",
+            url = "https://api.avtrdb.com/v1/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
             headers = headers,
             body = null
         )
@@ -35,18 +35,7 @@ class AvtrDbProvider : BaseClient() {
                 val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
 
                 json.avatars.forEach { avatar ->
-                    temp.add(
-                        SearchAvatar(
-                            authorId = avatar.author.vrcId,
-                            authorName = avatar.author.name,
-                            description = avatar.description,
-                            id = avatar.vrcId,
-                            imageUrl = avatar.imageUrl,
-                            name = avatar.name,
-                            releaseStatus = "",
-                            thumbnailImageUrl = avatar.thumbnailImageUrl
-                        )
-                    )
+                    temp.add(avatar)
                 }
 
                 if (json.hasMore) {
