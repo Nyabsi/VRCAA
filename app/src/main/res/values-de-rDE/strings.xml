@@ -57,6 +57,8 @@
     <string name="search_filter_category_worlds_count">Count</string>
     <string name="search_filter_category_users">Users</string>
     <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_avatars">Avatars</string>
+    <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Groups</string>
     <string name="search_filter_category_groups_count">Count</string>
     <string name="search_filter_button_reset">Reset</string>
@@ -187,7 +189,7 @@
         <item>Info</item>
         <item>Instances</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
+    <string name="group_toast_not_found_message">Gruppe wurde nicht gefunden. Bist du sicher, dass sie existiert?</string>
     <string name="group_page_label_description">Description</string>
     <string name="group_page_label_rules">Rules</string>
     <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
