@@ -273,14 +273,8 @@ class WorldInfoScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                world.let {
-                    WorldCard(
-                        url = it.imageUrl,
-                        name = it.name,
-                        author = stringResource(R.string.world_author_label).format(it.authorName),
-                        packages = it.unityPackages
-                    )
-                }
+                WorldCard(world)
+
                 Column(
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,

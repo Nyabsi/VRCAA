@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.UnityPackage
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -34,18 +35,15 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun WorldCard(
-    url: String,
-    name: String,
-    author: String,
-    packages: List<UnityPackage>
+    world: World
 ) {
     var foundWindows by remember { mutableStateOf(false) }
     var foundAndroid by remember { mutableStateOf(false) }
     var foundDarwin by remember { mutableStateOf(false) }
 
-    LaunchedEffect(packages) {
-        packages.forEach {
-            when (it.platform) {
+    LaunchedEffect(Unit) {
+        world.unityPackages.forEach { pkg ->
+            when (pkg.platform) {
                 "android" -> {
                     foundAndroid = true
                 }
@@ -75,7 +73,7 @@ fun WorldCard(
         ) {
             item {
                 GlideImage(
-                    model = url,
+                    model = world.thumbnailImageUrl,
                     contentDescription = "Profile Picture",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -89,7 +87,7 @@ fun WorldCard(
             item {
                 Row {
                     Text(
-                        text = name,
+                        text = world.name,
                         modifier = Modifier
                             .padding(start = 8.dp, top = 4.dp)
                             .weight(0.50f),
@@ -153,7 +151,7 @@ fun WorldCard(
             item {
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
-                    text = author,
+                    text = world.authorName,
                     textAlign = TextAlign.Left,
                     fontWeight = FontWeight.SemiBold,
                     overflow = TextOverflow.Ellipsis,
