@@ -117,7 +117,7 @@ fun GroupCard(
                         overflow = TextOverflow.Ellipsis
                     )
                     Row(
-                        modifier = Modifier.fillMaxWidth().weight(0.30f).padding(end = 4.dp), horizontalArrangement = Arrangement.End
+                        modifier = Modifier.fillMaxWidth().weight(0.30f).padding(end = 8.dp), horizontalArrangement = Arrangement.End
                     ) {
                         languages?.let {
                             Languages(languages = it, true)
