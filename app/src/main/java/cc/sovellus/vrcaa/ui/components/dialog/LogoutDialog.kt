@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.components.dialog
 
-import android.app.Activity
 import android.content.Intent
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
