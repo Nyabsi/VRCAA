@@ -73,7 +73,7 @@ class WorldInfoScreen(
     @Composable
     override fun Content() {
         val context = LocalContext.current
-        val model = rememberScreenModel { WorldInfoScreenModel(worldId, context) }
+        val model = rememberScreenModel { WorldInfoScreenModel(worldId) }
         val state by model.state.collectAsState()
 
         when (val result = state) {

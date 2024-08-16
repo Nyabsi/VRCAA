@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
@@ -32,6 +33,7 @@ class AvatarScreenModel(
 
     private fun fetchAvatar(avatarId: String) {
         screenModelScope.launch {
+            App.setLoadingText(R.string.loading_text_avatar)
             avatar = api.getAvatar(avatarId)
             mutableState.value = AvatarState.Result(avatar)
         }

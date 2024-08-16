@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 
 class LoadingIndicatorScreen : Screen {
@@ -59,7 +60,7 @@ class LoadingIndicatorScreen : Screen {
 
             Spacer(modifier = Modifier.padding(8.dp))
 
-            Text(text = "Loading some random crap from the internet.")
+            Text(text = App.getLoadingText().value)
         }
     }
 }

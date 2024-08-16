@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.api.vrchat
 
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -42,11 +44,13 @@ class VRChatCache : CoroutineScope {
 
     fun forceCacheRefresh() {
         launch {
+            App.setLoadingText(R.string.loading_text_profile)
             profile = api.getSelf()
 
             val friendList: MutableList<Friend> = mutableListOf()
             val recentWorlds: MutableList<WorldCache> = mutableListOf()
 
+            App.setLoadingText(R.string.loading_text_online_friends)
             var friends = api.getFriends(false)
 
             friends.forEach { friend->
@@ -63,12 +67,14 @@ class VRChatCache : CoroutineScope {
                 friendList.add(friend)
             }
 
+            App.setLoadingText(R.string.loading_text_offline_friends)
             friends = api.getFriends(true)
 
             friends.forEach { friend->
                 friendList.add(friend)
             }
 
+            App.setLoadingText(R.string.loading_text_recently_visited)
             api.getRecentWorlds()?.forEach { world->
                 val cache = WorldCache(
                     id = world.id,
@@ -82,6 +88,8 @@ class VRChatCache : CoroutineScope {
             recentlyVisited = recentWorlds
 
             FriendManager.setFriends(friendList)
+
+            App.setLoadingText(R.string.loading_text_favorites)
             FavoriteManager.refresh()
 
             listeners.forEach { listener ->

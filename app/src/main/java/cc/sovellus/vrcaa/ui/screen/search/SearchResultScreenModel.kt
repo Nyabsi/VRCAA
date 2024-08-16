@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
@@ -57,6 +59,9 @@ class SearchResultScreenModel(
 
     private fun getContent() {
         screenModelScope.launch {
+
+            App.setLoadingText(R.string.loading_text_worlds)
+
             worlds = api.getWorlds(
                 query,
                 preferences.worldsAmount,
@@ -64,10 +69,14 @@ class SearchResultScreenModel(
                 preferences.sortWorlds
             )
 
+            App.setLoadingText(R.string.loading_text_users)
+
             users = api.getUsers(
                 username = query,
                 preferences.usersAmount
             )
+
+            App.setLoadingText(R.string.loading_text_avatars)
 
             when (preferences.avatarProvider) {
                 "avtrdb" -> {
@@ -77,6 +86,8 @@ class SearchResultScreenModel(
                     avatars = justHPartyProvider.search(query)
                 }
             }
+
+            App.setLoadingText(R.string.loading_text_groups)
 
             groups = api.getGroups(
                 query,

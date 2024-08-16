@@ -2,6 +2,8 @@ package cc.sovellus.vrcaa.ui.screen.profile
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
@@ -32,6 +34,7 @@ class UserProfileScreenModel(
 
     private fun fetchProfile() {
         screenModelScope.launch {
+            App.setLoadingText(R.string.loading_text_user)
             api.getUser(userId)?.let {
                 it.location.let { location ->
                     if (it.isFriend &&

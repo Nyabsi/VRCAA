@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
@@ -35,6 +36,7 @@ class GroupScreenModel(
     private fun fetchGroup() {
         mutableState.value = GroupState.Loading
         screenModelScope.launch {
+            App.setLoadingText(R.string.loading_text_group)
             group = api.getGroup(groupId)
             instances = api.getGroupInstances(groupId)
             mutableState.value = GroupState.Result(group, instances)
