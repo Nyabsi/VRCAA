@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.debug
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -25,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -88,6 +91,7 @@ class DebugScreen : Screen {
 
     @Composable
     fun ShowHTTPTraffic(model: DebugScreenModel) {
+        val navigator = LocalNavigator.currentOrThrow
         val metadata = model.metadata.collectAsState()
 
         LazyColumn(
@@ -102,22 +106,25 @@ class DebugScreen : Screen {
                     overlineContent = {
                         Text(text = it.code.toString())
                     },
-                headlineContent = {
-                    if (it.code == 200 || it.code == 304) {
-                        Text(
-                            text = it.methodType,
-                            color = Color.Green
-                        )
-                    } else {
-                        Text(
-                            text = it.methodType,
-                            color = Color.Red
-                        )
-                    }
-                }, 
-                supportingContent = {
-                    Text(text = it.url)
-                },
+                    headlineContent = {
+                        if (it.code == 200 || it.code == 304) {
+                            Text(
+                                text = it.methodType,
+                                color = Color.Green
+                            )
+                        } else {
+                            Text(
+                                text = it.methodType,
+                                color = Color.Red
+                            )
+                        }
+                    }, 
+                    supportingContent = {
+                        Column {
+                            Text(text = it.url, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(text = "Click to view the payload")
+                        }
+                    },
                     leadingContent = {
                         if (it.code == 200 || it.code == 304) {
                             Icon(
@@ -132,6 +139,12 @@ class DebugScreen : Screen {
                                 modifier = Modifier.offset(y = 24.dp)
                             )
                         }
+                    },
+                    trailingContent = {
+                        Text(text = "${it.payload.length} bytes")
+                    },
+                    modifier = Modifier.clickable {
+                        navigator.parent?.parent?.push(ExtendedDebugViewScreen(it.payload, it.url))
                     }
                 )
             }
@@ -140,6 +153,7 @@ class DebugScreen : Screen {
 
     @Composable
     fun ShowPipelineTraffic(model: DebugScreenModel) {
+        val navigator = LocalNavigator.currentOrThrow
         val metadata = model.metadata.collectAsState()
 
         LazyColumn(
@@ -165,7 +179,7 @@ class DebugScreen : Screen {
                         }
                     },
                     supportingContent = {
-                        Text(text = "Click to view the payload.")
+                        Text(text = "Click to view the payload")
                     },
                     leadingContent = {
                         if (!it.unknown) {
@@ -181,6 +195,12 @@ class DebugScreen : Screen {
                                 modifier = Modifier.offset(y = 4.dp)
                             )
                         }
+                    },
+                    trailingContent = {
+                        Text(text = "${it.payload.length} bytes")
+                    },
+                    modifier = Modifier.clickable {
+                        navigator.parent?.parent?.push(ExtendedDebugViewScreen(it.payload))
                     }
                 )
             }
