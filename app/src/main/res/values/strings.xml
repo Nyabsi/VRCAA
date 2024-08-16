@@ -242,7 +242,7 @@
     <string name="misc_loading_label_text">Loading…</string>
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_no_internet_label">Close</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
 
     <!-- User -->

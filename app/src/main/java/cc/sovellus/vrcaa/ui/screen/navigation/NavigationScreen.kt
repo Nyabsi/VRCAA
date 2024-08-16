@@ -71,8 +71,8 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
-import cc.sovellus.vrcaa.ui.components.dialog.SingleButtonDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
@@ -100,14 +100,11 @@ class NavigationScreen : Screen {
         val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
 
         if (model.hasNoInternet.value) {
-            SingleButtonDialog(
+            NoInternetDialog(
                 onClick = {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                },
-                title = stringResource(R.string.misc_no_internet_title),
-                description = stringResource(R.string.misc_no_internet_description),
-                label = stringResource(R.string.misc_no_internet_label)
+                    if (context is Activity)
+                        context.finish()
+                }
             )
         }
 
