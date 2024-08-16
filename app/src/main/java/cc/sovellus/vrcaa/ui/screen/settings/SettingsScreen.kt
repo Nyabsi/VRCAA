@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.settings
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -152,6 +153,12 @@ class SettingsScreen : Screen {
                             onCheckedChange = { state ->
                                 model.developerMode.value = state
                                 preferences.developerMode = state
+
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.developer_mode_toggle_toast),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = MaterialTheme.colorScheme.primary,
@@ -164,6 +171,12 @@ class SettingsScreen : Screen {
                     modifier = Modifier.clickable {
                         model.developerMode.value = !model.developerMode.value
                         preferences.developerMode = model.developerMode.value
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.developer_mode_toggle_toast),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 )
             }

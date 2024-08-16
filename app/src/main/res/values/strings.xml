@@ -312,6 +312,8 @@
         <item>Pipeline Traffic</item>
     </string-array>
 
+    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+
     <!-- Loading Texts -->
 
     <string name="loading_text_profile">Loading profile…</string>
