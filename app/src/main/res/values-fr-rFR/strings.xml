@@ -10,17 +10,11 @@
         <item>Site Web</item>
         <item>Déconnecté</item>
     </string-array>
-    <string name="friend_refreshed_favorites_message">Amis favoris actualisés.</string>
     <!-- Home -->
     <string name="home_active_friends">Amis en ligne</string>
     <string name="home_recently_visited">Récemment visités</string>
-    <string name="home_featured_avatars">Avatars en vedette</string>
     <string name="home_offline_friends">Amis hors ligne</string>
-    <string name="home_featured_worlds">Mondes en vedette</string>
     <string name="home_friend_locations">Emplacements de vos amis</string>
-    <string name="home_failed_to_fetch_worlds_message">Échec dans l\'actualisation des mondes veuillez réessayer.</string>
-    <string name="home_failed_to_fetch_friends_message">Échec de l\'actualisation de la liste d\'ami, veuillez réessayer.</string>
-    <string name="home_toast_updated_info">Amis et mondes actualisés.</string>
     <!-- Login -->
     <string name="login_text">Se connecter à VRC Android Assistant</string>
     <string name="login_label_username">Nom d\'utilisateur ou adresse e-mail</string>
@@ -31,7 +25,6 @@
     <!-- Two Auth -->
     <string name="auth_text_email">Entrez le code envoyé sur votre email</string>
     <string name="auth_text_app">Entrez le code de votre application d\'authentification</string>
-    <string name="auth_label_code">Code 2FA</string>
     <string name="auth_button_text">Vérifié</string>
     <string name="auth_button_paste">Coller</string>
     <!-- Main -->
@@ -39,9 +32,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Emplacement actuel</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_languages">Langues</string>
     <string name="profile_text_no_biography">Aucune description spécifiée.</string>
-    <string name="profile_text_no_languages">Aucune langue spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
     <string name="profile_user_dropdown_view_groups">Afficher les groupes</string>
     <string name="profile_user_dropdown_view_avatar">Voir l\'avatar</string>
@@ -69,18 +60,13 @@
         <item>Avatars</item>
         <item>Groupes</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Échec de la récupération des mondes, veuillez réessayer.</string>
-    <string name="search_failed_to_fetch_users_message">Échec de la récupération des utilisateurs, veuillez réessayer.</string>
-    <string name="search_failed_to_fetch_avatars_message">Échec de la récupération des avatars, veuillez réessayer.</string>
     <!-- Settings -->
-    <string name="settings_item_check_updates">Rechercher des mises à jour</string>
     <string name="settings_item_about">À propos</string>
     <string name="settings_item_rich_presence">Rich Presence (Expérimental)</string>
     <string name="settings_item_logout">Se déconnecter</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Mots-clés</string>
-    <string name="world_text_no_description">Aucune description spécifiée.</string>
     <string name="world_text_no_tags">L\'auteur n\'a pas fourni de mots-clés.</string>
     <string name="world_title_created_at">Date de création</string>
     <string name="world_title_updated_at">Dernière mise à jour</string>
@@ -101,7 +87,6 @@
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
     <string name="tabs_label_settings">Paramètres</string>
-    <string name="tabs_label_debug">Debug</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
@@ -150,15 +135,10 @@
     <string name="feed_friend_request_text">veut vous ajouter comme ami.</string>
     <!-- About -->
     <string name="about_page_title">À propos</string>
-    <string name="about_page_version_title">Vous utilisez actuellement la version : %1$s</string>
     <string name="about_page_open_source_licenses_title">Licences Open Source</string>
-    <string name="about_page_open_source_licenses_description">Voir les bibliothèques sur lesquelles VRCAA a été construit.</string>
     <string name="about_page_translate_title">Contribuer à la traduction</string>
-    <string name="about_page_translate_description">Aidez-nous à traduire VRCAA dans votre langue.</string>
     <string name="about_page_battery_optimizations_title">Désactiver les optimisations de la batterie</string>
-    <string name="about_page_battery_optimizations_description">Ne l\'utilisez qu\'en cas de nécessité.</string>
     <string name="about_page_battery_optimizations_toast">Les optimisations de la batterie sont déjà désactivées.</string>
-    <string name="about_page_crash_title">Fermer l\'application</string>
     <string name="license_title">Licences Open Source</string>
     <string name="about_page_developer_mode">Activer le mode développeur</string>
     <!-- API -->
@@ -210,7 +190,6 @@
     <string name="group_user_failed_to_fetch_groups">Échec de la récupération des groupes, veuillez réessayer.</string>
     <string name="group_user_viewing_groups_username">Groupes de %1$s</string>
     <!-- Misc -->
-    <string name="misc_loading_label_text">Chargement…</string>
     <string name="misc_no_internet_title">Pas de connexion internet</string>
     <string name="misc_no_internet_description">Veuillez vous assurer que vous êtes connecté à internet, car cette application ne peut pas fonctionner sans connexion internet.</string>
     <string name="misc_no_internet_label">Redémarrer</string>
@@ -220,7 +199,6 @@
     <string name="user_dropdown_view_worlds">Voir les mondes</string>
     <string name="user_dropdown_view_avatars">Voir les avatars</string>
     <string name="user_dropdown_view_favorites">Voir les favoris</string>
-    <string name="user_dropdown_edit_profile">Modifier votre profil</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Statut</string>
     <string name="profile_edit_dialog_title_status_description">Description du statut</string>
@@ -231,7 +209,6 @@
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
     <string name="profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
     <string name="profile_edit_dialog_title_edit_profile">Modifier le profil</string>
-    <string name="api_toast_rate_limited_message">Vous avez fait trop de requêtes, veuillez patienter un instant avant d\'envoyer une autre.</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Voir les emplacements actuels des amis</string>
     <string name="widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>

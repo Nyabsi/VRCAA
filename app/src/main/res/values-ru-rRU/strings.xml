@@ -10,17 +10,11 @@
         <item>Веб-сайт</item>
         <item>Офлайн</item>
     </string-array>
-    <string name="friend_refreshed_favorites_message">Обновлены любимые друзья.</string>
     <!-- Home -->
     <string name="home_active_friends">Друзья онлайн</string>
     <string name="home_recently_visited">Недавно посещенные</string>
-    <string name="home_featured_avatars">Рекомендуемые аватары</string>
     <string name="home_offline_friends">Друзья не в сети</string>
-    <string name="home_featured_worlds">Рекомендуемые миры</string>
     <string name="home_friend_locations">Местонахождение друзей</string>
-    <string name="home_failed_to_fetch_worlds_message">Не удалось получить миры, попробуйте еще раз.</string>
-    <string name="home_failed_to_fetch_friends_message">Не удалось получить список друзей, попробуйте еще раз.</string>
-    <string name="home_toast_updated_info">Обновлены списки друзей и миров.</string>
     <!-- Login -->
     <string name="login_text">Войти в VRC Android Assistant</string>
     <string name="login_label_username">Имя пользователя или адрес электронной почты</string>
@@ -31,7 +25,6 @@
     <!-- Two Auth -->
     <string name="auth_text_email">Введите код, отправленный на вашу эл. почту</string>
     <string name="auth_text_app">Введите код из вашего приложения для двухфакторной аутентификации</string>
-    <string name="auth_label_code">Код двухфакторной аутентификации</string>
     <string name="auth_button_text">Подтвердить</string>
     <string name="auth_button_paste">Вставить</string>
     <!-- Main -->
@@ -39,9 +32,7 @@
     <!-- Profile -->
     <string name="profile_label_current_location">Текущее расположение</string>
     <string name="profile_label_biography">О себе</string>
-    <string name="profile_label_languages">Языки</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
-    <string name="profile_text_no_languages">Языки не указанны.</string>
     <string name="profile_user_dropdown_manage_notifications">Управление уведомлениями</string>
     <string name="profile_user_dropdown_view_groups">Показать группы</string>
     <string name="profile_user_dropdown_view_avatar">Показать аватары</string>
@@ -69,18 +60,13 @@
         <item>Аватары</item>
         <item>Группы</item>
     </string-array>
-    <string name="search_failed_to_fetch_worlds_message">Не удалось получить список миров, попробуйте еще раз.</string>
-    <string name="search_failed_to_fetch_users_message">Не удалось получить список юзеров, попробуйте еще раз.</string>
-    <string name="search_failed_to_fetch_avatars_message">Не удалось получить список аватаров, попробуйте еще раз.</string>
     <!-- Settings -->
-    <string name="settings_item_check_updates">Проверить обновления</string>
     <string name="settings_item_about">О программе</string>
     <string name="settings_item_rich_presence">Rich Presence (экспериментальный)</string>
     <string name="settings_item_logout">Выйти</string>
     <!-- Worlds -->
     <string name="world_label_description">Описание</string>
     <string name="world_label_tags">Теги</string>
-    <string name="world_text_no_description">Описание не указано.</string>
     <string name="world_text_no_tags">Автор не предоставил теги.</string>
     <string name="world_title_created_at">Дата создания</string>
     <string name="world_title_updated_at">Последнее обновление</string>
@@ -101,7 +87,6 @@
     <string name="tabs_label_profile">Профиль</string>
     <string name="tabs_label_pictures">Картинки</string>
     <string name="tabs_label_settings">Настройки</string>
-    <string name="tabs_label_debug">Debug</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA теперь следит за вашими друзьями в фоновом режиме.</string>
     <string name="notification_service_title_online">Друг появился в сети!</string>
@@ -150,15 +135,10 @@
     <string name="feed_friend_request_text">хочет добавить вас в друзья.</string>
     <!-- About -->
     <string name="about_page_title">О программе</string>
-    <string name="about_page_version_title">В настоящее время вы используете версию: %1$s</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
-    <string name="about_page_open_source_licenses_description">Просмотреть библиотеки, на основе которых была разработан VRCAA.</string>
     <string name="about_page_translate_title">Помочь в переводе</string>
-    <string name="about_page_translate_description">Помогите перевести VRCAA на Ваш язык.</string>
     <string name="about_page_battery_optimizations_title">Отключить оптимизацию батареи</string>
-    <string name="about_page_battery_optimizations_description">Используйте только если это необходимо.</string>
     <string name="about_page_battery_optimizations_toast">Оптимизация заряда батареи уже отключена.</string>
-    <string name="about_page_crash_title">Завершить приложение</string>
     <string name="license_title">Лицензии с открытым исходным кодом</string>
     <string name="about_page_developer_mode">Включить Режим Разработчика</string>
     <!-- API -->
@@ -210,7 +190,6 @@
     <string name="group_user_failed_to_fetch_groups">Не удалось получить список групп, попробуйте еще раз.</string>
     <string name="group_user_viewing_groups_username">Группы %1$s</string>
     <!-- Misc -->
-    <string name="misc_loading_label_text">Загрузка…</string>
     <string name="misc_no_internet_title">Нет подключения к интернету</string>
     <string name="misc_no_internet_description">Пожалуйста, убедитесь, что вы подключены к Интернету, это приложение не может работать без подключения к Интернету.</string>
     <string name="misc_no_internet_label">Перезапустить</string>
@@ -220,7 +199,6 @@
     <string name="user_dropdown_view_worlds">Просмотреть миры</string>
     <string name="user_dropdown_view_avatars">Просмотр аватаров</string>
     <string name="user_dropdown_view_favorites">Просмотр избранного</string>
-    <string name="user_dropdown_edit_profile">Редактировать профиль</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Статус</string>
     <string name="profile_edit_dialog_title_status_description">Описание статуса</string>
@@ -231,7 +209,6 @@
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
     <string name="profile_edit_dialog_title_edit_profile">Редактировать профиль</string>
-    <string name="api_toast_rate_limited_message">Вы ограничены в скорости запросов, пожалуйста, подождите некоторое время, прежде чем отправить еще один запрос.</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Посмотреть текущее местоположение друзей</string>
     <string name="widget_name_loading_text">Горизонт светлый, мой друг.</string>
