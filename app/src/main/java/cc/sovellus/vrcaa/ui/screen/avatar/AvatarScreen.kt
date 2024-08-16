@@ -4,10 +4,9 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
@@ -41,12 +40,13 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.ui.components.card.AvatarCard
+import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.components.card.AvatarCard
-import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -198,70 +198,54 @@ class AvatarScreen(
                         )
                     }
 
-                    LazyColumn(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
                                 top = padding.calculateTopPadding(),
-                                bottom = padding.calculateBottomPadding()
+                                bottom = padding.calculateBottomPadding(),
+                                start = 16.dp,
+                                end = 16.dp
                             ),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        item {
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                avatar.let {
-                                    AvatarCard(
-                                        thumbnailUrl = it.imageUrl,
-                                        name = it.name,
-                                        authorName = it.authorName
-                                    )
-                                }
-                            }
-                        }
+                        AvatarCard(avatar)
 
-                        item {
-                            Column(
-                                modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp),
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                horizontalAlignment = Alignment.Start
-                            ) {
-                                ElevatedCard(
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation = 6.dp
-                                    ),
-                                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                                ) {
-                                    SubHeader(title = stringResource(R.string.avatar_title_description))
-                                    Description(text = avatar.description)
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                                    val parser =
-                                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                                    val formatter =
-                                        SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+                        ElevatedCard(
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            SubHeader(title = stringResource(R.string.avatar_title_description))
+                            Description(text = avatar.description)
 
-                                    val createdAtFormatted = parser.parse(avatar.createdAt)
-                                        ?.let { formatter.format(it) }
+                            val parser =
+                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                            val formatter =
+                                SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
 
-                                    val updatedAtFormatted = parser.parse(avatar.updatedAt)
-                                        ?.let { formatter.format(it) }
+                            val createdAtFormatted = parser.parse(avatar.createdAt)
+                                ?.let { formatter.format(it) }
 
-                                    SubHeader(title = stringResource(R.string.avatar_title_created_at))
-                                    Description(text = createdAtFormatted)
+                            val updatedAtFormatted = parser.parse(avatar.updatedAt)
+                                ?.let { formatter.format(it) }
 
-                                    SubHeader(title = stringResource(R.string.avatar_title_updated_at))
-                                    Description(text = updatedAtFormatted)
+                            SubHeader(title = stringResource(R.string.avatar_title_created_at))
+                            Description(text = createdAtFormatted)
 
-                                    SubHeader(title = stringResource(R.string.avatar_title_content_labels))
-                                    BadgesFromTags(
-                                        tags = avatar.tags,
-                                        tagPropertyName = "content",
-                                        localizationResourceInt = R.string.avatar_text_content_labels_not_found
-                                    )
-                                }
-                            }
+                            SubHeader(title = stringResource(R.string.avatar_title_updated_at))
+                            Description(text = updatedAtFormatted)
+
+                            SubHeader(title = stringResource(R.string.avatar_title_content_labels))
+                            BadgesFromTags(
+                                tags = avatar.tags,
+                                tagPropertyName = "content",
+                                localizationResourceInt = R.string.avatar_text_content_labels_not_found
+                            )
                         }
                     }
                 }

@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.api
 
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,9 +40,10 @@ open class BaseClient {
     }
 
     private fun handleRequest(
-        response: Response
+        response: Response,
+        responseBody: String
     ): Result = when (response.code) {
-        200 -> Result.Succeeded(response, response.body?.string().toString())
+        200 -> Result.Succeeded(response, responseBody)
         304 -> Result.NotModified
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest
@@ -84,7 +87,21 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
-                    handleRequest(response)
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isDeveloperModeEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "GET",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
                 }
 
                 "POST" -> {
@@ -95,7 +112,21 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
-                    handleRequest(response)
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isDeveloperModeEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "POST",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
                 }
 
                 "PUT" -> {
@@ -106,7 +137,21 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
-                    handleRequest(response)
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isDeveloperModeEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "PUT",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
                 }
 
                 "DELETE" -> {
@@ -117,7 +162,21 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
-                    handleRequest(response)
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isDeveloperModeEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "DELETE",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
                 }
 
                 else -> {

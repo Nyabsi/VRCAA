@@ -2,6 +2,8 @@ package cc.sovellus.vrcaa.ui.screen.group
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ class UserGroupsScreenModel(
     private fun fetchGroups() {
         mutableState.value = UserGroupsState.Loading
         screenModelScope.launch {
+            App.setLoadingText(R.string.loading_text_groups)
             groups = api.getUserGroups(userId)
             mutableState.value = UserGroupsState.Result(groups)
         }

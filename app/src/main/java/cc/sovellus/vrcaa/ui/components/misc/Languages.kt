@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.misc
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -11,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 
 @Composable
-fun Languages(languages: List<String>, isGroup: Boolean = false, modifier: Modifier? = null) {
+fun Languages(languages: List<String>, isGroup: Boolean = false, @SuppressLint("ModifierParameter") modifier: Modifier? = null) {
     Row(
         modifier = modifier ?: Modifier.padding(start = 12.dp)
     ) {

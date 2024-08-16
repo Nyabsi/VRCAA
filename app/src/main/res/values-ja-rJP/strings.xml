@@ -249,6 +249,7 @@
     <string name="favorite_dialog_button_cancel">キャンセル</string>
     <string name="favorite_dialog_title">"お気に入りへ追加"</string>
     <string name="favorite_page_title">お気に入り一覧</string>
+  
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>フィード</item>
@@ -259,7 +260,13 @@
     <string name="worlds_page_title">%1$s さんのワールド</string>
     <!-- Avatars -->
     <string name="avatars_page_title">アバターを表示</string>
+
     <!-- Debug -->
+    <string-array name="debug_selection_options" translatable="false">
+        <item>HTTP Traffic</item>
+        <item>Pipeline Traffic</item>
+    </string-array>
+  
     <!-- Loading Texts -->
     <string name="loading_text_profile">Loading profile…</string>
     <string name="loading_text_online_friends">Loading online friends…</string>

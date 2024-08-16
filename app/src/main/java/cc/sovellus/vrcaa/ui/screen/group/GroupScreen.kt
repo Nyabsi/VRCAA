@@ -1,6 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.group
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +24,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -37,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -50,11 +54,10 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
+import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.ui.components.card.GroupCard
-import cc.sovellus.vrcaa.ui.components.card.InstanceCardGroup
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
-import cc.sovellus.vrcaa.ui.components.misc.Languages
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -252,16 +255,15 @@ class GroupScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    group.let {
-                        GroupCard(
-                            groupName = it.name,
-                            discriminator = it.discriminator,
-                            shortCode = it.shortCode,
-                            bannerUrl = it.bannerUrl,
-                            iconUrl = it.iconUrl,
-                            totalMembers = it.memberCount
-                        )
-                    }
+                    GroupCard(
+                        groupName = group.name,
+                        discriminator = group.discriminator,
+                        shortCode = group.shortCode,
+                        bannerUrl = group.bannerUrl,
+                        iconUrl = group.iconUrl,
+                        totalMembers = group.memberCount,
+                        languages = group.languages
+                    )
                 }
             }
 
@@ -289,16 +291,6 @@ class GroupScreen(
                     ) {
                         SubHeader(title = stringResource(R.string.group_page_label_rules))
                         Description(text = group.rules)
-                    }
-
-                    ElevatedCard(
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 80.dp),
-                    ) {
-                        SubHeader(title = stringResource(R.string.profile_label_languages))
-                        Languages(languages = group.languages, true)
                     }
                 }
             }
@@ -341,15 +333,58 @@ class GroupScreen(
                 } else {
                     items(instances.size) {
                         val instance = instances[it]
-                        InstanceCardGroup(
-                            intent = instance.location,
-                            world = instance.world,
-                            members = instance.memberCount,
-                            instanceId = instance.instanceId
-                        ) {
-                            dialogState.value = true
-                            model.clickedInstance.value = instance.location
-                        }
+                        val result = LocationHelper.parseLocationInfo(instance.location)
+                        ListItem(
+                            headlineContent = {
+                                Text("Capacity: ${instance.memberCount}/${instance.world.capacity}, ${result.instanceType}")
+                            },
+                            overlineContent = {
+                                Text("${instance.world.name} #${instance.instanceId}")
+                            },
+                            trailingContent = {
+                                if (result.regionId.isNotEmpty()) {
+                                    when (result.regionId.lowercase()) {
+                                        "eu" -> Image(
+                                            painter = painterResource(R.drawable.flag_eu),
+                                            modifier = Modifier.padding(start = 2.dp),
+                                            contentDescription = "Region flag"
+                                        )
+                                        "jp" -> Image(
+                                            painter = painterResource(R.drawable.flag_jp),
+                                            modifier = Modifier.padding(start = 2.dp),
+                                            contentDescription = "Region flag"
+                                        )
+                                        "us" -> Image(
+                                            painter = painterResource(R.drawable.flag_us),
+                                            modifier = Modifier.padding(start = 2.dp),
+                                            contentDescription = "Region flag"
+                                        )
+                                        "use" -> Image(
+                                            painter = painterResource(R.drawable.flag_us),
+                                            modifier = Modifier.padding(start = 2.dp),
+                                            contentDescription = "Region flag"
+                                        )
+                                        "usw" -> Image(
+                                            painter = painterResource(R.drawable.flag_us),
+                                            modifier = Modifier.padding(start = 2.dp),
+                                            contentDescription = "Region flag"
+                                        )
+                                    }
+                                } else {
+                                    Image(
+                                        painter = painterResource(R.drawable.flag_us),
+                                        modifier = Modifier.padding(start = 2.dp),
+                                        contentDescription = "Region flag",
+                                    )
+                                }
+                            },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    dialogState.value = true
+                                    model.clickedInstance.value = instance.location
+                                }
+                            )
+                        )
                     }
                 }
             }

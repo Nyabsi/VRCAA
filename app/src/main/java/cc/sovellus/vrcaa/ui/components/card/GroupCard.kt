@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.components.misc.Languages
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -43,6 +44,7 @@ fun GroupCard(
     bannerUrl: String,
     iconUrl: String,
     totalMembers: Int,
+    languages: List<String>? = null,
     callback: (() -> Unit?)? = null
 ) {
     ElevatedCard(
@@ -105,14 +107,23 @@ fun GroupCard(
             }
 
             item {
-                Text(
-                    text = groupName,
-                    modifier = Modifier.padding(start = 104.dp),
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    textAlign = TextAlign.Start,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Row {
+                    Text(
+                        text = groupName,
+                        modifier = Modifier.padding(start = 104.dp).weight(0.70f),
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        textAlign = TextAlign.Start,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth().weight(0.30f).padding(end = 8.dp), horizontalArrangement = Arrangement.End
+                    ) {
+                        languages?.let {
+                            Languages(languages = it, true)
+                        }
+                    }
+                }
             }
         }
         Row(

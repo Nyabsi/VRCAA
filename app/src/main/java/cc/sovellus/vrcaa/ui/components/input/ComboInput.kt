@@ -18,7 +18,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun ComboInput(
     options: List<String>,
-    selection: MutableState<String>
+    selection: MutableState<String>,
+    readableOptions: Map<String, String>? = null
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -30,7 +31,7 @@ fun ComboInput(
             // The `menuAnchor` modifier must be passed to the text field for correctness.
             modifier = Modifier.menuAnchor(),
             readOnly = true,
-            value = selection.value,
+            value = readableOptions?.get(selection.value) ?: selection.value,
             onValueChange = {},
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
@@ -43,7 +44,7 @@ fun ComboInput(
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
-                    text = { Text(selectionOption) },
+                    text = { Text(readableOptions?.get(selectionOption) ?: selectionOption) },
                     onClick = {
                         selection.value = selectionOption
                         expanded = false

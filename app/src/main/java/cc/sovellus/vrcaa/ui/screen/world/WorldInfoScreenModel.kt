@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -24,7 +25,6 @@ sealed class WorldInfoState {
 
 class WorldInfoScreenModel(
     private val id: String,
-    private val context: Context
 ) : StateScreenModel<WorldInfoState>(WorldInfoState.Init) {
 
     private lateinit var world: World
@@ -40,12 +40,14 @@ class WorldInfoScreenModel(
 
     private fun fetchWorld() {
         screenModelScope.launch {
+            App.setLoadingText(R.string.loading_text_world)
             world = api.getWorld(id)
 
             val instanceIds = world.instances.map { instance ->
                 instance[0].toString()
             }
 
+            App.setLoadingText(R.string.loading_text_instances)
             instanceIds.forEach { id ->
                 api.getInstance("${world.id}:${id}").let { instance ->
                     instances.add(Pair(id, instance))

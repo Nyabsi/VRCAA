@@ -1,6 +1,8 @@
 package cc.sovellus.vrcaa.api.vrchat
 
+import android.os.Debug
 import android.util.Log
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
@@ -13,6 +15,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.NotificationV2
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
+import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.OkHttpClient
@@ -50,6 +53,7 @@ class VRChatPipeline(
                 webSocket: WebSocket, text: String
             ) {
                 val update = Gson().fromJson(text, UpdateModel::class.java)
+                var isUnknown = false
 
                 when (update.type) {
                     "friend-location" -> {
@@ -103,14 +107,20 @@ class VRChatPipeline(
                         socketListener?.onMessage(notification)
                     }
 
-                    else ->
-                    {
-                        if (BuildConfig.DEBUG)
-                        {
-                            Log.d("VRCAA", "Got Unknown pipeline message (${update.type})")
-                            Log.d("VRCAA", update.content)
-                        }
+                    else -> {
+                        isUnknown = true
                     }
+                }
+
+                if (App.isDeveloperModeEnabled()) {
+                    DebugManager.addDebugMetadata(
+                        DebugManager.DebugMetadataData(
+                            type = DebugManager.DebugType.DEBUG_TYPE_PIPELINE,
+                            name = update.type,
+                            unknown = isUnknown,
+                            payload = update.content
+                        )
+                    )
                 }
             }
 

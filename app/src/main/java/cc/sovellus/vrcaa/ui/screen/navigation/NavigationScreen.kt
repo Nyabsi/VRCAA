@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -54,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -66,13 +68,14 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
-import cc.sovellus.vrcaa.ui.components.dialog.SingleButtonDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
@@ -80,6 +83,7 @@ import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.ActivitiesTab
+import cc.sovellus.vrcaa.ui.tabs.DebugTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
@@ -100,18 +104,18 @@ class NavigationScreen : Screen {
         val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
 
         if (model.hasNoInternet.value) {
-            SingleButtonDialog(
+            NoInternetDialog(
                 onClick = {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                },
-                title = stringResource(R.string.misc_no_internet_title),
-                description = stringResource(R.string.misc_no_internet_description),
-                label = stringResource(R.string.misc_no_internet_label)
+                    if (context is Activity)
+                        context.finish()
+                }
             )
         }
 
-        val tabs = listOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab)
+        val tabs = if (model.developerMode.value)
+            arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab, DebugTab)
+        else
+            arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab)
 
         TabNavigator(
             HomeTab,
@@ -348,6 +352,15 @@ class NavigationScreen : Screen {
                             ) }
                         )
                     }
+                    else if (tabNavigator.current.options.index == DebugTab.options.index) {
+                        TopAppBar(
+                            title = { Text(
+                                text = stringResource(id = R.string.tabs_label_debug),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
                 },
                 content = { padding ->
                     Column(
@@ -490,11 +503,37 @@ class NavigationScreen : Screen {
                                 }
                                 item {
                                     ListItem(
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_avatars)) },
+                                        leadingContent = {
+                                            Icon(
+                                                imageVector = Icons.Outlined.Person,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    )
+                                    HorizontalDivider(
+                                        color = Color.Gray,
+                                        thickness = 0.5.dp
+                                    )
+                                }
+                                item {
+                                    ListItem(
+                                        headlineContent = { Text(stringResource(R.string.search_filter_category_avatars_provider)) },
+                                        trailingContent = {
+                                            val options = listOf("avtrdb", "justhparty")
+                                            val optionsReadable = mapOf("avtrdb" to "avtrDB", "justhparty" to "Just-H Party")
+                                            ComboInput(options = options, selection = model.avatarProvider, readableOptions = optionsReadable)
+                                        }
+                                    )
+                                }
+                                item {
+                                    ListItem(
                                         headlineContent = { Text(stringResource(R.string.search_filter_category_groups)) },
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.Groups,
-                                                contentDescription = null                                            )
+                                                contentDescription = null
+                                            )
                                         }
                                     )
                                     HorizontalDivider(

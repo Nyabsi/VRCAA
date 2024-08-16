@@ -27,7 +27,6 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun FriendItem(friend: Friend, callback: () -> Unit) {
-
     ListItem(
         headlineContent = {
             Text(friend.displayName)

@@ -71,3 +71,11 @@ internal var SharedPreferences.richPresenceWarningAcknowledged: Boolean
 internal var SharedPreferences.richPresenceWebhookUrl: String
     get() = getString("richPresenceWebhookUrl", "")!!
     set(it) = edit { putString("richPresenceWebhookUrl", it) }
+
+internal var SharedPreferences.avatarProvider: String
+    get() = getString("avatarProviderPreference", "avtrdb")!!
+    set(it) = edit { putString("avatarProviderPreference", it) }
+
+internal var SharedPreferences.developerMode: Boolean
+    get() = getBoolean("isDeveloperModeEnabled", false)
+    set(it) = edit { putBoolean("isDeveloperModeEnabled", it) }

@@ -69,6 +69,8 @@
     <string name="search_filter_category_worlds_count">Count</string>
     <string name="search_filter_category_users">Users</string>
     <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_avatars">Avatars</string>
+    <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Groups</string>
     <string name="search_filter_category_groups_count">Count</string>
 
@@ -119,6 +121,7 @@
     <string name="tabs_label_profile">Profile</string>
     <string name="tabs_label_pictures">Pictures</string>
     <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_debug">Debug</string>
 
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
@@ -242,7 +245,7 @@
     <string name="misc_loading_label_text">Loading…</string>
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_no_internet_label">Close</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
 
     <!-- User -->
@@ -301,4 +304,25 @@
     <!-- Avatars -->
     <string name="avatars_page_title">Viewing avatars</string>
 
+    <!-- Debug -->
+    <string-array name="debug_selection_options" translatable="false">
+        <item>HTTP Traffic</item>
+        <item>Pipeline Traffic</item>
+    </string-array>
+
+    <!-- Loading Texts -->
+    <string name="loading_text_profile">Loading profile…</string>
+    <string name="loading_text_online_friends">Loading online friends…</string>
+    <string name="loading_text_offline_friends">Loading offline friends…</string>
+    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_worlds">Loading worlds…</string>
+    <string name="loading_text_users">Loading users…</string>
+    <string name="loading_text_avatars">Loading avatars…</string>
+    <string name="loading_text_groups">Loading groups…</string>
+    <string name="loading_text_user">Loading user…</string>
+    <string name="loading_text_world">Loading world…</string>
+    <string name="loading_text_avatar">Loading avatar…</string>
+    <string name="loading_text_group">Loading group…</string>
+    <string name="loading_text_instances">Loading instances…</string>
 </resources>
