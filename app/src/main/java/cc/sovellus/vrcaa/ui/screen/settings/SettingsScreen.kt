@@ -45,6 +45,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.extension.developerMode
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
@@ -137,8 +138,11 @@ class SettingsScreen : Screen {
                     },
                     trailingContent = {
                         Switch(
-                            checked = false, // model.enableUpdates.value
-                            onCheckedChange = { state ->  }, // model.toggleUpdate(state)
+                            checked = model.developerMode.value,
+                            onCheckedChange = { state ->
+                                model.developerMode.value = state
+                                preferences.developerMode = model.developerMode.value
+                            },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = MaterialTheme.colorScheme.primary,
                                 checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,

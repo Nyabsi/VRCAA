@@ -121,6 +121,7 @@
     <string name="tabs_label_profile">Profile</string>
     <string name="tabs_label_pictures">Pictures</string>
     <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_debug">Debug</string>
 
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
@@ -303,4 +304,9 @@
     <!-- Avatars -->
     <string name="avatars_page_title">Viewing avatars</string>
 
+    <!-- Debug -->
+    <string-array name="debug_selection_options" translatable="false">
+        <item>HTTP Traffic</item>
+        <item>Pipeline Traffic</item>
+    </string-array>
 </resources>

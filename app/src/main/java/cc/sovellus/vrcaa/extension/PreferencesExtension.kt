@@ -75,3 +75,7 @@ internal var SharedPreferences.richPresenceWebhookUrl: String
 internal var SharedPreferences.avatarProvider: String
     get() = getString("avatarProviderPreference", "avtrdb")!!
     set(it) = edit { putString("avatarProviderPreference", it) }
+
+internal var SharedPreferences.developerMode: Boolean
+    get() = getBoolean("isDeveloperModeEnabled", false)
+    set(it) = edit { putBoolean("isDeveloperModeEnabled", it) }

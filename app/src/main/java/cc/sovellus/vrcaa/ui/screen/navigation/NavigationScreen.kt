@@ -68,6 +68,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
@@ -82,6 +83,7 @@ import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.ActivitiesTab
+import cc.sovellus.vrcaa.ui.tabs.DebugTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
@@ -110,7 +112,10 @@ class NavigationScreen : Screen {
             )
         }
 
-        val tabs = listOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab)
+        val tabs = if (model.developerMode.value)
+            arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab, DebugTab)
+        else
+            arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab)
 
         TabNavigator(
             HomeTab,
@@ -342,6 +347,15 @@ class NavigationScreen : Screen {
                         TopAppBar(
                             title = { Text(
                                 text = stringResource(id = R.string.tabs_label_settings),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            ) }
+                        )
+                    }
+                    else if (tabNavigator.current.options.index == DebugTab.options.index) {
+                        TopAppBar(
+                            title = { Text(
+                                text = stringResource(id = R.string.tabs_label_debug),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             ) }

@@ -13,6 +13,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.avatarProvider
+import cc.sovellus.vrcaa.extension.developerMode
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
@@ -34,6 +35,8 @@ class NavigationScreenModel(
     var searchHistory = mutableListOf<String>()
     var hasNoInternet = mutableStateOf(false)
     var invalidSession = mutableStateOf(false)
+
+    val developerMode = mutableStateOf(preferences.developerMode)
 
     var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
     var sortWorlds = mutableStateOf(preferences.sortWorlds)

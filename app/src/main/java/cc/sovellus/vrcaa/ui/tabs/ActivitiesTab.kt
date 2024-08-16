@@ -21,7 +21,7 @@ object ActivitiesTab : Tab {
 
             return remember {
                 TabOptions(
-                    index = 3u,
+                    index = 2u,
                     title = tabName,
                     icon = icon
                 )
