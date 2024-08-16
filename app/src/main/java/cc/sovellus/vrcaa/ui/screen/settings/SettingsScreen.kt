@@ -48,6 +48,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.developerMode
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
+import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 
@@ -60,10 +61,13 @@ class SettingsScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
+        
         val preferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
-        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(preferences.developerMode) }
+
         val dialogState = remember { mutableStateOf(false) }
+        val logoutState = remember { mutableStateOf(false) }
 
         val title = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.Red)) {
@@ -103,6 +107,12 @@ class SettingsScreen : Screen {
                 },
                 title,
                 description
+            )
+        }
+        
+        if (logoutState.value) {
+            LogoutDialog(
+                onDismiss = { logoutState.value = false }
             )
         }
 
@@ -225,7 +235,7 @@ class SettingsScreen : Screen {
                     },
                     modifier = Modifier.clickable(
                         onClick = {
-                            model.doLogout()
+                            logoutState.value = true
                         }
                     )
                 )
