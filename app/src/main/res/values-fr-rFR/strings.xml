@@ -57,6 +57,8 @@
     <string name="search_filter_category_worlds_count">Quantité</string>
     <string name="search_filter_category_users">Utilisateurs</string>
     <string name="search_filter_category_users_count">Quantité</string>
+    <string name="search_filter_category_avatars">Avatars</string>
+    <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Groupes</string>
     <string name="search_filter_category_groups_count">Quantité</string>
     <string name="search_filter_button_reset">Réinitialiser</string>
