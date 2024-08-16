@@ -209,6 +209,11 @@
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
     <string name="profile_edit_dialog_title_edit_profile">Редактировать профиль</string>
+    <!-- Logout dialog -->
+    <string name="logout_dialog_title">Are you sure?</string>
+    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
+    <string name="logout_dialog_continue">Continue</string>
+    <string name="logout_dialog_cancel">Cancel</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Посмотреть текущее местоположение друзей</string>
     <string name="widget_name_loading_text">Горизонт светлый, мой друг.</string>
@@ -237,6 +242,7 @@
     <!-- Avatars -->
     <string name="avatars_page_title">Просмотр аватаров</string>
     <!-- Debug -->
+    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
     <!-- Loading Texts -->
     <string name="loading_text_profile">Loading profile…</string>
     <string name="loading_text_online_friends">Loading online friends…</string>
