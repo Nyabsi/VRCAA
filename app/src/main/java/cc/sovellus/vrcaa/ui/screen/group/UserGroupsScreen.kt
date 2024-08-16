@@ -115,7 +115,8 @@ class UserGroupsScreen(
                                         discriminator = group.discriminator,
                                         bannerUrl = group.bannerUrl,
                                         iconUrl = group.iconUrl,
-                                        totalMembers = group.memberCount
+                                        totalMembers = group.memberCount,
+                                        languages = null
                                     ) {
                                         navigator.push(GroupScreen(group.groupId))
                                     }
