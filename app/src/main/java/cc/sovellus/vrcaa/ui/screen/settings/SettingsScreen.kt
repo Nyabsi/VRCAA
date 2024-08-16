@@ -141,7 +141,7 @@ class SettingsScreen : Screen {
                             checked = model.developerMode.value,
                             onCheckedChange = { state ->
                                 model.developerMode.value = state
-                                preferences.developerMode = model.developerMode.value
+                                preferences.developerMode = state
                             },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = MaterialTheme.colorScheme.primary,
