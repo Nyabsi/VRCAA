@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -18,7 +20,7 @@ fun BadgesFromTags(
     localizationResourceInt: Int
 ) {
     Row(
-        modifier = Modifier.padding(start = 12.dp, end = 24.dp, top = 8.dp, bottom = 8.dp)
+        modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 4.dp)
     ) {
         tags.let {
             var found = false
@@ -34,14 +36,20 @@ fun BadgesFromTags(
                             Text(
                                 text = tag.substring(tagPropertyName.length + 1)
                                     .uppercase()
-                                    .replace("_", " ")
+                                    .replace("_", " "),
+                                textAlign = TextAlign.Left,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
                     )
                 }
             }
             if (!found) {
-                Text(text = stringResource(localizationResourceInt))
+                Text(
+                    text = stringResource(localizationResourceInt),
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }
