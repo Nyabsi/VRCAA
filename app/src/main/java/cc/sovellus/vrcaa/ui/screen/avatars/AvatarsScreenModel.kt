@@ -1,13 +1,9 @@
 package cc.sovellus.vrcaa.ui.screen.avatars
 
-import android.content.Context
-import android.widget.Toast
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
 sealed class AvatarsState {

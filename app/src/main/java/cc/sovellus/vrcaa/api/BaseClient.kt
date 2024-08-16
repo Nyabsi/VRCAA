@@ -24,7 +24,7 @@ open class BaseClient {
     sealed class Result {
         data class Succeeded(val response: Response, val body: String) : Result()
         data class UnhandledResult(val response: Response) : Result()
-        data class ClientExceptionResult(val response: String) : Result()
+        data object ClientExceptionResult : Result()
         data object RateLimited : Result()
         data object InvalidRequest : Result()
         data object Unauthorized : Result()
@@ -184,7 +184,7 @@ open class BaseClient {
                 }
             }
         } catch (e: Exception) {
-            Result.ClientExceptionResult(e.message.toString())
+            Result.ClientExceptionResult
         }
     }
 

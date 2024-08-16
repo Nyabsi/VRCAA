@@ -1,13 +1,10 @@
 package cc.sovellus.vrcaa.manager
 
-import android.util.Log
 import cc.sovellus.vrcaa.extension.milliseconds
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.UUID
 import kotlin.math.abs
-import kotlin.time.Duration.Companion.milliseconds
 
 
 object FeedManager {

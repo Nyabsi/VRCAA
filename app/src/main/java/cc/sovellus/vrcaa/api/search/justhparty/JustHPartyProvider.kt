@@ -3,7 +3,6 @@ package cc.sovellus.vrcaa.api.search.justhparty
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import okhttp3.Headers
 import java.net.URLEncoder
 

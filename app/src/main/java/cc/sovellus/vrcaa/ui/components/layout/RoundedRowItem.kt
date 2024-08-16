@@ -41,7 +41,7 @@ fun RoundedRowItem(
         ) {
             GlideImage(
                 model = url,
-                contentDescription = stringResource(R.string.preview_image_description),
+                contentDescription = null,
                 modifier = Modifier
                     .size(64.dp)
                     .clip(RoundedCornerShape(50)),

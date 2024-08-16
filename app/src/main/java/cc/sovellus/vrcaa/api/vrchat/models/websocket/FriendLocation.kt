@@ -2,7 +2,6 @@ package cc.sovellus.vrcaa.api.vrchat.models.websocket
 
 
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import com.google.gson.annotations.SerializedName
 

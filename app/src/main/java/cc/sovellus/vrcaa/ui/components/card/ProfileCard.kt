@@ -60,7 +60,7 @@ fun ProfileCard(
             item {
                 GlideImage(
                     model = thumbnailUrl,
-                    contentDescription = stringResource(R.string.preview_image_description),
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(160.dp),

@@ -2,7 +2,6 @@ package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -55,7 +54,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -68,11 +66,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
@@ -168,198 +164,200 @@ class NavigationScreen : Screen {
 
             Scaffold(
                 topBar = {
-                    if (tabNavigator.current.options.index == HomeTab.options.index) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            SearchBar(
-                                query = model.searchText.value,
-                                placeholder = {
-                                    Text(
-                                        text = stringResource(R.string.main_search_placeholder),
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                },
-                                onQueryChange = { model.searchText.value = it; },
-                                onSearch = {
-                                    model.existSearchMode()
-                                    navigator.push(SearchResultScreen(model.searchText.value))
-                                    model.clearSearchText()
-                                },
-                                active = model.searchModeActivated.value,
-                                onActiveChange = {
-                                    if (it) {
-                                        model.enterSearchMode()
-                                    } else {
-                                        model.existSearchMode()
-                                    }
-                                },
-                                trailingIcon = {
-                                    if (model.searchModeActivated.value) {
-                                        IconButton(onClick = { model.clearSearchText() }) {
-                                            Icon(
-                                                imageVector = Icons.Filled.Close,
-                                                contentDescription = null                                        )
-                                        }
-                                    } else {
-                                        IconButton(onClick = { showBottomSheet = true }) {
-                                            Icon(
-                                                imageVector = Icons.Filled.MoreVert,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
-                                },
-                                leadingIcon = {
-                                    if (model.searchModeActivated.value) {
-                                        IconButton(onClick = { model.existSearchMode() }) {
-                                            Icon(
-                                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    } else {
-                                        Icon(
-                                            imageVector = Icons.Filled.Search,
-                                            contentDescription = null
-                                        )
-                                    }
-                                }
+                    when (tabNavigator.current.options.index) {
+                        HomeTab.options.index -> {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                LazyColumn(
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    items(model.searchHistory.size) {
-                                        val item = model.searchHistory.reversed()[it]
-                                        ListItem(
-                                            leadingContent = {
+                                SearchBar(
+                                    query = model.searchText.value,
+                                    placeholder = {
+                                        Text(
+                                            text = stringResource(R.string.main_search_placeholder),
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    },
+                                    onQueryChange = { model.searchText.value = it; },
+                                    onSearch = {
+                                        model.existSearchMode()
+                                        navigator.push(SearchResultScreen(model.searchText.value))
+                                        model.clearSearchText()
+                                    },
+                                    active = model.searchModeActivated.value,
+                                    onActiveChange = {
+                                        if (it) {
+                                            model.enterSearchMode()
+                                        } else {
+                                            model.existSearchMode()
+                                        }
+                                    },
+                                    trailingIcon = {
+                                        if (model.searchModeActivated.value) {
+                                            IconButton(onClick = { model.clearSearchText() }) {
                                                 Icon(
-                                                    imageVector = Icons.Filled.History,
+                                                    imageVector = Icons.Filled.Close,
+                                                    contentDescription = null                                        )
+                                            }
+                                        } else {
+                                            IconButton(onClick = { showBottomSheet = true }) {
+                                                Icon(
+                                                    imageVector = Icons.Filled.MoreVert,
                                                     contentDescription = null
                                                 )
-                                            },
-                                            headlineContent = {
-                                                Text(text = item)
-                                            },
-                                            modifier = Modifier.clickable(
-                                                onClick = {
-                                                    model.existSearchMode()
-                                                    navigator.push(SearchResultScreen(item))
-                                                }
+                                            }
+                                        }
+                                    },
+                                    leadingIcon = {
+                                        if (model.searchModeActivated.value) {
+                                            IconButton(onClick = { model.existSearchMode() }) {
+                                                Icon(
+                                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                                    contentDescription = null
+                                                )
+                                            }
+                                        } else {
+                                            Icon(
+                                                imageVector = Icons.Filled.Search,
+                                                contentDescription = null
                                             )
-                                        )
+                                        }
+                                    }
+                                ) {
+                                    LazyColumn(
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        items(model.searchHistory.size) {
+                                            val item = model.searchHistory.reversed()[it]
+                                            ListItem(
+                                                leadingContent = {
+                                                    Icon(
+                                                        imageVector = Icons.Filled.History,
+                                                        contentDescription = null
+                                                    )
+                                                },
+                                                headlineContent = {
+                                                    Text(text = item)
+                                                },
+                                                modifier = Modifier.clickable(
+                                                    onClick = {
+                                                        model.existSearchMode()
+                                                        navigator.push(SearchResultScreen(item))
+                                                    }
+                                                )
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    else if (tabNavigator.current.options.index == FriendsTab.options.index) {
-                        TopAppBar(
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_friends),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
-                    }
-                    else if (tabNavigator.current.options.index == ProfileTab.options.index) {
-                        TopAppBar(
-                            actions = {
-                                IconButton(onClick = { isMenuExpanded = true }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.MoreVert,
-                                        contentDescription = null
-                                    )
-                                    Box(
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        DropdownMenu(
-                                            expanded = isMenuExpanded,
-                                            onDismissRequest = { isMenuExpanded = false },
-                                            offset = DpOffset(0.dp, 0.dp)
+                        FriendsTab.options.index -> {
+                            TopAppBar(
+                                title = { Text(
+                                    text = stringResource(id = R.string.tabs_label_friends),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                ) }
+                            )
+                        }
+                        ProfileTab.options.index -> {
+                            TopAppBar(
+                                actions = {
+                                    IconButton(onClick = { isMenuExpanded = true }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.MoreVert,
+                                            contentDescription = null
+                                        )
+                                        Box(
+                                            contentAlignment = Alignment.Center
                                         ) {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    isEditingProfile = true
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) }
-                                            )
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    cache.getProfile()?.let {
-                                                        navigator.push(
-                                                            UserGroupsScreen(it.displayName, it.id)
-                                                        )
-                                                    }
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
-                                            )
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    cache.getProfile()?.let {
-                                                        navigator.push(
-                                                            WorldsScreen(it.displayName, it.id, true)
-                                                        )
-                                                    }
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }
-                                            )
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    navigator.push(AvatarsScreen())
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.user_dropdown_view_avatars)) }
-                                            )
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    navigator.push(FavoritesScreen())
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.user_dropdown_view_favorites)) }
-                                            )
+                                            DropdownMenu(
+                                                expanded = isMenuExpanded,
+                                                onDismissRequest = { isMenuExpanded = false },
+                                                offset = DpOffset(0.dp, 0.dp)
+                                            ) {
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        isEditingProfile = true
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) }
+                                                )
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        cache.getProfile()?.let {
+                                                            navigator.push(
+                                                                UserGroupsScreen(it.displayName, it.id)
+                                                            )
+                                                        }
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
+                                                )
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        cache.getProfile()?.let {
+                                                            navigator.push(
+                                                                WorldsScreen(it.displayName, it.id, true)
+                                                            )
+                                                        }
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }
+                                                )
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        navigator.push(AvatarsScreen())
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.user_dropdown_view_avatars)) }
+                                                )
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        navigator.push(FavoritesScreen())
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.user_dropdown_view_favorites)) }
+                                                )
+                                            }
                                         }
                                     }
-                                }
-                            },
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_profile),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
-                    }
-                    else if (tabNavigator.current.options.index == ActivitiesTab.options.index) {
-                        TopAppBar(
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_activities),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
-                    }
-                    else if (tabNavigator.current.options.index == SettingsTab.options.index) {
-                        TopAppBar(
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_settings),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
-                    }
-                    else if (tabNavigator.current.options.index == DebugTab.options.index) {
-                        TopAppBar(
-                            title = { Text(
-                                text = stringResource(id = R.string.tabs_label_debug),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            ) }
-                        )
+                                },
+                                title = { Text(
+                                    text = stringResource(id = R.string.tabs_label_profile),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                ) }
+                            )
+                        }
+                        ActivitiesTab.options.index -> {
+                            TopAppBar(
+                                title = { Text(
+                                    text = stringResource(id = R.string.tabs_label_activities),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                ) }
+                            )
+                        }
+                        SettingsTab.options.index -> {
+                            TopAppBar(
+                                title = { Text(
+                                    text = stringResource(id = R.string.tabs_label_settings),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                ) }
+                            )
+                        }
+                        DebugTab.options.index -> {
+                            TopAppBar(
+                                title = { Text(
+                                    text = stringResource(id = R.string.tabs_label_debug),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                ) }
+                            )
+                        }
                     }
                 },
                 content = { padding ->

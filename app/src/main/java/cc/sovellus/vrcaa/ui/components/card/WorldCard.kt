@@ -20,13 +20,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.UnityPackage
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -151,7 +151,7 @@ fun WorldCard(
             item {
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
-                    text = world.authorName,
+                    text = stringResource(R.string.world_author_label).format(world.authorName),
                     textAlign = TextAlign.Left,
                     fontWeight = FontWeight.SemiBold,
                     overflow = TextOverflow.Ellipsis,

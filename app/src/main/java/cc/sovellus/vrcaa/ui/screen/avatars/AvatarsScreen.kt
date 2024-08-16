@@ -67,7 +67,6 @@ class AvatarsScreen : Screen {
     private fun SearchRowItem(
         name: String,
         url: String,
-        count: Int?,
         onClick: () -> Unit
     ) {
         ElevatedCard(
@@ -84,7 +83,7 @@ class AvatarsScreen : Screen {
 
             GlideImage(
                 model = url,
-                contentDescription = stringResource(R.string.preview_image_description),
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
@@ -103,16 +102,6 @@ class AvatarsScreen : Screen {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                if (count != null) {
-                    Text(
-                        text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                            .padding(end = 2.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.Group,
-                        contentDescription = stringResource(R.string.preview_image_description)
-                    )
-                }
             }
         }
     }
@@ -176,8 +165,7 @@ class AvatarsScreen : Screen {
                                     val avatar = avatars[it]
                                     SearchRowItem(
                                         name = avatar.name,
-                                        url = avatar.thumbnailImageUrl,
-                                        count = null
+                                        url = avatar.thumbnailImageUrl
                                     ) {
                                         navigator.push(AvatarScreen(avatar.id))
                                     }

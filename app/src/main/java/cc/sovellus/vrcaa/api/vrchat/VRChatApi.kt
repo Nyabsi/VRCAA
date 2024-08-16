@@ -558,39 +558,6 @@ class VRChatApi : BaseClient() {
 
     suspend fun getFavorites(
         type: String,
-        n: Int = 50,
-        offset: Int = 0,
-        favorites: ArrayList<Favorite> = arrayListOf()
-    ): ArrayList<Favorite> {
-
-        val headers = Headers.Builder()
-
-        headers["User-Agent"] = userAgent
-
-        val result = doRequest(
-            method = "GET",
-            url = "$apiBase/favorites?type=$type&n=$n&offset=$offset",
-            headers = headers,
-            body = null
-        )
-
-        val response = handleRequest(result)
-
-        val temp: ArrayList<Favorite> = favorites
-        val json = Gson().fromJson(response, Favorites::class.java)
-        json?.forEach { favorite ->
-            temp.add(favorite)
-        }
-
-        return if (json == null) {
-            favorites
-        } else {
-            getFavorites(type, n, offset + n, temp)
-        }
-    }
-
-    suspend fun getFavorites(
-        type: String,
         tag: String,
         n: Int = 50,
         offset: Int = 0,
@@ -619,7 +586,7 @@ class VRChatApi : BaseClient() {
         return if (json == null) {
             favorites
         } else {
-            getFavorites(type, n, offset + n, temp)
+            getFavorites(type, tag, n, offset + n, temp)
         }
     }
 
@@ -723,7 +690,7 @@ class VRChatApi : BaseClient() {
         return Gson().fromJson(response, User::class.java)
     }
 
-    suspend fun getAvatar(avatarId: String): cc.sovellus.vrcaa.api.vrchat.models.Avatar? {
+    suspend fun getAvatar(avatarId: String): Avatar? {
 
         val headers = Headers.Builder()
 
@@ -737,7 +704,7 @@ class VRChatApi : BaseClient() {
         )
 
         val response = handleRequest(result)
-        return Gson().fromJson(response, cc.sovellus.vrcaa.api.vrchat.models.Avatar::class.java)
+        return Gson().fromJson(response, Avatar::class.java)
     }
 
     suspend fun getOwnAvatars(

@@ -42,7 +42,6 @@ import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import java.util.UUID
 
 class FriendsScreen : Screen {
 

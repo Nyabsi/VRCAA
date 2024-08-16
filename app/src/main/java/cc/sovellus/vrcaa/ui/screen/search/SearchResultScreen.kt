@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.search
 
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,8 +52,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.SearchAvatar
-import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
-import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Group
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.models.World
@@ -208,7 +205,7 @@ class SearchResultScreen(
 
             GlideImage(
                 model = url,
-                contentDescription = stringResource(R.string.preview_image_description),
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
@@ -234,7 +231,7 @@ class SearchResultScreen(
                     )
                     Icon(
                         imageVector = Icons.Filled.Group,
-                        contentDescription = stringResource(R.string.preview_image_description)
+                        contentDescription = null
                     )
                 }
             }

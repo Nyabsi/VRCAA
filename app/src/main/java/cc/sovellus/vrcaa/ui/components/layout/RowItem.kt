@@ -45,7 +45,7 @@ fun RowItem(
 
         GlideImage(
             model = url,
-            contentDescription = stringResource(R.string.preview_image_description),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(150.dp),
@@ -72,7 +72,7 @@ fun RowItem(
                 )
                 Icon(
                     imageVector = Icons.Filled.Group,
-                    contentDescription = stringResource(R.string.preview_image_description)
+                    contentDescription = null
                 )
             }
         }

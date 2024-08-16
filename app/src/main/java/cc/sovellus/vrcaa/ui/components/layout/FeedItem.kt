@@ -42,7 +42,7 @@ fun FeedItem(
         leadingContent = {
             GlideImage(
                 model = friendPictureUrl,
-                contentDescription = stringResource(R.string.preview_image_description),
+                contentDescription = null,
                 modifier = Modifier
                     .size(48.dp)
                     .clip(RoundedCornerShape(50)),

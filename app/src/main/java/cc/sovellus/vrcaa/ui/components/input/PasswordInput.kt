@@ -45,7 +45,7 @@ fun PasswordInput(
             IconButton(onClick = {
                 onVisibilityChange()
             }) {
-                Icon(imageVector = image, stringResource(R.string.preview_image_description))
+                Icon(imageVector = image, null)
             }
         }
     )

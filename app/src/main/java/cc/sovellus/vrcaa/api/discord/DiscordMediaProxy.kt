@@ -11,7 +11,6 @@ class DiscordMediaProxy(
     private val webHookUrl: String
 )  : BaseClient() {
 
-    private val apiBase: String = "https://discord.com/api/v9"
     private val userAgent: String = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0"
 
     private fun handleRequest(result: Result): String? {

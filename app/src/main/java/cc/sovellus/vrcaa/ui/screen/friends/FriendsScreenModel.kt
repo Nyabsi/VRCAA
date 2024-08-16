@@ -2,7 +2,6 @@ package cc.sovellus.vrcaa.ui.screen.friends
 
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.api.vrchat.models.Friend

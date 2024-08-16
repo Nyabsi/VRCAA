@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
+
     <string name="app_name" translatable="false">VRChat Android Assistant</string>
     <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="preview_image_description" translatable="false">Preview Image</string>
     <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
 
     <!-- Friends -->
+
     <string-array name="friend_selection_options">
         <item>Favorite</item>
         <item>Online</item>
@@ -13,22 +14,15 @@
         <item>Offline</item>
     </string-array>
 
-    <string name="friend_refreshed_favorites_message">Refreshed favorite friends.</string>
-
     <!-- Home -->
+
     <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_featured_avatars">Featured Avatars</string>
     <string name="home_offline_friends">Offline Friends</string>
-    <string name="home_featured_worlds">Featured Worlds</string>
     <string name="home_friend_locations">Friend Locations</string>
 
-    <string name="home_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="home_failed_to_fetch_friends_message">Failed to fetch friends, try again.</string>
-
-    <string name="home_toast_updated_info">Refreshed friends and worlds.</string>
-
     <!-- Login -->
+
     <string name="login_text">Login to VRC Android Assistant</string>
     <string name="login_label_username">Username or E-Mail Address</string>
     <string name="login_label_password">Password</string>
@@ -37,21 +31,21 @@
     <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
 
     <!-- Two Auth -->
+
     <string name="auth_text_email">Input the code sent to your e-mail</string>
     <string name="auth_text_app">Input the code from your Authenticator app</string>
-    <string name="auth_label_code">2FA Code</string>
     <string name="auth_button_text">Verify</string>
     <string name="auth_button_paste">Paste</string>
 
     <!-- Main -->
+
     <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
 
     <!-- Profile -->
+
     <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_languages">Languages</string>
     <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_text_no_languages">No languages specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
@@ -61,6 +55,7 @@
     <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
 
     <!-- Search -->
+
     <string name="search_text_result">Results for</string>
 
     <string name="search_filter_category_worlds">Worlds</string>
@@ -85,20 +80,16 @@
         <item>Groups</item>
     </string-array>
 
-    <string name="search_failed_to_fetch_worlds_message">Failed to fetch worlds, try again.</string>
-    <string name="search_failed_to_fetch_users_message">Failed to fetch users, try again.</string>
-    <string name="search_failed_to_fetch_avatars_message">Failed to fetch avatars, try again.</string>
-
     <!-- Settings -->
-    <string name="settings_item_check_updates">Check for updates</string>
+
     <string name="settings_item_about">About</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
     <string name="settings_item_logout">Logout</string>
 
     <!-- Worlds -->
+
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_description">No description specified.</string>
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
@@ -115,17 +106,18 @@
     <string name="world_instance_failed_to_fetch_instance_message">Failed to fetch instance, try again.</string>
 
     <!-- Tabs -->
+
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
     <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profile</string>
     <string name="tabs_label_pictures">Pictures</string>
     <string name="tabs_label_settings">Settings</string>
-    <string name="tabs_label_debug">Debug</string>
+    <string name="tabs_label_debug" translatable="false">Debug</string>
 
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
 
+    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
     <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
     <string name="notification_service_title_offline">Friend has gone offline!</string>
@@ -146,6 +138,7 @@
     <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
 
     <!-- Avatars -->
+
     <string name="avatar_dropdown_label_select">Change to Avatar</string>
     <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
@@ -158,6 +151,7 @@
     <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
 
     <!-- Feed -->
+
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">has come online.</string>
     <string name="feed_offline_label">Offline</string>
@@ -174,24 +168,22 @@
     <string name="feed_friend_request_text">wants to add you as friend.</string>
 
     <!-- About -->
+
     <string name="about_page_title">About</string>
-    <string name="about_page_version_title">You\'re currently running on version: %1$s</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
-    <string name="about_page_open_source_licenses_description">View the libraries VRCAA was built on.</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_translate_description">Help translating VRCAA to your language.</string>
     <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
-    <string name="about_page_battery_optimizations_description">Only use if this if you have to.</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
-    <string name="about_page_crash_title">Kill the application</string>
     <string name="license_title">Open Source Licenses</string>
     <string name="about_page_developer_mode">Enable Developer Mode</string>
 
     <!-- API -->
+
     <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
     <string name="api_avatar_select_failed">"Failed to select avatar."</string>
 
     <!-- Discord Rich Presence -->
+
     <string name="discord_login_title">Login to Discord</string>
     <string name="discord_login_title_verify">Verify 2FA</string>
     <string name="discord_login_label_username">Username</string>
@@ -209,12 +201,14 @@
     <string name="discord_login_description_logout">Revoke your access token</string>
 
     <!-- Crash -->
+
     <string name="crash_title_text">The application encountered fatal error.</string>
     <string name="crash_button_restart_text">Restart</string>
     <string name="crash_button_copy_log_text">Copy Information</string>
     <string name="crash_button_report_text">Report Issue</string>
 
     <!-- Groups -->
+
     <string-array name="group_selection_options">
         <item>Info</item>
         <item>Instances</item>
@@ -242,36 +236,34 @@
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
 
     <!-- Misc -->
-    <string name="misc_loading_label_text">Loading…</string>
+
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
     <string name="misc_no_internet_label">Close</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
 
     <!-- User -->
+
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_view_worlds">View Worlds</string>
     <string name="user_dropdown_view_avatars">View Avatars</string>
     <string name="user_dropdown_view_favorites">View Favorites</string>
-    <string name="user_dropdown_edit_profile">Edit Profile</string>
 
     <!-- Profile Edit Dialog -->
+
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-
     <string name="profile_edit_dialog_button_update">Update</string>
     <string name="profile_edit_dialog_button_cancel">Cancel</string>
-
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-
     <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
 
-    <string name="api_toast_rate_limited_message">You are being rate-limited, please wait a while before sending another request.</string>
 
     <!-- Widgets -->
+
     <string name="widget_name_friend_list">See current friend locations</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
 
@@ -292,6 +284,7 @@
     <string name="favorite_page_title">Showing Favorites</string>
 
     <!-- Activities -->
+
     <string-array name="activities_selection_options">
         <item>Feed</item>
         <item>Notifications</item>
@@ -299,18 +292,22 @@
     </string-array>
 
     <!-- Worlds -->
+
     <string name="worlds_page_title">%1$s\'s Worlds</string>
 
     <!-- Avatars -->
+
     <string name="avatars_page_title">Viewing avatars</string>
 
     <!-- Debug -->
+
     <string-array name="debug_selection_options" translatable="false">
         <item>HTTP Traffic</item>
         <item>Pipeline Traffic</item>
     </string-array>
 
     <!-- Loading Texts -->
+
     <string name="loading_text_profile">Loading profile…</string>
     <string name="loading_text_online_friends">Loading online friends…</string>
     <string name="loading_text_offline_friends">Loading offline friends…</string>

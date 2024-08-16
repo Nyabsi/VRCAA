@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,7 +54,7 @@ fun AvatarCard(avatar: Avatar) {
         )
 
         Text(
-            text = "By ${avatar.authorName}",
+            text = stringResource(R.string.avatar_text_author).format(avatar.authorName),
             modifier = Modifier.padding(start = 12.dp),
             fontSize = 16.sp,
             textAlign = TextAlign.Left,

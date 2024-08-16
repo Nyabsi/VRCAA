@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.os.Debug
 import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig

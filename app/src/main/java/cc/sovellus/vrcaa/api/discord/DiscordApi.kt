@@ -4,7 +4,6 @@ import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
-import cc.sovellus.vrcaa.api.discord.models.DiscordTicket
 import com.google.gson.Gson
 import okhttp3.Headers
 

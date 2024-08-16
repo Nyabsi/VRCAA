@@ -42,7 +42,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
         leadingContent = {
             GlideImage(
                 model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
-                contentDescription = stringResource(R.string.preview_image_description),
+                contentDescription = null,
                 modifier = Modifier
                     .size(56.dp)
                     .clip(RoundedCornerShape(50)),

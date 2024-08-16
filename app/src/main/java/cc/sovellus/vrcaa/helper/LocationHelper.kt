@@ -1,7 +1,5 @@
 package cc.sovellus.vrcaa.helper
 
-import android.util.Log
-import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import extensions.wu.seal.PropertySuffixSupport.append
 

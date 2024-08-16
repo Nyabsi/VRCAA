@@ -73,7 +73,7 @@ fun CrashScreen(
                 }
                 Button(onClick = {
                     val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-                    val clip = ClipData.newPlainText("Crash Log", exception.toString())
+                    val clip = ClipData.newPlainText("Crash Log", exception)
                     clipboard?.setPrimaryClip(clip)
                 }) {
                     Text(text = stringResource(R.string.crash_button_copy_log_text))

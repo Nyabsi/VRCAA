@@ -71,7 +71,7 @@ fun GroupCard(
                 ) {
                     GlideImage(
                         model = bannerUrl,
-                        contentDescription = stringResource(R.string.preview_image_description),
+                        contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(160.dp),

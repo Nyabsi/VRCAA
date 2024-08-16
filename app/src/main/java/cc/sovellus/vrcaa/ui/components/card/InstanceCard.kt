@@ -59,7 +59,7 @@ fun InstanceCard(profile: LimitedUser, instance: Instance, callback: () -> Unit)
         ) {
             GlideImage(
                 model = instance.world.imageUrl,
-                contentDescription = stringResource(R.string.preview_image_description),
+                contentDescription = null,
                 modifier = Modifier
                     .width(160.dp)
                     .height(100.dp)

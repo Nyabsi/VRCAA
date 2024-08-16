@@ -71,7 +71,6 @@ class WorldsScreen(
     private fun SearchRowItem(
         name: String,
         url: String,
-        count: Int?,
         onClick: () -> Unit
     ) {
         ElevatedCard(
@@ -107,16 +106,6 @@ class WorldsScreen(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                if (count != null) {
-                    Text(
-                        text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                            .padding(end = 2.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.Group,
-                        contentDescription = null
-                    )
-                }
             }
         }
     }
@@ -180,8 +169,7 @@ class WorldsScreen(
                                     val world = worlds[it]
                                     SearchRowItem(
                                         name = world.name,
-                                        url = world.thumbnailImageUrl,
-                                        count = null
+                                        url = world.thumbnailImageUrl
                                     ) {
                                         navigator.push(WorldInfoScreen(world.id))
                                     }

@@ -46,7 +46,6 @@ import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import java.text.SimpleDateFormat
 import java.util.Locale
 

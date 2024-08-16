@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.widgets
 
-import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import androidx.glance.appwidget.GlanceAppWidget
