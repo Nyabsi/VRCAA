@@ -1,5 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.activities
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +20,7 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
@@ -81,6 +84,8 @@ class ActivitiesScreen : Screen {
 
         when (model.currentIndex.intValue) {
             0 -> ShowFeed(model)
+            1 -> StubScreen()
+            2 -> StubScreen()
         }
     }
 
@@ -225,6 +230,20 @@ class ActivitiesScreen : Screen {
                     }
                 }
             }
+        }
+    }
+
+    @Composable
+    fun StubScreen() {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(1.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "This functional has not been implemented.")
         }
     }
 }
