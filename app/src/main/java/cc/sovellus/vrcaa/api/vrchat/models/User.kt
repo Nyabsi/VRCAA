@@ -17,9 +17,9 @@ data class User(
     @SerializedName("allowAvatarCopying")
     val allowAvatarCopying: Boolean,
     @SerializedName("bio")
-    val bio: String,
+    var bio: String,
     @SerializedName("bioLinks")
-    val bioLinks: List<String>,
+    var bioLinks: List<String>,
     @SerializedName("currentAvatar")
     val currentAvatar: String,
     @SerializedName("currentAvatarAssetUrl")
@@ -35,7 +35,7 @@ data class User(
     @SerializedName("developerType")
     val developerType: String,
     @SerializedName("displayName")
-    val displayName: String,
+    var displayName: String,
     @SerializedName("emailVerified")
     val emailVerified: Boolean,
     @SerializedName("fallbackAvatar")
@@ -87,13 +87,13 @@ data class User(
     @SerializedName("presence")
     val presence: Presence,
     @SerializedName("profilePicOverride")
-    val profilePicOverride: String,
+    var profilePicOverride: String,
     @SerializedName("state")
     val state: String,
     @SerializedName("status")
-    val status: String,
+    var status: String,
     @SerializedName("statusDescription")
-    val statusDescription: String,
+    var statusDescription: String,
     @SerializedName("statusFirstTime")
     val statusFirstTime: Boolean,
     @SerializedName("statusHistory")
@@ -103,7 +103,7 @@ data class User(
     @SerializedName("steamId")
     val steamId: String,
     @SerializedName("tags")
-    val tags: List<String>,
+    var tags: List<String>,
     @SerializedName("twoFactorAuthEnabled")
     val twoFactorAuthEnabled: Boolean,
     @SerializedName("twoFactorAuthEnabledDate")
@@ -113,7 +113,7 @@ data class User(
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("userIcon")
-    val userIcon: String,
+    var userIcon: String,
     @SerializedName("userLanguage")
     val userLanguage: String,
     @SerializedName("userLanguageCode")

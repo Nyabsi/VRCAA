@@ -3,13 +3,13 @@ package cc.sovellus.vrcaa.api.vrchat.models.websocket
 
 import com.google.gson.annotations.SerializedName
 
-data class UpdateUser(
+data class UserUpdate(
     @SerializedName("allowAvatarCopying")
     val allowAvatarCopying: Boolean?,
     @SerializedName("bio")
     val bio: String?,
     @SerializedName("bioLinks")
-    val bioLinks: List<Any>?,
+    val bioLinks: List<String>?,
     @SerializedName("currentAvatarImageUrl")
     val currentAvatarImageUrl: String?,
     @SerializedName("currentAvatarTags")

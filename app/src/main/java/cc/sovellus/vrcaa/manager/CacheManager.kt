@@ -9,7 +9,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 
 object CacheManager {
 
-    private var profile: User? = null
+    private lateinit var profile: User
     private var worldList: MutableList<WorldCache> = mutableListOf()
     private var recentWorldList: MutableList<WorldCache> = mutableListOf()
 
@@ -33,7 +33,7 @@ object CacheManager {
 
     suspend fun buildCache() {
         App.setLoadingText(R.string.loading_text_profile)
-        profile = api.getSelf()
+        api.getSelf()?.let { profile = it }
 
         val friendList: MutableList<Friend> = mutableListOf()
         val recentWorlds: MutableList<WorldCache> = mutableListOf()
@@ -102,11 +102,11 @@ object CacheManager {
         }
     }
 
-    fun getProfile(): User? {
+    fun getProfile(): User {
         return profile
     }
 
-    fun updateProfile(profile: User?) {
+    fun updateProfile(profile: User) {
         this.profile = profile
         listeners.forEach { listener ->
             listener?.profileUpdated()

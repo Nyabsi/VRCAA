@@ -12,6 +12,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.NotificationV2
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserUpdate
 import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -88,6 +89,11 @@ class VRChatPipeline(
 
                     "user-location" -> {
                         val location = Gson().fromJson(update.content, UserLocation::class.java)
+                        socketListener?.onMessage(location)
+                    }
+
+                    "user-update" -> {
+                        val location = Gson().fromJson(update.content, UserUpdate::class.java)
                         socketListener?.onMessage(location)
                     }
 

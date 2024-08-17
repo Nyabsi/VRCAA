@@ -24,6 +24,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendOnline
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
+import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserUpdate
 import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
@@ -264,6 +265,46 @@ class PipelineService : Service(), CoroutineScope {
                             }
                         }
                     }
+                }
+
+                is UserUpdate -> {
+                    val user = msg.obj as UserUpdate
+
+                    val profile = CacheManager.getProfile()
+
+                    user.bio?.let { bio ->
+                        profile.bio = bio
+                    }
+
+                    user.statusDescription?.let { status ->
+                        profile.statusDescription = status
+                    }
+
+                    user.profilePicOverride?.let { image ->
+                        profile.profilePicOverride = image
+                    }
+
+                    user.userIcon?.let { image ->
+                        profile.userIcon = image
+                    }
+
+                    user.status?.let { status ->
+                        profile.status = status
+                    }
+
+                    user.bioLinks?.let { bioLinks ->
+                        profile.bioLinks = bioLinks
+                    }
+
+                    user.tags?.let { bioLinks ->
+                        profile.tags = bioLinks
+                    }
+
+                    user.displayName?.let { name ->
+                        profile.displayName = name
+                    }
+
+                    CacheManager.updateProfile(profile)
                 }
 
                 is FriendDelete -> {
