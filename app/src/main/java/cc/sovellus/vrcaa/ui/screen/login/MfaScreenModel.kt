@@ -13,7 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import kotlinx.coroutines.launch
 
@@ -36,7 +36,7 @@ class MfaScreenModel(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                cache.forceCacheRefresh()
+                CacheManager.buildCache()
                 preferences.twoFactorToken = result
                 navigator.replace(NavigationScreen())
             }

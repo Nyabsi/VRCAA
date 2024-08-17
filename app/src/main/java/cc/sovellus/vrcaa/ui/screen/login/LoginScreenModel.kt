@@ -14,7 +14,7 @@ import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import kotlinx.coroutines.launch
 
@@ -40,7 +40,7 @@ class LoginScreenModel(
                 } else {
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
-                        cache.forceCacheRefresh()
+                        CacheManager.buildCache()
                         preferences.authToken = result.token
                         navigator.replace(NavigationScreen())
                     } else {

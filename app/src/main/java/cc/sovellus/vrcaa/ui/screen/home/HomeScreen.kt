@@ -19,7 +19,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
-import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
@@ -86,7 +86,7 @@ class HomeScreen : Screen {
                     ) {
                         val friendLocations = friends.filter { it.location.contains("wrld_") }
                         items(friendLocations.distinctBy { it.location.split(':')[0] }, key = { it.id }) { friend ->
-                            val world = cache.getWorld(friend.location.split(':')[0])
+                            val world = CacheManager.getWorld(friend.location.split(':')[0])
                             RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,

@@ -69,7 +69,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -286,7 +286,7 @@ class NavigationScreen : Screen {
                                                 )
                                                 DropdownMenuItem(
                                                     onClick = {
-                                                        cache.getProfile()?.let {
+                                                        CacheManager.getProfile()?.let {
                                                             navigator.push(
                                                                 UserGroupsScreen(it.displayName, it.id)
                                                             )
@@ -297,7 +297,7 @@ class NavigationScreen : Screen {
                                                 )
                                                 DropdownMenuItem(
                                                     onClick = {
-                                                        cache.getProfile()?.let {
+                                                        CacheManager.getProfile()?.let {
                                                             navigator.push(
                                                                 WorldsScreen(it.displayName, it.id, true)
                                                             )

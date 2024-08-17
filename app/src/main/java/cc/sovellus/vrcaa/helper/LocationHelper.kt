@@ -1,6 +1,6 @@
 package cc.sovellus.vrcaa.helper
 
-import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.CacheManager
 import extensions.wu.seal.PropertySuffixSupport.append
 
 object LocationHelper {
@@ -104,7 +104,7 @@ object LocationHelper {
 
         val info = parseLocationInfo(location)
 
-        val result = "${cache.getWorld(info.worldId).name} #${info.instanceId} ${info.instanceType} "
+        val result = "${CacheManager.getWorld(info.worldId).name} #${info.instanceId} ${info.instanceType} "
         if (info.regionId.isNotEmpty()) location.append(info.regionId)
         return result
     }

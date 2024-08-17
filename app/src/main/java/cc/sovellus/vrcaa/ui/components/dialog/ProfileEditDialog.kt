@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.ApiManager.cache
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import kotlinx.coroutines.launch
 
@@ -50,7 +50,7 @@ fun ProfileEditDialog(
     val options = listOf("join me", "active", "ask me", "busy")
 
     LaunchedEffect(Unit) {
-        user = cache.getProfile()
+        user = CacheManager.getProfile()
 
         user?.let {
             id.value = it.id
@@ -171,7 +171,7 @@ fun ProfileEditDialog(
                     ).show()
                     coroutineScope.launch {
                         user = api.updateProfile(id.value, status.value, description.value, bio.value, bioLinks)
-                        cache.updateProfile(user)
+                        CacheManager.updateProfile(user)
                         onConfirmation()
                     }
                 }

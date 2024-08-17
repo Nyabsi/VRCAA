@@ -30,10 +30,10 @@ import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.helper.NotificationHelper
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.widgets.FriendWidgetReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,9 +62,11 @@ class PipelineService : Service(), CoroutineScope {
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
     private var refreshTask: Runnable = Runnable {
-        pipeline?.disconnect()
-        pipeline?.connect()
-        cache.forceCacheRefresh()
+        launch {
+            pipeline?.disconnect()
+            pipeline?.connect()
+            CacheManager.buildCache()
+        }
     }
 
     private val listener = object : VRChatPipeline.SocketListener {
@@ -157,10 +159,10 @@ class PipelineService : Service(), CoroutineScope {
                     val update = msg.obj as FriendLocation
 
                     update.world?.let {
-                        if (cache.worldExists(it.id))
-                            cache.updateWorld(update.world)
+                        if (CacheManager.isWorldCached(it.id))
+                            CacheManager.updateWorld(update.world)
                         else
-                            cache.addWorld(update.world)
+                            CacheManager.addWorld(update.world)
                     }
 
                     update.location?.let {
@@ -248,7 +250,7 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    cache.addRecentlyVisited(user.world)
+                    CacheManager.addRecent(user.world)
 
                     if (preferences.richPresenceEnabled) {
                         val status = StatusHelper.getStatusFromString(user.user.status)

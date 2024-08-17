@@ -1,9 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import cafe.adriel.voyager.core.model.StateScreenModel
-import cc.sovellus.vrcaa.api.vrchat.VRChatCache
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.api.vrchat.models.User
-import cc.sovellus.vrcaa.manager.ApiManager.cache
 
 sealed class ProfileState {
     data object Init : ProfileState()
@@ -13,7 +12,7 @@ sealed class ProfileState {
 
 class ProfileScreenModel : StateScreenModel<ProfileState>(ProfileState.Init) {
 
-    private val cacheListener = object : VRChatCache.CacheListener {
+    private val cacheListener = object : CacheManager.CacheListener {
         override fun profileUpdated() {
             mutableState.value = ProfileState.Loading
             fetchProfile()
@@ -22,11 +21,11 @@ class ProfileScreenModel : StateScreenModel<ProfileState>(ProfileState.Init) {
 
     init {
         mutableState.value = ProfileState.Loading
-        cache.addCacheListener(cacheListener)
+        CacheManager.addListener(cacheListener)
         fetchProfile()
     }
 
     fun fetchProfile() {
-        mutableState.value = ProfileState.Result(cache.getProfile())
+        mutableState.value = ProfileState.Result(CacheManager.getProfile())
     }
 }
