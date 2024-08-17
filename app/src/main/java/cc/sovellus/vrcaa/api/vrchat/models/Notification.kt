@@ -16,6 +16,8 @@ data class Notification(
     val seen: Boolean,
     @SerializedName("senderUserId")
     val senderUserId: String,
+    @SerializedName("senderUsername")
+    val senderUsername: String,
     @SerializedName("type")
     val type: String
 )
