@@ -14,10 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Initialize crash handler
         GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-
-        // Initialize notification channels
         NotificationManager.createNotificationChannels(this)
 
         mContext = this
@@ -31,16 +28,8 @@ class App : Application() {
         private var developerModeEnabled: Boolean = false
         private var loadingText: MutableState<String> = mutableStateOf("")
 
-        fun isDeveloperModeEnabled(): Boolean {
-            return developerModeEnabled
-        }
-
-        fun getLoadingText(): MutableState<String> {
-            return loadingText
-        }
-
-        fun setLoadingText(resourceId: Int) {
-            loadingText.value = mContext.getString(resourceId)
-        }
+        fun isDeveloperModeEnabled(): Boolean { return developerModeEnabled }
+        fun getLoadingText(): MutableState<String> { return loadingText }
+        fun setLoadingText(resourceId: Int) { loadingText.value = mContext.getString(resourceId) }
     }
 }
