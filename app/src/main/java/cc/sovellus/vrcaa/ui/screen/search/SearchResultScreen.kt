@@ -222,12 +222,13 @@ class SearchResultScreen(
                     text = name,
                     textAlign = TextAlign.Start,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(0.80f)
                 )
                 if (count != null) {
                     Text(
                         text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                            .padding(end = 2.dp)
+                            .weight(0.20f).padding(end = 2.dp)
                     )
                     Icon(
                         imageVector = Icons.Filled.Group,
