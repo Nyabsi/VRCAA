@@ -51,53 +51,40 @@ class ProfileScreen : Screen {
     }
 
     @Composable
-    private fun RenderProfile(profile: User?) {
-        val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
-
-        if (profile == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.profile_user_not_found_message),
-                Toast.LENGTH_SHORT
-            ).show()
-            navigator.pop()
-        } else {
-
-            LazyColumn(modifier = Modifier.padding(16.dp).fillMaxWidth().fillMaxHeight()) {
-                item {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        profile.let {
-                            ProfileCard(
-                                thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                iconUrl = it.userIcon.ifEmpty { it.currentAvatarImageUrl },
-                                displayName = it.displayName,
-                                statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
-                                trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                tags = profile.tags
-                            )
-                        }
+    private fun RenderProfile(profile: User) {
+        LazyColumn(modifier = Modifier.padding(16.dp).fillMaxWidth().fillMaxHeight()) {
+            item {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    profile.let {
+                        ProfileCard(
+                            thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                            iconUrl = it.userIcon.ifEmpty { it.currentAvatarImageUrl },
+                            displayName = it.displayName,
+                            statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
+                            trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                            statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                            tags = profile.tags
+                        )
                     }
                 }
+            }
 
-                item {
-                    Column(
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.Start
+            item {
+                Column(
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp),
                     ) {
-                        ElevatedCard(
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 6.dp
-                            ),
-                            modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp),
-                        ) {
-                            SubHeader(title = stringResource(R.string.profile_label_biography))
-                            Description(text = profile.bio)
-                        }
+                        SubHeader(title = stringResource(R.string.profile_label_biography))
+                        Description(text = profile.bio)
                     }
                 }
             }

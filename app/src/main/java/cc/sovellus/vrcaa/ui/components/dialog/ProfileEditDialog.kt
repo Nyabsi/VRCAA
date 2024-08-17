@@ -173,7 +173,6 @@ fun ProfileEditDialog(
                         api.updateProfile(id.value, status.value, description.value, bio.value, bioLinks)?.let { user ->
                             CacheManager.updateProfile(user)
                         }
-
                         onConfirmation()
                     }
                 }

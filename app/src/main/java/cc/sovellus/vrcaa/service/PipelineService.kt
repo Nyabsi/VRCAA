@@ -12,6 +12,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
@@ -269,42 +270,7 @@ class PipelineService : Service(), CoroutineScope {
 
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
-
-                    val profile = CacheManager.getProfile()
-
-                    user.bio?.let { bio ->
-                        profile.bio = bio
-                    }
-
-                    user.statusDescription?.let { status ->
-                        profile.statusDescription = status
-                    }
-
-                    user.profilePicOverride?.let { image ->
-                        profile.profilePicOverride = image
-                    }
-
-                    user.userIcon?.let { image ->
-                        profile.userIcon = image
-                    }
-
-                    user.status?.let { status ->
-                        profile.status = status
-                    }
-
-                    user.bioLinks?.let { bioLinks ->
-                        profile.bioLinks = bioLinks
-                    }
-
-                    user.tags?.let { bioLinks ->
-                        profile.tags = bioLinks
-                    }
-
-                    user.displayName?.let { name ->
-                        profile.displayName = name
-                    }
-
-                    CacheManager.updateProfile(profile)
+                    CacheManager.updateProfile(user.user)
                 }
 
                 is FriendDelete -> {

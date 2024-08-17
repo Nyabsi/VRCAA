@@ -9,6 +9,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.CacheManager.WorldCache
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
+import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.widgets.FriendWidgetReceiver
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -22,7 +22,7 @@ object CacheManager {
     interface CacheListener {
         fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) { }
         fun cacheUpdated() { }
-        fun profileUpdated() { }
+        fun profileUpdated(profile: User) { }
     }
 
     private var listeners: MutableList<CacheListener?> = mutableListOf()
@@ -109,7 +109,7 @@ object CacheManager {
     fun updateProfile(profile: User) {
         this.profile = profile
         listeners.forEach { listener ->
-            listener?.profileUpdated()
+            listener?.profileUpdated(profile)
         }
     }
 
