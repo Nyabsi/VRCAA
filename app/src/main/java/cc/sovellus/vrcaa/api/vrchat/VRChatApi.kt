@@ -37,7 +37,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 class VRChatApi : BaseClient() {
 
     private val apiBase: String = "https://api.vrchat.cloud/api/1"
-    private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
+    private val userAgent: String = "VRCAA/2.0.0 nyabsi@sovellus.cc"
 
     private var listener: SessionListener? = null
 

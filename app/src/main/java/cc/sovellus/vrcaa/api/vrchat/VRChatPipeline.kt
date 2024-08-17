@@ -28,7 +28,7 @@ class VRChatPipeline(
 
     private var socket: WebSocket? = null
     private val client: OkHttpClient by lazy { OkHttpClient() }
-    private val userAgent: String = "VRCAA/0.1 nyabsi@sovellus.cc"
+    private val userAgent: String = "VRCAA/2.0.0 nyabsi@sovellus.cc"
     private var shouldReconnect: Boolean = false
 
     interface SocketListener {
