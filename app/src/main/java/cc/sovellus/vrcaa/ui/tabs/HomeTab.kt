@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreen
 
 object HomeTab : Tab {
+
     override val options: TabOptions
         @Composable
         get() {
@@ -32,4 +33,6 @@ object HomeTab : Tab {
     override fun Content() {
         Navigator(HomeScreen())
     }
+
+    private fun readResolve(): Any = HomeTab
 }

@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreen
 
 object FriendsTab : Tab {
+
     override val options: TabOptions
         @Composable
         get() {
@@ -32,4 +33,6 @@ object FriendsTab : Tab {
     override fun Content() {
         Navigator(FriendsScreen())
     }
+
+    private fun readResolve(): Any = FriendsTab
 }

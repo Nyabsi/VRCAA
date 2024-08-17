@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.profile.ProfileScreen
 
 object ProfileTab : Tab {
+
     override val options: TabOptions
         @Composable
         get() {
@@ -32,4 +33,6 @@ object ProfileTab : Tab {
     override fun Content() {
         Navigator(ProfileScreen())
     }
+
+    private fun readResolve(): Any = ProfileTab
 }

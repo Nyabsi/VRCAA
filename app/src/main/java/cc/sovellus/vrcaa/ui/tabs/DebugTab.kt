@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.debug.DebugScreen
 
 object DebugTab : Tab {
+
     override val options: TabOptions
         @Composable
         get() {
@@ -32,4 +33,6 @@ object DebugTab : Tab {
     override fun Content() {
         Navigator(DebugScreen())
     }
+
+    private fun readResolve(): Any = DebugTab
 }

@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.activities.ActivitiesScreen
 
 object ActivitiesTab : Tab {
+
     override val options: TabOptions
         @Composable
         get() {
@@ -32,4 +33,6 @@ object ActivitiesTab : Tab {
     override fun Content() {
         Navigator(ActivitiesScreen())
     }
+
+    private fun readResolve(): Any = ActivitiesTab
 }

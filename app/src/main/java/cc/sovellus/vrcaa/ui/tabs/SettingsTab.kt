@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 
 object SettingsTab : Tab {
+
     override val options: TabOptions
         @Composable
         get() {
@@ -32,4 +33,6 @@ object SettingsTab : Tab {
     override fun Content() {
         Navigator(SettingsScreen())
     }
+
+    private fun readResolve(): Any = SettingsTab
 }
