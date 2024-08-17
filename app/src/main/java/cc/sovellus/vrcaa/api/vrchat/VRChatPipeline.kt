@@ -1,8 +1,6 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.util.Log
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
