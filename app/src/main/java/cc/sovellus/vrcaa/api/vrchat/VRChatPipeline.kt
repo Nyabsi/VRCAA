@@ -43,8 +43,6 @@ class VRChatPipeline(
             override fun onOpen(
                 webSocket: WebSocket, response: Response
             ) {
-                if (BuildConfig.DEBUG)
-                    Log.d("VRCAA", "Connected to the VRChat pipeline.")
                 shouldReconnect = true
             }
 

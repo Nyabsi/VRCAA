@@ -146,7 +146,7 @@ class FavoritesScreen : Screen {
                     title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
                 ) {
                     items(item.value) {
-                        RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
+                        RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
                                 navigator.push(WorldInfoScreen(it.id))
                             }
@@ -170,7 +170,7 @@ class FavoritesScreen : Screen {
                     title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
                 ) {
                     items(item.value) {
-                        RowItem(name = it.name, count = null, url = it.thumbnailUrl) {
+                        RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
                                 navigator.push(AvatarScreen(it.id))
                             }

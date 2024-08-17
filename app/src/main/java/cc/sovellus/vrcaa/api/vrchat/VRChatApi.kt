@@ -1,7 +1,5 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.util.Log
-import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.models.Avatars
@@ -63,9 +61,6 @@ class VRChatApi : BaseClient() {
     private fun handleRequest(result: Result): String? {
         return when (result) {
              is Result.Succeeded -> {
-                if (BuildConfig.DEBUG)
-                    Log.d("VRCAA", result.body)
-
                 var cookies = ""
 
                  if (result.body == "[]")
@@ -80,8 +75,6 @@ class VRChatApi : BaseClient() {
             }
 
             is Result.UnhandledResult -> {
-                if (BuildConfig.DEBUG)
-                    Log.d("VRCAA", "Unknown response type from server, ${result.response.code}")
                 null
             }
 

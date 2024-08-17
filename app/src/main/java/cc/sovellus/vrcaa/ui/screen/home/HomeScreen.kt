@@ -73,7 +73,6 @@ class HomeScreen : Screen {
                             RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
-                                count = world.occupants,
                                 onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                             )
                         }
@@ -90,7 +89,6 @@ class HomeScreen : Screen {
                             RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
-                                count = world.occupants,
                                 onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                             )
                         }
@@ -106,7 +104,6 @@ class HomeScreen : Screen {
                             RowItem(
                                 name = friend.displayName,
                                 url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
-                                count = null,
                                 onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                             )
                         }

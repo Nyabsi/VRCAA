@@ -28,7 +28,6 @@ import com.bumptech.glide.integration.compose.placeholder
 @Composable
 fun RowItem(
     name: String,
-    count: Int?,
     url: Any,
     onClick: () -> Unit
 ) {
@@ -64,17 +63,6 @@ fun RowItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            if (count != null) {
-                Text(
-                    text = count.toString(), textAlign = TextAlign.End, modifier = Modifier
-                        .weight(0.20f)
-                        .padding(end = 2.dp)
-                )
-                Icon(
-                    imageVector = Icons.Filled.Group,
-                    contentDescription = null
-                )
-            }
         }
     }
 }

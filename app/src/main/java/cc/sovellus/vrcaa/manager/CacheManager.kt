@@ -17,7 +17,6 @@ object CacheManager {
         val id: String,
         var name: String = "???",
         var thumbnailUrl: String = "",
-        var occupants: Int = -1
     )
 
     interface CacheListener {
@@ -47,7 +46,6 @@ object CacheManager {
                 worldList.add(WorldCache(world.id).apply {
                     name = world.name
                     thumbnailUrl = world.thumbnailImageUrl
-                    occupants = world.occupants
                 })
             }
             friendList.add(friend)
@@ -93,7 +91,6 @@ object CacheManager {
         worldList.add(WorldCache(world.id).apply {
             name = world.name
             thumbnailUrl = world.thumbnailImageUrl
-            occupants = world.occupants
         })
     }
 
