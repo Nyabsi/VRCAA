@@ -33,7 +33,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.ApiManager.cache
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.widgets.FriendWidgetReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +53,7 @@ class PipelineService : Service(), CoroutineScope {
     private var serviceHandler: ServiceHandler? = null
 
     private lateinit var context: Context
-    private lateinit var notificationManager: NotificationManager
+    private lateinit var notificationHelper: NotificationHelper
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: VRChatPipeline? = null
@@ -93,17 +93,17 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (!FeedManager.isDuplicate(feed))
                     {
-                        if (notificationManager.isOnWhitelist(update.userId) &&
-                            notificationManager.isIntentEnabled(
+                        if (notificationHelper.isOnWhitelist(update.userId) &&
+                            notificationHelper.isIntentEnabled(
                                 update.userId,
-                                NotificationManager.Intents.FRIEND_FLAG_ONLINE
+                                NotificationHelper.Intents.FRIEND_FLAG_ONLINE
                             )
                         ) {
-                            notificationManager.pushNotification(
+                            notificationHelper.pushNotification(
                                 title = application.getString(R.string.notification_service_title_online),
                                 content = application.getString(R.string.notification_service_description_online)
                                     .format(update.user.displayName),
-                                channel = NotificationManager.CHANNEL_ONLINE_ID
+                                channel = NotificationHelper.CHANNEL_ONLINE_ID
                             )
                         }
 
@@ -128,17 +128,17 @@ class PipelineService : Service(), CoroutineScope {
 
                         if (!FeedManager.isDuplicate(feed))
                         {
-                            if (notificationManager.isOnWhitelist(friend.id) &&
-                                notificationManager.isIntentEnabled(
+                            if (notificationHelper.isOnWhitelist(friend.id) &&
+                                notificationHelper.isIntentEnabled(
                                     friend.id,
-                                    NotificationManager.Intents.FRIEND_FLAG_OFFLINE
+                                    NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
                                 )
                             ) {
-                                notificationManager.pushNotification(
+                                notificationHelper.pushNotification(
                                     title = application.getString(R.string.notification_service_title_offline),
                                     content = application.getString(R.string.notification_service_description_offline)
                                         .format(friend.displayName),
-                                    channel = NotificationManager.CHANNEL_OFFLINE_ID
+                                    channel = NotificationHelper.CHANNEL_OFFLINE_ID
                                 )
                             }
 
@@ -179,17 +179,17 @@ class PipelineService : Service(), CoroutineScope {
 
                         if (!FeedManager.isDuplicate(feed))
                         {
-                            if (notificationManager.isOnWhitelist(update.userId) &&
-                                notificationManager.isIntentEnabled(
+                            if (notificationHelper.isOnWhitelist(update.userId) &&
+                                notificationHelper.isIntentEnabled(
                                     update.userId,
-                                    NotificationManager.Intents.FRIEND_FLAG_LOCATION
+                                    NotificationHelper.Intents.FRIEND_FLAG_LOCATION
                                 )
                             ) {
-                                notificationManager.pushNotification(
+                                notificationHelper.pushNotification(
                                     title = application.getString(R.string.notification_service_title_location),
                                     content = application.getString(R.string.notification_service_description_location)
                                         .format(update.user.displayName, update.world.name),
-                                    channel = NotificationManager.CHANNEL_LOCATION_ID
+                                    channel = NotificationHelper.CHANNEL_LOCATION_ID
                                 )
                             }
 
@@ -219,13 +219,13 @@ class PipelineService : Service(), CoroutineScope {
 
                             if (!FeedManager.isDuplicate(feed))
                             {
-                                if (notificationManager.isOnWhitelist(update.userId) &&
-                                    notificationManager.isIntentEnabled(
+                                if (notificationHelper.isOnWhitelist(update.userId) &&
+                                    notificationHelper.isIntentEnabled(
                                         update.userId,
-                                        NotificationManager.Intents.FRIEND_FLAG_STATUS
+                                        NotificationHelper.Intents.FRIEND_FLAG_STATUS
                                     )
                                 ) {
-                                    notificationManager.pushNotification(
+                                    notificationHelper.pushNotification(
                                         title = application.getString(R.string.notification_service_title_status),
                                         content = application.getString(R.string.notification_service_description_status)
                                             .format(
@@ -235,7 +235,7 @@ class PipelineService : Service(), CoroutineScope {
                                                 StatusHelper.getStatusFromString(update.user.status)
                                                     .toString()
                                             ),
-                                        channel = NotificationManager.CHANNEL_LOCATION_ID
+                                        channel = NotificationHelper.CHANNEL_LOCATION_ID
                                     )
                                 }
                                 FeedManager.addFeed(feed)
@@ -277,11 +277,11 @@ class PipelineService : Service(), CoroutineScope {
 
                         if (!FeedManager.isDuplicate(feed))
                         {
-                            notificationManager.pushNotification(
+                            notificationHelper.pushNotification(
                                 title = application.getString(R.string.notification_service_title_friend_removed),
                                 content = application.getString(R.string.notification_service_description_friend_removed)
                                     .format(friend.displayName),
-                                channel = NotificationManager.CHANNEL_STATUS_ID
+                                channel = NotificationHelper.CHANNEL_STATUS_ID
                             )
 
                             FeedManager.addFeed(feed)
@@ -301,11 +301,11 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (!FeedManager.isDuplicate(feed))
                     {
-                        notificationManager.pushNotification(
+                        notificationHelper.pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_added),
                             content = application.getString(R.string.notification_service_description_friend_added)
                                 .format(update.user.displayName),
-                            channel = NotificationManager.CHANNEL_STATUS_ID
+                            channel = NotificationHelper.CHANNEL_STATUS_ID
                         )
 
                         FeedManager.addFeed(feed)
@@ -346,7 +346,7 @@ class PipelineService : Service(), CoroutineScope {
     override fun onCreate() {
 
         this.context = this
-        this.notificationManager = NotificationManager(this)
+        this.notificationHelper = NotificationHelper(this)
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
@@ -373,7 +373,7 @@ class PipelineService : Service(), CoroutineScope {
 
         scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
-        val builder = NotificationCompat.Builder(this, NotificationManager.CHANNEL_DEFAULT_ID)
+        val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
             .setContentText(application.getString(R.string.service_notification))

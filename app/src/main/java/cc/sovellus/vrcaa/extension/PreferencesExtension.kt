@@ -2,7 +2,7 @@ package cc.sovellus.vrcaa.extension
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.helper.NotificationHelper
 import com.google.gson.Gson
 
 // extend SharedPreferences
@@ -26,13 +26,13 @@ internal var SharedPreferences.twoFactorToken: String
     get() = getString("TwoFactorAuth", "")!!
     set(it) = edit { putString("TwoFactorAuth", it) }
 
-internal var SharedPreferences.notificationWhitelist: NotificationManager.NotificationPermissions
+internal var SharedPreferences.notificationWhitelist: NotificationHelper.NotificationPermissions
     get() {
         val result = getString("notificationWhitelist", "")
         if (result?.isNotEmpty() == true) {
-            return Gson().fromJson(result, NotificationManager.NotificationPermissions::class.java)
+            return Gson().fromJson(result, NotificationHelper.NotificationPermissions::class.java)
         }
-        return NotificationManager.NotificationPermissions()
+        return NotificationHelper.NotificationPermissions()
     }
     set(it) = edit { putString("notificationWhitelist", Gson().toJson(it)) }
 

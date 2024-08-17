@@ -29,7 +29,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.helper.NotificationHelper
 
 class NotificationScreen(
     private val friendId: String,
@@ -110,7 +110,7 @@ class NotificationScreen(
                                 onCheckedChange = { toggleOffline ->
                                     model.toggleIntent(
                                         toggleOffline,
-                                        NotificationManager.Intents.FRIEND_FLAG_OFFLINE
+                                        NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
                                     )
                                 },
                                 colors = SwitchDefaults.colors(
@@ -139,7 +139,7 @@ class NotificationScreen(
                                 onCheckedChange = { toggleOnline ->
                                     model.toggleIntent(
                                         toggleOnline,
-                                        NotificationManager.Intents.FRIEND_FLAG_ONLINE
+                                        NotificationHelper.Intents.FRIEND_FLAG_ONLINE
                                     )
                                 },
                                 colors = SwitchDefaults.colors(
@@ -168,7 +168,7 @@ class NotificationScreen(
                                 onCheckedChange = { toggle ->
                                     model.toggleIntent(
                                         toggle,
-                                        NotificationManager.Intents.FRIEND_FLAG_LOCATION
+                                        NotificationHelper.Intents.FRIEND_FLAG_LOCATION
                                     )
                                 },
                                 colors = SwitchDefaults.colors(
@@ -197,7 +197,7 @@ class NotificationScreen(
                                 onCheckedChange = { toggle ->
                                     model.toggleIntent(
                                         toggle,
-                                        NotificationManager.Intents.FRIEND_FLAG_STATUS
+                                        NotificationHelper.Intents.FRIEND_FLAG_STATUS
                                     )
                                 },
                                 colors = SwitchDefaults.colors(

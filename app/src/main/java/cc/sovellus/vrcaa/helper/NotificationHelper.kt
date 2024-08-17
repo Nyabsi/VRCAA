@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.manager
+package cc.sovellus.vrcaa.helper
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -15,7 +15,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.notificationWhitelist
 import com.google.gson.annotations.SerializedName
 
-class NotificationManager(
+class NotificationHelper(
     context: Context
 ): ContextWrapper(context) {
     private val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", 0)
