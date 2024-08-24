@@ -5,10 +5,11 @@ import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,74 +43,74 @@ class MfaScreen(
 
         val screenModel = navigator.rememberNavigatorScreenModel { MfaScreenModel(context, otpType, navigator) }
 
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            Text(
-                text = if (otpType == VRChatApi.MfaType.EMAIL_OTP) {
-                    stringResource(R.string.auth_text_email)
-                } else {
-                    stringResource(R.string.auth_text_app)
-                }
-            )
-
-            CodeInput(
-                input = screenModel.code
-            )
-
-            Button(
+        Scaffold { padding ->
+            Column(
                 modifier = Modifier
-                    .height(48.dp)
-                    .width(200.dp)
-                    .padding(1.dp),
-                onClick = {
-                    val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                    if (clipboard?.hasPrimaryClip() == true) {
-                        val clipData = clipboard.primaryClip
-                        if ((clipData?.itemCount ?: 0) > 0) {
-                            val clipItem = clipData?.getItemAt(0)
-                            val clipText = clipItem?.text?.toString()
-                            if (clipText?.length == 6) {
-                                screenModel.code.value = clipText
+                    .fillMaxSize()
+                    .padding(top = padding.calculateTopPadding()),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Text(
+                    text = if (otpType == VRChatApi.MfaType.EMAIL_OTP) {
+                        stringResource(R.string.auth_text_email)
+                    } else {
+                        stringResource(R.string.auth_text_app)
+                    }
+                )
+
+                CodeInput(
+                    input = screenModel.code
+                )
+
+                Button(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .padding(4.dp),
+                    onClick = {
+                        screenModel.verify()
+                    }
+                ) {
+                    Text(text = stringResource(R.string.auth_button_text))
+                }
+
+                Button(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .padding(4.dp),
+                    onClick = {
+                        val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                        if (clipboard?.hasPrimaryClip() == true) {
+                            val clipData = clipboard.primaryClip
+                            if ((clipData?.itemCount ?: 0) > 0) {
+                                val clipItem = clipData?.getItemAt(0)
+                                val clipText = clipItem?.text?.toString()
+                                if (clipText?.length == 6) {
+                                    screenModel.code.value = clipText
+                                    screenModel.verify()
+                                }
                             }
                         }
                     }
+                ) {
+                    Text(text = stringResource(R.string.auth_button_paste))
                 }
-            ) {
-                Text(text = stringResource(R.string.auth_button_paste))
             }
-
-            Button(
+            Column(
                 modifier = Modifier
-                    .height(48.dp)
-                    .width(200.dp)
-                    .padding(1.dp),
-                onClick = {
-                    screenModel.verify()
-                }
+                    .fillMaxSize()
+                    .padding(start = 16.dp, end = 16.dp, bottom = padding.calculateBottomPadding()),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(R.string.auth_button_text))
+                Text(
+                    text = stringResource(R.string.legal_disclaimer),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    fontSize = 12.sp
+                )
             }
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(vertical = 16.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.legal_disclaimer),
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                fontSize = 12.sp
-            )
         }
     }
 }

@@ -38,11 +38,12 @@ class LoginScreenModel(
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
+                    preferences.authToken = result.token
+
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
-                        CacheManager.buildCache()
-                        preferences.authToken = result.token
                         navigator.replace(NavigationScreen())
+                        CacheManager.buildCache()
                     } else {
                         preferences.userCredentials = Pair(username.value, password.value)
                         navigator.replace(MfaScreen(result.mfaType))

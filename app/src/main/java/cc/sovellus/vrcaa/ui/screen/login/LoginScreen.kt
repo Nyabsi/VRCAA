@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,54 +44,56 @@ class LoginScreen : Screen {
 
         var passwordVisibility by remember { mutableStateOf(false) }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = stringResource(R.string.login_text))
-
-            TextInput(
-                title = stringResource(R.string.login_label_username),
-                input = screenModel.username
-            )
-
-            PasswordInput(
-                title = stringResource(R.string.login_label_password),
-                input = screenModel.password,
-                visible = passwordVisibility,
-                onVisibilityChange = {
-                    passwordVisibility = !passwordVisibility
-                }
-            )
-
-            Button(
+        Scaffold { padding ->
+            Column(
                 modifier = Modifier
-                    .height(48.dp)
-                    .width(200.dp),
-                onClick = {
-                    screenModel.doLogin()
-                }
+                    .fillMaxSize()
+                    .padding(top = padding.calculateTopPadding()),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(R.string.login_button_text))
-            }
-        }
+                Text(text = stringResource(R.string.login_text))
 
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(vertical = 16.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.legal_disclaimer),
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                fontSize = 12.sp
-            )
+                TextInput(
+                    title = stringResource(R.string.login_label_username),
+                    input = screenModel.username
+                )
+
+                PasswordInput(
+                    title = stringResource(R.string.login_label_password),
+                    input = screenModel.password,
+                    visible = passwordVisibility,
+                    onVisibilityChange = {
+                        passwordVisibility = !passwordVisibility
+                    }
+                )
+
+                Button(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .padding(8.dp),
+                    onClick = {
+                        screenModel.doLogin()
+                    }
+                ) {
+                    Text(text = stringResource(R.string.login_button_text))
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = padding.calculateBottomPadding(), start = 16.dp, end = 16.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.legal_disclaimer),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    fontSize = 12.sp
+                )
+            }
         }
     }
 }

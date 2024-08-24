@@ -30,7 +30,7 @@ fun PasswordInput(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
         value = input.value,
         onValueChange = { input.value = it },
         label = { Text(text = title) },
