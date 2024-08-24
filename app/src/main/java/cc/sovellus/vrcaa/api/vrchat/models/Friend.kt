@@ -34,8 +34,6 @@ data class Friend(
     var lastPlatform: String = "",
     @SerializedName("location")
     var location: String = "",
-    @SerializedName("platform")
-    var platform: String = "",
     @SerializedName("profilePicOverride")
     var profilePicOverride: String = "",
     @SerializedName("profilePicOverrideThumbnail")
