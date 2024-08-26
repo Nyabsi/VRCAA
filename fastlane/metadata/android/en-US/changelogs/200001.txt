@@ -1,0 +1,22 @@
+New:
+
+- Added Favorites support
+- Added Avatar/World viewing
+- Add new Avatar provider (avtrDB)
+- Add Developer Mode
+
+Changes:
+
+- Separated active / online friends in Friend tab
+- Improved navigation mechanism
+- Profile updates in realtime
+- Rename Feed to Activities for future update
+
+Fixes:
+
+- Improved UI consistency, fixed alignment issues
+- Fixed various of login related issues
+- "Invite myself" now does not show on user profiles
+- Various of misc fixes
+
+Full changelog in Github.
