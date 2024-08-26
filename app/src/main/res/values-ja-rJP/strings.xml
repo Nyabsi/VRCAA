@@ -210,10 +210,10 @@
     <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
     <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_dialog_title">ログアウトしますか？</string>
+    <string name="logout_dialog_description">継続した場合、VRCAAからログアウトします。アプリを利用する為には再ログインが必要です。</string>
+    <string name="logout_dialog_continue">確認</string>
+    <string name="logout_dialog_cancel">キャンセル</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">フレンドの現在地を表示する</string>
     <string name="widget_name_loading_text">少女祈祷中・・・</string>
@@ -244,18 +244,18 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Loading profile…</string>
-    <string name="loading_text_online_friends">Loading online friends…</string>
-    <string name="loading_text_offline_friends">Loading offline friends…</string>
-    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
+    <string name="loading_text_profile">プロファイルを読み込み中。。。</string>
+    <string name="loading_text_online_friends">オンラインのフレンドを読み込み中。。。</string>
+    <string name="loading_text_offline_friends">オフラインのフレンドを読み込み中。。。</string>
+    <string name="loading_text_recently_visited">最近訪れたワールドを読み込み中。。。</string>
+    <string name="loading_text_favorites">お気に入りを読み込み中。。。</string>
+    <string name="loading_text_worlds">ワールドの一覧を読み込み中。。。</string>
+    <string name="loading_text_users">ユーザーの一覧を読み込み中。。。</string>
+    <string name="loading_text_avatars">アバターの一覧を読み込み中。。。</string>
+    <string name="loading_text_groups">グループの一覧を読み込み中。。。</string>
+    <string name="loading_text_user">ユーザー情報を読み込み中。。。</string>
+    <string name="loading_text_world">ワールド情報を読み込み中。。。</string>
+    <string name="loading_text_avatar">アバター情報を読み込み中。。。</string>
+    <string name="loading_text_group">グループ情報を読み込み中。。。</string>
+    <string name="loading_text_instances">インスタンス情報を読み込み中。。。</string>
 </resources>
