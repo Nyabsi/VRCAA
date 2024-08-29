@@ -64,6 +64,10 @@ internal var SharedPreferences.groupsAmount: Int
     get() = getInt("groupsAmount", 50)
     set(it) = edit { putInt("groupsAmount", it) }
 
+internal var SharedPreferences.avatarsAmount: Int
+    get() = getInt("groupsAmount", 50)
+    set(it) = edit { putInt("groupsAmount", it) }
+
 internal var SharedPreferences.richPresenceWarningAcknowledged: Boolean
     get() = getBoolean("richPresenceWarningAcknowledged", false)
     set(it) = edit { putBoolean("richPresenceWarningAcknowledged", it) }

@@ -27,6 +27,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.Users
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
+import cc.sovellus.vrcaa.helper.MathHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -349,13 +350,13 @@ class VRChatApi : BaseClient() {
     suspend fun getWorlds(
         query: String = "",
         limit: Int,
+        byProduct: Int,
         featured: Boolean = false,
         sort: String = "relevance",
         n: Int = 50,
         offset: Int = 0,
         worlds: ArrayList<World> = arrayListOf()
     ): ArrayList<World> {
-
         val headers = Headers.Builder()
 
         headers["User-Agent"] = userAgent
@@ -375,10 +376,10 @@ class VRChatApi : BaseClient() {
             temp.add(world)
         }
 
-        return if (json == null || limit == (offset + n)) {
+        return if (limit == (offset + n) || json == null) {
             worlds
         } else {
-            getWorlds(query, limit, featured, sort, n, offset + n, worlds)
+            getWorlds(query, limit, byProduct, featured, sort, if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) { byProduct } else { n }, offset + n, worlds)
         }
     }
 
@@ -441,6 +442,7 @@ class VRChatApi : BaseClient() {
     suspend fun getUsers(
         username: String,
         limit: Int,
+        byProduct: Int,
         n: Int = 50,
         offset: Int = 0,
         users: ArrayList<LimitedUser> = arrayListOf()
@@ -465,10 +467,10 @@ class VRChatApi : BaseClient() {
             temp.add(user)
         }
 
-        return if (json == null  || limit == (offset + n)) {
+        return if (limit == (offset + n) || json == null) {
             users
         } else {
-            getUsers(username, limit, n, offset + n, temp)
+            getUsers(username, limit, byProduct, if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) { byProduct } else { n }, offset + n, temp)
         }
     }
 
@@ -735,11 +737,11 @@ class VRChatApi : BaseClient() {
     suspend fun getGroups(
         query: String,
         limit: Int,
+        byProduct: Int,
         n: Int = 50,
         offset: Int = 0,
         groups: ArrayList<Group> = arrayListOf()
     ): ArrayList<Group> {
-
         val headers = Headers.Builder()
 
         headers["User-Agent"] = userAgent
@@ -759,10 +761,10 @@ class VRChatApi : BaseClient() {
             temp.add(group)
         }
 
-        return if (json == null  || limit == (offset + n)) {
+        return if (limit == (offset + n) || json == null) {
             groups
         } else {
-            getGroups(query, limit, n, offset + n, groups)
+            getGroups(query, limit, byProduct, if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) { byProduct } else { n }, offset + n, groups)
         }
     }
 

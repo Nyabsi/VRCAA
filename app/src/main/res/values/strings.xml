@@ -69,6 +69,8 @@
     <string name="search_filter_category_groups">Groups</string>
     <string name="search_filter_category_groups_count">Count</string>
 
+    <!-- TODO: remove duplicate labels :) -->
+    <string name="search_filter_label_count">Count</string>
     <string name="search_filter_button_reset">Reset</string>
     <string name="search_filter_button_apply">Apply</string>
 

@@ -456,13 +456,16 @@ class NavigationScreen : Screen {
                                     )
                                 }
                                 item {
+                                    var worldCount by remember { mutableStateOf(model.worldsAmount.intValue.toString()) }
                                     ListItem(
                                         headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_count)) },
                                         trailingContent = {
                                             OutlinedTextField(
-                                                value = model.worldsAmount.intValue.toString(),
+                                                value = worldCount,
                                                 onValueChange = {
-                                                    model.worldsAmount.intValue = it.toIntOrNull() ?: 0
+                                                    worldCount = it
+                                                    if (it.isNotEmpty())
+                                                        model.worldsAmount.intValue = it.toIntOrNull() ?: model.worldsAmount.intValue
                                                 },
                                                 singleLine = true,
                                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -476,7 +479,8 @@ class NavigationScreen : Screen {
                                         leadingContent = {
                                             Icon(
                                                 imageVector = Icons.Outlined.People,
-                                                contentDescription = null                                            )
+                                                contentDescription = null
+                                            )
                                         }
                                     )
                                     HorizontalDivider(
@@ -491,7 +495,8 @@ class NavigationScreen : Screen {
                                             OutlinedTextField(
                                                 value = model.usersAmount.intValue.toString(),
                                                 onValueChange = {
-                                                    model.usersAmount.intValue = it.toIntOrNull() ?: model.usersAmount.intValue
+                                                    if (it.isNotEmpty())
+                                                        model.usersAmount.intValue = it.toInt()
                                                 },
                                                 singleLine = true,
                                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -525,6 +530,24 @@ class NavigationScreen : Screen {
                                     )
                                 }
                                 item {
+                                    var avatarCount by remember { mutableStateOf(model.avatarsAmount.intValue.toString()) }
+                                    ListItem(
+                                        headlineContent = { Text(stringResource(R.string.search_filter_label_count)) },
+                                        trailingContent = {
+                                            OutlinedTextField(
+                                                value = avatarCount,
+                                                onValueChange = {
+                                                    avatarCount = it
+                                                    if (it.isNotEmpty())
+                                                        model.avatarsAmount.intValue = it.toIntOrNull() ?: model.avatarsAmount.intValue
+                                                },
+                                                singleLine = true,
+                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                                            )
+                                        }
+                                    )
+                                }
+                                item {
                                     ListItem(
                                         headlineContent = { Text(stringResource(R.string.search_filter_category_groups)) },
                                         leadingContent = {
@@ -540,13 +563,16 @@ class NavigationScreen : Screen {
                                     )
                                 }
                                 item {
+                                    var groupCount by remember { mutableStateOf(model.groupsAmount.intValue.toString()) }
                                     ListItem(
                                         headlineContent = { Text(stringResource(R.string.search_filter_category_groups_count)) },
                                         trailingContent = {
                                             OutlinedTextField(
-                                                value = model.groupsAmount.intValue.toString(),
+                                                value = groupCount,
                                                 onValueChange = {
-                                                    model.groupsAmount.intValue = it.toIntOrNull() ?: model.groupsAmount.intValue
+                                                    groupCount = it
+                                                    if (it.isNotEmpty())
+                                                        model.groupsAmount.intValue = it.toIntOrNull() ?: model.groupsAmount.intValue
                                                 },
                                                 singleLine = true,
                                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)

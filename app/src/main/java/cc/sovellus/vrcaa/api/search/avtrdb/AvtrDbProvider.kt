@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.api.search.avtrdb
 
+import android.util.Log
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse
@@ -11,6 +12,7 @@ class AvtrDbProvider : BaseClient() {
 
     suspend fun search(
         query: String,
+        limit: Int,
         n: Int = 50,
         offset: Int = 0,
         avatars: ArrayList<SearchAvatar> = arrayListOf()
@@ -38,12 +40,12 @@ class AvtrDbProvider : BaseClient() {
                     temp.add(avatar)
                 }
 
-                if (json.hasMore) {
+                if (limit <= (n * offset) || !json.hasMore) {
+                    avatars
+                } else {
                     // avtrdb.com has rate-limit of 1r/s
                     delay(1000)
-                    search(query, n, offset + 1, avatars)
-                } else {
-                    avatars
+                    search(query, limit, n, offset + 1, avatars)
                 }
             }
             else -> {
