@@ -52,6 +52,8 @@
     <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Ryhmät</string>
     <string name="search_filter_category_groups_count">Määrä</string>
+    <!-- TODO: remove duplicate labels :) -->
+    <string name="search_filter_label_count">Count</string>
     <string name="search_filter_button_reset">Nollaa</string>
     <string name="search_filter_button_apply">Käytä</string>
     <string-array name="search_selection_options">

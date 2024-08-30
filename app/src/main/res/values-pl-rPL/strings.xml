@@ -52,6 +52,8 @@
     <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Grupy</string>
     <string name="search_filter_category_groups_count">Ilość</string>
+    <!-- TODO: remove duplicate labels :) -->
+    <string name="search_filter_label_count">Count</string>
     <string name="search_filter_button_reset">Reset</string>
     <string name="search_filter_button_apply">Zastosuj</string>
     <string-array name="search_selection_options">

@@ -48,10 +48,12 @@
     <string name="search_filter_category_worlds_count">Количество</string>
     <string name="search_filter_category_users">Юзеры</string>
     <string name="search_filter_category_users_count">Количество</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Provider</string>
+    <string name="search_filter_category_avatars">Аватары</string>
+    <string name="search_filter_category_avatars_provider">Провайдер</string>
     <string name="search_filter_category_groups">Группы</string>
     <string name="search_filter_category_groups_count">Количество</string>
+    <!-- TODO: remove duplicate labels :) -->
+    <string name="search_filter_label_count">Кол-во</string>
     <string name="search_filter_button_reset">Сброс</string>
     <string name="search_filter_button_apply">Применить</string>
     <string-array name="search_selection_options">
@@ -210,10 +212,10 @@
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
     <string name="profile_edit_dialog_title_edit_profile">Редактировать профиль</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_dialog_title">Вы уверены?</string>
+    <string name="logout_dialog_description">Нажав «Продолжить» ниже вы выйдете из VRCAA и снова войдите в систему, чтобы продолжать использовать приложение.</string>
+    <string name="logout_dialog_continue">Продолжить</string>
+    <string name="logout_dialog_cancel">Отмена</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Посмотреть текущее местоположение друзей</string>
     <string name="widget_name_loading_text">Горизонт светлый, мой друг.</string>
@@ -242,20 +244,20 @@
     <!-- Avatars -->
     <string name="avatars_page_title">Просмотр аватаров</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="developer_mode_toggle_toast">Перезапустите приложение, чтобы изменения вступили в силу.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Loading profile…</string>
-    <string name="loading_text_online_friends">Loading online friends…</string>
-    <string name="loading_text_offline_friends">Loading offline friends…</string>
-    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
+    <string name="loading_text_profile">Загрузка профиля…</string>
+    <string name="loading_text_online_friends">Загрузка друзей в онлайн…</string>
+    <string name="loading_text_offline_friends">Загрузка друзей в оффлайн…</string>
+    <string name="loading_text_recently_visited">Загрузка недавно посещенных миров…</string>
+    <string name="loading_text_favorites">Загрузка избранного…</string>
+    <string name="loading_text_worlds">Загрузка миров…</string>
+    <string name="loading_text_users">Загрузка пользователей…</string>
+    <string name="loading_text_avatars">Загрузка аватаров…</string>
+    <string name="loading_text_groups">Загрузка групп…</string>
+    <string name="loading_text_user">Загрузка пользователя…</string>
+    <string name="loading_text_world">Загрузка мира…</string>
+    <string name="loading_text_avatar">Загрузка аватара…</string>
+    <string name="loading_text_group">Загрузка группы…</string>
+    <string name="loading_text_instances">Загрузка инстансев…</string>
 </resources>
