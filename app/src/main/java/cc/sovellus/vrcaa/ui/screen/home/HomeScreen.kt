@@ -106,7 +106,7 @@ class HomeScreen : Screen {
                         )
                         LazyRow(
                             modifier = Modifier
-                                .height(200.dp)
+                                .height(190.dp)
                                 .fillMaxWidth()
                                 .fillMaxHeight(),
                             horizontalArrangement = Arrangement.Center,
@@ -143,7 +143,7 @@ class HomeScreen : Screen {
                         )
                         LazyRow(
                             modifier = Modifier
-                                .height(200.dp)
+                                .height(190.dp)
                                 .fillMaxWidth()
                                 .fillMaxHeight(),
                             horizontalArrangement = Arrangement.Center,
@@ -180,7 +180,7 @@ class HomeScreen : Screen {
                         )
                         LazyRow(
                             modifier = Modifier
-                                .height(200.dp)
+                                .height(190.dp)
                                 .fillMaxWidth()
                                 .fillMaxHeight(),
                             horizontalArrangement = Arrangement.Center,
