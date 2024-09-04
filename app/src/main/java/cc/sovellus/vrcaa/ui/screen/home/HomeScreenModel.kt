@@ -3,13 +3,13 @@ package cc.sovellus.vrcaa.ui.screen.home
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.CacheManager.WorldCache
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.widgets.FriendWidgetReceiver
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,12 +30,18 @@ class HomeScreenModel(context: Context) : ScreenModel {
         }
     }
 
+    val initialLoadComplete = mutableStateOf(false)
+
     private val cacheListener = object : CacheManager.CacheListener {
         override fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) {
             recentlyVisitedFlow.value = worlds.toMutableStateList()
         }
 
         override fun cacheUpdated() {
+            if (!initialLoadComplete.value) {
+                initialLoadComplete.value = true
+            }
+
             val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
             context.sendBroadcast(intent)
             fetchContent()
