@@ -55,7 +55,7 @@ fun RowItem(
             Text(
                 text = name,
                 textAlign = TextAlign.Start,
-                modifier = Modifier.weight(0.80f),
+                modifier = Modifier.weight(0.80f).padding(top = 2.dp, start = 4.dp),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
