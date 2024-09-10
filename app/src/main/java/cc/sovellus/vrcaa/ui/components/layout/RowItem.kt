@@ -32,7 +32,7 @@ fun RowItem(
             defaultElevation = 2.dp
         ),
         modifier = Modifier
-            .height(190.dp)
+            .height(185.dp)
             .width(240.dp)
             .fillMaxWidth()
             .clickable(onClick = { onClick() })
