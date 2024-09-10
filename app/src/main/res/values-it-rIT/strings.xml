@@ -40,6 +40,7 @@
     <string name="profile_user_not_found_message">L\'utente non esiste.</string>
     <string name="profile_user_avatar_private">Avatar privato!</string>
     <string name="profile_user_toast_invite_sent">Invito inviato! Controlla il tuo client.</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">Risultati per</string>
     <string name="search_filter_category_worlds">Mondi</string>
