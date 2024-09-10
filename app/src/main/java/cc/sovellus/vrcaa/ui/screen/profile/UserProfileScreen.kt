@@ -356,7 +356,7 @@ class UserProfileScreen(
                                                 name = group.name,
                                                 url = group.bannerUrl,
                                                 onClick = {
-                                                    navigator.parent?.parent?.push(
+                                                    navigator.push(
                                                         GroupScreen(group.groupId)
                                                     )
                                                 }
@@ -388,7 +388,7 @@ class UserProfileScreen(
                                                 name = group.name,
                                                 url = group.bannerUrl,
                                                 onClick = {
-                                                    navigator.parent?.parent?.push(
+                                                    navigator.push(
                                                         GroupScreen(group.groupId)
                                                     )
                                                 }
