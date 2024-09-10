@@ -40,6 +40,7 @@
     <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
     <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
     <string name="profile_user_toast_invite_sent">インバイトを送信しました、ゲーム内で確認してください。</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
     <string name="search_filter_category_worlds">ワールド</string>
