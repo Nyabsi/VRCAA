@@ -30,20 +30,19 @@ class HomeScreenModel(context: Context) : ScreenModel {
         }
     }
 
-    val initialLoadComplete = mutableStateOf(false)
+    val isUpdatingCache = mutableStateOf(true)
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) {
             recentlyVisitedFlow.value = worlds.toMutableStateList()
         }
 
-        override fun cacheUpdated() {
-            if (!initialLoadComplete.value) {
-                initialLoadComplete.value = true
-            }
+        override fun startCacheRefresh() {
+            isUpdatingCache.value = true
+        }
 
-            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-            context.sendBroadcast(intent)
+        override fun endCacheRefresh() {
+            isUpdatingCache.value = false
             fetchContent()
         }
     }

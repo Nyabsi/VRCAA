@@ -21,7 +21,8 @@ object CacheManager {
 
     interface CacheListener {
         fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) { }
-        fun cacheUpdated() { }
+        fun startCacheRefresh() { }
+        fun endCacheRefresh() { }
         fun profileUpdated(profile: User) { }
     }
 
@@ -32,6 +33,10 @@ object CacheManager {
     }
 
     suspend fun buildCache() {
+        listeners.forEach { listener ->
+            listener?.startCacheRefresh()
+        }
+
         App.setLoadingText(R.string.loading_text_profile)
         api.getSelf()?.let { profile = it }
 
@@ -59,6 +64,9 @@ object CacheManager {
 
         FriendManager.setFriends(friendList)
 
+        // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+        // context.sendBroadcast(intent)
+
         App.setLoadingText(R.string.loading_text_recently_visited)
 
         api.getRecentWorlds()?.forEach { world->
@@ -75,7 +83,7 @@ object CacheManager {
         FavoriteManager.refresh()
 
         listeners.forEach { listener ->
-            listener?.cacheUpdated()
+            listener?.endCacheRefresh()
         }
     }
 

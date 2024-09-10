@@ -39,13 +39,13 @@ class LoginScreenModel(
                     ).show()
                 } else {
                     preferences.authToken = result.token
+                    preferences.userCredentials = Pair(username.value, password.value)
 
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
+                        launch { CacheManager.buildCache() }
                         navigator.replace(NavigationScreen())
-                        CacheManager.buildCache()
                     } else {
-                        preferences.userCredentials = Pair(username.value, password.value)
                         navigator.replace(MfaScreen(result.mfaType))
                     }
                 }

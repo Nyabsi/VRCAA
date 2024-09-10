@@ -48,7 +48,7 @@ class HomeScreen : Screen {
         val friends = model.friendsList.collectAsState().value
         val recent = model.recentlyVisited.collectAsState().value
 
-        if (!model.initialLoadComplete.value)
+        if (model.isUpdatingCache.value)
         {
             LoadingIndicatorScreen().Content()
         } else {
