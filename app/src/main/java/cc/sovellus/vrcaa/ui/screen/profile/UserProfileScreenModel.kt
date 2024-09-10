@@ -7,6 +7,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
+import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 sealed class UserProfileState {
     data object Init : UserProfileState()
     data object Loading : UserProfileState()
-    data class Result(val profile: LimitedUser?, val instance: Instance?) : UserProfileState()
+    data class Result(val profile: LimitedUser?, val instance: Instance?, val worlds: ArrayList<World>, val groups: ArrayList<UserGroups.Group>) : UserProfileState()
 }
 
 class UserProfileScreenModel(
@@ -26,6 +28,8 @@ class UserProfileScreenModel(
 
     private var profile: LimitedUser? = null
     private var instance: Instance? = null
+    private lateinit var worlds: ArrayList<World>
+    private lateinit var groups: ArrayList<UserGroups.Group>
 
     init {
         mutableState.value = UserProfileState.Loading
@@ -48,7 +52,9 @@ class UserProfileScreenModel(
                 profile = it
             }
 
-            mutableState.value = UserProfileState.Result(profile, instance)
+            groups = api.getUserGroups(userId)
+            worlds = api.getWorldsByUserId(userId, false)
+            mutableState.value = UserProfileState.Result(profile, instance, worlds, groups)
         }
     }
 
