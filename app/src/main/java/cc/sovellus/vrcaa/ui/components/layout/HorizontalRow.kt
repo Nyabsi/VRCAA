@@ -21,7 +21,7 @@ fun HorizontalRow(
     Text(
         text = title,
         fontWeight = FontWeight.Bold,
-        fontSize = 32.sp,
+        fontSize = 24.sp,
         modifier = Modifier.padding(bottom = 4.dp)
     )
 
