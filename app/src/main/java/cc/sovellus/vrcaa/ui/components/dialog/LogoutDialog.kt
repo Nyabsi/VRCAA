@@ -13,6 +13,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
+import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
@@ -46,6 +47,7 @@ fun LogoutDialog(
                         val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
                         preferences.authToken = ""
                         preferences.twoFactorToken = ""
+                        preferences.userCredentials = Pair("", "")
 
                         val bundle = bundleOf()
                         bundle.putBoolean("TERMINATE_SESSION", true)
