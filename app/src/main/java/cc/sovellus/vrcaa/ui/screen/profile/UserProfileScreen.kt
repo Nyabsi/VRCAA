@@ -325,7 +325,7 @@ class UserProfileScreen(
                                                 name = world.name,
                                                 url = world.thumbnailImageUrl,
                                                 onClick = {
-                                                    navigator.parent?.parent?.push(
+                                                    navigator.push(
                                                         WorldInfoScreen(world.id)
                                                     )
                                                 }
