@@ -358,16 +358,6 @@ class PipelineService : Service(), CoroutineScope {
         this.notificationHelper = NotificationHelper(this)
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
-        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
-            start()
-
-            serviceLooper = looper
-            serviceHandler = ServiceHandler(looper)
-        }
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         launch {
             api.getAuth()?.let { token ->
                 pipeline = VRChatPipeline(token)
@@ -381,6 +371,16 @@ class PipelineService : Service(), CoroutineScope {
         }
 
         scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
+
+        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
+            start()
+
+            serviceLooper = looper
+            serviceHandler = ServiceHandler(looper)
+        }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
