@@ -107,7 +107,7 @@ object FavoriteManager {
             "friend" -> {
                 friendList.forEach { group ->
                     group.value.forEach { friend ->
-                        if (friend.id == id)
+                        if (friend.favoriteId == id)
                             return true
                     }
                 }
