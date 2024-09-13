@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.service
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
@@ -12,7 +11,6 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
@@ -30,13 +28,12 @@ import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.LocationHelper
+import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.helper.NotificationHelper
-import cc.sovellus.vrcaa.manager.CacheManager
-import cc.sovellus.vrcaa.widgets.FriendWidgetReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -51,15 +48,14 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private var serviceLooper: Looper? = null
-    private var serviceHandler: ServiceHandler? = null
-
-    private lateinit var context: Context
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: VRChatPipeline? = null
     private var gateway: DiscordGateway? = null
+
+    private var serviceLooper: Looper? = null
+    private var serviceHandler: ServiceHandler? = null
 
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
@@ -143,8 +139,8 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
 
-                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                        context.sendBroadcast(intent)
+                        // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                        // context.sendBroadcast(intent)
 
                         FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
@@ -191,8 +187,8 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
 
-                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                        context.sendBroadcast(intent)
+                        // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                        // context.sendBroadcast(intent)
                     }
                 }
 
@@ -336,7 +332,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
 
-        this.context = this
         this.notificationHelper = NotificationHelper(this)
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
