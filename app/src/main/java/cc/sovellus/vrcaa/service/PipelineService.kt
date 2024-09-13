@@ -95,24 +95,21 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                     }
 
-                    if (!FeedManager.isDuplicate(feed))
-                    {
-                        if (notificationHelper.isOnWhitelist(update.userId) &&
-                            notificationHelper.isIntentEnabled(
-                                update.userId,
-                                NotificationHelper.Intents.FRIEND_FLAG_ONLINE
-                            )
-                        ) {
-                            notificationHelper.pushNotification(
-                                title = application.getString(R.string.notification_service_title_online),
-                                content = application.getString(R.string.notification_service_description_online)
-                                    .format(update.user.displayName),
-                                channel = NotificationHelper.CHANNEL_ONLINE_ID
-                            )
-                        }
-
-                        FeedManager.addFeed(feed)
+                    if (notificationHelper.isOnWhitelist(update.userId) &&
+                        notificationHelper.isIntentEnabled(
+                            update.userId,
+                            NotificationHelper.Intents.FRIEND_FLAG_ONLINE
+                        )
+                    ) {
+                        notificationHelper.pushNotification(
+                            title = application.getString(R.string.notification_service_title_online),
+                            content = application.getString(R.string.notification_service_description_online)
+                                .format(update.user.displayName),
+                            channel = NotificationHelper.CHANNEL_ONLINE_ID
+                        )
                     }
+
+                    FeedManager.addFeed(feed)
 
                     FriendManager.updateLocation(update.userId, "private")
                     FriendManager.updateStatus(update.userId, update.user.status)
@@ -130,27 +127,24 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                         }
 
-                        if (!FeedManager.isDuplicate(feed))
-                        {
-                            if (notificationHelper.isOnWhitelist(friend.id) &&
-                                notificationHelper.isIntentEnabled(
-                                    friend.id,
-                                    NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
-                                )
-                            ) {
-                                notificationHelper.pushNotification(
-                                    title = application.getString(R.string.notification_service_title_offline),
-                                    content = application.getString(R.string.notification_service_description_offline)
-                                        .format(friend.displayName),
-                                    channel = NotificationHelper.CHANNEL_OFFLINE_ID
-                                )
-                            }
-
-                            FeedManager.addFeed(feed)
-
-                            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                            context.sendBroadcast(intent)
+                        if (notificationHelper.isOnWhitelist(friend.id) &&
+                            notificationHelper.isIntentEnabled(
+                                friend.id,
+                                NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
+                            )
+                        ) {
+                            notificationHelper.pushNotification(
+                                title = application.getString(R.string.notification_service_title_offline),
+                                content = application.getString(R.string.notification_service_description_offline)
+                                    .format(friend.displayName),
+                                channel = NotificationHelper.CHANNEL_OFFLINE_ID
+                            )
                         }
+
+                        FeedManager.addFeed(feed)
+
+                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                        context.sendBroadcast(intent)
 
                         FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
@@ -181,27 +175,24 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                         }
 
-                        if (!FeedManager.isDuplicate(feed))
-                        {
-                            if (notificationHelper.isOnWhitelist(update.userId) &&
-                                notificationHelper.isIntentEnabled(
-                                    update.userId,
-                                    NotificationHelper.Intents.FRIEND_FLAG_LOCATION
-                                )
-                            ) {
-                                notificationHelper.pushNotification(
-                                    title = application.getString(R.string.notification_service_title_location),
-                                    content = application.getString(R.string.notification_service_description_location)
-                                        .format(update.user.displayName, update.world.name),
-                                    channel = NotificationHelper.CHANNEL_LOCATION_ID
-                                )
-                            }
-
-                            FeedManager.addFeed(feed)
-
-                            val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                            context.sendBroadcast(intent)
+                        if (notificationHelper.isOnWhitelist(update.userId) &&
+                            notificationHelper.isIntentEnabled(
+                                update.userId,
+                                NotificationHelper.Intents.FRIEND_FLAG_LOCATION
+                            )
+                        ) {
+                            notificationHelper.pushNotification(
+                                title = application.getString(R.string.notification_service_title_location),
+                                content = application.getString(R.string.notification_service_description_location)
+                                    .format(update.user.displayName, update.world.name),
+                                channel = NotificationHelper.CHANNEL_LOCATION_ID
+                            )
                         }
+
+                        FeedManager.addFeed(feed)
+
+                        val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
+                        context.sendBroadcast(intent)
                     }
                 }
 
@@ -221,29 +212,27 @@ class PipelineService : Service(), CoroutineScope {
                                 friendStatus = StatusHelper.getStatusFromString(update.user.status)
                             }
 
-                            if (!FeedManager.isDuplicate(feed))
-                            {
-                                if (notificationHelper.isOnWhitelist(update.userId) &&
-                                    notificationHelper.isIntentEnabled(
-                                        update.userId,
-                                        NotificationHelper.Intents.FRIEND_FLAG_STATUS
-                                    )
-                                ) {
-                                    notificationHelper.pushNotification(
-                                        title = application.getString(R.string.notification_service_title_status),
-                                        content = application.getString(R.string.notification_service_description_status)
-                                            .format(
-                                                update.user.displayName,
-                                                StatusHelper.getStatusFromString(friend.status)
-                                                    .toString(),
-                                                StatusHelper.getStatusFromString(update.user.status)
-                                                    .toString()
-                                            ),
-                                        channel = NotificationHelper.CHANNEL_LOCATION_ID
-                                    )
-                                }
-                                FeedManager.addFeed(feed)
+                            if (notificationHelper.isOnWhitelist(update.userId) &&
+                                notificationHelper.isIntentEnabled(
+                                    update.userId,
+                                    NotificationHelper.Intents.FRIEND_FLAG_STATUS
+                                )
+                            ) {
+                                notificationHelper.pushNotification(
+                                    title = application.getString(R.string.notification_service_title_status),
+                                    content = application.getString(R.string.notification_service_description_status)
+                                        .format(
+                                            update.user.displayName,
+                                            StatusHelper.getStatusFromString(friend.status)
+                                                .toString(),
+                                            StatusHelper.getStatusFromString(update.user.status)
+                                                .toString()
+                                        ),
+                                    channel = NotificationHelper.CHANNEL_LOCATION_ID
+                                )
                             }
+
+                            FeedManager.addFeed(feed)
                         }
                         FriendManager.updateFriend(update.user)
                     }
@@ -284,18 +273,15 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                         }
 
-                        if (!FeedManager.isDuplicate(feed))
-                        {
-                            notificationHelper.pushNotification(
-                                title = application.getString(R.string.notification_service_title_friend_removed),
-                                content = application.getString(R.string.notification_service_description_friend_removed)
-                                    .format(friend.displayName),
-                                channel = NotificationHelper.CHANNEL_STATUS_ID
-                            )
+                        notificationHelper.pushNotification(
+                            title = application.getString(R.string.notification_service_title_friend_removed),
+                            content = application.getString(R.string.notification_service_description_friend_removed)
+                                .format(friend.displayName),
+                            channel = NotificationHelper.CHANNEL_STATUS_ID
+                        )
 
-                            FeedManager.addFeed(feed)
-                            FriendManager.removeFriend(update.userId)
-                        }
+                        FeedManager.addFeed(feed)
+                        FriendManager.removeFriend(update.userId)
                     }
                 }
 
@@ -308,18 +294,15 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                     }
 
-                    if (!FeedManager.isDuplicate(feed))
-                    {
-                        notificationHelper.pushNotification(
-                            title = application.getString(R.string.notification_service_title_friend_added),
-                            content = application.getString(R.string.notification_service_description_friend_added)
-                                .format(update.user.displayName),
-                            channel = NotificationHelper.CHANNEL_STATUS_ID
-                        )
+                    notificationHelper.pushNotification(
+                        title = application.getString(R.string.notification_service_title_friend_added),
+                        content = application.getString(R.string.notification_service_description_friend_added)
+                            .format(update.user.displayName),
+                        channel = NotificationHelper.CHANNEL_STATUS_ID
+                    )
 
-                        FeedManager.addFeed(feed)
-                        FriendManager.addFriend(update.user)
-                    }
+                    FeedManager.addFeed(feed)
+                    FriendManager.addFriend(update.user)
                 }
 
                 is Notification -> {
@@ -337,8 +320,7 @@ class PipelineService : Service(), CoroutineScope {
                                         friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
                                     }
 
-                                    if (!FeedManager.isDuplicate(feed))
-                                        FeedManager.addFeed(feed)
+                                    FeedManager.addFeed(feed)
                                 }
 
                                 else -> {}

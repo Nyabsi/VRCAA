@@ -37,16 +37,6 @@ object FeedManager {
         fun onReceiveUpdate(list: MutableList<Feed>)
     }
 
-    fun isDuplicate(feed: Feed): Boolean {
-        val lastFeed = feedList.findLast { it.type == feed.type && it.friendId == feed.friendId }
-        if (lastFeed != null) {
-            val last: Long = lastFeed.feedTimestamp.milliseconds
-            val incoming: Long = feed.feedTimestamp.milliseconds
-            return abs(last - incoming) >= 1500
-        }
-        return false
-    }
-
     fun addFeed(feed: Feed) {
         feedList.add(feed)
         feedListener?.onReceiveUpdate(feedList)
