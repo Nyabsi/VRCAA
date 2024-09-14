@@ -41,5 +41,7 @@ class MfaScreenModel(
                 navigator.replace(NavigationScreen())
             }
         }
+
+        code.value = ""
     }
 }
