@@ -77,17 +77,11 @@ class NavigationScreenModel(
         api.setSessionListener(listener)
     }
 
-    fun enterSearchMode() {
+    fun addSearchHistory() {
         screenModelScope.launch {
-            searchModeActivated.value = true
-        }
-    }
-
-    fun existSearchMode() {
-        screenModelScope.launch {
-            searchModeActivated.value = false
             if (searchText.value.isNotEmpty())
                 searchHistory.add(searchText.value)
+            clearSearchText()
         }
     }
 

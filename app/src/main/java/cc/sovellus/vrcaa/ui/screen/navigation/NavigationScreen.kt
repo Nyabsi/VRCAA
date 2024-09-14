@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +32,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationBar
@@ -38,6 +42,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarDefaults.InputField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -52,12 +59,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -172,84 +182,94 @@ class NavigationScreen : Screen {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 SearchBar(
-                                    query = model.searchText.value,
-                                    placeholder = {
-                                        Text(
-                                            text = stringResource(R.string.main_search_placeholder),
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    },
-                                    onQueryChange = { model.searchText.value = it; },
-                                    onSearch = {
-                                        model.existSearchMode()
-                                        navigator.push(SearchResultScreen(model.searchText.value))
-                                        model.clearSearchText()
-                                    },
-                                    active = model.searchModeActivated.value,
-                                    onActiveChange = {
-                                        if (it) {
-                                            model.enterSearchMode()
-                                        } else {
-                                            model.existSearchMode()
-                                        }
-                                    },
-                                    trailingIcon = {
-                                        if (model.searchModeActivated.value) {
-                                            IconButton(onClick = { model.clearSearchText() }) {
-                                                Icon(
-                                                    imageVector = Icons.Filled.Close,
-                                                    contentDescription = null                                        )
-                                            }
-                                        } else {
-                                            IconButton(onClick = { showBottomSheet = true }) {
-                                                Icon(
-                                                    imageVector = Icons.Filled.MoreVert,
-                                                    contentDescription = null
+                                    inputField = {
+                                        InputField(
+                                            query = model.searchText.value,
+                                            onQueryChange = { model.searchText.value = it; },
+                                            onSearch = {
+                                                model.searchModeActivated.value = false
+                                                navigator.push(SearchResultScreen(model.searchText.value))
+                                                model.addSearchHistory()
+                                            },
+                                            expanded = model.searchModeActivated.value,
+                                            onExpandedChange = { model.searchModeActivated.value = true },
+                                            enabled = true,
+                                            placeholder = {
+                                                Text(
+                                                    text = stringResource(R.string.main_search_placeholder),
+                                                    overflow = TextOverflow.Ellipsis
                                                 )
-                                            }
-                                        }
-                                    },
-                                    leadingIcon = {
-                                        if (model.searchModeActivated.value) {
-                                            IconButton(onClick = { model.existSearchMode() }) {
-                                                Icon(
-                                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                    contentDescription = null
-                                                )
-                                            }
-                                        } else {
-                                            Icon(
-                                                imageVector = Icons.Filled.Search,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
-                                ) {
-                                    LazyColumn(
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        items(model.searchHistory.size) {
-                                            val item = model.searchHistory.reversed()[it]
-                                            ListItem(
-                                                leadingContent = {
+                                            },
+                                            leadingIcon = {
+                                                if (model.searchModeActivated.value) {
+                                                    IconButton(onClick = {
+                                                        model.searchModeActivated.value = false
+                                                    }) {
+                                                        Icon(
+                                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                                            contentDescription = null
+                                                        )
+                                                    }
+                                                } else {
                                                     Icon(
-                                                        imageVector = Icons.Filled.History,
+                                                        imageVector = Icons.Filled.Search,
                                                         contentDescription = null
                                                     )
-                                                },
-                                                headlineContent = {
-                                                    Text(text = item)
-                                                },
-                                                modifier = Modifier.clickable(
-                                                    onClick = {
-                                                        model.existSearchMode()
-                                                        navigator.push(SearchResultScreen(item))
+                                                }
+                                            },
+                                            trailingIcon = {
+                                                if (model.searchModeActivated.value) {
+                                                    IconButton(onClick = { model.clearSearchText() }) {
+                                                        Icon(
+                                                            imageVector = Icons.Filled.Close,
+                                                            contentDescription = null                                        )
                                                     }
-                                                )
-                                            )
+                                                } else {
+                                                    IconButton(onClick = { showBottomSheet = true }) {
+                                                        Icon(
+                                                            imageVector = Icons.Filled.MoreVert,
+                                                            contentDescription = null
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        )
+                                    },
+                                    expanded = model.searchModeActivated.value,
+                                    onExpandedChange = { },
+                                    shape = SearchBarDefaults.inputFieldShape,
+                                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
+                                    tonalElevation = if (model.searchModeActivated.value) { 0.dp } else { 8.dp },
+                                    windowInsets = SearchBarDefaults.windowInsets.exclude(WindowInsets(left = 4.dp, right = 4.dp)),
+                                    content = {
+                                        LazyColumn(
+                                            modifier = Modifier.fillMaxWidth(),
+                                        ) {
+                                            if (model.searchModeActivated.value) {
+                                                items(model.searchHistory.size) {
+                                                    val item = model.searchHistory.reversed()[it]
+                                                    ListItem(
+                                                        leadingContent = {
+                                                            Icon(
+                                                                imageVector = Icons.Filled.History,
+                                                                contentDescription = null
+                                                            )
+                                                        },
+                                                        headlineContent = {
+                                                            Text(text = item)
+                                                        },
+                                                        modifier = Modifier.clickable(
+                                                            onClick = {
+                                                                model.searchModeActivated.value = false
+                                                                navigator.push(SearchResultScreen(item))
+                                                            }
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
-                                    }
-                                }
+                                    },
+                                )
                             }
                         }
                         FriendsTab.options.index -> {
@@ -286,7 +306,7 @@ class NavigationScreen : Screen {
                                                 )
                                                 DropdownMenuItem(
                                                     onClick = {
-                                                        CacheManager.getProfile()?.let {
+                                                        CacheManager.getProfile().let {
                                                             navigator.push(
                                                                 UserGroupsScreen(it.displayName, it.id)
                                                             )
@@ -297,7 +317,7 @@ class NavigationScreen : Screen {
                                                 )
                                                 DropdownMenuItem(
                                                     onClick = {
-                                                        CacheManager.getProfile()?.let {
+                                                        CacheManager.getProfile().let {
                                                             navigator.push(
                                                                 WorldsScreen(it.displayName, it.id, true)
                                                             )
