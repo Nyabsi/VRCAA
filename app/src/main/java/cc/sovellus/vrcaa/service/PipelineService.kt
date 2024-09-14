@@ -149,27 +149,11 @@ class PipelineService : Service(), CoroutineScope {
 
                 is FriendLocation -> {
                     val update = msg.obj as FriendLocation
-
-                    update.world?.let {
-                        if (CacheManager.isWorldCached(it.id))
-                            CacheManager.updateWorld(update.world)
-                        else
-                            CacheManager.addWorld(update.world)
-                    }
-
-                    update.location?.let {
-                        FriendManager.updateLocation(update.userId, update.location)
-                    }
+                    val friend = FriendManager.getFriend(update.userId)
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
-                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && update.user.location != update.location) {
-                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
-                            friendId = update.userId
-                            friendName = update.user.displayName
-                            travelDestination = LocationHelper.getReadableLocation(update.location)
-                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
-                        }
+                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && friend?.location != update.location) {
 
                         if (notificationHelper.isOnWhitelist(update.userId) &&
                             notificationHelper.isIntentEnabled(
@@ -185,10 +169,28 @@ class PipelineService : Service(), CoroutineScope {
                             )
                         }
 
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_LOCATION).apply {
+                            friendId = update.userId
+                            friendName = update.user.displayName
+                            travelDestination = LocationHelper.getReadableLocation(update.location)
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        }
+
                         FeedManager.addFeed(feed)
 
                         // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
                         // context.sendBroadcast(intent)
+                    }
+
+                    update.world?.let {
+                        if (CacheManager.isWorldCached(it.id))
+                            CacheManager.updateWorld(update.world)
+                        else
+                            CacheManager.addWorld(update.world)
+                    }
+
+                    update.location?.let {
+                        FriendManager.updateLocation(update.userId, update.location)
                     }
                 }
 
