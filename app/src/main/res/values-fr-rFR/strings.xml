@@ -40,6 +40,7 @@
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
     <string name="profile_user_avatar_private">L\'avatar est privé !</string>
     <string name="profile_user_toast_invite_sent">Invitation envoyée ! Regardez VRChat.</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">Résultats pour</string>
     <string name="search_filter_category_worlds">Mondes</string>

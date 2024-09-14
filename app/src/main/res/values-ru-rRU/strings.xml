@@ -40,6 +40,7 @@
     <string name="profile_user_not_found_message">Юзер не существует.</string>
     <string name="profile_user_avatar_private">Аватар является приватным!</string>
     <string name="profile_user_toast_invite_sent">Приглашение отправлено! Проверьте ваш клиент игры.</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">Результаты по</string>
     <string name="search_filter_category_worlds">Миры</string>

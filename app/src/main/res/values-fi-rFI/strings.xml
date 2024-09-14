@@ -40,6 +40,7 @@
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
     <string name="profile_user_avatar_private">Avatar is private!</string>
     <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">Tulokset kohteelle</string>
     <string name="search_filter_category_worlds">Maailmat</string>
