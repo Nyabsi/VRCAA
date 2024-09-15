@@ -30,7 +30,7 @@ class HomeScreenModel : ScreenModel {
         }
     }
 
-    val isUpdatingCache = mutableStateOf(true)
+    val isUpdatingCache = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) {
