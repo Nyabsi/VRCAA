@@ -151,6 +151,13 @@ class PipelineService : Service(), CoroutineScope {
                     val update = msg.obj as FriendLocation
                     val friend = FriendManager.getFriend(update.userId)
 
+                    update.world?.let {
+                        if (CacheManager.isWorldCached(it.id))
+                            CacheManager.updateWorld(update.world)
+                        else
+                            CacheManager.addWorld(update.world)
+                    }
+
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
                     if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && friend?.location != update.location) {
@@ -180,13 +187,6 @@ class PipelineService : Service(), CoroutineScope {
 
                         // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
                         // context.sendBroadcast(intent)
-                    }
-
-                    update.world?.let {
-                        if (CacheManager.isWorldCached(it.id))
-                            CacheManager.updateWorld(update.world)
-                        else
-                            CacheManager.addWorld(update.world)
                     }
 
                     update.location?.let {
