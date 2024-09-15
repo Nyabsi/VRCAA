@@ -6,6 +6,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import kotlin.jvm.optionals.getOrNull
 
 object CacheManager {
 
@@ -88,11 +89,11 @@ object CacheManager {
     }
 
     fun isWorldCached(worldId: String): Boolean {
-        return worldList.contains(worldList.find { it.id == worldId })
+        return worldList.stream().filter { it.id == worldId }.count().toInt() != 0
     }
 
     fun getWorld(worldId: String): WorldCache {
-        return worldList.find { it.id == worldId } ?: WorldCache("invalid")
+        return worldList.stream().filter { it.id == worldId }.findFirst().getOrNull() ?: WorldCache("invalid")
     }
 
     fun addWorld(world: World) {
