@@ -53,6 +53,14 @@ fun FavoriteDialog(
 
                 selectedGroup.value = groups[0]
             }
+
+            "friend" -> {
+                FavoriteManager.getFriendList().forEach {
+                    groups.add(it.key)
+                }
+
+                selectedGroup.value = groups[0]
+            }
         }
     }
 

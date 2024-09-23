@@ -51,8 +51,10 @@ import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.card.InstanceCard
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
+import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
@@ -97,6 +99,7 @@ class UserProfileScreen(
         val context = LocalContext.current
 
         var isMenuExpanded by remember { mutableStateOf(false) }
+        var favoriteDialogShown by remember { mutableStateOf(false) }
 
         if (profile == null) {
             Toast.makeText(
@@ -210,23 +213,7 @@ class UserProfileScreen(
                                         } else {
                                             DropdownMenuItem(
                                                 onClick = {
-                                                    model.addFavorite { result ->
-                                                        if (result) {
-                                                            Toast.makeText(
-                                                                context,
-                                                                context.getString(R.string.favorite_toast_favorite_added)
-                                                                    .format(profile.displayName),
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        } else {
-                                                            Toast.makeText(
-                                                                context,
-                                                                context.getString(R.string.favorite_toast_favorite_added_failed)
-                                                                    .format(profile.displayName),
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        }
-                                                    }
+                                                    favoriteDialogShown = true
                                                     isMenuExpanded = false
                                                 },
                                                 text = { Text(stringResource(R.string.favorite_label_add)) }
@@ -244,6 +231,33 @@ class UserProfileScreen(
                     )
                 },
                 content = { padding ->
+
+                    if (favoriteDialogShown) {
+                        FavoriteDialog(
+                            type = "friend",
+                            id = profile.id,
+                            metadata = FavoriteManager.FavoriteMetadata(profile.id, "", profile.displayName, ""),
+                            onDismiss = { favoriteDialogShown = false },
+                            onConfirmation = { result ->
+                                if (result) {
+                                    FriendManager.setIsFavorite(profile.id, true)
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.favorite_toast_favorite_added).format(profile.displayName),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.favorite_toast_favorite_added_failed).format(profile.displayName),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                favoriteDialogShown = false
+                            }
+                        )
+                    }
+
                     LazyColumn(
                         modifier = Modifier
                             .padding(16.dp)

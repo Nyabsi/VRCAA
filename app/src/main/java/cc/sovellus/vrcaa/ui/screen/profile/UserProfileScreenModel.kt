@@ -91,17 +91,6 @@ class UserProfileScreenModel(
         }
     }
 
-    fun addFavorite(callback: (result: Boolean) -> Unit) {
-        screenModelScope.launch {
-            profile?.let {
-                val result = FavoriteManager.addFavorite("friend", it.id, null, null)
-                if (result)
-                    FriendManager.setIsFavorite(it.id, true)
-                callback(result)
-            }
-        }
-    }
-
     fun removeFavorite(callback: (result: Boolean) -> Unit) {
         screenModelScope.launch {
             profile?.let {

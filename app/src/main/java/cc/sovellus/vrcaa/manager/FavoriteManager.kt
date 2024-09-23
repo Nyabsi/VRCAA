@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
@@ -79,6 +80,10 @@ object FavoriteManager {
         return worldList
     }
 
+    fun getFriendList(): SnapshotStateMap<String, SnapshotStateList<FavoriteMetadata>> {
+        return friendList
+    }
+
     fun getDisplayNameFromTag(tag: String): String? {
         return tagToDisplayNameMap[tag]
     }
@@ -107,7 +112,7 @@ object FavoriteManager {
             "friend" -> {
                 friendList.forEach { group ->
                     group.value.forEach { friend ->
-                        if (friend.favoriteId == id)
+                        if (friend.id == id)
                             return true
                     }
                 }
@@ -150,26 +155,9 @@ object FavoriteManager {
         }
     }
 
-    suspend fun addFavorite(type: String, id: String, tag: String?, metadata: FavoriteMetadata?): Boolean {
+    suspend fun addFavorite(type: String, id: String, tag: String, metadata: FavoriteMetadata?): Boolean {
 
-        var groupTag = ""
-        if (tag == null) {
-            favoriteLimits?.let {
-                for (i in 0..<it.maxFavoriteGroups.friend)
-                {
-                    friendList["group_$i"]?.let { group ->
-                        if (group.size < it.maxFavoritesPerGroup.friend) {
-                            groupTag = "group_$i"
-                        }
-                    }
-
-                    if (groupTag.isNotEmpty())
-                        break
-                }
-            }
-        }
-
-        val result = api.addFavorite(type, id, tag ?: groupTag)
+        val result = api.addFavorite(type, id, tag)
 
         result?.let {
             when (type) {
@@ -186,7 +174,7 @@ object FavoriteManager {
                     }
                 }
                 "friend" -> {
-                    friendList[id]?.add(FavoriteMetadata(id = id, favoriteId = result.favoriteId))
+                    friendList[tag]?.add(FavoriteMetadata(id = id, favoriteId = result.id))
                 }
                 else -> {}
             }
@@ -200,7 +188,19 @@ object FavoriteManager {
         favorite.first?.let { favoriteId ->
             val result = api.removeFavorite(favoriteId)
             if (result)
-                avatarList[favorite.second]?.removeIf { it.id == id }
+            {
+                when (type) {
+                    "world" -> {
+                        worldList[favorite.second]?.removeIf { it.id == id }
+                    }
+                    "avatar" -> {
+                        avatarList[favorite.second]?.removeIf { it.id == id }
+                    }
+                    "friend" -> {
+                        friendList[favorite.second]?.removeIf { it.id == id }
+                    }
+                }
+            }
             return result
         }
         return false
