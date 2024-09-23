@@ -11,14 +11,14 @@ import kotlinx.coroutines.launch
 sealed class UserGroupsState {
     data object Init : UserGroupsState()
     data object Loading : UserGroupsState()
-    data class Result(val groups: ArrayList<UserGroups.Group>?) : UserGroupsState()
+    data class Result(val groups: List<UserGroups.Group>?) : UserGroupsState()
 }
 
 class UserGroupsScreenModel(
     private val userId: String
 ) : StateScreenModel<UserGroupsState>(UserGroupsState.Init) {
 
-    private var groups: ArrayList<UserGroups.Group>? = null
+    private var groups: List<UserGroups.Group>? = null
 
     init {
         fetchGroups()
@@ -28,7 +28,8 @@ class UserGroupsScreenModel(
         mutableState.value = UserGroupsState.Loading
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_groups)
-            groups = api.getUserGroups(userId)
+            val groupsTemp = api.getUserGroups(userId).sortedBy { it.ownerId != userId }.toList()
+            groups = groupsTemp
             mutableState.value = UserGroupsState.Result(groups)
         }
     }

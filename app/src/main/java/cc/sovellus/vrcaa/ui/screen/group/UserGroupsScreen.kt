@@ -56,7 +56,7 @@ class UserGroupsScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ShowGroups(
-        groups: ArrayList<UserGroups.Group>?
+        groups: List<UserGroups.Group>?
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
