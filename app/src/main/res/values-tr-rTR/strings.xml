@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="result_not_found">Burada tavuklardan başka bir şey yok!</string>
+    <string name="legal_disclaimer">"VRCAA VRChat ya da bağlı herhangi bir şirketçe desteklenmemektedir."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
-        <item>Favorite</item>
-        <item>Online</item>
-        <item>Website</item>
-        <item>Offline</item>
+        <item>Favori</item>
+        <item>Web sitesi</item>
+        <item>Web sitesi</item>
+        <item>Çevrimdışı</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
-    <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_offline_friends">Offline Friends</string>
-    <string name="home_friend_locations">Friend Locations</string>
+    <string name="home_active_friends">Çevrimiçi Arkadaşlar</string>
+    <string name="home_recently_visited">Yakın zamanda ziyaret ettiklerim</string>
+    <string name="home_offline_friends">Çevrimdışı Arkadaşlar</string>
+    <string name="home_friend_locations">Arkadaş konumları</string>
     <!-- Login -->
-    <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
-    <string name="login_label_password">Password</string>
-    <string name="login_button_text">Login</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
-    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
+    <string name="login_text">VRC Android Asistanı\'na giriş yap</string>
+    <string name="login_label_username">Kullanıcı adı ya da E-mail</string>
+    <string name="login_label_password">Şifre</string>
+    <string name="login_button_text">Giriş yap</string>
+    <string name="login_toast_wrong_credentials">Yanlış kullanıcı adı veya şifre.</string>
+    <string name="login_toast_wrong_code">Onaylanamadı, kodu tekrar kontrol et.</string>
     <!-- Two Auth -->
-    <string name="auth_text_email">Input the code sent to your e-mail</string>
-    <string name="auth_text_app">Input the code from your Authenticator app</string>
-    <string name="auth_button_text">Verify</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_text_email">E-mailine gönderdiğimiz kodu gir</string>
+    <string name="auth_text_app">Yetkilendirici uygulamasındaki kodu gir</string>
+    <string name="auth_button_text">Onayla</string>
+    <string name="auth_button_paste">Yapıştır</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">Dünyalar, kullanıcılar ve avatarları bul…</string>
     <!-- Profile -->
-    <string name="profile_label_current_location">Current Location</string>
-    <string name="profile_label_biography">Bio</string>
-    <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
-    <string name="profile_user_dropdown_view_groups">View Groups</string>
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
-    <string name="profile_user_dropdown_invite_self">Invite myself</string>
-    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
-    <string name="profile_mutual_groups_text">Mutual Groups</string>
+    <string name="profile_label_current_location">Şu an ki konum</string>
+    <string name="profile_label_biography">Hakkımda</string>
+    <string name="profile_text_no_biography">Açıklama belirtilmedi.</string>
+    <string name="profile_user_dropdown_manage_notifications">Bildirimleri düzenle</string>
+    <string name="profile_user_dropdown_view_groups">Gurupları Görüntüle</string>
+    <string name="profile_user_dropdown_view_avatar">Avatarları görüntüle</string>
+    <string name="profile_user_dropdown_invite_self">Kendimi davet et</string>
+    <string name="profile_user_not_found_message">Kullanıcı bulunamadı.</string>
+    <string name="profile_user_avatar_private">Avatar özel!</string>
+    <string name="profile_user_toast_invite_sent">Davet gönderildi! Oyunu kontrol et.</string>
+    <string name="profile_mutual_groups_text">Ortak guruplar</string>
     <!-- Search -->
-    <string name="search_text_result">Results for</string>
-    <string name="search_filter_category_worlds">Worlds</string>
-    <string name="search_filter_category_worlds_featured">Featured</string>
-    <string name="search_filter_category_worlds_sort_by">Sort By</string>
-    <string name="search_filter_category_worlds_count">Count</string>
-    <string name="search_filter_category_users">Users</string>
-    <string name="search_filter_category_users_count">Count</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Provider</string>
-    <string name="search_filter_category_groups">Groups</string>
-    <string name="search_filter_category_groups_count">Count</string>
+    <string name="search_text_result">Arama Sonuçları;</string>
+    <string name="search_filter_category_worlds">Dünyalar</string>
+    <string name="search_filter_category_worlds_featured">Öne çıkanlar</string>
+    <string name="search_filter_category_worlds_sort_by">Sırala</string>
+    <string name="search_filter_category_worlds_count">Dünya Adedi</string>
+    <string name="search_filter_category_users">Kullanıcılar</string>
+    <string name="search_filter_category_users_count">Kullanıcı adedi</string>
+    <string name="search_filter_category_avatars">Avatarlar</string>
+    <string name="search_filter_category_avatars_provider">Avatar sağlayıcı</string>
+    <string name="search_filter_category_groups">Guruplar</string>
+    <string name="search_filter_category_groups_count">Gurup adedi</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Count</string>
     <string name="search_filter_button_reset">Reset</string>
-    <string name="search_filter_button_apply">Apply</string>
+    <string name="search_filter_button_apply">Uygula</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
-        <item>Avatars</item>
-        <item>Groups</item>
+        <item>Dünyalar</item>
+        <item>Kullanıcılar</item>
+        <item>Avatarlar</item>
+        <item>Guruplar</item>
     </string-array>
     <!-- Settings -->
-    <string name="settings_item_about">About</string>
+    <string name="settings_item_about">Hakkında</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_logout">Logout</string>
+    <string name="settings_item_logout">Çıkış yap</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_label_description">Açıklama</string>
+    <string name="world_label_tags">Etiketler</string>
+    <string name="world_text_no_tags">Üretici etiket eklemedi.</string>
+    <string name="world_title_created_at">Üretim tarihi</string>
+    <string name="world_title_updated_at">En son güncellenmiş</string>
+    <string name="world_toast_not_found">Dünya özel yada bulunamadı.</string>
     <string-array name="world_selection_options">
-        <item>Info</item>
+        <item>Bilgi</item>
         <item>Instances</item>
     </string-array>
-    <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
+    <string name="world_author_label">%1$s tarafından</string>
+    <string name="world_instance_invite_dialog_title">Emin misin?</string>
     <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
     <string name="world_instance_no_public_instances_message">No public instances</string>
     <string name="world_instance_failed_to_fetch_instance_message">Failed to fetch instance, try again.</string>
@@ -93,9 +93,9 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
+    <string name="notification_service_description_online">Arkadaşın %1$s çevrimiçi oldu!</string>
     <string name="notification_service_title_offline">Friend has gone offline!</string>
-    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
+    <string name="notification_service_description_offline">Arkadaşın %1$s çevrimdışı oldu!</string>
     <string name="notification_service_title_location">Friend changed location!</string>
     <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
     <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
@@ -195,7 +195,7 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_no_internet_label">Kapat</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
