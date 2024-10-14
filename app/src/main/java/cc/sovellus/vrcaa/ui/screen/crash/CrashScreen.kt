@@ -81,7 +81,7 @@ fun CrashScreen(
                 Button(onClick = {
                     val intent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://discord.gg/dTvMKC3yjm")
+                        Uri.parse("https://discord.gg/aJs8qJXuT3")
                     )
                     context.startActivity(intent)
                 }) {
