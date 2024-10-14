@@ -6,7 +6,9 @@ VRChat Android Assistant offers a convenient solution for managing your VRChat e
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/cc.sovellus.vrcaa)
 
-[Click here to download latest Nightly build](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-signed.apk)
+[Click here to download latest Nightly build for Android](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-signed.apk)
+
+[Click here to download latest Nightly build for Meta Quest](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-quest-signed.apk)
 
 # Showcase
 
