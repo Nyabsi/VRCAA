@@ -1,0 +1,11 @@
+- Update various of translations, huge thanks to all the individual contributors.
+- Now search limits are enforced
+- Now accounts without friends work
+- Reset user after a logout
+- Now friend favorites allows proper groups
+- Fix issue with duplicate events
+- Now the 2FA code is cleared after an attempt
+- Improve robustness of checking valid user-session
+- Now your own groups are sorted as top of group lists
+- Fix service not restarting properly after invalid session
+- fix various of improvements
