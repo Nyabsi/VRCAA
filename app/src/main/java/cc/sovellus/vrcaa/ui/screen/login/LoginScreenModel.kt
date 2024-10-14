@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.login
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +16,7 @@ import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import kotlinx.coroutines.launch
 
@@ -43,6 +45,8 @@ class LoginScreenModel(
 
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
+                        val intent = Intent(context, PipelineService::class.java)
+                        context.startService(intent)
                         launch { CacheManager.buildCache() }
                         navigator.replace(NavigationScreen())
                     } else {

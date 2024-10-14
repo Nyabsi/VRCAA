@@ -52,6 +52,9 @@ class MainActivity : ComponentActivity() {
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
 
         if (invalidSession == true) {
+            val intent = Intent(this, PipelineService::class.java)
+            stopService(intent)
+
             Toast.makeText(
                 this,
                 getString(R.string.api_session_has_expired_text),
