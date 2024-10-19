@@ -45,6 +45,7 @@ class LoginScreenModel(
 
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
+                        api.setToken(result.token)
                         val intent = Intent(context, PipelineService::class.java)
                         context.startService(intent)
                         launch { CacheManager.buildCache() }
