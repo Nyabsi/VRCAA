@@ -75,6 +75,7 @@ object LocationHelper {
                     } else {
                         result.instanceType = "Invite"
                     }
+                    result.userId = result.privateId
                 } else if (result.friendId.isNotEmpty()) {
                     result.instanceType = "Friends"
                 } else if (result.hiddenId.isNotEmpty()) {
@@ -82,12 +83,12 @@ object LocationHelper {
                 } else if (result.groupId.isNotEmpty()) {
                     result.instanceType = "Group"
                     if (result.groupAccessType.isNotEmpty()) {
-                        if (result.groupAccessType == "public") {
-                            result.groupAccessType = "Public"
-                            result.instanceType = "Group"
-                        } else {
+                        if (result.groupAccessType == "plus") {
                             result.groupAccessType = "Plus"
                             result.instanceType = "Group+"
+                        } else {
+                            result.groupAccessType = "Public"
+                            result.instanceType = "Group"
                         }
                     }
                 }
