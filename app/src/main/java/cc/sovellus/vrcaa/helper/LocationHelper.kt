@@ -75,7 +75,6 @@ object LocationHelper {
                     } else {
                         result.instanceType = "Invite"
                     }
-                    result.userId = result.privateId
                 } else if (result.friendId.isNotEmpty()) {
                     result.instanceType = "Friends"
                 } else if (result.hiddenId.isNotEmpty()) {
