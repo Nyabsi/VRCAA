@@ -102,8 +102,6 @@ open class BaseClient {
                         )
                     }
 
-                    Log.d("VRCAA", responseBody)
-
                     handleRequest(response, responseBody)
                 }
 
