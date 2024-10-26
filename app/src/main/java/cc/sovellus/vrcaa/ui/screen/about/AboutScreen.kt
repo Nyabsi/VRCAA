@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -39,6 +40,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.licenses.LicensesScreen
@@ -73,9 +75,15 @@ class AboutScreen : Screen {
             content = {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth().padding(bottom = it.calculateBottomPadding(), top = it.calculateTopPadding()),
+                        .fillMaxWidth()
+                        .padding(
+                            bottom = it.calculateBottomPadding(),
+                            top = it.calculateTopPadding()
+                        ),
                 ) {
                     item {
+                        Spacer(modifier = Modifier.padding(8.dp))
+
                         Box(
                             modifier = Modifier
                                 .height(128.dp)
@@ -90,10 +98,7 @@ class AboutScreen : Screen {
                             )
                         }
 
-                        HorizontalDivider(
-                            color = Color.Gray,
-                            thickness = 0.5.dp
-                        )
+                        Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
                         ListItem(
@@ -101,7 +106,7 @@ class AboutScreen : Screen {
                                 Text("Version")
                             },
                             supportingContent = {
-                                Text(text = "${BuildConfig.FLAVOR}, ${BuildConfig.VERSION_NAME} (${BuildConfig.GIT_BRANCH}, ${BuildConfig.GIT_HASH})")
+                                Text(text = "${BuildConfig.VERSION_NAME} ${BuildConfig.FLAVOR} (${BuildConfig.GIT_BRANCH}, ${BuildConfig.GIT_HASH})")
                             }
                         )
                     }
@@ -174,6 +179,18 @@ class AboutScreen : Screen {
                                 }
                             )
                         )
+                    }
+                    if (App.isDeveloperModeEnabled()) {
+                        item {
+                            ListItem(
+                                headlineContent = { Text("Artificial Exception") },
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        throw RuntimeException("d3ad :(")
+                                    }
+                                )
+                            )
+                        }
                     }
                 }
             }
