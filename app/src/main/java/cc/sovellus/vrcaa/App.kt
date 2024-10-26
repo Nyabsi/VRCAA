@@ -17,19 +17,22 @@ class App : Application() {
         GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
         NotificationHelper.createNotificationChannels(this)
 
-        mContext = this
-        developerModeEnabled = this.getSharedPreferences("vrcaa_prefs", 0).developerMode
+        context = this
+        developerModeEnabled.value = this.getSharedPreferences("vrcaa_prefs", 0).developerMode
     }
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private lateinit var mContext: Context
+        private lateinit var context: Context
 
-        private var developerModeEnabled: Boolean = false
+        private var developerModeEnabled: MutableState<Boolean> = mutableStateOf(false)
         private var loadingText: MutableState<String> = mutableStateOf("")
 
-        fun isDeveloperModeEnabled(): Boolean { return developerModeEnabled }
+        fun getContext(): Context { return context }
+
+        fun isDeveloperModeEnabled(): Boolean { return developerModeEnabled.value }
+
         fun getLoadingText(): MutableState<String> { return loadingText }
-        fun setLoadingText(resourceId: Int) { loadingText.value = mContext.getString(resourceId) }
+        fun setLoadingText(resourceId: Int) { loadingText.value = context.getString(resourceId) }
     }
 }
