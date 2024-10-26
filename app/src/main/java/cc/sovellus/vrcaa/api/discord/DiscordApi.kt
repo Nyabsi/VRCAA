@@ -4,6 +4,7 @@ import android.util.Log
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
+import cc.sovellus.vrcaa.api.discord.models.DiscordTicket
 import com.google.gson.Gson
 import okhttp3.Headers
 
@@ -53,8 +54,13 @@ class DiscordApi : BaseClient() {
         return if (result == Result.InvalidRequest) {
             false
         } else {
-            val login = Gson().fromJson(response, DiscordLogin::class.java)
-            login
+            if (response?.contains("ticket") == true) {
+                val ticket = Gson().fromJson(response, DiscordTicket::class.java)
+                ticket
+            } else {
+                val login = Gson().fromJson(response, DiscordLogin::class.java)
+                login
+            }
         }
     }
 

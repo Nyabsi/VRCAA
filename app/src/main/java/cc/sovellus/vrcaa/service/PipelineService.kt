@@ -246,13 +246,8 @@ class PipelineService : Service(), CoroutineScope {
                         val location = LocationHelper.parseLocationInfo(user.location)
                         launch {
                             val instance = api.getInstance(user.location)
-                            if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                                instance?.world?.let {
-                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
-
-                                }
-                            } else {
-                                gateway?.sendPresence(status.toString(), "User location is hidden.", null, status)
+                            instance?.let {
+                                instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
                             }
                         }
                     }
@@ -260,6 +255,12 @@ class PipelineService : Service(), CoroutineScope {
 
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
+
+                    if (preferences.richPresenceEnabled) {
+                        val status = StatusHelper.getStatusFromString(user.user.status)
+                        launch { gateway?.sendPresence(null, null, null, status) }
+                    }
+
                     CacheManager.updateProfile(user.user)
                 }
 

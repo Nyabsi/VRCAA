@@ -20,6 +20,10 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 import java.io.ByteArrayOutputStream
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
 
@@ -43,13 +47,17 @@ class DiscordGateway(
     private var interval: Long = 0
     private var sessionId = ""
     private var shouldResume: Boolean = false
+    private lateinit var schedule: ScheduledFuture<*>
+
+    private var worldInfo: String = ""
+    private var worldName: String = ""
+    private var worldUrl: String = ""
+
+    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
 
     private val heartbeatRunnable = Runnable {
-        Thread.sleep(interval)
         sendHeartbeat()
     }
-
-    private lateinit var heartbeatThread: Thread
 
     private val listener by lazy {
         object : WebSocketListener() {
@@ -80,12 +88,10 @@ class DiscordGateway(
                     10 -> {
                         val hello = Gson().fromJson(payload.d, Hello::class.java)
                         interval = hello.heartbeatInterval
-                        heartbeatThread = Thread(heartbeatRunnable)
-                        heartbeatThread.start()
+                        schedule = scheduler.scheduleWithFixedDelay(heartbeatRunnable, interval, interval, TimeUnit.MILLISECONDS)
                     }
                     11 -> {
-                        heartbeatThread = Thread(heartbeatRunnable)
-                        heartbeatThread.start()
+                        scheduler.schedule(heartbeatRunnable, interval, TimeUnit.MILLISECONDS)
                     }
                     else -> {
                         Log.d("VRCAA", "got unknown op: ${payload.op}")
@@ -133,6 +139,7 @@ class DiscordGateway(
 
     fun disconnect() {
         socket.close(1000, "Closed by user")
+        schedule.cancel(true)
         client.dispatcher.executorService.shutdown()
     }
 
@@ -148,14 +155,26 @@ class DiscordGateway(
         }
     }
 
-    suspend fun sendPresence(playerStatus: String, worldName: String, url: String?, status: StatusHelper.Status) {
+    suspend fun sendPresence(name: String?, info: String?, url: String?, status: StatusHelper.Status) {
 
         val assets = ArrayMap<String, String>()
+
+        if (name != null) {
+            this.worldName = name
+        }
+
+        if (info != null) {
+            this.worldInfo = info
+        }
+
+        if (url != null) {
+            this.worldUrl = url
+        }
 
         if (webHookUrl.isEmpty())
             assets["large_image"] =  APP_ASSET_LARGE_ICON
         else
-            assets["large_image"] = mp.convertImageUrl(url)?.ifEmpty { APP_ASSET_LARGE_ICON }
+            assets["large_image"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { mp.convertImageUrl(worldUrl) } else { APP_ASSET_LARGE_ICON }
 
         assets["large_text"] = "Powered by VRCAA"
 
@@ -164,9 +183,7 @@ class DiscordGateway(
             StatusHelper.Status.Active -> APP_ASSET_SMALL_ICON_ACTIVE
             StatusHelper.Status.AskMe -> APP_ASSET_SMALL_ICON_ASK_ME
             StatusHelper.Status.Busy -> APP_ASSET_SMALL_ICON_BUSY
-            else -> {
-                APP_ASSET_SMALL_ICON_ACTIVE // Odd...
-            }
+            StatusHelper.Status.Offline -> { "" }
         }
 
         assets["small_text"] = status.toString()
@@ -177,8 +194,8 @@ class DiscordGateway(
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
         activity["application_id"] = APP_ID
-        activity["state"] = worldName
-        activity["details"] = playerStatus
+        activity["state"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { worldName } else { "User location hidden." }
+        activity["details"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { worldInfo } else { status.toString() }
         activity["type"] = 0
         activity["timestamps"] = timestamps
         activity["assets"] = assets
