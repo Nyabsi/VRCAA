@@ -6,14 +6,19 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -23,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 
 
@@ -37,34 +43,57 @@ fun CrashScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.crash_title_text)) }
+                title = { Text(stringResource(R.string.crash_title_text)) },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.Info,
+                        contentDescription = null
+                    )
+                }
             )
         },
         content = { padding ->
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
+                    .fillMaxHeight(0.95f)
                     .padding(
                         top = padding.calculateTopPadding(),
-                        bottom = padding.calculateBottomPadding()
+                        bottom = padding.calculateBottomPadding(),
+                        start = 8.dp,
+                        end = 8.dp
                     ),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.Start
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                item {
-                    Text(
-                        text = exception,
-                        softWrap = true,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                ElevatedCard(
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 6.dp
+                    ),
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    LazyColumn {
+                        item {
+                            Text(
+                                text = exception,
+                                softWrap = true,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
                 }
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(bottom = padding.calculateBottomPadding()),
+                    .padding(
+                        top = 16.dp,
+                        bottom = padding.calculateBottomPadding() + 8.dp,
+                        start = 16.dp,
+                        end = 16.dp
+                    ),
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -88,7 +117,6 @@ fun CrashScreen(
                     Text(text = stringResource(R.string.crash_button_report_text))
                 }
             }
-        },
-        modifier = Modifier.fillMaxSize()
+        }
     )
 }
