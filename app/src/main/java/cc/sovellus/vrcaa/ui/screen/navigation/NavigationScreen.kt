@@ -145,7 +145,7 @@ class NavigationScreen : Screen {
             BackHandler(
                 enabled = true,
                 onBack = {
-                    if (pressBackCounter == 0 && tabNavigator.current != HomeTab)
+                    if (tabNavigator.current != HomeTab)
                     {
                         tabNavigator.current = HomeTab
                     } else {
@@ -610,6 +610,7 @@ class NavigationScreen : Screen {
                             NavigationBarItem(
                                 selected = tabNavigator.current.key == tab.key,
                                 onClick = {
+                                    pressBackCounter = 0
                                     tabNavigator.current = tab
                                 },
                                 icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
