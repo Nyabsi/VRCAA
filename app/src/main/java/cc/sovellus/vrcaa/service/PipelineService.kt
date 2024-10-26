@@ -247,7 +247,10 @@ class PipelineService : Service(), CoroutineScope {
                         launch {
                             val instance = api.getInstance(user.location)
                             if (status == StatusHelper.Status.Active || status == StatusHelper.Status.JoinMe) {
-                                instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                                instance?.world?.let {
+                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+
+                                }
                             } else {
                                 gateway?.sendPresence(status.toString(), "User location is hidden.", null, status)
                             }

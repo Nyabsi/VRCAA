@@ -17,5 +17,5 @@ data class UserLocation(
     @SerializedName("worldId")
     val worldId: String,
     @SerializedName("world")
-    val world: World
+    val world: World?
 )

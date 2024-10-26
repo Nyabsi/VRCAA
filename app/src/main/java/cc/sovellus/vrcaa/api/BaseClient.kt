@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.api
 
+import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
@@ -100,6 +101,8 @@ open class BaseClient {
                             )
                         )
                     }
+
+                    Log.d("VRCAA", responseBody)
 
                     handleRequest(response, responseBody)
                 }

@@ -40,15 +40,14 @@ class LoginScreenModel(
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    preferences.authToken = result.token
+                    if (result.token.isNotEmpty())
+                        preferences.authToken = result.token
                     preferences.userCredentials = Pair(username.value, password.value)
 
                     if (result.mfaType == VRChatApi.MfaType.NONE)
                     {
-                        api.setToken(result.token)
                         val intent = Intent(context, PipelineService::class.java)
                         context.startService(intent)
-                        launch { CacheManager.buildCache() }
                         navigator.replace(NavigationScreen())
                     } else {
                         navigator.replace(MfaScreen(result.mfaType))

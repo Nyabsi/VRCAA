@@ -34,6 +34,7 @@ object CacheManager {
     }
 
     suspend fun buildCache() {
+
         listeners.forEach { listener ->
             listener?.startCacheRefresh()
         }
@@ -49,10 +50,12 @@ object CacheManager {
         api.getFriends(false).forEach { friend->
             if (friend.location.contains("wrld_")) {
                 val world = api.getWorld(friend.location.split(":")[0])
-                worldList.add(WorldCache(world.id).apply {
-                    name = world.name
-                    thumbnailUrl = world.thumbnailImageUrl
-                })
+                world?.let {
+                    worldList.add(WorldCache(world.id).apply {
+                        name = world.name
+                        thumbnailUrl = world.thumbnailImageUrl
+                    })
+                }
             }
             friendList.add(friend)
         }
@@ -64,9 +67,6 @@ object CacheManager {
         }
 
         FriendManager.setFriends(friendList)
-
-        // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-        // context.sendBroadcast(intent)
 
         App.setLoadingText(R.string.loading_text_recently_visited)
 
@@ -126,17 +126,19 @@ object CacheManager {
         return recentWorldList
     }
 
-    fun addRecent(world: World) {
-        recentWorldList.removeIf { it.id == world.id }
-        recentWorldList.add(
-            0,
-            WorldCache(world.id).apply {
-                name = world.name
-                thumbnailUrl = world.thumbnailImageUrl
+    fun addRecent(world: World?) {
+        world?.let {
+            recentWorldList.removeIf { it.id == world.id }
+            recentWorldList.add(
+                0,
+                WorldCache(world.id).apply {
+                    name = world.name
+                    thumbnailUrl = world.thumbnailImageUrl
+                }
+            )
+            listeners.forEach { listener ->
+                listener?.recentlyVisitedUpdated(recentWorldList)
             }
-        )
-        listeners.forEach { listener ->
-            listener?.recentlyVisitedUpdated(recentWorldList)
         }
     }
 }

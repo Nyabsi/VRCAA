@@ -40,7 +40,6 @@ class MfaScreenModel(
             } else {
                 val intent = Intent(context, PipelineService::class.java)
                 context.startService(intent)
-                launch { CacheManager.buildCache() }
                 preferences.twoFactorToken = result
                 navigator.replace(NavigationScreen())
             }

@@ -87,7 +87,7 @@ class WorldInfoScreen(
     @Composable
     fun MultiChoiceHandler(
         world: World?,
-        instances: MutableList<Pair<String, Instance>>,
+        instances: MutableList<Pair<String, Instance?>>,
         model: WorldInfoScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
@@ -333,7 +333,7 @@ class WorldInfoScreen(
     }
 
     @Composable
-    fun ShowInstances(instances: MutableList<Pair<String, Instance>>, model: WorldInfoScreenModel) {
+    fun ShowInstances(instances: MutableList<Pair<String, Instance?>>, model: WorldInfoScreenModel) {
         val dialogState = remember { mutableStateOf(false) }
 
         if (dialogState.value) {
@@ -363,16 +363,18 @@ class WorldInfoScreen(
                     }
                 }
             } else {
-                items(instances.size) {
+                items(instances.size) { it ->
                     val instance = instances[it]
-                    InstanceItem(
-                        intent = instance.first,
-                        instance = instance.second,
-                        onClick = {
-                            dialogState.value = true
-                            model.selectedInstanceId.value = instance.second.id
-                        }
-                    )
+                    instance.second?.let { instanceObj ->
+                        InstanceItem(
+                            intent = instance.first,
+                            instance = instanceObj,
+                            onClick = {
+                                dialogState.value = true
+                                model.selectedInstanceId.value = instanceObj.id
+                            }
+                        )
+                    }
                 }
             }
         }

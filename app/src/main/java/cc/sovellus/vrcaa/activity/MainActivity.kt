@@ -21,7 +21,6 @@ import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
@@ -64,11 +63,11 @@ class MainActivity : ComponentActivity() {
 
         val preferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
         val token = preferences.authToken
-        val twoFactorToken = preferences.twoFactorToken
 
         api.setToken(token)
 
-        if (token.isNotBlank() && invalidSession == null) {
+
+        if (token.isNotBlank() && invalidSession == null && terminateSession == null) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)
         }
@@ -79,7 +78,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Content(invalidSession == null && terminateSession == null && token.isNotBlank() && twoFactorToken.isNotBlank())
+                    Content(token.isNotBlank() && invalidSession == null && terminateSession == null)
                 }
             }
         }
@@ -87,6 +86,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Content(authenticated: Boolean) {
+
         Navigator(
             screen = if (authenticated) {
                 NavigationScreen()

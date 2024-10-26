@@ -17,7 +17,7 @@ sealed class WorldInfoState {
     data object Loading : WorldInfoState()
     data class Result(
         val world: World,
-        val instances: MutableList<Pair<String, Instance>>
+        val instances: MutableList<Pair<String, Instance?>>
     ) : WorldInfoState()
 }
 
@@ -25,8 +25,8 @@ class WorldInfoScreenModel(
     private val id: String,
 ) : StateScreenModel<WorldInfoState>(WorldInfoState.Init) {
 
-    private lateinit var world: World
-    private val instances: MutableList<Pair<String, Instance>> = ArrayList()
+    private var world: World? = null
+    private val instances: MutableList<Pair<String, Instance?>> = ArrayList()
 
     var currentTabIndex = mutableIntStateOf(0)
     var selectedInstanceId = mutableStateOf("")
@@ -41,18 +41,20 @@ class WorldInfoScreenModel(
             App.setLoadingText(R.string.loading_text_world)
             world = api.getWorld(id)
 
-            val instanceIds = world.instances.map { instance ->
-                instance[0].toString()
-            }
-
-            App.setLoadingText(R.string.loading_text_instances)
-            instanceIds.forEach { id ->
-                api.getInstance("${world.id}:${id}").let { instance ->
-                    instances.add(Pair(id, instance))
+            world?.let {
+                val instanceIds = it.instances.map { instance ->
+                    instance[0].toString()
                 }
-            }
 
-            mutableState.value = WorldInfoState.Result(world, instances)
+                App.setLoadingText(R.string.loading_text_instances)
+                instanceIds.forEach { id ->
+                    api.getInstance("${it.id}:${id}").let { instance ->
+                        instances.add(Pair(id, instance))
+                    }
+                }
+
+                mutableState.value = WorldInfoState.Result(it, instances)
+            }
         }
     }
 
@@ -64,8 +66,11 @@ class WorldInfoScreenModel(
 
     fun removeFavorite(callback: (result: Boolean) -> Unit) {
         screenModelScope.launch {
-            val result = FavoriteManager.removeFavorite("world", world.id)
-            callback(result)
+            world?.let {
+                val result = FavoriteManager.removeFavorite("world", it.id)
+                callback(result)
+            }
+            // callback(false)
         }
     }
 }
