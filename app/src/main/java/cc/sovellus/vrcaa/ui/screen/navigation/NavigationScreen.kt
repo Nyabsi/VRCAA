@@ -605,17 +605,19 @@ class NavigationScreen : Screen {
                     }
                 },
                 bottomBar = {
-                    NavigationBar {
-                        tabs.forEach { tab ->
-                            NavigationBarItem(
-                                selected = tabNavigator.current.key == tab.key,
-                                onClick = {
-                                    pressBackCounter = 0
-                                    tabNavigator.current = tab
-                                },
-                                icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
-                                label = { Text(text = tab.options.title) }
-                            )
+                    if (!model.searchModeActivated.value) {
+                        NavigationBar {
+                            tabs.forEach { tab ->
+                                NavigationBarItem(
+                                    selected = tabNavigator.current.key == tab.key,
+                                    onClick = {
+                                        pressBackCounter = 0
+                                        tabNavigator.current = tab
+                                    },
+                                    icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
+                                    label = { Text(text = tab.options.title) }
+                                )
+                            }
                         }
                     }
                 }
