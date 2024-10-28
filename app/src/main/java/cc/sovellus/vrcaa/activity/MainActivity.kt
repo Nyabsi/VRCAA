@@ -47,10 +47,15 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        val preferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+
         val invalidSession = intent.extras?.getBoolean("INVALID_SESSION")
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
 
         if (invalidSession == true) {
+
+            preferences.authToken = ""
+
             val intent = Intent(this, PipelineService::class.java)
             stopService(intent)
 
@@ -61,11 +66,8 @@ class MainActivity : ComponentActivity() {
             ).show()
         }
 
-        val preferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
         val token = preferences.authToken
-
         api.setToken(token)
-
 
         if (token.isNotBlank() && invalidSession == null && terminateSession == null) {
             val intent = Intent(this, PipelineService::class.java)
