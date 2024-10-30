@@ -11,10 +11,10 @@
         <item>Ei paikalla</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Kaverit paikalla</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
     <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
-    <string name="home_friend_locations">Friend Locations</string>
+    <string name="home_friend_locations">Ystävien Sijainnit</string>
     <!-- Login -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
     <string name="login_label_username">Username or E-Mail Address</string>
@@ -195,7 +195,7 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_no_internet_label">Sulje</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
