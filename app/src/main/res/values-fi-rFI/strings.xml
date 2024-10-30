@@ -11,7 +11,7 @@
         <item>Ei paikalla</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Kaverit paikalla</string>
+    <string name="home_active_friends">Ystävät paikalla</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
     <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
     <string name="home_friend_locations">Ystävien Sijainnit</string>
@@ -28,19 +28,19 @@
     <string name="auth_button_text">Vahvista</string>
     <string name="auth_button_paste">Liitä</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
     <string name="profile_label_biography">Kuvaus</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
-    <string name="profile_user_dropdown_invite_self">Invite myself</string>
+    <string name="profile_user_dropdown_view_avatar">Näytä Hahmo</string>
+    <string name="profile_user_dropdown_invite_self">Kutsu itseni</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
-    <string name="profile_mutual_groups_text">Mutual Groups</string>
+    <string name="profile_user_avatar_private">Hahmo on yksityinen!</string>
+    <string name="profile_user_toast_invite_sent">Kutsu lähetetty! Tarkista pelisi.</string>
+    <string name="profile_mutual_groups_text">Yhteiset Ryhmät</string>
     <!-- Search -->
     <string name="search_text_result">Tulokset kohteelle</string>
     <string name="search_filter_category_worlds">Maailmat</string>
@@ -49,12 +49,12 @@
     <string name="search_filter_category_worlds_count">Määrä</string>
     <string name="search_filter_category_users">Käyttäjät</string>
     <string name="search_filter_category_users_count">Määrä</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Provider</string>
+    <string name="search_filter_category_avatars">Hahmot</string>
+    <string name="search_filter_category_avatars_provider">Tarjoaja</string>
     <string name="search_filter_category_groups">Ryhmät</string>
     <string name="search_filter_category_groups_count">Määrä</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
+    <string name="search_filter_label_count">Määrä</string>
     <string name="search_filter_button_reset">Nollaa</string>
     <string name="search_filter_button_apply">Käytä</string>
     <string-array name="search_selection_options">
@@ -86,14 +86,14 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Kaverit</string>
     <string name="tabs_label_home">Kotisivu</string>
-    <string name="tabs_label_activities">Activities</string>
+    <string name="tabs_label_activities">Aktiviteetit</string>
     <string name="tabs_label_profile">Profiili</string>
     <string name="tabs_label_pictures">Kuvat</string>
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
-    <string name="notification_service_title_online">Friend has came online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
+    <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
+    <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
     <string name="notification_service_title_offline">Kaverisi meni pois :(</string>
     <string name="notification_service_description_offline">Ystäväsi, %1$s on tullut paikalle!</string>
     <string name="notification_service_title_location">Kaveri vaihtoi sijaintia!</string>
@@ -120,7 +120,7 @@
     <string name="avatar_title_content_labels">Sisällön Tunnisteet</string>
     <string name="avatar_text_author">Tekijä: %1$s</string>
     <string name="avatar_text_content_labels_not_found">Hahmo ei ole määritetty sisältövaroituksia.</string>
-    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
+    <string name="avatar_toast_avatar_not_found_message">Hahmo on joko yksityinen tai virheellinen.</string>
     <!-- Feed -->
     <string name="feed_online_label">Paikalla</string>
     <string name="feed_online_text">on tullut paikalle.</string>
@@ -141,9 +141,9 @@
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
     <string name="about_page_translate_title">Avusta Kääntämisessä</string>
     <string name="about_page_battery_optimizations_title">Poista akun optimointi käytöstä</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_battery_optimizations_toast">Akun optimointi on jo pois käytöstä.</string>
     <string name="license_title">Avoimen lähdekoodin lisenssit</string>
-    <string name="about_page_developer_mode">Enable Developer Mode</string>
+    <string name="about_page_developer_mode">Ota kehittäjätila käyttöön</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Istuntosi on vanhentunut, ole hyvä ja kirjaudu uudelleen.</string>
     <string name="api_avatar_select_failed">"Avatarin valinta epäonnistui."</string>
@@ -157,16 +157,16 @@
     <string name="discord_login_button_login">Kirjaudu sisään</string>
     <string name="discord_login_button_verify">Vahvista</string>
     <string name="discord_login_restarted_service_toast">Palvelu uudelleenkäynnistetty voimaan ottoa varten.</string>
-    <string name="discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_label_enable">Aktivoi Rich Presence</string>
+    <string name="discord_login_label_set_webhook">Aseta Webkoukun URL</string>
+    <string name="discord_login_description_set_webhook">Vaadittu maailman pikkukuvalle (Valinnainen)</string>
+    <string name="discord_login_description_enable">Näytä tämänhetkinen tilasi discord:ssa</string>
     <string name="discord_login_label_logout">Kirjaudu ulos</string>
-    <string name="discord_login_description_logout">Revoke your access token</string>
+    <string name="discord_login_description_logout">Peru käyttöoikeustunnus</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
+    <string name="crash_title_text">Sovellus kohtasi kohtalokkaan virheen.</string>
     <string name="crash_button_restart_text">Uudelleenkäynnistä</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
+    <string name="crash_button_copy_log_text">Kopioi Kaatumislogi</string>
     <string name="crash_button_report_text">Ilmoita ongelma</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
@@ -193,72 +193,72 @@
     <string name="group_user_failed_to_fetch_groups">Ryhmien noutaminen epäonnistui, yritä uudelleen.</string>
     <string name="group_user_viewing_groups_username">%1$s:n Ryhmät</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_title">Ei internet-yhteyttä</string>
+    <string name="misc_no_internet_description">Varmista, että olet yhteydessä Internetiin, tämä sovellus ei voi toimia ilman Internet-yhteyttä.</string>
     <string name="misc_no_internet_label">Sulje</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">View Groups</string>
-    <string name="user_dropdown_view_worlds">View Worlds</string>
-    <string name="user_dropdown_view_avatars">View Avatars</string>
-    <string name="user_dropdown_view_favorites">View Favorites</string>
+    <string name="user_dropdown_view_groups">Näytä Ryhmät</string>
+    <string name="user_dropdown_view_worlds">Näytä maailmat</string>
+    <string name="user_dropdown_view_avatars">Näytä Hahmot</string>
+    <string name="user_dropdown_view_favorites">Näytä Suosikit</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
-    <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="profile_edit_dialog_title_status">Tila</string>
+    <string name="profile_edit_dialog_title_status_description">Tilan kuvaus</string>
+    <string name="profile_edit_dialog_title_bio">Kuvaus</string>
+    <string name="profile_edit_dialog_title_bio_links">Sosiaaliset linkit</string>
+    <string name="profile_edit_dialog_button_update">Päivitä</string>
+    <string name="profile_edit_dialog_button_cancel">Peruuta</string>
+    <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
+    <string name="profile_edit_dialog_title_edit_profile">Muokkaa profiilia</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_dialog_title">Oletko varma?</string>
+    <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
+    <string name="logout_dialog_continue">Jatka</string>
+    <string name="logout_dialog_cancel">Peruuta</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
+    <string name="widget_name_loading_text">Taivas on kirkas ystäväni.</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>Maailmat</item>
+        <item>Hahmot</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
+    <string name="favorite_label_add">Lisää suosikkeihin</string>
+    <string name="favorite_label_remove">Poista suosikeista</string>
+    <string name="favorite_toast_favorite_added">%1$s on lisätty suosikkeihin.</string>
+    <string name="favorite_toast_favorite_added_failed">%1$s lisääminen suosikkeihin epäonnistui.</string>
+    <string name="favorite_toast_favorite_removed">%1$s on poistettu suosikeista.</string>
+    <string name="favorite_toast_favorite_removed_failed">%1$s poisto suosikeista epäonnistui.</string>
+    <string name="favorite_dialog_button_add">Lisää</string>
+    <string name="favorite_dialog_button_cancel">Peruuta</string>
+    <string name="favorite_dialog_title">"Lisää Suosikkeihin"</string>
+    <string name="favorite_page_title">Näytetään Suosikit</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
-        <item>Feed</item>
-        <item>Notifications</item>
-        <item>Group Activity</item>
+        <item>Syöte</item>
+        <item>Ilmoitukset</item>
+        <item>Ryhmien aktiivisuus</item>
     </string-array>
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">%1$s:n maailmat</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">Näytetään hahmoja</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="developer_mode_toggle_toast">Käynnistä sovellus uudelleen, jotta muutokset tulevat voimaan.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Loading profile…</string>
-    <string name="loading_text_online_friends">Loading online friends…</string>
-    <string name="loading_text_offline_friends">Loading offline friends…</string>
-    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
+    <string name="loading_text_profile">Ladataan profiilia…</string>
+    <string name="loading_text_online_friends">Ladataan verkossa olevia ystäviä…</string>
+    <string name="loading_text_offline_friends">Ladataan ei-verkossa olevia ystäviä…</string>
+    <string name="loading_text_recently_visited">Ladataan äskettäin vierailluita maailmoista…</string>
+    <string name="loading_text_favorites">Ladataan suosikkeja…</string>
+    <string name="loading_text_worlds">Ladataan maailmoja…</string>
+    <string name="loading_text_users">Ladataan käyttäjiä…</string>
+    <string name="loading_text_avatars">Ladataan hahmoja…</string>
+    <string name="loading_text_groups">Ladataan ryhmiä…</string>
+    <string name="loading_text_user">Ladataan käyttäjää…</string>
+    <string name="loading_text_world">Ladataan maailmaa…</string>
+    <string name="loading_text_avatar">Ladataan hahmoa…</string>
+    <string name="loading_text_group">Ladataan ryhmää…</string>
+    <string name="loading_text_instances">Ladataan instansseja…</string>
 </resources>
