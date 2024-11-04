@@ -129,7 +129,7 @@
     <string name="feed_location_label">GPS</string>
     <string name="feed_location_text">è andato a</string>
     <string name="feed_status_label">Stato</string>
-    <string name="feed_status_text">{0} ha modificato lo stato in {1}</string>
+    <string name="feed_status_text">ha modificato lo stato in</string>
     <string name="feed_added_label">Amico aggiunto</string>
     <string name="feed_added_text">ti ha aggiunto come amico.</string>
     <string name="feed_removed_label">Amico rimosso</string>
