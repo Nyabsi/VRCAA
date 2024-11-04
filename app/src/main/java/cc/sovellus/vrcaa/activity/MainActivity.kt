@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
 
         val invalidSession = intent.extras?.getBoolean("INVALID_SESSION")
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
+        val restartSession = intent.extras?.getBoolean("RESTART_SESSION")
 
         if (invalidSession == true) {
 
@@ -66,10 +67,16 @@ class MainActivity : ComponentActivity() {
             ).show()
         }
 
+        if (restartSession == true) {
+            val intent = Intent(this, PipelineService::class.java)
+            stopService(intent)
+            startService(intent)
+        }
+
         val token = preferences.authToken
         api.setToken(token)
 
-        if (token.isNotBlank() && invalidSession == null && terminateSession == null) {
+        if (token.isNotBlank() && invalidSession == null && terminateSession == null && restartSession == null) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)
         }
