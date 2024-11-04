@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.vrchat
 
-import android.util.Log
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.models.Auth
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
@@ -81,7 +80,7 @@ class VRChatApi : BaseClient() {
                 null
             }
 
-            is Result.ClientExceptionResult -> {
+            is Result.NoInternet -> {
                 listener?.noInternet()
                 null
             }
@@ -128,7 +127,8 @@ class VRChatApi : BaseClient() {
             method = "GET",
             url = "$apiBase/auth/user",
             headers = headers,
-            body = null
+            body = null,
+            bypassIgnore = true
         )
 
         val response = handleRequest(result)
