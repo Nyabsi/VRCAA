@@ -31,6 +31,7 @@
     <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
+    <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Kuvaus</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
