@@ -1,10 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
-import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.api.vrchat.models.User
+import cc.sovellus.vrcaa.manager.CacheManager
 
 sealed class ProfileState {
     data object Init : ProfileState()

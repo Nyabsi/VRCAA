@@ -1,10 +1,8 @@
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.extension.milliseconds
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.util.UUID
-import kotlin.math.abs
 
 
 object FeedManager {

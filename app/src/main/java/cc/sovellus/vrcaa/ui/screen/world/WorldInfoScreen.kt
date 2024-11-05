@@ -363,7 +363,7 @@ class WorldInfoScreen(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(instances.size) { it ->
+                items(instances.size) {
                     val instance = instances[it]
                     instance.second?.let { instanceObj ->
                         InstanceItem(

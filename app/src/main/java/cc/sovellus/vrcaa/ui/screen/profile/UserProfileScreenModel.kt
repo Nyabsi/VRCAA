@@ -11,7 +11,6 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.launch
 
 sealed class UserProfileState {

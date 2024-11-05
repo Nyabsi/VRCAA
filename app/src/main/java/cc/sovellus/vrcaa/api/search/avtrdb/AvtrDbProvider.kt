@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.search.avtrdb
 
-import android.util.Log
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse

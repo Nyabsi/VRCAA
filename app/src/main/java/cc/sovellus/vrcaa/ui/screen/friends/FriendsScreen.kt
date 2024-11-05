@@ -48,7 +48,6 @@ class FriendsScreen : Screen {
 
     override val key = uniqueScreenKey
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
