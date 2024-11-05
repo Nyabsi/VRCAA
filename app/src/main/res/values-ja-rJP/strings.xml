@@ -31,6 +31,7 @@
     <string name="main_search_placeholder">ワールド・ユーザー・アバターの検索…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">現在のインスタンス</string>
+    <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">プロフィール</string>
     <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
     <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
@@ -40,7 +41,7 @@
     <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
     <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
     <string name="profile_user_toast_invite_sent">インバイトを送信しました、ゲーム内で確認してください。</string>
-    <string name="profile_mutual_groups_text">共有するグループ</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
     <string name="search_filter_category_worlds">ワールド</string>
@@ -86,7 +87,7 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">フレンド</string>
     <string name="tabs_label_home">ホーム</string>
-    <string name="tabs_label_activities">アクティビティ</string>
+    <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">プロフィール</string>
     <string name="tabs_label_pictures">ピクチャー</string>
     <string name="tabs_label_settings">設定</string>
@@ -245,7 +246,7 @@
     <!-- Avatars -->
     <string name="avatars_page_title">アバターを表示</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">変更を反映する為に、アプリを再起動してください。</string>
+    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
     <!-- Loading Texts -->
     <string name="loading_text_profile">プロファイルを読み込み中。。。</string>
     <string name="loading_text_online_friends">オンラインのフレンドを読み込み中。。。</string>
