@@ -155,30 +155,32 @@ class AboutScreen : Screen {
                             )
                         )
                     }
-                    item {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title)) },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    val manager = getSystemService(context, PowerManager::class.java)
-                                    manager?.let { pm ->
-                                        if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
-                                            val intent = Intent(
-                                                Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                                                Uri.parse("package:${context.packageName}")
-                                            )
-                                            context.startActivity(intent)
-                                        } else {
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.about_page_battery_optimizations_toast),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                    if (BuildConfig.FLAVOR != "gplay") {
+                        item {
+                            ListItem(
+                                headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title)) },
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        val manager = getSystemService(context, PowerManager::class.java)
+                                        manager?.let { pm ->
+                                            if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
+                                                val intent = Intent(
+                                                    Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                                                    Uri.parse("package:${context.packageName}")
+                                                )
+                                                context.startActivity(intent)
+                                            } else {
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.about_page_battery_optimizations_toast),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                         }
                                     }
-                                }
+                                )
                             )
-                        )
+                        }
                     }
                     if (App.isDeveloperModeEnabled()) {
                         item {

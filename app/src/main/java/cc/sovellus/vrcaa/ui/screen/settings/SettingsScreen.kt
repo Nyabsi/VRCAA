@@ -45,6 +45,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.developerMode
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
@@ -138,47 +139,50 @@ class SettingsScreen : Screen {
                     )
                 }
             }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.about_page_developer_mode)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Construction,
-                            contentDescription = null
-                        )
-                    },
-                    trailingContent = {
-                        Switch(
-                            checked = model.developerMode.value,
-                            onCheckedChange = { state ->
-                                model.developerMode.value = state
-                                preferences.developerMode = state
 
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.developer_mode_toggle_toast),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+            if (BuildConfig.FLAVOR != "gplay") {
+                item {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.about_page_developer_mode)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Outlined.Construction,
+                                contentDescription = null
                             )
-                        )
-                    },
-                    modifier = Modifier.clickable {
-                        model.developerMode.value = !model.developerMode.value
-                        preferences.developerMode = model.developerMode.value
+                        },
+                        trailingContent = {
+                            Switch(
+                                checked = model.developerMode.value,
+                                onCheckedChange = { state ->
+                                    model.developerMode.value = state
+                                    preferences.developerMode = state
 
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.developer_mode_toggle_toast),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                )
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.developer_mode_toggle_toast),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                    uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                                )
+                            )
+                        },
+                        modifier = Modifier.clickable {
+                            model.developerMode.value = !model.developerMode.value
+                            preferences.developerMode = model.developerMode.value
+
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.developer_mode_toggle_toast),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    )
+                }
             }
             item {
                 ListItem(

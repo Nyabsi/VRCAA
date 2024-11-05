@@ -61,6 +61,9 @@ android {
             isDefault = true
             dimension = "type"
         }
+        create("gplay") {
+            dimension = "type"
+        }
         create("quest") {
             dimension = "type"
         }
