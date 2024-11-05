@@ -95,8 +95,6 @@ class UserProfileScreenModel(
         screenModelScope.launch {
             profile?.let {
                 val result = FavoriteManager.removeFavorite("friend", it.id)
-                if (result)
-                    FriendManager.setIsFavorite(it.id, false)
                 callback(result)
             }
         }

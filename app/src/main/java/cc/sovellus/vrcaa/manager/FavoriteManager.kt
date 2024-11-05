@@ -66,7 +66,6 @@ object FavoriteManager {
         friendGroups?.forEach { group ->
             val friends = api.getFavorites("friend", group.name)
             friends.forEach { friend ->
-                FriendManager.setIsFavorite(friend.favoriteId, true)
                 friendList[group.name]?.add(FavoriteMetadata(id = friend.favoriteId, favoriteId = friend.id))
             }
         }

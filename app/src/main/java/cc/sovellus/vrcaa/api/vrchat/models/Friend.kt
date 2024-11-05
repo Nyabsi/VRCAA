@@ -45,7 +45,5 @@ data class Friend(
     @SerializedName("tags")
     var tags: List<String> = listOf(),
     @SerializedName("userIcon")
-    var userIcon: String = "",
-    @Transient
-    var isFavorite: Boolean = false
+    var userIcon: String = ""
 )

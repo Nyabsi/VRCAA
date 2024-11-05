@@ -40,6 +40,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.helper.StatusHelper
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 
@@ -114,9 +115,9 @@ class FriendsScreen : Screen {
     fun ShowFriendsFavorite(
         friends: State<List<Friend>>
     ) {
-        val favoriteFriends = friends.value.filter { it.isFavorite && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val favoriteFriendsInInstances = friends.value.filter { it.isFavorite && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val favoriteFriendsOffline = friends.value.filter { it.isFavorite && StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline && it.location == "offline" }
+        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline && it.location == "offline" }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
             Column(
@@ -226,8 +227,8 @@ class FriendsScreen : Screen {
     fun ShowFriends(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { !it.isFavorite && it.location != "offline" && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val filteredFriendsInInstances = friends.value.filter { !it.isFavorite && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location != "offline" && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+        val filteredFriendsInInstances = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
 
         if (filteredFriends.isEmpty() && filteredFriendsInInstances.isEmpty()) {
             Column(

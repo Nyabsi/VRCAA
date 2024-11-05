@@ -92,16 +92,4 @@ object FriendManager {
     fun getFriends(): MutableList<Friend> {
         return friends
     }
-
-    fun setIsFavorite(userId: String, isFavorite: Boolean) {
-        val it = friends.find { it.id == userId }
-        it?.let {
-            it.isFavorite = isFavorite
-            friends.set(friends.indexOf(it), it)
-        }
-
-        friendListeners.map {
-            it.onUpdateFriends(friends)
-        }
-    }
 }

@@ -240,7 +240,6 @@ class UserProfileScreen(
                             onDismiss = { favoriteDialogShown = false },
                             onConfirmation = { result ->
                                 if (result) {
-                                    FriendManager.setIsFavorite(profile.id, true)
                                     Toast.makeText(
                                         context,
                                         context.getString(R.string.favorite_toast_favorite_added).format(profile.displayName),
