@@ -14,20 +14,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.VRChatApi.MfaType
 import cc.sovellus.vrcaa.extension.authToken
+import cc.sovellus.vrcaa.extension.twoFactorToken
+import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import cc.sovellus.vrcaa.ui.theme.Theme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), CoroutineScope {
+
+    override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,32 +64,42 @@ class MainActivity : ComponentActivity() {
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
         val restartSession = intent.extras?.getBoolean("RESTART_SESSION")
 
+        val serviceIntent = Intent(this, PipelineService::class.java)
+
         if (invalidSession == true) {
 
             preferences.authToken = ""
+            stopService(serviceIntent)
 
-            val intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
+            launch {
+                val result = api.getToken(preferences.userCredentials.first ?: "", preferences.userCredentials.second ?: "", preferences.twoFactorToken)
 
-            Toast.makeText(
-                this,
-                getString(R.string.api_session_has_expired_text),
-                Toast.LENGTH_LONG
-            ).show()
+                result?.let {
+                    if (result.mfaType == MfaType.NONE)
+                    {
+                        preferences.authToken = result.token
+                        startService(serviceIntent)
+                    } else {
+                        Toast.makeText(
+                            App.getContext(),
+                            getString(R.string.api_session_has_expired_text),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
         }
 
         if (restartSession == true) {
-            val intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-            startService(intent)
+            stopService(serviceIntent)
+            startService(serviceIntent)
         }
 
         val token = preferences.authToken
         api.setToken(token)
 
         if (token.isNotBlank() && invalidSession == null && terminateSession == null && restartSession == null) {
-            val intent = Intent(this, PipelineService::class.java)
-            startService(intent)
+            startService(serviceIntent)
         }
 
         setContent {
