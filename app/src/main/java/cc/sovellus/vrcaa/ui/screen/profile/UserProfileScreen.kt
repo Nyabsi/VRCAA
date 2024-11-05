@@ -299,6 +299,25 @@ class UserProfileScreen(
                             }
                         }
 
+                        if (profile.note.isNotEmpty()) {
+                            item {
+                                Column(
+                                    verticalArrangement = Arrangement.SpaceBetween,
+                                    horizontalAlignment = Alignment.Start
+                                ) {
+                                    ElevatedCard(
+                                        elevation = CardDefaults.cardElevation(
+                                            defaultElevation = 6.dp
+                                        ),
+                                        modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp),
+                                    ) {
+                                        SubHeader(title = stringResource(R.string.profile_label_note))
+                                        Description(text = profile.note)
+                                    }
+                                }
+                            }
+                        }
+
                         item {
                             Column(
                                 verticalArrangement = Arrangement.SpaceBetween,
