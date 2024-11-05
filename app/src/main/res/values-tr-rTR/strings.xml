@@ -31,6 +31,7 @@
     <string name="main_search_placeholder">Dünyalar, kullanıcılar ve avatarları bul…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Şu an ki konum</string>
+    <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Hakkımda</string>
     <string name="profile_text_no_biography">Açıklama belirtilmedi.</string>
     <string name="profile_user_dropdown_manage_notifications">Bildirimleri düzenle</string>

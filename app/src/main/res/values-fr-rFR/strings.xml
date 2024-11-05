@@ -31,6 +31,7 @@
     <string name="main_search_placeholder">Rechercher des mondes, utilisateurs ou avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Emplacement actuel</string>
+    <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_text_no_biography">Aucune description spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
