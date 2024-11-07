@@ -183,38 +183,40 @@ class UserProfileScreen(
                                                 text = { Text(stringResource(R.string.profile_user_dropdown_invite_self)) }
                                             )
                                         }
-                                        if (FavoriteManager.isFavorite("friend", profile.id)) {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    model.removeFavorite { result ->
-                                                        if (result) {
-                                                            Toast.makeText(
-                                                                context,
-                                                                context.getString(R.string.favorite_toast_favorite_removed)
-                                                                    .format(profile.displayName),
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        } else {
-                                                            Toast.makeText(
-                                                                context,
-                                                                context.getString(R.string.favorite_toast_favorite_removed_failed)
-                                                                    .format(profile.displayName),
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
+                                        if (profile.isFriend) {
+                                            if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        model.removeFavorite { result ->
+                                                            if (result) {
+                                                                Toast.makeText(
+                                                                    context,
+                                                                    context.getString(R.string.favorite_toast_favorite_removed)
+                                                                        .format(profile.displayName),
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            } else {
+                                                                Toast.makeText(
+                                                                    context,
+                                                                    context.getString(R.string.favorite_toast_favorite_removed_failed)
+                                                                        .format(profile.displayName),
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            }
                                                         }
-                                                    }
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.favorite_label_remove)) }
-                                            )
-                                        } else {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    favoriteDialogShown = true
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.favorite_label_add)) }
-                                            )
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.favorite_label_remove)) }
+                                                )
+                                            } else {
+                                                DropdownMenuItem(
+                                                    onClick = {
+                                                        favoriteDialogShown = true
+                                                        isMenuExpanded = false
+                                                    },
+                                                    text = { Text(stringResource(R.string.favorite_label_add)) }
+                                                )
+                                            }
                                         }
                                     }
                                 }
