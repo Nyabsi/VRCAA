@@ -126,19 +126,17 @@ object CacheManager {
         return recentWorldList
     }
 
-    fun addRecent(world: World?) {
-        world?.let {
-            recentWorldList.removeIf { it.id == world.id }
-            recentWorldList.add(
-                0,
-                WorldCache(world.id).apply {
-                    name = world.name
-                    thumbnailUrl = world.thumbnailImageUrl
-                }
-            )
-            listeners.forEach { listener ->
-                listener?.recentlyVisitedUpdated(recentWorldList)
+    fun addRecent(world: World) {
+        recentWorldList.removeIf { it.id == world.id }
+        recentWorldList.add(
+            0,
+            WorldCache(world.id).apply {
+                name = world.name
+                thumbnailUrl = world.thumbnailImageUrl
             }
+        )
+        listeners.forEach { listener ->
+            listener?.recentlyVisitedUpdated(recentWorldList)
         }
     }
 }

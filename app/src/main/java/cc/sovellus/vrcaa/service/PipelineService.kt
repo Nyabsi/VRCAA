@@ -239,15 +239,17 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    CacheManager.addRecent(user.world)
+                    if (user.world != null && user.location != "offline") {
+                        CacheManager.addRecent(user.world)
 
-                    if (preferences.richPresenceEnabled) {
-                        val status = StatusHelper.getStatusFromString(user.user.status)
-                        val location = LocationHelper.parseLocationInfo(user.location)
-                        launch {
-                            val instance = api.getInstance(user.location)
-                            instance?.let {
-                                instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                        if (preferences.richPresenceEnabled) {
+                            val status = StatusHelper.getStatusFromString(user.user.status)
+                            val location = LocationHelper.parseLocationInfo(user.location)
+                            launch {
+                                val instance = api.getInstance(user.location)
+                                instance?.let {
+                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                                }
                             }
                         }
                     }
