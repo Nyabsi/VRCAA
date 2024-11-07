@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -311,7 +312,9 @@ class UserProfileScreen(
                                         elevation = CardDefaults.cardElevation(
                                             defaultElevation = 6.dp
                                         ),
-                                        modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp),
+                                        modifier = Modifier
+                                            .padding(top = 16.dp)
+                                            .defaultMinSize(minHeight = 80.dp),
                                     ) {
                                         SubHeader(title = stringResource(R.string.profile_label_note))
                                         Description(text = profile.note)
@@ -329,7 +332,9 @@ class UserProfileScreen(
                                     elevation = CardDefaults.cardElevation(
                                         defaultElevation = 6.dp
                                     ),
-                                    modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp),
+                                    modifier = Modifier
+                                        .padding(top = 16.dp)
+                                        .defaultMinSize(minHeight = 80.dp),
                                 ) {
                                     SubHeader(title = stringResource(R.string.profile_label_biography))
                                     Description(text = profile.bio)
@@ -369,7 +374,7 @@ class UserProfileScreen(
 
                         item {
                             val nonMutualGroups = groups.filter { !it.mutualGroup }
-                            if (nonMutualGroups.isNotEmpty()) {
+                            if (groups.isNotEmpty()) {
                                 Column(
                                     verticalArrangement = Arrangement.SpaceBetween,
                                     horizontalAlignment = Alignment.Start,
@@ -428,6 +433,10 @@ class UserProfileScreen(
                                     }
                                 }
                             }
+                        }
+
+                        item {
+                            Spacer(modifier = Modifier.padding(16.dp))
                         }
                     }
                 }
