@@ -87,6 +87,7 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">フレンド</string>
     <string name="tabs_label_home">ホーム</string>
+    <string name="tabs_label_favorites">Favorites</string>
     <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">プロフィール</string>
     <string name="tabs_label_pictures">ピクチャー</string>
