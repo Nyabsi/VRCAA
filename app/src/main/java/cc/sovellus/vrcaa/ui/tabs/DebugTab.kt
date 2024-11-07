@@ -22,7 +22,7 @@ object DebugTab : Tab {
 
             return remember {
                 TabOptions(
-                    index = 5u,
+                    index = 6u,
                     title = tabName,
                     icon = icon
                 )

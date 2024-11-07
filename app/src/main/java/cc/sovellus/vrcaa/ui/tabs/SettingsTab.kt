@@ -22,7 +22,7 @@ object SettingsTab : Tab {
 
             return remember {
                 TabOptions(
-                    index = 4u,
+                    index = 5u,
                     title = tabName,
                     icon = icon
                 )

@@ -87,6 +87,7 @@ import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.ActivitiesTab
 import cc.sovellus.vrcaa.ui.tabs.DebugTab
+import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
@@ -122,7 +123,7 @@ class NavigationScreen : Screen {
         val tabs = if (model.developerMode.value)
             arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab, DebugTab)
         else
-            arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab)
+            arrayListOf(HomeTab, FriendsTab, FavoritesTab, ActivitiesTab, ProfileTab, SettingsTab)
 
         TabNavigator(
             HomeTab,
@@ -334,19 +335,21 @@ class NavigationScreen : Screen {
                                                     },
                                                     text = { Text(stringResource(R.string.user_dropdown_view_avatars)) }
                                                 )
-                                                DropdownMenuItem(
-                                                    onClick = {
-                                                        navigator.push(FavoritesScreen())
-                                                        isMenuExpanded = false
-                                                    },
-                                                    text = { Text(stringResource(R.string.user_dropdown_view_favorites)) }
-                                                )
                                             }
                                         }
                                     }
                                 },
                                 title = { Text(
                                     text = stringResource(id = R.string.tabs_label_profile),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                ) }
+                            )
+                        }
+                        FavoritesTab.options.index -> {
+                            TopAppBar(
+                                title = { Text(
+                                    text = stringResource(id = R.string.tabs_label_favorites),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                                 ) }

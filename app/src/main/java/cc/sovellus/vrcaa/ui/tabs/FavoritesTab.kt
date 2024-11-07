@@ -1,7 +1,7 @@
 package cc.sovellus.vrcaa.ui.tabs
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -10,19 +10,19 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.screen.activities.ActivitiesScreen
+import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
 
-object ActivitiesTab : Tab {
+object FavoritesTab : Tab {
 
     override val options: TabOptions
         @Composable
         get() {
-            val icon = rememberVectorPainter(Icons.Filled.BarChart)
-            val tabName = stringResource(R.string.tabs_label_activities)
+            val icon = rememberVectorPainter(Icons.Filled.Star)
+            val tabName = stringResource(R.string.tabs_label_favorites)
 
             return remember {
                 TabOptions(
-                    index = 3u,
+                    index = 2u,
                     title = tabName,
                     icon = icon
                 )
@@ -31,8 +31,8 @@ object ActivitiesTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(ActivitiesScreen())
+        Navigator(FavoritesScreen())
     }
 
-    private fun readResolve(): Any = ActivitiesTab
+    private fun readResolve(): Any = FavoritesTab
 }
