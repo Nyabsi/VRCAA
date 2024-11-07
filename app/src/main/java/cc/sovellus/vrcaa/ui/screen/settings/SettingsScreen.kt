@@ -140,7 +140,7 @@ class SettingsScreen : Screen {
                 }
             }
 
-            if (BuildConfig.FLAVOR != "gplay") {
+            if (BuildConfig.DEBUG) {
                 item {
                     ListItem(
                         headlineContent = { Text(stringResource(R.string.about_page_developer_mode)) },
