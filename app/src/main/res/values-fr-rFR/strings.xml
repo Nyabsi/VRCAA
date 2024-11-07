@@ -87,6 +87,7 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Amis</string>
     <string name="tabs_label_home">Domicile</string>
+    <string name="tabs_label_favorites">Favorites</string>
     <string name="tabs_label_activities">Activités</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
