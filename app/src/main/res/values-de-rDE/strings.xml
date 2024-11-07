@@ -87,6 +87,7 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Freunde</string>
     <string name="tabs_label_home">Startseite</string>
+    <string name="tabs_label_favorites">Favorites</string>
     <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Pictures</string>
