@@ -135,13 +135,13 @@ class VRChatApi : BaseClient() {
 
         response?.let {
 
+            if (response.size == 1)
+                return AccountInfo(MfaType.NONE, "")
+
             val body = response[0]
             val cookies = response[1]
 
             api.setToken(cookies)
-
-            if (!body.contains("requiresTwoFactorAuth"))
-                return AccountInfo(MfaType.NONE, cookies)
 
             if (body.contains("emailOtp")) {
                 return AccountInfo(MfaType.EMAIL_OTP, cookies)
