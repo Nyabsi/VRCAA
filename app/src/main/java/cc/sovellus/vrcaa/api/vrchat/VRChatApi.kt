@@ -30,6 +30,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.World
 import cc.sovellus.vrcaa.api.vrchat.models.Worlds
 import cc.sovellus.vrcaa.helper.MathHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.CacheManager
 import com.google.gson.Gson
 import okhttp3.Headers
 import java.net.URLEncoder
@@ -594,6 +595,31 @@ class VRChatApi : BaseClient() {
             url = "$apiBase/favorites/$id",
             headers = headers,
             body = null
+        )
+
+        return result is Result.Succeeded
+    }
+
+    suspend fun updateFavorite(
+        type: String,
+        tag: String,
+        displayName: String,
+        visibility: String
+    ): Boolean {
+
+        val headers = Headers.Builder()
+
+        headers["User-Agent"] = userAgent
+
+        val body = "{\"displayName\":\"$displayName\",\"visibility\":\"$visibility\"}"
+
+        val user = CacheManager.getProfile().id
+
+        val result = doRequest(
+            method = "PUT",
+            url = "$apiBase/favorite/group/$type/$tag/$user",
+            headers = headers,
+            body = body
         )
 
         return result is Result.Succeeded

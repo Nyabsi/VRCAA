@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.favorites
 
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.manager.FavoriteManager
@@ -18,6 +19,8 @@ class FavoritesScreenModel : ScreenModel {
     var avatarList = avatarListFlow.asStateFlow()
 
     var currentIndex = mutableIntStateOf(0)
+    var currentSelectedGroup = mutableStateOf("")
+    var editDialogShown = mutableStateOf(false)
 
     init {
         fetchContent()

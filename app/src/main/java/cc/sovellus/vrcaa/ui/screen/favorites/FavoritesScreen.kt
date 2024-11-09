@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.favorites
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +16,6 @@ import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
@@ -27,14 +27,17 @@ import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
+import cc.sovellus.vrcaa.ui.components.dialog.FavoriteEditDialog
+import cc.sovellus.vrcaa.ui.components.layout.FavoriteHorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
@@ -51,6 +54,28 @@ class FavoritesScreen : Screen {
 
         val options = stringArrayResource(R.array.favorites_selection_options)
         val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person)
+
+        if (model.editDialogShown.value)
+        {
+            FavoriteEditDialog(model.currentSelectedGroup.value,
+                onDismiss = {
+                    Toast.makeText(
+                        App.getContext(),
+                        App.getContext().getString(R.string.favorite_edit_discarded),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    model.editDialogShown.value = false
+                },
+                onConfirmation = {
+                    Toast.makeText(
+                        App.getContext(),
+                        App.getContext().getString(R.string.favorite_edit_applied),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    model.editDialogShown.value = false
+                }
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -98,8 +123,8 @@ class FavoritesScreen : Screen {
             ) {
                 item {
                     when (model.currentIndex.intValue) {
-                        0 -> ShowWorlds(worldList)
-                        1 -> ShowAvatars(avatarList)
+                        0 -> ShowWorlds(model, worldList)
+                        1 -> ShowAvatars(model, avatarList)
                     }
                 }
             }
@@ -107,14 +132,21 @@ class FavoritesScreen : Screen {
     }
 
     @Composable
-    fun ShowWorlds(worldList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>) {
+    fun ShowWorlds(
+        model: FavoritesScreenModel,
+        worldList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>
+    ) {
         val navigator = LocalNavigator.currentOrThrow
 
         val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
         sortedWorldList.forEach { item ->
             if (item.value.size > 0) {
-                HorizontalRow(
-                    title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
+                FavoriteHorizontalRow(
+                    title = FavoriteManager.getDisplayNameFromTag(item.key),
+                    onEdit = {
+                        model.currentSelectedGroup.value = item.key
+                        model.editDialogShown.value = true
+                    }
                 ) {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
@@ -131,14 +163,21 @@ class FavoritesScreen : Screen {
     }
 
     @Composable
-    fun ShowAvatars(avatarList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>) {
+    fun ShowAvatars(
+        model: FavoritesScreenModel,
+        avatarList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>
+    ) {
         val navigator = LocalNavigator.currentOrThrow
 
         val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
         sortedAvatarList.forEach { item ->
             if (item.value.size > 0) {
-                HorizontalRow(
-                    title = FavoriteManager.getDisplayNameFromTag(item.key) ?: item.key
+                FavoriteHorizontalRow(
+                    title = FavoriteManager.getDisplayNameFromTag(item.key),
+                    onEdit = {
+                        model.currentSelectedGroup.value = item.key
+                        model.editDialogShown.value = true
+                    }
                 ) {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {

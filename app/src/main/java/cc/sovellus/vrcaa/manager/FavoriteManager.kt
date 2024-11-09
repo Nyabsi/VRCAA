@@ -15,13 +15,21 @@ object FavoriteManager {
         val thumbnailUrl: String = ""
     )
 
+    data class FavoriteGroupMetadata(
+        val id: String,
+        val name: String,
+        val type: String,
+        val displayName: String,
+        val visibility: String
+    )
+
     private var favoriteLimits: FavoriteLimits? = null
 
     private var worldList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
     private var avatarList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
     private var friendList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
 
-    private var tagToDisplayNameMap = mutableStateMapOf<String, String>()
+    private var tagToGroupMetadataMap = mutableStateMapOf<String, FavoriteGroupMetadata>()
 
     suspend fun refresh()
     {
@@ -47,7 +55,7 @@ object FavoriteManager {
             worlds.forEach { favorite ->
                 worldList[group.name]?.add(FavoriteMetadata(favorite.id, favorite.favoriteId, favorite.name, favorite.thumbnailImageUrl))
             }
-            tagToDisplayNameMap[group.name] = group.displayName
+            tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(group.id, group.name, group.type, group.displayName, group.visibility)
         }
 
         val avatarGroups = api.getFavoriteGroups("avatar")
@@ -57,7 +65,7 @@ object FavoriteManager {
             avatars.forEach { favorite ->
                 avatarList[group.name]?.add(FavoriteMetadata(favorite.id, favorite.favoriteId, favorite.name, favorite.thumbnailImageUrl))
             }
-            tagToDisplayNameMap[group.name] = group.displayName
+            tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(group.id, group.name, group.type, group.displayName, group.visibility)
         }
 
         val friendGroups = api.getFavoriteGroups("friend")
@@ -82,8 +90,19 @@ object FavoriteManager {
         return friendList
     }
 
-    fun getDisplayNameFromTag(tag: String): String? {
-        return tagToDisplayNameMap[tag]
+    fun getDisplayNameFromTag(tag: String): String {
+        return tagToGroupMetadataMap[tag]?.displayName ?: tagToGroupMetadataMap[tag]?.name ?: "???"
+    }
+
+    fun getGroupMetadata(tag: String): FavoriteGroupMetadata? {
+        return tagToGroupMetadataMap[tag]
+    }
+
+    suspend fun updateGroupMetadata(tag: String, metadata: FavoriteGroupMetadata): Boolean {
+        val tmp = tagToGroupMetadataMap
+        tagToGroupMetadataMap[tag] = metadata
+        tagToGroupMetadataMap = tmp
+        return api.updateFavorite(metadata.type, metadata.name, metadata.displayName, metadata.visibility)
     }
 
     // it's the 21th century, and we have computers faster than super computers in our pockets.
