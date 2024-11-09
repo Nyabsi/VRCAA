@@ -48,6 +48,7 @@ fun ProfileEditDialog(
     val id = remember { mutableStateOf("") }
     val bioLinks = remember { mutableStateListOf("", "", "") }
     val options = listOf("join me", "active", "ask me", "busy")
+    val optionFormat = mapOf("join me" to "Join Me", "active" to "Active", "ask me" to "Ask Me", "busy" to "Busy")
 
     LaunchedEffect(Unit) {
         user = CacheManager.getProfile()
@@ -66,6 +67,8 @@ fun ProfileEditDialog(
     }
 
     AlertDialog(
+        modifier = Modifier.padding(16.dp),
+
         title = {
             Text(text = title)
         },
@@ -86,7 +89,7 @@ fun ProfileEditDialog(
                     )
                 }
                 item {
-                    ComboInput(options = options, selection = status)
+                    ComboInput(options = options, selection = status, readableOptions = optionFormat)
                 }
                 item {
                     Text(
