@@ -236,6 +236,12 @@
     <string name="favorite_dialog_button_cancel">Cancel</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
     <string name="favorite_page_title">Showing Favorites</string>
+    <string name="favorite_edit_title">Editing %1$s</string>
+    <string name="favorite_edit_display_name">Display Name</string>
+    <string name="favorite_edit_visibility">Visibility</string>
+    <string name="favorite_edit_discarded">Changes were discarded.</string>
+    <string name="favorite_edit_applied">Changes have been applied.</string>
+    <string name="favorite_dialog_button_edit">Edit</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>Feed</item>
