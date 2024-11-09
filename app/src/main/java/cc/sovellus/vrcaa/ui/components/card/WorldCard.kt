@@ -89,8 +89,7 @@ fun WorldCard(
                     Text(
                         text = world.name,
                         modifier = Modifier
-                            .padding(start = 8.dp, top = 4.dp)
-                            .weight(0.50f),
+                            .padding(start = 8.dp, top = 4.dp),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Left,
@@ -100,7 +99,6 @@ fun WorldCard(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.50f)
                             .padding(end = 4.dp), horizontalArrangement = Arrangement.End
                     ) {
                         if (foundWindows) {
