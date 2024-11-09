@@ -151,7 +151,7 @@ class FavoritesScreen : Screen {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
-                                navigator.push(WorldInfoScreen(it.id))
+                                navigator.parent?.parent?.push(WorldInfoScreen(it.id))
                             }
                         }
                     }
@@ -182,7 +182,7 @@ class FavoritesScreen : Screen {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
-                                navigator.push(AvatarScreen(it.id))
+                                navigator.parent?.parent?.push(AvatarScreen(it.id))
                             }
                         }
                     }
