@@ -115,6 +115,7 @@
     <string name="tabs_label_home">Home</string>
     <string name="tabs_label_favorites">Favorites</string>
     <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profile</string>
     <string name="tabs_label_pictures">Pictures</string>
     <string name="tabs_label_settings">Settings</string>
