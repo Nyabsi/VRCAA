@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.ui.screen.about
 
 import android.annotation.SuppressLint
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -23,7 +24,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -36,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getSystemService
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -43,6 +48,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.extension.crashAnalytics
 import cc.sovellus.vrcaa.ui.screen.licenses.LicensesScreen
 
 class AboutScreen : Screen {
@@ -56,6 +62,9 @@ class AboutScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
+
+        val preferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+        val model = navigator.rememberNavigatorScreenModel { AboutScreenModel(preferences.crashAnalytics) }
 
         Scaffold(
             topBar = {
@@ -143,6 +152,36 @@ class AboutScreen : Screen {
                         HorizontalDivider(
                             color = Color.Gray,
                             thickness = 0.5.dp
+                        )
+                    }
+                    item {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.about_page_crash_analytics)) },
+                            trailingContent = {
+                                Switch(
+                                    checked = model.crashAnalytics.value,
+                                    onCheckedChange = { state ->
+                                        model.crashAnalytics.value = state
+                                        preferences.crashAnalytics = state
+
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.developer_mode_toggle_toast),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    },
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                        uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    )
+                                )
+                            },
+                            modifier = Modifier.clickable {
+                                model.crashAnalytics.value = !model.crashAnalytics.value
+                                preferences.crashAnalytics = model.crashAnalytics.value
+                            }
                         )
                     }
                     item {

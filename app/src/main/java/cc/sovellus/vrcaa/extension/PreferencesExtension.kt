@@ -83,3 +83,7 @@ internal var SharedPreferences.avatarProvider: String
 internal var SharedPreferences.developerMode: Boolean
     get() = getBoolean("isDeveloperModeEnabled", false)
     set(it) = edit { putBoolean("isDeveloperModeEnabled", it) }
+
+internal var SharedPreferences.crashAnalytics: Boolean
+    get() = getBoolean("crashAnalytics", true)
+    set(it) = edit { putBoolean("crashAnalytics", it) }

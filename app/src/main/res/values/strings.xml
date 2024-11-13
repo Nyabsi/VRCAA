@@ -181,6 +181,7 @@
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
     <string name="license_title">Open Source Licenses</string>
     <string name="about_page_developer_mode">Enable Developer Mode</string>
+    <string name="about_page_crash_analytics">Enable Crash Analytics</string>
 
     <!-- API -->
 

@@ -1,7 +1,11 @@
+import org.jetbrains.kotlin.ir.backend.js.compile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.mikepenz.aboutlibraries.plugin") version "10.10.0"
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -12,8 +16,8 @@ android {
         applicationId = "cc.sovellus.vrcaa"
         minSdk = 27
         targetSdk = 35
-        versionCode = 200100
-        versionName = "2.1.0"
+        versionCode = 200101
+        versionName = "2.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -138,4 +142,7 @@ dependencies {
     implementation ("androidx.glance:glance-appwidget:1.1.1")
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 }
