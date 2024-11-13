@@ -81,11 +81,10 @@ import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
-import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
-import cc.sovellus.vrcaa.ui.tabs.ActivitiesTab
+import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.DebugTab
 import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
@@ -121,9 +120,9 @@ class NavigationScreen : Screen {
         }
 
         val tabs = if (model.developerMode.value)
-            arrayListOf(HomeTab, FriendsTab, ActivitiesTab, ProfileTab, SettingsTab, DebugTab)
+            arrayListOf(HomeTab, FriendsTab, FeedTab, ProfileTab, SettingsTab, DebugTab)
         else
-            arrayListOf(HomeTab, FriendsTab, FavoritesTab, ActivitiesTab, ProfileTab, SettingsTab)
+            arrayListOf(HomeTab, FriendsTab, FavoritesTab, FeedTab, ProfileTab, SettingsTab)
 
         TabNavigator(
             HomeTab,
@@ -355,10 +354,10 @@ class NavigationScreen : Screen {
                                 ) }
                             )
                         }
-                        ActivitiesTab.options.index -> {
+                        FeedTab.options.index -> {
                             TopAppBar(
                                 title = { Text(
-                                    text = stringResource(id = R.string.tabs_label_activities),
+                                    text = stringResource(id = R.string.tabs_label_feed),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                                 ) }

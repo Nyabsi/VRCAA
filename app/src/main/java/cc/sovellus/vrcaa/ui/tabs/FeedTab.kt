@@ -10,15 +10,15 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.screen.activities.ActivitiesScreen
+import cc.sovellus.vrcaa.ui.screen.feed.FeedScreen
 
-object ActivitiesTab : Tab {
+object FeedTab : Tab {
 
     override val options: TabOptions
         @Composable
         get() {
             val icon = rememberVectorPainter(Icons.Filled.BarChart)
-            val tabName = stringResource(R.string.tabs_label_activities)
+            val tabName = stringResource(R.string.tabs_label_feed)
 
             return remember {
                 TabOptions(
@@ -31,8 +31,8 @@ object ActivitiesTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(ActivitiesScreen())
+        Navigator(FeedScreen())
     }
 
-    private fun readResolve(): Any = ActivitiesTab
+    private fun readResolve(): Any = FeedTab
 }

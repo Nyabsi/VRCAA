@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.activities
+package cc.sovellus.vrcaa.ui.screen.feed
 
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -8,7 +8,7 @@ import cc.sovellus.vrcaa.manager.FeedManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ActivitiesScreenModel : ScreenModel {
+class FeedScreenModel : ScreenModel {
     private var feedStateFlow = MutableStateFlow(mutableStateListOf<FeedManager.Feed>())
     var feed = feedStateFlow.asStateFlow()
 
