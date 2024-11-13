@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -65,9 +63,6 @@ android {
     productFlavors {
         create("standard") {
             isDefault = true
-            dimension = "type"
-        }
-        create("gplay") {
             dimension = "type"
         }
         create("quest") {
