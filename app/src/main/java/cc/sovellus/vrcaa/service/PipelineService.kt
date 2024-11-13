@@ -61,8 +61,6 @@ class PipelineService : Service(), CoroutineScope {
 
     private var refreshTask: Runnable = Runnable {
         launch {
-            pipeline?.disconnect()
-            pipeline?.connect()
             CacheManager.buildCache()
         }
     }
@@ -347,6 +345,7 @@ class PipelineService : Service(), CoroutineScope {
             api.getAuth()?.let { token ->
                 pipeline = VRChatPipeline(token)
                 pipeline?.setListener(listener)
+                pipeline?.connect()
             }
 
             if (preferences.richPresenceEnabled) {
