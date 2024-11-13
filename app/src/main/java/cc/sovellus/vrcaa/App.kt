@@ -6,19 +6,26 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cc.sovellus.vrcaa.activity.CrashActivity
+import cc.sovellus.vrcaa.extension.crashAnalytics
 import cc.sovellus.vrcaa.extension.developerMode
 import cc.sovellus.vrcaa.helper.NotificationHelper
+import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+        val preferences = this.getSharedPreferences("vrcaa_prefs", 0)
+
+        Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
+        if (!preferences.crashAnalytics)
+            GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
         NotificationHelper.createNotificationChannels(this)
 
         context = this
-        developerModeEnabled.value = this.getSharedPreferences("vrcaa_prefs", 0).developerMode
+        developerModeEnabled.value = preferences.developerMode
     }
 
     companion object {
