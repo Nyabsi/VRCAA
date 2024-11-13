@@ -13,7 +13,6 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.DiscordGateway
 import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
@@ -52,7 +51,6 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: VRChatPipeline? = null
-    private var gateway: DiscordGateway? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -239,28 +237,11 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (user.world != null && user.location != "offline") {
                         CacheManager.addRecent(user.world)
-
-                        if (preferences.richPresenceEnabled) {
-                            val status = StatusHelper.getStatusFromString(user.user.status)
-                            val location = LocationHelper.parseLocationInfo(user.location)
-                            launch {
-                                val instance = api.getInstance(user.location)
-                                instance?.let {
-                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
-                                }
-                            }
-                        }
                     }
                 }
 
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
-
-                    if (preferences.richPresenceEnabled) {
-                        val status = StatusHelper.getStatusFromString(user.user.status)
-                        launch { gateway?.sendPresence(null, null, null, status) }
-                    }
-
                     CacheManager.updateProfile(user.user)
                 }
 
@@ -347,11 +328,6 @@ class PipelineService : Service(), CoroutineScope {
                 pipeline?.setListener(listener)
                 pipeline?.connect()
             }
-
-            if (preferences.richPresenceEnabled) {
-                gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
-                gateway?.connect()
-            }
         }
 
         scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
@@ -388,9 +364,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onDestroy() {
         pipeline?.disconnect()
-        if (preferences.richPresenceEnabled) {
-            gateway?.disconnect()
-        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {

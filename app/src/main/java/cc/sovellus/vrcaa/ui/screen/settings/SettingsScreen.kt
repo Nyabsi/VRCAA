@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.Construction
-import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -36,9 +35,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -48,11 +44,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.developerMode
-import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
-import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
-import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 
 class SettingsScreen : Screen {
 
@@ -68,50 +61,8 @@ class SettingsScreen : Screen {
 
         val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(preferences.developerMode) }
 
-        val dialogState = remember { mutableStateOf(false) }
         val logoutState = remember { mutableStateOf(false) }
 
-        val title = buildAnnotatedString {
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("Notice!")
-            }
-            append(" ")
-            append("Are you sure?")
-        }
-
-        val description = buildAnnotatedString {
-            append("This feature is not ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("condoned")
-            }
-            append(" nor supported by discord, it may bear ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("consequences")
-            }
-            append(", that may get your account ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("terminated")
-            }
-            append(", if you understand the ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("risks")
-            }
-            append(" press \"Continue\" to continue, or press \"Go Back\".")
-        }
-
-        if (dialogState.value) {
-            DisclaimerDialog(
-                onDismiss = { dialogState.value = false },
-                onConfirmation = {
-                    dialogState.value = false
-                    preferences.richPresenceWarningAcknowledged = true
-                    navigator.parent?.parent?.push(RichPresenceScreen())
-                },
-                title,
-                description
-            )
-        }
-        
         if (logoutState.value) {
             LogoutDialog(
                 onDismiss = { logoutState.value = false }
@@ -222,25 +173,6 @@ class SettingsScreen : Screen {
                     modifier = Modifier.clickable(
                         onClick = {
                             navigator.parent?.parent?.push(AboutScreen())
-                        }
-                    )
-                )
-            }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_rich_presence)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Image,
-                            contentDescription = null
-                        )
-                    },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            if (preferences.richPresenceWarningAcknowledged)
-                                navigator.parent?.parent?.push(RichPresenceScreen())
-                            else
-                                dialogState.value = true
                         }
                     )
                 )
