@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.activities
+package cc.sovellus.vrcaa.ui.screen.feed
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.RssFeed
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.SegmentedButton
@@ -39,57 +38,18 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
 
-class ActivitiesScreen : Screen {
+class FeedScreen : Screen {
 
     override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { ActivitiesScreenModel() }
+        val model = navigator.rememberNavigatorScreenModel { FeedScreenModel() }
 
         val options = stringArrayResource(R.array.activities_selection_options)
         val icons = listOf(Icons.Filled.RssFeed, Icons.Filled.Notifications, Icons.Filled.Groups)
 
-        MultiChoiceSegmentedButtonRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-        ) {
-            options.forEachIndexed { index, label ->
-                SegmentedButton(
-                    shape = SegmentedButtonDefaults.itemShape(
-                        index = index,
-                        count = options.size
-                    ),
-                    icon = {
-                        SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
-                            Icon(
-                                imageVector = icons[index],
-                                contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                            )
-                        }
-                    },
-                    onCheckedChange = {
-                        model.currentIndex.intValue = index
-                    },
-                    checked = index == model.currentIndex.intValue
-                ) {
-                    Text(text = label, softWrap = true, maxLines = 1)
-                }
-            }
-        }
-
-        when (model.currentIndex.intValue) {
-            0 -> ShowFeed(model)
-            1 -> StubScreen()
-            2 -> StubScreen()
-        }
-    }
-
-    @Composable
-    fun ShowFeed(model: ActivitiesScreenModel) {
         val feed = model.feed.collectAsState()
 
         LazyColumn(
@@ -229,20 +189,6 @@ class ActivitiesScreen : Screen {
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    fun StubScreen() {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(1.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "This functional has not been implemented.")
         }
     }
 }
