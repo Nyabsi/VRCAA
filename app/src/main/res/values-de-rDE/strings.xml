@@ -195,28 +195,28 @@
     <string name="group_user_failed_to_fetch_groups">Fehler beim Abrufen der Gruppen. Versuchen Sie es erneut.</string>
     <string name="group_user_viewing_groups_username">Gruppen von %1$s</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_title">Keine Internetverbindung</string>
+    <string name="misc_no_internet_description">Bitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind. Diese Anwendung funktioniert nicht ohne eine aktive Internetverbindung.</string>
     <string name="misc_no_internet_label">Restart</string>
     <string name="misc_exit_toast_label">Zum Beenden erneut drücken.</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">Gruppen ansehen</string>
-    <string name="user_dropdown_view_worlds">View Worlds</string>
-    <string name="user_dropdown_view_avatars">View Avatars</string>
-    <string name="user_dropdown_view_favorites">View Favorites</string>
+    <string name="user_dropdown_view_groups">Gruppen anzeigen</string>
+    <string name="user_dropdown_view_worlds">Welten anzeigen</string>
+    <string name="user_dropdown_view_avatars">Avatare anzeigen</string>
+    <string name="user_dropdown_view_favorites">Favoriten anzeigen</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_status_description">Statusbeschreibung</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="profile_edit_dialog_title_bio_links">Verlinkte Webseiten</string>
+    <string name="profile_edit_dialog_button_update">Ändern</string>
+    <string name="profile_edit_dialog_button_cancel">Abbrechen</string>
+    <string name="profile_edit_dialog_toast_updated">Profil aktualisiert.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Änderungen wurden verworfen.</string>
+    <string name="profile_edit_dialog_title_edit_profile">Profil bearbeiten</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
+    <string name="logout_dialog_title">Sind Sie sicher?</string>
+    <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>
     <string name="logout_dialog_continue">Continue</string>
     <string name="logout_dialog_cancel">Cancel</string>
     <!-- Widgets -->
