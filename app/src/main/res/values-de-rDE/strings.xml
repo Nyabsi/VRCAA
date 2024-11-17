@@ -217,48 +217,48 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sind Sie sicher?</string>
     <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_dialog_continue">Fortfahren</string>
+    <string name="logout_dialog_cancel">Abbrechen</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list">Aktuellen Freundestandorte ansehen</string>
+    <string name="widget_name_loading_text">Der Horizont ist hell, mein Freund.</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>Welten</item>
+        <item>Avatare</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_label_add">Zu den Favoriten hinzufügen</string>
+    <string name="favorite_label_remove">Als Favorit entfernen</string>
+    <string name="favorite_toast_favorite_added">%1$s zu den Favoriten hinzugefügt.</string>
+    <string name="favorite_toast_favorite_added_failed">Hinzufügen von %1$s zu Favoriten fehlgeschlagen.</string>
+    <string name="favorite_toast_favorite_removed">%1$s aus den Favoriten entfernt.</string>
+    <string name="favorite_toast_favorite_removed_failed">Entfernen von %1$s aus Favoriten fehlgeschlagen.</string>
+    <string name="favorite_dialog_button_add">Hinzufügen</string>
+    <string name="favorite_dialog_button_cancel">Abbrechen</string>
+    <string name="favorite_dialog_title">"Zu den Favoriten hinzufügen"</string>
+    <string name="favorite_page_title">Favoriten ansehen</string>
+    <string name="favorite_edit_title">Bearbeite %1$s</string>
+    <string name="favorite_edit_display_name">Anzeigename</string>
+    <string name="favorite_edit_visibility">Sichtbarkeit</string>
+    <string name="favorite_edit_discarded">Änderungen wurden verworfen.</string>
+    <string name="favorite_edit_applied">Änderungen wurden angewendet.</string>
+    <string name="favorite_dialog_button_edit">Bearbeiten</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
-        <item>Feed</item>
-        <item>Notifications</item>
-        <item>Group Activity</item>
+        <item>Für dich</item>
+        <item>Benachrichtigungen</item>
+        <item>Gruppenaktivitäten</item>
     </string-array>
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">Welten von %1$s</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">Avatare ansehen</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="developer_mode_toggle_toast">Starten Sie die App neu, um die Änderungen wirksam zu machen.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Loading profile…</string>
-    <string name="loading_text_online_friends">Loading online friends…</string>
-    <string name="loading_text_offline_friends">Loading offline friends…</string>
-    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
+    <string name="loading_text_profile">Lade Profil…</string>
+    <string name="loading_text_online_friends">Lade Online-Freunde…</string>
+    <string name="loading_text_offline_friends">Lade Offline-Freunde…</string>
+    <string name="loading_text_recently_visited">Lade kürzlich besuchte Welten…</string>
     <string name="loading_text_favorites">Lade Favoriten…</string>
     <string name="loading_text_worlds">Lade Welten…</string>
     <string name="loading_text_users">Lade Nutzer…</string>
