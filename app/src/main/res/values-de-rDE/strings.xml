@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">Hier gibt es nicht mehr als Hühner!</string>
-    <string name="legal_disclaimer">"VRCAA wird nicht von VRChat Inc. oder deren Partner unterstützt"</string>
+    <string name="legal_disclaimer">"VRCAA wird nicht von VRChat Inc. oder deren Partner unterstützt."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favorit</item>
@@ -198,9 +198,9 @@
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
     <string name="misc_no_internet_label">Restart</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_exit_toast_label">Zum Beenden erneut drücken.</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">View Groups</string>
+    <string name="user_dropdown_view_groups">Gruppen ansehen</string>
     <string name="user_dropdown_view_worlds">View Worlds</string>
     <string name="user_dropdown_view_avatars">View Avatars</string>
     <string name="user_dropdown_view_favorites">View Favorites</string>
@@ -259,14 +259,14 @@
     <string name="loading_text_online_friends">Loading online friends…</string>
     <string name="loading_text_offline_friends">Loading offline friends…</string>
     <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
+    <string name="loading_text_favorites">Lade Favoriten…</string>
+    <string name="loading_text_worlds">Lade Welten…</string>
+    <string name="loading_text_users">Lade Nutzer…</string>
+    <string name="loading_text_avatars">Lade Avatare…</string>
+    <string name="loading_text_groups">Lade Gruppen…</string>
+    <string name="loading_text_user">Lade Nutzer…</string>
+    <string name="loading_text_world">Lade Welt…</string>
+    <string name="loading_text_avatar">Lade Avatar…</string>
+    <string name="loading_text_group">Lade Gruppe…</string>
+    <string name="loading_text_instances">Lade Instanzen…</string>
 </resources>
