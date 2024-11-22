@@ -87,7 +87,7 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Amis</string>
     <string name="tabs_label_home">Domicile</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_favorites">Favoris</string>
     <string name="tabs_label_activities">Activités</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Photos</string>
@@ -236,12 +236,12 @@
     <string name="favorite_dialog_button_cancel">Annuler</string>
     <string name="favorite_dialog_title">"Ajouter aux favoris"</string>
     <string name="favorite_page_title">Afficher les favoris</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_edit_title">Modification de %1$s</string>
+    <string name="favorite_edit_display_name">Nom d’affichage</string>
+    <string name="favorite_edit_visibility">Visibilité</string>
+    <string name="favorite_edit_discarded">Les modifications ont été ignorées.</string>
+    <string name="favorite_edit_applied">Les modifications ont été appliquées.</string>
+    <string name="favorite_dialog_button_edit">Modifier</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>Flux</item>
