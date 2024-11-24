@@ -18,9 +18,7 @@ class ProfileScreenModel : StateScreenModel<ProfileState>(ProfileState.Init) {
             mutableState.value = ProfileState.Result(profile)
         }
 
-        override fun startCacheRefresh() { }
-
-        override fun endCacheRefresh() { }
+        override fun endCacheRefresh() { fetchProfile() }
 
         override fun recentlyVisitedUpdated(worlds: MutableList<CacheManager.WorldCache>) { }
     }
@@ -28,7 +26,9 @@ class ProfileScreenModel : StateScreenModel<ProfileState>(ProfileState.Init) {
     init {
         mutableState.value = ProfileState.Loading
         CacheManager.addListener(cacheListener)
-        fetchProfile()
+
+        if (!CacheManager.isRefreshing())
+            fetchProfile()
     }
 
     private fun fetchProfile() {

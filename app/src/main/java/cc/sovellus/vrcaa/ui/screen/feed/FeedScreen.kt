@@ -1,28 +1,15 @@
 package cc.sovellus.vrcaa.ui.screen.feed
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.RssFeed
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MultiChoiceSegmentedButtonRow
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -37,6 +24,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 
 class FeedScreen : Screen {
 
@@ -47,9 +35,18 @@ class FeedScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val model = navigator.rememberNavigatorScreenModel { FeedScreenModel() }
 
-        val options = stringArrayResource(R.array.activities_selection_options)
-        val icons = listOf(Icons.Filled.RssFeed, Icons.Filled.Notifications, Icons.Filled.Groups)
+        val state by model.state.collectAsState()
 
+        when (state) {
+            is FeedState.Loading -> LoadingIndicatorScreen().Content()
+            is FeedState.Result -> ShowScreen(model)
+            else -> {}
+        }
+    }
+
+    @Composable
+    fun ShowScreen(model: FeedScreenModel)
+    {
         val feed = model.feed.collectAsState()
 
         LazyColumn(

@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonOff
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Web
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
@@ -26,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -42,6 +43,8 @@ import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
+import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreenModel
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 
 class FriendsScreen : Screen {
@@ -51,12 +54,7 @@ class FriendsScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-
         val model = navigator.rememberNavigatorScreenModel { FriendsScreenModel() }
-        val friends = model.friends.collectAsState()
-
-        val options = stringArrayResource(R.array.friend_selection_options)
-        val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
 
         BackHandler(
             enabled = model.currentIndex.intValue != 0,
@@ -64,6 +62,23 @@ class FriendsScreen : Screen {
                 model.currentIndex.intValue = 0
             }
         )
+
+        val state by model.state.collectAsState()
+
+        when (state) {
+            is FriendsState.Loading -> LoadingIndicatorScreen().Content()
+            is FriendsState.Result -> ShowScreen(model)
+            else -> {}
+        }
+    }
+
+    @Composable
+    fun ShowScreen(model: FriendsScreenModel)
+    {
+        val friends = model.friends.collectAsState()
+
+        val options = stringArrayResource(R.array.friend_selection_options)
+        val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
 
         Column(
             modifier = Modifier
