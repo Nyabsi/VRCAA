@@ -88,6 +88,7 @@
     <string name="tabs_label_friends">Kaverit</string>
     <string name="tabs_label_home">Kotisivu</string>
     <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_activities">Aktiviteetit</string>
     <string name="tabs_label_profile">Profiili</string>
     <string name="tabs_label_pictures">Kuvat</string>
