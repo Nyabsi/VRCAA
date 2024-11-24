@@ -33,6 +33,8 @@ class FavoritesScreenModel : StateScreenModel<FavoriteState>(FavoriteState.Init)
     private val cacheListener = object : CacheManager.CacheListener {
         override fun profileUpdated(profile: User) { }
 
+        override fun startCacheRefresh() { }
+
         override fun endCacheRefresh() {
             fetchContent()
             mutableState.value = FavoriteState.Result
