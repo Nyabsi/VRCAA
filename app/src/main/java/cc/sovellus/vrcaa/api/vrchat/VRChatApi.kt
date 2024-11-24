@@ -56,7 +56,7 @@ class VRChatApi : BaseClient() {
     enum class MfaType {
         NONE,
         EMAIL_OTP,
-        TOTP
+        APP_OTP
     }
 
     data class AccountInfo(val mfaType: MfaType, val token: String = "", val twoAuth: String = "")
@@ -146,9 +146,13 @@ class VRChatApi : BaseClient() {
 
             if (body.contains("emailOtp")) {
                 return AccountInfo(MfaType.EMAIL_OTP, cookies)
-            } else {
-                return AccountInfo(MfaType.TOTP, cookies)
             }
+
+            if (body.contains("totp")) {
+                return AccountInfo(MfaType.APP_OTP, cookies)
+            }
+
+            return AccountInfo(MfaType.NONE, cookies)
         }
 
         return null
@@ -201,7 +205,7 @@ class VRChatApi : BaseClient() {
                 return null
             }
 
-            MfaType.TOTP -> {
+            MfaType.APP_OTP -> {
 
                 val body = Gson().toJson(cc.sovellus.vrcaa.api.vrchat.models.Code(code))
 
