@@ -307,7 +307,7 @@ class NavigationScreen : Screen {
                                                 )
                                                 DropdownMenuItem(
                                                     onClick = {
-                                                        CacheManager.getProfile().let {
+                                                        CacheManager.getProfile()?.let {
                                                             navigator.push(
                                                                 UserGroupsScreen(it.displayName, it.id)
                                                             )
@@ -318,7 +318,7 @@ class NavigationScreen : Screen {
                                                 )
                                                 DropdownMenuItem(
                                                     onClick = {
-                                                        CacheManager.getProfile().let {
+                                                        CacheManager.getProfile()?.let {
                                                             navigator.push(
                                                                 WorldsScreen(it.displayName, it.id, true)
                                                             )
