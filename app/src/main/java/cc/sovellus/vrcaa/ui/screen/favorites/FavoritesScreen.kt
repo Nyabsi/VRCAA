@@ -22,12 +22,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -40,6 +40,7 @@ import cc.sovellus.vrcaa.ui.components.dialog.FavoriteEditDialog
 import cc.sovellus.vrcaa.ui.components.layout.FavoriteHorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class FavoritesScreen : Screen {
@@ -48,6 +49,18 @@ class FavoritesScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val model = navigator.rememberNavigatorScreenModel { FavoritesScreenModel() }
+
+        val state by model.state.collectAsState()
+
+        when (state) {
+            is FavoriteState.Loading -> LoadingIndicatorScreen().Content()
+            is FavoriteState.Result -> ShowScreen(model)
+            else -> {}
+        }
+    }
+
+    @Composable
+    fun ShowScreen(model: FavoritesScreenModel) {
 
         val worldList = model.worldList.collectAsState()
         val avatarList = model.avatarList.collectAsState()
