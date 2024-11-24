@@ -10,7 +10,7 @@ import kotlin.jvm.optionals.getOrNull
 
 object CacheManager {
 
-    private lateinit var profile: User
+    private var profile: User? = null
     private var worldList: MutableList<WorldCache> = mutableListOf()
     private var recentWorldList: MutableList<WorldCache> = mutableListOf()
 
@@ -111,7 +111,7 @@ object CacheManager {
         }
     }
 
-    fun getProfile(): User {
+    fun getProfile(): User? {
         return profile
     }
 

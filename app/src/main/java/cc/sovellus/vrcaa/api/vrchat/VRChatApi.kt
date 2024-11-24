@@ -613,7 +613,7 @@ class VRChatApi : BaseClient() {
 
         val body = "{\"displayName\":\"$displayName\",\"visibility\":\"$visibility\"}"
 
-        val user = CacheManager.getProfile().id
+        val user = CacheManager.getProfile()?.id
 
         val result = doRequest(
             method = "PUT",
