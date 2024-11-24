@@ -4,6 +4,7 @@ import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.models.Auth
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.models.Avatars
+import cc.sovellus.vrcaa.api.vrchat.models.Code
 import cc.sovellus.vrcaa.api.vrchat.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.models.FavoriteAdd
 import cc.sovellus.vrcaa.api.vrchat.models.FavoriteAvatar
@@ -56,7 +57,7 @@ class VRChatApi : BaseClient() {
     enum class MfaType {
         NONE,
         EMAIL_OTP,
-        TOTP
+        APP_OTP
     }
 
     data class AccountInfo(val mfaType: MfaType, val token: String = "", val twoAuth: String = "")
@@ -136,7 +137,7 @@ class VRChatApi : BaseClient() {
 
         response?.let {
 
-            if (response.size == 1)
+            if (response.size == 1) // No OTP required
                 return AccountInfo(MfaType.NONE, "")
 
             val body = response[0]
@@ -146,9 +147,14 @@ class VRChatApi : BaseClient() {
 
             if (body.contains("emailOtp")) {
                 return AccountInfo(MfaType.EMAIL_OTP, cookies)
-            } else {
-                return AccountInfo(MfaType.TOTP, cookies)
             }
+
+            if (body.contains("totp")) {
+                return AccountInfo(MfaType.APP_OTP, cookies)
+            }
+
+            // No OTP required, pass new tokens
+            return AccountInfo(MfaType.NONE, cookies)
         }
 
         return null
@@ -184,7 +190,7 @@ class VRChatApi : BaseClient() {
         return when (type) {
             MfaType.EMAIL_OTP -> {
 
-                val body = Gson().toJson(cc.sovellus.vrcaa.api.vrchat.models.Code(code))
+                val body = Gson().toJson(Code(code))
 
                 val result = doRequest(
                     method = "POST",
@@ -201,9 +207,9 @@ class VRChatApi : BaseClient() {
                 return null
             }
 
-            MfaType.TOTP -> {
+            MfaType.APP_OTP -> {
 
-                val body = Gson().toJson(cc.sovellus.vrcaa.api.vrchat.models.Code(code))
+                val body = Gson().toJson(Code(code))
 
                 val result = doRequest(
                     method = "POST",
