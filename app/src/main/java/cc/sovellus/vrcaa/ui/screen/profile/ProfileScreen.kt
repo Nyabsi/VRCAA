@@ -57,7 +57,7 @@ class ProfileScreen : Screen {
                     profile.let {
                         ProfileCard(
                             thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                            iconUrl = it.userIcon.ifEmpty { it.currentAvatarImageUrl },
+                            iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
                             displayName = it.displayName,
                             statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
                             trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),

@@ -40,7 +40,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
         },
         leadingContent = {
             GlideImage(
-                model = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
+                model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
                 contentDescription = null,
                 modifier = Modifier
                     .size(56.dp)

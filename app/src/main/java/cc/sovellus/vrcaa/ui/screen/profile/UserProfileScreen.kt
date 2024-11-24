@@ -275,7 +275,7 @@ class UserProfileScreen(
                                 profile.let {
                                     ProfileCard(
                                         thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                        iconUrl = it.userIcon.ifEmpty { it.currentAvatarImageUrl },
+                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
                                         displayName = it.displayName,
                                         statusDescription = it.statusDescription.ifEmpty {
                                             StatusHelper.getStatusFromString(it.status).toString()
