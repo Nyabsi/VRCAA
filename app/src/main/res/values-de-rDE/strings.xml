@@ -88,6 +88,7 @@
     <string name="tabs_label_friends">Freunde</string>
     <string name="tabs_label_home">Startseite</string>
     <string name="tabs_label_favorites">Favoriten</string>
+    <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_activities">Aktivitäten</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_pictures">Bilder</string>
