@@ -1,0 +1,7 @@
+- Moved favourites to bottom bar
+- Implement Favourite Group Editing
+- Add Loading Screen to all Tabs
+- Implement Per-App Locale Selection (13+)
+- Show user notes on top of bio if they exist
+- Fix UI inconsistencies
+- Bug fixes
