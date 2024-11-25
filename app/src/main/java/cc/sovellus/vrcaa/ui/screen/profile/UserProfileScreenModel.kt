@@ -60,28 +60,52 @@ class UserProfileScreenModel(
     fun findAvatar(callback: ((userId: String?) -> Unit?)) {
         screenModelScope.launch {
             profile?.let {
-                val url = it.currentAvatarImageUrl
-                val fileId = url.substring(url.indexOf("file_"), url.lastIndexOf("/file") - 2)
+                val fileId = extractFileIdFromUrl(it.currentAvatarImageUrl)
 
-                api.getFileMetadata(fileId)?.let { metadata ->
-                    var name = metadata.name
+                if (fileId != null) {
+                    api.getFileMetadata(fileId)?.let { metadata ->
+                        var name = metadata.name
 
-                    name = name.substring(9) // skip first 9 characters, not required.
-                    name = name.substring(0, name.indexOf('-') - 1)
+                        name = name.substring(9) // skip first 9 characters, not required.
+                        name = name.substring(0, name.indexOf('-') - 1)
 
-                    val avatars = avatarProvider.search(name)
-                    if (avatars.isNotEmpty()) {
-                       for (avatar in avatars) {
-                           if (avatar.name == name && avatar.authorId == metadata.ownerId) {
-                               callback(avatar.id)
-                               return@launch
-                           }
-                       }
+                        val searchAvatarsByName = avatarProvider.search(name)
+                        if (searchAvatarsByName.isNotEmpty()) {
+                            for (avatar in searchAvatarsByName) {
+                                val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
+                                if (avatarFileId == fileId) {
+                                    callback(avatar.id)
+                                    return@launch
+                                }
+                            }
+                        }
+
+                        // fallback to using author search
+                        val searchAvatarsByAuthor = avatarProvider.searchByAuthor(metadata.ownerId)
+                        if (searchAvatarsByAuthor.isNotEmpty()) {
+                            for (avatar in searchAvatarsByAuthor) {
+                                val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
+                                if (avatarFileId == fileId) {
+                                    callback(avatar.id)
+                                    return@launch
+                                }
+                            }
+                        }
+                        callback(null)
                     }
-                    callback(null)
                 }
             }
         }
+    }
+
+    private fun extractFileIdFromUrl(imageUrl: String): String? {
+        val startIndex = imageUrl.indexOf("file_")
+        val endIndex = imageUrl.indexOf("/", startIndex)
+        if (startIndex != -1 && endIndex != -1) {
+            val fileId = imageUrl.substring(startIndex, endIndex)
+            return fileId
+        }
+        return null
     }
 
     fun inviteToFriend(intent: String) {

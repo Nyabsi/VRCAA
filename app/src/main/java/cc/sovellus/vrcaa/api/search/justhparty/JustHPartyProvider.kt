@@ -41,5 +41,15 @@ class JustHPartyProvider : BaseClient() {
         }
     }
 
+    suspend fun searchByAuthor(query: String): ArrayList<SearchAvatar>
+    {
+        return when (val result = sendRequest("?authorId=${URLEncoder.encode(query)}")) {
+            is String -> {
+                Gson().fromJson(result, Avatars::class.java) ?: arrayListOf()
+            }
+            else -> arrayListOf()
+        }
+    }
+
     class Avatars : ArrayList<SearchAvatar>()
 }
