@@ -66,16 +66,18 @@ class UserProfileScreenModel(
                     api.getFileMetadata(fileId)?.let { metadata ->
                         var name = metadata.name
 
-                        name = name.substring(9) // skip first 9 characters, not required.
+                        name = name.substring(9)
                         name = name.substring(0, name.indexOf('-') - 1)
 
                         val searchAvatarsByName = avatarProvider.search(name)
                         if (searchAvatarsByName.isNotEmpty()) {
                             for (avatar in searchAvatarsByName) {
-                                val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
-                                if (avatarFileId == fileId) {
-                                    callback(avatar.id)
-                                    return@launch
+                                avatar.imageUrl?.let {
+                                    val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
+                                    if (avatarFileId == fileId) {
+                                        callback(avatar.id)
+                                        return@launch
+                                    }
                                 }
                             }
                         }
@@ -84,10 +86,12 @@ class UserProfileScreenModel(
                         val searchAvatarsByAuthor = avatarProvider.searchByAuthor(metadata.ownerId)
                         if (searchAvatarsByAuthor.isNotEmpty()) {
                             for (avatar in searchAvatarsByAuthor) {
-                                val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
-                                if (avatarFileId == fileId) {
-                                    callback(avatar.id)
-                                    return@launch
+                                avatar.imageUrl?.let {
+                                    val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
+                                    if (avatarFileId == fileId) {
+                                        callback(avatar.id)
+                                        return@launch
+                                    }
                                 }
                             }
                         }
