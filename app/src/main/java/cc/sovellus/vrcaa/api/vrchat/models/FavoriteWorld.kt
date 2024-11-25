@@ -55,7 +55,7 @@ data class FavoriteWorld(
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("version")
-    var version: Int = 0,
+    var version: Long = 0,
     @SerializedName("visits")
     var visits: Int = 0
 )
