@@ -153,8 +153,7 @@ class UserProfileScreen(
                                         DropdownMenuItem(
                                             onClick = {
                                                 model.findAvatar { avatarId ->
-                                                    @Suppress("SENSELESS_COMPARISON")
-                                                    if(profile.profilePicOverride != null){
+                                                    if(profile.profilePicOverride.isNotEmpty()){
                                                         Toast.makeText(
                                                             context,
                                                             context.getString(R.string.profile_user_avatar_unreachable),
