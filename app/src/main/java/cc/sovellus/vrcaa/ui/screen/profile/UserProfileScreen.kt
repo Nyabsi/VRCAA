@@ -153,6 +153,14 @@ class UserProfileScreen(
                                         DropdownMenuItem(
                                             onClick = {
                                                 model.findAvatar { avatarId ->
+                                                    if(profile.profilePicOverride.isNotEmpty()){
+                                                        Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.profile_user_avatar_unreachable),
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                        return@findAvatar Unit
+                                                    }
                                                     if (avatarId == null)  {
                                                         Toast.makeText(
                                                             context,
