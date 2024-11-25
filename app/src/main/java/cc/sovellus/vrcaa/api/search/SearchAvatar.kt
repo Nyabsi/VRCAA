@@ -6,7 +6,7 @@ data class SearchAvatar(
     @SerializedName("id")
     val id: String,
     @SerializedName("imageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerializedName("name")
     val name: String,
     @SerializedName("authorId")
