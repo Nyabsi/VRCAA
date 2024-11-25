@@ -40,6 +40,7 @@
     <string name="profile_user_dropdown_invite_self">Kutsu itseni</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
     <string name="profile_user_avatar_private">Hahmo on yksityinen!</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
     <string name="profile_user_toast_invite_sent">Kutsu lähetetty! Tarkista pelisi.</string>
     <string name="profile_mutual_groups_text">Yhteiset Ryhmät</string>
     <!-- Search -->

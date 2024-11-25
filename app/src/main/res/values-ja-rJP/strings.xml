@@ -40,6 +40,7 @@
     <string name="profile_user_dropdown_invite_self">セルフ・インバイト</string>
     <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
     <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
     <string name="profile_user_toast_invite_sent">インバイトを送信しました、ゲーム内で確認してください。</string>
     <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->

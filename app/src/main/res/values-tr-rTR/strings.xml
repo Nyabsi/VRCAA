@@ -40,6 +40,7 @@
     <string name="profile_user_dropdown_invite_self">Kendimi davet et</string>
     <string name="profile_user_not_found_message">Kullanıcı bulunamadı.</string>
     <string name="profile_user_avatar_private">Avatar özel!</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
     <string name="profile_user_toast_invite_sent">Davet gönderildi! Oyunu kontrol et.</string>
     <string name="profile_mutual_groups_text">Ortak guruplar</string>
     <!-- Search -->
