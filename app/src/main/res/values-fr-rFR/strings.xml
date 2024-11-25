@@ -40,6 +40,7 @@
     <string name="profile_user_dropdown_invite_self">S\'envoyer une invitation</string>
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
     <string name="profile_user_avatar_private">L\'avatar est privé !</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
     <string name="profile_user_toast_invite_sent">Invitation envoyée ! Regardez VRChat.</string>
     <string name="profile_mutual_groups_text">Groupes mutuels</string>
     <!-- Search -->

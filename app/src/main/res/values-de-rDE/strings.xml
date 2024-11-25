@@ -40,6 +40,7 @@
     <string name="profile_user_dropdown_invite_self">Selber einladen</string>
     <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
     <string name="profile_user_avatar_private">Avatar ist privat!</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
     <string name="profile_user_toast_invite_sent">Einladung gesendet. Überprüfe dein Spiel.</string>
     <string name="profile_mutual_groups_text">Gemeinsame Gruppen</string>
     <!-- Search -->
