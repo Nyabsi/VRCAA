@@ -37,5 +37,5 @@ data class Avatar(
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("version")
-    var version: Int = 0
+    var version: Long = 0
 )
