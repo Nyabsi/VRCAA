@@ -109,7 +109,7 @@ class NavigationScreenModel(
         ).show()
     }
 
-    fun applySettings() {
+    fun applySettings(silent: Boolean = false) {
         preferences.searchFeaturedWorlds = featuredWorlds.value
         preferences.sortWorlds = sortWorlds.value
         preferences.worldsAmount = worldsAmount.intValue
@@ -118,10 +118,12 @@ class NavigationScreenModel(
         preferences.avatarsAmount = avatarsAmount.intValue
         preferences.avatarProvider = avatarProvider.value
 
-        Toast.makeText(
-            context,
-            "Applied settings.",
-            Toast.LENGTH_SHORT
-        ).show()
+        if (!silent) {
+            Toast.makeText(
+                context,
+                "Applied settings.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }

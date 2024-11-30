@@ -446,6 +446,7 @@ class NavigationScreen : Screen {
                         ModalBottomSheet(
                             onDismissRequest = {
                                 showBottomSheet = false
+                                model.applySettings(true)
                             },
                             sheetState = sheetState
                         ) {
