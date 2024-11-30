@@ -519,15 +519,12 @@ class NavigationScreen : Screen {
                                                 "shuffle",
                                                 "random",
                                                 "favorites",
-                                                " reportScore",
-                                                "reportCount",
                                                 "publicationDate",
                                                 "labsPublicationDate",
                                                 "created",
                                                 "updated",
                                                 "order",
                                                 "relevance",
-                                                "magic",
                                                 "name"
                                             )
                                             ComboInput(
