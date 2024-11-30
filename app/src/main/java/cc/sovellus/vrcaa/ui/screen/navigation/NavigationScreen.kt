@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -92,6 +93,7 @@ import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 import cc.sovellus.vrcaa.ui.tabs.SettingsTab
 import kotlinx.coroutines.launch
+import cc.sovellus.vrcaa.extension.lowDPIMode
 
 class NavigationScreen : Screen {
 
@@ -103,7 +105,7 @@ class NavigationScreen : Screen {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
-
+        val preferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
         val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
 
         if (model.hasNoInternet.value) {
@@ -196,10 +198,12 @@ class NavigationScreen : Screen {
                                             onExpandedChange = { model.searchModeActivated.value = true },
                                             enabled = true,
                                             placeholder = {
-                                                Text(
-                                                    text = stringResource(R.string.main_search_placeholder),
-                                                    overflow = TextOverflow.Ellipsis
-                                                )
+                                                if (!preferences.lowDPIMode) {
+                                                    Text(
+                                                        text = stringResource(R.string.main_search_placeholder),
+                                                        overflow = TextOverflow.Ellipsis
+                                                    )
+                                                }
                                             },
                                             leadingIcon = {
                                                 if (model.searchModeActivated.value) {
@@ -618,7 +622,11 @@ class NavigationScreen : Screen {
                                         tabNavigator.current = tab
                                     },
                                     icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
-                                    label = { Text(text = tab.options.title) }
+                                    label = {
+                                        if (!preferences.lowDPIMode) {
+                                            Text(text = tab.options.title)
+                                        }
+                                    }
                                 )
                             }
                         }
