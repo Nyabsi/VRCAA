@@ -105,7 +105,7 @@ open class BaseClient {
                     val response = client.newCall(request).await()
                     val responseBody = response.body?.string().toString()
 
-                    if (App.isDeveloperModeEnabled()) {
+                    if (App.isNetworkLoggingEnabled()) {
                         DebugManager.addDebugMetadata(
                             DebugManager.DebugMetadataData(
                                 type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
@@ -130,7 +130,7 @@ open class BaseClient {
                     val response = client.newCall(request).await()
                     val responseBody = response.body?.string().toString()
 
-                    if (App.isDeveloperModeEnabled()) {
+                    if (App.isNetworkLoggingEnabled()) {
                         DebugManager.addDebugMetadata(
                             DebugManager.DebugMetadataData(
                                 type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
@@ -155,7 +155,7 @@ open class BaseClient {
                     val response = client.newCall(request).await()
                     val responseBody = response.body?.string().toString()
 
-                    if (App.isDeveloperModeEnabled()) {
+                    if (App.isNetworkLoggingEnabled()) {
                         DebugManager.addDebugMetadata(
                             DebugManager.DebugMetadataData(
                                 type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
@@ -180,7 +180,7 @@ open class BaseClient {
                     val response = client.newCall(request).await()
                     val responseBody = response.body?.string().toString()
 
-                    if (App.isDeveloperModeEnabled()) {
+                    if (App.isNetworkLoggingEnabled()) {
                         DebugManager.addDebugMetadata(
                             DebugManager.DebugMetadataData(
                                 type = DebugManager.DebugType.DEBUG_TYPE_HTTP,

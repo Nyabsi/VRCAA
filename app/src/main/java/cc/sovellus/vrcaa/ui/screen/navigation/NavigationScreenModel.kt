@@ -14,13 +14,14 @@ import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
-import cc.sovellus.vrcaa.extension.developerMode
+import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.ThemeManager
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
@@ -31,13 +32,13 @@ class NavigationScreenModel(
 
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
 
+    val currentTheme = mutableIntStateOf(preferences.currentThemeOption)
+
     var searchModeActivated = mutableStateOf(false)
     var searchText = mutableStateOf("")
     var searchHistory = mutableListOf<String>()
     var hasNoInternet = mutableStateOf(false)
     var invalidSession = mutableStateOf(false)
-
-    val developerMode = mutableStateOf(preferences.developerMode)
 
     var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
     var sortWorlds = mutableStateOf(preferences.sortWorlds)
@@ -73,8 +74,16 @@ class NavigationScreenModel(
         }
     }
 
+    private val themeListener = object : ThemeManager.ThemeListener {
+        override fun onPreferenceUpdate(theme: Int) {
+            currentTheme.intValue = theme
+        }
+
+    }
+
     init {
         api.setSessionListener(listener)
+        ThemeManager.addThemeListener(themeListener)
     }
 
     fun addSearchHistory() {
