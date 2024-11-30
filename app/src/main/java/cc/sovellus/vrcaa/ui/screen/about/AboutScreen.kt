@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -43,6 +44,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.ui.screen.licenses.LicensesScreen
 
 class AboutScreen : Screen {
@@ -91,7 +93,7 @@ class AboutScreen : Screen {
                             contentAlignment = Alignment.TopCenter
                         ) {
                             Image(
-                                painter = if (isSystemInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
+                                painter = if (isSystemInDarkTheme() && App.getContext().getSharedPreferences("vrcaa_prefs", 0).currentThemeOption == 1) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
                                 contentDescription = null,
                                 contentScale = ContentScale.FillHeight,
                                 alignment = Alignment.Center
@@ -154,45 +156,6 @@ class AboutScreen : Screen {
                                 }
                             )
                         )
-                    }
-                    if (BuildConfig.FLAVOR != "gplay") {
-                        item {
-                            ListItem(
-                                headlineContent = { Text(stringResource(R.string.about_page_battery_optimizations_title)) },
-                                modifier = Modifier.clickable(
-                                    onClick = {
-                                        val manager = getSystemService(context, PowerManager::class.java)
-                                        manager?.let { pm ->
-                                            if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
-                                                val intent = Intent(
-                                                    Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                                                    Uri.parse("package:${context.packageName}")
-                                                )
-                                                context.startActivity(intent)
-                                            } else {
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.about_page_battery_optimizations_toast),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        }
-                                    }
-                                )
-                            )
-                        }
-                    }
-                    if (App.isDeveloperModeEnabled()) {
-                        item {
-                            ListItem(
-                                headlineContent = { Text("Artificial Exception") },
-                                modifier = Modifier.clickable(
-                                    onClick = {
-                                        throw RuntimeException("d3ad :(")
-                                    }
-                                )
-                            )
-                        }
                     }
                 }
             }

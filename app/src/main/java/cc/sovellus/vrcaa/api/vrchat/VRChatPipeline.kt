@@ -113,7 +113,7 @@ class VRChatPipeline(
                     }
                 }
 
-                if (App.isDeveloperModeEnabled()) {
+                if (App.isNetworkLoggingEnabled()) {
                     DebugManager.addDebugMetadata(
                         DebugManager.DebugMetadataData(
                             type = DebugManager.DebugType.DEBUG_TYPE_PIPELINE,

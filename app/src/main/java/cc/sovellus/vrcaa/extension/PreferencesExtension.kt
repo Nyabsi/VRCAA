@@ -80,10 +80,14 @@ internal var SharedPreferences.avatarProvider: String
     get() = getString("avatarProviderPreference", "avtrdb")!!
     set(it) = edit { putString("avatarProviderPreference", it) }
 
-internal var SharedPreferences.developerMode: Boolean
+internal var SharedPreferences.networkLogging: Boolean
     get() = getBoolean("isDeveloperModeEnabled", false)
     set(it) = edit { putBoolean("isDeveloperModeEnabled", it) }
 
-internal var SharedPreferences.lowDPIMode: Boolean
-    get() = getBoolean("isLowDPIModeEnabled", false)
-    set(it) = edit { putBoolean("isLowDPIModeEnabled", it) }
+internal var SharedPreferences.minimalistMode: Boolean
+    get() = getBoolean("isMinimalistModeEnabled", false)
+    set(it) = edit { putBoolean("isMinimalistModeEnabled", it) }
+
+internal var SharedPreferences.currentThemeOption: Int
+    get() = getInt("currentThemeOption", 2)
+    set(it) = edit { putInt("currentThemeOption", it) }
