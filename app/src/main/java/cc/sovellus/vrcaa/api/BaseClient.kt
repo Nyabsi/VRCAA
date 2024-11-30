@@ -12,6 +12,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
 import ru.gildor.coroutines.okhttp.await
+import java.net.SocketException
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 open class BaseClient {
@@ -199,6 +201,10 @@ open class BaseClient {
                 }
             }
         } catch (e: UnknownHostException) {
+            Result.NoInternet
+        } catch (e: SocketException) {
+            Result.NoInternet
+        } catch (e: SocketTimeoutException) {
             Result.NoInternet
         }
     }
