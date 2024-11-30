@@ -49,7 +49,6 @@ import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.advanced.AdvancedScreen
-import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreen
 
 class SettingsScreen : Screen {
@@ -62,52 +61,8 @@ class SettingsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel() }
-
-        val dialogState = remember { mutableStateOf(false) }
         val logoutState = remember { mutableStateOf(false) }
 
-        val title = buildAnnotatedString {
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("Notice!")
-            }
-            append(" ")
-            append("Are you sure?")
-        }
-
-        val description = buildAnnotatedString {
-            append("This feature is not ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("condoned")
-            }
-            append(" nor supported by discord, it may bear ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("consequences")
-            }
-            append(", that may get your account ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("terminated")
-            }
-            append(", if you understand the ")
-            withStyle(style = SpanStyle(color = Color.Red)) {
-                append("risks")
-            }
-            append(" press \"Continue\" to continue, or press \"Go Back\".")
-        }
-
-        if (dialogState.value) {
-            DisclaimerDialog(
-                onDismiss = { dialogState.value = false },
-                onConfirmation = {
-                    dialogState.value = false
-                    model.preferences.richPresenceWarningAcknowledged = true
-                    navigator.parent?.parent?.push(RichPresenceScreen())
-                },
-                title,
-                description
-            )
-        }
-        
         if (logoutState.value) {
             LogoutDialog(
                 onDismiss = { logoutState.value = false }
@@ -167,26 +122,6 @@ class SettingsScreen : Screen {
                     modifier = Modifier.clickable(
                         onClick = {
                             navigator.parent?.parent?.push(ThemeScreen())
-                        }
-                    )
-                )
-            }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_rich_presence)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Image,
-                            contentDescription = null
-                        )
-                    },
-                    supportingContent = { Text(text = stringResource(R.string.settings_item_rich_presence_description)) },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            if (model.preferences.richPresenceWarningAcknowledged)
-                                navigator.parent?.parent?.push(RichPresenceScreen())
-                            else
-                                dialogState.value = true
                         }
                     )
                 )

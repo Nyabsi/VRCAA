@@ -131,43 +131,6 @@ class AdvancedScreen : Screen {
                             )
                         )
                     }
-
-                    item {
-                        Spacer(modifier = Modifier.padding(4.dp))
-
-                        ListItem(
-                            headlineContent = {
-                                Text(text = "Background Activities", color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
-                            }
-                        )
-                    }
-
-                    item {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.advanced_page_battery_optimization)) },
-                            supportingContent = { Text(text = stringResource(R.string.advanced_page_battery_optimization_description)) },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    val manager = getSystemService(context, PowerManager::class.java)
-                                    manager?.let { pm ->
-                                        if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
-                                            val intent = Intent(
-                                                Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                                                Uri.parse("package:${context.packageName}")
-                                            )
-                                            context.startActivity(intent)
-                                        } else {
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.about_page_battery_optimizations_toast),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    }
-                                }
-                            )
-                        )
-                    }
                 }
             },
         )
