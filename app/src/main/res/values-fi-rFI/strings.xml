@@ -271,4 +271,5 @@
     <string name="loading_text_avatar">Ladataan hahmoa…</string>
     <string name="loading_text_group">Ladataan ryhmää…</string>
     <string name="loading_text_instances">Ladataan instansseja…</string>
+    <string name="about_page_low_dpi_mode">Minimalist Mode</string>
 </resources>
