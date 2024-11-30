@@ -271,4 +271,5 @@
     <string name="loading_text_avatar">Loading avatar…</string>
     <string name="loading_text_group">Loading group…</string>
     <string name="loading_text_instances">Loading instances…</string>
+    <string name="about_page_low_dpi_mode">Minimalist Mode</string>
 </resources>
