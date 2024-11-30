@@ -107,7 +107,7 @@ class NavigationScreen : Screen {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
-        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel() }
 
         if (model.hasNoInternet.value) {
             NoInternetDialog(
@@ -446,6 +446,7 @@ class NavigationScreen : Screen {
                         ModalBottomSheet(
                             onDismissRequest = {
                                 showBottomSheet = false
+                                model.applySettings(true)
                             },
                             sheetState = sheetState
                         ) {
@@ -519,15 +520,12 @@ class NavigationScreen : Screen {
                                                 "shuffle",
                                                 "random",
                                                 "favorites",
-                                                " reportScore",
-                                                "reportCount",
                                                 "publicationDate",
                                                 "labsPublicationDate",
                                                 "created",
                                                 "updated",
                                                 "order",
                                                 "relevance",
-                                                "magic",
                                                 "name"
                                             )
                                             ComboInput(
