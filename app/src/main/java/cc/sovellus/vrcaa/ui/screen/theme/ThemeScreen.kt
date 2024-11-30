@@ -55,116 +55,97 @@ class ThemeScreen : Screen {
 
         val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
-        CompositionLocalProvider(LocalTheme provides model.currentIndex.intValue) {
-            Theme(LocalTheme.current) {
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            navigationIcon = {
-                                IconButton(onClick = { navigator.pop() }) {
-                                    Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = null
-                                    )
-                                }
-                            },
 
-                            title = { Text(text = stringResource(R.string.theme_page_title)) }
-                        )
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
                     },
-                    content = {
-                        LazyColumn(
+
+                    title = { Text(text = stringResource(R.string.theme_page_title)) }
+                )
+            },
+            content = {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            bottom = it.calculateBottomPadding(),
+                            top = it.calculateTopPadding()
+                        )
+                ) {
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = stringResource(R.string.theme_page_section_theme_title),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        )
+                    }
+
+                    item {
+                        val options =
+                            stringArrayResource(R.array.theme_page_selection_options)
+
+                        MultiChoiceSegmentedButtonRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(
-                                    bottom = it.calculateBottomPadding(),
-                                    top = it.calculateTopPadding()
-                                )
+                                .padding(start = 16.dp, end = 16.dp)
                         ) {
-                            item {
-                                ListItem(
-                                    headlineContent = {
-                                        Text(
-                                            text = stringResource(R.string.theme_page_section_theme_title),
-                                            color = MaterialTheme.colorScheme.secondary,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                    }
-                                )
-                            }
-
-                            item {
-                                val options =
-                                    stringArrayResource(R.array.theme_page_selection_options)
-
-                                MultiChoiceSegmentedButtonRow(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 16.dp, end = 16.dp)
+                            options.forEachIndexed { index, label ->
+                                SegmentedButton(
+                                    shape = SegmentedButtonDefaults.itemShape(
+                                        index = index,
+                                        count = options.size
+                                    ),
+                                    onCheckedChange = {
+                                        model.currentIndex.intValue = index
+                                        model.preferences.currentThemeOption =
+                                            model.currentIndex.intValue
+                                        ThemeManager.setTheme(model.currentIndex.intValue)
+                                    },
+                                    checked = index == model.currentIndex.intValue
                                 ) {
-                                    options.forEachIndexed { index, label ->
-                                        SegmentedButton(
-                                            shape = SegmentedButtonDefaults.itemShape(
-                                                index = index,
-                                                count = options.size
-                                            ),
-                                            onCheckedChange = {
-                                                model.currentIndex.intValue = index
-                                                model.preferences.currentThemeOption =
-                                                    model.currentIndex.intValue
-                                                ThemeManager.setTheme(model.currentIndex.intValue)
-                                            },
-                                            checked = index == model.currentIndex.intValue
-                                        ) {
-                                            Text(text = label, softWrap = true, maxLines = 1)
-                                        }
-                                    }
+                                    Text(text = label, softWrap = true, maxLines = 1)
                                 }
                             }
+                        }
+                    }
 
-                            item {
+                    item {
 
-                                Spacer(modifier = Modifier.padding(4.dp))
+                        Spacer(modifier = Modifier.padding(4.dp))
 
-                                ListItem(
-                                    headlineContent = {
-                                        Text(
-                                            text = stringResource(R.string.theme_page_section_display_title),
-                                            color = MaterialTheme.colorScheme.secondary,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                    }
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = stringResource(R.string.theme_page_section_display_title),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.SemiBold
                                 )
                             }
+                        )
+                    }
 
-                            item {
-                                ListItem(
-                                    headlineContent = { Text(stringResource(R.string.theme_page_minimalist_mode_text)) },
-                                    trailingContent = {
+                    item {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.theme_page_minimalist_mode_text)) },
+                            trailingContent = {
 
-                                        Switch(
-                                            checked = model.minimalistMode.value,
-                                            onCheckedChange = {
-                                                model.minimalistMode.value =
-                                                    !model.minimalistMode.value
-                                                model.preferences.minimalistMode =
-                                                    !model.preferences.minimalistMode
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.developer_mode_toggle_toast),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            },
-                                            colors = SwitchDefaults.colors(
-                                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                                                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-                                            )
-                                        )
-                                    },
-                                    modifier = Modifier.clickable {
-                                        model.minimalistMode.value = !model.minimalistMode.value
+                                Switch(
+                                    checked = model.minimalistMode.value,
+                                    onCheckedChange = {
+                                        model.minimalistMode.value =
+                                            !model.minimalistMode.value
                                         model.preferences.minimalistMode =
                                             !model.preferences.minimalistMode
                                         Toast.makeText(
@@ -172,28 +153,44 @@ class ThemeScreen : Screen {
                                             context.getString(R.string.developer_mode_toggle_toast),
                                             Toast.LENGTH_SHORT
                                         ).show()
-                                    }
-                                )
-
-                                ListItem(
-                                    headlineContent = {
-                                        Icon(
-                                            imageVector = Icons.Outlined.Info,
-                                            contentDescription = null
-                                        )
                                     },
-                                    supportingContent = {
-                                        Text(
-                                            text = stringResource(R.string.theme_page_minimalist_mode_text_description),
-                                            modifier = Modifier.padding(top = 8.dp)
-                                        )
-                                    },
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                        uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    )
                                 )
+                            },
+                            modifier = Modifier.clickable {
+                                model.minimalistMode.value = !model.minimalistMode.value
+                                model.preferences.minimalistMode =
+                                    !model.preferences.minimalistMode
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.developer_mode_toggle_toast),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        }
-                    },
-                )
-            }
-        }
+                        )
+
+                        ListItem(
+                            headlineContent = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Info,
+                                    contentDescription = null
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = stringResource(R.string.theme_page_minimalist_mode_text_description),
+                                    modifier = Modifier.padding(top = 8.dp)
+                                )
+                            },
+                        )
+                    }
+                }
+            },
+        )
     }
 }

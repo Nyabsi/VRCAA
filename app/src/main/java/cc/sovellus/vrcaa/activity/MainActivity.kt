@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.activity
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +32,7 @@ import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.manager.ThemeManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
@@ -40,6 +42,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class MainActivity : ComponentActivity() {
+
+    val currentTheme = mutableIntStateOf(-1)
+
+    private val themeListener = object : ThemeManager.ThemeListener {
+        override fun onPreferenceUpdate(theme: Int) {
+            currentTheme.intValue = theme
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +69,10 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        val preferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+        ThemeManager.addThemeListener(themeListener)
+
+        val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+        currentTheme.intValue = preferences.currentThemeOption
 
         val invalidSession = intent.extras?.getBoolean("INVALID_SESSION")
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
@@ -94,11 +107,15 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Content(token.isNotBlank() && invalidSession == null && terminateSession == null)
+            CompositionLocalProvider(LocalTheme provides currentTheme.intValue) {
+                Theme(LocalTheme.current) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        Content(token.isNotBlank() && invalidSession == null && terminateSession == null)
+                    }
+                }
             }
         }
     }
