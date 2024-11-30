@@ -16,10 +16,14 @@ VRChat Android Assistant offers a convenient solution for managing your VRChat e
 
 # Translations
 
-Are you multilangual? help translating VRChat Android Assistant for your language, at [Crowdin](https://crowdin.com/project/vrcaa)
+Are you multilangual? Help translate VRChat Android Assistant for your language at [Crowdin](https://crowdin.com/project/vrcaa).
 
-# Disclaimer
+# Disclaimers
 
-VRChat Android Assistant is not affiliated with VRChat Inc, nor does it represent the view or opinion of VRChat Inc. VRChat Android Assistant does not store nor collect any data out of the scope of YOUR device. The author of this application is not liable for any damage caused by the application.
+VRChat Android Assistant is **not affiliated with VRChat Inc.**, nor does it represent the views or opinions of VRChat Inc.
 
-VRChat Android Assistant is EXTERNAL modification and does not MODIFY or MANIPULATE the game, it is not against the Terms of Service of VRChat.
+VRChat Android Assistant **DOES NOT** store any data out of the scope of **YOUR DEVICE**. The author of this application is not liable for any damage caused by the application.
+
+VRChat Android Assistant is an **EXTERNAL TOOL** and **does not MODIFY or MANIPULATE the VRChat client in any way**.
+
+VRChat Android Assistant is in compliance with [VRChat's Terms of Service](https://hello.vrchat.com/legal).
