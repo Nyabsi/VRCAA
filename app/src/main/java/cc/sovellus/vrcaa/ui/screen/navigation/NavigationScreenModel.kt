@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.bundleOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.extension.avatarProvider
@@ -24,10 +25,9 @@ import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
 
-class NavigationScreenModel(
-    private val context: Context
-) : ScreenModel {
+class NavigationScreenModel : ScreenModel {
 
+    private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
 
     var searchModeActivated = mutableStateOf(false)
