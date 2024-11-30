@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.Construction
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Screenshot
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -49,6 +50,7 @@ import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.developerMode
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
+import cc.sovellus.vrcaa.extension.lowDPIMode
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
@@ -66,7 +68,11 @@ class SettingsScreen : Screen {
         
         val preferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
-        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(preferences.developerMode) }
+        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel(preferences.developerMode, preferences.lowDPIMode) }
+
+        // attempt to fix toggle issue by setting both models to the existing preference values...
+        model.developerMode.value = preferences.developerMode
+        model.lowDPIMode.value = preferences.lowDPIMode
 
         val dialogState = remember { mutableStateOf(false) }
         val logoutState = remember { mutableStateOf(false) }
@@ -183,6 +189,47 @@ class SettingsScreen : Screen {
                         }
                     )
                 }
+            }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.about_page_low_dpi_mode)) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.Screenshot,
+                            contentDescription = null
+                        )
+                    },
+                    trailingContent = {
+
+                        Switch(
+                            checked = model.lowDPIMode.value,
+                            onCheckedChange = {
+                                model.lowDPIMode.value = !model.lowDPIMode.value
+                                preferences.lowDPIMode = !preferences.lowDPIMode
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.developer_mode_toggle_toast),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                            )
+                        )
+                    },
+                    modifier = Modifier.clickable {
+                        model.lowDPIMode.value = !model.lowDPIMode.value
+                        preferences.lowDPIMode = !preferences.lowDPIMode
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.developer_mode_toggle_toast),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
             }
             item {
                 ListItem(

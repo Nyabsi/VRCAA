@@ -4,7 +4,9 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 
 class SettingsScreenModel(
-    developerMode: Boolean
+    developerMode: Boolean,
+    lowDPIMode: Boolean
 ) : ScreenModel {
     val developerMode = mutableStateOf(developerMode)
+    val lowDPIMode = mutableStateOf(lowDPIMode)
 }
