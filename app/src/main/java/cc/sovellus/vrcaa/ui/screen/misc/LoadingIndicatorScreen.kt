@@ -46,7 +46,7 @@ class LoadingIndicatorScreen : Screen {
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
-                    painter = if (isSystemInDarkTheme() && App.getContext().getSharedPreferences("vrcaa_prefs", 0).currentThemeOption == 1) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
+                    painter = if (App.isAppInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
                     contentDescription = null,
                     contentScale = ContentScale.FillHeight,
                     alignment = Alignment.Center
