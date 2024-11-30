@@ -107,7 +107,7 @@ class NavigationScreen : Screen {
 
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
-        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel() }
 
         if (model.hasNoInternet.value) {
             NoInternetDialog(
