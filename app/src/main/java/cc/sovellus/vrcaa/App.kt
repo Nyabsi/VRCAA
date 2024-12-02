@@ -8,11 +8,27 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.Tab
 import cc.sovellus.vrcaa.activity.CrashActivity
 import cc.sovellus.vrcaa.extension.currentThemeOption
+import cc.sovellus.vrcaa.extension.homeTab
+import cc.sovellus.vrcaa.extension.friendsTab
+import cc.sovellus.vrcaa.extension.favoritesTab
 import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.extension.minimalistMode
+import cc.sovellus.vrcaa.extension.settingsTab
+import cc.sovellus.vrcaa.extension.FeedTab
+import cc.sovellus.vrcaa.extension.userHome
 import cc.sovellus.vrcaa.helper.NotificationHelper
+import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
+import cc.sovellus.vrcaa.ui.tabs.FeedTab
+import cc.sovellus.vrcaa.ui.tabs.FriendsTab
+import cc.sovellus.vrcaa.ui.tabs.HomeTab
+import cc.sovellus.vrcaa.ui.tabs.ProfileTab
+import cc.sovellus.vrcaa.ui.tabs.SettingsTab
 
 class App : Application() {
 
@@ -43,6 +59,17 @@ class App : Application() {
 
         fun isNetworkLoggingEnabled(): Boolean { return networkLogging.value }
         fun isMinimalistModeEnabled(): Boolean { return minimalistModeEnabled.value }
+
+        fun ShowHome(): Int { return preferences.homeTab }
+        fun ShowFriends(): Int { return preferences.friendsTab }
+        fun ShowFavorites(): Int { return preferences.favoritesTab }
+        fun ShowFeed(): Int { return preferences.FeedTab }
+        fun ShowSettings(): Int { return preferences.settingsTab }
+
+
+        private val tabs =
+            arrayListOf(HomeTab, FriendsTab, FavoritesTab, FeedTab, ProfileTab, SettingsTab)
+        fun userHome(): Tab { return tabs[preferences.userHome] }
 
         @Composable
         fun isAppInDarkTheme(): Boolean { return isSystemInDarkTheme() && preferences.currentThemeOption != 0 }

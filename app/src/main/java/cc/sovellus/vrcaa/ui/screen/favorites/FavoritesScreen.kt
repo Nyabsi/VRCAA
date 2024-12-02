@@ -12,13 +12,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -28,6 +32,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -59,9 +65,10 @@ class FavoritesScreen : Screen {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ShowScreen(model: FavoritesScreenModel) {
-
+        val navigator = LocalNavigator.currentOrThrow
         val worldList = model.worldList.collectAsState()
         val avatarList = model.avatarList.collectAsState()
 
@@ -96,6 +103,25 @@ class FavoritesScreen : Screen {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (App.ShowFavorites() == 1) {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    title = {
+                        Text(
+                            text = stringResource(id = R.string.tabs_label_favorites),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                )
+            }
             MultiChoiceSegmentedButtonRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -164,7 +190,7 @@ class FavoritesScreen : Screen {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
-                                navigator.parent?.parent?.push(WorldInfoScreen(it.id))
+                                if (App.ShowFavorites() == 1) {navigator.push(WorldInfoScreen(it.id))} else {navigator.parent?.parent?.push(WorldInfoScreen(it.id))}
                             }
                         }
                     }
@@ -195,7 +221,7 @@ class FavoritesScreen : Screen {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
-                                navigator.parent?.parent?.push(AvatarScreen(it.id))
+                                if (App.ShowFavorites() == 1) {navigator.push(AvatarScreen(it.id))} else {navigator.parent?.parent?.push(AvatarScreen(it.id))}
                             }
                         }
                     }

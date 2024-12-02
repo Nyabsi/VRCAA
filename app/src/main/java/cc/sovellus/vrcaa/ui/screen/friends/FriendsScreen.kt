@@ -12,16 +12,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonOff
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Web
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -31,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -38,6 +43,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.models.Friend
 import cc.sovellus.vrcaa.helper.StatusHelper
@@ -72,11 +78,12 @@ class FriendsScreen : Screen {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ShowScreen(model: FriendsScreenModel)
     {
         val friends = model.friends.collectAsState()
-
+        val navigator = LocalNavigator.currentOrThrow
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
 
@@ -86,7 +93,26 @@ class FriendsScreen : Screen {
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            MultiChoiceSegmentedButtonRow(
+            if (App.ShowFriends() == 1) {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    title = {
+                        Text(
+                            text = stringResource(id = R.string.tabs_label_friends),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                )
+            }
+        MultiChoiceSegmentedButtonRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp)
@@ -155,7 +181,7 @@ class FriendsScreen : Screen {
                         favoriteFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                         FriendItem(
                             friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                         )
                     }
 
@@ -170,7 +196,7 @@ class FriendsScreen : Screen {
                         favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                         FriendItem(
                             friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                         )
                     }
 
@@ -179,7 +205,7 @@ class FriendsScreen : Screen {
                         favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                         FriendItem(
                             friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                         )
                     }
                 }
@@ -198,7 +224,7 @@ class FriendsScreen : Screen {
                     favoriteFriendsOffline.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                     FriendItem(
                         friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                     )
                 }
             }
@@ -230,7 +256,7 @@ class FriendsScreen : Screen {
                 items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                     FriendItem(
                         friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                     )
                 }
             }
@@ -266,7 +292,7 @@ class FriendsScreen : Screen {
                     items(filteredFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                         FriendItem(
                             friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                         )
                     }
                     item {
@@ -278,14 +304,14 @@ class FriendsScreen : Screen {
                     items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                         FriendItem(
                             friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                         )
                     }
                 } else {
                     items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status)  }) { friend ->
                         FriendItem(
                             friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                            callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                         )
                     }
                 }
@@ -319,7 +345,7 @@ class FriendsScreen : Screen {
                 items(filteredFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
                     FriendItem(
                         friend = friend,
-                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                        callback = { if (App.ShowFriends() == 1) {navigator.push(UserProfileScreen(friend.id))} else {navigator.parent?.parent?.push(UserProfileScreen(friend.id))} }
                     )
                 }
             }

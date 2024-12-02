@@ -49,7 +49,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -94,8 +93,6 @@ import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 import cc.sovellus.vrcaa.ui.tabs.SettingsTab
 import kotlinx.coroutines.launch
-import cc.sovellus.vrcaa.ui.theme.LocalTheme
-import cc.sovellus.vrcaa.ui.theme.Theme
 
 class NavigationScreen : Screen {
 
@@ -108,6 +105,7 @@ class NavigationScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
         val context: Context = LocalContext.current
         val model = navigator.rememberNavigatorScreenModel { NavigationScreenModel() }
+        var startAt = App.userHome()
 
         if (model.hasNoInternet.value) {
             NoInternetDialog(
@@ -122,10 +120,31 @@ class NavigationScreen : Screen {
             )
         }
 
-        val tabs = arrayListOf(HomeTab, FriendsTab, FavoritesTab, FeedTab, ProfileTab, SettingsTab)
+        val tabs =
+            arrayListOf(HomeTab, FriendsTab, FavoritesTab, FeedTab, ProfileTab, SettingsTab)
+        if (App.ShowHome() != 0) {
+            tabs.remove(HomeTab)
+        }
+        if (App.ShowFriends() != 0) {
+            tabs.remove(FriendsTab)
+        }
+        if (App.ShowFavorites() != 0) {
+            tabs.remove(FavoritesTab)
+        }
+        if (App.ShowFeed() != 0) {
+            tabs.remove(FeedTab)
+        }
+        if (App.ShowSettings() != 0) {
+            tabs.remove(SettingsTab)
+        }
+        if ( !tabs.contains( App.userHome() )) {
+            startAt = ProfileTab
+            val toast = Toast.makeText(context, "Couldn't find your home tab! Falling back...", Toast.LENGTH_SHORT)
+            toast.show()
+        }
 
         TabNavigator(
-            HomeTab,
+            startAt,
             tabDisposable = {
                 TabDisposable(
                     navigator = it,
@@ -146,8 +165,8 @@ class NavigationScreen : Screen {
             BackHandler(
                 enabled = true,
                 onBack = {
-                    if (tabNavigator.current != HomeTab) {
-                        tabNavigator.current = HomeTab
+                    if (tabNavigator.current != startAt) {
+                        tabNavigator.current = startAt
                     } else {
                         pressBackCounter++
                     }
@@ -678,27 +697,29 @@ class NavigationScreen : Screen {
                     }
                 },
                 bottomBar = {
-                    if (!model.searchModeActivated.value) {
-                        NavigationBar {
-                            tabs.forEach { tab ->
-                                NavigationBarItem(
-                                    selected = tabNavigator.current.key == tab.key,
-                                    onClick = {
-                                        pressBackCounter = 0
-                                        tabNavigator.current = tab
-                                    },
-                                    icon = {
-                                        Icon(
-                                            painter = tab.options.icon!!,
-                                            contentDescription = tab.options.title
-                                        )
-                                    },
-                                    label = {
-                                        if (!App.isMinimalistModeEnabled()) {
-                                            Text(text = tab.options.title)
+                    if (App.ShowHome() == 0 || App.ShowFriends() == 0 || App.ShowFavorites() == 0 || App.ShowFeed() == 0 || App.ShowSettings() == 0) {
+                        if (!model.searchModeActivated.value) {
+                            NavigationBar {
+                                tabs.forEach { tab ->
+                                    NavigationBarItem(
+                                        selected = tabNavigator.current.key == tab.key,
+                                        onClick = {
+                                            pressBackCounter = 0
+                                            tabNavigator.current = tab
+                                        },
+                                        icon = {
+                                            Icon(
+                                                painter = tab.options.icon!!,
+                                                contentDescription = tab.options.title
+                                            )
+                                        },
+                                        label = {
+                                            if (!App.isMinimalistModeEnabled()) {
+                                                Text(text = tab.options.title)
+                                            }
                                         }
-                                    }
-                                )
+                                    )
+                                }
                             }
                         }
                     }

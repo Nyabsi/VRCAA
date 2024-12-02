@@ -147,7 +147,7 @@
     <string name="feed_friend_request_label">Заявка в друзья</string>
     <string name="feed_friend_request_text">хочет добавить вас в друзья.</string>
     <!-- About -->
-    <string name="about_page_title">О программе</string>
+    <string name="DeleteMe">О программе</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
     <string name="about_page_translate_title">Помочь в переводе</string>
     <string name="about_page_battery_optimizations_title">Отключить оптимизацию батареи</string>

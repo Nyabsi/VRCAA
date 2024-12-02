@@ -5,6 +5,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -13,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -21,6 +29,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
@@ -44,10 +53,12 @@ class FeedScreen : Screen {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ShowScreen(model: FeedScreenModel)
     {
         val feed = model.feed.collectAsState()
+        val navigator: Navigator = LocalNavigator.currentOrThrow
 
         LazyColumn(
             Modifier
@@ -56,6 +67,27 @@ class FeedScreen : Screen {
                 .padding(1.dp),
             state = rememberLazyListState()
         ) {
+            if (App.ShowFeed() == 1) {
+                item {
+                    TopAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = { navigator.pop() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = null
+                                )
+                            }
+                        },
+                        title = {
+                            Text(
+                                text = stringResource(id = R.string.tabs_label_feed),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    )
+                }
+            }
             items(
                 feed.value.count(),
                 key = { item -> feed.value.reversed()[item].feedId })

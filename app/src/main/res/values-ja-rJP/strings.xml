@@ -147,7 +147,7 @@
     <string name="feed_friend_request_label">フレンド・リクエスト</string>
     <string name="feed_friend_request_text">さんがフレンドになりたいようです。</string>
     <!-- About -->
-    <string name="about_page_title">概要</string>
+    <string name="DeleteMe">概要</string>
     <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
     <string name="about_page_translate_title">飜訳への協力</string>
     <string name="about_page_battery_optimizations_title">バッテリーの最適化</string>

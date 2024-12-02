@@ -91,3 +91,30 @@ internal var SharedPreferences.minimalistMode: Boolean
 internal var SharedPreferences.currentThemeOption: Int
     get() = getInt("currentThemeOption", 2)
     set(it) = edit { putInt("currentThemeOption", it) }
+
+
+/* Tab settings (0: Shown, 1: Folded to Profile, 2: Hidden) */
+
+internal var SharedPreferences.homeTab: Int
+    get() = getInt("homeTab", 0)
+    set(it) = edit { putInt("homeTab", it) }
+
+internal var SharedPreferences.friendsTab: Int
+    get() = getInt("friendsTab", 0)
+    set(it) = edit { putInt("friendsTab", it) }
+
+internal var SharedPreferences.favoritesTab: Int
+    get() = getInt("favoritesTab", 0)
+    set(it) = edit { putInt("favoritesTab", it) }
+
+internal var SharedPreferences.FeedTab: Int
+    get() = getInt("FeedTab", 0)
+    set(it) = edit { putInt("FeedTab", it) }
+
+internal var SharedPreferences.settingsTab: Int
+    get() = getInt("settingsTab", 0)
+    set(it) = edit { putInt("settingsTab", it) }
+
+internal var SharedPreferences.userHome: Int
+    get() = getInt("userHome", 0)
+    set(it) = edit { putInt("userHome", it) }

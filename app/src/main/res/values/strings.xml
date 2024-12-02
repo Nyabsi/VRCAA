@@ -86,8 +86,7 @@
     </string-array>
 
     <!-- Settings -->
-
-    <string name="settings_item_about">About</string>
+    <string name="about">About</string>
     <string name="settings_item_about_description">More information about your device and VRCAA</string>
     <string name="settings_item_theming">Appearance</string>
     <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
@@ -96,6 +95,17 @@
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_logout">Logout</string>
+    <string name="settings_navBar">Navigation Bar Icons</string>
+    <string name="settings_navBar_description">Change which icons are shown in the navigation bar.</string>
+
+        <!-- Settings -> Customization -> Navigation Bar Icons -->
+    <string name="navButtons_page_title">NavBar Icons</string>
+    <string-array name="navigation_buttons_settings_page_selection_options">
+        <item>Shown</item>
+        <item>Settings</item>
+        <item>Hidden</item>
+    </string-array>
+
 
     <!-- Worlds -->
 
@@ -182,7 +192,7 @@
 
     <!-- About -->
 
-    <string name="about_page_title">About</string>
+    <string name="DeleteMe">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
     <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
@@ -374,5 +384,10 @@
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+    <string name="settings_Networking">Networking</string>
+    <string name="advanced_page_view_network_logs_description">View intercepted HTTP and WebSocket traffic</string>
+    <string name="advanced_page_background_activities">Background Activities</string>
+    <string name="about_page_translate_description">Help translate VRCAA to your language</string>
+    <string name="settings_item_logout_description">Log out of VRCAA</string>
 
 </resources>

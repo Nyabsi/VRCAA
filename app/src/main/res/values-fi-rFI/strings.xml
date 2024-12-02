@@ -147,7 +147,7 @@
     <string name="feed_friend_request_label">Ystäväpyyntö</string>
     <string name="feed_friend_request_text">haluaa lisätä sinut ystäväksi.</string>
     <!-- About -->
-    <string name="about_page_title">Tietoja</string>
+    <string name="DeleteMe">Tietoja</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
     <string name="about_page_translate_title">Avusta Kääntämisessä</string>
     <string name="about_page_battery_optimizations_title">Poista akun optimointi käytöstä</string>

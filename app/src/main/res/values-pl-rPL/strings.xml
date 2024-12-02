@@ -147,7 +147,7 @@
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
     <!-- About -->
-    <string name="about_page_title">About</string>
+    <string name="DeleteMe">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
     <string name="about_page_battery_optimizations_title">Wyłącz optymalizację baterii</string>
