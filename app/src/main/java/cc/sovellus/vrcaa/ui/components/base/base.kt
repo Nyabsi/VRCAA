@@ -259,6 +259,38 @@ class ComposableBase {
             }
         }
 
+        fun LazyListScope.FoldedTabs(
+            inRoot: Boolean = true
+        ) {
+            if (!App.ShowHome()) {
+                ComposableBase.companion.ButtonItemWithIcon(R.string.tabs_label_home, 0, Icons.Filled.Home) {
+                    if (inRoot) {
+                        navigator.parent?.parent?.push(HomeScreen())
+                    } else {
+                        navigator.push(HomeScreen())
+                    }
+                }
+            }
+            if (!App.ShowFriends()) {
+                ComposableBase.companion.ButtonItemWithIcon(R.string.tabs_label_friends, 0, Icons.Filled.Person) {
+                    if (inRoot) {
+                        navigator.parent?.parent?.push(FriendsScreen())
+                    } else {
+                        navigator.push(FriendsScreen())
+                    }
+                }
+            }
+            if (!App.ShowFavorites()) {
+                ComposableBase.companion.ButtonItemWithIcon(R.string.tabs_label_favorites, 0, Icons.Filled.Star) {
+                    if (inRoot) {
+                        navigator.parent?.parent?.push(FavoritesScreen())
+                    } else {
+                        navigator.push(FavoritesScreen())
+                    }
+                }
+            }
+        }
+
 
     } //END OF COMPANION OBJECT
 }

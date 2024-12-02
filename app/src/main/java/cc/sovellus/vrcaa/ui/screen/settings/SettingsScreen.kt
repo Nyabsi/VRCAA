@@ -129,6 +129,10 @@ class SettingsScreen : Screen {
                     )
                 }
             }
+            
+
+            DividerH()
+
             ButtonItemWithIcon(R.string.about, R.string.settings_item_about_description, Icons.Outlined.Info) {
                 navigator.parent?.parent?.push(AboutScreen())
             }
