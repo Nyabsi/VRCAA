@@ -88,7 +88,7 @@ fun FavoriteDialog(
                             RadioButton(selected = it == selectedGroup.value, onClick = {
                                 selectedGroup.value = it
                             })
-                            Text(text = FavoriteManager.getDisplayNameFromTag(it) ?: it)
+                            Text(text = FavoriteManager.getDisplayNameFromTag(it))
                         }
                     }
                 }

@@ -16,7 +16,11 @@ import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.ImagesearchRoller
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Translate
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,7 +56,7 @@ class SettingsScreen : Screen {
 
     @Composable
     override fun Content() {
-
+        val snackbarHostState = remember { SnackbarHostState() }
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
@@ -95,7 +99,7 @@ class SettingsScreen : Screen {
                 onConfirmation = {
                     dialogState.value = false
                     model.preferences.richPresenceWarningAcknowledged = true
-                    if (App.ShowSettings() == 0) { navigator.parent?.parent?.push(RichPresenceScreen()) } else { navigator.push(RichPresenceScreen()) }
+                    navigator.parent?.parent?.push(RichPresenceScreen())
                 },
                 title,
                 description
@@ -129,8 +133,15 @@ class SettingsScreen : Screen {
                     )
                 }
             }
-            
-
+            item {
+                SnackbarHost(hostState = snackbarHostState)
+                LaunchedEffect(Unit) {
+                    snackbarHostState.showSnackbar(
+                        message = "This is a custom toast!",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
             DividerH()
 
             ButtonItemWithIcon(R.string.about, R.string.settings_item_about_description, Icons.Outlined.Info) {

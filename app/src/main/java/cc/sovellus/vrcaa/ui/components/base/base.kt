@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.DisabledByDefault
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -20,6 +24,7 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -30,7 +35,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
+import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreen
+import cc.sovellus.vrcaa.ui.screen.home.HomeScreen
 
 /*
 How to use:
@@ -60,7 +69,12 @@ ExampleFunction(Parameter) {OutParameter -> ...}
 Otherwise, you can just do this:
 ExampleFunction(Parameter)
  */
+
+
 class ComposableBase {
+
+
+
     companion object {
 
         fun QuickToast(context: Context, text: Int) {
@@ -220,7 +234,7 @@ class ComposableBase {
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp)
                 ) {
-                    options.forEachIndexed() { index, label ->
+                    options.forEachIndexed { index, label ->
                         SegmentedButton(
                             shape = SegmentedButtonDefaults.itemShape(
                                 index = index,
@@ -259,11 +273,13 @@ class ComposableBase {
             }
         }
 
+        @Composable
         fun LazyListScope.FoldedTabs(
+            navigator: cafe.adriel.voyager.navigator.Navigator,
             inRoot: Boolean = true
         ) {
-            if (!App.ShowHome()) {
-                ComposableBase.companion.ButtonItemWithIcon(R.string.tabs_label_home, 0, Icons.Filled.Home) {
+            if (App.ShowHome() == 2) {
+                ButtonItemWithIcon(R.string.tabs_label_home, 0, Icons.Filled.Home) {
                     if (inRoot) {
                         navigator.parent?.parent?.push(HomeScreen())
                     } else {
@@ -271,8 +287,8 @@ class ComposableBase {
                     }
                 }
             }
-            if (!App.ShowFriends()) {
-                ComposableBase.companion.ButtonItemWithIcon(R.string.tabs_label_friends, 0, Icons.Filled.Person) {
+            if (App.ShowFriends() == 2) {
+                ButtonItemWithIcon(R.string.tabs_label_friends, 0, Icons.Filled.Person) {
                     if (inRoot) {
                         navigator.parent?.parent?.push(FriendsScreen())
                     } else {
@@ -280,8 +296,8 @@ class ComposableBase {
                     }
                 }
             }
-            if (!App.ShowFavorites()) {
-                ComposableBase.companion.ButtonItemWithIcon(R.string.tabs_label_favorites, 0, Icons.Filled.Star) {
+            if (App.ShowFavorites() == 2) {
+                ButtonItemWithIcon(R.string.tabs_label_favorites, 0, Icons.Filled.Star) {
                     if (inRoot) {
                         navigator.parent?.parent?.push(FavoritesScreen())
                     } else {
@@ -289,8 +305,10 @@ class ComposableBase {
                     }
                 }
             }
+            if (App.ShowFeed() == 2) {
+                ButtonItemWithIcon(R.string.tabs_label_feed, 0, Icons.Filled.BarChart) {
+                }
+            }
         }
-
-
     } //END OF COMPANION OBJECT
 }
