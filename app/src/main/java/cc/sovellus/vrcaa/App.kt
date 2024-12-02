@@ -64,7 +64,6 @@ class App : Application() {
         fun ShowFriends(): Int { return preferences.friendsTab }
         fun ShowFavorites(): Int { return preferences.favoritesTab }
         fun ShowFeed(): Int { return preferences.FeedTab }
-        fun ShowSettings(): Int { return preferences.settingsTab }
 
 
         private val tabs =
