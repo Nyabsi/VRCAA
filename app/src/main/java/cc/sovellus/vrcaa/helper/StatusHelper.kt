@@ -29,6 +29,10 @@ object StatusHelper {
                 else -> "Offline"
             }
         }
+
+        companion object {
+            fun fromInt(value: Int) = Status.entries.first { it.ordinal == value }
+        }
     }
 
     fun getStatusFromString(status: String?): Status {

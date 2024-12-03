@@ -10,6 +10,10 @@ object FeedManager {
     private var feedListener: FeedListener? = null
     private var feedList: MutableList<Feed> = ArrayList()
 
+    init {
+        feedList = DatabaseManager.readFeeds()
+    }
+
     enum class FeedType {
         FRIEND_FEED_ONLINE,
         FRIEND_FEED_OFFLINE,
@@ -17,7 +21,11 @@ object FeedManager {
         FRIEND_FEED_STATUS,
         FRIEND_FEED_FRIEND_REQUEST,
         FRIEND_FEED_REMOVED,
-        FRIEND_FEED_ADDED
+        FRIEND_FEED_ADDED;
+
+        companion object {
+            fun fromInt(value: Int) = entries.first { it.ordinal == value }
+        }
     }
 
     data class Feed(
@@ -37,6 +45,7 @@ object FeedManager {
 
     fun addFeed(feed: Feed) {
         feedList.add(feed)
+        DatabaseManager.writeFeed(feed)
         feedListener?.onReceiveUpdate(feedList)
     }
 
