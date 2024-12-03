@@ -16,11 +16,8 @@ import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.ImagesearchRoller
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Translate
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -43,6 +40,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
 import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ButtonItemWithIcon
 import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.DividerH
+import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.FoldedTabs
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
@@ -133,18 +131,25 @@ class SettingsScreen : Screen {
                     )
                 }
             }
+            /* Test Item, considering replacement of regular toast for better continuity.
             item {
                 SnackbarHost(hostState = snackbarHostState)
                 LaunchedEffect(Unit) {
                     snackbarHostState.showSnackbar(
-                        message = "This is a custom toast!",
+                        message = "What sorcery is this?!?!",
                         duration = SnackbarDuration.Short
                     )
                 }
             }
-            DividerH()
+             */
 
-            ButtonItemWithIcon(R.string.about, R.string.settings_item_about_description, Icons.Outlined.Info) {
+            FoldedTabs(navigator)
+
+            ButtonItemWithIcon(
+                R.string.settings_item_about,
+                R.string.settings_item_about_description,
+                Icons.Outlined.Info
+            ) {
                 navigator.parent?.parent?.push(AboutScreen())
             }
             ButtonItemWithIcon(R.string.settings_item_theming, R.string.settings_item_theming_description, Icons.Outlined.ImagesearchRoller) {

@@ -375,5 +375,21 @@
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+    <string name="settings_Networking">Networking</string>
+    <string name="advanced_page_view_network_logs_description">View intercepted HTTP and WebSocket traffic.</string>
+    <string name="advanced_page_background_activities">Background Activities</string>
+
+    <!-- Unorganized Items -->
+    <string name="navButtons_page_title">NavBar Icons</string>
+    <string name="home_page_not_available">Failed to find home page, please set it in settings.</string>
+    <string name="about_page_translate_description">Help translate VRCAA to your language</string>
+    <string name="settings_item_logout_description">Log out of VRCAA</string>
+    <string name="settings_navBar">Navigation Bar Icons</string>
+    <string name="settings_navBar_description">Show, fold, or hide icons in the Navigation Bar</string>
+    <string-array name="settings_navBar_selection_options">
+        <item>Show</item>
+        <item>Fold</item>
+        <item>Hide</item>
+    </string-array>
 
 </resources>

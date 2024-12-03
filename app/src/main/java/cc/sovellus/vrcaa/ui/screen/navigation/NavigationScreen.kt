@@ -78,6 +78,7 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.QuickToast
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -85,9 +86,9 @@ import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
-import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.DebugTab
 import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
+import cc.sovellus.vrcaa.ui.tabs.FeedTab
 import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
@@ -134,13 +135,11 @@ class NavigationScreen : Screen {
         if (App.ShowFeed() != 0) {
             tabs.remove(FeedTab)
         }
-        if (App.ShowSettings() != 0) {
-            tabs.remove(SettingsTab)
-        }
+
         if ( !tabs.contains( App.userHome() )) {
-            startAt = ProfileTab
-            val toast = Toast.makeText(context, "Couldn't find your home tab! Falling back...", Toast.LENGTH_SHORT)
-            toast.show()
+            startAt = SettingsTab
+            QuickToast(context, R.string.home_page_not_available)
+            App.FallbackHome()
         }
 
         TabNavigator(
@@ -697,7 +696,7 @@ class NavigationScreen : Screen {
                     }
                 },
                 bottomBar = {
-                    if (App.ShowHome() == 0 || App.ShowFriends() == 0 || App.ShowFavorites() == 0 || App.ShowFeed() == 0 || App.ShowSettings() == 0) {
+                    if (true) { // This condition will be repurposed at a later time
                         if (!model.searchModeActivated.value) {
                             NavigationBar {
                                 tabs.forEach { tab ->

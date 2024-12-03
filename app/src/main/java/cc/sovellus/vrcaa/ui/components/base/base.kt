@@ -24,7 +24,6 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -38,6 +37,7 @@ import androidx.compose.ui.zIndex
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreen
+import cc.sovellus.vrcaa.ui.screen.feed.FeedScreen
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreen
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreen
 
@@ -254,7 +254,7 @@ class ComposableBase {
         }
 
 
-        fun LazyListScope.TextWithHeaderAndDescription(
+        fun LazyListScope.TextWithStringHeaderAndDescription(
             title: String,
             description: String,
             bottomDivider: Boolean = false
@@ -268,17 +268,16 @@ class ComposableBase {
                         Text(description)
                     }
                 )
-                if (bottomDivider) this@TextWithHeaderAndDescription.DividerH()
+                if (bottomDivider) this@TextWithStringHeaderAndDescription.DividerH()
 
             }
         }
 
-        @Composable
         fun LazyListScope.FoldedTabs(
             navigator: cafe.adriel.voyager.navigator.Navigator,
             inRoot: Boolean = true
         ) {
-            if (App.ShowHome() == 2) {
+            if (App.ShowHome() == 1) {
                 ButtonItemWithIcon(R.string.tabs_label_home, 0, Icons.Filled.Home) {
                     if (inRoot) {
                         navigator.parent?.parent?.push(HomeScreen())
@@ -287,7 +286,7 @@ class ComposableBase {
                     }
                 }
             }
-            if (App.ShowFriends() == 2) {
+            if (App.ShowFriends() == 1) {
                 ButtonItemWithIcon(R.string.tabs_label_friends, 0, Icons.Filled.Person) {
                     if (inRoot) {
                         navigator.parent?.parent?.push(FriendsScreen())
@@ -296,7 +295,7 @@ class ComposableBase {
                     }
                 }
             }
-            if (App.ShowFavorites() == 2) {
+            if (App.ShowFavorites() == 1) {
                 ButtonItemWithIcon(R.string.tabs_label_favorites, 0, Icons.Filled.Star) {
                     if (inRoot) {
                         navigator.parent?.parent?.push(FavoritesScreen())
@@ -305,9 +304,17 @@ class ComposableBase {
                     }
                 }
             }
-            if (App.ShowFeed() == 2) {
+            if (App.ShowFeed() == 1) {
                 ButtonItemWithIcon(R.string.tabs_label_feed, 0, Icons.Filled.BarChart) {
+                    if (inRoot) {
+                        navigator.parent?.parent?.push(FeedScreen())
+                    } else {
+                        navigator.push(FeedScreen())
+                    }
                 }
+            }
+            if (App.ShowHome() == 1 || App.ShowFriends() == 1 || App.ShowFavorites() == 1 || App.ShowFeed() == 1) {
+                this@FoldedTabs.DividerH()
             }
         }
     } //END OF COMPANION OBJECT

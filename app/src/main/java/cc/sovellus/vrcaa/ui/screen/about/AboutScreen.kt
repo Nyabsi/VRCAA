@@ -34,7 +34,7 @@ import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ButtonItem
 import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.DividerH
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.TextWithHeaderAndDescription
+import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.TextWithStringHeaderAndDescription
 import cc.sovellus.vrcaa.ui.screen.licenses.LicensesScreen
 
 class AboutScreen : Screen {
@@ -61,7 +61,7 @@ class AboutScreen : Screen {
                         }
                     },
 
-                    title = { Text(text = stringResource(R.string.DeleteMe)) }
+                    title = { Text(text = stringResource(R.string.about_page_title)) }
                 )
             },
             content = {
@@ -92,10 +92,17 @@ class AboutScreen : Screen {
 
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
-                    TextWithHeaderAndDescription("Version", "${BuildConfig.VERSION_NAME} ${BuildConfig.FLAVOR} (${BuildConfig.GIT_BRANCH}, ${BuildConfig.GIT_HASH})")
-                    TextWithHeaderAndDescription("Model", Build.MODEL)
-                    TextWithHeaderAndDescription("Vendor", Build.MANUFACTURER)
-                    TextWithHeaderAndDescription("System Version", "Android ${Build.VERSION.RELEASE}", true)
+                    TextWithStringHeaderAndDescription(
+                        "Version",
+                        "${BuildConfig.VERSION_NAME} ${BuildConfig.FLAVOR} (${BuildConfig.GIT_BRANCH}, ${BuildConfig.GIT_HASH})"
+                    )
+                    TextWithStringHeaderAndDescription("Model", Build.MODEL)
+                    TextWithStringHeaderAndDescription("Vendor", Build.MANUFACTURER)
+                    TextWithStringHeaderAndDescription(
+                        "System Version",
+                        "Android ${Build.VERSION.RELEASE}",
+                        true
+                    )
                     DividerH()
                     ButtonItem(R.string.about_page_open_source_licenses_title, 0) {navigator.push(LicensesScreen())}
                 }
