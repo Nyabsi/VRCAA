@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Universal Strings -->
+    <string name="result_not_found">釣れた魚が居ないのでボウズのようです。</string>
+    <string name="legal_disclaimer">"VRCAAはVRChat社ならびに関連会社によって承認されておりません。"</string>
+    <!-- Friends -->
+    <string-array name="friend_selection_options">
+        <item>お気に入り</item>
+        <item>オンライン</item>
+        <item>ウェブサイト</item>
+        <item>オフライン</item>
+    </string-array>
+    <!-- Home -->
+    <string name="home_active_friends">アクティブ</string>
+    <string name="home_recently_visited">最近訪れたワールド</string>
+    <string name="home_offline_friends">オフライン</string>
+    <string name="home_friend_locations">フレンドのインスタンス</string>
+    <!-- Login -->
+    <string name="login_text">VRC Android Assistantへのログイン</string>
+    <string name="login_label_username">ユーザー名 or メールアドレス</string>
+    <string name="login_label_password">パスワード</string>
+    <string name="login_button_text">ログイン</string>
+    <string name="login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
+    <string name="login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
+    <!-- Two Auth -->
+    <string name="auth_text_email">メールで送信されたコードを入力して下さい。</string>
+    <string name="auth_text_app">2段階認証アプリに表示されているコードを入力して下さい。</string>
+    <string name="auth_button_text">認証</string>
+    <string name="auth_button_paste">貼り付け</string>
+    <!-- Main -->
+    <string name="main_search_placeholder">ワールド・ユーザー・アバターの検索…</string>
+    <!-- Profile -->
+    <string name="profile_label_current_location">現在のインスタンス</string>
+    <string name="profile_label_note">Note</string>
+    <string name="profile_label_biography">プロフィール</string>
+    <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
+    <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
+    <string name="profile_user_dropdown_view_groups">グループの表示</string>
+    <string name="profile_user_dropdown_view_avatar">アバター詳細を表示</string>
+    <string name="profile_user_dropdown_invite_self">セルフ・インバイト</string>
+    <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
+    <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_toast_invite_sent">インバイトを送信しました、ゲーム内で確認してください。</string>
+    <string name="profile_mutual_groups_text">Mutual Groups</string>
+    <!-- Search -->
+    <string name="search_text_result">検索結果：</string>
+    <string name="search_filter_category_worlds">ワールド</string>
+    <string name="search_filter_category_worlds_featured">注目</string>
+    <string name="search_filter_category_worlds_sort_by">ソート</string>
+    <string name="search_filter_category_worlds_count">表示数</string>
+    <string name="search_filter_category_users">ユーザー</string>
+    <string name="search_filter_category_users_count">表示数</string>
+    <string name="search_filter_category_avatars">アバター</string>
+    <string name="search_filter_category_avatars_provider">提供者</string>
+    <string name="search_filter_category_groups">グループ</string>
+    <string name="search_filter_category_groups_count">表示数</string>
+    <!-- TODO: remove duplicate labels :) -->
+    <string name="search_filter_label_count">表示数</string>
+    <string name="search_filter_button_reset">リセット</string>
+    <string name="search_filter_button_apply">適用</string>
+    <string-array name="search_selection_options">
+        <item>ワールド</item>
+        <item>ユーザー</item>
+        <item>アバター</item>
+        <item>グループ</item>
+    </string-array>
+    <!-- Settings -->
+    <string name="settings_item_about">概要</string>
+    <string name="settings_item_about_description">More information about your device and VRCAA</string>
+    <string name="settings_item_theming">Appearance</string>
+    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_rich_presence">リッチプレゼンス (実験中)</string>
+    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
+    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_logout">ログオフ</string>
+    <!-- Worlds -->
+    <string name="world_label_description">情報</string>
+    <string name="world_label_tags">タグ</string>
+    <string name="world_text_no_tags">タグの記載が有りません。</string>
+    <string name="world_title_created_at">作成日時</string>
+    <string name="world_title_updated_at">最終更新日時</string>
+    <string name="world_toast_not_found">ワールドが存在しないか、プライベートの為、取得に失敗しました。</string>
+    <string-array name="world_selection_options">
+        <item>概要</item>
+        <item>インスタンス</item>
+    </string-array>
+    <string name="world_author_label">作者： %1$s</string>
+    <string name="world_instance_invite_dialog_title">確認</string>
+    <string name="world_instance_invite_dialog_description">このインスタンスへ自分を招待しますか？</string>
+    <string name="world_instance_no_public_instances_message">パブリックインスタンスが存在しません。</string>
+    <string name="world_instance_failed_to_fetch_instance_message">インスタンス一覧の取得に失敗しました。再試行してください。</string>
+    <!-- Tabs -->
+    <string name="tabs_label_friends">フレンド</string>
+    <string name="tabs_label_home">ホーム</string>
+    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_activities">Activities</string>
+    <string name="tabs_label_profile">プロフィール</string>
+    <string name="tabs_label_pictures">ピクチャー</string>
+    <string name="tabs_label_settings">設定</string>
+    <!-- Notifications -->
+    <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
+    <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
+    <string name="notification_service_description_online">フレンドの %1$s さんがオンラインになりました。</string>
+    <string name="notification_service_title_offline">フレンドがオフラインになりました。</string>
+    <string name="notification_service_description_offline">フレンドの %1$s さんがオフラインになりました。</string>
+    <string name="notification_service_title_location">フレンドが別インスタンスへ移動しました。</string>
+    <string name="notification_service_description_location">フレンドの %1$s さんが %2$s へ移動しました。</string>
+    <string name="notification_service_title_friend_removed">フレンド解除されました。</string>
+    <string name="notification_service_description_friend_removed">フレンドの %1$s さんがフレンド解除しました。</string>
+    <string name="notification_service_title_friend_added">新しいフレンドが出来ました。</string>
+    <string name="notification_service_description_friend_added">%1$s さんがフレンドになりました。</string>
+    <string name="notification_title_player">の通知</string>
+    <string name="notification_label_enable">通知を有効にする</string>
+    <string name="notification_label_intent_online">オンラインの通知</string>
+    <string name="notification_label_intent_offline">オフラインの通知</string>
+    <string name="notification_label_intent_location">インスタンスの通知</string>
+    <string name="notification_label_intent_status">ステータス変更の通知</string>
+    <string name="notification_service_title_status">フレンドがステースを変更しました。</string>
+    <string name="notification_service_description_status">フレンドの %1$s さんのステータスが( %2$s )から( %3$s )へ変更されました。</string>
+    <!-- Avatars -->
+    <string name="avatar_dropdown_label_select">このアバターへ変更</string>
+    <string name="avatar_dropdown_label_remove_favorite">お気に入りから削除</string>
+    <string name="avatar_dropdown_toast_select_avatar">アバターが選択されました。</string>
+    <string name="avatar_title_description">情報</string>
+    <string name="avatar_title_created_at">作成日時</string>
+    <string name="avatar_title_updated_at">最終更新日時</string>
+    <string name="avatar_title_content_labels">コンテンツラベル</string>
+    <string name="avatar_text_author">作者： %1$s</string>
+    <string name="avatar_text_content_labels_not_found">このアバターにコンテンツラベルの登録は有りません。</string>
+    <string name="avatar_toast_avatar_not_found_message">アバターが存在しないか、プライベートの為、取得に失敗しました。</string>
+    <!-- Feed -->
+    <string name="feed_online_label">オンライン</string>
+    <string name="feed_online_text">さんがオンラインになりました。</string>
+    <string name="feed_offline_label">オフライン</string>
+    <string name="feed_offline_text">さんがオフラインになりました。</string>
+    <string name="feed_location_label">GPS</string>
+    <string name="feed_location_text">さんが移動しました。：</string>
+    <string name="feed_status_label">ステータス</string>
+    <string name="feed_status_text">ステータスが変更されました：</string>
+    <string name="feed_added_label">フレンドの追加</string>
+    <string name="feed_added_text">さんがフレンドとして追加しました。</string>
+    <string name="feed_removed_label">フレンドの解除</string>
+    <string name="feed_removed_text">さんがフレンドを解除しました。</string>
+    <string name="feed_friend_request_label">フレンド・リクエスト</string>
+    <string name="feed_friend_request_text">さんがフレンドになりたいようです。</string>
+    <!-- About -->
+    <string name="about_page_title">概要</string>
+    <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
+    <string name="about_page_translate_title">飜訳への協力</string>
+    <string name="about_page_battery_optimizations_title">バッテリーの最適化</string>
+    <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
+    <string name="license_title">オープンソースライセンス</string>
+    <string name="about_page_developer_mode">開発者モード</string>
+    <!-- API -->
+    <string name="api_session_has_expired_text">セッションが切れました、再ログインしてください。</string>
+    <string name="api_avatar_select_failed">"アバターの選択に失敗しました。"</string>
+    <!-- Discord Rich Presence -->
+    <string name="discord_login_title">Discordへのログイン</string>
+    <string name="discord_login_title_verify">2段階認証</string>
+    <string name="discord_login_label_username">ユーザー名 or メールアドレス</string>
+    <string name="discord_login_label_password">パスワード</string>
+    <string name="discord_login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
+    <string name="discord_login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
+    <string name="discord_login_button_login">ログイン</string>
+    <string name="discord_login_button_verify">認証</string>
+    <string name="discord_login_restarted_service_toast">サービスを再起動し、有効化しました。</string>
+    <string name="discord_login_label_enable">リッチプレゼンスを有効にする</string>
+    <string name="discord_login_label_set_webhook">Webhook URLを設定する</string>
+    <string name="discord_login_description_set_webhook">ワールドのサムネイル表示に必要 (任意)</string>
+    <string name="discord_login_description_enable">discordに現在のStatusを表示する</string>
+    <string name="discord_login_label_logout">ログアウト</string>
+    <string name="discord_login_description_logout">現在のセッショントークンを無効化します</string>
+    <!-- Crash -->
+    <string name="crash_title_text">アプリに致命的な障害が発生しました </string>
+    <string name="crash_button_restart_text">アプリの再起動</string>
+    <string name="crash_button_copy_log_text">情報をコピーする</string>
+    <string name="crash_button_report_text">問題を報告する</string>
+    <!-- Groups -->
+    <string-array name="group_selection_options">
+        <item>概要</item>
+        <item>インスタンス</item>
+    </string-array>
+    <string name="group_toast_not_found_message">グループが見つかりませんでした。入力内容を確認してください。</string>
+    <string name="group_page_label_description">詳細</string>
+    <string name="group_page_label_rules">ルール</string>
+    <string name="group_page_dropdown_view_author">作者のプロフィールを確認</string>
+    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
+    <string name="group_page_dropdown_request_invite">参加を申請する</string>
+    <string name="group_page_dropdown_request_invite_cancel">参加申請をキャンセルする</string>
+    <string name="group_page_dropdown_join_group">グループへ参加する</string>
+    <string name="group_page_dropdown_leave_group">グループを離脱する</string>
+    <string name="group_page_toast_invite_requested">参加申請を完了しました。</string>
+    <string name="group_page_toast_invite_requested_fail">参加申請に失敗しました。</string>
+    <string name="group_page_toast_invite_requested_cancel">参加申請をキャンセルしました。</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">参加申請のキャンセルに失敗しました。</string>
+    <string name="group_page_toast_join_group">グループへ参加しました。</string>
+    <string name="group_page_toast_join_group_fail">グループへの参加に失敗しました。</string>
+    <string name="group_page_toast_leave_group">グループを離脱しました。</string>
+    <string name="group_page_toast_leave_group_fail">グループの離脱に失敗しました。</string>
+    <string name="group_user_no_groups_message">このユーザーはどのグループにも所属していません。</string>
+    <string name="group_user_failed_to_fetch_groups">グループ情報の取得に失敗しました。再試行してください。</string>
+    <string name="group_user_viewing_groups_username">%1$s さんのグループ一覧</string>
+    <!-- Misc -->
+    <string name="misc_no_internet_title">インターネット接続</string>
+    <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
+    <string name="misc_no_internet_label">再起動</string>
+    <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">所属グループを表示</string>
+    <string name="user_dropdown_view_worlds">製作ワールドを表示</string>
+    <string name="user_dropdown_view_avatars">製作アバターを表示</string>
+    <string name="user_dropdown_view_favorites">お気に入りを表示</string>
+    <!-- Profile Edit Dialog -->
+    <string name="profile_edit_dialog_title_status">ステータス</string>
+    <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
+    <string name="profile_edit_dialog_title_bio">プロフィール</string>
+    <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
+    <string name="profile_edit_dialog_button_update">変更</string>
+    <string name="profile_edit_dialog_button_cancel">キャンセル</string>
+    <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
+    <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
+    <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
+    <!-- Logout dialog -->
+    <string name="logout_dialog_title">ログアウトしますか？</string>
+    <string name="logout_dialog_description">継続した場合、VRCAAからログアウトします。アプリを利用する為には再ログインが必要です。</string>
+    <string name="logout_dialog_continue">確認</string>
+    <string name="logout_dialog_cancel">キャンセル</string>
+    <!-- Widgets -->
+    <string name="widget_name_friend_list">フレンドの現在地を表示する</string>
+    <string name="widget_name_loading_text">少女祈祷中・・・</string>
+    <string-array name="favorites_selection_options">
+        <item>ワールド</item>
+        <item>アバター</item>
+    </string-array>
+    <string name="favorite_label_add">お気に入りへ追加</string>
+    <string name="favorite_label_remove">お気に入りから削除</string>
+    <string name="favorite_toast_favorite_added">%1$s をお気に入りに追加しました。</string>
+    <string name="favorite_toast_favorite_added_failed">%1$s をお気に入りに追加するのに失敗しました。</string>
+    <string name="favorite_toast_favorite_removed">%1$s をお気に入りから削除しました。</string>
+    <string name="favorite_toast_favorite_removed_failed">%1$s をお気に入りから削除するのに失敗しました。</string>
+    <string name="favorite_dialog_button_add">追加</string>
+    <string name="favorite_dialog_button_cancel">キャンセル</string>
+    <string name="favorite_dialog_title">"お気に入りへ追加"</string>
+    <string name="favorite_page_title">お気に入り一覧</string>
+    <string name="favorite_edit_title">Editing %1$s</string>
+    <string name="favorite_edit_display_name">Display Name</string>
+    <string name="favorite_edit_visibility">Visibility</string>
+    <string name="favorite_edit_discarded">Changes were discarded.</string>
+    <string name="favorite_edit_applied">Changes have been applied.</string>
+    <string name="favorite_dialog_button_edit">Edit</string>
+    <!-- Activities -->
+    <string-array name="activities_selection_options">
+        <item>フィード</item>
+        <item>通知</item>
+        <item>グループ・アクティビティ</item>
+    </string-array>
+    <!-- Worlds -->
+    <string name="worlds_page_title">%1$s さんのワールド</string>
+    <!-- Avatars -->
+    <string name="avatars_page_title">アバターを表示</string>
+    <!-- Debug -->
+    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <!-- Loading Texts -->
+    <string name="loading_text_profile">プロファイルを読み込み中。。。</string>
+    <string name="loading_text_online_friends">オンラインのフレンドを読み込み中。。。</string>
+    <string name="loading_text_offline_friends">オフラインのフレンドを読み込み中。。。</string>
+    <string name="loading_text_recently_visited">最近訪れたワールドを読み込み中。。。</string>
+    <string name="loading_text_favorites">お気に入りを読み込み中。。。</string>
+    <string name="loading_text_worlds">ワールドの一覧を読み込み中。。。</string>
+    <string name="loading_text_users">ユーザーの一覧を読み込み中。。。</string>
+    <string name="loading_text_avatars">アバターの一覧を読み込み中。。。</string>
+    <string name="loading_text_groups">グループの一覧を読み込み中。。。</string>
+    <string name="loading_text_user">ユーザー情報を読み込み中。。。</string>
+    <string name="loading_text_world">ワールド情報を読み込み中。。。</string>
+    <string name="loading_text_avatar">アバター情報を読み込み中。。。</string>
+    <string name="loading_text_group">グループ情報を読み込み中。。。</string>
+    <string name="loading_text_instances">インスタンス情報を読み込み中。。。</string>
+    <!-- Theming -->
+    <string name="theme_page_title">Theme</string>
+    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
+    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string-array name="theme_page_selection_options">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System</item>
+    </string-array>
+    <string name="theme_page_section_theme_title">Theme</string>
+    <string name="theme_page_section_display_title">Display</string>
+    <!-- Advanced Settings -->
+    <string name="advanced_page_title">Advanced Settings</string>
+    <string name="advanced_page_network_logging">Network Logging</string>
+    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
+    <string name="advanced_page_view_network_logs">Show Network Logs</string>
+    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
+    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+</resources>

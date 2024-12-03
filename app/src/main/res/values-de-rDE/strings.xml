@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Universal Strings -->
+    <string name="result_not_found">Hier gibt es nicht mehr als Hühner!</string>
+    <string name="legal_disclaimer">"VRCAA wird nicht von VRChat Inc. oder deren Partner unterstützt."</string>
+    <!-- Friends -->
+    <string-array name="friend_selection_options">
+        <item>Favorit</item>
+        <item>Online</item>
+        <item>Webseite</item>
+        <item>Offline</item>
+    </string-array>
+    <!-- Home -->
+    <string name="home_active_friends">Aktive Freunde</string>
+    <string name="home_recently_visited">Zuletzt besucht</string>
+    <string name="home_offline_friends">Freunde offline</string>
+    <string name="home_friend_locations">Freunde Standorte</string>
+    <!-- Login -->
+    <string name="login_text">Melde dich bei VRC Android Assistant an</string>
+    <string name="login_label_username">Benutzername oder E-Mail-Adresse</string>
+    <string name="login_label_password">Passwort</string>
+    <string name="login_button_text">Anmelden</string>
+    <string name="login_toast_wrong_credentials">Benutzername oder Passwort falsch.</string>
+    <string name="login_toast_wrong_code">Fehler beim Überprüfen. Verifiziere Sie den Code und versuchen Sie es erneut.</string>
+    <!-- Two Auth -->
+    <string name="auth_text_email">Gebe den an deine E-Mail gesendeten Code ein</string>
+    <string name="auth_text_app">Gebe den Code deiner Authentifikation-App ein</string>
+    <string name="auth_button_text">Überprüfen</string>
+    <string name="auth_button_paste">Einfügen</string>
+    <!-- Main -->
+    <string name="main_search_placeholder">Suche nach Welten, Nutzer oder Avatare…</string>
+    <!-- Profile -->
+    <string name="profile_label_current_location">Aktueller Standort</string>
+    <string name="profile_label_note">Notiz</string>
+    <string name="profile_label_biography">Biografie</string>
+    <string name="profile_text_no_biography">Keine Beschreibung angegeben.</string>
+    <string name="profile_user_dropdown_manage_notifications">Benachrichtigungen verwalten</string>
+    <string name="profile_user_dropdown_view_groups">Gruppen anzeigen</string>
+    <string name="profile_user_dropdown_view_avatar">Avatar ansehen</string>
+    <string name="profile_user_dropdown_invite_self">Selber einladen</string>
+    <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
+    <string name="profile_user_avatar_private">Avatar ist privat!</string>
+    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_toast_invite_sent">Einladung gesendet. Überprüfe dein Spiel.</string>
+    <string name="profile_mutual_groups_text">Gemeinsame Gruppen</string>
+    <!-- Search -->
+    <string name="search_text_result">Ergebnisse für</string>
+    <string name="search_filter_category_worlds">Welten</string>
+    <string name="search_filter_category_worlds_featured">Hervorgehoben</string>
+    <string name="search_filter_category_worlds_sort_by">Sortiere nach</string>
+    <string name="search_filter_category_worlds_count">Anzahl</string>
+    <string name="search_filter_category_users">Nutzer</string>
+    <string name="search_filter_category_users_count">Anzahl</string>
+    <string name="search_filter_category_avatars">Avatare</string>
+    <string name="search_filter_category_avatars_provider">Anbieter</string>
+    <string name="search_filter_category_groups">Gruppen</string>
+    <string name="search_filter_category_groups_count">Anzahl</string>
+    <!-- TODO: remove duplicate labels :) -->
+    <string name="search_filter_label_count">Anzahl</string>
+    <string name="search_filter_button_reset">Zurücksetzen</string>
+    <string name="search_filter_button_apply">Anwenden</string>
+    <string-array name="search_selection_options">
+        <item>Welten</item>
+        <item>Benutzer</item>
+        <item>Avatare</item>
+        <item>Gruppen</item>
+    </string-array>
+    <!-- Settings -->
+    <string name="settings_item_about">Info</string>
+    <string name="settings_item_about_description">More information about your device and VRCAA</string>
+    <string name="settings_item_theming">Appearance</string>
+    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_rich_presence">Rich Presence (Experimentell)</string>
+    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
+    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_logout">Abmelden</string>
+    <!-- Worlds -->
+    <string name="world_label_description">Beschreibung</string>
+    <string name="world_label_tags">Stichworte</string>
+    <string name="world_text_no_tags">Der Autor hat keine Stichworte angegeben.</string>
+    <string name="world_title_created_at">Erstelldatum</string>
+    <string name="world_title_updated_at">Zuletzt aktualisiert</string>
+    <string name="world_toast_not_found">Dieser Welt ist privat oder existiert nicht.</string>
+    <string-array name="world_selection_options">
+        <item>Info</item>
+        <item>Instanzen</item>
+    </string-array>
+    <string name="world_author_label">Von %1$s</string>
+    <string name="world_instance_invite_dialog_title">Sind Sie sicher?</string>
+    <string name="world_instance_invite_dialog_description">Sie sind dabei, sich selbst in diese Instanz einzuladen. Wollen Sie das wirklich tun?</string>
+    <string name="world_instance_no_public_instances_message">Keine öffentlichen Instanzen</string>
+    <string name="world_instance_failed_to_fetch_instance_message">Fehler beim Abrufen der Instanz, versuchen Sie es erneut.</string>
+    <!-- Tabs -->
+    <string name="tabs_label_friends">Freunde</string>
+    <string name="tabs_label_home">Startseite</string>
+    <string name="tabs_label_favorites">Favoriten</string>
+    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_activities">Aktivitäten</string>
+    <string name="tabs_label_profile">Profil</string>
+    <string name="tabs_label_pictures">Bilder</string>
+    <string name="tabs_label_settings">Einstellungen</string>
+    <!-- Notifications -->
+    <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
+    <string name="notification_service_title_online">Freund ist jetzt online!</string>
+    <string name="notification_service_description_online">Dein Freund, %1$s ist jetzt online!</string>
+    <string name="notification_service_title_offline">Freund ist jetzt offline!</string>
+    <string name="notification_service_description_offline">Dein Freund %1$s ist jetzt offline!</string>
+    <string name="notification_service_title_location">Freund hat seinen Standort geändert!</string>
+    <string name="notification_service_description_location">Dein Freund, %1$s ging zu %2$s.</string>
+    <string name="notification_service_title_friend_removed">Dein Freund hat Dich entfernt.</string>
+    <string name="notification_service_description_friend_removed">Dein Freund, %1$s ist nicht mehr dein Freund :(</string>
+    <string name="notification_service_title_friend_added">Du hast einen neuen Freund!</string>
+    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
+    <string name="notification_title_player">\'s Benachrichtigung</string>
+    <string name="notification_label_enable">Aktiviere Benachrichtigungen</string>
+    <string name="notification_label_intent_online">Online Benachrichtigungen</string>
+    <string name="notification_label_intent_offline">Offline Benachrichtigungen</string>
+    <string name="notification_label_intent_location">Standort Benachrichtigungen</string>
+    <string name="notification_label_intent_status">Statusänderungs-Benachrichtigungen</string>
+    <string name="notification_service_title_status">Freund änderte seinen Status!</string>
+    <string name="notification_service_description_status">Dein Freund %1$s änderte seinen Status von %2$s zu %3$s.</string>
+    <!-- Avatars -->
+    <string name="avatar_dropdown_label_select">Wechsel zu Avatar</string>
+    <string name="avatar_dropdown_label_remove_favorite">Entferne von Favoriten</string>
+    <string name="avatar_dropdown_toast_select_avatar">Avatar ausgewählt!</string>
+    <string name="avatar_title_description">Beschreibung</string>
+    <string name="avatar_title_created_at">Erstelldatum</string>
+    <string name="avatar_title_updated_at">Zuletzt geändert</string>
+    <string name="avatar_title_content_labels">Inhaltsbezeichnungen</string>
+    <string name="avatar_text_author">Von %1$s</string>
+    <string name="avatar_text_content_labels_not_found">Avatar hat keine Inhaltswarnungen angegeben.</string>
+    <string name="avatar_toast_avatar_not_found_message">Dieser Avatar ist entweder privat oder ungültig.</string>
+    <!-- Feed -->
+    <string name="feed_online_label">Online</string>
+    <string name="feed_online_text">ist jetzt online.</string>
+    <string name="feed_offline_label">Offline</string>
+    <string name="feed_offline_text">ist jetzt offline.</string>
+    <string name="feed_location_label">GPS</string>
+    <string name="feed_location_text">ging zu</string>
+    <string name="feed_status_label">Status</string>
+    <string name="feed_status_text">änderte Status zu</string>
+    <string name="feed_added_label">Freund hinzugefügt</string>
+    <string name="feed_added_text">hat dich als Freund hinzugefügt.</string>
+    <string name="feed_removed_label">Freund entfernt</string>
+    <string name="feed_removed_text">hat dich als Freund entfernt.</string>
+    <string name="feed_friend_request_label">Freundschaftsanfrage</string>
+    <string name="feed_friend_request_text">möchte dich als Freund hinzufügen.</string>
+    <!-- About -->
+    <string name="about_page_title">Info</string>
+    <string name="about_page_open_source_licenses_title">Open-Source-Lizenzen</string>
+    <string name="about_page_translate_title">Beim Übersetzen mithelfen</string>
+    <string name="about_page_battery_optimizations_title">Batterieoptimierung deaktivieren</string>
+    <string name="about_page_battery_optimizations_toast">Batterieoptimierungen sind bereits deaktiviert.</string>
+    <string name="license_title">Open-Source Lizenzen</string>
+    <string name="about_page_developer_mode">Entwicklermodus aktivieren</string>
+    <!-- API -->
+    <string name="api_session_has_expired_text">Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.</string>
+    <string name="api_avatar_select_failed">"Auswahl des Avatars fehlgeschlagen."</string>
+    <!-- Discord Rich Presence -->
+    <string name="discord_login_title">Bei Discord anmelden</string>
+    <string name="discord_login_title_verify">2FA verifizieren</string>
+    <string name="discord_login_label_username">Nutzername</string>
+    <string name="discord_login_label_password">Passwort</string>
+    <string name="discord_login_toast_wrong_credentials">Benutzername oder Passwort ist ungültig.</string>
+    <string name="discord_login_toast_wrong_code">Der MFA-Code ist falsch.</string>
+    <string name="discord_login_button_login">Anmelden</string>
+    <string name="discord_login_button_verify">Überprüfen</string>
+    <string name="discord_login_restarted_service_toast">Dienst neu gestartet, um aktiv zu werden.</string>
+    <string name="discord_login_label_enable">Rich-Präsenz aktivieren</string>
+    <string name="discord_login_label_set_webhook">Webhook-URL festlegen</string>
+    <string name="discord_login_description_set_webhook">Benötigt für Verwendung von Welthumbnails (optional)</string>
+    <string name="discord_login_description_enable">Zeigt deinen aktuellen Status auf Discord</string>
+    <string name="discord_login_label_logout">Abmelden</string>
+    <string name="discord_login_description_logout">Zugangs-Token widerrufen</string>
+    <!-- Crash -->
+    <string name="crash_title_text">In der Anwendung ist ein Fehler aufgetreten.</string>
+    <string name="crash_button_restart_text">Neu starten</string>
+    <string name="crash_button_copy_log_text">Informationen kopieren</string>
+    <string name="crash_button_report_text">Problem melden</string>
+    <!-- Groups -->
+    <string-array name="group_selection_options">
+        <item>Info</item>
+        <item>Instanzen</item>
+    </string-array>
+    <string name="group_toast_not_found_message">Gruppe wurde nicht gefunden. Bist du sicher, dass sie existiert?</string>
+    <string name="group_page_label_description">Beschreibung</string>
+    <string name="group_page_label_rules">Regeln</string>
+    <string name="group_page_dropdown_view_author">Profil des Verfassers ansehen</string>
+    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
+    <string name="group_page_dropdown_request_invite">Einladung anfragen</string>
+    <string name="group_page_dropdown_request_invite_cancel">Einladungsanfrage abbrechen</string>
+    <string name="group_page_dropdown_join_group">Gruppe beitreten</string>
+    <string name="group_page_dropdown_leave_group">Gruppe verlassen</string>
+    <string name="group_page_toast_invite_requested">Einladungsanfrage gesendet.</string>
+    <string name="group_page_toast_invite_requested_fail">Fehler beim Anfragen einer Einladung.</string>
+    <string name="group_page_toast_invite_requested_cancel">Einladungsanfrage abgebrochen.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Fehler beim Abbrechen der Einladungsanfrage.</string>
+    <string name="group_page_toast_join_group">Gruppe beigetreten.</string>
+    <string name="group_page_toast_join_group_fail">Beitritt zur Gruppe fehlgeschlagen.</string>
+    <string name="group_page_toast_leave_group">Gruppe verlassen.</string>
+    <string name="group_page_toast_leave_group_fail">Fehler beim Verlassen der Gruppe.</string>
+    <string name="group_user_no_groups_message">Nutzer ist in keiner Gruppe.</string>
+    <string name="group_user_failed_to_fetch_groups">Fehler beim Abrufen der Gruppen. Versuchen Sie es erneut.</string>
+    <string name="group_user_viewing_groups_username">Gruppen von %1$s</string>
+    <!-- Misc -->
+    <string name="misc_no_internet_title">Keine Internetverbindung</string>
+    <string name="misc_no_internet_description">Bitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind. Diese Anwendung funktioniert nicht ohne eine aktive Internetverbindung.</string>
+    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_exit_toast_label">Zum Beenden erneut drücken.</string>
+    <!-- User -->
+    <string name="user_dropdown_view_groups">Gruppen anzeigen</string>
+    <string name="user_dropdown_view_worlds">Welten anzeigen</string>
+    <string name="user_dropdown_view_avatars">Avatare anzeigen</string>
+    <string name="user_dropdown_view_favorites">Favoriten anzeigen</string>
+    <!-- Profile Edit Dialog -->
+    <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_status_description">Statusbeschreibung</string>
+    <string name="profile_edit_dialog_title_bio">Bio</string>
+    <string name="profile_edit_dialog_title_bio_links">Verlinkte Webseiten</string>
+    <string name="profile_edit_dialog_button_update">Ändern</string>
+    <string name="profile_edit_dialog_button_cancel">Abbrechen</string>
+    <string name="profile_edit_dialog_toast_updated">Profil aktualisiert.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Änderungen wurden verworfen.</string>
+    <string name="profile_edit_dialog_title_edit_profile">Profil bearbeiten</string>
+    <!-- Logout dialog -->
+    <string name="logout_dialog_title">Sind Sie sicher?</string>
+    <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>
+    <string name="logout_dialog_continue">Fortfahren</string>
+    <string name="logout_dialog_cancel">Abbrechen</string>
+    <!-- Widgets -->
+    <string name="widget_name_friend_list">Aktuellen Freundestandorte ansehen</string>
+    <string name="widget_name_loading_text">Der Horizont ist hell, mein Freund.</string>
+    <string-array name="favorites_selection_options">
+        <item>Welten</item>
+        <item>Avatare</item>
+    </string-array>
+    <string name="favorite_label_add">Zu den Favoriten hinzufügen</string>
+    <string name="favorite_label_remove">Als Favorit entfernen</string>
+    <string name="favorite_toast_favorite_added">%1$s zu den Favoriten hinzugefügt.</string>
+    <string name="favorite_toast_favorite_added_failed">Hinzufügen von %1$s zu Favoriten fehlgeschlagen.</string>
+    <string name="favorite_toast_favorite_removed">%1$s aus den Favoriten entfernt.</string>
+    <string name="favorite_toast_favorite_removed_failed">Entfernen von %1$s aus Favoriten fehlgeschlagen.</string>
+    <string name="favorite_dialog_button_add">Hinzufügen</string>
+    <string name="favorite_dialog_button_cancel">Abbrechen</string>
+    <string name="favorite_dialog_title">"Zu den Favoriten hinzufügen"</string>
+    <string name="favorite_page_title">Favoriten ansehen</string>
+    <string name="favorite_edit_title">Bearbeite %1$s</string>
+    <string name="favorite_edit_display_name">Anzeigename</string>
+    <string name="favorite_edit_visibility">Sichtbarkeit</string>
+    <string name="favorite_edit_discarded">Änderungen wurden verworfen.</string>
+    <string name="favorite_edit_applied">Änderungen wurden angewendet.</string>
+    <string name="favorite_dialog_button_edit">Bearbeiten</string>
+    <!-- Activities -->
+    <string-array name="activities_selection_options">
+        <item>Für dich</item>
+        <item>Benachrichtigungen</item>
+        <item>Gruppenaktivitäten</item>
+    </string-array>
+    <!-- Worlds -->
+    <string name="worlds_page_title">Welten von %1$s</string>
+    <!-- Avatars -->
+    <string name="avatars_page_title">Avatare ansehen</string>
+    <!-- Debug -->
+    <string name="developer_mode_toggle_toast">Starten Sie die App neu, um die Änderungen wirksam zu machen.</string>
+    <!-- Loading Texts -->
+    <string name="loading_text_profile">Lade Profil…</string>
+    <string name="loading_text_online_friends">Lade Online-Freunde…</string>
+    <string name="loading_text_offline_friends">Lade Offline-Freunde…</string>
+    <string name="loading_text_recently_visited">Lade kürzlich besuchte Welten…</string>
+    <string name="loading_text_favorites">Lade Favoriten…</string>
+    <string name="loading_text_worlds">Lade Welten…</string>
+    <string name="loading_text_users">Lade Nutzer…</string>
+    <string name="loading_text_avatars">Lade Avatare…</string>
+    <string name="loading_text_groups">Lade Gruppen…</string>
+    <string name="loading_text_user">Lade Nutzer…</string>
+    <string name="loading_text_world">Lade Welt…</string>
+    <string name="loading_text_avatar">Lade Avatar…</string>
+    <string name="loading_text_group">Lade Gruppe…</string>
+    <string name="loading_text_instances">Lade Instanzen…</string>
+    <!-- Theming -->
+    <string name="theme_page_title">Theme</string>
+    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
+    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string-array name="theme_page_selection_options">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System</item>
+    </string-array>
+    <string name="theme_page_section_theme_title">Theme</string>
+    <string name="theme_page_section_display_title">Display</string>
+    <!-- Advanced Settings -->
+    <string name="advanced_page_title">Advanced Settings</string>
+    <string name="advanced_page_network_logging">Network Logging</string>
+    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
+    <string name="advanced_page_view_network_logs">Show Network Logs</string>
+    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
+    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+</resources>
