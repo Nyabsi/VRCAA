@@ -6,15 +6,16 @@ import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-sealed class AvatarsState {
-    data object Init : AvatarsState()
-    data object Loading : AvatarsState()
-    data class Result(
-        val avatars: ArrayList<Avatar>
-    ) : AvatarsState()
-}
+class AvatarsScreenModel : StateScreenModel<AvatarsScreenModel.AvatarsState>(AvatarsState.Init) {
 
-class AvatarsScreenModel : StateScreenModel<AvatarsState>(AvatarsState.Init) {
+    sealed class AvatarsState {
+        data object Init : AvatarsState()
+        data object Loading : AvatarsState()
+        data object Empty : AvatarsState()
+        data class Result(
+            val avatars: ArrayList<Avatar>
+        ) : AvatarsState()
+    }
 
     private var avatars: ArrayList<Avatar> = arrayListOf()
 
@@ -26,7 +27,11 @@ class AvatarsScreenModel : StateScreenModel<AvatarsState>(AvatarsState.Init) {
     private fun fetchAvatars() {
         screenModelScope.launch {
             avatars = api.getOwnAvatars()
-            mutableState.value = AvatarsState.Result(avatars)
+
+            if (avatars.isEmpty())
+                mutableState.value = AvatarsState.Empty
+            else
+                mutableState.value = AvatarsState.Result(avatars)
         }
     }
 }

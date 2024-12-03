@@ -94,7 +94,8 @@ class DiscordGateway(
                         scheduler.schedule(heartbeatRunnable, interval, TimeUnit.MILLISECONDS)
                     }
                     else -> {
-                        Log.d("VRCAA", "got unknown op: ${payload.op}")
+                        if (BuildConfig.DEBUG)
+                            Log.d("VRCAA", "got unknown op: ${payload.op}")
                     }
                }
             }

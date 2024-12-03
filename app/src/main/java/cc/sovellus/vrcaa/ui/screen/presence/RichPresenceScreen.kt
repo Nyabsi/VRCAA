@@ -54,9 +54,8 @@ class RichPresenceScreen : Screen {
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { RichPresenceScreenModel(context) }
+        val model = navigator.rememberNavigatorScreenModel { RichPresenceScreenModel() }
         val dialogState = remember { mutableStateOf(false) }
 
         if (dialogState.value) {
@@ -80,7 +79,7 @@ class RichPresenceScreen : Screen {
                         IconButton(onClick = { navigator.pop() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go Back"
+                                contentDescription = null
                             )
                         }
                     },

@@ -25,14 +25,8 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
 class SearchResultScreenModel(
-    context: Context,
     private val query: String
 ) : StateScreenModel<SearchResultScreenModel.SearchState>(SearchState.Init) {
-
-    private val avtrDbProvider = AvtrDbProvider()
-    private val justHPartyProvider = JustHPartyProvider()
-
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
 
     sealed class SearchState {
         data object Init : SearchState()
@@ -44,6 +38,12 @@ class SearchResultScreenModel(
             val groups: ArrayList<Group>
         ) : SearchState()
     }
+
+    private val context: Context = App.getContext()
+    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
+
+    private val avtrDbProvider = AvtrDbProvider()
+    private val justHPartyProvider = JustHPartyProvider()
 
     private var worlds: ArrayList<World> = arrayListOf()
     private var users: MutableList<LimitedUser> = arrayListOf()

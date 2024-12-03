@@ -8,29 +8,30 @@ import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-sealed class UserGroupsState {
-    data object Init : UserGroupsState()
-    data object Loading : UserGroupsState()
-    data class Result(val groups: List<UserGroups.Group>?) : UserGroupsState()
-}
-
 class UserGroupsScreenModel(
     private val userId: String
-) : StateScreenModel<UserGroupsState>(UserGroupsState.Init) {
+) : StateScreenModel<UserGroupsScreenModel.UserGroupsState>(UserGroupsState.Init) {
 
-    private var groups: List<UserGroups.Group>? = null
+    sealed class UserGroupsState {
+        data object Init : UserGroupsState()
+        data object Loading : UserGroupsState()
+        data object Empty : UserGroupsState()
+        data class Result(val groups: List<UserGroups.Group>) : UserGroupsState()
+    }
 
     init {
+        mutableState.value = UserGroupsState.Loading
         fetchGroups()
     }
 
     private fun fetchGroups() {
-        mutableState.value = UserGroupsState.Loading
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_groups)
-            val groupsTemp = api.getUserGroups(userId).sortedBy { it.ownerId != userId }.toList()
-            groups = groupsTemp
-            mutableState.value = UserGroupsState.Result(groups)
+            val result = api.getUserGroups(userId).sortedBy { it.ownerId != userId }.toList()
+            if (result.isEmpty())
+                mutableState.value = UserGroupsState.Empty
+            else
+                mutableState.value = UserGroupsState.Result(result)
         }
     }
 }

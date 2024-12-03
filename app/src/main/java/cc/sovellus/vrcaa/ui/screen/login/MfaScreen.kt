@@ -26,6 +26,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
+import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
 class MfaScreen(
     private val otpType: VRChatApi.MfaType
@@ -40,7 +41,8 @@ class MfaScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val screenModel = navigator.rememberNavigatorScreenModel { MfaScreenModel(context, otpType, navigator) }
+        val screenModel =
+            navigator.rememberNavigatorScreenModel { MfaScreenModel(otpType) }
 
         Scaffold { padding ->
             Column(
@@ -63,36 +65,39 @@ class MfaScreen(
                     input = screenModel.code
                 )
 
-                Button(
-                    modifier = Modifier
-                        .width(200.dp)
-                        .padding(4.dp),
-                    onClick = {
-                        screenModel.verify()
+                Button(modifier = Modifier
+                    .width(200.dp)
+                    .padding(4.dp), onClick = {
+                    screenModel.verify { result ->
+                        if (result) {
+                            navigator.replace(NavigationScreen())
+                        }
                     }
-                ) {
+                }) {
                     Text(text = stringResource(R.string.auth_button_text))
                 }
 
-                Button(
-                    modifier = Modifier
-                        .width(200.dp)
-                        .padding(4.dp),
-                    onClick = {
-                        val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                        if (clipboard?.hasPrimaryClip() == true) {
-                            val clipData = clipboard.primaryClip
-                            if ((clipData?.itemCount ?: 0) > 0) {
-                                val clipItem = clipData?.getItemAt(0)
-                                val clipText = clipItem?.text?.toString()
-                                if (clipText?.length == 6) {
-                                    screenModel.code.value = clipText
-                                    screenModel.verify()
+                Button(modifier = Modifier
+                    .width(200.dp)
+                    .padding(4.dp), onClick = {
+                    val clipboard: ClipboardManager? =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                    if (clipboard?.hasPrimaryClip() == true) {
+                        val clipData = clipboard.primaryClip
+                        if ((clipData?.itemCount ?: 0) > 0) {
+                            val clipItem = clipData?.getItemAt(0)
+                            val clipText = clipItem?.text?.toString()
+                            if (clipText?.length == 6) {
+                                screenModel.code.value = clipText
+                                screenModel.verify { result ->
+                                    if (result) {
+                                        navigator.replace(NavigationScreen())
+                                    }
                                 }
                             }
                         }
                     }
-                ) {
+                }) {
                     Text(text = stringResource(R.string.auth_button_paste))
                 }
             }

@@ -42,6 +42,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
@@ -67,6 +68,7 @@ class SettingsScreen : Screen {
         val dialogState = remember { mutableStateOf(false) }
         val logoutState = remember { mutableStateOf(false) }
 
+        // TODO: string to translatable
         val title = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.Red)) {
                 append("Notice!")
@@ -227,7 +229,7 @@ class SettingsScreen : Screen {
                         onClick = {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("https://crowdin.com/project/vrcaa")
+                                Uri.parse(BuildConfig.CROWDIN_URL)
                             )
                             context.startActivity(intent)
                         }

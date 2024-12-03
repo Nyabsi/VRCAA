@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,8 +47,9 @@ class UserGroupsScreen(
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is UserGroupsState.Loading -> LoadingIndicatorScreen().Content()
-            is UserGroupsState.Result -> ShowGroups(result.groups)
+            is UserGroupsScreenModel.UserGroupsState.Loading -> LoadingIndicatorScreen().Content()
+            is UserGroupsScreenModel.UserGroupsState.Empty -> HandleEmpty()
+            is UserGroupsScreenModel.UserGroupsState.Result -> HandleResult(result.groups)
 
             else -> {}
         }
@@ -55,77 +57,107 @@ class UserGroupsScreen(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun ShowGroups(
-        groups: List<UserGroups.Group>?
-    ) {
+    fun HandleEmpty() {
         val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
 
-        if (groups == null) {
-            Toast.makeText(
-                context,
-                stringResource(R.string.group_user_failed_to_fetch_groups),
-                Toast.LENGTH_SHORT
-            ).show()
-
-            LaunchedEffect(userId) {
-                navigator.pop()
-            }
-        } else {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        navigationIcon = {
-                            IconButton(onClick = { navigator.pop() }) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        title = { Text(text = stringResource(R.string.group_user_viewing_groups_username).format(username)) }
-                    )
-                },
-                content = { padding ->
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    title = {
+                        Text(
+                            text = stringResource(R.string.group_user_viewing_groups_username).format(
+                                username
+                            )
+                        )
+                    }
+                )
+            },
+            content = { padding ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
+                        ),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(
-                                top = padding.calculateTopPadding(),
-                                bottom = padding.calculateBottomPadding()
-                            ),
+                        modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        if (groups.isEmpty()) {
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
+                        Text(text = stringResource(R.string.group_user_no_groups_message))
+                    }
+                }
+            }
+        )
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun HandleResult(
+        groups: List<UserGroups.Group>
+    ) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    title = {
+                        Text(
+                            text = stringResource(R.string.group_user_viewing_groups_username).format(
+                                username
+                            )
+                        )
+                    }
+                )
+            },
+            content = { padding ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
+                        ),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(groups) { group ->
+                            GroupCard(
+                                groupName = group.name,
+                                shortCode = group.shortCode,
+                                discriminator = group.discriminator,
+                                bannerUrl = group.bannerUrl,
+                                iconUrl = group.iconUrl,
+                                totalMembers = group.memberCount,
+                                languages = null
                             ) {
-                                Text(text = stringResource(R.string.group_user_no_groups_message))
-                            }
-                        } else {
-                            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                                items(groups.size) {
-                                    val group = groups[it]
-                                    GroupCard(
-                                        groupName = group.name,
-                                        shortCode = group.shortCode,
-                                        discriminator = group.discriminator,
-                                        bannerUrl = group.bannerUrl,
-                                        iconUrl = group.iconUrl,
-                                        totalMembers = group.memberCount,
-                                        languages = null
-                                    ) {
-                                        navigator.push(GroupScreen(group.groupId))
-                                    }
-                                }
+                                navigator.push(GroupScreen(group.groupId))
                             }
                         }
                     }
                 }
-            )
-        }
+            }
+        )
     }
 }

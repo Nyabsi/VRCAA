@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
@@ -58,6 +59,7 @@ import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.ui.components.card.GroupCard
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.RegionFlag
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -78,8 +80,11 @@ class GroupScreen(
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is GroupState.Loading -> LoadingIndicatorScreen().Content()
-            is GroupState.Result -> MultiChoiceHandler(result.group, result.instances, model)
+            is GroupScreenModel.GroupState.Loading -> LoadingIndicatorScreen().Content()
+            is GroupScreenModel.GroupState.Result -> MultiChoiceHandler(
+                result.group, result.instances, model
+            )
+
             else -> {}
         }
     }
@@ -87,9 +92,7 @@ class GroupScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(
-        group: Group?,
-        instances: GroupInstances?,
-        model: GroupScreenModel
+        group: Group?, instances: GroupInstances?, model: GroupScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -98,149 +101,131 @@ class GroupScreen(
 
         if (group == null) {
             Toast.makeText(
-                context,
-                stringResource(R.string.group_toast_not_found_message),
-                Toast.LENGTH_SHORT
+                context, stringResource(R.string.group_toast_not_found_message), Toast.LENGTH_SHORT
             ).show()
             navigator.pop()
         } else {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        navigationIcon = {
-                            IconButton(onClick = { navigator.pop() }) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = { isMenuExpanded = true }) {
-                                Icon(
-                                    imageVector = Icons.Filled.MoreVert,
-                                    contentDescription = null
-                                )
+            Scaffold(topBar = {
+                TopAppBar(navigationIcon = {
+                    IconButton(onClick = { navigator.pop() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
+                }, actions = {
+                    IconButton(onClick = { isMenuExpanded = true }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert, contentDescription = null
+                        )
 
-                                Box(
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    DropdownMenu(
-                                        expanded = isMenuExpanded,
-                                        onDismissRequest = { isMenuExpanded = false },
-                                        offset = DpOffset(0.dp, 0.dp)
-                                    ) {
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                navigator.push(
-                                                    UserProfileScreen(group.ownerId)
-                                                )
-                                                isMenuExpanded = false
-                                            },
-                                            text = { Text(stringResource(R.string.group_page_dropdown_view_author)) }
-                                        )
-                                        if (group.membershipStatus == "inactive") {
-                                            if (group.joinState != "closed" && group.joinState != "invite") {
-                                                DropdownMenuItem(
-                                                    onClick = {
-                                                        if (group.joinState == "open") {
-                                                            model.joinGroup(true)
-                                                        } else {
-                                                            model.joinGroup(false)
-                                                        }
-                                                        isMenuExpanded = false
-                                                    },
-                                                    text = { Text(
-                                                        text = if (group.joinState == "open") {
-                                                            stringResource(R.string.group_page_dropdown_join_group)
-                                                        } else {
-                                                            stringResource(R.string.group_page_dropdown_request_invite)
-                                                        }
-                                                    ) }
-                                                )
-                                            }
-                                        } else {
-                                            if (group.membershipStatus == "requested") {
-                                                DropdownMenuItem(
-                                                    onClick = {
-                                                        model.withdrawInvite()
-                                                        isMenuExpanded = false
-                                                    },
-                                                    text = { Text(stringResource(R.string.group_page_dropdown_request_invite_cancel)) }
-                                                )
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ) {
+                            DropdownMenu(
+                                expanded = isMenuExpanded,
+                                onDismissRequest = { isMenuExpanded = false },
+                                offset = DpOffset(0.dp, 0.dp)
+                            ) {
+                                DropdownMenuItem(onClick = {
+                                    navigator.push(
+                                        UserProfileScreen(group.ownerId)
+                                    )
+                                    isMenuExpanded = false
+                                },
+                                    text = { Text(stringResource(R.string.group_page_dropdown_view_author)) })
+                                // TODO: refactor / cleanup
+                                if (group.membershipStatus == "inactive") {
+                                    if (group.joinState != "closed") {
+                                        DropdownMenuItem(onClick = {
+                                            if (group.joinState == "open" || group.joinState == "invite") {
+                                                model.joinGroup(true)
                                             } else {
-                                                DropdownMenuItem(
-                                                    onClick = {
-                                                        model.leaveGroup()
-                                                        isMenuExpanded = false
-                                                    },
-                                                    text = { Text(stringResource(R.string.group_page_dropdown_leave_group)) }
-                                                )
+                                                model.joinGroup(false)
                                             }
-                                        }
+                                            isMenuExpanded = false
+                                        }, text = {
+                                            Text(
+                                                text = if (group.joinState == "open") {
+                                                    stringResource(R.string.group_page_dropdown_join_group)
+                                                } else {
+                                                    if (group.joinState != "invite") {
+                                                        stringResource(R.string.group_page_dropdown_request_invite)
+                                                    } else {
+                                                        stringResource(R.string.group_page_dropdown_accept_invite)
+                                                    }
+                                                }
+                                            )
+                                        })
+                                    }
+                                } else {
+                                    if (group.membershipStatus == "requested") {
+                                        DropdownMenuItem(onClick = {
+                                            model.withdrawInvite()
+                                            isMenuExpanded = false
+                                        },
+                                            text = { Text(stringResource(R.string.group_page_dropdown_request_invite_cancel)) })
+                                    } else {
+                                        DropdownMenuItem(onClick = {
+                                            model.leaveGroup()
+                                            isMenuExpanded = false
+                                        },
+                                            text = { Text(stringResource(R.string.group_page_dropdown_leave_group)) })
                                     }
                                 }
                             }
-                        },
-                        title = { Text(
-                            text = group.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        ) }
-                    )
-                },
-                content = {
-
-                    val options =  stringArrayResource(R.array.group_selection_options)
-                    val icons = listOf(Icons.Filled.Cabin, Icons.Filled.LocationOn)
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(
-                                top = it.calculateTopPadding(),
-                                bottom = it.calculateBottomPadding()
-                            ),
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        MultiChoiceSegmentedButtonRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp)
-                        ) {
-                            options.forEachIndexed { index, label ->
-                                SegmentedButton(
-                                    shape = SegmentedButtonDefaults.itemShape(
-                                        index = index,
-                                        count = options.size
-                                    ),
-                                    icon = {
-                                        SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
-                                            Icon(
-                                                imageVector = icons[index],
-                                                contentDescription = null,
-                                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                            )
-                                        }
-                                    },
-                                    onCheckedChange = {
-                                        model.currentIndex.intValue = index
-                                    },
-                                    checked = index == model.currentIndex.intValue
-                                ) {
-                                    Text(text = label, softWrap = true, maxLines = 1)
-                                }
-                            }
-                        }
-
-                        when (model.currentIndex.intValue) {
-                            0 -> ShowGroupInfo(group)
-                            1 -> ShowGroupInstances(model, instances)
                         }
                     }
+                }, title = {
+                    Text(
+                        text = group.name, maxLines = 1, overflow = TextOverflow.Ellipsis
+                    )
+                })
+            }, content = {
+
+                val options = stringArrayResource(R.array.group_selection_options)
+                val icons = listOf(Icons.Filled.Cabin, Icons.Filled.LocationOn)
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = it.calculateTopPadding(), bottom = it.calculateBottomPadding()
+                        ),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    MultiChoiceSegmentedButtonRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp)
+                    ) {
+                        options.forEachIndexed { index, label ->
+                            SegmentedButton(shape = SegmentedButtonDefaults.itemShape(
+                                index = index, count = options.size
+                            ), icon = {
+                                SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
+                                    Icon(
+                                        imageVector = icons[index],
+                                        contentDescription = null,
+                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                    )
+                                }
+                            }, onCheckedChange = {
+                                model.currentIndex.intValue = index
+                            }, checked = index == model.currentIndex.intValue
+                            ) {
+                                Text(text = label, softWrap = true, maxLines = 1)
+                            }
+                        }
+                    }
+
+                    when (model.currentIndex.intValue) {
+                        0 -> ShowGroupInfo(group)
+                        1 -> ShowGroupInstances(model, instances)
+                    }
                 }
-            )
+            })
         }
     }
 
@@ -269,7 +254,9 @@ class GroupScreen(
 
             item {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -277,7 +264,10 @@ class GroupScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 80.dp),
                     ) {
                         SubHeader(title = stringResource(R.string.group_page_label_description))
                         Description(text = group.description)
@@ -287,7 +277,10 @@ class GroupScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth().defaultMinSize(minHeight = 80.dp),
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 80.dp),
                     ) {
                         SubHeader(title = stringResource(R.string.group_page_label_rules))
                         Description(text = group.rules)
@@ -299,14 +292,12 @@ class GroupScreen(
 
     @Composable
     private fun ShowGroupInstances(
-        model: GroupScreenModel,
-        instances: GroupInstances?
+        model: GroupScreenModel, instances: GroupInstances?
     ) {
         val dialogState = remember { mutableStateOf(false) }
 
         if (dialogState.value) {
-            GenericDialog(
-                onDismiss = { dialogState.value = false },
+            GenericDialog(onDismiss = { dialogState.value = false },
                 onConfirmation = {
                     dialogState.value = false
                     model.selfInvite()
@@ -321,6 +312,7 @@ class GroupScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // TODO: refactor / cleanup
             if (instances == null) {
                 item {
                     Text(stringResource(R.string.world_instance_no_public_instances_message))
@@ -331,60 +323,18 @@ class GroupScreen(
                         Text(stringResource(R.string.world_instance_no_public_instances_message))
                     }
                 } else {
-                    items(instances.size) {
-                        val instance = instances[it]
+                    items(instances) { instance ->
                         val result = LocationHelper.parseLocationInfo(instance.location)
-                        ListItem(
-                            headlineContent = {
-                                Text("Capacity: ${instance.memberCount}/${instance.world.capacity}, ${result.instanceType}")
-                            },
-                            overlineContent = {
-                                Text("${instance.world.name} #${instance.instanceId}")
-                            },
-                            trailingContent = {
-                                if (result.regionId.isNotEmpty()) {
-                                    when (result.regionId.lowercase()) {
-                                        "eu" -> Image(
-                                            painter = painterResource(R.drawable.flag_eu),
-                                            modifier = Modifier.padding(start = 2.dp),
-                                            contentDescription = "Region flag"
-                                        )
-                                        "jp" -> Image(
-                                            painter = painterResource(R.drawable.flag_jp),
-                                            modifier = Modifier.padding(start = 2.dp),
-                                            contentDescription = "Region flag"
-                                        )
-                                        "us" -> Image(
-                                            painter = painterResource(R.drawable.flag_us),
-                                            modifier = Modifier.padding(start = 2.dp),
-                                            contentDescription = "Region flag"
-                                        )
-                                        "use" -> Image(
-                                            painter = painterResource(R.drawable.flag_us),
-                                            modifier = Modifier.padding(start = 2.dp),
-                                            contentDescription = "Region flag"
-                                        )
-                                        "usw" -> Image(
-                                            painter = painterResource(R.drawable.flag_us),
-                                            modifier = Modifier.padding(start = 2.dp),
-                                            contentDescription = "Region flag"
-                                        )
-                                    }
-                                } else {
-                                    Image(
-                                        painter = painterResource(R.drawable.flag_us),
-                                        modifier = Modifier.padding(start = 2.dp),
-                                        contentDescription = "Region flag",
-                                    )
-                                }
-                            },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    dialogState.value = true
-                                    model.clickedInstance.value = instance.location
-                                }
-                            )
-                        )
+                        ListItem(headlineContent = {
+                            Text("Capacity: ${instance.memberCount}/${instance.world.capacity}, ${result.instanceType}")
+                        }, overlineContent = {
+                            Text("${instance.world.name} #${instance.instanceId}")
+                        }, trailingContent = {
+                            RegionFlag(result.regionId)
+                        }, modifier = Modifier.clickable(onClick = {
+                            dialogState.value = true
+                            model.clickedInstance.value = instance.location
+                        }))
                     }
                 }
             }

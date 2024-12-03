@@ -19,14 +19,14 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-        NotificationHelper.createNotificationChannels(this)
-
         context = this
         preferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
         networkLogging.value = preferences.networkLogging
         minimalistModeEnabled.value = preferences.minimalistMode
+
+        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+        NotificationHelper.createNotificationChannels()
     }
 
     companion object {

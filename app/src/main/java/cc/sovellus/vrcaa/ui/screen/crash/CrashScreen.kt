@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
 
 
@@ -101,7 +102,8 @@ fun CrashScreen(
                     Text(text = stringResource(R.string.crash_button_restart_text))
                 }
                 Button(onClick = {
-                    val clipboard: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    val clipboard: ClipboardManager? =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
                     val clip = ClipData.newPlainText("Crash Log", exception)
                     clipboard?.setPrimaryClip(clip)
                 }) {
@@ -110,7 +112,7 @@ fun CrashScreen(
                 Button(onClick = {
                     val intent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://discord.gg/aJs8qJXuT3")
+                        Uri.parse(BuildConfig.DISCORD_URL)
                     )
                     context.startActivity(intent)
                 }) {

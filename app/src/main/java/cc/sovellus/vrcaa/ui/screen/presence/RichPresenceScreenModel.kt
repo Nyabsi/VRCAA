@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordApi
 import cc.sovellus.vrcaa.api.discord.models.DiscordLogin
@@ -16,10 +17,9 @@ import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
-class RichPresenceScreenModel(
-    private val context: Context
-) : ScreenModel {
+class RichPresenceScreenModel : ScreenModel {
 
+    private val context: Context = App.getContext()
     private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
 
     private var ticket = mutableStateOf("")

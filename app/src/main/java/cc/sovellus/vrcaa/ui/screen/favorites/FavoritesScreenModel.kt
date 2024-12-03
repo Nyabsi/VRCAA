@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-sealed class FavoriteState {
-    data object Init : FavoriteState()
-    data object Loading : FavoriteState()
-    data object Result : FavoriteState()
-}
+class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState>(FavoriteState.Init) {
 
-class FavoritesScreenModel : StateScreenModel<FavoriteState>(FavoriteState.Init) {
+    sealed class FavoriteState {
+        data object Init : FavoriteState()
+        data object Loading : FavoriteState()
+        data object Result : FavoriteState()
+    }
 
     private var worldListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
     var worldList = worldListFlow.asStateFlow()

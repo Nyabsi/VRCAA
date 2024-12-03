@@ -4,13 +4,13 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cc.sovellus.vrcaa.api.vrchat.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 
-sealed class ProfileState {
-    data object Init : ProfileState()
-    data object Loading : ProfileState()
-    data class Result(val profile: User) : ProfileState()
-}
+class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(ProfileState.Init) {
 
-class ProfileScreenModel : StateScreenModel<ProfileState>(ProfileState.Init) {
+    sealed class ProfileState {
+        data object Init : ProfileState()
+        data object Loading : ProfileState()
+        data class Result(val profile: User) : ProfileState()
+    }
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun profileUpdated(profile: User) {

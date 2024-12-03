@@ -78,8 +78,11 @@ class UserProfileScreen(
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is UserProfileState.Loading -> LoadingIndicatorScreen().Content()
-            is UserProfileState.Result -> Profile(result.profile, result.instance, result.worlds, result.groups, model)
+            is UserProfileScreenModel.UserProfileState.Loading -> LoadingIndicatorScreen().Content()
+            is UserProfileScreenModel.UserProfileState.Result -> Profile(
+                result.profile, result.instance, result.worlds, result.groups, model
+            )
+
             else -> {}
         }
     }
@@ -101,236 +104,185 @@ class UserProfileScreen(
 
         if (profile == null) {
             Toast.makeText(
-                context,
-                stringResource(R.string.profile_user_not_found_message),
-                Toast.LENGTH_SHORT
+                context, stringResource(R.string.profile_user_not_found_message), Toast.LENGTH_SHORT
             ).show()
 
             LaunchedEffect(userId) {
                 navigator.pop()
             }
         } else {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        navigationIcon = {
-                            IconButton(onClick = { navigator.pop() }) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = { isMenuExpanded = true }) {
-                                Icon(
-                                    imageVector = Icons.Filled.MoreVert,
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    DropdownMenu(
-                                        expanded = isMenuExpanded,
-                                        onDismissRequest = { isMenuExpanded = false },
-                                        offset = DpOffset(0.dp, 0.dp)
-                                    ) {
-                                        if (profile.isFriend) {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    navigator.push(
-                                                        NotificationScreen(
-                                                            profile.id,
-                                                            profile.displayName
-                                                        )
-                                                    )
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.profile_user_dropdown_manage_notifications)) }
-                                            )
-                                        }
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                model.findAvatar { avatarId ->
-                                                    if(profile.profilePicOverride.isNotEmpty()){
-                                                        Toast.makeText(
-                                                            context,
-                                                            context.getString(R.string.profile_user_avatar_unreachable),
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                        return@findAvatar Unit
-                                                    }
-                                                    if (avatarId == null)  {
-                                                        Toast.makeText(
-                                                            context,
-                                                            context.getString(R.string.profile_user_avatar_private),
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                    } else {
-                                                        navigator.push(
-                                                            AvatarScreen(avatarId)
-                                                        )
-                                                    }
-                                                }
-                                                isMenuExpanded = false
-                                            },
-                                            text = { Text(stringResource(R.string.profile_user_dropdown_view_avatar)) }
-                                        )
-                                        if (instance != null) {
-                                            DropdownMenuItem(
-                                                onClick = {
-
-                                                        model.inviteToFriend(profile.location)
-                                                        Toast.makeText(
-                                                            context,
-                                                            context.getString(R.string.profile_user_toast_invite_sent),
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.profile_user_dropdown_invite_self)) }
-                                            )
-                                        }
-                                        if (profile.isFriend) {
-                                            if (FavoriteManager.isFavorite("friend", profile.id)) {
-                                                DropdownMenuItem(
-                                                    onClick = {
-                                                        model.removeFavorite { result ->
-                                                            if (result) {
-                                                                Toast.makeText(
-                                                                    context,
-                                                                    context.getString(R.string.favorite_toast_favorite_removed)
-                                                                        .format(profile.displayName),
-                                                                    Toast.LENGTH_SHORT
-                                                                ).show()
-                                                            } else {
-                                                                Toast.makeText(
-                                                                    context,
-                                                                    context.getString(R.string.favorite_toast_favorite_removed_failed)
-                                                                        .format(profile.displayName),
-                                                                    Toast.LENGTH_SHORT
-                                                                ).show()
-                                                            }
-                                                        }
-                                                        isMenuExpanded = false
-                                                    },
-                                                    text = { Text(stringResource(R.string.favorite_label_remove)) }
-                                                )
-                                            } else {
-                                                DropdownMenuItem(
-                                                    onClick = {
-                                                        favoriteDialogShown = true
-                                                        isMenuExpanded = false
-                                                    },
-                                                    text = { Text(stringResource(R.string.favorite_label_add)) }
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        title = { Text(
-                            text = profile.displayName,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        ) }
-                    )
-                },
-                content = { padding ->
-
-                    if (favoriteDialogShown) {
-                        FavoriteDialog(
-                            type = "friend",
-                            id = profile.id,
-                            metadata = FavoriteManager.FavoriteMetadata(profile.id, "", profile.displayName, ""),
-                            onDismiss = { favoriteDialogShown = false },
-                            onConfirmation = { result ->
-                                if (result) {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.favorite_toast_favorite_added).format(profile.displayName),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.favorite_toast_favorite_added_failed).format(profile.displayName),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                favoriteDialogShown = false
-                            }
+            Scaffold(topBar = {
+                TopAppBar(navigationIcon = {
+                    IconButton(onClick = { navigator.pop() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
                         )
                     }
+                }, actions = {
+                    IconButton(onClick = { isMenuExpanded = true }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert, contentDescription = null
+                        )
 
-                    LazyColumn(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .padding(
-                                top = padding.calculateTopPadding(),
-                                bottom = padding.calculateBottomPadding()
-                            ),
-                    ) {
-                        item {
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ) {
+                            DropdownMenu(
+                                expanded = isMenuExpanded,
+                                onDismissRequest = { isMenuExpanded = false },
+                                offset = DpOffset(0.dp, 0.dp)
                             ) {
-                                profile.let {
-                                    ProfileCard(
-                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                        displayName = it.displayName,
-                                        statusDescription = it.statusDescription.ifEmpty {
-                                            StatusHelper.getStatusFromString(it.status).toString()
+                                if (profile.isFriend) {
+                                    DropdownMenuItem(onClick = {
+                                        navigator.push(
+                                            NotificationScreen(
+                                                profile.id, profile.displayName
+                                            )
+                                        )
+                                        isMenuExpanded = false
+                                    },
+                                        text = { Text(stringResource(R.string.profile_user_dropdown_manage_notifications)) })
+                                }
+                                DropdownMenuItem(onClick = {
+                                    model.findAvatar { avatarId ->
+                                        if (profile.profilePicOverride.isNotEmpty()) {
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.profile_user_avatar_unreachable),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            return@findAvatar Unit
+                                        }
+                                        if (avatarId == null) {
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.profile_user_avatar_private),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        } else {
+                                            navigator.push(
+                                                AvatarScreen(avatarId)
+                                            )
+                                        }
+                                    }
+                                    isMenuExpanded = false
+                                },
+                                    text = { Text(stringResource(R.string.profile_user_dropdown_view_avatar)) })
+                                if (instance != null) {
+                                    DropdownMenuItem(onClick = {
+
+                                        model.inviteToFriend(profile.location)
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.profile_user_toast_invite_sent),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        isMenuExpanded = false
+                                    },
+                                        text = { Text(stringResource(R.string.profile_user_dropdown_invite_self)) })
+                                }
+                                if (profile.isFriend) {
+                                    if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                        DropdownMenuItem(onClick = {
+                                            model.removeFavorite { result ->
+                                                if (result) {
+                                                    Toast.makeText(
+                                                        context,
+                                                        context.getString(R.string.favorite_toast_favorite_removed)
+                                                            .format(profile.displayName),
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                } else {
+                                                    Toast.makeText(
+                                                        context,
+                                                        context.getString(R.string.favorite_toast_favorite_removed_failed)
+                                                            .format(profile.displayName),
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                            }
+                                            isMenuExpanded = false
                                         },
-                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                        statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                        tags = profile.tags
-                                    )
-                                }
-                            }
-                        }
-
-                        item {
-                            if (instance != null) {
-                                Column(
-                                    verticalArrangement = Arrangement.SpaceBetween,
-                                    horizontalAlignment = Alignment.Start,
-                                    modifier = Modifier.padding(top = 16.dp)
-                                ) {
-                                    InstanceCard(profile = profile, instance = instance) {
-                                        navigator.push(WorldInfoScreen(instance.worldId))
+                                            text = { Text(stringResource(R.string.favorite_label_remove)) })
+                                    } else {
+                                        DropdownMenuItem(onClick = {
+                                            favoriteDialogShown = true
+                                            isMenuExpanded = false
+                                        },
+                                            text = { Text(stringResource(R.string.favorite_label_add)) })
                                     }
                                 }
                             }
                         }
+                    }
+                }, title = {
+                    Text(
+                        text = profile.displayName,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                })
+            }, content = { padding ->
 
-                        if (profile.note.isNotEmpty()) {
-                            item {
-                                Column(
-                                    verticalArrangement = Arrangement.SpaceBetween,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    ElevatedCard(
-                                        elevation = CardDefaults.cardElevation(
-                                            defaultElevation = 6.dp
-                                        ),
-                                        modifier = Modifier
-                                            .padding(top = 16.dp)
-                                            .defaultMinSize(minHeight = 80.dp),
-                                    ) {
-                                        SubHeader(title = stringResource(R.string.profile_label_note))
-                                        Description(text = profile.note)
-                                    }
+                if (favoriteDialogShown) {
+                    FavoriteDialog(type = "friend",
+                        id = profile.id,
+                        metadata = FavoriteManager.FavoriteMetadata(
+                            profile.id, "", profile.displayName, ""
+                        ),
+                        onDismiss = { favoriteDialogShown = false },
+                        onConfirmation = { favoriteDialogShown = false })
+                }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding()
+                        ),
+                ) {
+                    item {
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            profile.let {
+                                ProfileCard(
+                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                    iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
+                                    displayName = it.displayName,
+                                    statusDescription = it.statusDescription.ifEmpty {
+                                        StatusHelper.getStatusFromString(it.status).toString()
+                                    },
+                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
+                                        .toColor(),
+                                    statusColor = StatusHelper.getStatusFromString(it.status)
+                                        .toColor(),
+                                    tags = profile.tags
+                                )
+                            }
+                        }
+                    }
+
+                    item {
+                        if (instance != null) {
+                            Column(
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start,
+                                modifier = Modifier.padding(top = 16.dp)
+                            ) {
+                                InstanceCard(profile = profile, instance = instance) {
+                                    navigator.push(WorldInfoScreen(instance.worldId))
                                 }
                             }
                         }
+                    }
 
+                    if (profile.note.isNotEmpty()) {
                         item {
                             Column(
                                 verticalArrangement = Arrangement.SpaceBetween,
@@ -344,111 +296,132 @@ class UserProfileScreen(
                                         .padding(top = 16.dp)
                                         .defaultMinSize(minHeight = 80.dp),
                                 ) {
-                                    SubHeader(title = stringResource(R.string.profile_label_biography))
-                                    Description(text = profile.bio)
+                                    SubHeader(title = stringResource(R.string.profile_label_note))
+                                    Description(text = profile.note)
                                 }
                             }
-                        }
-
-                        item {
-                            if (worlds.isNotEmpty()) {
-                                Column(
-                                    verticalArrangement = Arrangement.SpaceBetween,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    SubHeader(title = stringResource(R.string.worlds_page_title).format(profile.displayName))
-
-                                    LazyRow(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .fillMaxHeight(),
-                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                    ) {
-                                        items(worlds, key = { it.id }) { world ->
-                                            RowItem(
-                                                name = world.name,
-                                                url = world.thumbnailImageUrl,
-                                                onClick = {
-                                                    navigator.push(
-                                                        WorldInfoScreen(world.id)
-                                                    )
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        item {
-                            val nonMutualGroups = groups.filter { !it.mutualGroup }
-                            if (groups.isNotEmpty()) {
-                                Column(
-                                    verticalArrangement = Arrangement.SpaceBetween,
-                                    horizontalAlignment = Alignment.Start,
-                                ) {
-                                    SubHeader(title = stringResource(R.string.group_user_viewing_groups_username).format(profile.displayName))
-
-                                    LazyRow(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .fillMaxHeight(),
-                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                    ) {
-                                        items(nonMutualGroups, key = { it.groupId }) { group ->
-                                            RowItem(
-                                                name = group.name,
-                                                url = group.bannerUrl,
-                                                onClick = {
-                                                    navigator.push(
-                                                        GroupScreen(group.groupId)
-                                                    )
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        item {
-                            val mutualGroups = groups.filter { it.mutualGroup }
-                            if (mutualGroups.isNotEmpty()) {
-                                Column(
-                                    verticalArrangement = Arrangement.SpaceBetween,
-                                    horizontalAlignment = Alignment.Start,
-                                ) {
-
-                                    SubHeader(title = stringResource(R.string.profile_mutual_groups_text))
-
-                                    LazyRow(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .fillMaxHeight(),
-                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                    ) {
-                                        items(mutualGroups, key = { it.groupId }) { group ->
-                                            RowItem(
-                                                name = group.name,
-                                                url = group.bannerUrl,
-                                                onClick = {
-                                                    navigator.push(
-                                                        GroupScreen(group.groupId)
-                                                    )
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        item {
-                            Spacer(modifier = Modifier.padding(16.dp))
                         }
                     }
+
+                    item {
+                        Column(
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.Start
+                        ) {
+                            ElevatedCard(
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 6.dp
+                                ),
+                                modifier = Modifier
+                                    .padding(top = 16.dp)
+                                    .defaultMinSize(minHeight = 80.dp),
+                            ) {
+                                SubHeader(title = stringResource(R.string.profile_label_biography))
+                                Description(text = profile.bio)
+                            }
+                        }
+                    }
+
+                    item {
+                        if (worlds.isNotEmpty()) {
+                            Column(
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start
+                            ) {
+                                SubHeader(
+                                    title = stringResource(R.string.worlds_page_title).format(
+                                        profile.displayName
+                                    )
+                                )
+
+                                LazyRow(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight(),
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                ) {
+                                    items(worlds, key = { it.id }) { world ->
+                                        RowItem(name = world.name,
+                                            url = world.thumbnailImageUrl,
+                                            onClick = {
+                                                navigator.push(
+                                                    WorldInfoScreen(world.id)
+                                                )
+                                            })
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        val nonMutualGroups = groups.filter { !it.mutualGroup }
+                        if (groups.isNotEmpty()) {
+                            Column(
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start,
+                            ) {
+                                SubHeader(
+                                    title = stringResource(R.string.group_user_viewing_groups_username).format(
+                                        profile.displayName
+                                    )
+                                )
+
+                                LazyRow(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight(),
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                ) {
+                                    items(nonMutualGroups, key = { it.groupId }) { group ->
+                                        RowItem(name = group.name,
+                                            url = group.bannerUrl,
+                                            onClick = {
+                                                navigator.push(
+                                                    GroupScreen(group.groupId)
+                                                )
+                                            })
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        val mutualGroups = groups.filter { it.mutualGroup }
+                        if (mutualGroups.isNotEmpty()) {
+                            Column(
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.Start,
+                            ) {
+
+                                SubHeader(title = stringResource(R.string.profile_mutual_groups_text))
+
+                                LazyRow(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight(),
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                ) {
+                                    items(mutualGroups, key = { it.groupId }) { group ->
+                                        RowItem(name = group.name,
+                                            url = group.bannerUrl,
+                                            onClick = {
+                                                navigator.push(
+                                                    GroupScreen(group.groupId)
+                                                )
+                                            })
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.padding(16.dp))
+                    }
                 }
-            )
+            })
         }
     }
 }

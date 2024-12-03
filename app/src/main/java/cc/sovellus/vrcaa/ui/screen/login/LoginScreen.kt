@@ -25,8 +25,10 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.VRChatApi
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
+import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
 class LoginScreen : Screen {
 
@@ -36,9 +38,8 @@ class LoginScreen : Screen {
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
 
-        val screenModel = LoginScreenModel(context, navigator)
+        val screenModel = LoginScreenModel()
 
         var passwordVisibility by remember { mutableStateOf(false) }
 
@@ -57,23 +58,25 @@ class LoginScreen : Screen {
                     input = screenModel.username
                 )
 
-                PasswordInput(
-                    title = stringResource(R.string.login_label_password),
+                PasswordInput(title = stringResource(R.string.login_label_password),
                     input = screenModel.password,
                     visible = passwordVisibility,
                     onVisibilityChange = {
                         passwordVisibility = !passwordVisibility
-                    }
-                )
+                    })
 
-                Button(
-                    modifier = Modifier
-                        .width(200.dp)
-                        .padding(8.dp),
-                    onClick = {
-                        screenModel.doLogin()
+                Button(modifier = Modifier
+                    .width(200.dp)
+                    .padding(8.dp), onClick = {
+                    screenModel.doLogin { result, type ->
+                        if (result) {
+                            if (type == VRChatApi.MfaType.NONE)
+                                navigator.replace(NavigationScreen())
+                            else
+                                navigator.replace(MfaScreen(type))
+                        }
                     }
-                ) {
+                }) {
                     Text(text = stringResource(R.string.login_button_text))
                 }
             }

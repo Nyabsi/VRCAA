@@ -38,15 +38,14 @@ class FeedScreen : Screen {
         val state by model.state.collectAsState()
 
         when (state) {
-            is FeedState.Loading -> LoadingIndicatorScreen().Content()
-            is FeedState.Result -> ShowScreen(model)
+            is FeedScreenModel.FeedState.Loading -> LoadingIndicatorScreen().Content()
+            is FeedScreenModel.FeedState.Result -> ShowScreen(model)
             else -> {}
         }
     }
 
     @Composable
-    fun ShowScreen(model: FeedScreenModel)
-    {
+    fun ShowScreen(model: FeedScreenModel) {
         val feed = model.feed.collectAsState()
 
         LazyColumn(

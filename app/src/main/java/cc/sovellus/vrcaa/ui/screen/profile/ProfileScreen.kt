@@ -40,8 +40,8 @@ class ProfileScreen : Screen {
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is ProfileState.Loading -> LoadingIndicatorScreen().Content()
-            is ProfileState.Result -> RenderProfile(result.profile)
+            is ProfileScreenModel.ProfileState.Loading -> LoadingIndicatorScreen().Content()
+            is ProfileScreenModel.ProfileState.Result -> RenderProfile(result.profile)
             else -> {}
         }
     }

@@ -47,7 +47,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
             mutableState.value = HomeState.Result
         }
 
-        override fun profileUpdated(profile: User) { }
+        override fun profileUpdated(profile: User) {}
     }
 
     init {
@@ -58,8 +58,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
         // BUG: this will be "true" before the initial screen loads
         // set "HomeState" to Loading with startCacheRefresh
         // is used as an temporary mitigation
-        if (!CacheManager.isRefreshing())
-        {
+        if (!CacheManager.isRefreshing()) {
             fetchContent()
             mutableState.value = HomeState.Result
         }
