@@ -181,6 +181,7 @@
     <string name="group_page_label_description">Beschreibung</string>
     <string name="group_page_label_rules">Regeln</string>
     <string name="group_page_dropdown_view_author">Profil des Verfassers ansehen</string>
+    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">Einladung anfragen</string>
     <string name="group_page_dropdown_request_invite_cancel">Einladungsanfrage abbrechen</string>
     <string name="group_page_dropdown_join_group">Gruppe beitreten</string>

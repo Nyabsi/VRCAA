@@ -180,6 +180,7 @@
     <string name="group_page_label_description">Описание</string>
     <string name="group_page_label_rules">Правила</string>
     <string name="group_page_dropdown_view_author">Посмотреть профиль автора</string>
+    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">Запросить приглашение</string>
     <string name="group_page_dropdown_request_invite_cancel">Отменить запрос на приглашение</string>
     <string name="group_page_dropdown_join_group">Вступить в группу</string>
