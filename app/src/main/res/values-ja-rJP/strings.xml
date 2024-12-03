@@ -187,6 +187,7 @@
     <string name="group_page_label_description">詳細</string>
     <string name="group_page_label_rules">ルール</string>
     <string name="group_page_dropdown_view_author">作者のプロフィールを確認</string>
+    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">参加を申請する</string>
     <string name="group_page_dropdown_request_invite_cancel">参加申請をキャンセルする</string>
     <string name="group_page_dropdown_join_group">グループへ参加する</string>
