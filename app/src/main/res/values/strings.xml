@@ -231,6 +231,7 @@
     <string name="group_page_label_description">Description</string>
     <string name="group_page_label_rules">Rules</string>
     <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
+    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">Request Invite</string>
     <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
     <string name="group_page_dropdown_join_group">Join Group</string>

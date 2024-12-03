@@ -13,16 +13,16 @@ import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-sealed class GroupState {
-    data object Init : GroupState()
-    data object Loading : GroupState()
-    data class Result(val group: Group?, val instances: GroupInstances?) : GroupState()
-}
-
 class GroupScreenModel(
-    private val context: Context,
-    private val groupId: String
-) : StateScreenModel<GroupState>(GroupState.Init) {
+    private val context: Context, private val groupId: String
+) : StateScreenModel<GroupScreenModel.GroupState>(GroupState.Init) {
+
+    sealed class GroupState {
+        data object Init : GroupState()
+        data object Loading : GroupState()
+        data class Result(val group: Group?, val instances: GroupInstances?) : GroupState()
+    }
+
     private var group: Group? = null
     private var instances: GroupInstances? = null
 
@@ -66,24 +66,20 @@ class GroupScreenModel(
         screenModelScope.launch {
             if (api.joinGroup(groupId)) {
                 Toast.makeText(
-                    context,
-                    if (open) {
+                    context, if (open) {
                         context.getString(R.string.group_page_toast_join_group)
                     } else {
                         context.getString(R.string.group_page_toast_invite_requested)
-                    },
-                    Toast.LENGTH_SHORT
+                    }, Toast.LENGTH_SHORT
                 ).show()
                 fetchGroup()
             } else {
                 Toast.makeText(
-                    context,
-                    if (open) {
+                    context, if (open) {
                         context.getString(R.string.group_page_toast_join_group_fail)
                     } else {
                         context.getString(R.string.group_page_toast_invite_requested_fail)
-                    },
-                    Toast.LENGTH_SHORT
+                    }, Toast.LENGTH_SHORT
                 ).show()
             }
         }

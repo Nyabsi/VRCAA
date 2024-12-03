@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.dialog
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.glance.LocalContext
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
@@ -30,8 +32,9 @@ fun FavoriteDialog(
     id: String,
     metadata: FavoriteManager.FavoriteMetadata,
     onDismiss: () -> Unit,
-    onConfirmation: (result: Boolean) -> Unit
+    onConfirmation: () -> Unit
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     val selectedGroup = remember { mutableStateOf("") }
@@ -88,7 +91,7 @@ fun FavoriteDialog(
                             RadioButton(selected = it == selectedGroup.value, onClick = {
                                 selectedGroup.value = it
                             })
-                            Text(text = FavoriteManager.getDisplayNameFromTag(it) ?: it)
+                            Text(text = FavoriteManager.getDisplayNameFromTag(it))
                         }
                     }
                 }
@@ -102,7 +105,22 @@ fun FavoriteDialog(
                 onClick = {
                     coroutineScope.launch {
                         val result = FavoriteManager.addFavorite(type, id, selectedGroup.value, metadata)
-                        onConfirmation(result)
+
+                        if (result) {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.favorite_toast_favorite_added).format(metadata.name),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.favorite_toast_favorite_added_failed).format(metadata.name),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        onConfirmation()
                     }
                 }
             ) {

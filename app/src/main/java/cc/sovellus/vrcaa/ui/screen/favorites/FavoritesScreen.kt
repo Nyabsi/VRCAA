@@ -53,8 +53,8 @@ class FavoritesScreen : Screen {
         val state by model.state.collectAsState()
 
         when (state) {
-            is FavoriteState.Loading -> LoadingIndicatorScreen().Content()
-            is FavoriteState.Result -> ShowScreen(model)
+            is FavoritesScreenModel.FavoriteState.Loading -> LoadingIndicatorScreen().Content()
+            is FavoritesScreenModel.FavoriteState.Result -> ShowScreen(model)
             else -> {}
         }
     }
@@ -62,33 +62,18 @@ class FavoritesScreen : Screen {
     @Composable
     fun ShowScreen(model: FavoritesScreenModel) {
 
+        if (model.editDialogShown.value) {
+            FavoriteEditDialog(model.currentSelectedGroup.value,
+                onDismiss = { model.editDialogShown.value = false },
+                onConfirmation = { model.editDialogShown.value = false }
+            )
+        }
+
         val worldList = model.worldList.collectAsState()
         val avatarList = model.avatarList.collectAsState()
 
         val options = stringArrayResource(R.array.favorites_selection_options)
         val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person)
-
-        if (model.editDialogShown.value)
-        {
-            FavoriteEditDialog(model.currentSelectedGroup.value,
-                onDismiss = {
-                    Toast.makeText(
-                        App.getContext(),
-                        App.getContext().getString(R.string.favorite_edit_discarded),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    model.editDialogShown.value = false
-                },
-                onConfirmation = {
-                    Toast.makeText(
-                        App.getContext(),
-                        App.getContext().getString(R.string.favorite_edit_applied),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    model.editDialogShown.value = false
-                }
-            )
-        }
 
         Column(
             modifier = Modifier

@@ -47,7 +47,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private lateinit var notificationHelper: NotificationHelper
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: VRChatPipeline? = null
@@ -87,13 +86,13 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                     }
 
-                    if (notificationHelper.isOnWhitelist(update.userId) &&
-                        notificationHelper.isIntentEnabled(
+                    if (NotificationHelper.isOnWhitelist(update.userId) &&
+                        NotificationHelper.isIntentEnabled(
                             update.userId,
                             NotificationHelper.Intents.FRIEND_FLAG_ONLINE
                         )
                     ) {
-                        notificationHelper.pushNotification(
+                        NotificationHelper.pushNotification(
                             title = application.getString(R.string.notification_service_title_online),
                             content = application.getString(R.string.notification_service_description_online)
                                 .format(update.user.displayName),
@@ -119,13 +118,13 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                         }
 
-                        if (notificationHelper.isOnWhitelist(friend.id) &&
-                            notificationHelper.isIntentEnabled(
+                        if (NotificationHelper.isOnWhitelist(friend.id) &&
+                            NotificationHelper.isIntentEnabled(
                                 friend.id,
                                 NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
                             )
                         ) {
-                            notificationHelper.pushNotification(
+                            NotificationHelper.pushNotification(
                                 title = application.getString(R.string.notification_service_title_offline),
                                 content = application.getString(R.string.notification_service_description_offline)
                                     .format(friend.displayName),
@@ -158,13 +157,13 @@ class PipelineService : Service(), CoroutineScope {
                     // We want to show it only once, so only show when the travelling is done.
                     if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && friend?.location != update.location) {
 
-                        if (notificationHelper.isOnWhitelist(update.userId) &&
-                            notificationHelper.isIntentEnabled(
+                        if (NotificationHelper.isOnWhitelist(update.userId) &&
+                            NotificationHelper.isIntentEnabled(
                                 update.userId,
                                 NotificationHelper.Intents.FRIEND_FLAG_LOCATION
                             )
                         ) {
-                            notificationHelper.pushNotification(
+                            NotificationHelper.pushNotification(
                                 title = application.getString(R.string.notification_service_title_location),
                                 content = application.getString(R.string.notification_service_description_location)
                                     .format(update.user.displayName, update.world.name),
@@ -206,13 +205,13 @@ class PipelineService : Service(), CoroutineScope {
                                 friendStatus = StatusHelper.getStatusFromString(update.user.status)
                             }
 
-                            if (notificationHelper.isOnWhitelist(update.userId) &&
-                                notificationHelper.isIntentEnabled(
+                            if (NotificationHelper.isOnWhitelist(update.userId) &&
+                                NotificationHelper.isIntentEnabled(
                                     update.userId,
                                     NotificationHelper.Intents.FRIEND_FLAG_STATUS
                                 )
                             ) {
-                                notificationHelper.pushNotification(
+                                NotificationHelper.pushNotification(
                                     title = application.getString(R.string.notification_service_title_status),
                                     content = application.getString(R.string.notification_service_description_status)
                                         .format(
@@ -256,7 +255,7 @@ class PipelineService : Service(), CoroutineScope {
                             friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                         }
 
-                        notificationHelper.pushNotification(
+                        NotificationHelper.pushNotification(
                             title = application.getString(R.string.notification_service_title_friend_removed),
                             content = application.getString(R.string.notification_service_description_friend_removed)
                                 .format(friend.displayName),
@@ -277,7 +276,7 @@ class PipelineService : Service(), CoroutineScope {
                         friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                     }
 
-                    notificationHelper.pushNotification(
+                    NotificationHelper.pushNotification(
                         title = application.getString(R.string.notification_service_title_friend_added),
                         content = application.getString(R.string.notification_service_description_friend_added)
                             .format(update.user.displayName),
@@ -319,7 +318,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
 
-        this.notificationHelper = NotificationHelper(this)
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         launch {

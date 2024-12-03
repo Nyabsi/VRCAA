@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.dialog
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.LocalContext
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -37,6 +40,7 @@ fun FavoriteEditDialog(
     onDismiss: () -> Unit,
     onConfirmation: (result: Boolean) -> Unit
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     val staticName = remember { mutableStateOf(FavoriteManager.getDisplayNameFromTag(tag)) }
@@ -111,6 +115,13 @@ fun FavoriteEditDialog(
                         val metadata = FavoriteManager.getGroupMetadata(tag)
                         metadata?.let {
                             val result = FavoriteManager.updateGroupMetadata(tag, metadata.copy(displayName = name.value, visibility = visibility.value))
+
+                            Toast.makeText(
+                                context,
+                                App.getContext().getString(R.string.favorite_edit_applied),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
                             onConfirmation(result)
                         }
                     }
@@ -121,7 +132,15 @@ fun FavoriteEditDialog(
         },
         dismissButton = {
             TextButton(
-                onClick = { onDismiss() }
+                onClick = {
+                    Toast.makeText(
+                        context,
+                        App.getContext().getString(R.string.favorite_edit_discarded),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    onDismiss()
+                }
             ) {
                 Text(stringResource(R.string.favorite_dialog_button_cancel))
             }

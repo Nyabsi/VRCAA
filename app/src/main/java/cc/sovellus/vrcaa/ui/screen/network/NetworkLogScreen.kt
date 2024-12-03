@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.debug
+package cc.sovellus.vrcaa.ui.screen.network
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -44,7 +44,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.DebugManager
 import java.util.Locale
 
-class DebugScreen : Screen {
+class NetworkLogScreen : Screen {
 
     override val key = uniqueScreenKey
 
@@ -52,7 +52,7 @@ class DebugScreen : Screen {
     @Composable
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { DebugScreenModel() }
+        val model = navigator.rememberNavigatorScreenModel { NetworkLogScreenModel() }
 
         val options = stringArrayResource(R.array.debug_selection_options)
         val icons = listOf(Icons.Filled.NetworkWifi, Icons.Filled.RssFeed)
@@ -121,7 +121,7 @@ class DebugScreen : Screen {
     }
 
     @Composable
-    fun ShowHTTPTraffic(model: DebugScreenModel) {
+    fun ShowHTTPTraffic(model: NetworkLogScreenModel) {
         val navigator = LocalNavigator.currentOrThrow
         val metadata = model.metadata.collectAsState()
 
@@ -175,7 +175,7 @@ class DebugScreen : Screen {
                         Text(text = "${it.payload.length} bytes")
                     },
                     modifier = Modifier.clickable {
-                        navigator.parent?.parent?.push(ExtendedDebugViewScreen(it.payload, it.url))
+                        navigator.parent?.parent?.push(PacketViewScreen(it.payload, it.url))
                     }
                 )
             }
@@ -183,7 +183,7 @@ class DebugScreen : Screen {
     }
 
     @Composable
-    fun ShowPipelineTraffic(model: DebugScreenModel) {
+    fun ShowPipelineTraffic(model: NetworkLogScreenModel) {
         val navigator = LocalNavigator.currentOrThrow
         val metadata = model.metadata.collectAsState()
 
@@ -231,7 +231,7 @@ class DebugScreen : Screen {
                         Text(text = "${it.payload.length} bytes")
                     },
                     modifier = Modifier.clickable {
-                        navigator.parent?.parent?.push(ExtendedDebugViewScreen(it.payload))
+                        navigator.parent?.parent?.push(PacketViewScreen(it.payload))
                     }
                 )
             }

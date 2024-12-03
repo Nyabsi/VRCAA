@@ -4,7 +4,6 @@ import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.models.Auth
 import cc.sovellus.vrcaa.api.vrchat.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.models.Avatars
-import cc.sovellus.vrcaa.api.vrchat.models.Code
 import cc.sovellus.vrcaa.api.vrchat.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.models.FavoriteAdd
 import cc.sovellus.vrcaa.api.vrchat.models.FavoriteAvatar
@@ -55,6 +54,7 @@ class VRChatApi : BaseClient() {
     }
 
     enum class MfaType {
+        UNKNOWN,
         NONE,
         EMAIL_OTP,
         APP_OTP
@@ -64,17 +64,18 @@ class VRChatApi : BaseClient() {
 
     private fun handleRequest(result: Result): List<String>? {
         return when (result) {
-             is Result.Succeeded -> {
+            is Result.Succeeded -> {
                 var cookies = ""
 
-                 if (result.body == "[]")
-                     return null
+                if (result.body == "[]")
+                    return null
 
                 if (result.response.headers("Set-Cookie").isNotEmpty()) {
-                    for (cookie in result.response.headers("Set-Cookie")) { cookies += "$cookie " }
+                    for (cookie in result.response.headers("Set-Cookie")) {
+                        cookies += "$cookie "
+                    }
                     listOf(result.body, cookies)
-                }
-                else
+                } else
                     listOf(result.body)
             }
 
@@ -104,7 +105,9 @@ class VRChatApi : BaseClient() {
                 null
             }
 
-            else -> { null }
+            else -> {
+                null
+            }
         }
     }
 
@@ -115,7 +118,10 @@ class VRChatApi : BaseClient() {
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun getToken(username: String, password: String, twoFactor: String): AccountInfo? {
 
-        val token = Base64.encode((URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password).replace("+", "%20")).toByteArray())
+        val token = Base64.encode(
+            (URLEncoder.encode(username).replace("+", "%20") + ":" + URLEncoder.encode(password)
+                .replace("+", "%20")).toByteArray()
+        )
 
         val headers = Headers.Builder()
 
@@ -137,7 +143,8 @@ class VRChatApi : BaseClient() {
 
         response?.let {
 
-            if (response.size == 1) // No OTP required
+            // No headers in response
+            if (response.size == 1)
                 return AccountInfo(MfaType.NONE, "")
 
             val body = response[0]
@@ -153,7 +160,6 @@ class VRChatApi : BaseClient() {
                 return AccountInfo(MfaType.APP_OTP, cookies)
             }
 
-            // No OTP required, pass new tokens
             return AccountInfo(MfaType.NONE, cookies)
         }
 
@@ -190,7 +196,7 @@ class VRChatApi : BaseClient() {
         return when (type) {
             MfaType.EMAIL_OTP -> {
 
-                val body = Gson().toJson(Code(code))
+                val body = Gson().toJson(cc.sovellus.vrcaa.api.vrchat.models.Code(code))
 
                 val result = doRequest(
                     method = "POST",
@@ -209,7 +215,7 @@ class VRChatApi : BaseClient() {
 
             MfaType.APP_OTP -> {
 
-                val body = Gson().toJson(Code(code))
+                val body = Gson().toJson(cc.sovellus.vrcaa.api.vrchat.models.Code(code))
 
                 val result = doRequest(
                     method = "POST",
@@ -226,7 +232,9 @@ class VRChatApi : BaseClient() {
                 return null
             }
 
-            else -> { null }
+            else -> {
+                null
+            }
         }
     }
 
@@ -417,7 +425,20 @@ class VRChatApi : BaseClient() {
                 temp.add(world)
             }
 
-            getWorlds(query, limit, byProduct, featured, sort, if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) { byProduct } else { n }, offset + n, worlds)
+            getWorlds(
+                query,
+                limit,
+                byProduct,
+                featured,
+                sort,
+                if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) {
+                    byProduct
+                } else {
+                    n
+                },
+                offset + n,
+                worlds
+            )
         }
 
         return worlds
@@ -435,7 +456,11 @@ class VRChatApi : BaseClient() {
 
         headers["User-Agent"] = userAgent
 
-        val releaseStatus = if (private) { "all" } else { "public" }
+        val releaseStatus = if (private) {
+            "all"
+        } else {
+            "public"
+        }
 
         val result = doRequest(
             method = "GET",
@@ -475,7 +500,7 @@ class VRChatApi : BaseClient() {
         val response = handleRequest(result)
 
         response?.let {
-           return Gson().fromJson(response[0], World::class.java)
+            return Gson().fromJson(response[0], World::class.java)
         }
 
         return null
@@ -510,7 +535,18 @@ class VRChatApi : BaseClient() {
                 temp.add(user)
             }
 
-            getUsers(username, limit, byProduct, if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) { byProduct } else { n }, offset + n, temp)
+            getUsers(
+                username,
+                limit,
+                byProduct,
+                if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) {
+                    byProduct
+                } else {
+                    n
+                },
+                offset + n,
+                temp
+            )
         }
 
         return users
@@ -857,7 +893,18 @@ class VRChatApi : BaseClient() {
                 temp.add(group)
             }
 
-            getGroups(query, limit, byProduct, if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) { byProduct } else { n }, offset + n, groups)
+            getGroups(
+                query,
+                limit,
+                byProduct,
+                if (MathHelper.isWithinByProduct(offset + n, byProduct, limit)) {
+                    byProduct
+                } else {
+                    n
+                },
+                offset + n,
+                groups
+            )
         }
 
         return groups
@@ -1007,12 +1054,19 @@ class VRChatApi : BaseClient() {
         return null
     }
 
-    suspend fun updateProfile(id: String, status: String, description: String, bio: String, bioLinks: List<String>): User? {
+    suspend fun updateProfile(
+        id: String,
+        status: String,
+        description: String,
+        bio: String,
+        bioLinks: List<String>
+    ): User? {
 
         val headers = Headers.Builder()
 
         headers["User-Agent"] = userAgent
 
+        // TODO: wrap inside object
         val body = "{\"status\":\"$status\",\"statusDescription\":\"$description\",\"bio\":\"${bio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(bioLinks)}}"
 
         val result = doRequest(

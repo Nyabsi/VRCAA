@@ -91,7 +91,9 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_active_friends)
                     ) {
-                        items(onlineFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }, key = { it.id }) { friend ->
+                        items(
+                            onlineFriends.sortedBy { StatusHelper.getStatusFromString(it.status) },
+                            key = { it.id }) { friend ->
                             RoundedRowItem(
                                 name = friend.displayName,
                                 url = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl },
@@ -165,7 +167,9 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_friend_locations)
                     ) {
-                        items(friendLocations.distinctBy { it.location.split(':')[0] }, key = { it.id }) { friend ->
+                        items(
+                            friendLocations.distinctBy { it.location.split(':')[0] },
+                            key = { it.id }) { friend ->
                             val world = CacheManager.getWorld(friend.location.split(':')[0])
                             RowItem(
                                 name = world.name,

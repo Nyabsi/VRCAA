@@ -13,15 +13,15 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
-sealed class UserProfileState {
-    data object Init : UserProfileState()
-    data object Loading : UserProfileState()
-    data class Result(val profile: LimitedUser?, val instance: Instance?, val worlds: ArrayList<World>, val groups: ArrayList<UserGroups.Group>) : UserProfileState()
-}
-
 class UserProfileScreenModel(
     private val userId: String
-) : StateScreenModel<UserProfileState>(UserProfileState.Init) {
+) : StateScreenModel<UserProfileScreenModel.UserProfileState>(UserProfileState.Init) {
+
+    sealed class UserProfileState {
+        data object Init : UserProfileState()
+        data object Loading : UserProfileState()
+        data class Result(val profile: LimitedUser?, val instance: Instance?, val worlds: ArrayList<World>, val groups: ArrayList<UserGroups.Group>) : UserProfileState()
+    }
 
     private val avatarProvider = JustHPartyProvider()
 

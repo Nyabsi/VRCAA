@@ -18,12 +18,15 @@ android {
         versionName = "2.1.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
 
         buildConfigField("String", "GIT_HASH", "\"${getGitHash()}\"")
         buildConfigField("String", "GIT_BRANCH", "\"${getBranch()}\"")
+        buildConfigField("String", "DISCORD_URL", "\"https://discord.gg/aJs8qJXuT3\"")
+        buildConfigField("String", "CROWDIN_URL", "\"https://crowdin.com/project/vrcaa\"")
     }
 
     buildTypes {

@@ -1,40 +1,31 @@
 package cc.sovellus.vrcaa.ui.screen.notification
 
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.helper.NotificationHelper
 
-class NotificationScreenModel(
-    context: Context,
-    private val friendId: String
-) : ScreenModel {
-    private val notificationHelper = NotificationHelper(context)
+class NotificationScreenModel(private val friendId: String) : ScreenModel {
 
-    val isNotificationsEnabled = mutableStateOf(notificationHelper.isOnWhitelist(friendId))
+    val isNotificationsEnabled = mutableStateOf(NotificationHelper.isOnWhitelist(friendId))
 
     val isOnlineIntentEnabled = mutableStateOf(
-        notificationHelper.isIntentEnabled(
-            friendId,
-            NotificationHelper.Intents.FRIEND_FLAG_ONLINE
+        NotificationHelper.isIntentEnabled(
+            friendId, NotificationHelper.Intents.FRIEND_FLAG_ONLINE
         )
     )
     val isOfflineIntentEnabled = mutableStateOf(
-        notificationHelper.isIntentEnabled(
-            friendId,
-            NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
+        NotificationHelper.isIntentEnabled(
+            friendId, NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
         )
     )
     val isLocationIntentEnabled = mutableStateOf(
-        notificationHelper.isIntentEnabled(
-            friendId,
-            NotificationHelper.Intents.FRIEND_FLAG_LOCATION
+        NotificationHelper.isIntentEnabled(
+            friendId, NotificationHelper.Intents.FRIEND_FLAG_LOCATION
         )
     )
     val isStatusIntentEnabled = mutableStateOf(
-        notificationHelper.isIntentEnabled(
-            friendId,
-            NotificationHelper.Intents.FRIEND_FLAG_STATUS
+        NotificationHelper.isIntentEnabled(
+            friendId, NotificationHelper.Intents.FRIEND_FLAG_STATUS
         )
     )
 
@@ -42,10 +33,10 @@ class NotificationScreenModel(
     fun toggleNotifications(toggle: Boolean) {
 
         if (toggle) {
-            notificationHelper.addToWhitelist(friendId)
+            NotificationHelper.addToWhitelist(friendId)
             isNotificationsEnabled.value = true
         } else {
-            notificationHelper.removeFromWhiteList(friendId)
+            NotificationHelper.removeFromWhiteList(friendId)
             isNotificationsEnabled.value = false
         }
     }
@@ -53,15 +44,17 @@ class NotificationScreenModel(
     fun toggleIntent(toggle: Boolean, intent: NotificationHelper.Intents) {
 
         if (toggle) {
-            notificationHelper.enableIntent(friendId, intent)
+            NotificationHelper.enableIntent(friendId, intent)
         } else {
-            notificationHelper.disableIntent(friendId, intent)
+            NotificationHelper.disableIntent(friendId, intent)
         }
 
         when (intent) {
             NotificationHelper.Intents.FRIEND_FLAG_ONLINE -> isOnlineIntentEnabled.value = toggle
             NotificationHelper.Intents.FRIEND_FLAG_OFFLINE -> isOfflineIntentEnabled.value = toggle
-            NotificationHelper.Intents.FRIEND_FLAG_LOCATION -> isLocationIntentEnabled.value = toggle
+            NotificationHelper.Intents.FRIEND_FLAG_LOCATION -> isLocationIntentEnabled.value =
+                toggle
+
             NotificationHelper.Intents.FRIEND_FLAG_STATUS -> isStatusIntentEnabled.value = toggle
         }
     }

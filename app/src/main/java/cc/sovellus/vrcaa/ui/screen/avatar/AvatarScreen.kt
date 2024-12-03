@@ -57,198 +57,167 @@ class AvatarScreen(
 
     @Composable
     override fun Content() {
-        val context = LocalContext.current
-        val model = rememberScreenModel { AvatarScreenModel(context, avatarId) }
+        val model = rememberScreenModel { AvatarScreenModel(avatarId) }
 
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is AvatarState.Loading -> LoadingIndicatorScreen().Content()
-            is AvatarState.Result -> DisplayResult(result.avatar, model)
+            is AvatarScreenModel.AvatarState.Loading -> LoadingIndicatorScreen().Content()
+            is AvatarScreenModel.AvatarState.Failure -> HandleFailure()
+            is AvatarScreenModel.AvatarState.Result -> HandleResult(result.avatar, model)
             else -> {}
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun DisplayResult(avatar: Avatar?, model: AvatarScreenModel) {
+    private fun HandleFailure() {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
+        Toast.makeText(
+            context,
+            stringResource(R.string.avatar_toast_avatar_not_found_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        navigator.pop()
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun HandleResult(avatar: Avatar, model: AvatarScreenModel) {
+
+        val navigator = LocalNavigator.currentOrThrow
+
         var isMenuExpanded by remember { mutableStateOf(false) }
-        var favoriteDialogShown by remember { mutableStateOf(false) }
-        var exitOnce by remember { mutableStateOf(false) }
+        var isDialogShown by remember { mutableStateOf(false) }
 
-        if (avatar == null) {
-            if (!exitOnce) {
-                Toast.makeText(
-                    context,
-                    stringResource(R.string.avatar_toast_avatar_not_found_message),
-                    Toast.LENGTH_SHORT
-                ).show()
-                navigator.pop()
-                exitOnce = true
-            }
-        } else {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        navigationIcon = {
-                            IconButton(onClick = { navigator.pop() }) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = { isMenuExpanded = true }) {
-                                Icon(
-                                    imageVector = Icons.Filled.MoreVert,
-                                    contentDescription = null
-                                )
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { isMenuExpanded = true }) {
+                            Icon(
+                                imageVector = Icons.Filled.MoreVert,
+                                contentDescription = null
+                            )
 
-                                Box(
-                                    contentAlignment = Alignment.Center
+                            Box(
+                                contentAlignment = Alignment.Center
+                            ) {
+                                DropdownMenu(
+                                    expanded = isMenuExpanded,
+                                    onDismissRequest = { isMenuExpanded = false },
+                                    offset = DpOffset(0.dp, 0.dp)
                                 ) {
-                                    DropdownMenu(
-                                        expanded = isMenuExpanded,
-                                        onDismissRequest = { isMenuExpanded = false },
-                                        offset = DpOffset(0.dp, 0.dp)
-                                    ) {
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            model.selectAvatar()
+                                        },
+                                        text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
+                                    )
+                                    if (FavoriteManager.isFavorite("avatar", avatar.id)) {
                                         DropdownMenuItem(
                                             onClick = {
-                                                if (model.selectAvatar()) {
-                                                    Toast.makeText(
-                                                        context,
-                                                        context.getString(R.string.avatar_dropdown_toast_select_avatar),
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
+                                                model.removeFavorite()
+                                                isMenuExpanded = false
                                             },
-                                            text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
+                                            text = { Text(stringResource(R.string.favorite_label_remove)) }
                                         )
-                                        if (FavoriteManager.isFavorite("avatar", avatar.id)) {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    model.removeFavorite { result ->
-                                                        if (result) {
-                                                            Toast.makeText(
-                                                                context,
-                                                                context.getString(R.string.favorite_toast_favorite_removed)
-                                                                    .format(avatar.name),
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        } else {
-                                                            Toast.makeText(
-                                                                context,
-                                                                context.getString(R.string.favorite_toast_favorite_removed_failed)
-                                                                    .format(avatar.name),
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        }
-                                                    }
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.favorite_label_remove)) }
-                                            )
-                                        } else {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    favoriteDialogShown = true
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.favorite_label_add)) }
-                                            )
-                                        }
+                                    } else {
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                isDialogShown = true
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.favorite_label_add)) }
+                                        )
                                     }
                                 }
                             }
-                        },
-                        title = {
-                            Text(text = avatar.name)
                         }
-                    )
-                },
-                content = { padding ->
+                    },
+                    title = {
+                        Text(text = avatar.name)
+                    }
+                )
+            },
+            content = { padding ->
 
-                    if (favoriteDialogShown) {
-                        FavoriteDialog(
-                            type = "avatar",
-                            id = avatar.id,
-                            metadata = FavoriteManager.FavoriteMetadata(avatar.id, "", avatar.name, avatar.thumbnailImageUrl),
-                            onDismiss = { favoriteDialogShown = false },
-                            onConfirmation = { result ->
-                                if (result) {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.favorite_toast_favorite_added).format(avatar.name),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.favorite_toast_favorite_added_failed).format(avatar.name),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                favoriteDialogShown = false
-                            }
+                if (isDialogShown) {
+                    FavoriteDialog(
+                        type = "avatar",
+                        id = avatar.id,
+                        metadata = FavoriteManager.FavoriteMetadata(
+                            avatar.id,
+                            "",
+                            avatar.name,
+                            avatar.thumbnailImageUrl
+                        ),
+                        onDismiss = { isDialogShown = false },
+                        onConfirmation = { isDialogShown = false }
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding(),
+                            start = 16.dp,
+                            end = 16.dp
+                        ),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AvatarCard(avatar)
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        SubHeader(title = stringResource(R.string.avatar_title_description))
+                        Description(text = avatar.description)
+
+                        val parser =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                        val formatter =
+                            SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+
+                        val createdAtFormatted = parser.parse(avatar.createdAt)
+                            ?.let { formatter.format(it) }
+
+                        val updatedAtFormatted = parser.parse(avatar.updatedAt)
+                            ?.let { formatter.format(it) }
+
+                        SubHeader(title = stringResource(R.string.avatar_title_created_at))
+                        Description(text = createdAtFormatted)
+
+                        SubHeader(title = stringResource(R.string.avatar_title_updated_at))
+                        Description(text = updatedAtFormatted)
+
+                        SubHeader(title = stringResource(R.string.avatar_title_content_labels))
+                        BadgesFromTags(
+                            tags = avatar.tags,
+                            tagPropertyName = "content",
+                            localizationResourceInt = R.string.avatar_text_content_labels_not_found
                         )
                     }
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                top = padding.calculateTopPadding(),
-                                bottom = padding.calculateBottomPadding(),
-                                start = 16.dp,
-                                end = 16.dp
-                            ),
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AvatarCard(avatar)
-
-                        Spacer(modifier = Modifier.padding(8.dp))
-
-                        ElevatedCard(
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 6.dp
-                            ),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            SubHeader(title = stringResource(R.string.avatar_title_description))
-                            Description(text = avatar.description)
-
-                            val parser =
-                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                            val formatter =
-                                SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
-
-                            val createdAtFormatted = parser.parse(avatar.createdAt)
-                                ?.let { formatter.format(it) }
-
-                            val updatedAtFormatted = parser.parse(avatar.updatedAt)
-                                ?.let { formatter.format(it) }
-
-                            SubHeader(title = stringResource(R.string.avatar_title_created_at))
-                            Description(text = createdAtFormatted)
-
-                            SubHeader(title = stringResource(R.string.avatar_title_updated_at))
-                            Description(text = updatedAtFormatted)
-
-                            SubHeader(title = stringResource(R.string.avatar_title_content_labels))
-                            BadgesFromTags(
-                                tags = avatar.tags,
-                                tagPropertyName = "content",
-                                localizationResourceInt = R.string.avatar_text_content_labels_not_found
-                            )
-                        }
-                    }
                 }
-            )
-        }
+            }
+        )
     }
 }

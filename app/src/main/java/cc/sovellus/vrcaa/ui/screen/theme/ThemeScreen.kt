@@ -23,7 +23,6 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
@@ -39,8 +38,6 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.manager.ThemeManager
-import cc.sovellus.vrcaa.ui.theme.LocalTheme
-import cc.sovellus.vrcaa.ui.theme.Theme
 
 class ThemeScreen : Screen {
 

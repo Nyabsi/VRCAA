@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.debug
+package cc.sovellus.vrcaa.ui.screen.network
 
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -8,7 +8,7 @@ import cc.sovellus.vrcaa.manager.DebugManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class DebugScreenModel : ScreenModel {
+class NetworkLogScreenModel : ScreenModel {
     private var metadataStateFlow = MutableStateFlow(mutableStateListOf<DebugManager.DebugMetadataData>())
     var metadata = metadataStateFlow.asStateFlow()
 

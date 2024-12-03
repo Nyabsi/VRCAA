@@ -10,7 +10,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.screen.debug.DebugScreen
+import cc.sovellus.vrcaa.ui.screen.network.NetworkLogScreen
 
 object DebugTab : Tab {
 
@@ -31,7 +31,7 @@ object DebugTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(DebugScreen())
+        Navigator(NetworkLogScreen())
     }
 
     private fun readResolve(): Any = DebugTab

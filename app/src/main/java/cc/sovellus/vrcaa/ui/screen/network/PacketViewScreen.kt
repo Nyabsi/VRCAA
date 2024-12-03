@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.ui.screen.debug
+package cc.sovellus.vrcaa.ui.screen.network
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -37,7 +37,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 
-class ExtendedDebugViewScreen(
+class PacketViewScreen(
     private val payload: String,
     private val url: String? = null
 ) : Screen {
