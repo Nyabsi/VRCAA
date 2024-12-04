@@ -25,6 +25,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class FeedScreen : Screen {
 
@@ -46,6 +48,7 @@ class FeedScreen : Screen {
 
     @Composable
     fun ShowScreen(model: FeedScreenModel) {
+        val navigator = LocalNavigator.currentOrThrow
         val feed = model.feed.collectAsState()
 
         LazyColumn(
@@ -74,7 +77,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_online_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(item.friendId)) }
                         )
                     }
 
@@ -91,7 +94,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_offline_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(item.friendId)) }
                         )
                     }
 
@@ -110,7 +113,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_location_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(WorldInfoScreen(item.worldId)) }
                         )
                     }
 
@@ -129,7 +132,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_status_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(item.friendId)) }
                         )
                     }
 
@@ -146,7 +149,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_added_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(item.friendId)) }
                         )
                     }
 
@@ -163,7 +166,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_removed_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(item.friendId)) }
                         )
                     }
 
@@ -180,7 +183,7 @@ class FeedScreen : Screen {
                             friendPictureUrl = item.friendPictureUrl,
                             feedTimestamp = item.feedTimestamp,
                             resourceStringTitle = R.string.feed_friend_request_label,
-                            userId = item.friendId
+                            onClick = { navigator.parent?.parent?.push(UserProfileScreen(item.friendId)) }
                         )
                     }
                 }
