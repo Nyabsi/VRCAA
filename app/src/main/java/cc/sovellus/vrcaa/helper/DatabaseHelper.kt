@@ -26,7 +26,7 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
     }
 
     object Queries {
-        const val SQL_CREATE_FEED_TABLE = "CREATE TABLE feed(type INTEGER, feedId TEXT, friendId TEXT, friendName TEXT, friendPictureUrl TEXT, friendStatus TEXT, travelDestination TEXT, feedTimestamp BIGINT)"
+        const val SQL_CREATE_FEED_TABLE = "CREATE TABLE feed(type INTEGER, feedId TEXT, friendId TEXT, friendName TEXT, friendPictureUrl TEXT, friendStatus TEXT, travelDestination TEXT, worldId TEXT, feedTimestamp BIGINT)"
     }
 
     object Tables {

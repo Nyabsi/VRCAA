@@ -36,6 +36,7 @@ object FeedManager {
         var friendPictureUrl: String = "",
         var friendStatus: StatusHelper.Status = StatusHelper.Status.Offline,
         var travelDestination: String = "",
+        var worldId: String = "",
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
     )
 

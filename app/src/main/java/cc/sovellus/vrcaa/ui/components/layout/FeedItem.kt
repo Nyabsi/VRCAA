@@ -31,10 +31,8 @@ fun FeedItem(
     friendPictureUrl: String,
     feedTimestamp: LocalDateTime,
     resourceStringTitle: Int,
-    userId: String
+    onClick: () -> Unit
 ) {
-    val navigator = LocalNavigator.currentOrThrow
-
     ListItem(
         headlineContent = {
             Text(text, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -60,7 +58,7 @@ fun FeedItem(
             Text(text = feedTimestamp.format(formatter))
         },
         modifier = Modifier.clickable(
-            onClick = { navigator.parent?.parent?.push(UserProfileScreen(userId)) }
+            onClick = { onClick() }
         )
     )
 }

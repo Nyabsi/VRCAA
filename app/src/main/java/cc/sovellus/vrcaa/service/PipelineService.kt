@@ -177,6 +177,7 @@ class PipelineService : Service(), CoroutineScope {
                             friendId = update.userId
                             friendName = update.user.displayName
                             travelDestination = LocationHelper.getReadableLocation(update.location)
+                            worldId = update.worldId
                             friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
                         }
 
