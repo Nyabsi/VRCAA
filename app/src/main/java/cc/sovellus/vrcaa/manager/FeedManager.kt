@@ -11,7 +11,9 @@ object FeedManager {
     private var feedList: MutableList<Feed> = ArrayList()
 
     init {
-        feedList = DatabaseManager.readFeeds()
+        DatabaseManager.readFeeds().map {
+            feedList.add(it)
+        }
     }
 
     enum class FeedType {
