@@ -31,7 +31,7 @@
     <string name="main_search_placeholder">ワールド・ユーザー・アバターの検索…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">現在のインスタンス</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_note">ノート</string>
     <string name="profile_label_biography">プロフィール</string>
     <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
     <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
@@ -40,9 +40,9 @@
     <string name="profile_user_dropdown_invite_self">セルフ・インバイト</string>
     <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
     <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_avatar_unreachable">アバターを参照できません。</string>
     <string name="profile_user_toast_invite_sent">インバイトを送信しました、ゲーム内で確認してください。</string>
-    <string name="profile_mutual_groups_text">Mutual Groups</string>
+    <string name="profile_mutual_groups_text">共有するグループ</string>
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
     <string name="search_filter_category_worlds">ワールド</string>
@@ -67,13 +67,13 @@
     </string-array>
     <!-- Settings -->
     <string name="settings_item_about">概要</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about_description">あなたのデバイスとVRCAAに関するより詳細な情報</string>
+    <string name="settings_item_theming">外観</string>
+    <string name="settings_item_theming_description">外観設定、簡易モード</string>
     <string name="settings_item_rich_presence">リッチプレゼンス (実験中)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_rich_presence_description">Discordリッチプレゼンス機能</string>
+    <string name="settings_item_advanced_settings">上級者機能</string>
+    <string name="settings_item_advanced_settings_description">詳細ログ機能</string>
     <string name="settings_item_logout">ログオフ</string>
     <!-- Worlds -->
     <string name="world_label_description">情報</string>
@@ -94,9 +94,9 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">フレンド</string>
     <string name="tabs_label_home">ホーム</string>
-    <string name="tabs_label_favorites">Favorites</string>
-    <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_activities">Activities</string>
+    <string name="tabs_label_favorites">お気に入り</string>
+    <string name="tabs_label_feed">フィード</string>
+    <string name="tabs_label_activities">アクティビティ</string>
     <string name="tabs_label_profile">プロフィール</string>
     <string name="tabs_label_pictures">ピクチャー</string>
     <string name="tabs_label_settings">設定</string>
@@ -187,7 +187,7 @@
     <string name="group_page_label_description">詳細</string>
     <string name="group_page_label_rules">ルール</string>
     <string name="group_page_dropdown_view_author">作者のプロフィールを確認</string>
-    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
+    <string name="group_page_dropdown_accept_invite">招待を承諾する</string>
     <string name="group_page_dropdown_request_invite">参加を申請する</string>
     <string name="group_page_dropdown_request_invite_cancel">参加申請をキャンセルする</string>
     <string name="group_page_dropdown_join_group">グループへ参加する</string>
@@ -245,12 +245,12 @@
     <string name="favorite_dialog_button_cancel">キャンセル</string>
     <string name="favorite_dialog_title">"お気に入りへ追加"</string>
     <string name="favorite_page_title">お気に入り一覧</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_edit_title">%1$s を編集</string>
+    <string name="favorite_edit_display_name">表示名</string>
+    <string name="favorite_edit_visibility">ステータスカラー</string>
+    <string name="favorite_edit_discarded">変更を破棄しました。</string>
+    <string name="favorite_edit_applied">変更を適用しました。</string>
+    <string name="favorite_dialog_button_edit">変更</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>フィード</item>
@@ -262,7 +262,7 @@
     <!-- Avatars -->
     <string name="avatars_page_title">アバターを表示</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="developer_mode_toggle_toast">アプリを再起動して変更を反映してください。</string>
     <!-- Loading Texts -->
     <string name="loading_text_profile">プロファイルを読み込み中。。。</string>
     <string name="loading_text_online_friends">オンラインのフレンドを読み込み中。。。</string>
@@ -279,21 +279,21 @@
     <string name="loading_text_group">グループ情報を読み込み中。。。</string>
     <string name="loading_text_instances">インスタンス情報を読み込み中。。。</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">テーマ</string>
+    <string name="theme_page_minimalist_mode_text">簡易モード</string>
+    <string name="theme_page_minimalist_mode_text_description">"簡易モードでは表示内容がより小さなスクリーンに収まるように調整します。"</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>ライト</item>
+        <item>ダーク</item>
+        <item>システム</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
+    <string name="theme_page_section_theme_title">テーマ</string>
+    <string name="theme_page_section_display_title">画面</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
-    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+    <string name="advanced_page_title">詳細設定</string>
+    <string name="advanced_page_network_logging">ネットワークログ</string>
+    <string name="advanced_page_network_logging_description">HTTPとWebSocketのトラフィックを捕捉</string>
+    <string name="advanced_page_view_network_logs">ネットワークログを表示</string>
+    <string name="advanced_page_battery_optimization">バッテリー最適化を無効にする</string>
+    <string name="advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
 </resources>
