@@ -32,9 +32,9 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ButtonItem
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.DividerH
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.TextWithStringHeaderAndDescription
+import cc.sovellus.vrcaa.ui.components.base.button
+import cc.sovellus.vrcaa.ui.components.base.headerAndDescription
+import cc.sovellus.vrcaa.ui.components.base.horizontalDivider
 import cc.sovellus.vrcaa.ui.screen.licenses.LicensesScreen
 
 class AboutScreen : Screen {
@@ -92,19 +92,28 @@ class AboutScreen : Screen {
 
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
-                    TextWithStringHeaderAndDescription(
+                    headerAndDescription(
                         "Version",
                         "${BuildConfig.VERSION_NAME} ${BuildConfig.FLAVOR} (${BuildConfig.GIT_BRANCH}, ${BuildConfig.GIT_HASH})"
                     )
-                    TextWithStringHeaderAndDescription("Model", Build.MODEL)
-                    TextWithStringHeaderAndDescription("Vendor", Build.MANUFACTURER)
-                    TextWithStringHeaderAndDescription(
+                    headerAndDescription(
+                        "Model",
+                        Build.MODEL
+                    )
+                    headerAndDescription(
+                        "Vendor",
+                        Build.MANUFACTURER
+                    )
+                    headerAndDescription(
                         "System Version",
                         "Android ${Build.VERSION.RELEASE}",
-                        true
                     )
-                    DividerH()
-                    ButtonItem(R.string.about_page_open_source_licenses_title, 0) {navigator.push(LicensesScreen())}
+                    horizontalDivider()
+                    button(
+                        R.string.about_page_open_source_licenses_title,
+                        0,
+                        true
+                    ) { navigator.push(LicensesScreen()) }
                 }
             }
         )

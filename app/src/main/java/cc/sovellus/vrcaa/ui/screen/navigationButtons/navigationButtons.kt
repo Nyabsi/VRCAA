@@ -25,8 +25,8 @@ import cc.sovellus.vrcaa.extension.FeedTab
 import cc.sovellus.vrcaa.extension.favoritesTab
 import cc.sovellus.vrcaa.extension.friendsTab
 import cc.sovellus.vrcaa.extension.homeTab
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ContentHeader
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.SegmentedRowItem
+import cc.sovellus.vrcaa.ui.components.base.ContentHeader
+import cc.sovellus.vrcaa.ui.components.base.SegmentedRowItem
 
 class NavigationButtonSettingsScreen : Screen {
 

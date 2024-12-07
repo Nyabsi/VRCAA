@@ -5,7 +5,7 @@ import androidx.core.content.edit
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import com.google.gson.Gson
 
-// extend SharedPreferences
+// User Auth //
 internal var SharedPreferences.userCredentials: Pair<String?, String?>
     get() {
         return Pair(
@@ -26,6 +26,8 @@ internal var SharedPreferences.twoFactorToken: String
     get() = getString("TwoFactorAuth", "")!!
     set(it) = edit { putString("TwoFactorAuth", it) }
 
+
+// Notification Checks //
 internal var SharedPreferences.notificationWhitelist: NotificationHelper.NotificationPermissions
     get() {
         val result = getString("notificationWhitelist", "")
@@ -36,6 +38,7 @@ internal var SharedPreferences.notificationWhitelist: NotificationHelper.Notific
     }
     set(it) = edit { putString("notificationWhitelist", Gson().toJson(it)) }
 
+// Discord RPC //
 internal var SharedPreferences.discordToken: String
     get() = getString("discordToken", "")!!
     set(it) = edit { putString("discordToken", it) }
@@ -44,8 +47,17 @@ internal var SharedPreferences.richPresenceEnabled: Boolean
     get() = getBoolean("richPresenceEnabled", false)
     set(it) = edit { putBoolean("richPresenceEnabled", it) }
 
+internal var SharedPreferences.richPresenceWarningAcknowledged: Boolean
+    get() = getBoolean("richPresenceWarningAcknowledged", false)
+    set(it) = edit { putBoolean("richPresenceWarningAcknowledged", it) }
+
+internal var SharedPreferences.richPresenceWebhookUrl: String
+    get() = getString("richPresenceWebhookUrl", "")!!
+    set(it) = edit { putString("richPresenceWebhookUrl", it) }
+
+// Search Preferences //
 internal var SharedPreferences.searchFeaturedWorlds: Boolean
-    get() = getBoolean("searchFeaturedWorlds", false)
+    get() = false // getBoolean("searchFeaturedWorlds", false)
     set(it) = edit { putBoolean("searchFeaturedWorlds", it) }
 
 internal var SharedPreferences.sortWorlds: String
@@ -68,14 +80,6 @@ internal var SharedPreferences.avatarsAmount: Int
     get() = getInt("groupsAmount", 50)
     set(it) = edit { putInt("groupsAmount", it) }
 
-internal var SharedPreferences.richPresenceWarningAcknowledged: Boolean
-    get() = getBoolean("richPresenceWarningAcknowledged", false)
-    set(it) = edit { putBoolean("richPresenceWarningAcknowledged", it) }
-
-internal var SharedPreferences.richPresenceWebhookUrl: String
-    get() = getString("richPresenceWebhookUrl", "")!!
-    set(it) = edit { putString("richPresenceWebhookUrl", it) }
-
 internal var SharedPreferences.avatarProvider: String
     get() = getString("avatarProviderPreference", "avtrdb")!!
     set(it) = edit { putString("avatarProviderPreference", it) }
@@ -84,17 +88,17 @@ internal var SharedPreferences.networkLogging: Boolean
     get() = getBoolean("isDeveloperModeEnabled", false)
     set(it) = edit { putBoolean("isDeveloperModeEnabled", it) }
 
+// Customization //
 internal var SharedPreferences.minimalistMode: Boolean
     get() = getBoolean("isMinimalistModeEnabled", false)
     set(it) = edit { putBoolean("isMinimalistModeEnabled", it) }
 
+/* Theme settings (0: Light, 1: Dark, System: 2) */
 internal var SharedPreferences.currentThemeOption: Int
     get() = getInt("currentThemeOption", 2)
     set(it) = edit { putInt("currentThemeOption", it) }
 
-
-/* Tab settings (0: Shown, 1: Folded to Profile, 2: Hidden) */
-
+/* Tab settings (0: Shown, 1: Folded, 2: Hidden) */
 internal var SharedPreferences.homeTab: Int
     get() = getInt("homeTab", 0)
     set(it) = edit { putInt("homeTab", it) }
@@ -110,10 +114,6 @@ internal var SharedPreferences.favoritesTab: Int
 internal var SharedPreferences.FeedTab: Int
     get() = getInt("FeedTab", 0)
     set(it) = edit { putInt("FeedTab", it) }
-
-internal var SharedPreferences.settingsTab: Int
-    get() = getInt("settingsTab", 0)
-    set(it) = edit { putInt("settingsTab", it) }
 
 internal var SharedPreferences.userHome: Int
     get() = getInt("userHome", 0)

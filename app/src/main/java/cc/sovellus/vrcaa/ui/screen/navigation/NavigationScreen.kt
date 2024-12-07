@@ -78,7 +78,7 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.manager.CacheManager
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.QuickToast
+import cc.sovellus.vrcaa.ui.components.base.quickToast
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -138,7 +138,7 @@ class NavigationScreen : Screen {
 
         if ( !tabs.contains( App.userHome() )) {
             startAt = SettingsTab
-            QuickToast(context, R.string.home_page_not_available)
+            quickToast(context, R.string.home_page_not_available)
             App.FallbackHome()
         }
 

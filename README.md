@@ -20,10 +20,14 @@ Are you multilangual? Help translate VRChat Android Assistant for your language 
 
 # Disclaimers
 
-VRChat Android Assistant is **not affiliated with VRChat Inc.**, nor does it represent the views or opinions of VRChat Inc.
+VRChat Android Assistant is not affiliated with VRChat Inc. and does not represent the views or
+opinions of VRChat Inc.
 
-VRChat Android Assistant **DOES NOT** store any data out of the scope of **YOUR DEVICE**. The author of this application is not liable for any damage caused by the application.
+VRChat Android Assistant does not store any data beyond the scope of your device. The author of this
+application is not liable for any damage caused by its use.
 
-VRChat Android Assistant is an **EXTERNAL TOOL** and **does not MODIFY or MANIPULATE the VRChat client in any way**.
+VRChat Android Assistant is an external tool and does not modify or manipulate the VRChat client in
+any way.
 
-VRChat Android Assistant is in compliance with [VRChat's Terms of Service](https://hello.vrchat.com/legal).
+VRChat Android Assistant complies with [VRChat's Terms of Service](https://hello.vrchat.com/legal).
+

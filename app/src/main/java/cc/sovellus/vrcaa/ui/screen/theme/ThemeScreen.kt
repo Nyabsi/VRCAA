@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.ui.screen.theme
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,14 +26,12 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.manager.ThemeManager
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ButtonItem
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ButtonItemWithIcon
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ContentHeader
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.DividerH
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.QuickToast
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.SegmentedRowItem
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.SwitchItem
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.SwitchItemWithIcon
+import cc.sovellus.vrcaa.ui.components.base.ContentHeader
+import cc.sovellus.vrcaa.ui.components.base.SegmentedRowItem
+import cc.sovellus.vrcaa.ui.components.base.buttonWithIcon
+import cc.sovellus.vrcaa.ui.components.base.horizontalDivider
+import cc.sovellus.vrcaa.ui.components.base.quickToast
+import cc.sovellus.vrcaa.ui.components.base.toggleWithIcon
 import cc.sovellus.vrcaa.ui.screen.navigationButtons.NavigationButtonSettingsScreen
 
 
@@ -84,16 +81,20 @@ class ThemeScreen : Screen {
 
                     ContentHeader(R.string.theme_page_section_display_title)
 
-                    SwitchItemWithIcon(
+                    toggleWithIcon(
                         R.string.theme_page_minimalist_mode_text, R.string.theme_page_minimalist_mode_text_description, model.minimalistMode, Icons.Outlined.Screenshot) { toggled ->
                         model.preferences.minimalistMode = toggled
-                        QuickToast(context, R.string.developer_mode_toggle_toast)
+                        quickToast(context, R.string.developer_mode_toggle_toast)
                     }
 
-                    ButtonItemWithIcon(R.string.settings_navBar, R.string.settings_navBar_description, Icons.Outlined.EditNote) {
+                    buttonWithIcon(
+                        R.string.settings_navBar,
+                        R.string.settings_navBar_description,
+                        Icons.Outlined.EditNote
+                    ) {
                         navigator.push(NavigationButtonSettingsScreen())
                     }
-                    DividerH()
+                    horizontalDivider()
                 }
             },
         )

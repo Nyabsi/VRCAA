@@ -5,11 +5,10 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.mutableIntStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.extension.homeTab
-import cc.sovellus.vrcaa.extension.friendsTab
-import cc.sovellus.vrcaa.extension.favoritesTab
 import cc.sovellus.vrcaa.extension.FeedTab
-import cc.sovellus.vrcaa.extension.settingsTab
+import cc.sovellus.vrcaa.extension.favoritesTab
+import cc.sovellus.vrcaa.extension.friendsTab
+import cc.sovellus.vrcaa.extension.homeTab
 
 class NavigationButtonSettingsModel : ScreenModel {
     val preferences: SharedPreferences = App.getContext().getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
@@ -17,6 +16,5 @@ class NavigationButtonSettingsModel : ScreenModel {
     var currentIndexFr = mutableIntStateOf(preferences.friendsTab)
     var currentIndexFa = mutableIntStateOf(preferences.favoritesTab)
     var currentIndexFe = mutableIntStateOf(preferences.FeedTab)
-    var currentIndexSe = mutableIntStateOf(preferences.settingsTab)
 
 }

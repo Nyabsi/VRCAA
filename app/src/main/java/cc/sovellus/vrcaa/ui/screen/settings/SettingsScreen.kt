@@ -38,9 +38,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.richPresenceWarningAcknowledged
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.ButtonItemWithIcon
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.DividerH
-import cc.sovellus.vrcaa.ui.components.base.ComposableBase.Companion.FoldedTabs
+import cc.sovellus.vrcaa.ui.components.base.buttonWithIcon
+import cc.sovellus.vrcaa.ui.components.base.horizontalDivider
 import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
@@ -143,38 +142,64 @@ class SettingsScreen : Screen {
             }
              */
 
-            FoldedTabs(navigator)
+            //FoldedTabs(navigator)
 
-            ButtonItemWithIcon(
+            buttonWithIcon(
                 R.string.settings_item_about,
                 R.string.settings_item_about_description,
-                Icons.Outlined.Info
+                Icons.Outlined.Info,
+                true
             ) {
                 navigator.parent?.parent?.push(AboutScreen())
             }
-            ButtonItemWithIcon(R.string.settings_item_theming, R.string.settings_item_theming_description, Icons.Outlined.ImagesearchRoller) {
+            buttonWithIcon(
+                R.string.settings_item_theming,
+                R.string.settings_item_theming_description,
+                Icons.Outlined.ImagesearchRoller,
+                true
+            ) {
                 navigator.parent?.parent?.push(ThemeScreen())
             }
-            ButtonItemWithIcon(R.string.settings_item_rich_presence, R.string.settings_item_rich_presence_description, Icons.Outlined.Image) {
+            buttonWithIcon(
+                R.string.settings_item_rich_presence,
+                R.string.settings_item_rich_presence_description,
+                Icons.Outlined.Image,
+                true
+            ) {
                 if (model.preferences.richPresenceWarningAcknowledged)
                     navigator.parent?.parent?.push(RichPresenceScreen())
                 else
                     dialogState.value = true
             }
-            ButtonItemWithIcon(R.string.settings_item_advanced_settings, R.string.settings_item_advanced_settings_description, Icons.Outlined.DeveloperMode) {
+            buttonWithIcon(
+                R.string.settings_item_advanced_settings,
+                R.string.settings_item_advanced_settings_description,
+                Icons.Outlined.DeveloperMode,
+                true
+            ) {
                 navigator.parent?.parent?.push(AdvancedScreen())
             }
 
-            DividerH()
+            horizontalDivider()
 
-            ButtonItemWithIcon(R.string.about_page_translate_title, R.string.about_page_translate_description, Icons.Outlined.Translate) {
+            buttonWithIcon(
+                R.string.about_page_translate_title,
+                R.string.about_page_translate_description,
+                Icons.Outlined.Translate,
+                true,
+                true
+            ) {
                 val intent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("https://crowdin.com/project/vrcaa")
                 )
                 context.startActivity(intent)
             }
-            ButtonItemWithIcon(R.string.settings_item_logout, R.string.settings_item_logout_description, Icons.AutoMirrored.Outlined.Logout) {
+            buttonWithIcon(
+                R.string.settings_item_logout,
+                R.string.settings_item_logout_description,
+                Icons.AutoMirrored.Outlined.Logout
+            ) {
                 logoutState.value = true
             }
         }
