@@ -1,6 +1,6 @@
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.api.vrchat.models.Friend
+import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 
 object FriendManager {
 

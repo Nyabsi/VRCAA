@@ -1,7 +1,7 @@
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
 
 object ApiManager {
-    val api by lazy { VRChatApi() }
+    val api by lazy { HttpClient() }
 }

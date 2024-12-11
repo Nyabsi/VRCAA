@@ -3,7 +3,9 @@ package cc.sovellus.vrcaa.manager
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
-import cc.sovellus.vrcaa.api.vrchat.models.FavoriteLimits
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
+import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.manager.ApiManager.api
 
 object FavoriteManager {
@@ -33,7 +35,7 @@ object FavoriteManager {
 
     suspend fun refresh()
     {
-        favoriteLimits = api.getFavoriteLimits()
+        favoriteLimits = api.favorites.fetchLimits()
 
         // populate default lists
         favoriteLimits?.let {
@@ -48,30 +50,30 @@ object FavoriteManager {
                 friendList["group_${i}"] = SnapshotStateList()
         }
 
-        val worldGroups = api.getFavoriteGroups("world")
+        val worldGroups = api.favorites.fetchFavoriteGroups(IFavorites.FavoriteType.FAVORITE_WORLD)
 
         worldGroups?.forEach { group ->
-            val worlds = api.getFavoriteWorlds(group.name)
+            val worlds = api.favorites.fetchFavoriteWorlds(group.name)
             worlds.forEach { favorite ->
                 worldList[group.name]?.add(FavoriteMetadata(favorite.id, favorite.favoriteId, favorite.name, favorite.thumbnailImageUrl))
             }
             tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(group.id, group.name, group.type, group.displayName, group.visibility)
         }
 
-        val avatarGroups = api.getFavoriteGroups("avatar")
+        val avatarGroups = api.favorites.fetchFavoriteGroups(IFavorites.FavoriteType.FAVORITE_AVATAR)
 
         avatarGroups?.forEach { group ->
-            val avatars = api.getFavoriteAvatars(group.name)
+            val avatars = api.favorites.fetchFavoriteAvatars(group.name)
             avatars.forEach { favorite ->
                 avatarList[group.name]?.add(FavoriteMetadata(favorite.id, favorite.favoriteId, favorite.name, favorite.thumbnailImageUrl))
             }
             tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(group.id, group.name, group.type, group.displayName, group.visibility)
         }
 
-        val friendGroups = api.getFavoriteGroups("friend")
+        val friendGroups = api.favorites.fetchFavoriteGroups(IFavorites.FavoriteType.FAVORITE_FRIEND)
 
         friendGroups?.forEach { group ->
-            val friends = api.getFavorites("friend", group.name)
+            val friends = api.favorites.fetchFavorites(IFavorites.FavoriteType.FAVORITE_FRIEND, group.name)
             friends.forEach { friend ->
                 friendList[group.name]?.add(FavoriteMetadata(id = friend.favoriteId, favoriteId = friend.id))
             }
@@ -102,7 +104,15 @@ object FavoriteManager {
         val tmp = tagToGroupMetadataMap
         tagToGroupMetadataMap[tag] = metadata
         tagToGroupMetadataMap = tmp
-        return api.updateFavorite(metadata.type, metadata.name, metadata.displayName, metadata.visibility)
+
+        val dType = when (metadata.type) {
+            "world" -> FavoriteType.FAVORITE_WORLD
+            "avatar" -> FavoriteType.FAVORITE_AVATAR
+            "friend" -> FavoriteType.FAVORITE_FRIEND
+            else -> FavoriteType.FAVORITE_NONE
+        }
+
+        return api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, metadata.visibility)
     }
 
     // it's the 21th century, and we have computers faster than super computers in our pockets.
@@ -139,9 +149,9 @@ object FavoriteManager {
         }
     }
 
-    private fun getFavoriteId(type: String, id: String): Pair<String?, String> {
+    private fun getFavoriteId(type: IFavorites.FavoriteType, id: String): Pair<String?, String> {
         return when (type) {
-            "world" -> {
+            IFavorites.FavoriteType.FAVORITE_WORLD -> {
                 worldList.forEach { group ->
                     group.value.forEach { world ->
                         if (world.id == id)
@@ -150,7 +160,7 @@ object FavoriteManager {
                 }
                 Pair(null, "")
             }
-            "avatar" -> {
+            IFavorites.FavoriteType.FAVORITE_AVATAR -> {
                 avatarList.forEach { group ->
                     group.value.forEach { avatar ->
                         if (avatar.id == id)
@@ -159,7 +169,7 @@ object FavoriteManager {
                 }
                 Pair(null, "")
             }
-            "friend" -> {
+            IFavorites.FavoriteType.FAVORITE_FRIEND -> {
                 friendList.forEach { group ->
                     group.value.forEach { friend ->
                         if (friend.id == id)
@@ -172,25 +182,25 @@ object FavoriteManager {
         }
     }
 
-    suspend fun addFavorite(type: String, id: String, tag: String, metadata: FavoriteMetadata?): Boolean {
+    suspend fun addFavorite(type: IFavorites.FavoriteType, id: String, tag: String, metadata: FavoriteMetadata?): Boolean {
 
-        val result = api.addFavorite(type, id, tag)
+        val result = api.favorites.addFavorite(type, id, tag)
 
         result?.let {
             when (type) {
-                "world" -> {
+                IFavorites.FavoriteType.FAVORITE_WORLD -> {
                     metadata?.let {
                         metadata.favoriteId = result.favoriteId
                         worldList[tag]?.add(metadata)
                     }
                 }
-                "avatar" -> {
+                IFavorites.FavoriteType.FAVORITE_AVATAR -> {
                     metadata?.let {
                         metadata.favoriteId = result.favoriteId
                         avatarList[tag]?.add(metadata)
                     }
                 }
-                "friend" -> {
+                IFavorites.FavoriteType.FAVORITE_FRIEND -> {
                     friendList[tag]?.add(FavoriteMetadata(id = id, favoriteId = result.id))
                 }
                 else -> {}
@@ -200,22 +210,24 @@ object FavoriteManager {
         return result != null
     }
 
-    suspend fun removeFavorite(type: String, id: String): Boolean {
+    suspend fun removeFavorite(type: IFavorites.FavoriteType, id: String): Boolean {
         val favorite = getFavoriteId(type, id)
         favorite.first?.let { favoriteId ->
-            val result = api.removeFavorite(favoriteId)
+            val result = api.favorites.removeFavorite(favoriteId)
             if (result)
             {
                 when (type) {
-                    "world" -> {
+                    FavoriteType.FAVORITE_WORLD -> {
                         worldList[favorite.second]?.removeIf { it.id == id }
                     }
-                    "avatar" -> {
+                    FavoriteType.FAVORITE_AVATAR -> {
                         avatarList[favorite.second]?.removeIf { it.id == id }
                     }
-                    "friend" -> {
+                    FavoriteType.FAVORITE_FRIEND -> {
                         friendList[favorite.second]?.removeIf { it.id == id }
                     }
+
+                    FavoriteType.FAVORITE_NONE -> { }
                 }
             }
             return result

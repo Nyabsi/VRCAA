@@ -23,12 +23,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteDialog(
-    type: String,
+    type: IFavorites.FavoriteType,
     id: String,
     metadata: FavoriteManager.FavoriteMetadata,
     onDismiss: () -> Unit,
@@ -42,14 +43,14 @@ fun FavoriteDialog(
 
     LaunchedEffect(Unit) {
         when (type) {
-            "world" -> {
+            IFavorites.FavoriteType.FAVORITE_WORLD -> {
                 FavoriteManager.getWorldList().forEach {
                     groups.add(it.key)
                 }
 
                 selectedGroup.value = groups[0]
             }
-            "avatar" -> {
+            IFavorites.FavoriteType.FAVORITE_AVATAR -> {
                 FavoriteManager.getAvatarList().forEach {
                     groups.add(it.key)
                 }
@@ -57,13 +58,15 @@ fun FavoriteDialog(
                 selectedGroup.value = groups[0]
             }
 
-            "friend" -> {
+            IFavorites.FavoriteType.FAVORITE_FRIEND -> {
                 FavoriteManager.getFriendList().forEach {
                     groups.add(it.key)
                 }
 
                 selectedGroup.value = groups[0]
             }
+
+            IFavorites.FavoriteType.FAVORITE_NONE -> {   }
         }
     }
 

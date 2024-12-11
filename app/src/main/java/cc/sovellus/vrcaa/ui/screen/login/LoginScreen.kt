@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,7 +24,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
@@ -70,7 +69,7 @@ class LoginScreen : Screen {
                     .padding(8.dp), onClick = {
                     screenModel.doLogin { result, type ->
                         if (result) {
-                            if (type == VRChatApi.MfaType.NONE)
+                            if (type == IAuth.AuthType.AUTH_NONE)
                                 navigator.replace(NavigationScreen())
                             else
                                 navigator.replace(MfaScreen(type))

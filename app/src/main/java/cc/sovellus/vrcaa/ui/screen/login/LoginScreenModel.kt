@@ -8,16 +8,12 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cafe.adriel.voyager.navigator.Navigator
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.VRChatApi
-import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.twoFactorToken
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
-import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import kotlinx.coroutines.launch
 
 class LoginScreenModel : ScreenModel {
@@ -28,25 +24,22 @@ class LoginScreenModel : ScreenModel {
     var username = mutableStateOf(preferences.userCredentials.first.let { it ?: "" })
     var password = mutableStateOf(preferences.userCredentials.second.let { it ?: "" })
 
-    fun doLogin(callback: (success: Boolean, type: VRChatApi.MfaType) -> Unit) {
+    fun doLogin(callback: (success: Boolean, type: IAuth.AuthType) -> Unit) {
         screenModelScope.launch {
-            api.getToken(username.value, password.value, preferences.twoFactorToken).let { result ->
-                if (result == null) {
+            api.auth.login(username.value, password.value).let { result ->
+                if (result.success) {
+                    if (result.authType == IAuth.AuthType.AUTH_NONE) {
+                        val intent = Intent(context, PipelineService::class.java)
+                        context.startService(intent)
+                    }
+                    callback(true, result.authType)
+                } else {
                     Toast.makeText(
                         context,
                         context.getString(R.string.login_toast_wrong_credentials),
                         Toast.LENGTH_SHORT
                     ).show()
-                    callback(false, VRChatApi.MfaType.UNKNOWN)
-                } else {
-                    if (result.token.isNotEmpty()) preferences.authToken = result.token
-                    preferences.userCredentials = Pair(username.value, password.value)
-
-                    if (result.mfaType == VRChatApi.MfaType.NONE) {
-                        val intent = Intent(context, PipelineService::class.java)
-                        context.startService(intent)
-                    }
-                    callback(true, result.mfaType)
+                    callback(false, IAuth.AuthType.AUTH_NONE)
                 }
             }
         }

@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.User
+import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -173,7 +173,7 @@ fun ProfileEditDialog(
                         Toast.LENGTH_LONG
                     ).show()
                     coroutineScope.launch {
-                        api.updateProfile(id.value, status.value, description.value, bio.value, bioLinks)?.let { user ->
+                        api.user.updateProfileByUserId(id.value, status.value, description.value, bio.value, bioLinks)?.let { user ->
                             CacheManager.updateProfile(user)
                         }
                         onConfirmation()

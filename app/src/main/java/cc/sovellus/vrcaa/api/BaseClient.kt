@@ -22,7 +22,6 @@ open class BaseClient {
 
     private lateinit var credentials: String
     private var authorizationType: AuthorizationType = AuthorizationType.None
-    private var shouldIgnoreRequest: Boolean = false
 
     // TODO: add new response types, when required.
     sealed class Result {
@@ -32,10 +31,10 @@ open class BaseClient {
         data object RateLimited : Result()
         data object InvalidRequest : Result()
         data object Unauthorized : Result()
+        data object NotFound : Result()
         data object InternalError : Result()
         data object UnknownMethod : Result()
         data object NotModified : Result()
-        data object Ignored : Result()
     }
 
     enum class AuthorizationType {
@@ -48,18 +47,12 @@ open class BaseClient {
         response: Response,
         responseBody: String
     ): Result = when (response.code) {
-        200 -> {
-            if (shouldIgnoreRequest)
-                shouldIgnoreRequest = false
-            Result.Succeeded(response, responseBody)
-        }
+        200 -> Result.Succeeded(response, responseBody)
         304 -> Result.NotModified
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest
-        401 -> {
-            shouldIgnoreRequest = true
-            Result.Unauthorized
-        }
+        401 -> Result.Unauthorized
+        404 -> Result.NotFound
         500 -> Result.InternalError
         else -> Result.UnhandledResult(response)
     }
@@ -70,11 +63,7 @@ open class BaseClient {
         headers: Headers.Builder,
         body: String?,
         ignoreAuthorization: Boolean = false,
-        bypassIgnore: Boolean = false
     ): Result {
-
-        if (shouldIgnoreRequest && !bypassIgnore)
-            return Result.Ignored
 
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST

@@ -13,7 +13,6 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.VRChatPipeline
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendLocation
@@ -23,9 +22,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.websocket.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.Notification
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.models.websocket.UserUpdate
-import cc.sovellus.vrcaa.extension.discordToken
-import cc.sovellus.vrcaa.extension.richPresenceEnabled
-import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
+import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
@@ -48,8 +45,7 @@ class PipelineService : Service(), CoroutineScope {
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private lateinit var preferences: SharedPreferences
-
-    private var pipeline: VRChatPipeline? = null
+    private lateinit var pipeline: PipelineSocket
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -62,7 +58,7 @@ class PipelineService : Service(), CoroutineScope {
         }
     }
 
-    private val listener = object : VRChatPipeline.SocketListener {
+    private val listener = object : PipelineSocket.SocketListener {
         override fun onMessage(message: Any?) {
             if (message != null) {
                 serviceHandler?.obtainMessage()?.also { msg ->
@@ -293,7 +289,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     launch {
                         withContext(Dispatchers.Main) {
-                            val sender = api.getUser(notification.senderUserId)
+                            val sender = api.users.fetchUserByUserId(notification.senderUserId)
 
                             when (notification.type) {
                                 "friendRequest" -> {
@@ -322,10 +318,11 @@ class PipelineService : Service(), CoroutineScope {
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         launch {
-            api.getAuth()?.let { token ->
-                pipeline = VRChatPipeline(token)
-                pipeline?.setListener(listener)
-                pipeline?.connect()
+            // getToken is used to clean "auth_xxxx_xxxx_xxxx_xxxx" token without the cookie header crap
+            api.auth.fetchToken()?.let { token ->
+                pipeline = PipelineSocket(token)
+                pipeline.setListener(listener)
+                pipeline.connect()
             }
         }
 
@@ -362,7 +359,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onDestroy() {
-        pipeline?.disconnect()
+        pipeline.disconnect()
     }
 
     override fun onBind(intent: Intent?): IBinder? {

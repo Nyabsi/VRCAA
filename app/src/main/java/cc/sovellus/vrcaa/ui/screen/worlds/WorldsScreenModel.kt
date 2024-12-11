@@ -2,7 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.worlds
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -28,7 +28,7 @@ class WorldsStateScreenModel(
 
     private fun fetchAvatars() {
         screenModelScope.launch {
-            worlds = api.getWorldsByUserId(userId, private)
+            worlds = api.worlds.fetchWorldsByAuthorId(userId, private)
             mutableState.value = WorldsState.Result(worlds)
         }
     }

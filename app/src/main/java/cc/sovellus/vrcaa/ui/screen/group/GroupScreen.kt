@@ -1,7 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.group
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,7 +40,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,8 +51,8 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Group
-import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
+import cc.sovellus.vrcaa.api.vrchat.http.models.Group
+import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstance
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.ui.components.card.GroupCard
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
@@ -92,7 +90,7 @@ class GroupScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(
-        group: Group?, instances: GroupInstances?, model: GroupScreenModel
+        group: Group?, instances: ArrayList<GroupInstance>, model: GroupScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -138,7 +136,7 @@ class GroupScreen(
                                 if (group.membershipStatus == "inactive") {
                                     if (group.joinState != "closed") {
                                         DropdownMenuItem(onClick = {
-                                            if (group.joinState == "open" || group.joinState == "invite") {
+                                            if (group.joinState == "open") {
                                                 model.joinGroup(true)
                                             } else {
                                                 model.joinGroup(false)
@@ -149,11 +147,7 @@ class GroupScreen(
                                                 text = if (group.joinState == "open") {
                                                     stringResource(R.string.group_page_dropdown_join_group)
                                                 } else {
-                                                    if (group.joinState != "invite") {
-                                                        stringResource(R.string.group_page_dropdown_request_invite)
-                                                    } else {
-                                                        stringResource(R.string.group_page_dropdown_accept_invite)
-                                                    }
+                                                    stringResource(R.string.group_page_dropdown_request_invite)
                                                 }
                                             )
                                         })
@@ -292,7 +286,7 @@ class GroupScreen(
 
     @Composable
     private fun ShowGroupInstances(
-        model: GroupScreenModel, instances: GroupInstances?
+        model: GroupScreenModel, instances: ArrayList<GroupInstance>
     ) {
         val dialogState = remember { mutableStateOf(false) }
 
@@ -312,30 +306,23 @@ class GroupScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // TODO: refactor / cleanup
-            if (instances == null) {
+            if (instances.isEmpty()) {
                 item {
                     Text(stringResource(R.string.world_instance_no_public_instances_message))
                 }
             } else {
-                if (instances.isEmpty()) {
-                    item {
-                        Text(stringResource(R.string.world_instance_no_public_instances_message))
-                    }
-                } else {
-                    items(instances) { instance ->
-                        val result = LocationHelper.parseLocationInfo(instance.location)
-                        ListItem(headlineContent = {
-                            Text("Capacity: ${instance.memberCount}/${instance.world.capacity}, ${result.instanceType}")
-                        }, overlineContent = {
-                            Text("${instance.world.name} #${instance.instanceId}")
-                        }, trailingContent = {
-                            RegionFlag(result.regionId)
-                        }, modifier = Modifier.clickable(onClick = {
-                            dialogState.value = true
-                            model.clickedInstance.value = instance.location
-                        }))
-                    }
+                items(instances) { instance ->
+                    val result = LocationHelper.parseLocationInfo(instance.location)
+                    ListItem(headlineContent = {
+                        Text("Capacity: ${instance.memberCount}/${instance.world.capacity}, ${result.instanceType}")
+                    }, overlineContent = {
+                        Text("${instance.world.name} #${instance.instanceId}")
+                    }, trailingContent = {
+                        RegionFlag(result.regionId)
+                    }, modifier = Modifier.clickable(onClick = {
+                        dialogState.value = true
+                        model.clickedInstance.value = instance.location
+                    }))
                 }
             }
         }

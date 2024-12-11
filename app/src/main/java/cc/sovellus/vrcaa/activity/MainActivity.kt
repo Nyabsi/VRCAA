@@ -100,8 +100,6 @@ class MainActivity : ComponentActivity() {
         }
 
         val token = preferences.authToken
-        api.setToken(token)
-
         if (token.isNotBlank() && invalidSession == null && terminateSession == null && restartSession == null) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)

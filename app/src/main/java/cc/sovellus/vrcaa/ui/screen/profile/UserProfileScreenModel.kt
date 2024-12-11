@@ -5,10 +5,11 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
-import cc.sovellus.vrcaa.api.vrchat.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
-import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
-import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroup
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class UserProfileScreenModel(
     sealed class UserProfileState {
         data object Init : UserProfileState()
         data object Loading : UserProfileState()
-        data class Result(val profile: LimitedUser?, val instance: Instance?, val worlds: ArrayList<World>, val groups: ArrayList<UserGroups.Group>) : UserProfileState()
+        data class Result(val profile: LimitedUser?, val instance: Instance?, val worlds: ArrayList<World>, val groups: ArrayList<UserGroup>) : UserProfileState()
     }
 
     private val avatarProvider = JustHPartyProvider()
@@ -28,7 +29,7 @@ class UserProfileScreenModel(
     private var profile: LimitedUser? = null
     private var instance: Instance? = null
     private lateinit var worlds: ArrayList<World>
-    private lateinit var groups: ArrayList<UserGroups.Group>
+    private lateinit var groups: ArrayList<UserGroup>
 
     init {
         mutableState.value = UserProfileState.Loading
@@ -38,21 +39,21 @@ class UserProfileScreenModel(
     private fun fetchProfile() {
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_user)
-            api.getUser(userId)?.let {
+            api.users.fetchUserByUserId(userId)?.let {
                 it.location.let { location ->
                     if (it.isFriend &&
                         location.isNotEmpty() &&
                         location != "private" &&
                         location != "traveling" &&
                         location != "offline") {
-                        instance = api.getInstance(location)
+                        instance = api.instances.fetchInstance(location)
                     }
                 }
                 profile = it
             }
 
-            groups = api.getUserGroups(userId)
-            worlds = api.getWorldsByUserId(userId, false)
+            groups = api.users.fetchGroupsByUserId(userId)
+            worlds = api.worlds.fetchWorldsByAuthorId(userId, false)
             mutableState.value = UserProfileState.Result(profile, instance, worlds, groups)
         }
     }
@@ -63,7 +64,7 @@ class UserProfileScreenModel(
                 val fileId = extractFileIdFromUrl(it.currentAvatarImageUrl)
 
                 if (fileId != null) {
-                    api.getFileMetadata(fileId)?.let { metadata ->
+                    api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
                         var name = metadata.name
 
                         name = name.substring(9)
@@ -114,14 +115,14 @@ class UserProfileScreenModel(
 
     fun inviteToFriend(intent: String) {
         screenModelScope.launch {
-            api.inviteSelfToInstance(intent)
+            api.instances.selfInvite(intent)
         }
     }
 
     fun removeFavorite(callback: (result: Boolean) -> Unit) {
         screenModelScope.launch {
             profile?.let {
-                val result = FavoriteManager.removeFavorite("friend", it.id)
+                val result = FavoriteManager.removeFavorite(IFavorites.FavoriteType.FAVORITE_FRIEND, it.id)
                 callback(result)
             }
         }
