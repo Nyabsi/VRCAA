@@ -8,8 +8,9 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ class WorldInfoScreenModel(
     private fun fetchWorld() {
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_world)
-            val result = api.getWorld(id)
+            val result = api.worlds.fetchWorldByWorldId(id)
 
             result?.let {
                 world = it
@@ -53,7 +54,7 @@ class WorldInfoScreenModel(
 
                 val instanceIds = it.instances.map { instance -> instance[0].toString() }
                 instanceIds.forEach { id ->
-                    api.getInstance("${it.id}:${id}").let { instance ->
+                    api.instances.fetchInstance("${it.id}:${id}").let { instance ->
                         instances.add(Pair(id, instance))
                     }
                 }
@@ -67,13 +68,13 @@ class WorldInfoScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api.inviteSelfToInstance(selectedInstanceId.value)
+            api.instances.selfInvite(selectedInstanceId.value)
         }
     }
 
     fun removeFavorite() {
         screenModelScope.launch {
-            val result = FavoriteManager.removeFavorite("world", world.id)
+            val result = FavoriteManager.removeFavorite(IFavorites.FavoriteType.FAVORITE_WORLD, world.id)
 
             if (result) {
                 Toast.makeText(

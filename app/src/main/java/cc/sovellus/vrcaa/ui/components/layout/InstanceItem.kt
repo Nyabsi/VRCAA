@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.helper.LocationHelper
 
 @Composable

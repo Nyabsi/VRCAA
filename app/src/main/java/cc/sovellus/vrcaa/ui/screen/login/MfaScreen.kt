@@ -24,12 +24,12 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.ui.components.input.CodeInput
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
 class MfaScreen(
-    private val otpType: VRChatApi.MfaType
+    private val authType: IAuth.AuthType
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -42,7 +42,7 @@ class MfaScreen(
         val context = LocalContext.current
 
         val screenModel =
-            navigator.rememberNavigatorScreenModel { MfaScreenModel(otpType) }
+            navigator.rememberNavigatorScreenModel { MfaScreenModel(authType) }
 
         Scaffold { padding ->
             Column(
@@ -54,7 +54,7 @@ class MfaScreen(
             ) {
 
                 Text(
-                    text = if (otpType == VRChatApi.MfaType.EMAIL_OTP) {
+                    text = if (authType == IAuth.AuthType.AUTH_EMAIL) {
                         stringResource(R.string.auth_text_email)
                     } else {
                         stringResource(R.string.auth_text_app)

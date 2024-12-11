@@ -6,7 +6,8 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class AvatarScreenModel(
     private fun fetchAvatar(avatarId: String) {
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_avatar)
-            val result = api.getAvatar(avatarId)
+            val result = api.avatars.fetchAvatarById(avatarId)
             result?.let { avtr ->
                 avatar = avtr
                 mutableState.value = AvatarState.Result(avtr)
@@ -48,20 +49,20 @@ class AvatarScreenModel(
     fun selectAvatar() {
         screenModelScope.launch {
             avatar.id.let { id ->
-                api.selectAvatar(id)
-
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.avatar_dropdown_toast_select_avatar),
-                    Toast.LENGTH_SHORT
-                ).show()
+                api.avatars.selectAvatarById(id).let {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.avatar_dropdown_toast_select_avatar),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
 
     fun removeFavorite() {
         screenModelScope.launch {
-            val result = FavoriteManager.removeFavorite("avatar", avatarId)
+            val result = FavoriteManager.removeFavorite(IFavorites.FavoriteType.FAVORITE_AVATAR, avatarId)
             if (result) {
                 Toast.makeText(
                     context,

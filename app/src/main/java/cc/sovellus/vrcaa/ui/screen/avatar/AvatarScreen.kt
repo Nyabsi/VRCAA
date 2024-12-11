@@ -38,7 +38,8 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.AvatarCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
@@ -154,7 +155,7 @@ class AvatarScreen(
 
                 if (isDialogShown) {
                     FavoriteDialog(
-                        type = "avatar",
+                        type = IFavorites.FavoriteType.FAVORITE_AVATAR,
                         id = avatar.id,
                         metadata = FavoriteManager.FavoriteMetadata(
                             avatar.id,

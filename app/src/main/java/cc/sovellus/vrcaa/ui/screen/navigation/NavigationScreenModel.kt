@@ -13,7 +13,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
-import cc.sovellus.vrcaa.api.vrchat.VRChatApi
+import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
 import cc.sovellus.vrcaa.extension.groupsAmount
@@ -45,7 +45,7 @@ class NavigationScreenModel : ScreenModel {
     var avatarsAmount = mutableIntStateOf(preferences.avatarsAmount)
     var avatarProvider = mutableStateOf(preferences.avatarProvider)
 
-    private val listener = object : VRChatApi.SessionListener {
+    private val listener = object : HttpClient.SessionListener {
         override fun onSessionInvalidate() {
             if (!invalidSession.value) {
                 invalidSession.value = true

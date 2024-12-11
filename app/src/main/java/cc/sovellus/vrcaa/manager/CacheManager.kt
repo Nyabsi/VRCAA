@@ -1,10 +1,11 @@
 package cc.sovellus.vrcaa.manager
 
+import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.models.User
-import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
+import cc.sovellus.vrcaa.api.vrchat.http.models.User
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlin.jvm.optionals.getOrNull
 
@@ -44,16 +45,19 @@ object CacheManager {
         }
 
         App.setLoadingText(R.string.loading_text_profile)
-        api.getSelf()?.let { profile = it }
+        api.auth.fetchCurrentUser()?.let { profile = it }
 
         val friendList: MutableList<Friend> = mutableListOf()
         val recentWorlds: MutableList<WorldCache> = mutableListOf()
 
         App.setLoadingText(R.string.loading_text_online_friends)
 
-        api.getFriends(false).forEach { friend->
+        val t = api.friends.fetchFriends(false)
+        Log.d("VRCAA", t.size.toString())
+
+        t.forEach { friend->
             if (friend.location.contains("wrld_")) {
-                val world = api.getWorld(friend.location.split(":")[0])
+                val world = api.worlds.fetchWorldByWorldId(friend.location.split(":")[0])
                 world?.let {
                     worldList.add(WorldCache(world.id).apply {
                         name = world.name
@@ -66,7 +70,7 @@ object CacheManager {
 
         App.setLoadingText(R.string.loading_text_offline_friends)
 
-        api.getFriends(true).forEach { friend->
+        api.friends.fetchFriends(true).forEach { friend->
             friendList.add(friend)
         }
 
@@ -74,7 +78,7 @@ object CacheManager {
 
         App.setLoadingText(R.string.loading_text_recently_visited)
 
-        api.getRecentWorlds()?.forEach { world->
+        api.worlds.fetchRecent().forEach { world->
             recentWorlds.add(WorldCache(world.id).apply {
                 name = world.name
                 thumbnailUrl = world.thumbnailImageUrl

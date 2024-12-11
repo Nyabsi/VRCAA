@@ -2,7 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.avatars
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import cc.sovellus.vrcaa.api.vrchat.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,7 @@ class AvatarsScreenModel : StateScreenModel<AvatarsScreenModel.AvatarsState>(Ava
 
     private fun fetchAvatars() {
         screenModelScope.launch {
-            avatars = api.getOwnAvatars()
+            avatars = api.user.fetchOwnedAvatars()
 
             if (avatars.isEmpty())
                 mutableState.value = AvatarsState.Empty

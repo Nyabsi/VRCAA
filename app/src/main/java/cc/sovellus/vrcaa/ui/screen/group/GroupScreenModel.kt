@@ -8,8 +8,8 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.Group
-import cc.sovellus.vrcaa.api.vrchat.models.GroupInstances
+import cc.sovellus.vrcaa.api.vrchat.http.models.Group
+import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstance
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -20,11 +20,11 @@ class GroupScreenModel(
     sealed class GroupState {
         data object Init : GroupState()
         data object Loading : GroupState()
-        data class Result(val group: Group?, val instances: GroupInstances?) : GroupState()
+        data class Result(val group: Group?, val instances: ArrayList<GroupInstance>) : GroupState()
     }
 
     private var group: Group? = null
-    private var instances: GroupInstances? = null
+    private var instances: ArrayList<GroupInstance> = arrayListOf()
 
     var currentIndex = mutableIntStateOf(0)
     var clickedInstance = mutableStateOf("")
@@ -37,15 +37,15 @@ class GroupScreenModel(
         mutableState.value = GroupState.Loading
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_group)
-            group = api.getGroup(groupId)
-            instances = api.getGroupInstances(groupId)
+            group = api.groups.fetchGroupByGroupId(groupId)
+            instances = api.instances.fetchGroupInstancesById(groupId)
             mutableState.value = GroupState.Result(group, instances)
         }
     }
 
     fun withdrawInvite() {
         screenModelScope.launch {
-            if (api.withdrawGroupJoinRequest(groupId)) {
+            if (api.groups.withdrawRequestByGroupId(groupId)) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.group_page_toast_invite_requested_cancel),
@@ -64,7 +64,7 @@ class GroupScreenModel(
 
     fun joinGroup(open: Boolean) {
         screenModelScope.launch {
-            if (api.joinGroup(groupId)) {
+            if (api.groups.joinGroupByGroupId(groupId)) {
                 Toast.makeText(
                     context, if (open) {
                         context.getString(R.string.group_page_toast_join_group)
@@ -87,7 +87,7 @@ class GroupScreenModel(
 
     fun leaveGroup() {
         screenModelScope.launch {
-            if (api.leaveGroup(groupId)) {
+            if (api.groups.leaveGroupByGroupId(groupId)) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.group_page_toast_leave_group),
@@ -106,7 +106,7 @@ class GroupScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api.inviteSelfToInstance(clickedInstance.value)
+            api.instances.selfInvite(clickedInstance.value)
         }
     }
 }

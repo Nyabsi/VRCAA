@@ -42,7 +42,7 @@ fun LogoutDialog(
                         var intent = Intent(context, PipelineService::class.java)
                         context.stopService(intent)
 
-                        api.logout()
+                        api.auth.logout()
 
                         val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
                         preferences.authToken = ""

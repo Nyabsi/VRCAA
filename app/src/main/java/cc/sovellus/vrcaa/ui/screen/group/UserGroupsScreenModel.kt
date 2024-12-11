@@ -4,7 +4,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.models.UserGroups
+import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroup
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ class UserGroupsScreenModel(
         data object Init : UserGroupsState()
         data object Loading : UserGroupsState()
         data object Empty : UserGroupsState()
-        data class Result(val groups: List<UserGroups.Group>) : UserGroupsState()
+        data class Result(val groups: List<UserGroup>) : UserGroupsState()
     }
 
     init {
@@ -27,7 +27,7 @@ class UserGroupsScreenModel(
     private fun fetchGroups() {
         screenModelScope.launch {
             App.setLoadingText(R.string.loading_text_groups)
-            val result = api.getUserGroups(userId).sortedBy { it.ownerId != userId }.toList()
+            val result = api.users.fetchGroupsByUserId(userId).sortedBy { it.ownerId != userId }
             if (result.isEmpty())
                 mutableState.value = UserGroupsState.Empty
             else

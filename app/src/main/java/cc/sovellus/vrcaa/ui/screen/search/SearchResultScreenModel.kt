@@ -10,17 +10,12 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
-import cc.sovellus.vrcaa.api.vrchat.models.Group
-import cc.sovellus.vrcaa.api.vrchat.models.LimitedUser
-import cc.sovellus.vrcaa.api.vrchat.models.World
+import cc.sovellus.vrcaa.api.vrchat.http.models.Group
+import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
-import cc.sovellus.vrcaa.extension.groupsAmount
-import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
-import cc.sovellus.vrcaa.extension.usersAmount
-import cc.sovellus.vrcaa.extension.worldsAmount
-import cc.sovellus.vrcaa.helper.MathHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
@@ -62,27 +57,14 @@ class SearchResultScreenModel(
 
             App.setLoadingText(R.string.loading_text_worlds)
 
-            val (worldAmount, worldByProduct) = MathHelper.getLimits(preferences.worldsAmount)
-
-            worlds = api.getWorlds(
+            worlds = api.worlds.fetchWorldsByName(
                 query,
-                preferences.worldsAmount,
-                worldByProduct,
-                preferences.searchFeaturedWorlds,
-                preferences.sortWorlds,
-                worldAmount
+                preferences.sortWorlds
             )
 
             App.setLoadingText(R.string.loading_text_users)
 
-            val (userAmount, userByProduct) = MathHelper.getLimits(preferences.usersAmount)
-
-            users = api.getUsers(
-                username = query,
-                preferences.usersAmount,
-                userByProduct,
-                userAmount
-            )
+            users = api.users.fetchUsersByName(query)
 
             App.setLoadingText(R.string.loading_text_avatars)
 
@@ -98,14 +80,7 @@ class SearchResultScreenModel(
 
             App.setLoadingText(R.string.loading_text_groups)
 
-            val (groupAmount, groupByProduct) = MathHelper.getLimits(preferences.groupsAmount)
-
-            groups = api.getGroups(
-                query,
-                preferences.groupsAmount,
-                groupByProduct,
-                groupAmount
-            )
+            groups = api.groups.fetchGroupsByName(query)
 
             mutableState.value = SearchState.Result(worlds, users, avatars, groups)
         }
