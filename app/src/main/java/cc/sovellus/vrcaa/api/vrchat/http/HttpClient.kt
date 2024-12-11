@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.api.vrchat.http
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
@@ -242,7 +243,7 @@ class HttpClient : BaseClient() {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth",
+                url = "${Config.API_BASE_URL}/auth/user",
                 headers = headers,
                 body = null
             )
