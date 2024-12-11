@@ -139,4 +139,5 @@ dependencies {
     implementation ("androidx.glance:glance-appwidget:1.1.1")
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
+    implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
 }
