@@ -44,8 +44,8 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private lateinit var preferences: SharedPreferences
-    private lateinit var pipeline: PipelineSocket
+    private var preferences: SharedPreferences? = null
+    private var pipeline: PipelineSocket? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -318,11 +318,13 @@ class PipelineService : Service(), CoroutineScope {
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         launch {
-            // getToken is used to clean "auth_xxxx_xxxx_xxxx_xxxx" token without the cookie header crap
+            // fetchToken is used to clean "auth_xxxx_xxxx_xxxx_xxxx" token without the cookie header crap
             api.auth.fetchToken()?.let { token ->
                 pipeline = PipelineSocket(token)
-                pipeline.setListener(listener)
-                pipeline.connect()
+                pipeline?.let { pipeline ->
+                    pipeline.setListener(listener)
+                    pipeline.connect()
+                }
             }
         }
 
@@ -359,7 +361,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onDestroy() {
-        pipeline.disconnect()
+        pipeline?.disconnect()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
