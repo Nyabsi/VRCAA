@@ -49,8 +49,9 @@ class PipelineService : Service(), CoroutineScope {
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private lateinit var preferences: SharedPreferences
-    private lateinit var pipeline: PipelineSocket
-    private lateinit var gateway: DiscordGateway
+
+    private var pipeline: PipelineSocket? = null
+    private var gateway: DiscordGateway? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -245,7 +246,7 @@ class PipelineService : Service(), CoroutineScope {
                             launch {
                                 val instance = api.instances.fetchInstance(user.location)
                                 instance?.let {
-                                    instance.world.name.let { gateway.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
                                 }
                             }
                         }
@@ -342,13 +343,15 @@ class PipelineService : Service(), CoroutineScope {
         launch {
             api.auth.fetchToken()?.let { token ->
                 pipeline = PipelineSocket(token)
-                pipeline.setListener(listener)
-                pipeline.connect()
+                pipeline?.let { pipeline ->
+                    pipeline.setListener(listener)
+                    pipeline.connect()
+                }
             }
 
             if (preferences.richPresenceEnabled) {
                 gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
-                gateway.connect()
+                gateway?.connect()
             }
         }
 
@@ -385,9 +388,9 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onDestroy() {
-        pipeline.disconnect()
+        pipeline?.disconnect()
         if (preferences.richPresenceEnabled) {
-            gateway.disconnect()
+            gateway?.disconnect()
         }
     }
 
