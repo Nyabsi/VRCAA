@@ -95,6 +95,7 @@ class HttpClient : BaseClient() {
                 ).show()
             }
             Result.Unauthorized -> {
+                setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
                 listener?.onSessionInvalidate()
             }
             Result.UnknownMethod -> {
