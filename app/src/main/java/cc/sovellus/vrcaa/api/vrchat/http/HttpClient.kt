@@ -118,9 +118,6 @@ class HttpClient : BaseClient() {
                 .add("Authorization", "Basic $token")
                 .add("User-Agent", Config.API_USER_AGENT)
 
-            if (preferences.twoFactorToken.isNotEmpty())
-                setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user",
@@ -143,9 +140,12 @@ class HttpClient : BaseClient() {
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
                             return IAuth.AuthResult(true, IAuth.AuthType.AUTH_TOTP)
                         }
-                    }
 
-                    return IAuth.AuthResult(true)
+                        preferences.authToken = cookies[0]
+                        setAuthorization(AuthorizationType.Cookie,"${preferences.authToken} ${preferences.twoFactorToken}")
+                        return IAuth.AuthResult(true, IAuth.AuthType.AUTH_NONE)
+                    }
+                    return IAuth.AuthResult(false)
                 }
                 is Result.Unauthorized -> {
                     return IAuth.AuthResult(false)
