@@ -609,9 +609,13 @@ class NavigationScreen : Screen {
                                 },
                                 label = {
                                     if (!App.isMinimalistModeEnabled()) {
-                                        Text(text = tab.options.title)
+                                        Text(
+                                            text = tab.options.title,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
                                     }
-                                })
+                                }
+                            )
                         }
                     }
                 }
