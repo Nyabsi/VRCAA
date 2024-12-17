@@ -50,6 +50,11 @@ fun ProfileEditDialog(
     val options = listOf("join me", "active", "ask me", "busy")
     val optionFormat = mapOf("join me" to "Join Me", "active" to "Active", "ask me" to "Ask Me", "busy" to "Busy")
 
+    val ageVerified = remember { mutableStateOf(false) }
+    val verifiedStatus = remember { mutableStateOf("") }
+    val verifiedOptions = listOf("hidden", "verified", "18+")
+    val verifiedOptionsFormat = mapOf("hidden" to "Hidden", "verified" to "Verified", "18+" to "18+ Verified")
+
     LaunchedEffect(Unit) {
         user = CacheManager.getProfile()
 
@@ -63,6 +68,9 @@ fun ProfileEditDialog(
             {
                 bioLinks[i - 1] = it.bioLinks[i - 1]
             }
+
+            ageVerified.value = it.ageVerified
+            verifiedStatus.value = it.ageVerificationStatus
         }
     }
 
@@ -107,6 +115,22 @@ fun ProfileEditDialog(
                         onValueChange = { description.value = it },
                         singleLine = true,
                     )
+                }
+                if (ageVerified.value) {
+                    item {
+                        Text(
+                            text = stringResource(R.string.profile_edit_dialog_title_age_verification_visibility),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Left,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(bottom = 4.dp, top = 4.dp)
+                        )
+                    }
+                    item {
+                        ComboInput(options = verifiedOptions, selection = verifiedStatus, readableOptions = verifiedOptionsFormat)
+
+                    }
                 }
                 item {
                     Text(

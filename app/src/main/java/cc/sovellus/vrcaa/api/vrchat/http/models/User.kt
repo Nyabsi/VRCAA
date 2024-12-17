@@ -5,153 +5,143 @@ import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("acceptedPrivacyVersion")
-    val acceptedPrivacyVersion: Int,
+    var acceptedPrivacyVersion: Int = 0,
     @SerializedName("acceptedTOSVersion")
-    val acceptedTOSVersion: Int,
+    var acceptedTOSVersion: Int = 0,
     @SerializedName("accountDeletionDate")
-    val accountDeletionDate: Any?,
+    var accountDeletionDate: Any? = Any(),
     @SerializedName("accountDeletionLog")
-    val accountDeletionLog: Any?,
+    var accountDeletionLog: Any? = Any(),
     @SerializedName("activeFriends")
-    val activeFriends: List<String>,
+    var activeFriends: List<String> = listOf(),
+    @SerializedName("ageVerificationStatus")
+    var ageVerificationStatus: String = "",
+    @SerializedName("ageVerified")
+    var ageVerified: Boolean = false,
     @SerializedName("allowAvatarCopying")
-    val allowAvatarCopying: Boolean,
+    var allowAvatarCopying: Boolean = false,
+    @SerializedName("badges")
+    var badges: List<Any> = listOf(),
     @SerializedName("bio")
-    var bio: String,
+    var bio: String = "",
     @SerializedName("bioLinks")
-    var bioLinks: List<String>,
+    var bioLinks: List<String> = listOf(),
+    @SerializedName("contentFilters")
+    var contentFilters: List<Any> = listOf(),
     @SerializedName("currentAvatar")
-    val currentAvatar: String,
+    var currentAvatar: String = "",
     @SerializedName("currentAvatarAssetUrl")
-    val currentAvatarAssetUrl: String,
+    var currentAvatarAssetUrl: String = "",
     @SerializedName("currentAvatarImageUrl")
-    val currentAvatarImageUrl: String,
+    var currentAvatarImageUrl: String = "",
     @SerializedName("currentAvatarTags")
-    val currentAvatarTags: List<Any>,
+    var currentAvatarTags: List<Any> = listOf(),
     @SerializedName("currentAvatarThumbnailImageUrl")
-    val currentAvatarThumbnailImageUrl: String,
+    var currentAvatarThumbnailImageUrl: String = "",
     @SerializedName("date_joined")
-    val dateJoined: String,
+    var dateJoined: String = "",
     @SerializedName("developerType")
-    val developerType: String,
+    var developerType: String = "",
     @SerializedName("displayName")
-    var displayName: String,
+    var displayName: String = "",
     @SerializedName("emailVerified")
-    val emailVerified: Boolean,
+    var emailVerified: Boolean = false,
     @SerializedName("fallbackAvatar")
-    val fallbackAvatar: String,
+    var fallbackAvatar: String = "",
     @SerializedName("friendGroupNames")
-    val friendGroupNames: List<Any>,
+    var friendGroupNames: List<Any> = listOf(),
     @SerializedName("friendKey")
-    val friendKey: String,
+    var friendKey: String = "",
     @SerializedName("friends")
-    val friends: List<String>,
+    var friends: List<String> = listOf(),
+    @SerializedName("googleDetails")
+    var googleDetails: GoogleDetails = GoogleDetails(),
     @SerializedName("googleId")
-    val googleId: String,
+    var googleId: String = "",
     @SerializedName("hasBirthday")
-    val hasBirthday: Boolean,
+    var hasBirthday: Boolean = false,
     @SerializedName("hasEmail")
-    val hasEmail: Boolean,
+    var hasEmail: Boolean = false,
     @SerializedName("hasLoggedInFromClient")
-    val hasLoggedInFromClient: Boolean,
+    var hasLoggedInFromClient: Boolean = false,
     @SerializedName("hasPendingEmail")
-    val hasPendingEmail: Boolean,
+    var hasPendingEmail: Boolean = false,
     @SerializedName("hideContentFilterSettings")
-    val hideContentFilterSettings: Boolean,
+    var hideContentFilterSettings: Boolean = false,
     @SerializedName("homeLocation")
-    val homeLocation: String,
+    var homeLocation: String = "",
     @SerializedName("id")
-    val id: String,
+    var id: String = "",
+    @SerializedName("isAdult")
+    var isAdult: Boolean = false,
+    @SerializedName("isBoopingEnabled")
+    var isBoopingEnabled: Boolean = false,
     @SerializedName("isFriend")
-    val isFriend: Boolean,
+    var isFriend: Boolean = false,
     @SerializedName("last_activity")
-    val lastActivity: String,
+    var lastActivity: String = "",
     @SerializedName("last_login")
-    val lastLogin: String,
+    var lastLogin: String = "",
+    @SerializedName("last_mobile")
+    var lastMobile: Any? = Any(),
     @SerializedName("last_platform")
-    val lastPlatform: String,
+    var lastPlatform: String = "",
     @SerializedName("obfuscatedEmail")
-    val obfuscatedEmail: String,
+    var obfuscatedEmail: String = "",
     @SerializedName("obfuscatedPendingEmail")
-    val obfuscatedPendingEmail: String,
+    var obfuscatedPendingEmail: String = "",
     @SerializedName("oculusId")
-    val oculusId: String,
+    var oculusId: String = "",
     @SerializedName("offlineFriends")
-    val offlineFriends: List<String>,
+    var offlineFriends: List<String> = listOf(),
     @SerializedName("onlineFriends")
-    val onlineFriends: List<String>,
+    var onlineFriends: List<String> = listOf(),
     @SerializedName("pastDisplayNames")
-    val pastDisplayNames: List<PastDisplayName>,
+    var pastDisplayNames: List<Any> = listOf(),
     @SerializedName("picoId")
-    val picoId: String,
+    var picoId: String = "",
     @SerializedName("presence")
-    val presence: Presence,
+    var presence: Presence = Presence(),
     @SerializedName("profilePicOverride")
-    var profilePicOverride: String,
+    var profilePicOverride: String = "",
+    @SerializedName("profilePicOverrideThumbnail")
+    var profilePicOverrideThumbnail: String = "",
+    @SerializedName("pronouns")
+    var pronouns: String = "",
+    @SerializedName("receiveMobileInvitations")
+    var receiveMobileInvitations: Boolean = false,
     @SerializedName("state")
-    val state: String,
+    var state: String = "",
     @SerializedName("status")
-    var status: String,
+    var status: String = "",
     @SerializedName("statusDescription")
-    var statusDescription: String,
+    var statusDescription: String = "",
     @SerializedName("statusFirstTime")
-    val statusFirstTime: Boolean,
+    var statusFirstTime: Boolean = false,
     @SerializedName("statusHistory")
-    val statusHistory: List<String>,
+    var statusHistory: List<String> = listOf(),
     @SerializedName("steamDetails")
-    val steamDetails: SteamDetails,
+    var steamDetails: SteamDetails = SteamDetails(),
     @SerializedName("steamId")
-    val steamId: String,
+    var steamId: String = "",
     @SerializedName("tags")
-    var tags: List<String>,
+    var tags: List<String> = listOf(),
     @SerializedName("twoFactorAuthEnabled")
-    val twoFactorAuthEnabled: Boolean,
+    var twoFactorAuthEnabled: Boolean = false,
     @SerializedName("twoFactorAuthEnabledDate")
-    val twoFactorAuthEnabledDate: Any?,
+    var twoFactorAuthEnabledDate: Any? = Any(),
     @SerializedName("unsubscribe")
-    val unsubscribe: Boolean,
+    var unsubscribe: Boolean = false,
     @SerializedName("updated_at")
-    val updatedAt: String,
+    var updatedAt: String = "",
     @SerializedName("userIcon")
-    var userIcon: String,
+    var userIcon: String = "",
     @SerializedName("userLanguage")
-    val userLanguage: String,
+    var userLanguage: Any? = Any(),
     @SerializedName("userLanguageCode")
-    val userLanguageCode: Any?,
+    var userLanguageCode: String = "",
     @SerializedName("username")
-    val username: String,
+    var username: String = "",
     @SerializedName("viveId")
-    val viveId: String
-) {
-    data class PastDisplayName(
-        @SerializedName("displayName")
-        val displayName: String,
-        @SerializedName("reverted")
-        val reverted: Boolean,
-        @SerializedName("updated_at")
-        val updatedAt: String
-    )
-
-    data class Presence(
-        @SerializedName("groups")
-        val groups: List<Any>,
-        @SerializedName("id")
-        val id: String,
-        @SerializedName("instance")
-        val instance: String,
-        @SerializedName("instanceType")
-        val instanceType: String,
-        @SerializedName("platform")
-        val platform: String,
-        @SerializedName("status")
-        val status: String,
-        @SerializedName("travelingToInstance")
-        val travelingToInstance: String,
-        @SerializedName("travelingToWorld")
-        val travelingToWorld: String,
-        @SerializedName("world")
-        val world: String
-    )
-
-    class SteamDetails
-}
+    var viveId: String = ""
+)
