@@ -7,6 +7,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
@@ -21,7 +22,11 @@ fun InstanceItem(intent: String, instance: Instance, onClick: () -> Unit) {
             Text("Capacity: ${instance.nUsers}/${instance.world.capacity}, ${result.instanceType}")
         },
         overlineContent = {
-            Text("${instance.world.name} #${instance.name}")
+            Text("${instance.world.name} #${instance.name}", color = if (result.ageGated) {
+                Color.Red
+            } else {
+                Color.Unspecified
+            })
         },
         trailingContent = {
             if (result.regionId.isNotEmpty()) {
