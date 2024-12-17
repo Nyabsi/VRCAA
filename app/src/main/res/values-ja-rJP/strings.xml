@@ -215,6 +215,7 @@
     <string name="user_dropdown_view_favorites">お気に入りを表示</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">ステータス</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
     <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
     <string name="profile_edit_dialog_title_bio">プロフィール</string>
     <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
