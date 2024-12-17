@@ -16,7 +16,8 @@ object LocationHelper {
         var groupId: String = "",
         var groupAccessType: String = "",
         var strict: String = "",
-        var instanceType: String = "Public"
+        var instanceType: String = "Public",
+        var ageGated: Boolean = false
     )
 
     // Reference from https://github.com/vrcx-team/VRCX/blob/master/html/src/app.js#L699-L804
@@ -67,6 +68,7 @@ object LocationHelper {
                     "group" -> result.groupId = value
                     "groupAccessType" -> result.groupAccessType = value
                     "strict" -> result.strict = value
+                    "ageGate" -> result.ageGated = value.toBoolean()
                 }
 
                 if (result.privateId.isNotEmpty()) {
