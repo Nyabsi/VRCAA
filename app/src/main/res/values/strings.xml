@@ -266,6 +266,7 @@
     <!-- Profile Edit Dialog -->
 
     <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Social Links</string>
