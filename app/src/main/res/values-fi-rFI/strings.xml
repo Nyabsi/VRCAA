@@ -215,6 +215,7 @@
     <string name="user_dropdown_view_favorites">Näytä Suosikit</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Tila</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
     <string name="profile_edit_dialog_title_status_description">Tilan kuvaus</string>
     <string name="profile_edit_dialog_title_bio">Kuvaus</string>
     <string name="profile_edit_dialog_title_bio_links">Sosiaaliset linkit</string>
