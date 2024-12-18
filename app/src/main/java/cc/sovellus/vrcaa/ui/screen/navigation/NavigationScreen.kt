@@ -420,7 +420,7 @@ class NavigationScreen : Screen {
                                         ).show()
                                         scope.launch {
                                             CacheManager.getProfile()?.let {
-                                                api.user.updateProfileByUserId(it.id, model.status.value, model.description.value, model.bio.value, model.bioLinks)?.let { user ->
+                                                api.user.updateProfileByUserId(it.id, model.status.value, model.description.value, model.bio.value, model.bioLinks, model.verifiedStatus.value)?.let { user ->
                                                     CacheManager.updateProfile(user)
                                                 }
                                             }

@@ -140,7 +140,7 @@ class FavoritesScreen : Screen {
         sortedWorldList.forEach { item ->
             if (item.value.size > 0) {
                 FavoriteHorizontalRow(
-                    title = FavoriteManager.getDisplayNameFromTag(item.key),
+                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
                         model.currentSelectedGroup.value = item.key
                         model.editDialogShown.value = true
@@ -171,7 +171,7 @@ class FavoritesScreen : Screen {
         sortedAvatarList.forEach { item ->
             if (item.value.size > 0) {
                 FavoriteHorizontalRow(
-                    title = FavoriteManager.getDisplayNameFromTag(item.key),
+                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
                         model.currentSelectedGroup.value = item.key
                         model.editDialogShown.value = true

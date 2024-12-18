@@ -94,7 +94,7 @@ fun FavoriteDialog(
                             RadioButton(selected = it == selectedGroup.value, onClick = {
                                 selectedGroup.value = it
                             })
-                            Text(text = FavoriteManager.getDisplayNameFromTag(it))
+                            Text(text ="${FavoriteManager.getDisplayNameFromTag(it)} (${FavoriteManager.getGroupMetadata(it)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(it)})")
                         }
                     }
                 }
