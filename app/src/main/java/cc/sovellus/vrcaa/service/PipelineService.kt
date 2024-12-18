@@ -153,9 +153,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
-                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null &&
-                        friend?.location != update.location &&
-                        update.user.currentAvatarImageUrl != friend?.currentAvatarThumbnailImageUrl)
+                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && friend?.location != update.location)
                     {
                         if (NotificationHelper.isOnWhitelist(update.userId) &&
                             NotificationHelper.isIntentEnabled(
