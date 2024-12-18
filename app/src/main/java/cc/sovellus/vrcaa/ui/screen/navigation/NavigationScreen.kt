@@ -60,6 +60,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
@@ -77,9 +78,9 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
-import cc.sovellus.vrcaa.ui.components.dialog.ProfileEditDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
@@ -124,11 +125,12 @@ class NavigationScreen : Screen {
                 navigator = it, tabs = tabs
             )
         }) { tabNavigator ->
-            val sheetState = rememberModalBottomSheetState()
+            val settingsSheetState = rememberModalBottomSheetState()
+            val profileSheetState = rememberModalBottomSheetState()
 
-            var showBottomSheet by remember { mutableStateOf(false) }
+            var showSettingsSheet by remember { mutableStateOf(false) }
             var isMenuExpanded by remember { mutableStateOf(false) }
-            var isEditingProfile by remember { mutableStateOf(false) }
+            var showProfileSheet by remember { mutableStateOf(false) }
 
             val scope = rememberCoroutineScope()
 
@@ -213,7 +215,7 @@ class NavigationScreen : Screen {
                                                 }
                                             } else {
                                                 IconButton(onClick = {
-                                                    showBottomSheet = true
+                                                    showSettingsSheet = true
                                                 }) {
                                                     Icon(
                                                         imageVector = Icons.Filled.MoreVert,
@@ -291,7 +293,8 @@ class NavigationScreen : Screen {
                                         offset = DpOffset(0.dp, 0.dp)
                                     ) {
                                         DropdownMenuItem(onClick = {
-                                            isEditingProfile = true
+                                            model.getCurrentProfileValues()
+                                            showProfileSheet = true
                                             isMenuExpanded = false
                                         },
                                             text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) })
@@ -381,24 +384,203 @@ class NavigationScreen : Screen {
                         bottom = padding.calculateBottomPadding()
                     )
                 ) {
-                    if (isEditingProfile) {
-                        ProfileEditDialog(onDismiss = { isEditingProfile = false },
-                            onConfirmation = {
-                                isEditingProfile = false
-                            },
-                            title = stringResource(R.string.profile_edit_dialog_title_edit_profile)
-                        )
-                    }
-
                     CurrentTab()
                 }
 
-                if (showBottomSheet) {
+                if (showProfileSheet) {
                     ModalBottomSheet(
                         onDismissRequest = {
-                            showBottomSheet = false
+                            showProfileSheet = false
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.profile_edit_dialog_toast_cancelled),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }, sheetState = profileSheetState
+                    ) {
+                        LazyColumn {
+                            item {
+                                ListItem(leadingContent = {
+                                    OutlinedButton(onClick = {
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.profile_edit_dialog_toast_cancelled),
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        showProfileSheet = false
+                                    }) {
+                                        Text("Cancel")
+                                    }
+                                }, trailingContent = {
+                                    Button(onClick = {
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.profile_edit_dialog_toast_updated),
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        scope.launch {
+                                            CacheManager.getProfile()?.let {
+                                                api.user.updateProfileByUserId(it.id, model.status.value, model.description.value, model.bio.value, model.bioLinks)?.let { user ->
+                                                    CacheManager.updateProfile(user)
+                                                }
+                                            }
+                                            profileSheetState.hide()
+                                        }.invokeOnCompletion {
+                                            if (!settingsSheetState.isVisible) {
+                                                showProfileSheet = false
+                                            }
+                                        }
+                                    }) {
+                                        Text("Change")
+                                    }
+                                }, headlineContent = { })
+                            }
+                            item {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_status), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                    }
+                                )
+
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    ComboInput(
+                                        options = listOf("join me", "active", "ask me", "busy"),
+                                        readableOptions = mapOf("join me" to "Join Me", "active" to "Active", "ask me" to "Ask Me", "busy" to "Busy"),
+                                        selection = model.status
+                                    )
+                                }
+                            }
+                            item {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_status_description), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                    }
+                                )
+
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    OutlinedTextField(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(start = 16.dp, end = 16.dp),
+                                        value = model.description.value,
+                                        onValueChange = {
+                                            model.description.value = it
+                                        },
+                                        singleLine = true,
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                    )
+                                }
+                            }
+
+                            item {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_bio), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                    }
+                                )
+
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    OutlinedTextField(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(start = 16.dp, end = 16.dp),
+                                        value = model.bio.value,
+                                        onValueChange = {
+                                            model.bio.value = it
+                                        },
+                                        minLines = 8,
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                    )
+                                }
+                            }
+
+                            if (model.ageVerified.value) {
+                                item {
+                                    ListItem(
+                                        headlineContent = {
+                                            Text(text = stringResource(R.string.profile_edit_dialog_title_age_verification_visibility), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                        }
+                                    )
+
+                                    Column(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        ComboInput(
+                                            options = listOf("hidden", "verified", "18+"),
+                                            readableOptions = mapOf("hidden" to "Hidden", "verified" to "Verified", "18+" to "18+ Verified"),
+                                            selection = model.verifiedStatus
+                                        )
+                                    }
+                                }
+                            }
+
+                            item {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_bio_links), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                    }
+                                )
+
+                                OutlinedTextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 16.dp, end = 16.dp),
+                                    value = model.bioLinks[0],
+                                    onValueChange = {
+                                        model.bioLinks[0] = it
+                                    },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                )
+
+                                OutlinedTextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                                    value = model.bioLinks[1],
+                                    onValueChange = {
+                                        model.bioLinks[1] = it
+                                    },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                )
+
+                                OutlinedTextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                                    value = model.bioLinks[2],
+                                    onValueChange = {
+                                        model.bioLinks[2] = it
+                                    },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                if (showSettingsSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = {
+                            showSettingsSheet = false
                             model.applySettings(true)
-                        }, sheetState = sheetState
+                        }, sheetState = settingsSheetState
                     ) {
                         LazyColumn {
                             item {
@@ -412,10 +594,10 @@ class NavigationScreen : Screen {
                                     Button(onClick = {
                                         scope.launch {
                                             model.applySettings()
-                                            sheetState.hide()
+                                            settingsSheetState.hide()
                                         }.invokeOnCompletion {
-                                            if (!sheetState.isVisible) {
-                                                showBottomSheet = false
+                                            if (!settingsSheetState.isVisible) {
+                                                showSettingsSheet = false
                                             }
                                         }
                                     }) {

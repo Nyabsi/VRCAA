@@ -7,6 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.bundleOf
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -22,6 +23,7 @@ import cc.sovellus.vrcaa.extension.sortWorlds
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
@@ -44,6 +46,13 @@ class NavigationScreenModel : ScreenModel {
     var groupsAmount = mutableIntStateOf(preferences.groupsAmount)
     var avatarsAmount = mutableIntStateOf(preferences.avatarsAmount)
     var avatarProvider = mutableStateOf(preferences.avatarProvider)
+
+    val status = mutableStateOf("")
+    val description = mutableStateOf("")
+    val bio = mutableStateOf("")
+    val bioLinks = mutableStateListOf("", "", "")
+    val ageVerified = mutableStateOf(false)
+    val verifiedStatus = mutableStateOf("")
 
     private val listener = object : HttpClient.SessionListener {
         override fun onSessionInvalidate() {
@@ -126,6 +135,22 @@ class NavigationScreenModel : ScreenModel {
                 "Applied settings.",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    fun getCurrentProfileValues() {
+        CacheManager.getProfile()?.let {
+            status.value = it.status
+            description.value = it.statusDescription
+            bio.value = it.bio
+
+            for (i in 1..it.bioLinks.size)
+            {
+                bioLinks[i - 1] = it.bioLinks[i - 1]
+            }
+
+            ageVerified.value = it.ageVerified
+            verifiedStatus.value = it.ageVerificationStatus
         }
     }
 }
