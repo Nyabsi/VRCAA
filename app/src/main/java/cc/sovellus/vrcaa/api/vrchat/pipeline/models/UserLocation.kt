@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.api.vrchat.models.websocket
+package cc.sovellus.vrcaa.api.vrchat.pipeline.models
 
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
