@@ -98,8 +98,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     FeedManager.addFeed(feed)
 
-                    FriendManager.updateLocation(update.userId, "private")
-                    FriendManager.updateStatus(update.userId, update.user.status)
+                    FriendManager.updateFriend(update.user)
                 }
 
                 is FriendOffline -> {
@@ -130,9 +129,6 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
 
-                        // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                        // context.sendBroadcast(intent)
-
                         FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
                     }
@@ -151,8 +147,10 @@ class PipelineService : Service(), CoroutineScope {
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
-                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && friend?.location != update.location) {
-
+                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null &&
+                        friend?.location != update.location &&
+                        update.user.currentAvatarImageUrl != friend?.currentAvatarThumbnailImageUrl)
+                    {
                         if (NotificationHelper.isOnWhitelist(update.userId) &&
                             NotificationHelper.isIntentEnabled(
                                 update.userId,
@@ -176,14 +174,9 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         FeedManager.addFeed(feed)
-
-                        // val intent = Intent(context, FriendWidgetReceiver::class.java).apply { action = "FRIEND_LOCATION_UPDATE" }
-                        // context.sendBroadcast(intent)
                     }
 
-                    update.location?.let {
-                        FriendManager.updateLocation(update.userId, update.location)
-                    }
+                    FriendManager.updateFriend(update.user)
                 }
 
                 is FriendUpdate -> {
@@ -224,8 +217,9 @@ class PipelineService : Service(), CoroutineScope {
 
                             FeedManager.addFeed(feed)
                         }
-                        FriendManager.updateFriend(update.user)
                     }
+
+                    FriendManager.updateFriend(update.user)
                 }
 
                 is UserLocation -> {

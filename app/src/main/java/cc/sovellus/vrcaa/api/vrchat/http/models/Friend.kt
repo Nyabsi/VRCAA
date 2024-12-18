@@ -45,5 +45,7 @@ data class Friend(
     @SerializedName("tags")
     var tags: List<String> = listOf(),
     @SerializedName("userIcon")
-    var userIcon: String = ""
+    var userIcon: String = "",
+    @SerializedName("platform")
+    var platform: String = ""
 )

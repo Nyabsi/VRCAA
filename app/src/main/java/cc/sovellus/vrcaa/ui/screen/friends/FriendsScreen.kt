@@ -207,7 +207,7 @@ class FriendsScreen : Screen {
     fun ShowFriendsOnWebsite(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { it.location == "offline" && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+        val filteredFriends = friends.value.filter { it.platform == "web" }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -239,8 +239,8 @@ class FriendsScreen : Screen {
     fun ShowFriends(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location != "offline" && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val filteredFriendsInInstances = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location != "offline" && it.location.contains("wrld_").not() && it.platform.isNotEmpty() && it.platform != "web" }
+        val filteredFriendsInInstances = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform.isNotEmpty() && it.platform != "web" }
 
         if (filteredFriends.isEmpty() && filteredFriendsInInstances.isEmpty()) {
             Column(
@@ -296,7 +296,7 @@ class FriendsScreen : Screen {
     fun ShowFriendsOffline(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { it.location == "offline" && StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location == "offline" && it.platform.isEmpty() }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
