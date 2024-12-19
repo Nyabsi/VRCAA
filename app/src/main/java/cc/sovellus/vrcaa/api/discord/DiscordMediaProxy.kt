@@ -54,7 +54,7 @@ class DiscordMediaProxy(
 
         val response = handleRequest(result)
 
-        if (result == Result.InvalidRequest)
+        if (result is Result.InvalidRequest)
             return null
 
         val webhookResponse =  Gson().fromJson(response, WebHookResponse::class.java)

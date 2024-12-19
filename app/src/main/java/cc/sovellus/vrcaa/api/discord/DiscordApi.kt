@@ -51,7 +51,7 @@ class DiscordApi : BaseClient() {
 
         val response = handleRequest(result)
 
-        return if (result == Result.InvalidRequest) {
+        return if (result is Result.InvalidRequest) {
             false
         } else {
             if (response?.contains("ticket") == true) {
@@ -79,7 +79,7 @@ class DiscordApi : BaseClient() {
 
         val response = handleRequest(result)
 
-        return if (result == Result.InvalidRequest)
+        return if (result is Result.InvalidRequest)
             null
         else
             Gson().fromJson(response, DiscordLogin::class.java)
