@@ -1,7 +1,9 @@
 package cc.sovellus.vrcaa.api
 
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.api.vrchat.http.models.ErrorResponse
 import cc.sovellus.vrcaa.manager.DebugManager
+import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -29,7 +31,7 @@ open class BaseClient {
         data class UnhandledResult(val response: Response) : Result()
         data object NoInternet : Result()
         data object RateLimited : Result()
-        data object InvalidRequest : Result()
+        data class InvalidRequest(val body: String) : Result()
         data object Unauthorized : Result()
         data object NotFound : Result()
         data object InternalError : Result()
@@ -50,7 +52,7 @@ open class BaseClient {
         200 -> Result.Succeeded(response, responseBody)
         304 -> Result.NotModified
         429 -> Result.RateLimited
-        400 -> Result.InvalidRequest
+        400 -> Result.InvalidRequest(responseBody)
         401 -> Result.Unauthorized
         404 -> Result.NotFound
         500 -> Result.InternalError
