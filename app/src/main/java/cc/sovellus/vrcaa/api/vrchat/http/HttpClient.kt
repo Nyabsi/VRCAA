@@ -24,6 +24,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IWorlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatars
+import cc.sovellus.vrcaa.api.vrchat.http.models.ErrorResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAdd
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAvatar
@@ -101,6 +102,16 @@ class HttpClient : BaseClient() {
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
                     throw RuntimeException("Invalid method used for request, make sure you're using a supported method.")
+            }
+            is Result.InvalidRequest -> {
+
+                val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
+
+                Toast.makeText(
+                    context,
+                    "API returned (400): $reason",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             else -> { /* Stub! */ }
         }
