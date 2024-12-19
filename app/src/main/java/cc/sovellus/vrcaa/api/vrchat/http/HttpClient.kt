@@ -1148,14 +1148,17 @@ class HttpClient : BaseClient() {
             newDescription: String,
             newBio: String,
             newBioLinks: List<String>,
-            newAgeVerificationStatus: String
+            newAgeVerificationStatus: String?
         ): User? {
 
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
             // TODO: wrap inside object
-            val body = "{\"ageVerificationStatus\":\"$newAgeVerificationStatus\",\"status\":\"$newStatus\",\"statusDescription\":\"$newDescription\",\"bio\":\"${newBio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(newBioLinks)}}"
+            val body = if (newAgeVerificationStatus == null)
+                "{\"status\":\"$newStatus\",\"statusDescription\":\"$newDescription\",\"bio\":\"${newBio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(newBioLinks)}}"
+            else
+                "{\"ageVerificationStatus\":\"$newAgeVerificationStatus\",\"status\":\"$newStatus\",\"statusDescription\":\"$newDescription\",\"bio\":\"${newBio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(newBioLinks)}}"
 
             val result = doRequest(
                 method = "PUT",
