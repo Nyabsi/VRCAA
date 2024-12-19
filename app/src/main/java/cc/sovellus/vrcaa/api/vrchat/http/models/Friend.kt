@@ -47,5 +47,7 @@ data class Friend(
     @SerializedName("userIcon")
     var userIcon: String = "",
     @SerializedName("platform")
-    var platform: String = ""
+    var platform: String = "",
+    @SerializedName("state")
+    var state: String = ""
 )
