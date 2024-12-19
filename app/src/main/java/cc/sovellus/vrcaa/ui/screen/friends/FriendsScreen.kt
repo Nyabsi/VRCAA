@@ -127,9 +127,9 @@ class FriendsScreen : Screen {
     fun ShowFriendsFavorite(
         friends: State<List<Friend>>
     ) {
-        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && StatusHelper.getStatusFromString(it.status) != StatusHelper.Status.Offline }
-        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && StatusHelper.getStatusFromString(it.status) == StatusHelper.Status.Offline && it.location == "offline" }
+        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location != "offline" && it.platform != "web" }
+        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" }
+        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() && it.location == "offline" }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
             Column(
@@ -207,7 +207,7 @@ class FriendsScreen : Screen {
     fun ShowFriendsOnWebsite(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { it.platform == "web" }
+        val filteredFriends = friends.value.filter { it.platform == "web" && it.location != "offline" }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
