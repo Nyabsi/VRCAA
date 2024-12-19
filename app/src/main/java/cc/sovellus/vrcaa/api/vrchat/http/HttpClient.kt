@@ -3,13 +3,10 @@ package cc.sovellus.vrcaa.api.vrchat.http
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
-import cc.sovellus.vrcaa.api.vrchat.models.AuthResponse
-import cc.sovellus.vrcaa.api.vrchat.http.models.Code
 import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAvatars
@@ -24,6 +21,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IWorlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatars
+import cc.sovellus.vrcaa.api.vrchat.http.models.Code
 import cc.sovellus.vrcaa.api.vrchat.http.models.ErrorResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAdd
@@ -44,12 +42,14 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
 import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.http.models.ProfileUpdate
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroup
 import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
+import cc.sovellus.vrcaa.api.vrchat.models.AuthResponse
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
@@ -1154,17 +1154,19 @@ class HttpClient : BaseClient() {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
-            // TODO: wrap inside object
-            val body = if (newAgeVerificationStatus == null)
-                "{\"status\":\"$newStatus\",\"statusDescription\":\"$newDescription\",\"bio\":\"${newBio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(newBioLinks)}}"
-            else
-                "{\"ageVerificationStatus\":\"$newAgeVerificationStatus\",\"status\":\"$newStatus\",\"statusDescription\":\"$newDescription\",\"bio\":\"${newBio.replace("\n", "\\n")}\",\"bioLinks\":${Gson().toJson(newBioLinks)}}"
+            val update = ProfileUpdate(
+                ageVerificationStatus = newAgeVerificationStatus,
+                bio = newBio,
+                bioLinks = newBioLinks,
+                status = newStatus,
+                statusDescription = newDescription
+            )
 
             val result = doRequest(
                 method = "PUT",
                 url = "${Config.API_BASE_URL}/users/${userId}",
                 headers = headers,
-                body = body
+                body = Gson().toJson(update, ProfileUpdate::class.java)
             )
 
             when (result) {
