@@ -175,7 +175,7 @@ class NetworkLogScreen : Screen {
                         Text(text = "${it.payload.length} bytes")
                     },
                     modifier = Modifier.clickable {
-                        navigator.parent?.parent?.push(PacketViewScreen(it.payload, it.url))
+                        navigator.push(PacketViewScreen(it.payload, it.url))
                     }
                 )
             }
@@ -231,7 +231,7 @@ class NetworkLogScreen : Screen {
                         Text(text = "${it.payload.length} bytes")
                     },
                     modifier = Modifier.clickable {
-                        navigator.parent?.parent?.push(PacketViewScreen(it.payload))
+                        navigator.push(PacketViewScreen(it.payload))
                     }
                 )
             }
