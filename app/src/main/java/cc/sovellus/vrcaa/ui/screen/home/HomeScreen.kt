@@ -66,7 +66,7 @@ class HomeScreen : Screen {
                 .padding(16.dp)
         ) {
             item {
-                val onlineFriends = friends.filter { it.platform.isNotEmpty() && it.platform != "web" && it.state == "active" }
+                val onlineFriends = friends.filter { it.platform.isNotEmpty() && it.platform != "web" && it.location != "offline" }
                 if (onlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_active_friends),
@@ -206,7 +206,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_offline_friends)
                     ) {
-                        val filteredFriends = friends.filter { it.platform.isEmpty() && it.state == "offline" }
+                        val filteredFriends = friends.filter { it.platform.isEmpty() && it.location == "offline" }
                         items(filteredFriends, key = { it.id }) { friend ->
                             RowItem(
                                 name = friend.displayName,

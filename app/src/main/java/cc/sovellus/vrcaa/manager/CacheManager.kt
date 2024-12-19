@@ -53,7 +53,6 @@ object CacheManager {
         App.setLoadingText(R.string.loading_text_online_friends)
 
         val t = api.friends.fetchFriends(false)
-        Log.d("VRCAA", t.size.toString())
 
         t.forEach { friend->
             if (friend.location.contains("wrld_")) {
