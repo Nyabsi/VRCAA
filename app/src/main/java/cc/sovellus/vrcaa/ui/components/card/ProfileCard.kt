@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.models.Badge
 import cc.sovellus.vrcaa.ui.components.misc.Languages
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -41,7 +42,8 @@ fun ProfileCard(
     statusDescription: String,
     trustRankColor: Color,
     statusColor: Color,
-    tags: List<String>
+    tags: List<String>,
+    badges: List<Badge>
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -54,7 +56,9 @@ fun ProfileCard(
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy((-50).dp),
-            modifier = Modifier.height(270.dp).fillMaxSize()
+            modifier = Modifier
+                .height(270.dp)
+                .fillMaxSize()
         ) {
             item {
                 GlideImage(
@@ -98,7 +102,9 @@ fun ProfileCard(
                 Row {
                     Text(
                         text = displayName,
-                        modifier = Modifier.padding(start = 12.dp, top = 60.dp).weight(0.70f),
+                        modifier = Modifier
+                            .padding(start = 12.dp, top = 60.dp)
+                            .weight(0.70f),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Left,
@@ -108,7 +114,10 @@ fun ProfileCard(
                     )
 
                     Row(
-                        modifier = Modifier.fillMaxWidth().weight(0.30f).padding(end = 4.dp), horizontalArrangement = Arrangement.End
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.30f)
+                            .padding(end = 4.dp), horizontalArrangement = Arrangement.End
                     ) {
                         Languages(languages = tags, modifier = Modifier.padding(top = 20.dp))
                     }
@@ -116,18 +125,33 @@ fun ProfileCard(
             }
             item {
                 Row(
-                    modifier = Modifier.padding(start = 12.dp, top = 50.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.padding(start = 12.dp, top = 50.dp)
                 ) {
-                    Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
-                    Text(
-                        modifier = Modifier.padding(start = 8.dp),
-                        text = statusDescription,
-                        textAlign = TextAlign.Left,
-                        fontWeight = FontWeight.SemiBold,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
-                    )
+                    Row(
+                        modifier = Modifier.weight(0.70f),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
+                        Text(
+                            modifier = Modifier.padding(start = 8.dp),
+                            text = statusDescription,
+                            textAlign = TextAlign.Left,
+                            fontWeight = FontWeight.SemiBold,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.30f)
+                            .padding(end = 8.dp), horizontalArrangement = Arrangement.End
+                    ) {
+                        for (badge in badges) {
+                            GlideImage(model = badge.badgeImageUrl, contentDescription = null, modifier = Modifier.size(28.dp).padding(2.dp), alpha = if (badge.showcased) { 1.0f } else { 0.5f })
+                        }
+                    }
                 }
             }
         }
