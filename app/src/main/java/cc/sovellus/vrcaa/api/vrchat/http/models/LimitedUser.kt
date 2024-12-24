@@ -7,7 +7,7 @@ data class LimitedUser(
     @SerializedName("allowAvatarCopying")
     var allowAvatarCopying: Boolean = false,
     @SerializedName("badges")
-    var badges: List<Any> = listOf(),
+    var badges: List<Badge> = listOf(),
     @SerializedName("bio")
     var bio: String = "",
     @SerializedName("bioLinks")

@@ -263,7 +263,8 @@ class UserProfileScreen(
                                         .toColor(),
                                     statusColor = StatusHelper.getStatusFromString(it.status)
                                         .toColor(),
-                                    tags = profile.tags
+                                    tags = profile.tags,
+                                    badges = profile.badges
                                 )
                             }
                         }
