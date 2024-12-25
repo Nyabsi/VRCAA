@@ -27,7 +27,8 @@ jobs:
 
     - name: Rename built apk(s)
       run: mv app/build/outputs/apk/standard/release/app-standard-release.apk app/build/outputs/apk/standard/release/VRCAA.apk &&
-           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/quest/release/VRCAA-quest.apk
+           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/quest/release/VRCAA-quest.apk &&
+           mv app/build/outputs/apk/pico/release/app-pico-release.apk app/build/outputs/apk/pico/release/VRCAA-pico.apk
 
     - name: Setup build tool version variable
       shell: bash
@@ -60,6 +61,18 @@ jobs:
       env:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
+    - name: Sign app APK (Pico)
+      uses: noriban/sign-android-release@v5.1
+      id: sign_pico
+      with:
+        releaseDirectory: app/build/outputs/apk/quest/release
+        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+      env:
+        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+
 
     - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
@@ -71,3 +84,4 @@ jobs:
         files: |
           ${{ steps.sign_standard.outputs.signedReleaseFile }}
           ${{ steps.sign_quest.outputs.signedReleaseFile }}
+          ${{ steps.sign_pico.outputs.signedReleaseFile }}
