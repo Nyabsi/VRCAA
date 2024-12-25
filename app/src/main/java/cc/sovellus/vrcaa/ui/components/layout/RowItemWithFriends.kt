@@ -74,7 +74,8 @@ fun RowItemWithFriends(
                 friends.forEach { friend ->
                     Column(
                         verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(2.dp)
                     ) {
                         GlideImage(
                             model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
