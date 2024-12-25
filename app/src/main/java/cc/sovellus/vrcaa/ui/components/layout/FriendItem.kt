@@ -36,7 +36,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
             }, maxLines = 1)
         },
         supportingContent = {
-            Text(text = (if (friend.location == "offline" &&  StatusHelper.getStatusFromString(friend.status) != StatusHelper.Status.Offline) { "Active on website." } else { LocationHelper.getReadableLocation(friend.location) }), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text = (if (friend.platform == "web") { "Active on website." } else { LocationHelper.getReadableLocation(friend.location) }), maxLines = 1, overflow = TextOverflow.Ellipsis)
         },
         leadingContent = {
             GlideImage(

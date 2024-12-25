@@ -107,6 +107,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     FriendManager.updateFriend(update.user)
                     FriendManager.updatePlatform(update.userId, update.platform)
+                    FriendManager.updateLocation(update.userId, update.location)
                 }
 
                 is FriendOffline -> {
@@ -156,7 +157,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
                     // We want to show it only once, so only show when the travelling is done.
-                    if (update.travelingToLocation?.isEmpty() == true && update.location != null && update.world != null && friend?.location != update.location)
+                    if (update.travelingToLocation.isEmpty() && update.world != null && friend?.location != update.location)
                     {
                         if (NotificationHelper.isOnWhitelist(update.userId) &&
                             NotificationHelper.isIntentEnabled(
@@ -185,6 +186,7 @@ class PipelineService : Service(), CoroutineScope {
 
                     FriendManager.updateFriend(update.user)
                     FriendManager.updatePlatform(update.userId, update.platform)
+                    FriendManager.updateLocation(update.userId, update.location)
                 }
 
                 is FriendUpdate -> {

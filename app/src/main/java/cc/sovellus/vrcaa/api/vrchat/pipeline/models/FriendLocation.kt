@@ -9,9 +9,9 @@ data class FriendLocation(
     @SerializedName("canRequestInvite")
     val canRequestInvite: Boolean,
     @SerializedName("location")
-    val location: String?,
+    val location: String,
     @SerializedName("travelingToLocation")
-    val travelingToLocation: String?,
+    val travelingToLocation: String,
     @SerializedName("user")
     val user: Friend,
     @SerializedName("userId")
