@@ -81,6 +81,18 @@ object FriendManager {
         }
     }
 
+    fun updatePlatform(userId: String, platform: String) {
+        val it = friends.find { it.id == userId }
+        it?.let {
+            it.platform = platform
+            friends.set(friends.indexOf(it), it)
+        }
+
+        friendListeners.map {
+            it.onUpdateFriends(friends)
+        }
+    }
+
     fun getFriends(): MutableList<Friend> {
         return friends
     }

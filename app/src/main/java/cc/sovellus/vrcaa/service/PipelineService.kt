@@ -139,6 +139,7 @@ class PipelineService : Service(), CoroutineScope {
                             FriendManager.updateLocation(friend.id, "offline")
                             FriendManager.updateStatus(friend.id, "offline")
                         }
+                        FriendManager.updatePlatform(friend.id, update.platform)
                     }
                 }
 
