@@ -16,5 +16,7 @@ data class FriendOnline(
     @SerializedName("userId")
     val userId: String,
     @SerializedName("worldId")
-    val worldId: String
+    val worldId: String,
+    @SerializedName("platform")
+    var platform: String = ""
 )
