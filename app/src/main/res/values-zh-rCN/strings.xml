@@ -107,194 +107,194 @@
     <string name="notification_service_title_offline">好友已离线！</string>
     <string name="notification_service_description_offline">您的好友 %1$s 已离线！</string>
     <string name="notification_service_title_location">好友改变了位置！</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
-    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
-    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
-    <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
-    <string name="notification_title_player">\'s Notifications</string>
-    <string name="notification_label_enable">Enable Notifications</string>
-    <string name="notification_label_intent_online">Online Notifications</string>
-    <string name="notification_label_intent_offline">Offline Notifications</string>
-    <string name="notification_label_intent_location">Location Notifications</string>
-    <string name="notification_label_intent_status">Status Change Notifications</string>
-    <string name="notification_service_title_status">Friend changed status!</string>
-    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
+    <string name="notification_service_description_location">您的好友 %1$s 前往了 %2$s</string>
+    <string name="notification_service_title_friend_removed">您的好友已经将你移除</string>
+    <string name="notification_service_description_friend_removed">您的好友 %1$s 不再是您的好友 :(</string>
+    <string name="notification_service_title_friend_added">你有一个新的好友！</string>
+    <string name="notification_service_description_friend_added">%1$s 现在是您的好友了！</string>
+    <string name="notification_title_player">的通知</string>
+    <string name="notification_label_enable">开启通知</string>
+    <string name="notification_label_intent_online">上线通知</string>
+    <string name="notification_label_intent_offline">离线通知</string>
+    <string name="notification_label_intent_location">位置通知</string>
+    <string name="notification_label_intent_status">状态变更通知</string>
+    <string name="notification_service_title_status">好友改变了状态！</string>
+    <string name="notification_service_description_status">您的好友 %1$s 已将他的状态从 %2$s 更改为 %3$s</string>
     <!-- Avatars -->
-    <string name="avatar_dropdown_label_select">Change to Avatar</string>
-    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
-    <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
-    <string name="avatar_title_description">Description</string>
-    <string name="avatar_title_created_at">Creation Date</string>
-    <string name="avatar_title_updated_at">Last Updated</string>
-    <string name="avatar_title_content_labels">Content Labels</string>
-    <string name="avatar_text_author">By %1$s</string>
-    <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
-    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
+    <string name="avatar_dropdown_label_select">更换为此模型</string>
+    <string name="avatar_dropdown_label_remove_favorite">取消收藏</string>
+    <string name="avatar_dropdown_toast_select_avatar">已选择此模型</string>
+    <string name="avatar_title_description">描述</string>
+    <string name="avatar_title_created_at">创建时间</string>
+    <string name="avatar_title_updated_at">最后更新</string>
+    <string name="avatar_title_content_labels">内容标签</string>
+    <string name="avatar_text_author">作者：%1$s</string>
+    <string name="avatar_text_content_labels_not_found">模型没有指定内容警告</string>
+    <string name="avatar_toast_avatar_not_found_message">模型是私有的或无效的</string>
     <!-- Feed -->
-    <string name="feed_online_label">Online</string>
-    <string name="feed_online_text">has come online.</string>
-    <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">has gone offline.</string>
-    <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
-    <string name="feed_status_label">Status</string>
-    <string name="feed_status_text">changed status to</string>
-    <string name="feed_added_label">Friend Added</string>
-    <string name="feed_added_text">added you as friend.</string>
-    <string name="feed_removed_label">Friend Removed</string>
-    <string name="feed_removed_text">has removed you as friend.</string>
-    <string name="feed_friend_request_label">Friend Request</string>
-    <string name="feed_friend_request_text">wants to add you as friend.</string>
+    <string name="feed_online_label">上线</string>
+    <string name="feed_online_text">已上线</string>
+    <string name="feed_offline_label">离线</string>
+    <string name="feed_offline_text">已离线</string>
+    <string name="feed_location_label">位置变化</string>
+    <string name="feed_location_text">前往了</string>
+    <string name="feed_status_label">状态</string>
+    <string name="feed_status_text">将状态更改为</string>
+    <string name="feed_added_label">好友添加成功</string>
+    <string name="feed_added_text">已将您添加为好友</string>
+    <string name="feed_removed_label">好友已经删除</string>
+    <string name="feed_removed_text">已将您从好友中移除</string>
+    <string name="feed_friend_request_label">好友申请</string>
+    <string name="feed_friend_request_text">想要将您添加为好友</string>
     <!-- About -->
-    <string name="about_page_title">About</string>
-    <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
-    <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_battery_optimizations_title">Disable Battery Optimizations</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
-    <string name="license_title">Open Source Licenses</string>
-    <string name="about_page_developer_mode">Enable Developer Mode</string>
+    <string name="about_page_title">关于</string>
+    <string name="about_page_open_source_licenses_title">开放源代码许可</string>
+    <string name="about_page_translate_title">参与翻译</string>
+    <string name="about_page_battery_optimizations_title">禁用电池优化</string>
+    <string name="about_page_battery_optimizations_toast">电池优化已被禁用</string>
+    <string name="license_title">开放源代码许可</string>
+    <string name="about_page_developer_mode">启用开发者模式</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
-    <string name="api_avatar_select_failed">"Failed to select avatar."</string>
+    <string name="api_session_has_expired_text">您的登录信息已过期，请重新登录</string>
+    <string name="api_avatar_select_failed">"选择模型失败"</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Login to Discord</string>
-    <string name="discord_login_title_verify">Verify 2FA</string>
-    <string name="discord_login_label_username">Username</string>
-    <string name="discord_login_label_password">Password</string>
-    <string name="discord_login_toast_wrong_credentials">Username or password is invalid.</string>
-    <string name="discord_login_toast_wrong_code">The MFA code is wrong.</string>
-    <string name="discord_login_button_login">Login</string>
-    <string name="discord_login_button_verify">Verify</string>
-    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
-    <string name="discord_login_label_logout">Logout</string>
-    <string name="discord_login_description_logout">Revoke your access token</string>
+    <string name="discord_login_title">登录到 Discord</string>
+    <string name="discord_login_title_verify">验证双重验证</string>
+    <string name="discord_login_label_username">用户名</string>
+    <string name="discord_login_label_password">密码</string>
+    <string name="discord_login_toast_wrong_credentials">用户名或密码无效</string>
+    <string name="discord_login_toast_wrong_code">MFA 验证码错误</string>
+    <string name="discord_login_button_login">登录</string>
+    <string name="discord_login_button_verify">验证</string>
+    <string name="discord_login_restarted_service_toast">重新启动服务后生效</string>
+    <string name="discord_login_label_enable">启用状态面板</string>
+    <string name="discord_login_label_set_webhook">设置 Webhook URL</string>
+    <string name="discord_login_description_set_webhook">显示世界缩略图</string>
+    <string name="discord_login_description_enable">在 Discord 中显示您的当前状态</string>
+    <string name="discord_login_label_logout">退出登录</string>
+    <string name="discord_login_description_logout">撤销您的访问令牌</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_title_text">应用程序遇到了致命错误</string>
+    <string name="crash_button_restart_text">重新启动</string>
+    <string name="crash_button_copy_log_text">复制信息</string>
+    <string name="crash_button_report_text">反馈问题</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
-        <item>Info</item>
-        <item>Instances</item>
+        <item>信息</item>
+        <item>房间</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_toast_not_found_message">找不到群组，您确定它存在吗？</string>
+    <string name="group_page_label_description">描述</string>
+    <string name="group_page_label_rules">规则</string>
+    <string name="group_page_dropdown_view_author">查看拥有者资料</string>
+    <string name="group_page_dropdown_accept_invite">接受邀请</string>
+    <string name="group_page_dropdown_request_invite">申请加入</string>
+    <string name="group_page_dropdown_request_invite_cancel">取消邀请</string>
+    <string name="group_page_dropdown_join_group">加入群组</string>
+    <string name="group_page_dropdown_leave_group">离开群组</string>
+    <string name="group_page_toast_invite_requested">已发送邀请</string>
+    <string name="group_page_toast_invite_requested_fail">发送邀请失败</string>
+    <string name="group_page_toast_invite_requested_cancel">已取消邀请</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">取消邀请失败</string>
+    <string name="group_page_toast_join_group">加入了此群组</string>
+    <string name="group_page_toast_join_group_fail">加入群组失败</string>
+    <string name="group_page_toast_leave_group">离开了此群组</string>
+    <string name="group_page_toast_leave_group_fail">离开群组失败</string>
+    <string name="group_user_no_groups_message">用户不属于任何群组</string>
+    <string name="group_user_failed_to_fetch_groups">获取组失败，请重试</string>
+    <string name="group_user_viewing_groups_username">%1$s 的群组</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
+    <string name="misc_no_internet_title">无法连接互联网</string>
+    <string name="misc_no_internet_description">请确保您已连接到互联网，没有互联网连接本应用程序无法工作</string>
     <string name="misc_no_internet_label">Restart</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_exit_toast_label">再按一次退出</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">View Groups</string>
-    <string name="user_dropdown_view_worlds">View Worlds</string>
-    <string name="user_dropdown_view_avatars">View Avatars</string>
-    <string name="user_dropdown_view_favorites">View Favorites</string>
+    <string name="user_dropdown_view_groups">查看群组</string>
+    <string name="user_dropdown_view_worlds">查看世界</string>
+    <string name="user_dropdown_view_avatars">查看模型</string>
+    <string name="user_dropdown_view_favorites">查看收藏</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
-    <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="profile_edit_dialog_title_status">社交状态</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">年龄验证可见性</string>
+    <string name="profile_edit_dialog_title_status_description">社交状态描述</string>
+    <string name="profile_edit_dialog_title_bio">自我介绍</string>
+    <string name="profile_edit_dialog_title_bio_links">社交链接</string>
+    <string name="profile_edit_dialog_button_update">更新</string>
+    <string name="profile_edit_dialog_button_cancel">取消</string>
+    <string name="profile_edit_dialog_toast_updated">更新个人资料</string>
+    <string name="profile_edit_dialog_toast_cancelled">更改已丢弃</string>
+    <string name="profile_edit_dialog_title_edit_profile">编辑个人资料</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_dialog_title">您确定吗？</string>
+    <string name="logout_dialog_description">通过按下“继续”，您将退出VRCAA，您必须重新登录才能继续使用该应用程序</string>
+    <string name="logout_dialog_continue">继续</string>
+    <string name="logout_dialog_cancel">取消</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list">查看当前好友位置</string>
+    <string name="widget_name_loading_text">我的朋友，地平线是明亮的</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>世界</item>
+        <item>模型</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_label_add">加入收藏</string>
+    <string name="favorite_label_remove">取消收藏</string>
+    <string name="favorite_toast_favorite_added">已添加 %1$s 到收藏夹</string>
+    <string name="favorite_toast_favorite_added_failed">添加 %1$s 到收藏夹失败</string>
+    <string name="favorite_toast_favorite_removed">已从收藏夹中移除 %1$s</string>
+    <string name="favorite_toast_favorite_removed_failed">从收藏夹中移除 %1$s 失败</string>
+    <string name="favorite_dialog_button_add">添加</string>
+    <string name="favorite_dialog_button_cancel">取消</string>
+    <string name="favorite_dialog_title">"加入收藏"</string>
+    <string name="favorite_page_title">显示收藏夹</string>
+    <string name="favorite_edit_title">编辑 %1$s</string>
+    <string name="favorite_edit_display_name">显示名称</string>
+    <string name="favorite_edit_visibility">可见性</string>
+    <string name="favorite_edit_discarded">更改已丢弃</string>
+    <string name="favorite_edit_applied">更改已应用</string>
+    <string name="favorite_dialog_button_edit">编辑</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
-        <item>Feed</item>
-        <item>Notifications</item>
-        <item>Group Activity</item>
+        <item>动态</item>
+        <item>通知</item>
+        <item>群组活动</item>
     </string-array>
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">%1$s 的世界</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">查看模型</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="developer_mode_toggle_toast">重启应用程序以使更改生效</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Loading profile…</string>
-    <string name="loading_text_online_friends">Loading online friends…</string>
-    <string name="loading_text_offline_friends">Loading offline friends…</string>
-    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
+    <string name="loading_text_profile">正在加载个人资料…</string>
+    <string name="loading_text_online_friends">正在加载在线好友…</string>
+    <string name="loading_text_offline_friends">正在加载离线好友…</string>
+    <string name="loading_text_recently_visited">正在加载近期访问的世界…</string>
+    <string name="loading_text_favorites">正在加载收藏…</string>
+    <string name="loading_text_worlds">正在加载世界…</string>
+    <string name="loading_text_users">正在加载用户…</string>
+    <string name="loading_text_avatars">正在加载模型…</string>
+    <string name="loading_text_groups">正在加载群组…</string>
+    <string name="loading_text_user">正在加载用户…</string>
+    <string name="loading_text_world">正在加载世界…</string>
+    <string name="loading_text_avatar">正在加载模型…</string>
+    <string name="loading_text_group">正在加载群组…</string>
+    <string name="loading_text_instances">正在加载房间…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">主题</string>
+    <string name="theme_page_minimalist_mode_text">极简模式</string>
+    <string name="theme_page_minimalist_mode_text_description">"极简模式有助于内容适应较小的屏幕"</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>浅色</item>
+        <item>深色</item>
+        <item>跟随系统</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
+    <string name="theme_page_section_theme_title">主题</string>
+    <string name="theme_page_section_display_title">显示</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
-    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+    <string name="advanced_page_title">高级设置</string>
+    <string name="advanced_page_network_logging">网络日志</string>
+    <string name="advanced_page_network_logging_description">拦截 HTTP 和 WebSocket 流量</string>
+    <string name="advanced_page_view_network_logs">显示网络日志</string>
+    <string name="advanced_page_battery_optimization">禁用电池优化</string>
+    <string name="advanced_page_battery_optimization_description">可能有助于不接收实时网络事件</string>
 </resources>
