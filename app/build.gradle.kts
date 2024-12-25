@@ -69,6 +69,9 @@ android {
         create("quest") {
             dimension = "type"
         }
+        create("pico") {
+            dimension = "type"
+        }
     }
 }
 
