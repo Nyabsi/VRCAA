@@ -15,6 +15,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.networkLogging
+import cc.sovellus.vrcaa.service.PipelineService
 
 class AdvancedScreenModel : ScreenModel {
 
@@ -52,5 +53,10 @@ class AdvancedScreenModel : ScreenModel {
                 ).show()
             }
         }
+    }
+
+    fun killBackgroundService() {
+        val intent = Intent(context, PipelineService::class.java)
+        context.stopService(intent)
     }
 }

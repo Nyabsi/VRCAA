@@ -133,6 +133,14 @@ class AdvancedScreen : Screen {
                             modifier = Modifier.clickable(onClick = { model.disableBatteryOptimizations() })
                         )
                     }
+
+                    item {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.advanced_page_kill_service)) },
+                            supportingContent = { Text(stringResource(R.string.advanced_page_kill_service_description)) },
+                            modifier = Modifier.clickable(onClick = { model.killBackgroundService() })
+                        )
+                    }
                 }
             },
         )
