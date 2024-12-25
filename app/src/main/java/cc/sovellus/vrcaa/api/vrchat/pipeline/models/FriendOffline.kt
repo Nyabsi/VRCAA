@@ -5,5 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class FriendOffline(
     @SerializedName("userId")
-    val userId: String
+    val userId: String,
+    @SerializedName("platform")
+    val platform: String
 )
