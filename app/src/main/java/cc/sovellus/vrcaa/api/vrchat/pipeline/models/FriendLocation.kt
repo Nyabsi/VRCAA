@@ -19,5 +19,7 @@ data class FriendLocation(
     @SerializedName("world")
     val world: World?,
     @SerializedName("worldId")
-    val worldId: String
+    val worldId: String,
+    @SerializedName("platform")
+    var platform: String = ""
 )

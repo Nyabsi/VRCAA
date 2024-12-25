@@ -8,5 +8,7 @@ data class FriendActive(
     @SerializedName("user")
     val user: Friend,
     @SerializedName("userId")
-    val userId: String
+    val userId: String,
+    @SerializedName("platform")
+    var platform: String = ""
 )

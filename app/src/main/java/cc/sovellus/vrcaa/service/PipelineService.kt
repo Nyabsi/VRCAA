@@ -104,7 +104,9 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FeedManager.addFeed(feed)
+
                     FriendManager.updateFriend(update.user)
+                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is FriendOffline -> {
@@ -182,6 +184,7 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FriendManager.updateFriend(update.user)
+                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is FriendUpdate -> {
@@ -225,6 +228,7 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FriendManager.updateFriend(update.user)
+                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is UserLocation -> {
@@ -324,7 +328,9 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FeedManager.addFeed(feed)
+
                     FriendManager.updateFriend(update.user)
+                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is Notification -> {
