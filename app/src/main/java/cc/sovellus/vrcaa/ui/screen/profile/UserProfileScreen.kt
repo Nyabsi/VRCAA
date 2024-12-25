@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -37,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -253,34 +256,30 @@ class UserProfileScreen(
                 LazyColumn(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                        .fillMaxSize()
                         .padding(
                             top = padding.calculateTopPadding(),
                             bottom = padding.calculateBottomPadding()
                         ),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     item {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            profile.let {
-                                ProfileCard(
-                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                    iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                    displayName = it.displayName,
-                                    statusDescription = it.statusDescription.ifEmpty {
-                                        StatusHelper.getStatusFromString(it.status).toString()
-                                    },
-                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
-                                        .toColor(),
-                                    statusColor = StatusHelper.getStatusFromString(it.status)
-                                        .toColor(),
-                                    tags = profile.tags,
-                                    badges = profile.badges
-                                )
-                            }
+                        profile.let {
+                            ProfileCard(
+                                thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
+                                displayName = it.displayName,
+                                statusDescription = it.statusDescription.ifEmpty {
+                                    StatusHelper.getStatusFromString(it.status).toString()
+                                },
+                                trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
+                                    .toColor(),
+                                statusColor = StatusHelper.getStatusFromString(it.status)
+                                    .toColor(),
+                                tags = profile.tags,
+                                badges = profile.badges
+                            )
                         }
                     }
 
@@ -310,7 +309,8 @@ class UserProfileScreen(
                                     ),
                                     modifier = Modifier
                                         .padding(top = 16.dp)
-                                        .defaultMinSize(minHeight = 80.dp),
+                                        .defaultMinSize(minHeight = 80.dp)
+                                        .widthIn(Dp.Unspecified, 520.dp),
                                 ) {
                                     SubHeader(title = stringResource(R.string.profile_label_note))
                                     Description(text = profile.note)
@@ -330,16 +330,13 @@ class UserProfileScreen(
                                 ),
                                 modifier = Modifier
                                     .padding(top = 16.dp)
-                                    .defaultMinSize(minHeight = 80.dp),
+                                    .defaultMinSize(minHeight = 80.dp)
+                                    .widthIn(Dp.Unspecified, 520.dp),
                             ) {
                                 SubHeader(title = stringResource(R.string.profile_label_biography))
                                 Description(text = profile.bio)
                             }
                         }
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.padding(16.dp))
                     }
                 }
             })
