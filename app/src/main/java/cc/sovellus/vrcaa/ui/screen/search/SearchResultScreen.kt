@@ -237,7 +237,7 @@ class SearchResultScreen(
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), contentPadding = PaddingValues(
+            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
                 start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
             ), content = {
                 items(worlds.size) {
@@ -265,7 +265,7 @@ class SearchResultScreen(
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), contentPadding = PaddingValues(
+            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
                 start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
             ), content = {
                 items(users.size) {
@@ -300,7 +300,7 @@ class SearchResultScreen(
                     Text(text = stringResource(R.string.result_not_found))
                 }
             } else {
-                LazyVerticalGrid(columns = GridCells.Fixed(2), contentPadding = PaddingValues(
+                LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
                 ), content = {
                     items(avatars.size) {
@@ -329,7 +329,7 @@ class SearchResultScreen(
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), contentPadding = PaddingValues(
+            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
                 start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
             ), content = {
                 items(groups) {

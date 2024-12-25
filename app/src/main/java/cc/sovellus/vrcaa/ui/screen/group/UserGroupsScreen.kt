@@ -88,13 +88,7 @@ class UserGroupsScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = stringResource(R.string.group_user_no_groups_message))
-                    }
+                    Text(text = stringResource(R.string.group_user_no_groups_message))
                 }
             }
         )
@@ -120,15 +114,13 @@ class UserGroupsScreen(
                     },
                     title = {
                         Text(
-                            text = stringResource(R.string.group_user_viewing_groups_username).format(
-                                username
-                            )
+                            text = stringResource(R.string.group_user_viewing_groups_username).format(username)
                         )
                     }
                 )
             },
             content = { padding ->
-                Column(
+                LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
@@ -138,19 +130,17 @@ class UserGroupsScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(groups) { group ->
-                            GroupCard(
-                                groupName = group.name,
-                                shortCode = group.shortCode,
-                                discriminator = group.discriminator,
-                                bannerUrl = group.bannerUrl,
-                                iconUrl = group.iconUrl,
-                                totalMembers = group.memberCount,
-                                languages = null
-                            ) {
-                                navigator.push(GroupScreen(group.groupId))
-                            }
+                    items(groups) { group ->
+                        GroupCard(
+                            groupName = group.name,
+                            shortCode = group.shortCode,
+                            discriminator = group.discriminator,
+                            bannerUrl = group.bannerUrl,
+                            iconUrl = group.iconUrl,
+                            totalMembers = group.memberCount,
+                            languages = null
+                        ) {
+                            navigator.push(GroupScreen(group.groupId))
                         }
                     }
                 }

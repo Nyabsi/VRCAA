@@ -45,7 +45,11 @@ class App : Application() {
         fun isMinimalistModeEnabled(): Boolean { return minimalistModeEnabled.value }
 
         @Composable
-        fun isAppInDarkTheme(): Boolean { return isSystemInDarkTheme() && preferences.currentThemeOption != 0 }
+        fun isAppInDarkTheme(): Boolean {
+            if (preferences.currentThemeOption == 2)
+                return isSystemInDarkTheme()
+            return preferences.currentThemeOption != 0
+        }
 
         fun getLoadingText(): MutableState<String> { return loadingText }
         fun setLoadingText(resourceId: Int) { loadingText.value = context.getString(resourceId) }

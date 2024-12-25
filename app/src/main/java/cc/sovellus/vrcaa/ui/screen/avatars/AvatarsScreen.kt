@@ -121,7 +121,7 @@ class AvatarsScreen : Screen {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
+                        columns = GridCells.Adaptive(200.dp),
                         contentPadding = PaddingValues(
                             start = 12.dp,
                             top = 16.dp,

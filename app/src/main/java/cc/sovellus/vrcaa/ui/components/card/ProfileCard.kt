@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
@@ -24,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
@@ -51,6 +53,7 @@ fun ProfileCard(
         ),
         modifier = Modifier
             .height(270.dp)
+            .widthIn(Dp.Unspecified, 520.dp)
             .fillMaxWidth()
     ) {
 
@@ -119,7 +122,7 @@ fun ProfileCard(
                             .weight(0.30f)
                             .padding(end = 4.dp), horizontalArrangement = Arrangement.End
                     ) {
-                        Languages(languages = tags, modifier = Modifier.padding(top = 20.dp))
+                        Languages(languages = tags, modifier = Modifier.padding(top = 8.dp))
                     }
                 }
             }
