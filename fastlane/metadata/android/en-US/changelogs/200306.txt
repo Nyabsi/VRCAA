@@ -1,0 +1,11 @@
+- moved worlds and groups back to action menu from user screen
+- now home screen shows friends in instances
+- now user profile shows user badges
+- now favorite limits are displayed next to the favorite group
+- now you can change age verification visibility in profile settings
+- now age gated instance are shown with red color
+- clicking a GPS feed will show the world instead of profile
+- implement database
+    - feed is now stored in the database
+- implement appereance settings
+- fix crashes
