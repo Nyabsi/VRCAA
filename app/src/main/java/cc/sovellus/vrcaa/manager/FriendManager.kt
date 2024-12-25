@@ -50,29 +50,7 @@ object FriendManager {
     fun updateFriend(friend: Friend) {
         val it = friends.find { it.id == friend.id }
         it?.let {
-            it.bio = friend.bio
-            it.bioLinks = friend.bioLinks
-            it.currentAvatarImageUrl = friend.currentAvatarImageUrl
-            it.currentAvatarTags = friend.currentAvatarTags
-            it.currentAvatarThumbnailImageUrl = friend.currentAvatarThumbnailImageUrl
-            it.developerType = friend.developerType
-            it.displayName = friend.displayName
-            it.friendKey = friend.friendKey
-            it.id = friend.id
-            it.imageUrl = friend.imageUrl
-            it.isFriend = friend.isFriend
-            it.lastLogin = it.lastLogin
-            it.lastMobile = it.lastMobile
-            it.lastPlatform = friend.lastPlatform
-            it.location = friend.location
-            it.profilePicOverride = friend.profilePicOverride
-            it.profilePicOverrideThumbnail = friend.profilePicOverrideThumbnail
-            it.status = friend.status
-            it.statusDescription = friend.statusDescription
-            it.tags = friend.tags
-            it.userIcon = friend.userIcon
-            it.platform = friend.platform
-            friends.set(friends.indexOf(it), it)
+            friends.set(friends.indexOf(it), friend)
         }
 
         friendListeners.map {
