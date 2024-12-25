@@ -228,7 +228,6 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FriendManager.updateFriend(update.user)
-                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is UserLocation -> {
