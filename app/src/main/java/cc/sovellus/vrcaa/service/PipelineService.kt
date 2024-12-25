@@ -174,8 +174,6 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
                     }
-
-                    FriendManager.updateFriend(update.user)
                 }
 
                 is FriendUpdate -> {
