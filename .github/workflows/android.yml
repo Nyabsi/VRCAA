@@ -65,7 +65,7 @@ jobs:
       uses: noriban/sign-android-release@v5.1
       id: sign_pico
       with:
-        releaseDirectory: app/build/outputs/apk/quest/release
+        releaseDirectory: app/build/outputs/apk/pico/release
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
