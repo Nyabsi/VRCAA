@@ -297,4 +297,6 @@
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+    <string name="advanced_page_kill_service">Kill background service</string>
+    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
 </resources>
