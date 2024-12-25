@@ -180,6 +180,12 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
                     }
+
+                    if (friend != null) {
+                        update.location?.let {
+                            FriendManager.updateLocation(friend.id, it)
+                        }
+                    }
                 }
 
                 is FriendUpdate -> {
