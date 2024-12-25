@@ -30,6 +30,7 @@ import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
+import cc.sovellus.vrcaa.ui.components.layout.RowItemWithFriends
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
@@ -171,9 +172,10 @@ class HomeScreen : Screen {
                             friendLocations.distinctBy { it.location.split(':')[0] },
                             key = { it.id }) { friend ->
                             val world = CacheManager.getWorld(friend.location.split(':')[0])
-                            RowItem(
+                            RowItemWithFriends(
                                 name = world.name,
                                 url = world.thumbnailUrl,
+                                friends = friends.filter { it.location == friend.location },
                                 onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
                             )
                         }
