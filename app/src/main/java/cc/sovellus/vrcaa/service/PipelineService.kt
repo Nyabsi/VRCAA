@@ -113,30 +113,32 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null) {
-                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                            friendId = friend.id
-                            friendName = friend.displayName
-                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                        if (update.platform.isEmpty()) {
+                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                                friendId = friend.id
+                                friendName = friend.displayName
+                                friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                            }
+
+                            if (NotificationHelper.isOnWhitelist(friend.id) &&
+                                NotificationHelper.isIntentEnabled(
+                                    friend.id,
+                                    NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
+                                )
+                            ) {
+                                NotificationHelper.pushNotification(
+                                    title = application.getString(R.string.notification_service_title_offline),
+                                    content = application.getString(R.string.notification_service_description_offline)
+                                        .format(friend.displayName),
+                                    channel = NotificationHelper.CHANNEL_OFFLINE_ID
+                                )
+                            }
+
+                            FeedManager.addFeed(feed)
+
+                            FriendManager.updateLocation(friend.id, "offline")
+                            FriendManager.updateStatus(friend.id, "offline")
                         }
-
-                        if (NotificationHelper.isOnWhitelist(friend.id) &&
-                            NotificationHelper.isIntentEnabled(
-                                friend.id,
-                                NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
-                            )
-                        ) {
-                            NotificationHelper.pushNotification(
-                                title = application.getString(R.string.notification_service_title_offline),
-                                content = application.getString(R.string.notification_service_description_offline)
-                                    .format(friend.displayName),
-                                channel = NotificationHelper.CHANNEL_OFFLINE_ID
-                            )
-                        }
-
-                        FeedManager.addFeed(feed)
-
-                        FriendManager.updateLocation(friend.id, "offline")
-                        FriendManager.updateStatus(friend.id, "offline")
                     }
                 }
 
