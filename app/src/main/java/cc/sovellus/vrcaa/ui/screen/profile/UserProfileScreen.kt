@@ -61,9 +61,12 @@ import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
+import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreenModel
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 
 class UserProfileScreen(
     private val userId: String
@@ -81,7 +84,7 @@ class UserProfileScreen(
         when (val result = state) {
             is UserProfileScreenModel.UserProfileState.Loading -> LoadingIndicatorScreen().Content()
             is UserProfileScreenModel.UserProfileState.Result -> Profile(
-                result.profile, result.instance, result.worlds, result.groups, model
+                result.profile, result.instance, model
             )
 
             else -> {}
@@ -93,8 +96,6 @@ class UserProfileScreen(
     fun Profile(
         profile: LimitedUser?,
         instance: Instance?,
-        worlds: ArrayList<World>,
-        groups: ArrayList<UserGroup>,
         model: UserProfileScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
@@ -169,7 +170,20 @@ class UserProfileScreen(
                                     }
                                     isMenuExpanded = false
                                 },
-                                    text = { Text(stringResource(R.string.profile_user_dropdown_view_avatar)) })
+                                    text = { Text(stringResource(R.string.profile_user_dropdown_view_avatar)) }
+                                )
+                                DropdownMenuItem(onClick = {
+                                    navigator.push(UserGroupsScreen(profile.displayName, profile.id))
+                                    isMenuExpanded = false
+                                },
+                                    text = { Text(stringResource(R.string.user_dropdown_view_groups)) }
+                                )
+                                DropdownMenuItem(onClick = {
+                                    navigator.push(WorldsScreen(profile.displayName, profile.id, false))
+                                    isMenuExpanded = false
+                                },
+                                    text = { Text(stringResource(R.string.user_dropdown_view_worlds)) }
+                                )
                                 if (instance != null) {
                                     DropdownMenuItem(onClick = {
 
@@ -320,101 +334,6 @@ class UserProfileScreen(
                             ) {
                                 SubHeader(title = stringResource(R.string.profile_label_biography))
                                 Description(text = profile.bio)
-                            }
-                        }
-                    }
-
-                    item {
-                        if (worlds.isNotEmpty()) {
-                            Column(
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                horizontalAlignment = Alignment.Start
-                            ) {
-                                SubHeader(
-                                    title = stringResource(R.string.worlds_page_title).format(
-                                        profile.displayName
-                                    )
-                                )
-
-                                LazyRow(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .fillMaxHeight(),
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                ) {
-                                    items(worlds, key = { it.id }) { world ->
-                                        RowItem(name = world.name,
-                                            url = world.thumbnailImageUrl,
-                                            onClick = {
-                                                navigator.push(
-                                                    WorldInfoScreen(world.id)
-                                                )
-                                            })
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    item {
-                        val nonMutualGroups = groups.filter { !it.mutualGroup }
-                        if (groups.isNotEmpty()) {
-                            Column(
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                horizontalAlignment = Alignment.Start,
-                            ) {
-                                SubHeader(
-                                    title = stringResource(R.string.group_user_viewing_groups_username).format(
-                                        profile.displayName
-                                    )
-                                )
-
-                                LazyRow(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .fillMaxHeight(),
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                ) {
-                                    items(nonMutualGroups, key = { it.groupId }) { group ->
-                                        RowItem(name = group.name,
-                                            url = group.bannerUrl,
-                                            onClick = {
-                                                navigator.push(
-                                                    GroupScreen(group.groupId)
-                                                )
-                                            })
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    item {
-                        val mutualGroups = groups.filter { it.mutualGroup }
-                        if (mutualGroups.isNotEmpty()) {
-                            Column(
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                horizontalAlignment = Alignment.Start,
-                            ) {
-
-                                SubHeader(title = stringResource(R.string.profile_mutual_groups_text))
-
-                                LazyRow(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .fillMaxHeight(),
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                ) {
-                                    items(mutualGroups, key = { it.groupId }) { group ->
-                                        RowItem(name = group.name,
-                                            url = group.bannerUrl,
-                                            onClick = {
-                                                navigator.push(
-                                                    GroupScreen(group.groupId)
-                                                )
-                                            })
-                                    }
-                                }
                             }
                         }
                     }
