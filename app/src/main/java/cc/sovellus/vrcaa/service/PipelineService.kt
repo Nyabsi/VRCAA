@@ -104,7 +104,6 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FeedManager.addFeed(feed)
-
                     FriendManager.updateFriend(update.user)
                 }
 
@@ -114,32 +113,30 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null) {
-                        if (update.platform.isEmpty()) {
-                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
-                                friendId = friend.id
-                                friendName = friend.displayName
-                                friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
-                            }
-
-                            if (NotificationHelper.isOnWhitelist(friend.id) &&
-                                NotificationHelper.isIntentEnabled(
-                                    friend.id,
-                                    NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
-                                )
-                            ) {
-                                NotificationHelper.pushNotification(
-                                    title = application.getString(R.string.notification_service_title_offline),
-                                    content = application.getString(R.string.notification_service_description_offline)
-                                        .format(friend.displayName),
-                                    channel = NotificationHelper.CHANNEL_OFFLINE_ID
-                                )
-                            }
-
-                            FeedManager.addFeed(feed)
-
-                            FriendManager.updateLocation(friend.id, "offline")
-                            FriendManager.updateStatus(friend.id, "offline")
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
+                            friendId = friend.id
+                            friendName = friend.displayName
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
                         }
+
+                        if (NotificationHelper.isOnWhitelist(friend.id) &&
+                            NotificationHelper.isIntentEnabled(
+                                friend.id,
+                                NotificationHelper.Intents.FRIEND_FLAG_OFFLINE
+                            )
+                        ) {
+                            NotificationHelper.pushNotification(
+                                title = application.getString(R.string.notification_service_title_offline),
+                                content = application.getString(R.string.notification_service_description_offline)
+                                    .format(friend.displayName),
+                                channel = NotificationHelper.CHANNEL_OFFLINE_ID
+                            )
+                        }
+
+                        FeedManager.addFeed(feed)
+
+                        FriendManager.updateLocation(friend.id, "offline")
+                        FriendManager.updateStatus(friend.id, "offline")
                         FriendManager.updatePlatform(friend.id, update.platform)
                     }
                 }
@@ -305,6 +302,28 @@ class PipelineService : Service(), CoroutineScope {
 
                 is FriendActive -> {
                     val update = msg.obj as FriendActive
+
+                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                        friendId = update.userId
+                        friendName = update.user.displayName
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                    }
+
+                    if (NotificationHelper.isOnWhitelist(update.userId) &&
+                        NotificationHelper.isIntentEnabled(
+                            update.userId,
+                            NotificationHelper.Intents.FRIEND_FLAG_ONLINE
+                        )
+                    ) {
+                        NotificationHelper.pushNotification(
+                            title = application.getString(R.string.notification_service_title_online),
+                            content = application.getString(R.string.notification_service_description_online)
+                                .format(update.user.displayName),
+                            channel = NotificationHelper.CHANNEL_ONLINE_ID
+                        )
+                    }
+
+                    FeedManager.addFeed(feed)
                     FriendManager.updateFriend(update.user)
                 }
 
