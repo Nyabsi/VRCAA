@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendLocation
@@ -300,6 +301,11 @@ class PipelineService : Service(), CoroutineScope {
 
                     FeedManager.addFeed(feed)
                     FriendManager.addFriend(update.user)
+                }
+
+                is FriendActive -> {
+                    val update = msg.obj as FriendActive
+                    FriendManager.updateFriend(update.user)
                 }
 
                 is Notification -> {
