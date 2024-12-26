@@ -2,7 +2,7 @@ name: Publish nightly
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "transcript" ]
 
 jobs:
   build:
@@ -73,14 +73,20 @@ jobs:
       env:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
+    - name: Generate Release Tag
+      id: generate_release_tag
+      uses: slord399/next-release-tag@v1.0.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        tag_prefix: 'Transcript_Latest_'
 
     - name: Publish release to Github
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: slord399/action-automatic-releases@v1.0.1
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "nightly"
+        automatic_release_tag: "${{ steps.generate_release_tag.outputs.release_tag }}"
         prerelease: false
-        title: "${{ env.GITHUB_SHA }}"
+        title: "${{ steps.generate_release_tag.outputs.release_tag }}"
         files: |
           ${{ steps.sign_standard.outputs.signedReleaseFile }}
           ${{ steps.sign_quest.outputs.signedReleaseFile }}
