@@ -53,7 +53,7 @@ class ProfileScreen : Screen {
     private fun RenderProfile(profile: User) {
         LazyColumn(
             modifier = Modifier.padding(16.dp).fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
