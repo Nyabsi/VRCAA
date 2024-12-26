@@ -1,4 +1,4 @@
-name: Publish nightly
+name: Publish Transcript
 
 on:
   push:
