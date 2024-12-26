@@ -297,6 +297,6 @@
     <string name="advanced_page_view_network_logs">ネットワークログを表示</string>
     <string name="advanced_page_battery_optimization">バッテリー最適化を無効にする</string>
     <string name="advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
+    <string name="advanced_page_kill_service">バックグラウンドサービスの停止</string>
+    <string name="advanced_page_kill_service_description">リアルタイム更新関係のバックグラウンドサービスを停止する</string>
 </resources>
