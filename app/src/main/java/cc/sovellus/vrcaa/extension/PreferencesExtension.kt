@@ -95,3 +95,7 @@ internal var SharedPreferences.currentThemeOption: Int
 internal var SharedPreferences.columnCountOption: Int
     get() = getInt("columnCountOption", 0)
     set(value) = edit { putInt("columnCountOption", value) }
+
+internal var SharedPreferences.fixedColumnSize: Int
+    get() = getInt("fixedColumnSize", 2)
+    set(it) = edit { putInt("fixedColumnSize", it) }
