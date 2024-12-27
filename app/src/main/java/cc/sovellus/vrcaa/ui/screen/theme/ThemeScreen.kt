@@ -158,6 +158,26 @@ class ThemeScreen : Screen {
                                 }
                             }
                         }
+
+                        if (model.currentColumnIndex.intValue == 1) {
+                            Slider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 16.dp),
+                                value = model.currentColumnAmount.floatValue,
+                                onValueChange = { size ->
+                                    model.currentColumnAmount.floatValue = size.roundToInt().toFloat()
+                                    model.preferences.fixedColumnSize = model.currentColumnAmount.floatValue.roundToInt()
+                                },
+                                valueRange = 1f..6f
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 16.dp),
+                                text = "Fixed Column Size: ${model.currentColumnAmount.floatValue.roundToInt()}"
+                            )
+                        }
                     }
 
                     item {
