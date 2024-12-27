@@ -33,6 +33,8 @@
     <string name="profile_label_current_location">当前位置</string>
     <string name="profile_label_note">备注</string>
     <string name="profile_label_biography">自我介绍</string>
+    <string name="profile_label_last_activity">最后活动</string>
+    <string name="profile_label_date_joined">账号创建日期</string>
     <string name="profile_text_no_biography">未填写自我介绍。</string>
     <string name="profile_user_dropdown_manage_notifications">管理通知</string>
     <string name="profile_user_dropdown_view_groups">查看群组</string>
@@ -55,6 +57,8 @@
     <string name="search_filter_category_avatars_provider">提供方</string>
     <string name="search_filter_category_groups">群组</string>
     <string name="search_filter_category_groups_count">数量</string>
+    <string name="copy_id_label">复制 ID</string>
+    <string name="copied_toast">复制 %1$s 的 ID 成功。</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">数量</string>
     <string name="search_filter_button_reset">重置</string>
@@ -81,6 +85,16 @@
     <string name="world_text_no_tags">作者未提供标签。</string>
     <string name="world_title_created_at">创建时间</string>
     <string name="world_title_updated_at">最后更新</string>
+    <string name="world_title_visits">游玩人次</string>
+    <string name="world_title_favorites">收藏人数</string>
+    <string name="world_title_capacity">推荐人数</string>
+    <string name="world_title_occupants">地图内在线人数</string>
+    <string name="world_title_publication_date">正式公开于</string>
+    <string name="world_title_version">版本</string>
+    <string name="world_title_heat">热度</string>
+    <string name="world_title_popularity">知名度</string>
+    <string name="world_title_platform">平台</string>
+    <string name="world_title_labs_publication_date">进入实验室的日期</string>
     <string name="world_toast_not_found">世界是私密的，或者不存在。</string>
     <string-array name="world_selection_options">
         <item>信息</item>
@@ -129,6 +143,8 @@
     <string name="avatar_title_updated_at">最后更新</string>
     <string name="avatar_title_content_labels">内容标签</string>
     <string name="avatar_text_author">作者：%1$s</string>
+    <string name="avatar_title_version">版本</string>
+    <string name="avatar_title_platform">平台</string>
     <string name="avatar_text_content_labels_not_found">此模型没有指定内容警告。</string>
     <string name="avatar_toast_avatar_not_found_message">此模型是私有的或无效的。</string>
     <!-- Feed -->
@@ -146,6 +162,7 @@
     <string name="feed_removed_text">已将您从好友中移除。</string>
     <string name="feed_friend_request_label">好友请求</string>
     <string name="feed_friend_request_text">想要添加您为好友。</string>
+    <string name="feed_search_placeholder">搜索用户或房间…</string>
     <!-- About -->
     <string name="about_page_title">关于</string>
     <string name="about_page_open_source_licenses_title">开源许可证</string>
@@ -186,7 +203,7 @@
     <string name="group_toast_not_found_message">未找到群组，您确定它存在吗？</string>
     <string name="group_page_label_description">描述</string>
     <string name="group_page_label_rules">规则</string>
-    <string name="group_page_dropdown_view_author">查看拥有者的个人资料</string>
+    <string name="group_page_dropdown_view_author">查看拥有者</string>
     <string name="group_page_dropdown_accept_invite">接受邀请</string>
     <string name="group_page_dropdown_request_invite">申请加入</string>
     <string name="group_page_dropdown_request_invite_cancel">取消邀请</string>
@@ -288,8 +305,15 @@
         <item>深色</item>
         <item>跟随系统</item>
     </string-array>
+    <string-array name="column_count_options">
+        <item>自动</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
     <string name="theme_page_section_theme_title">主题</string>
     <string name="theme_page_section_display_title">显示</string>
+    <string name="theme_page_section_column_title">列</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">高级设置</string>
     <string name="advanced_page_network_logging">网络记录</string>

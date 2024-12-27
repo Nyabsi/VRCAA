@@ -35,6 +35,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.manager.ThemeManager
@@ -111,6 +112,47 @@ class ThemeScreen : Screen {
                                         ThemeManager.setTheme(model.currentIndex.intValue)
                                     },
                                     checked = index == model.currentIndex.intValue
+                                ) {
+                                    Text(text = label, softWrap = true, maxLines = 1)
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.padding(4.dp))
+
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = stringResource(R.string.theme_page_section_column_title),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        )
+                    }
+
+                    item {
+                        val options = stringArrayResource(R.array.column_count_options)
+
+                        MultiChoiceSegmentedButtonRow(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp)
+                        ) {
+                            options.forEachIndexed { index, label ->
+                                SegmentedButton(
+                                    shape = SegmentedButtonDefaults.itemShape(
+                                        index = index,
+                                        count = options.size
+                                    ),
+                                    onCheckedChange = {
+                                        model.currentColumnIndex.intValue = index
+                                        model.preferences.columnCountOption = index
+                                    },
+                                    checked = index == model.currentColumnIndex.intValue
                                 ) {
                                     Text(text = label, softWrap = true, maxLines = 1)
                                 }

@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -41,7 +42,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreenModel
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -115,6 +118,7 @@ class WorldsScreen(
     @Composable
     private fun DisplayResult(worlds: ArrayList<World>) {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         Scaffold(
             topBar = {
@@ -158,7 +162,10 @@ class WorldsScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         LazyVerticalGrid(
-                            columns = GridCells.Adaptive(200.dp),
+                            columns = when (model.preferences.columnCountOption) {
+                                0 -> GridCells.Adaptive(200.dp)
+                                else -> GridCells.Fixed(model.preferences.columnCountOption)
+                            },
                             contentPadding = PaddingValues(
                                 start = 12.dp,
                                 top = 16.dp,

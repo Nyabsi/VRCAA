@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.api.vrchat.http.models
 
 
+import cc.sovellus.vrcaa.api.vrchat.models.UnityPackage
 import com.google.gson.annotations.SerializedName
 
 data class Avatar(
@@ -37,5 +38,7 @@ data class Avatar(
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("version")
-    var version: Long = 0
+    var version: Long = 0,
+    @SerializedName("unityPackages")
+    var unityPackages: List<UnityPackage> = listOf(),
 )

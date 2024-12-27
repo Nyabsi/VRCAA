@@ -46,6 +46,8 @@
     <string name="profile_label_current_location">Current Location</string>
     <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Bio</string>
+    <string name="profile_label_last_activity">Last Activity</string>
+    <string name="profile_label_date_joined">Date Joined</string>
     <string name="profile_text_no_biography">No description specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
@@ -71,6 +73,8 @@
     <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Groups</string>
     <string name="search_filter_category_groups_count">Count</string>
+    <string name="copy_id_label">Copy ID</string>
+    <string name="copied_toast">Successfully copied %1$s\'s ID.</string>
 
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Count</string>
@@ -104,6 +108,16 @@
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
+    <string name="world_title_visits">Visits</string>
+    <string name="world_title_favorites">Favorites</string>
+    <string name="world_title_capacity">Capacity</string>
+    <string name="world_title_occupants">Occupants</string>
+    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_title_version">Version</string>
+    <string name="world_title_heat">Heat</string>
+    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_platform">Unity Packages</string>
+    <string name="world_title_labs_publication_date">LabsPublicationDate</string>
     <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -160,6 +174,8 @@
     <string name="avatar_title_updated_at">Last Updated</string>
     <string name="avatar_title_content_labels">Content Labels</string>
     <string name="avatar_text_author">By %1$s</string>
+    <string name="avatar_title_version">Version</string>
+    <string name="avatar_title_platform">Platform</string>
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
     <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
 
@@ -179,6 +195,7 @@
     <string name="feed_removed_text">has removed you as friend.</string>
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
+    <string name="feed_search_placeholder">Search for User or Location…</string>
 
     <!-- About -->
 
@@ -365,8 +382,16 @@
         <item>System</item>
     </string-array>
 
+    <string-array name="column_count_options">
+        <item>Auto</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string name="theme_page_section_theme_title">Theme</string>
     <string name="theme_page_section_display_title">Display</string>
+    <string name="theme_page_section_column_title">Column</string>
 
     <!-- Advanced Settings -->
 

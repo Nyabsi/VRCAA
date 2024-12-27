@@ -91,3 +91,7 @@ internal var SharedPreferences.minimalistMode: Boolean
 internal var SharedPreferences.currentThemeOption: Int
     get() = getInt("currentThemeOption", 2)
     set(it) = edit { putInt("currentThemeOption", it) }
+
+internal var SharedPreferences.columnCountOption: Int
+    get() = getInt("columnCountOption", 0)
+    set(value) = edit { putInt("columnCountOption", value) }

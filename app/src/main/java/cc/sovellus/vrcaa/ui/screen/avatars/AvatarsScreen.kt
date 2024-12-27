@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -29,9 +30,11 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
+import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.ui.components.layout.SearchRowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreenModel
 
 class AvatarsScreen : Screen {
 
@@ -92,6 +95,7 @@ class AvatarsScreen : Screen {
     @Composable
     private fun DisplayResult(avatars: ArrayList<Avatar>) {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         Scaffold(
             topBar = {
@@ -121,7 +125,10 @@ class AvatarsScreen : Screen {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     LazyVerticalGrid(
-                        columns = GridCells.Adaptive(200.dp),
+                        columns = when (model.preferences.columnCountOption) {
+                            0 -> GridCells.Adaptive(200.dp)
+                            else -> GridCells.Fixed(model.preferences.columnCountOption)
+                        },
                         contentPadding = PaddingValues(
                             start = 12.dp,
                             top = 16.dp,
