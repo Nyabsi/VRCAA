@@ -15,4 +15,5 @@ class ThemeScreenModel : ScreenModel {
     val minimalistMode = mutableStateOf(preferences.minimalistMode)
     var currentIndex = mutableIntStateOf(preferences.currentThemeOption)
     var currentColumnIndex = mutableIntStateOf(preferences.columnCountOption)
+    var currentColumnAmount = mutableFloatStateOf(0f)
 }
