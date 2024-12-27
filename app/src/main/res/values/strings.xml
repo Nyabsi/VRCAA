@@ -73,8 +73,8 @@
     <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Groups</string>
     <string name="search_filter_category_groups_count">Count</string>
-    <string name="copy_id_label">Copy ID</string>
-    <string name="copied_toast">Successfully copied %1$s\'s ID.</string>
+    <string name="copy_id_label">Copy Id</string>
+    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
 
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Count</string>
@@ -383,15 +383,13 @@
     </string-array>
 
     <string-array name="column_count_options">
-        <item>Auto</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>Adaptive</item>
+        <item>Fixed</item>
     </string-array>
 
     <string name="theme_page_section_theme_title">Theme</string>
     <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column</string>
+    <string name="theme_page_section_column_title">Column Count</string>
 
     <!-- Advanced Settings -->
 
