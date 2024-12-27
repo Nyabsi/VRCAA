@@ -127,7 +127,7 @@ class AvatarsScreen : Screen {
                     LazyVerticalGrid(
                         columns = when (model.preferences.columnCountOption) {
                             0 -> GridCells.Adaptive(200.dp)
-                            else -> GridCells.Fixed(model.preferences.columnCountOption)
+                            else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                         },
                         contentPadding = PaddingValues(
                             start = 12.dp,
