@@ -363,7 +363,7 @@ class NavigationScreen : Screen {
                                         onQueryChange = { model.feedFilterQuery.value = it },
                                         expanded = model.showFilteredFeed.value,
                                         onExpandedChange = { model.showFilteredFeed.value = it },
-                                        placeholder = { Text(text = "do stuff") },
+                                        placeholder = { Text(text = stringResource(id = R.string.feed_search_placeholder)) },
                                         leadingIcon = {
                                             if (model.showFilteredFeed.value) {
                                                 IconButton(onClick = {
