@@ -346,17 +346,6 @@ class WorldInfoScreen(
                         SubHeader(title = stringResource(R.string.world_title_popularity))
                         Description(text = world.popularity.toString())
 
-                        val unityPackages = world.unityPackages.joinToString(", ") {
-                            when (it.platform) {
-                                "standalonewindows" -> "PC/${it.unityVersion}"
-                                "android" -> "Android/${it.unityVersion}"
-                                else -> "${it.platform}/${it.unityVersion}"
-                            }
-                        }
-
-                        SubHeader(title = stringResource(R.string.world_title_platform))
-                        Description(text = unityPackages)
-
                         SubHeader(title = stringResource(R.string.world_label_tags))
                         BadgesFromTags(
                             tags = world.tags,
