@@ -312,6 +312,29 @@ class HttpClient : BaseClient() {
                 }
             }
         }
+
+        override suspend fun fetchFriendById(userId: String): Friend? {
+
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/users/${userId}",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Friend::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
     }
 
     val users = object : IUsers {
