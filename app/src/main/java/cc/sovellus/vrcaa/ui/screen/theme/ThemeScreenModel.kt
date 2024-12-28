@@ -9,6 +9,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.currentThemeOption
+import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.extension.minimalistMode
 
 class ThemeScreenModel : ScreenModel {
@@ -16,5 +17,5 @@ class ThemeScreenModel : ScreenModel {
     val minimalistMode = mutableStateOf(preferences.minimalistMode)
     var currentIndex = mutableIntStateOf(preferences.currentThemeOption)
     var currentColumnIndex = mutableIntStateOf(preferences.columnCountOption)
-    var currentColumnAmount = mutableFloatStateOf(0f)
+    var currentColumnAmount = mutableFloatStateOf(preferences.fixedColumnSize.toFloat())
 }
