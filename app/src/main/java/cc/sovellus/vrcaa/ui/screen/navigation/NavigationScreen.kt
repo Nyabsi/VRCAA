@@ -383,7 +383,6 @@ class NavigationScreen : Screen {
                                         },
                                         onSearch = {
                                             model.filterFeed()
-                                            model.showFilteredFeed.value = false
                                             model.feedFilterQuery.value = ""
                                         }
                                     )
@@ -398,7 +397,7 @@ class NavigationScreen : Screen {
                                     8.dp
                                 },
                                 windowInsets = SearchBarDefaults.windowInsets.exclude(
-                                    WindowInsets(left = 4.dp, right = 4.dp)
+                                    WindowInsets(left = 2.dp, right = 2.dp)
                                 )
                             ) {
                                 val feed = model.filteredFeed.collectAsState()
@@ -825,7 +824,7 @@ class NavigationScreen : Screen {
                     }
                 }
             }, bottomBar = {
-                if (!model.searchModeActivated.value) {
+                if (!model.searchModeActivated.value || !model.showFilteredFeed.value) {
                     NavigationBar {
                         tabs.forEach { tab ->
                             NavigationBarItem(selected = tabNavigator.current.key == tab.key,
