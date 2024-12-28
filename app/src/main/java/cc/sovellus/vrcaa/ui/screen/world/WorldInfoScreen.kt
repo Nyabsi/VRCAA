@@ -1,9 +1,13 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CardDefaults
@@ -66,7 +72,10 @@ import cc.sovellus.vrcaa.ui.components.layout.InstanceItem
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
+import java.util.TimeZone
 
 class WorldInfoScreen(
     private val worldId: String
@@ -171,6 +180,22 @@ class WorldInfoScreen(
                                                 text = { Text(stringResource(R.string.favorite_label_add)) }
                                             )
                                         }
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                                val clip = ClipData.newPlainText(null, world.id)
+                                                clipboard.setPrimaryClip(clip)
+
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.copied_toast).format(world.name),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.copy_id_label)) }
+                                        )
                                     }
                                 }
                             }
@@ -268,7 +293,9 @@ class WorldInfoScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(bottom = 16.dp).widthIn(Dp.Unspecified, 520.dp)
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .widthIn(Dp.Unspecified, 520.dp)
                     ) {
                         SubHeader(title = stringResource(R.string.world_label_description))
                         Description(text = world.description)
@@ -278,16 +305,32 @@ class WorldInfoScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(bottom = 16.dp).widthIn(Dp.Unspecified, 520.dp)
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .widthIn(Dp.Unspecified, 520.dp)
                     ) {
-                        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+                        val userTimeZone = TimeZone.getDefault().toZoneId()
+                        val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                            .withLocale(Locale.getDefault())
 
-                        val createdAtFormatted = parser.parse(world.createdAt)
-                            ?.let { formatter.format(it) }
+                        val createdAtFormatted = ZonedDateTime.parse(world.createdAt).withZoneSameInstant(userTimeZone).format(formatter)
+                        val updatedAtFormatted = ZonedDateTime.parse(world.updatedAt).withZoneSameInstant(userTimeZone).format(formatter)
 
-                        val updatedAtFormatted = parser.parse(world.updatedAt)
-                            ?.let { formatter.format(it) }
+                        SubHeader(title = stringResource(R.string.world_title_occupants))
+                        Description(text = "Public (${NumberFormat.getInstance().format(world.publicOccupants)}) Private (${NumberFormat.getInstance().format(world.privateOccupants)}) Total (${NumberFormat.getInstance().format(world.occupants)})")
+
+                        val occupancyRate = world.visits.takeIf { it != 0 }?.let {
+                            String.format(Locale.ENGLISH, "%.1f", world.favorites.toFloat() / it.toFloat() * 100)
+                        } ?: "0.0%"
+
+                        SubHeader(title = stringResource(R.string.world_title_favorites))
+                        Description(text = "${NumberFormat.getInstance().format(world.favorites)} (${occupancyRate}%)")
+
+                        SubHeader(title = stringResource(R.string.world_title_visits))
+                        Description(text = NumberFormat.getInstance().format(world.visits))
+
+                        SubHeader(title = stringResource(R.string.world_title_capacity))
+                        Description(text = "${world.recommendedCapacity} (${world.capacity})")
 
                         SubHeader(title = stringResource(R.string.world_title_created_at))
                         Description(text = createdAtFormatted)
@@ -295,14 +338,31 @@ class WorldInfoScreen(
                         SubHeader(title = stringResource(R.string.world_title_updated_at))
                         Description(text = updatedAtFormatted)
 
-                        SubHeader(title = "Visits")
-                        Description(text = NumberFormat.getInstance().format(world.visits))
+                        SubHeader(title = stringResource(R.string.world_title_labs_publication_date))
+                        Description(text = updatedAtFormatted)
 
-                        SubHeader(title = "Favorites")
-                        Description(text = NumberFormat.getInstance().format(world.favorites))
+                        SubHeader(title = stringResource(R.string.world_title_publication_date))
+                        Description(text = updatedAtFormatted)
 
-                        SubHeader(title = "Capacity")
-                        Description(text = "${world.recommendedCapacity} (${world.capacity})")
+                        SubHeader(title = "${stringResource(R.string.world_title_heat)} (${world.heat})")
+
+                        Row(
+                            modifier = Modifier.padding(start = 12.dp)
+                        ) {
+                            for (i in 0..world.heat) {
+                                Icon(Icons.Filled.LocalFireDepartment, contentDescription = null, modifier = Modifier.size(28.dp).padding(4.dp))
+                            }
+                        }
+
+                        SubHeader(title = "${stringResource(R.string.world_title_popularity)} (${world.popularity})")
+
+                        Row(
+                            modifier = Modifier.padding(start = 12.dp)
+                        ) {
+                            for (i in 0..world.popularity) {
+                                Icon(Icons.Filled.Favorite, contentDescription = null, modifier = Modifier.size(28.dp).padding(4.dp))
+                            }
+                        }
 
                         SubHeader(title = stringResource(R.string.world_label_tags))
                         BadgesFromTags(

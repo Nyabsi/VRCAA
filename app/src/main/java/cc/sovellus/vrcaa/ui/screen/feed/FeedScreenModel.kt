@@ -21,8 +21,6 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
     private var feedStateFlow = MutableStateFlow(mutableStateListOf<FeedManager.Feed>())
     var feed = feedStateFlow.asStateFlow()
 
-    var currentIndex = mutableIntStateOf(0)
-
     private val listener = object : FeedManager.FeedListener {
         override fun onReceiveUpdate(list: MutableList<FeedManager.Feed>) {
             feedStateFlow.value = list.toMutableStateList()
