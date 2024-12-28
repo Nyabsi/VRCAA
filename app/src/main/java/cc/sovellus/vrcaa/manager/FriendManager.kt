@@ -93,17 +93,6 @@ object FriendManager {
         }
     }
 
-    fun updateWorldId(userId: String, worldId: String) {
-        val it = friends.find { it.id == userId }
-        it?.let {
-            it.worldId = worldId
-            friends.set(friends.indexOf(it), it)
-        }
-        friendListeners.map {
-            it.onUpdateFriends(friends)
-        }
-    }
-
     fun getFriends(): MutableList<Friend> {
         return friends
     }
