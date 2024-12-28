@@ -384,6 +384,7 @@ class NavigationScreen : Screen {
                                         onSearch = {
                                             model.filterFeed()
                                             model.showFilteredFeed.value = false
+                                            model.feedFilterQuery.value = ""
                                         }
                                     )
                                 },
