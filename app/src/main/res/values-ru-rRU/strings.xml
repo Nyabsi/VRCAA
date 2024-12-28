@@ -94,7 +94,7 @@
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
     <string name="world_title_platform">Unity Packages</string>
-    <string name="world_title_labs_publication_date">LabsPublicationDate</string>
+    <string name="world_title_labs_publication_date">Labs Publication Date</string>
     <string name="world_toast_not_found">Мир является приватным или не существует.</string>
     <string-array name="world_selection_options">
         <item>Инфо</item>
