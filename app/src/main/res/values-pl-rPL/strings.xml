@@ -33,6 +33,8 @@
     <string name="profile_label_current_location">Aktualna lokalizacja</string>
     <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">O mnie</string>
+    <string name="profile_label_last_activity">Last Activity</string>
+    <string name="profile_label_date_joined">Date Joined</string>
     <string name="profile_text_no_biography">Brak opisu.</string>
     <string name="profile_user_dropdown_manage_notifications">Zarządzanie powiadomieniami</string>
     <string name="profile_user_dropdown_view_groups">Wyświetl grupy</string>
@@ -55,6 +57,8 @@
     <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Grupy</string>
     <string name="search_filter_category_groups_count">Ilość</string>
+    <string name="copy_id_label">Copy Id</string>
+    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Count</string>
     <string name="search_filter_button_reset">Reset</string>
@@ -81,6 +85,16 @@
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
+    <string name="world_title_visits">Visits</string>
+    <string name="world_title_favorites">Favorites</string>
+    <string name="world_title_capacity">Capacity</string>
+    <string name="world_title_occupants">Occupants</string>
+    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_title_version">Version</string>
+    <string name="world_title_heat">Heat</string>
+    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_platform">Unity Packages</string>
+    <string name="world_title_labs_publication_date">LabsPublicationDate</string>
     <string name="world_toast_not_found">Świat jest prywatny, lub nie istnieje.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -129,6 +143,8 @@
     <string name="avatar_title_updated_at">Last Updated</string>
     <string name="avatar_title_content_labels">Content Labels</string>
     <string name="avatar_text_author">By %1$s</string>
+    <string name="avatar_title_version">Version</string>
+    <string name="avatar_title_platform">Platform</string>
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
     <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
     <!-- Feed -->
@@ -146,6 +162,7 @@
     <string name="feed_removed_text">has removed you as friend.</string>
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
+    <string name="feed_search_placeholder">Search for User or Location…</string>
     <!-- About -->
     <string name="about_page_title">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
@@ -288,8 +305,13 @@
         <item>Dark</item>
         <item>System</item>
     </string-array>
+    <string-array name="column_count_options">
+        <item>Adaptive</item>
+        <item>Fixed</item>
+    </string-array>
     <string name="theme_page_section_theme_title">Theme</string>
     <string name="theme_page_section_display_title">Display</string>
+    <string name="theme_page_section_column_title">Column Count</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">Advanced Settings</string>
     <string name="advanced_page_network_logging">Network Logging</string>

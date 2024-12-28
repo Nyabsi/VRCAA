@@ -1,5 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -70,6 +73,11 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
+import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.TimeZone
 
 class UserProfileScreen(
     private val userId: String
@@ -231,6 +239,23 @@ class UserProfileScreen(
                                             text = { Text(stringResource(R.string.favorite_label_add)) })
                                     }
                                 }
+                                DropdownMenuItem(
+                                    onClick = {
+                                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        val clip = ClipData.newPlainText(null, profile.id)
+                                        clipboard.setPrimaryClip(clip)
+
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.copied_toast).format(profile.
+                                            displayName),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                        isMenuExpanded = false
+                                    },
+                                    text = { Text(stringResource(R.string.copy_id_label)) }
+                                )
                             }
                         }
                     }
@@ -335,6 +360,37 @@ class UserProfileScreen(
                             ) {
                                 SubHeader(title = stringResource(R.string.profile_label_biography))
                                 Description(text = profile.bio)
+                            }
+                        }
+                    }
+
+                    item {
+                        Column(
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.Start
+                        ) {
+                            ElevatedCard(
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 6.dp
+                                ),
+                                modifier = Modifier
+                                    .padding(top = 16.dp)
+                                    .defaultMinSize(minHeight = 80.dp)
+                                    .widthIn(Dp.Unspecified, 520.dp),
+                            ) {
+                                if (profile.lastActivity.isNotEmpty()) {
+                                    val userTimeZone = TimeZone.getDefault().toZoneId()
+                                    val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                                        .withLocale(Locale.getDefault())
+
+                                    val lastActivity = ZonedDateTime.parse(profile.lastActivity).withZoneSameInstant(userTimeZone).format(formatter)
+
+                                    SubHeader(title = stringResource(R.string.profile_label_last_activity))
+                                    Description(text = lastActivity)
+                                }
+
+                                SubHeader(title = stringResource(R.string.profile_label_date_joined))
+                                Description(text = profile.dateJoined)
                             }
                         }
                     }
