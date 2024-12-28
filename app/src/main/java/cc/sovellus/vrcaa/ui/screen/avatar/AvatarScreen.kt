@@ -201,7 +201,8 @@ class AvatarScreen(
                             bottom = padding.calculateBottomPadding(),
                             start = 16.dp,
                             end = 16.dp
-                        ),
+                        )
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
