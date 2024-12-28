@@ -22,7 +22,10 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.TimeZone
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -54,8 +57,10 @@ fun FeedItem(
             Text(stringResource(resourceStringTitle))
         },
         trailingContent = {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-            Text(text = feedTimestamp.format(formatter))
+            val userTimeZone = TimeZone.getDefault().toZoneId()
+            val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                .withLocale(Locale.getDefault())
+            Text(text = feedTimestamp.atZone(userTimeZone).format(formatter))
         },
         modifier = Modifier.clickable(
             onClick = { onClick() }

@@ -1,5 +1,8 @@
 package cc.sovellus.vrcaa.ui.screen.avatar
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,6 +11,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
@@ -50,7 +55,10 @@ import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
+import java.util.TimeZone
 
 class AvatarScreen(
     private val avatarId: String
@@ -91,6 +99,7 @@ class AvatarScreen(
     private fun HandleResult(avatar: Avatar, model: AvatarScreenModel) {
 
         val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
 
         var isMenuExpanded by remember { mutableStateOf(false) }
         var isDialogShown by remember { mutableStateOf(false) }
@@ -144,6 +153,22 @@ class AvatarScreen(
                                             text = { Text(stringResource(R.string.favorite_label_add)) }
                                         )
                                     }
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                            val clip = ClipData.newPlainText(null, avatar.id)
+                                            clipboard.setPrimaryClip(clip)
+
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.copied_toast).format(avatar.name),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                            isMenuExpanded = false
+                                        },
+                                        text = { Text(stringResource(R.string.copy_id_label)) }
+                                    )
                                 }
                             }
                         }
@@ -178,7 +203,8 @@ class AvatarScreen(
                             bottom = padding.calculateBottomPadding(),
                             start = 16.dp,
                             end = 16.dp
-                        ),
+                        )
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -195,22 +221,33 @@ class AvatarScreen(
                         SubHeader(title = stringResource(R.string.avatar_title_description))
                         Description(text = avatar.description)
 
-                        val parser =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                        val formatter =
-                            SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
+                        val userTimeZone = TimeZone.getDefault().toZoneId()
+                        val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                            .withLocale(Locale.getDefault())
 
-                        val createdAtFormatted = parser.parse(avatar.createdAt)
-                            ?.let { formatter.format(it) }
-
-                        val updatedAtFormatted = parser.parse(avatar.updatedAt)
-                            ?.let { formatter.format(it) }
+                        val createdAtFormatted = ZonedDateTime.parse(avatar.createdAt).withZoneSameInstant(userTimeZone).format(formatter)
+                        val updatedAtFormatted = ZonedDateTime.parse(avatar.updatedAt).withZoneSameInstant(userTimeZone).format(formatter)
 
                         SubHeader(title = stringResource(R.string.avatar_title_created_at))
                         Description(text = createdAtFormatted)
 
                         SubHeader(title = stringResource(R.string.avatar_title_updated_at))
                         Description(text = updatedAtFormatted)
+
+                        SubHeader(title = stringResource(R.string.avatar_title_version))
+                        Description(text = avatar.version.toString())
+
+                        val platforms = avatar.unityPackages.joinToString(", ") {
+                            when (it.platform) {
+                                "standalonewindows" -> "PC"
+                                "android" -> "Android"
+                                "ios" -> "iOS"
+                                else -> it.platform
+                            }
+                        }
+
+                        SubHeader(title = stringResource(R.string.avatar_title_platform))
+                        Description(text = platforms)
 
                         SubHeader(title = stringResource(R.string.avatar_title_content_labels))
                         BadgesFromTags(

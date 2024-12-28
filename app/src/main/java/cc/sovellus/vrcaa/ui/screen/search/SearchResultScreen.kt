@@ -44,6 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -54,11 +55,14 @@ import cc.sovellus.vrcaa.api.search.SearchAvatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.extension.columnCountOption
+import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
+import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreenModel
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -227,6 +231,7 @@ class SearchResultScreen(
         worlds: ArrayList<World>
     ) {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         if (worlds.isEmpty()) {
             Column(
@@ -237,16 +242,20 @@ class SearchResultScreen(
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
-                start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
-            ), content = {
-                items(worlds.size) {
-                    val world = worlds[it]
-                    SearchRowItem(
-                        name = world.name, url = world.imageUrl, count = world.occupants
-                    ) { navigator.push(WorldInfoScreen(world.id)) }
-                }
-            })
+            LazyVerticalGrid(
+                columns = when (model.preferences.columnCountOption) {
+                    0 -> GridCells.Adaptive(200.dp)
+                    else -> GridCells.Fixed(model.preferences.fixedColumnSize)
+                },contentPadding = PaddingValues(
+                    start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
+                ), content = {
+                    items(worlds.size) {
+                        val world = worlds[it]
+                        SearchRowItem(
+                            name = world.name, url = world.imageUrl, count = world.occupants
+                        ) { navigator.push(WorldInfoScreen(world.id)) }
+                    }
+                })
         }
     }
 
@@ -255,6 +264,7 @@ class SearchResultScreen(
         users: MutableList<LimitedUser>
     ) {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         if (users.isEmpty()) {
             Column(
@@ -265,26 +275,31 @@ class SearchResultScreen(
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
-                start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
-            ), content = {
-                items(users.size) {
-                    val user = users[it]
-                    SearchRowItem(
-                        name = user.displayName,
-                        url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
-                        count = null
-                    ) {
-                        navigator.push(UserProfileScreen(user.id))
+            LazyVerticalGrid(
+                columns = when (model.preferences.columnCountOption) {
+                    0 -> GridCells.Adaptive(200.dp)
+                    else -> GridCells.Fixed(model.preferences.fixedColumnSize)
+                },contentPadding = PaddingValues(
+                    start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
+                ), content = {
+                    items(users.size) {
+                        val user = users[it]
+                        SearchRowItem(
+                            name = user.displayName,
+                            url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
+                            count = null
+                        ) {
+                            navigator.push(UserProfileScreen(user.id))
+                        }
                     }
-                }
-            })
+                })
         }
     }
 
     @Composable
     private fun ShowAvatars(avatars: ArrayList<SearchAvatar>) {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -300,18 +315,22 @@ class SearchResultScreen(
                     Text(text = stringResource(R.string.result_not_found))
                 }
             } else {
-                LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
-                    start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
-                ), content = {
-                    items(avatars.size) {
-                        val avatar = avatars[it]
-                        SearchRowItem(
-                            name = avatar.name, url = avatar.imageUrl ?: "", count = null
-                        ) {
-                            navigator.push(AvatarScreen(avatar.id))
+                LazyVerticalGrid(
+                    columns = when (model.preferences.columnCountOption) {
+                        0 -> GridCells.Adaptive(200.dp)
+                        else -> GridCells.Fixed(model.preferences.fixedColumnSize)
+                    },contentPadding = PaddingValues(
+                        start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
+                    ), content = {
+                        items(avatars.size) {
+                            val avatar = avatars[it]
+                            SearchRowItem(
+                                name = avatar.name, url = avatar.imageUrl ?: "", count = null
+                            ) {
+                                navigator.push(AvatarScreen(avatar.id))
+                            }
                         }
-                    }
-                })
+                    })
             }
         }
     }
@@ -319,6 +338,7 @@ class SearchResultScreen(
     @Composable
     private fun ShowGroups(groups: ArrayList<Group>) {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         if (groups.isEmpty()) {
             Column(
@@ -329,17 +349,21 @@ class SearchResultScreen(
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), contentPadding = PaddingValues(
-                start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
-            ), content = {
-                items(groups) {
-                    SearchRowItem(
-                        name = it.name, url = it.bannerUrl, count = null
-                    ) {
-                        navigator.push(GroupScreen(it.id))
+            LazyVerticalGrid(
+                columns = when (model.preferences.columnCountOption) {
+                    0 -> GridCells.Adaptive(200.dp)
+                    else -> GridCells.Fixed(model.preferences.fixedColumnSize)
+                },contentPadding = PaddingValues(
+                    start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
+                ), content = {
+                    items(groups) {
+                        SearchRowItem(
+                            name = it.name, url = it.bannerUrl, count = null
+                        ) {
+                            navigator.push(GroupScreen(it.id))
+                        }
                     }
-                }
-            })
+                })
         }
     }
 }
