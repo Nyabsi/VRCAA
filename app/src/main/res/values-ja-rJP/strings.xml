@@ -57,8 +57,8 @@
     <string name="search_filter_category_avatars_provider">提供者</string>
     <string name="search_filter_category_groups">グループ</string>
     <string name="search_filter_category_groups_count">表示数</string>
-    <string name="copy_id_label">Copy ID</string>
-    <string name="copied_toast">Successfully copied %1$s\'s ID.</string>
+    <string name="copy_id_label">Copy Id</string>
+    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">表示数</string>
     <string name="search_filter_button_reset">リセット</string>
@@ -306,14 +306,12 @@
         <item>システム</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Auto</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>Adaptive</item>
+        <item>Fixed</item>
     </string-array>
     <string name="theme_page_section_theme_title">テーマ</string>
     <string name="theme_page_section_display_title">画面</string>
-    <string name="theme_page_section_column_title">Column</string>
+    <string name="theme_page_section_column_title">Column Count</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">詳細設定</string>
     <string name="advanced_page_network_logging">ネットワークログ</string>

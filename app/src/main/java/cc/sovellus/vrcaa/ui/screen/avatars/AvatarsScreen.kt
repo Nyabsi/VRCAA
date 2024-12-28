@@ -31,6 +31,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.extension.columnCountOption
+import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.components.layout.SearchRowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen

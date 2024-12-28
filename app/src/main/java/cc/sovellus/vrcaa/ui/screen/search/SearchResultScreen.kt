@@ -56,6 +56,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.extension.columnCountOption
+import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen

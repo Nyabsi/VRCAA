@@ -18,6 +18,7 @@ import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -37,8 +38,10 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.currentThemeOption
+import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.manager.ThemeManager
+import kotlin.math.roundToInt
 
 class ThemeScreen : Screen {
 

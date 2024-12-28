@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.ui.screen.theme
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
