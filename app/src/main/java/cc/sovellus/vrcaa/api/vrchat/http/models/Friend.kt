@@ -57,5 +57,7 @@ data class Friend(
     @SerializedName("location")
     var location: String = "",
     @SerializedName("platform")
-    var platform: String = ""
+    var platform: String = "",
+    @SerializedName("worldId")
+    var worldId: String = ""
 )

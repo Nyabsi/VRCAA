@@ -18,6 +18,7 @@ import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -35,9 +36,12 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.currentThemeOption
+import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.manager.ThemeManager
+import kotlin.math.roundToInt
 
 class ThemeScreen : Screen {
 
@@ -115,6 +119,67 @@ class ThemeScreen : Screen {
                                     Text(text = label, softWrap = true, maxLines = 1)
                                 }
                             }
+                        }
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.padding(4.dp))
+
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = stringResource(R.string.theme_page_section_column_title),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        )
+                    }
+
+                    item {
+                        val options = stringArrayResource(R.array.column_count_options)
+
+                        MultiChoiceSegmentedButtonRow(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp)
+                        ) {
+                            options.forEachIndexed { index, label ->
+                                SegmentedButton(
+                                    shape = SegmentedButtonDefaults.itemShape(
+                                        index = index,
+                                        count = options.size
+                                    ),
+                                    onCheckedChange = {
+                                        model.currentColumnIndex.intValue = index
+                                        model.preferences.columnCountOption = index
+                                    },
+                                    checked = index == model.currentColumnIndex.intValue
+                                ) {
+                                    Text(text = label, softWrap = true, maxLines = 1)
+                                }
+                            }
+                        }
+
+                        if (model.currentColumnIndex.intValue == 1) {
+                            Slider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 16.dp),
+                                value = model.currentColumnAmount.floatValue,
+                                onValueChange = { size ->
+                                    model.currentColumnAmount.floatValue = size.roundToInt().toFloat()
+                                    model.preferences.fixedColumnSize = model.currentColumnAmount.floatValue.roundToInt()
+                                },
+                                valueRange = 1f..6f
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 16.dp),
+                                text = "Fixed Column Size: ${model.currentColumnAmount.floatValue.roundToInt()}"
+                            )
                         }
                     }
 

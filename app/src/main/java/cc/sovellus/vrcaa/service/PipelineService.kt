@@ -14,6 +14,7 @@ import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
+import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -37,6 +38,7 @@ import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -62,6 +64,29 @@ class PipelineService : Service(), CoroutineScope {
     private var refreshTask: Runnable = Runnable {
         launch {
             CacheManager.buildCache()
+        }
+    }
+
+    private var fetchTask: Runnable = Runnable {
+        launch {
+            for (friend in FriendManager.getFriends()) {
+                val worldId = if (friend.platform == "" || friend.platform == "web") {
+                    "offline"
+                }
+                else {
+                    if (StatusHelper.getStatusFromString(friend.status) == StatusHelper.Status.AskMe)
+                        "private"
+                    else {
+                        "wrld_"
+                    }
+                }
+
+                if (!friend.worldId.contains(worldId)) {
+                    api.friends.fetchFriendById(friend.id)?.let {
+                        FriendManager.updateFriend(it)
+                    }
+                }
+            }
         }
     }
 
@@ -108,6 +133,7 @@ class PipelineService : Service(), CoroutineScope {
                     FriendManager.updateFriend(update.user)
                     FriendManager.updatePlatform(update.userId, update.platform)
                     FriendManager.updateLocation(update.userId, update.location)
+                    FriendManager.updateWorldId(update.userId, update.worldId)
                 }
 
                 is FriendOffline -> {
@@ -141,6 +167,7 @@ class PipelineService : Service(), CoroutineScope {
                         FriendManager.updateLocation(friend.id, "offline")
                         FriendManager.updateStatus(friend.id, "offline")
                         FriendManager.updatePlatform(friend.id, update.platform)
+                        FriendManager.updateWorldId(update.userId, "offline")
                     }
                 }
 
@@ -187,6 +214,7 @@ class PipelineService : Service(), CoroutineScope {
                     FriendManager.updateFriend(update.user)
                     FriendManager.updatePlatform(update.userId, update.platform)
                     FriendManager.updateLocation(update.userId, update.location)
+                    FriendManager.updateWorldId(update.userId, update.worldId)
                 }
 
                 is FriendUpdate -> {
@@ -382,7 +410,8 @@ class PipelineService : Service(), CoroutineScope {
             }
         }
 
-        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
+        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, REFRESH_INTERVAL, TimeUnit.MILLISECONDS)
+        scheduler.scheduleWithFixedDelay(fetchTask, RE_FETCH_INTERVAL, RE_FETCH_INTERVAL, TimeUnit.MILLISECONDS)
 
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
@@ -428,6 +457,7 @@ class PipelineService : Service(), CoroutineScope {
     companion object {
         private const val NOTIFICATION_ID: Int = 42069
         private const val INITIAL_INTERVAL: Long = 50
-        private const val RESTART_INTERVAL: Long = 1800000
+        private const val REFRESH_INTERVAL: Long = 1800000
+        private const val RE_FETCH_INTERVAL: Long = 300000
     }
 }
