@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CardDefaults
@@ -290,7 +293,9 @@ class WorldInfoScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(bottom = 16.dp).widthIn(Dp.Unspecified, 520.dp)
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .widthIn(Dp.Unspecified, 520.dp)
                     ) {
                         SubHeader(title = stringResource(R.string.world_label_description))
                         Description(text = world.description)
@@ -300,7 +305,9 @@ class WorldInfoScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(bottom = 16.dp).widthIn(Dp.Unspecified, 520.dp)
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .widthIn(Dp.Unspecified, 520.dp)
                     ) {
                         val userTimeZone = TimeZone.getDefault().toZoneId()
                         val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
@@ -310,11 +317,11 @@ class WorldInfoScreen(
                         val updatedAtFormatted = ZonedDateTime.parse(world.updatedAt).withZoneSameInstant(userTimeZone).format(formatter)
 
                         SubHeader(title = stringResource(R.string.world_title_occupants))
-                        Description(text = NumberFormat.getInstance().format(world.occupants))
+                        Description(text = "Public (${NumberFormat.getInstance().format(world.publicOccupants)}) Private (${NumberFormat.getInstance().format(world.privateOccupants)}) Total (${NumberFormat.getInstance().format(world.occupants)})")
 
                         val occupancyRate = world.visits.takeIf { it != 0 }?.let {
                             String.format(Locale.ENGLISH, "%.1f", world.favorites.toFloat() / it.toFloat() * 100)
-                        } ?: "0"
+                        } ?: "0.0%"
 
                         SubHeader(title = stringResource(R.string.world_title_favorites))
                         Description(text = "${NumberFormat.getInstance().format(world.favorites)} (${occupancyRate}%)")
@@ -337,14 +344,25 @@ class WorldInfoScreen(
                         SubHeader(title = stringResource(R.string.world_title_publication_date))
                         Description(text = updatedAtFormatted)
 
-                        SubHeader(title = stringResource(R.string.world_title_version))
-                        Description(text = world.version.toString())
+                        SubHeader(title = "${stringResource(R.string.world_title_heat)} (${world.heat})")
 
-                        SubHeader(title = stringResource(R.string.world_title_heat))
-                        Description(text = world.heat.toString())
+                        Row(
+                            modifier = Modifier.padding(start = 12.dp)
+                        ) {
+                            for (i in 0..world.heat) {
+                                Icon(Icons.Filled.LocalFireDepartment, contentDescription = null, modifier = Modifier.size(28.dp).padding(4.dp))
+                            }
+                        }
 
-                        SubHeader(title = stringResource(R.string.world_title_popularity))
-                        Description(text = world.popularity.toString())
+                        SubHeader(title = "${stringResource(R.string.world_title_popularity)} (${world.popularity})")
+
+                        Row(
+                            modifier = Modifier.padding(start = 12.dp)
+                        ) {
+                            for (i in 0..world.popularity) {
+                                Icon(Icons.Filled.Favorite, contentDescription = null, modifier = Modifier.size(28.dp).padding(4.dp))
+                            }
+                        }
 
                         SubHeader(title = stringResource(R.string.world_label_tags))
                         BadgesFromTags(
