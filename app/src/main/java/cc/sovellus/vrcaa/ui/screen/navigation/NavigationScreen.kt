@@ -824,7 +824,7 @@ class NavigationScreen : Screen {
                     }
                 }
             }, bottomBar = {
-                if (!model.searchModeActivated.value || !model.showFilteredFeed.value) {
+                if (!model.searchModeActivated.value && !model.showFilteredFeed.value) {
                     NavigationBar {
                         tabs.forEach { tab ->
                             NavigationBarItem(selected = tabNavigator.current.key == tab.key,
