@@ -6,6 +6,8 @@ VRChat Android Assistant offers a convenient solution for managing your VRChat e
 
 [Click here to download latest Nightly build for Android](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-signed.apk)
 
+[Click here to download latest Nightly build for Pico](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-pico-signed.apk)
+
 [Click here to download latest Nightly build for Meta Quest](https://github.com/Nyabsi/VRCAA/releases/download/nightly/VRCAA-quest-signed.apk)
 
 <br/>
