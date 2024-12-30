@@ -322,62 +322,29 @@ class UserProfileScreen(
                         }
                     }
 
-                    if (profile.note.isNotEmpty()) {
-                        item {
-                            Column(
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                horizontalAlignment = Alignment.Start
+
+                    item {
+                        Column(
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.Start
+                        ) {
+                            ElevatedCard(
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 6.dp
+                                ),
+                                modifier = Modifier
+                                    .padding(top = 16.dp)
+                                    .defaultMinSize(minHeight = 80.dp)
+                                    .widthIn(Dp.Unspecified, 520.dp),
                             ) {
-                                ElevatedCard(
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation = 6.dp
-                                    ),
-                                    modifier = Modifier
-                                        .padding(top = 16.dp)
-                                        .defaultMinSize(minHeight = 80.dp)
-                                        .widthIn(Dp.Unspecified, 520.dp),
-                                ) {
+                                if (profile.note.isNotEmpty()) {
                                     SubHeader(title = stringResource(R.string.profile_label_note))
                                     Description(text = profile.note)
                                 }
-                            }
-                        }
-                    }
 
-                    item {
-                        Column(
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            ElevatedCard(
-                                elevation = CardDefaults.cardElevation(
-                                    defaultElevation = 6.dp
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 16.dp)
-                                    .defaultMinSize(minHeight = 80.dp)
-                                    .widthIn(Dp.Unspecified, 520.dp),
-                            ) {
                                 SubHeader(title = stringResource(R.string.profile_label_biography))
                                 Description(text = profile.bio)
-                            }
-                        }
-                    }
 
-                    item {
-                        Column(
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            ElevatedCard(
-                                elevation = CardDefaults.cardElevation(
-                                    defaultElevation = 6.dp
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 16.dp)
-                                    .defaultMinSize(minHeight = 80.dp)
-                                    .widthIn(Dp.Unspecified, 520.dp),
-                            ) {
                                 if (profile.lastActivity.isNotEmpty()) {
                                     val userTimeZone = TimeZone.getDefault().toZoneId()
                                     val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
