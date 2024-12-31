@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -80,7 +81,8 @@ import java.util.Locale
 import java.util.TimeZone
 
 class UserProfileScreen(
-    private val userId: String
+    private val userId: String,
+    private val peek: Boolean = false
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -120,13 +122,25 @@ class UserProfileScreen(
                 context, stringResource(R.string.profile_user_not_found_message), Toast.LENGTH_SHORT
             ).show()
 
-            LaunchedEffect(userId) {
+            if (peek) {
+                if (context is Activity) {
+                    context.finish()
+                }
+            } else {
                 navigator.pop()
             }
         } else {
             Scaffold(topBar = {
                 TopAppBar(navigationIcon = {
-                    IconButton(onClick = { navigator.pop() }) {
+                    IconButton(onClick = {
+                        if (peek) {
+                            if (context is Activity) {
+                                context.finish()
+                            }
+                        } else {
+                            navigator.pop()
+                        }
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null
