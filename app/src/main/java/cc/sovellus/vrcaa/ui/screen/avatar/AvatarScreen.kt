@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.avatar
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -61,7 +62,8 @@ import java.util.Locale
 import java.util.TimeZone
 
 class AvatarScreen(
-    private val avatarId: String
+    private val avatarId: String,
+    private val peek: Boolean = false
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -91,7 +93,13 @@ class AvatarScreen(
             Toast.LENGTH_SHORT
         ).show()
 
-        navigator.pop()
+        if (peek) {
+            if (context is Activity) {
+                context.finish()
+            }
+        } else {
+            navigator.pop()
+        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -108,7 +116,15 @@ class AvatarScreen(
             topBar = {
                 TopAppBar(
                     navigationIcon = {
-                        IconButton(onClick = { navigator.pop() }) {
+                        IconButton(onClick = {
+                            if (peek) {
+                                if (context is Activity) {
+                                    context.finish()
+                                }
+                            } else {
+                                navigator.pop()
+                            }
+                        }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = null
