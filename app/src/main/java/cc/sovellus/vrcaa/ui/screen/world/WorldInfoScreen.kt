@@ -348,9 +348,6 @@ class WorldInfoScreen(
                         SubHeader(title = stringResource(R.string.world_title_updated_at))
                         Description(text = updatedAtFormatted)
 
-                        SubHeader(title = stringResource(R.string.world_title_labs_publication_date))
-                        Description(text = updatedAtFormatted)
-
                         SubHeader(title = stringResource(R.string.world_title_publication_date))
                         Description(text = updatedAtFormatted)
 
