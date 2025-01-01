@@ -2,6 +2,7 @@ package cc.sovellus.vrcaa.api.vrchat.http
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.Toast
 import cc.sovellus.vrcaa.App
@@ -54,13 +55,21 @@ import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import okhttp3.Headers
+import kotlin.coroutines.CoroutineContext
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class HttpClient : BaseClient() {
+class HttpClient : BaseClient(), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
@@ -97,7 +106,21 @@ class HttpClient : BaseClient() {
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-                listener?.onSessionInvalidate()
+
+                launch {
+                    val username = preferences.userCredentials.first ?: ""
+                    val password = preferences.userCredentials.second ?: ""
+
+                    val lr = auth.login(username, password)
+                    if (lr.success) {
+                        val intent = Intent(context, PipelineService::class.java)
+                        context.stopService(intent)
+                        context.startService(intent)
+                        CacheManager.buildCache()
+                    } else {
+                        listener?.onSessionInvalidate()
+                    }
+                }
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
