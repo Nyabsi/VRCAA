@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.screen.world
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -78,7 +79,8 @@ import java.util.Locale
 import java.util.TimeZone
 
 class WorldInfoScreen(
-    private val worldId: String
+    private val worldId: String,
+    private val peek: Boolean = false
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -125,7 +127,15 @@ class WorldInfoScreen(
                 topBar = {
                     TopAppBar(
                         navigationIcon = {
-                            IconButton(onClick = { navigator.pop() }) {
+                            IconButton(onClick = {
+                                if (peek) {
+                                    if (context is Activity) {
+                                        context.finish()
+                                    }
+                                } else {
+                                    navigator.pop()
+                                }
+                            }) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                     contentDescription = "Go Back"
@@ -336,9 +346,6 @@ class WorldInfoScreen(
                         Description(text = createdAtFormatted)
 
                         SubHeader(title = stringResource(R.string.world_title_updated_at))
-                        Description(text = updatedAtFormatted)
-
-                        SubHeader(title = stringResource(R.string.world_title_labs_publication_date))
                         Description(text = updatedAtFormatted)
 
                         SubHeader(title = stringResource(R.string.world_title_publication_date))
