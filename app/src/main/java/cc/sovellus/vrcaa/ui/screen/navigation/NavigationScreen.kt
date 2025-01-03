@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +40,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
@@ -487,137 +489,123 @@ class NavigationScreen : Screen {
                             item {
                                 ListItem(
                                     headlineContent = {
-                                        Text(text = stringResource(R.string.profile_edit_dialog_title_status), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_status), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
+                                        ComboInput(
+                                            options = listOf("join me", "active", "ask me", "busy"),
+                                            readableOptions = mapOf("join me" to "Join Me", "active" to "Active", "ask me" to "Ask Me", "busy" to "Busy"),
+                                            selection = model.status
+                                        )
                                     }
                                 )
-
-                                Column(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    ComboInput(
-                                        options = listOf("join me", "active", "ask me", "busy"),
-                                        readableOptions = mapOf("join me" to "Join Me", "active" to "Active", "ask me" to "Ask Me", "busy" to "Busy"),
-                                        selection = model.status
-                                    )
-                                }
                             }
                             item {
                                 ListItem(
                                     headlineContent = {
-                                        Text(text = stringResource(R.string.profile_edit_dialog_title_status_description), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_status_description), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
+                                        OutlinedTextField(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            value = model.description.value,
+                                            onValueChange = {
+                                                model.description.value = it
+                                            },
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                                        )
                                     }
                                 )
-
-                                Column(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    OutlinedTextField(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(start = 16.dp, end = 16.dp),
-                                        value = model.description.value,
-                                        onValueChange = {
-                                            model.description.value = it
-                                        },
-                                        singleLine = true,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
-                                    )
-                                }
                             }
 
                             item {
                                 ListItem(
                                     headlineContent = {
-                                        Text(text = stringResource(R.string.profile_edit_dialog_title_bio), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_bio), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
+                                        OutlinedTextField(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            value = model.bio.value,
+                                            onValueChange = {
+                                                model.bio.value = it
+                                            },
+                                            minLines = 8,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                        )
                                     }
                                 )
-
-                                Column(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    OutlinedTextField(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(start = 16.dp, end = 16.dp),
-                                        value = model.bio.value,
-                                        onValueChange = {
-                                            model.bio.value = it
-                                        },
-                                        minLines = 8,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
-                                    )
-                                }
                             }
 
                             if (model.ageVerified.value) {
                                 item {
                                     ListItem(
                                         headlineContent = {
-                                            Text(text = stringResource(R.string.profile_edit_dialog_title_age_verification_visibility), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                            Text(text = stringResource(R.string.profile_edit_dialog_title_age_verification_visibility), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                        },
+                                        supportingContent = {
+                                            ComboInput(
+                                                options = listOf("hidden", "verified", "18+"),
+                                                readableOptions = mapOf("hidden" to "Hidden", "verified" to "Verified", "18+" to "18+ Verified"),
+                                                selection = model.verifiedStatus
+                                            )
                                         }
                                     )
-
-                                    Column(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        ComboInput(
-                                            options = listOf("hidden", "verified", "18+"),
-                                            readableOptions = mapOf("hidden" to "Hidden", "verified" to "Verified", "18+" to "18+ Verified"),
-                                            selection = model.verifiedStatus
-                                        )
-                                    }
                                 }
                             }
 
                             item {
                                 ListItem(
                                     headlineContent = {
-                                        Text(text = stringResource(R.string.profile_edit_dialog_title_bio_links), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_bio_links), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
+                                        OutlinedTextField(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            value = model.bioLinks[0],
+                                            onValueChange = {
+                                                model.bioLinks[0] = it
+                                            },
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                        )
                                     }
                                 )
 
-                                OutlinedTextField(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 16.dp, end = 16.dp),
-                                    value = model.bioLinks[0],
-                                    onValueChange = {
-                                        model.bioLinks[0] = it
-                                    },
-                                    singleLine = true,
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                ListItem(
+                                    headlineContent = { },
+                                    supportingContent = {
+                                        OutlinedTextField(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            value = model.bioLinks[1],
+                                            onValueChange = {
+                                                model.bioLinks[1] = it
+                                            },
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                        )
+                                    }
                                 )
 
-                                OutlinedTextField(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                                    value = model.bioLinks[1],
-                                    onValueChange = {
-                                        model.bioLinks[1] = it
-                                    },
-                                    singleLine = true,
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
-                                )
-
-                                OutlinedTextField(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                                    value = model.bioLinks[2],
-                                    onValueChange = {
-                                        model.bioLinks[2] = it
-                                    },
-                                    singleLine = true,
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                ListItem(
+                                    headlineContent = { },
+                                    supportingContent = {
+                                        OutlinedTextField(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            value = model.bioLinks[2],
+                                            onValueChange = {
+                                                model.bioLinks[2] = it
+                                            },
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii)
+                                        )
+                                    }
                                 )
                             }
                         }
