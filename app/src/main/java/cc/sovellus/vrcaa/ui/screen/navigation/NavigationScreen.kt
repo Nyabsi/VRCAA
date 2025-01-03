@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -649,33 +650,18 @@ class NavigationScreen : Screen {
                                             imageVector = Icons.Outlined.Cabin,
                                             contentDescription = null
                                         )
-                                    })
-                                HorizontalDivider(
-                                    color = Color.Gray, thickness = 0.5.dp
+                                    }
                                 )
+
+                                Spacer(modifier = Modifier.padding(2.dp))
                             }
+
                             item {
-                                ListItem(headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_featured)) },
-                                    trailingContent = {
-                                        Switch(
-                                            checked = model.featuredWorlds.value,
-                                            onCheckedChange = { state ->
-                                                run {
-                                                    model.featuredWorlds.value = state
-                                                }
-                                            },
-                                            colors = SwitchDefaults.colors(
-                                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                                                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-                                            )
-                                        )
-                                    })
-                            }
-                            item {
-                                ListItem(headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_sort_by)) },
-                                    trailingContent = {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.search_filter_category_worlds_sort_by), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
                                         val options = listOf(
                                             "popularity",
                                             "heat",
@@ -694,7 +680,8 @@ class NavigationScreen : Screen {
                                         ComboInput(
                                             options = options, selection = model.sortWorlds
                                         )
-                                    })
+                                    }
+                                )
                             }
                             item {
                                 var worldCount by remember { mutableStateOf(model.worldsAmount.intValue.toString()) }
@@ -710,7 +697,8 @@ class NavigationScreen : Screen {
                                             singleLine = true,
                                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                                         )
-                                    })
+                                    }
+                                )
                             }
                             item {
                                 ListItem(headlineContent = { Text(stringResource(R.string.search_filter_category_users)) },
@@ -719,10 +707,10 @@ class NavigationScreen : Screen {
                                             imageVector = Icons.Outlined.People,
                                             contentDescription = null
                                         )
-                                    })
-                                HorizontalDivider(
-                                    color = Color.Gray, thickness = 0.5.dp
+                                    }
                                 )
+
+                                Spacer(modifier = Modifier.padding(2.dp))
                             }
                             item {
                                 ListItem(headlineContent = { Text(stringResource(R.string.search_filter_category_users_count)) },
@@ -736,7 +724,8 @@ class NavigationScreen : Screen {
                                             singleLine = true,
                                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                                         )
-                                    })
+                                    }
+                                )
                             }
                             item {
                                 ListItem(headlineContent = { Text(stringResource(R.string.search_filter_category_avatars)) },
@@ -745,14 +734,17 @@ class NavigationScreen : Screen {
                                             imageVector = Icons.Outlined.Person,
                                             contentDescription = null
                                         )
-                                    })
-                                HorizontalDivider(
-                                    color = Color.Gray, thickness = 0.5.dp
+                                    }
                                 )
+
+                                Spacer(modifier = Modifier.padding(2.dp))
                             }
                             item {
-                                ListItem(headlineContent = { Text(stringResource(R.string.search_filter_category_avatars_provider)) },
-                                    trailingContent = {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.search_filter_category_avatars_provider), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
                                         val options = listOf("avtrdb", "justhparty")
                                         val optionsReadable = mapOf(
                                             "avtrdb" to "avtrDB", "justhparty" to "Just-H Party"
@@ -762,7 +754,8 @@ class NavigationScreen : Screen {
                                             selection = model.avatarProvider,
                                             readableOptions = optionsReadable
                                         )
-                                    })
+                                    }
+                                )
                             }
                             item {
                                 var avatarCount by remember { mutableStateOf(model.avatarsAmount.intValue.toString()) }
@@ -787,10 +780,10 @@ class NavigationScreen : Screen {
                                             imageVector = Icons.Outlined.Groups,
                                             contentDescription = null
                                         )
-                                    })
-                                HorizontalDivider(
-                                    color = Color.Gray, thickness = 0.5.dp
+                                    }
                                 )
+
+                                Spacer(modifier = Modifier.padding(2.dp))
                             }
                             item {
                                 var groupCount by remember { mutableStateOf(model.groupsAmount.intValue.toString()) }
@@ -806,7 +799,8 @@ class NavigationScreen : Screen {
                                             singleLine = true,
                                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                                         )
-                                    })
+                                    }
+                                )
                             }
                         }
                     }
