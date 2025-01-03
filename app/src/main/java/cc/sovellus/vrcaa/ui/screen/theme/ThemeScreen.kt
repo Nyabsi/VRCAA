@@ -129,7 +129,7 @@ class ThemeScreen : Screen {
                         ListItem(
                             headlineContent = {
                                 Text(
-                                    text = stringResource(R.string.theme_page_section_column_title),
+                                    text = stringResource(R.string.theme_page_section_display_title),
                                     color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -140,27 +140,31 @@ class ThemeScreen : Screen {
                     item {
                         val options = stringArrayResource(R.array.column_count_options)
 
-                        MultiChoiceSegmentedButtonRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp)
-                        ) {
-                            options.forEachIndexed { index, label ->
-                                SegmentedButton(
-                                    shape = SegmentedButtonDefaults.itemShape(
-                                        index = index,
-                                        count = options.size
-                                    ),
-                                    onCheckedChange = {
-                                        model.currentColumnIndex.intValue = index
-                                        model.preferences.columnCountOption = index
-                                    },
-                                    checked = index == model.currentColumnIndex.intValue
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.theme_page_section_column_title)) },
+                            trailingContent = {
+                                MultiChoiceSegmentedButtonRow(
+                                    modifier = Modifier
+                                        .padding(start = 16.dp, end = 16.dp)
                                 ) {
-                                    Text(text = label, softWrap = true, maxLines = 1)
+                                    options.forEachIndexed { index, label ->
+                                        SegmentedButton(
+                                            shape = SegmentedButtonDefaults.itemShape(
+                                                index = index,
+                                                count = options.size
+                                            ),
+                                            onCheckedChange = {
+                                                model.currentColumnIndex.intValue = index
+                                                model.preferences.columnCountOption = index
+                                            },
+                                            checked = index == model.currentColumnIndex.intValue
+                                        ) {
+                                            Text(text = label, softWrap = true, maxLines = 1)
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        )
 
                         if (model.currentColumnIndex.intValue == 1) {
                             Slider(
@@ -181,21 +185,6 @@ class ThemeScreen : Screen {
                                 text = "Fixed Column Size: ${model.currentColumnAmount.floatValue.roundToInt()}"
                             )
                         }
-                    }
-
-                    item {
-
-                        Spacer(modifier = Modifier.padding(4.dp))
-
-                        ListItem(
-                            headlineContent = {
-                                Text(
-                                    text = stringResource(R.string.theme_page_section_display_title),
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            }
-                        )
                     }
 
                     item {

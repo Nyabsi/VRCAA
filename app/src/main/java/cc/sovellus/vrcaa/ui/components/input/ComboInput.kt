@@ -32,7 +32,7 @@ fun ComboInput(
     ) {
         TextField(
             // The `menuAnchor` modifier must be passed to the text field for correctness.
-            modifier = Modifier.menuAnchor().fillMaxWidth().padding(start = 16.dp, end = 16.dp),
+            modifier = Modifier.menuAnchor().fillMaxWidth(),
             readOnly = true,
             value = readableOptions?.get(selection.value) ?: selection.value,
             onValueChange = {},
