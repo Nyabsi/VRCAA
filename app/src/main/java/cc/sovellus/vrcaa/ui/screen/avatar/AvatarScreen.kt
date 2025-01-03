@@ -253,18 +253,6 @@ class AvatarScreen(
                         SubHeader(title = stringResource(R.string.avatar_title_version))
                         Description(text = avatar.version.toString())
 
-                        val platforms = avatar.unityPackages.joinToString(", ") {
-                            when (it.platform) {
-                                "standalonewindows" -> "PC"
-                                "android" -> "Android"
-                                "ios" -> "iOS"
-                                else -> it.platform
-                            }
-                        }
-
-                        SubHeader(title = stringResource(R.string.avatar_title_platform))
-                        Description(text = platforms)
-
                         SubHeader(title = stringResource(R.string.avatar_title_content_labels))
                         BadgesFromTags(
                             tags = avatar.tags,
