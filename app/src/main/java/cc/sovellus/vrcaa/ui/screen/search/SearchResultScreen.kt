@@ -6,15 +6,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
@@ -22,6 +27,7 @@ import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,10 +57,6 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.search.SearchAvatar
-import cc.sovellus.vrcaa.api.vrchat.http.models.Group
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
-import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
@@ -81,11 +83,9 @@ class SearchResultScreen(
 
         val state by model.state.collectAsState()
 
-        when (val result = state) {
+        when (state) {
             is SearchState.Loading -> LoadingIndicatorScreen().Content()
-            is SearchState.Result -> MultiChoiceHandler(
-                result.worlds, result.users, result.avatars, result.groups, model
-            )
+            is SearchState.Result -> MultiChoiceHandler(model)
 
             else -> {}
         }
@@ -94,10 +94,6 @@ class SearchResultScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(
-        worlds: ArrayList<World>,
-        users: MutableList<LimitedUser>,
-        avatars: ArrayList<SearchAvatar>,
-        groups: ArrayList<Group>,
         model: SearchResultScreenModel
     ) {
 
@@ -107,17 +103,21 @@ class SearchResultScreen(
             model.currentIndex.intValue = 0
         })
 
-        Scaffold(topBar = {
-            TopAppBar(navigationIcon = {
-                IconButton(onClick = { navigator.pop() }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null
-                    )
-                }
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    title = { Text(text = "${stringResource(R.string.search_text_result)} $query") }
+                )
             },
-                title = { Text(text = "${stringResource(R.string.search_text_result)} $query") })
-        }, content = {
+            content = {
 
             val options = stringArrayResource(R.array.search_selection_options)
             val icons = listOf(
@@ -162,10 +162,10 @@ class SearchResultScreen(
                 }
 
                 when (model.currentIndex.intValue) {
-                    0 -> ShowWorlds(worlds)
-                    1 -> ShowUsers(users)
-                    2 -> ShowAvatars(avatars)
-                    3 -> ShowGroups(groups)
+                    0 -> ShowWorlds(model)
+                    1 -> ShowUsers(model)
+                    2 -> ShowAvatars(model)
+                    3 -> ShowGroups(model)
                 }
             }
         })
@@ -228,12 +228,13 @@ class SearchResultScreen(
 
     @Composable
     private fun ShowWorlds(
-        worlds: ArrayList<World>
+        model: SearchResultScreenModel
     ) {
-        val navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
+        val state = model.worlds.collectAsState()
 
-        if (worlds.isEmpty()) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        if (state.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -249,24 +250,38 @@ class SearchResultScreen(
                 },contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
                 ), content = {
-                    items(worlds.size) {
-                        val world = worlds[it]
+                    items(state.value) { world ->
                         SearchRowItem(
                             name = world.name, url = world.imageUrl, count = world.occupants
                         ) { navigator.push(WorldInfoScreen(world.id)) }
                     }
-                })
+
+                    if (!model.worldLimitReached.value) {
+                        item(span = { GridItemSpan(if (model.preferences.columnCountOption == 0) { 2 } else { model.preferences.fixedColumnSize })}) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Button(onClick = { model.fetchMoreWorlds() }) {
+                                    Text(text = "More")
+                                }
+                            }
+                        }
+                    }
+                }
+            )
         }
     }
 
     @Composable
     private fun ShowUsers(
-        users: MutableList<LimitedUser>
+        model: SearchResultScreenModel
     ) {
+        val state = model.users.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
-        if (users.isEmpty()) {
+        if (state.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -282,8 +297,7 @@ class SearchResultScreen(
                 },contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
                 ), content = {
-                    items(users.size) {
-                        val user = users[it]
+                    items(state.value) { user ->
                         SearchRowItem(
                             name = user.displayName,
                             url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
@@ -292,21 +306,38 @@ class SearchResultScreen(
                             navigator.push(UserProfileScreen(user.id))
                         }
                     }
-                })
+
+                    if (!model.userLimitReached.value) {
+                        item(span = { GridItemSpan(if (model.preferences.columnCountOption == 0) { 2 } else { model.preferences.fixedColumnSize })}) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Button(onClick = { model.fetchMoreUsers() }) {
+                                    Text(text = "More")
+                                }
+                            }
+                        }
+                    }
+                }
+            )
         }
     }
 
     @Composable
-    private fun ShowAvatars(avatars: ArrayList<SearchAvatar>) {
+    private fun ShowAvatars(
+        model: SearchResultScreenModel
+    ) {
+        val state = model.avatars.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (avatars.isEmpty()) {
+            if (state.value.isEmpty()) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
@@ -322,25 +353,41 @@ class SearchResultScreen(
                     },contentPadding = PaddingValues(
                         start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
                     ), content = {
-                        items(avatars.size) {
-                            val avatar = avatars[it]
+                        items(state.value) { avatar ->
                             SearchRowItem(
                                 name = avatar.name, url = avatar.imageUrl ?: "", count = null
                             ) {
                                 navigator.push(AvatarScreen(avatar.id))
                             }
                         }
-                    })
+
+                        if (!model.avatarLimitReached.value) {
+                            item(span = { GridItemSpan(if (model.preferences.columnCountOption == 0) { 2 } else { model.preferences.fixedColumnSize })}) {
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Button(onClick = { model.fetchMoreAvatars() }) {
+                                        Text(text = "More")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )
             }
         }
     }
 
     @Composable
-    private fun ShowGroups(groups: ArrayList<Group>) {
+    private fun ShowGroups(
+        model: SearchResultScreenModel
+    ) {
+        val state = model.groups.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { ThemeScreenModel() }
 
-        if (groups.isEmpty()) {
+        if (state.value.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -356,14 +403,29 @@ class SearchResultScreen(
                 },contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
                 ), content = {
-                    items(groups) {
+                    items(state.value) { group ->
                         SearchRowItem(
-                            name = it.name, url = it.bannerUrl, count = null
+                            name = group.name, url = group.bannerUrl, count = null
                         ) {
-                            navigator.push(GroupScreen(it.id))
+                            navigator.push(GroupScreen(group.id))
                         }
                     }
-                })
+
+                    if (!model.groupLimitReached.value) {
+                        item(span = { GridItemSpan(if (model.preferences.columnCountOption == 0) { 2 } else { model.preferences.fixedColumnSize })}) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Button(onClick = { model.fetchMoreGroups() }) {
+                                    Text(text = "More")
+                                }
+                            }
+                        }
+                    }
+                }
+            )
         }
     }
 }
