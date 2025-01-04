@@ -101,7 +101,11 @@ class SearchResultScreenModel(
 
             when (preferences.avatarProvider) {
                 "avtrdb" -> {
-                    val result = avtrDbProvider.search(query, preferences.avatarsAmount)
+                    val result = avtrDbProvider.search(
+                        query = query,
+                        n = preferences.avatarsAmount,
+                        offset = avatarOffset
+                    )
                     avatarLimitReached.value = result.first
                     avatarStateFlow.value = result.second.toMutableStateList()
                 }
@@ -161,11 +165,15 @@ class SearchResultScreenModel(
     }
 
     fun fetchMoreAvatars() {
-        avatarOffset += 50
+        avatarOffset += 1
 
         screenModelScope.launch {
 
-            val result = avtrDbProvider.search(query, preferences.avatarsAmount)
+            val result = avtrDbProvider.search(
+                query = query,
+                n = preferences.avatarsAmount,
+                offset = avatarOffset
+            )
 
             if (result.first)
                 avatarLimitReached.value = true
