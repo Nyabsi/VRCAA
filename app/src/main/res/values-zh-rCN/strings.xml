@@ -69,6 +69,7 @@
         <item>模型</item>
         <item>群组</item>
     </string-array>
+    <string name="search_button_more">More…</string>
     <!-- Settings -->
     <string name="settings_item_about">关于</string>
     <string name="settings_item_about_description">关于您的设备和 VRCAA 的更多信息</string>

@@ -69,6 +69,7 @@
         <item>アバター</item>
         <item>グループ</item>
     </string-array>
+    <string name="search_button_more">More…</string>
     <!-- Settings -->
     <string name="settings_item_about">概要</string>
     <string name="settings_item_about_description">あなたのデバイスとVRCAAに関するより詳細な情報</string>
@@ -94,7 +95,7 @@
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
     <string name="world_title_platform">Unity Packages</string>
-    <string name="world_title_labs_publication_date">LabsPublicationDate</string>
+    <string name="world_title_labs_publication_date">Labs Publication Date</string>
     <string name="world_toast_not_found">ワールドが存在しないか、プライベートの為、取得に失敗しました。</string>
     <string-array name="world_selection_options">
         <item>概要</item>
@@ -232,6 +233,7 @@
     <string name="user_dropdown_view_favorites">お気に入りを表示</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">ステータス</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">年齢認証状態の表示</string>
     <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
     <string name="profile_edit_dialog_title_bio">プロフィール</string>
     <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
@@ -318,4 +320,6 @@
     <string name="advanced_page_view_network_logs">ネットワークログを表示</string>
     <string name="advanced_page_battery_optimization">バッテリー最適化を無効にする</string>
     <string name="advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
+    <string name="advanced_page_kill_service">バックグラウンドサービスの停止</string>
+    <string name="advanced_page_kill_service_description">リアルタイム更新関係のバックグラウンドサービスを停止する</string>
 </resources>
