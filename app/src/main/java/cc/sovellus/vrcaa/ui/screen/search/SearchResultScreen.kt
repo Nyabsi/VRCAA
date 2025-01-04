@@ -264,7 +264,7 @@ class SearchResultScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Button(onClick = { model.fetchMoreWorlds() }) {
-                                    Text(text = "More")
+                                    Text(text = stringResource(R.string.search_button_more))
                                 }
                             }
                         }
@@ -315,7 +315,7 @@ class SearchResultScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Button(onClick = { model.fetchMoreUsers() }) {
-                                    Text(text = "More")
+                                    Text(text = stringResource(R.string.search_button_more))
                                 }
                             }
                         }
@@ -369,7 +369,7 @@ class SearchResultScreen(
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Button(onClick = { model.fetchMoreAvatars() }) {
-                                        Text(text = "More")
+                                        Text(text = stringResource(R.string.search_button_more))
                                     }
                                 }
                             }
@@ -419,7 +419,7 @@ class SearchResultScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Button(onClick = { model.fetchMoreGroups() }) {
-                                    Text(text = "More")
+                                    Text(text = stringResource(R.string.search_button_more))
                                 }
                             }
                         }

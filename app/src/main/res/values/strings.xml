@@ -73,6 +73,7 @@
     <string name="search_filter_category_avatars_provider">Provider</string>
     <string name="search_filter_category_groups">Groups</string>
     <string name="search_filter_category_groups_count">Count</string>
+
     <string name="copy_id_label">Copy Id</string>
     <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
 
@@ -88,6 +89,8 @@
         <item>Avatars</item>
         <item>Groups</item>
     </string-array>
+
+    <string name="search_button_more">More…</string>
 
     <!-- Settings -->
 
