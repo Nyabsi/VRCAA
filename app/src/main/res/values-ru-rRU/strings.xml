@@ -69,6 +69,7 @@
         <item>Аватары</item>
         <item>Группы</item>
     </string-array>
+    <string name="search_button_more">More…</string>
     <!-- Settings -->
     <string name="settings_item_about">О программе</string>
     <string name="settings_item_about_description">More information about your device and VRCAA</string>
