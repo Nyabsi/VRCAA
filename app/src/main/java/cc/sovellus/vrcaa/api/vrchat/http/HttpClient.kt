@@ -394,6 +394,9 @@ class HttpClient : BaseClient(), CoroutineScope {
                 is Result.NotModified -> {
                     return users
                 }
+                is Result.Forbidden -> {
+                    return users
+                }
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
@@ -558,6 +561,9 @@ class HttpClient : BaseClient(), CoroutineScope {
                 is Result.NotModified -> {
                     return worlds
                 }
+                is Result.Forbidden -> {
+                    return worlds
+                }
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
@@ -604,11 +610,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     fetchWorldsByAuthorId(userId, private, n, offset + n, worlds)
                 }
-
                 is Result.NotModified -> {
                     return worlds
                 }
-
+                is Result.Forbidden -> {
+                    return worlds
+                }
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
@@ -1021,11 +1028,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     fetchGroupsByName(query, n, offset + n, groups)
                 }
-
                 is Result.NotModified -> {
                     return groups
                 }
-
+                is Result.Forbidden -> {
+                    return groups
+                }
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
@@ -1232,11 +1240,9 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     fetchOwnedAvatars(n, offset + n, avatars)
                 }
-
                 is Result.NotModified -> {
                     return avatars
                 }
-
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
