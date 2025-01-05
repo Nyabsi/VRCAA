@@ -164,7 +164,7 @@ class WorldsScreen(
                     ) {
                         LazyVerticalGrid(
                             columns = when (model.preferences.columnCountOption) {
-                                0 -> GridCells.Adaptive(200.dp)
+                                0 -> GridCells.Adaptive(180.dp)
                                 else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                             },
                             contentPadding = PaddingValues(

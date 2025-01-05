@@ -365,8 +365,7 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun fetchUsersByName(
             query: String,
             n: Int,
-            offset: Int,
-            users: ArrayList<LimitedUser>
+            offset: Int
         ): ArrayList<LimitedUser> {
 
             val headers = Headers.Builder()
@@ -382,21 +381,25 @@ class HttpClient : BaseClient(), CoroutineScope {
             return when (result) {
                 is Result.Succeeded -> {
                     if (result.body == "[]")
-                        return users
+                        return arrayListOf()
 
+                    val users: ArrayList<LimitedUser> = arrayListOf()
                     val json = Gson().fromJson(result.body, Users::class.java)
                     json?.forEach { user ->
                         users.add(user)
                     }
 
-                    fetchUsersByName(query, n, offset + n, users)
+                    users
                 }
                 is Result.NotModified -> {
-                    return users
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -529,8 +532,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             query: String,
             sort: String,
             n: Int,
-            offset: Int,
-            worlds: ArrayList<World>
+            offset: Int
         ): ArrayList<World> {
 
             val headers = Headers.Builder()
@@ -546,21 +548,19 @@ class HttpClient : BaseClient(), CoroutineScope {
             return when (result) {
                 is Result.Succeeded -> {
                     if (result.body == "[]")
-                        return worlds
+                         return arrayListOf()
 
+                    val worlds: ArrayList<World> = arrayListOf()
                     val json = Gson().fromJson(result.body, Worlds::class.java)
                     json?.forEach { world ->
                         worlds.add(world)
                     }
 
-                    fetchWorldsByName(query, sort, n, offset + n, worlds)
-                }
-                is Result.NotModified -> {
-                    return worlds
+                    worlds
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -604,11 +604,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     fetchWorldsByAuthorId(userId, private, n, offset + n, worlds)
                 }
-
                 is Result.NotModified -> {
                     return worlds
                 }
-
+                is Result.Forbidden -> {
+                    return worlds
+                }
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
@@ -994,8 +995,7 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun fetchGroupsByName(
             query: String,
             n: Int,
-            offset: Int,
-            groups: ArrayList<Group>
+            offset: Int
         ): ArrayList<Group> {
 
             val headers = Headers.Builder()
@@ -1011,21 +1011,23 @@ class HttpClient : BaseClient(), CoroutineScope {
             return when (result) {
                 is Result.Succeeded -> {
                     if (result.body == "[]")
-                        return groups
+                        return arrayListOf()
 
+                    val groups: ArrayList<Group> = arrayListOf()
                     val json = Gson().fromJson(result.body, Groups::class.java)
 
                     json?.forEach { group ->
                         groups.add(group)
                     }
 
-                    fetchGroupsByName(query, n, offset + n, groups)
+                    groups
                 }
-
                 is Result.NotModified -> {
-                    return groups
+                    arrayListOf()
                 }
-
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
@@ -1232,11 +1234,9 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     fetchOwnedAvatars(n, offset + n, avatars)
                 }
-
                 is Result.NotModified -> {
                     return avatars
                 }
-
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()

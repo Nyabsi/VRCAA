@@ -11,11 +11,9 @@ class AvtrDbProvider : BaseClient() {
 
     suspend fun search(
         query: String,
-        limit: Int,
         n: Int = 50,
-        offset: Int = 0,
-        avatars: ArrayList<SearchAvatar> = arrayListOf()
-    ): ArrayList<SearchAvatar>
+        offset: Int = 0
+    ): Pair<Boolean, ArrayList<SearchAvatar>>
     {
         val headers = Headers.Builder()
 
@@ -32,23 +30,17 @@ class AvtrDbProvider : BaseClient() {
         return when (result) {
             is Result.Succeeded -> {
 
-                val temp: ArrayList<SearchAvatar> = avatars
+                val avatars: ArrayList<SearchAvatar> = arrayListOf()
                 val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
 
                 json.avatars.forEach { avatar ->
-                    temp.add(avatar)
+                    avatars.add(avatar)
                 }
 
-                if (limit <= (n * offset) || !json.hasMore) {
-                    avatars
-                } else {
-                    // avtrdb.com has rate-limit of 1r/s
-                    delay(1000)
-                    search(query, limit, n, offset + 1, avatars)
-                }
+                Pair(!json.hasMore, avatars)
             }
             else -> {
-                arrayListOf()
+                Pair(false, arrayListOf())
             }
         }
     }

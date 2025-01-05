@@ -37,6 +37,7 @@ open class BaseClient {
         data object InternalError : Result()
         data object UnknownMethod : Result()
         data object NotModified : Result()
+        data object Forbidden : Result()
     }
 
     enum class AuthorizationType {
@@ -54,6 +55,7 @@ open class BaseClient {
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest(responseBody)
         401 -> Result.Unauthorized
+        403 -> Result.Forbidden
         404 -> Result.NotFound
         500 -> Result.InternalError
         else -> Result.UnhandledResult(response)

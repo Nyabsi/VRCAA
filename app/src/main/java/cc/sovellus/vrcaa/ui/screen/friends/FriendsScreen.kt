@@ -127,8 +127,8 @@ class FriendsScreen : Screen {
     fun ShowFriendsFavorite(
         friends: State<List<Friend>>
     ) {
-        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && it.platform != "web" && it.platform != "" }
-        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" && it.platform != "" }
+        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && it.platform != "" }
+        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") }
         val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform == "" }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
@@ -148,15 +148,15 @@ class FriendsScreen : Screen {
                     .padding(1.dp),
                 state = rememberLazyListState()
             ) {
-                if (favoriteFriendsInInstances.isNotEmpty()) {
-                    items(
-                        favoriteFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
-                        FriendItem(
-                            friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                        )
-                    }
+                items(
+                    favoriteFriendsInInstances.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
+                    FriendItem(
+                        friend = friend,
+                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                    )
+                }
 
+                if (favoriteFriendsInInstances.isNotEmpty()) {
                     item {
                         HorizontalDivider(
                             color = Color.Gray,
@@ -164,32 +164,23 @@ class FriendsScreen : Screen {
                         )
                     }
 
-                    items(
-                        favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
-                        FriendItem(
-                            friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                        )
-                    }
-
-                } else {
-                    items(
-                        favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
-                        FriendItem(
-                            friend = friend,
-                            callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
-                        )
-                    }
                 }
 
-                if (favoriteFriendsOffline.isNotEmpty()) {
-                    if (favoriteFriends.isNotEmpty())
-                        item {
-                            HorizontalDivider(
-                                color = Color.Gray,
-                                thickness = 0.5.dp
-                            )
-                        }
+                items(
+                    favoriteFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }) { friend ->
+                    FriendItem(
+                        friend = friend,
+                        callback = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                    )
+                }
+
+                if (favoriteFriendsOffline.isNotEmpty() && favoriteFriends.isNotEmpty()) {
+                    item {
+                        HorizontalDivider(
+                            color = Color.Gray,
+                            thickness = 0.5.dp
+                        )
+                    }
                 }
 
                 items(
@@ -207,7 +198,7 @@ class FriendsScreen : Screen {
     fun ShowFriendsOnWebsite(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { it.platform == "web" }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform == "web" }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
