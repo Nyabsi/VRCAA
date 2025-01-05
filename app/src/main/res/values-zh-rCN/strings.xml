@@ -69,7 +69,7 @@
         <item>模型</item>
         <item>群组</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">更多…</string>
     <!-- Settings -->
     <string name="settings_item_about">关于</string>
     <string name="settings_item_about_description">关于您的设备和 VRCAA 的更多信息</string>
@@ -95,7 +95,7 @@
     <string name="world_title_heat">热度</string>
     <string name="world_title_popularity">知名度</string>
     <string name="world_title_platform">平台</string>
-    <string name="world_title_labs_publication_date">Labs Publication Date</string>
+    <string name="world_title_labs_publication_date">进入实验室的日期</string>
     <string name="world_toast_not_found">世界是私密的，或者不存在。</string>
     <string-array name="world_selection_options">
         <item>信息</item>
