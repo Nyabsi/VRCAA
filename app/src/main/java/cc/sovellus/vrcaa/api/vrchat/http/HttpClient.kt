@@ -10,6 +10,7 @@ import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAvatars
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
@@ -112,7 +113,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val password = preferences.userCredentials.second ?: ""
 
                     val lr = auth.login(username, password)
-                    if (lr.success) {
+                    if (lr.success && lr.authType == AuthType.AUTH_NONE) {
                         val intent = Intent(context, PipelineService::class.java)
                         context.stopService(intent)
                         context.startService(intent)
