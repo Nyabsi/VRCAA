@@ -3,6 +3,7 @@ package cc.sovellus.vrcaa.ui.screen.feed
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -38,11 +39,8 @@ fun FeedList(feed: SnapshotStateList<FeedManager.Feed>, filter: Boolean = false)
             .padding(1.dp),
         state = rememberLazyListState()
     ) {
-        items(
-            feed.count(),
-            key = { item -> feed.reversed()[item].feedId })
-        {
-            val item = feed.reversed()[it]
+        items(feed.reversed())
+        { item ->
             when (item.type) {
                 FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
                     val text = buildAnnotatedString {
