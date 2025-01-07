@@ -80,6 +80,10 @@ class HttpClient : BaseClient(), CoroutineScope {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
     }
 
+    fun setToken() {
+        setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+    }
+
     interface SessionListener {
         fun onSessionInvalidate()
         fun noInternet()
