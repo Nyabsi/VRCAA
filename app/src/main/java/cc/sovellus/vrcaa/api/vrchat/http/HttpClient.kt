@@ -80,10 +80,6 @@ class HttpClient : BaseClient(), CoroutineScope {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
     }
 
-    fun setToken() {
-        setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
-    }
-
     interface SessionListener {
         fun onSessionInvalidate()
         fun noInternet()
@@ -111,21 +107,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-
-                launch {
-                    val username = preferences.userCredentials.first ?: ""
-                    val password = preferences.userCredentials.second ?: ""
-
-                    val lr = auth.login(username, password)
-                    if (lr.success && lr.authType == AuthType.AUTH_NONE) {
-                        val intent = Intent(context, PipelineService::class.java)
-                        context.stopService(intent)
-                        context.startService(intent)
-                        CacheManager.buildCache()
-                    } else {
-                        listener?.onSessionInvalidate()
-                    }
-                }
+                listener?.onSessionInvalidate()
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
