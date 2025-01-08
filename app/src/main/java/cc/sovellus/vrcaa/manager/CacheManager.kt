@@ -44,8 +44,6 @@ object CacheManager {
             listener?.startCacheRefresh()
         }
 
-        api.setToken()
-
         App.setLoadingText(R.string.loading_text_profile)
         api.auth.fetchCurrentUser()?.let { profile = it }
 
