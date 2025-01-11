@@ -70,7 +70,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
@@ -99,11 +99,13 @@ class HttpClient : BaseClient(), CoroutineScope {
                 listener?.noInternet()
             }
             Result.RateLimited -> {
-                Toast.makeText(
-                    context,
-                    "You're doing actions too quick! Please calm down.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                launch {
+                    Toast.makeText(
+                        context,
+                        "You're doing actions too quick! Please calm down.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
@@ -117,11 +119,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                 val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
 
-                Toast.makeText(
-                    context,
-                    "API returned (400): $reason",
-                    Toast.LENGTH_SHORT
-                ).show()
+                launch {
+                    Toast.makeText(
+                        context,
+                        "API returned (400): $reason",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             else -> { /* Stub! */ }
         }
