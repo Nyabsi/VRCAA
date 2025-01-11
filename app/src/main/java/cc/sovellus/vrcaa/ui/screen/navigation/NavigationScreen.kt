@@ -84,6 +84,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
@@ -98,6 +100,7 @@ import cc.sovellus.vrcaa.ui.tabs.FriendsTab
 import cc.sovellus.vrcaa.ui.tabs.HomeTab
 import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 import cc.sovellus.vrcaa.ui.tabs.SettingsTab
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class NavigationScreen : Screen {
@@ -343,7 +346,38 @@ class NavigationScreen : Screen {
                     }
 
                     FavoritesTab.options.index -> {
-                        TopAppBar(title = {
+                        TopAppBar(actions = {
+                            IconButton(onClick = { isMenuExpanded = true }) {
+                                Icon(
+                                    imageVector = Icons.Filled.MoreVert,
+                                    contentDescription = null
+                                )
+                                Box(
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    DropdownMenu(
+                                        expanded = isMenuExpanded,
+                                        onDismissRequest = { isMenuExpanded = false },
+                                        offset = DpOffset(0.dp, 0.dp)
+                                    ) {
+                                        DropdownMenuItem(onClick = {
+                                            scope.launch {
+                                                FavoriteManager.refresh()
+                                            }
+
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.favorite_toast_refreshed_favorites),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                            isMenuExpanded = false
+                                        },
+                                            text = { Text(stringResource(R.string.favorite_tab_refresh_favorites)) })
+                                    }
+                                }
+                            }
+                        }, title = {
                             Text(
                                 text = stringResource(id = R.string.tabs_label_favorites),
                                 maxLines = 1,
