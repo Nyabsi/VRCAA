@@ -270,6 +270,8 @@
     <string name="favorite_edit_discarded">変更を破棄しました。</string>
     <string name="favorite_edit_applied">変更を適用しました。</string>
     <string name="favorite_dialog_button_edit">変更</string>
+    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
+    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>フィード</item>
