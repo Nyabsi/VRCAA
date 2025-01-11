@@ -270,6 +270,8 @@
     <string name="favorite_edit_discarded">Änderungen wurden verworfen.</string>
     <string name="favorite_edit_applied">Änderungen wurden angewendet.</string>
     <string name="favorite_dialog_button_edit">Bearbeiten</string>
+    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
+    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>Für dich</item>
