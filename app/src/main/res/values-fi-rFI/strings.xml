@@ -270,6 +270,8 @@
     <string name="favorite_edit_discarded">Changes were discarded.</string>
     <string name="favorite_edit_applied">Changes have been applied.</string>
     <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
+    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>Syöte</item>
