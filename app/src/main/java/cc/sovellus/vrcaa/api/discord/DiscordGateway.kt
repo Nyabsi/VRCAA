@@ -149,7 +149,7 @@ class DiscordGateway(
             "READY" -> {
                 val ready = Gson().fromJson(payload.d, Ready::class.java)
                 sessionId = ready.sessionId
-                currentGatewayUrl = "$ready.resumeGatewayUrl/?encoding=json&v=9&compress=zlib-stream"
+                currentGatewayUrl = "${ready.resumeGatewayUrl}/?encoding=json&v=9&compress=zlib-stream"
                 if (BuildConfig.DEBUG)
                     Log.d("VRCAA", "Logged in discord with sessionId: $sessionId !")
             }
