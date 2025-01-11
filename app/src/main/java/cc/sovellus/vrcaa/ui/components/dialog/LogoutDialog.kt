@@ -53,6 +53,7 @@ fun LogoutDialog(
                         bundle.putBoolean("TERMINATE_SESSION", true)
 
                         intent = Intent(context, MainActivity::class.java)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         intent.putExtras(bundle)
                         context.startActivity(intent)
                     }

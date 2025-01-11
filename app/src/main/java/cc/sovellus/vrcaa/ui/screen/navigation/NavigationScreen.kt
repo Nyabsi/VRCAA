@@ -121,6 +121,7 @@ class NavigationScreen : Screen {
                 bundle.putBoolean("RESTART_SESSION", true)
 
                 val intent = Intent(context, MainActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.putExtras(bundle)
                 context.startActivity(intent)
             })
