@@ -34,7 +34,7 @@ class DiscordGateway(
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private lateinit var socket: WebSocket
+    private var socket: WebSocket? = null
     private val client: OkHttpClient by lazy { OkHttpClient() }
     private val mp = DiscordMediaProxy(webHookUrl)
     private val gson = GsonBuilder().serializeNulls().create()
@@ -139,9 +139,8 @@ class DiscordGateway(
     }
 
     fun disconnect() {
-        socket.close(1000, "Closed by user")
+        socket?.close(1000, "Closed by user")
         schedule.cancel(true)
-        client.dispatcher.executorService.shutdown()
     }
 
     private fun handleDispatch(payload: Incoming) {
@@ -212,7 +211,7 @@ class DiscordGateway(
         presencePayload["op"] = 3
         presencePayload["d"] = presence
 
-        socket.send(gson.toJson(presencePayload))
+        socket?.send(gson.toJson(presencePayload))
     }
 
     private fun sendIdentity() {
@@ -254,7 +253,7 @@ class DiscordGateway(
         identityPayload["op"] = 2
         identityPayload["d"] = data
 
-        socket.send(gson.toJson(identityPayload))
+        socket?.send(gson.toJson(identityPayload))
     }
 
     private fun sendResume() {
@@ -280,7 +279,7 @@ class DiscordGateway(
         heartbeatPayload["op"] = 1
         heartbeatPayload["d"] = if (sequence == 0) null else sequence
 
-        socket.send(gson.toJson(heartbeatPayload))
+        socket?.send(gson.toJson(heartbeatPayload))
     }
     companion object {
         private const val USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.301 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36"
