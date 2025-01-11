@@ -3,7 +3,6 @@ package cc.sovellus.vrcaa.ui.screen.navigation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
@@ -76,7 +75,7 @@ class NavigationScreenModel : ScreenModel {
                 bundle.putBoolean("INVALID_SESSION", true)
 
                 val intent = Intent(context, MainActivity::class.java)
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.putExtras(bundle)
                 context.startActivity(intent)
 
