@@ -267,7 +267,7 @@ class DiscordGateway(
         resumePayload["op"] = 6
         resumePayload["d"] = data
 
-        socket.send(gson.toJson(resumePayload))
+        socket?.send(gson.toJson(resumePayload))
 
         shouldResume = false
     }
