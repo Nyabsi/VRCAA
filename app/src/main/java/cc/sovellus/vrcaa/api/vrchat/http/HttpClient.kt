@@ -43,6 +43,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstance
 import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstances
 import cc.sovellus.vrcaa.api.vrchat.http.models.Groups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.http.models.InstanceCreateBody
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.ProfileUpdate
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
@@ -489,6 +490,43 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
+                }
+            }
+        }
+
+        override suspend fun createInstance(
+            worldId: String,
+            type: IInstances.InstanceType,
+            region: IInstances.InstanceRegion,
+            ownerId: String?,
+            canRequestInvite: Boolean
+        ): Instance? {
+
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val body = Gson().toJson(InstanceCreateBody(
+                worldId = worldId,
+                type = type.toString(),
+                region = region.toString(),
+                ownerId = ownerId,
+                canRequestInvite = canRequestInvite
+            ))
+
+            val result = doRequest(
+                method = "POST",
+                url = "${Config.API_BASE_URL}/instances",
+                headers = headers,
+                body = body
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Instance::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
                 }
             }
         }
