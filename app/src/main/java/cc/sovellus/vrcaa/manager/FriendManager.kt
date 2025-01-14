@@ -50,6 +50,7 @@ object FriendManager {
     fun updateFriend(friend: Friend) {
         val it = friends.find { it.id == friend.id }
         it?.let {
+            friend.platform = it.platform
             friends.set(friends.indexOf(it), friend)
         }
 
