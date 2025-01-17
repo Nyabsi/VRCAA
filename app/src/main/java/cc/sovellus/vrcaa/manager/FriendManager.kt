@@ -51,6 +51,7 @@ object FriendManager {
         val it = friends.find { it.id == friend.id }
         it?.let {
             friend.platform = it.platform
+            friend.location = it.location
             friends.set(friends.indexOf(it), friend)
         }
 
