@@ -270,8 +270,8 @@
     <string name="favorite_edit_discarded">更改已被丢弃。</string>
     <string name="favorite_edit_applied">更改已应用。</string>
     <string name="favorite_dialog_button_edit">编辑</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
+    <string name="favorite_tab_refresh_favorites">刷新收藏夹</string>
+    <string name="favorite_toast_refreshed_favorites">刷新收藏夹完成~</string>
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>动态</item>
