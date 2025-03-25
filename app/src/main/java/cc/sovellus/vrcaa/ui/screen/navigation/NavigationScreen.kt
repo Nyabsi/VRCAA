@@ -584,8 +584,8 @@ class NavigationScreen : Screen {
                                         },
                                         supportingContent = {
                                             ComboInput(
-                                                options = listOf("hidden", "verified", "18+"),
-                                                readableOptions = mapOf("hidden" to "Hidden", "verified" to "Verified", "18+" to "18+ Verified"),
+                                                options = listOf("hidden", "18+"),
+                                                readableOptions = mapOf("hidden" to "Hidden", "18+" to "18+ Verified"),
                                                 selection = model.verifiedStatus
                                             )
                                         }
