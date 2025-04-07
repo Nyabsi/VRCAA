@@ -87,6 +87,7 @@ class WorldInfoScreen(
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val model = rememberScreenModel { WorldInfoScreenModel(worldId) }
         val state by model.state.collectAsState()
 
@@ -97,6 +98,7 @@ class WorldInfoScreen(
                 result.instances,
                 model
             )
+            is WorldInfoScreenModel.WorldInfoState.Failure -> navigator.pop()
 
             else -> {}
         }
