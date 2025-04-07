@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -75,11 +76,11 @@ class MainActivity : ComponentActivity() {
         val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
         currentTheme.intValue = preferences.currentThemeOption
 
-        val invalidSession = intent.extras?.getBoolean("INVALID_SESSION")
-        val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION")
-        val restartSession = intent.extras?.getBoolean("RESTART_SESSION")
+        val invalidSession = intent.extras?.getBoolean("INVALID_SESSION") ?: false
+        val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION") ?: false
+        val restartSession = intent.extras?.getBoolean("RESTART_SESSION") ?: false
 
-        if (invalidSession == true) {
+        if (invalidSession) {
 
             preferences.authToken = ""
 
@@ -93,14 +94,14 @@ class MainActivity : ComponentActivity() {
             ).show()
         }
 
-        if (restartSession == true) {
+        if (restartSession) {
             val intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             startService(intent)
         }
 
         val token = preferences.authToken
-        if (token.isNotBlank() && invalidSession == null && terminateSession == null && restartSession == null) {
+        if (token.isNotBlank() && !invalidSession && !terminateSession && !restartSession) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)
         }
@@ -112,7 +113,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        Content(token.isNotBlank() && invalidSession == null && terminateSession == null)
+                        Content(token.isNotBlank() && !invalidSession && !terminateSession)
                     }
                 }
             }
