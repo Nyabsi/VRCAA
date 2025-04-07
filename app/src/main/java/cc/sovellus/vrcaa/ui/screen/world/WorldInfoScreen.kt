@@ -87,20 +87,39 @@ class WorldInfoScreen(
 
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
         val model = rememberScreenModel { WorldInfoScreenModel(worldId) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
             is WorldInfoScreenModel.WorldInfoState.Loading -> LoadingIndicatorScreen().Content()
+            is WorldInfoScreenModel.WorldInfoState.Failure -> HandleFailure()
             is WorldInfoScreenModel.WorldInfoState.Result -> MultiChoiceHandler(
                 result.world,
                 result.instances,
                 model
             )
-            is WorldInfoScreenModel.WorldInfoState.Failure -> navigator.pop()
 
             else -> {}
+        }
+    }
+
+    @Composable
+    private fun HandleFailure() {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        Toast.makeText(
+            context,
+            stringResource(R.string.world_toast_not_found),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        if (peek) {
+            if (context is Activity) {
+                context.finish()
+            }
+        } else {
+            navigator.pop()
         }
     }
 
