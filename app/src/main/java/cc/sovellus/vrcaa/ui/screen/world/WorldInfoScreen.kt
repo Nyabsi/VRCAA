@@ -92,6 +92,7 @@ class WorldInfoScreen(
 
         when (val result = state) {
             is WorldInfoScreenModel.WorldInfoState.Loading -> LoadingIndicatorScreen().Content()
+            is WorldInfoScreenModel.WorldInfoState.Failure -> HandleFailure()
             is WorldInfoScreenModel.WorldInfoState.Result -> MultiChoiceHandler(
                 result.world,
                 result.instances,
@@ -99,6 +100,26 @@ class WorldInfoScreen(
             )
 
             else -> {}
+        }
+    }
+
+    @Composable
+    private fun HandleFailure() {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        Toast.makeText(
+            context,
+            stringResource(R.string.world_toast_not_found),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        if (peek) {
+            if (context is Activity) {
+                context.finish()
+            }
+        } else {
+            navigator.pop()
         }
     }
 

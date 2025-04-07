@@ -91,16 +91,36 @@ class UserProfileScreen(
     override fun Content() {
 
         val model = rememberScreenModel { UserProfileScreenModel(userId) }
-
         val state by model.state.collectAsState()
 
         when (val result = state) {
             is UserProfileScreenModel.UserProfileState.Loading -> LoadingIndicatorScreen().Content()
+            is UserProfileScreenModel.UserProfileState.Failure -> HandleFailure()
             is UserProfileScreenModel.UserProfileState.Result -> Profile(
                 result.profile, result.instance, model
             )
 
             else -> {}
+        }
+    }
+
+    @Composable
+    private fun HandleFailure() {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+
+        Toast.makeText(
+            context,
+            stringResource(R.string.profile_user_not_found_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        if (peek) {
+            if (context is Activity) {
+                context.finish()
+            }
+        } else {
+            navigator.pop()
         }
     }
 
