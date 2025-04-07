@@ -173,7 +173,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                         return IAuth.AuthResult(true, "", AuthType.AUTH_NONE)
                     }
 
-                    return IAuth.AuthResult(false, "Login Failed: Server cookie response was empty!")
+                    return IAuth.AuthResult(true, "")
                 }
                 is Result.Unauthorized -> {
                     return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
