@@ -36,7 +36,7 @@ class LoginScreenModel : ScreenModel {
                 } else {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.login_toast_wrong_credentials),
+                        result.message,
                         Toast.LENGTH_SHORT
                     ).show()
                     callback(false, IAuth.AuthType.AUTH_NONE)

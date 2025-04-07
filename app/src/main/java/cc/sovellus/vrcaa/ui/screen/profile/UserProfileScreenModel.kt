@@ -19,6 +19,7 @@ class UserProfileScreenModel(
     sealed class UserProfileState {
         data object Init : UserProfileState()
         data object Loading : UserProfileState()
+        data object Failure : UserProfileState()
         data class Result(val profile: LimitedUser?, val instance: Instance?) : UserProfileState()
     }
 
@@ -46,9 +47,10 @@ class UserProfileScreenModel(
                     }
                 }
                 profile = it
+                mutableState.value = UserProfileState.Result(profile, instance)
+            } ?: run {
+                mutableState.value = UserProfileState.Failure
             }
-
-            mutableState.value = UserProfileState.Result(profile, instance)
         }
     }
 

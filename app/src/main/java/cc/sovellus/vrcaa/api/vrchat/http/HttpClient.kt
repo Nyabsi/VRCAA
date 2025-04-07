@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
@@ -158,27 +159,31 @@ class HttpClient : BaseClient(), CoroutineScope {
                         if (result.body.contains("emailOtp")) {
                             preferences.authToken = cookies[0]
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, IAuth.AuthType.AUTH_EMAIL)
+                            return IAuth.AuthResult(true, "", AuthType.AUTH_EMAIL)
                         }
 
                         if (result.body.contains("totp")) {
                             preferences.authToken = cookies[0]
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, IAuth.AuthType.AUTH_TOTP)
+                            return IAuth.AuthResult(true, "", AuthType.AUTH_TOTP)
                         }
 
                         preferences.authToken = cookies[0]
                         setAuthorization(AuthorizationType.Cookie,"${preferences.authToken} ${preferences.twoFactorToken}")
-                        return IAuth.AuthResult(true, IAuth.AuthType.AUTH_NONE)
+                        return IAuth.AuthResult(true, "", AuthType.AUTH_NONE)
                     }
-                    return IAuth.AuthResult(false)
+
+                    return IAuth.AuthResult(false, "Login Failed: Server cookie response was empty!")
                 }
                 is Result.Unauthorized -> {
-                    return IAuth.AuthResult(false)
+                    return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
+                }
+                is Result.NoInternet -> {
+                    return IAuth.AuthResult(false, "Login Failed: No internet connection.")
                 }
                 else -> {
                     handleExceptions(result)
-                    return IAuth.AuthResult(false)
+                    return IAuth.AuthResult(false, "Login Failed: Unknown exception from server.")
                 }
             }
         }

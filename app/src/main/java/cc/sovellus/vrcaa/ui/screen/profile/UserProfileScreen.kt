@@ -90,8 +90,8 @@ class UserProfileScreen(
     @Composable
     override fun Content() {
 
+        val navigator = LocalNavigator.currentOrThrow
         val model = rememberScreenModel { UserProfileScreenModel(userId) }
-
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -99,6 +99,7 @@ class UserProfileScreen(
             is UserProfileScreenModel.UserProfileState.Result -> Profile(
                 result.profile, result.instance, model
             )
+            is UserProfileScreenModel.UserProfileState.Failure -> navigator.pop()
 
             else -> {}
         }

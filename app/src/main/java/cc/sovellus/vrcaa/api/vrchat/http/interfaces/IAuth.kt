@@ -11,7 +11,7 @@ interface IAuth {
         AUTH_EMAIL
     }
 
-    data class AuthResult(val success: Boolean, val authType: AuthType = AuthType.AUTH_NONE)
+    data class AuthResult(val success: Boolean, val message: String = "", val authType: AuthType = AuthType.AUTH_NONE)
 
     suspend fun login(username: String, password: String): AuthResult
     suspend fun verify(type: AuthType, code: String): AuthResult
