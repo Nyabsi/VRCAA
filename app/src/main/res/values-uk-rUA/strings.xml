@@ -18,7 +18,7 @@
     <!-- Login -->
     <string name="login_text">Login to VRC Android Assistant</string>
     <string name="login_label_username">Username or E-Mail Address</string>
-    <string name="login_label_password">Password</string>
+    <string name="login_label_password">Пароль</string>
     <string name="login_button_text">Login</string>
     <string name="login_toast_wrong_credentials">Wrong username or password.</string>
     <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
@@ -34,7 +34,7 @@
     <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_date_joined">Дата реєстрації</string>
     <string name="profile_text_no_biography">No description specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
@@ -49,15 +49,15 @@
     <string name="search_text_result">Results for</string>
     <string name="search_filter_category_worlds">Worlds</string>
     <string name="search_filter_category_worlds_featured">Featured</string>
-    <string name="search_filter_category_worlds_sort_by">Sort By</string>
-    <string name="search_filter_category_worlds_count">Count</string>
-    <string name="search_filter_category_users">Users</string>
-    <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_worlds_sort_by">Сортувати за</string>
+    <string name="search_filter_category_worlds_count">Кількість</string>
+    <string name="search_filter_category_users">Користувачі</string>
+    <string name="search_filter_category_users_count">Кількість</string>
     <string name="search_filter_category_avatars">Avatars</string>
     <string name="search_filter_category_avatars_provider">Provider</string>
-    <string name="search_filter_category_groups">Groups</string>
-    <string name="search_filter_category_groups_count">Count</string>
-    <string name="copy_id_label">Copy Id</string>
+    <string name="search_filter_category_groups">Групи</string>
+    <string name="search_filter_category_groups_count">Кількість</string>
+    <string name="copy_id_label">Скопіювати Id</string>
     <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Count</string>
