@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -15,13 +16,16 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
+import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
+import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
@@ -67,20 +71,42 @@ class NavigationScreenModel : ScreenModel {
         override fun onSessionInvalidate() {
             if (!invalidSession.value) {
                 invalidSession.value = true
+                screenModelScope.launch {
+                    val response = api.auth.login(
+                        preferences.userCredentials.first,
+                        preferences.userCredentials.second
+                    )
 
-                val serviceIntent = Intent(context, PipelineService::class.java)
-                context.stopService(serviceIntent)
+                    if (response.success && response.authType == AuthType.AUTH_NONE) {
+                        val intent = Intent(App.getContext(), PipelineService::class.java)
+                        App.getContext().stopService(intent)
 
-                val bundle = bundleOf()
-                bundle.putBoolean("INVALID_SESSION", true)
+                        val bundle = bundleOf()
+                        bundle.putBoolean("SKIP_INIT_CACHE", true)
 
-                val intent = Intent(context, MainActivity::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intent.putExtras(bundle)
-                context.startActivity(intent)
+                        intent.putExtras(bundle)
+                        App.getContext().startService(intent)
 
-                if (context is Activity) {
-                    context.finish()
+                        // re-create the api instance to updated the token
+                        api = HttpClient()
+                        invalidSession.value = false
+                    } else {
+                        Log.d("VRCAA", "scoped failure of legacy")
+                        val serviceIntent = Intent(context, PipelineService::class.java)
+                        context.stopService(serviceIntent)
+
+                        val bundle = bundleOf()
+                        bundle.putBoolean("INVALID_SESSION", true)
+
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.putExtras(bundle)
+                        context.startActivity(intent)
+
+                        if (context is Activity) {
+                            context.finish()
+                        }
+                    }
                 }
             }
         }

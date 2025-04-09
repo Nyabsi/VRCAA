@@ -118,23 +118,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-
-                val response = auth.refresh(preferences.userCredentials.first, preferences.userCredentials.second)
-                if (response.success && response.authType == AuthType.AUTH_NONE) {
-
-                    val intent = Intent(App.getContext(), PipelineService::class.java)
-                    App.getContext().stopService(intent)
-
-                    val bundle = bundleOf()
-                    bundle.putBoolean("SKIP_INIT_CACHE", true)
-
-                    intent.putExtras(bundle)
-                    App.getContext().startService(intent)
-
-                    authenticationCounter++
-                } else {
-                    listener?.onSessionInvalidate()
-                }
+                listener?.onSessionInvalidate()
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
@@ -267,61 +251,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     return false
-                }
-            }
-        }
-
-        override fun refresh(username: String, password: String): IAuth.AuthResult {
-
-            preferences.userCredentials = Pair(username, password)
-
-            val token = Base64.encode(("${UrlEncoderUtil.encode(username)}:${UrlEncoderUtil.encode(password)}").toByteArray())
-
-            val headers = Headers.Builder()
-                .add("Authorization", "Basic $token")
-                .add("User-Agent", Config.API_USER_AGENT)
-
-            val result = doRequestSynchronous(
-                method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user",
-                headers = headers,
-                body = null
-            )
-
-            when (result) {
-                is Result.Succeeded -> {
-                    val cookies = result.response.headers("Set-Cookie")
-                    if (cookies.isNotEmpty()) {
-                        if (result.body.contains("emailOtp")) {
-                            preferences.authToken = cookies[0]
-                            setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, "", AuthType.AUTH_EMAIL)
-                        }
-
-                        if (result.body.contains("totp")) {
-                            preferences.authToken = cookies[0]
-                            setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, "", AuthType.AUTH_TOTP)
-                        }
-
-                        preferences.authToken = cookies[0]
-                        setAuthorization(AuthorizationType.Cookie,"${preferences.authToken} ${preferences.twoFactorToken}")
-                        return IAuth.AuthResult(true)
-                    }
-
-                    // if server doesn't send cookies, it means we're already authenticated.
-                    // I don't know how can you reach this statement though.
-                    return IAuth.AuthResult(true)
-                }
-                is Result.Unauthorized -> {
-                    return IAuth.AuthResult(false)
-                }
-                is Result.NoInternet -> {
-                    return IAuth.AuthResult(false)
-                }
-                else -> {
-                    handleExceptions(result)
-                    return IAuth.AuthResult(false)
                 }
             }
         }
