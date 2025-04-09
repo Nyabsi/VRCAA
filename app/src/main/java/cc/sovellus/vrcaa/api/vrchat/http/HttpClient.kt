@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
@@ -113,12 +114,15 @@ class HttpClient : BaseClient(), CoroutineScope {
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
+                // TODO: figure out why the code doesn't work, it just spams the API as it cannot re-login it makes no sense.
+                /*
                 // safe measure to prevent API spam if the credentials become invalidated
                 if (authenticationFailureCounter < 3)
                 {
                     launch {
                         val response = auth.login(preferences.userCredentials.first, preferences.userCredentials.second)
                         if (response.success && response.authType == AuthType.AUTH_NONE) {
+                            Log.d("VRCAA", "this hurts my eyes")
                             val intent = Intent(App.getContext(), PipelineService::class.java)
                             App.getContext().stopService(intent)
                             App.getContext().startService(intent)
@@ -130,6 +134,9 @@ class HttpClient : BaseClient(), CoroutineScope {
                 } else {
                     listener?.onSessionInvalidate()
                 }
+                 */
+
+                listener?.onSessionInvalidate()
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
