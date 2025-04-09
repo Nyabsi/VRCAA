@@ -77,6 +77,7 @@ class HttpClient : BaseClient(), CoroutineScope {
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
     private var listener: SessionListener? = null
+    private var authenticationFailureCounter: Int = 0
 
     init {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
@@ -111,7 +112,24 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-                listener?.onSessionInvalidate()
+
+                // safe measure to prevent API spam if the credentials become invalidated
+                if (authenticationFailureCounter < 3)
+                {
+                    launch {
+                        val response = auth.login(preferences.userCredentials.first, preferences.userCredentials.second)
+                        if (response.success && response.authType == AuthType.AUTH_NONE) {
+                            val intent = Intent(App.getContext(), PipelineService::class.java)
+                            App.getContext().stopService(intent)
+                            App.getContext().startService(intent)
+                        } else {
+                            authenticationFailureCounter++
+                            listener?.onSessionInvalidate()
+                        }
+                    }
+                } else {
+                    listener?.onSessionInvalidate()
+                }
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
@@ -168,12 +186,15 @@ class HttpClient : BaseClient(), CoroutineScope {
                             return IAuth.AuthResult(true, "", AuthType.AUTH_TOTP)
                         }
 
+                        authenticationFailureCounter = 0
                         preferences.authToken = cookies[0]
                         setAuthorization(AuthorizationType.Cookie,"${preferences.authToken} ${preferences.twoFactorToken}")
-                        return IAuth.AuthResult(true, "", AuthType.AUTH_NONE)
+                        return IAuth.AuthResult(true)
                     }
 
-                    return IAuth.AuthResult(true, "")
+                    // if server doesn't send cookies, it means we're already authenticated.
+                    // I don't know how can you reach this statement though.
+                    return IAuth.AuthResult(true)
                 }
                 is Result.Unauthorized -> {
                     return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
