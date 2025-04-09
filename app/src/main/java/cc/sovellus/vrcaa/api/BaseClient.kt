@@ -1,9 +1,7 @@
 package cc.sovellus.vrcaa.api
 
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.api.vrchat.http.models.ErrorResponse
 import cc.sovellus.vrcaa.manager.DebugManager
-import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -172,6 +170,147 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isNetworkLoggingEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "DELETE",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
+                }
+
+                else -> {
+                    Result.UnknownMethod
+                }
+            }
+        } catch (e: UnknownHostException) {
+            Result.NoInternet
+        } catch (e: SocketException) {
+            Result.NoInternet
+        } catch (e: SocketTimeoutException) {
+            Result.NoInternet
+        }
+    }
+
+    fun doRequestSynchronous(
+        method: String,
+        url: String,
+        headers: Headers.Builder,
+        body: String?,
+        ignoreAuthorization: Boolean = false,
+    ): Result {
+
+        val type: MediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
+
+        if (!ignoreAuthorization) {
+            when (authorizationType) {
+                AuthorizationType.Cookie -> {
+                    headers["Cookie"] = credentials
+                }
+                AuthorizationType.Bearer -> {
+                    headers["Authorization"] = "Bearer $credentials"
+                }
+                else -> {}
+            }
+        }
+
+        val finalHeaders = headers.build()
+
+        return try {
+            when (method) {
+                "GET" -> {
+
+                    val request = Request.Builder()
+                        .headers(headers = finalHeaders)
+                        .url(url)
+                        .get()
+                        .build()
+
+                    val response = client.newCall(request).execute()
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isNetworkLoggingEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "GET",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
+                }
+
+                "POST" -> {
+                    val request = Request.Builder()
+                        .headers(headers = finalHeaders)
+                        .url(url)
+                        .post(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).execute()
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isNetworkLoggingEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "POST",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
+                }
+
+                "PUT" -> {
+                    val request = Request.Builder()
+                        .headers(headers = finalHeaders)
+                        .url(url)
+                        .put(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).execute()
+                    val responseBody = response.body?.string().toString()
+
+                    if (App.isNetworkLoggingEnabled()) {
+                        DebugManager.addDebugMetadata(
+                            DebugManager.DebugMetadataData(
+                                type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                                url = url,
+                                methodType = "PUT",
+                                code = response.code,
+                                payload = responseBody
+                            )
+                        )
+                    }
+
+                    handleRequest(response, responseBody)
+                }
+
+                "DELETE" -> {
+                    val request = Request.Builder()
+                        .headers(headers = finalHeaders)
+                        .url(url)
+                        .delete(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).execute()
                     val responseBody = response.body?.string().toString()
 
                     if (App.isNetworkLoggingEnabled()) {
