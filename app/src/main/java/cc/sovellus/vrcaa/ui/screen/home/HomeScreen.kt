@@ -184,7 +184,8 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                if (friendLocations.isEmpty()) {
+                val offlineFriends = friends.filter { it.platform == "" }
+                if (offlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_offline_friends),
                         fontWeight = FontWeight.Bold,
@@ -208,8 +209,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_offline_friends)
                     ) {
-                        val filteredFriends = friends.filter { it.platform == "" }
-                        items(filteredFriends, key = { it.id }) { friend ->
+                        items(offlineFriends, key = { it.id }) { friend ->
                             RowItem(
                                 name = friend.displayName,
                                 url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
