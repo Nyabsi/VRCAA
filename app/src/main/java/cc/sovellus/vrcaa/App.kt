@@ -4,15 +4,18 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cc.sovellus.vrcaa.activity.CrashActivity
 import cc.sovellus.vrcaa.extension.currentThemeOption
-import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.extension.minimalistMode
+import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.helper.NotificationHelper
+
 
 class App : Application() {
 
@@ -24,6 +27,10 @@ class App : Application() {
 
         networkLogging.value = preferences.networkLogging
         minimalistModeEnabled.value = preferences.minimalistMode
+
+        // allow for networking to run on Main Thread
+        val policy = ThreadPolicy.Builder().permitNetwork().build()
+        StrictMode.setThreadPolicy(policy)
 
         GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
         NotificationHelper.createNotificationChannels()
