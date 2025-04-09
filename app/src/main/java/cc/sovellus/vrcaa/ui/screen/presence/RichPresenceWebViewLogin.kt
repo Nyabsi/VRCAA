@@ -72,19 +72,13 @@ class RichPresenceWebViewLogin : Screen {
                                         if (model.extractToken()) {
                                             Toast.makeText(
                                                 context,
-                                                "Extracted Discord token successfully!",
+                                                "Discord login successful!",
                                                 Toast.LENGTH_SHORT
                                             ).show()
+                                            navigator.pop()
                                         } else {
-                                            Toast.makeText(
-                                                context,
-                                                "Discord token extraction failed.",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-
+                                            view?.loadUrl(DISCORD_LOGON_URL)
                                         }
-
-                                        navigator.pop()
                                         return true
                                     }
                                 }

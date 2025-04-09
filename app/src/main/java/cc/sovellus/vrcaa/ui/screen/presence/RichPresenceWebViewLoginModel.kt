@@ -26,6 +26,7 @@ class RichPresenceWebViewLoginModel : ScreenModel {
                     if (line.contains("token")) {
                         var token = line.substring(line.indexOf("token") + 5)
                         token = token.substring(token.indexOf("\"") + 1 )
+                        token = token.substring(0, token.indexOf("\""))
 
                         preferences.discordToken = token
                         extracted = true
