@@ -17,6 +17,9 @@ interface IAuth {
     suspend fun verify(type: AuthType, code: String): AuthResult
     suspend fun logout(): Boolean
 
+    // NOTE: refresh is identical to login, but is synchronous to prevent race-condition or thread de-synchronization
+    fun refresh(username: String, password: String): AuthResult
+
     suspend fun fetchToken(): String?
     suspend fun fetchCurrentUser(): User?
 }

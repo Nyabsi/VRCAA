@@ -355,8 +355,6 @@ class PipelineService : Service(), CoroutineScope {
             }
         }
 
-        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
-
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
@@ -383,6 +381,14 @@ class PipelineService : Service(), CoroutineScope {
             // Older versions do not require to specify the `foregroundServiceType`
             startForeground(NOTIFICATION_ID, builder.build())
         }
+
+        val skipCacheInit = intent?.extras?.getBoolean("SKIP_INIT_CACHE") ?: false
+
+        var initialRefresh = INITIAL_INTERVAL
+        if (skipCacheInit)
+            initialRefresh = RESTART_INTERVAL
+
+        scheduler.scheduleWithFixedDelay(refreshTask, initialRefresh, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
         return START_STICKY_COMPATIBILITY
     }
