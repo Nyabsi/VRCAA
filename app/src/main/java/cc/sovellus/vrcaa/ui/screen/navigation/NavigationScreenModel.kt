@@ -87,11 +87,8 @@ class NavigationScreenModel : ScreenModel {
                         intent.putExtras(bundle)
                         App.getContext().startService(intent)
 
-                        // re-create the api instance to updated the token
-                        api = HttpClient()
                         invalidSession.value = false
                     } else {
-                        Log.d("VRCAA", "scoped failure of legacy")
                         val serviceIntent = Intent(context, PipelineService::class.java)
                         context.stopService(serviceIntent)
 
