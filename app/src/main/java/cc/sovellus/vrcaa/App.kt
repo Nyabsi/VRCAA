@@ -28,10 +28,6 @@ class App : Application() {
         networkLogging.value = preferences.networkLogging
         minimalistModeEnabled.value = preferences.minimalistMode
 
-        // allow for networking to run on Main Thread
-        val policy = ThreadPolicy.Builder().permitNetwork().build()
-        StrictMode.setThreadPolicy(policy)
-
         GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
         NotificationHelper.createNotificationChannels()
     }

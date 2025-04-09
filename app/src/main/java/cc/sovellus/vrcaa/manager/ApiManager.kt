@@ -1,7 +1,9 @@
 package cc.sovellus.vrcaa.manager
 
+import android.annotation.SuppressLint
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
 
+@SuppressLint("StaticFieldLeak")
 object ApiManager {
-    val api by lazy { HttpClient() }
+    var api = HttpClient()
 }
