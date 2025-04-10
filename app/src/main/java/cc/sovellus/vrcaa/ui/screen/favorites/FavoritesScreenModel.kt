@@ -26,6 +26,9 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     private var avatarListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
     var avatarList = avatarListFlow.asStateFlow()
 
+    private var friendListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
+    var friendList = friendListFlow.asStateFlow()
+
     var currentIndex = mutableIntStateOf(0)
     var currentSelectedGroup = mutableStateOf("")
     var editDialogShown = mutableStateOf(false)
@@ -57,5 +60,6 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     private fun fetchContent() {
         worldListFlow.update { FavoriteManager.getWorldList() }
         avatarListFlow.update { FavoriteManager.getAvatarList() }
+        friendListFlow.update { FavoriteManager.getFriendList() }
     }
 }

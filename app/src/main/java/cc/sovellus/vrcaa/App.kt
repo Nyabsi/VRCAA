@@ -30,6 +30,8 @@ class App : Application() {
 
         GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
         NotificationHelper.createNotificationChannels()
+
+        loadingText.value = context.getString(R.string.global_app_default_loading_text)
     }
 
     companion object {
