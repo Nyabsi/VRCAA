@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
         val token = preferences.authToken
         val twoFactorToken = preferences.twoFactorToken
 
-        if (token.isNotBlank() && twoFactorToken.isNotEmpty() && !invalidSession && !terminateSession && !restartSession) {
+        if ((token.isNotBlank() && twoFactorToken.isNotEmpty()) && !invalidSession && !terminateSession && !restartSession) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)
         }
@@ -116,7 +116,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        Content(token.isNotBlank() && twoFactorToken.isNotEmpty() && !invalidSession && !terminateSession)
+                        Content((token.isNotBlank() && twoFactorToken.isNotEmpty()) && !invalidSession && !terminateSession)
                     }
                 }
             }
