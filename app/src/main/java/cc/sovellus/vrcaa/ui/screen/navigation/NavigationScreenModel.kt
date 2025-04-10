@@ -60,6 +60,7 @@ class NavigationScreenModel : ScreenModel {
     val bioLinks = mutableStateListOf("", "", "")
     val ageVerified = mutableStateOf(false)
     val verifiedStatus = mutableStateOf("")
+    val pronouns = mutableStateOf("")
 
     var feedFilterQuery = mutableStateOf("")
     var showFilteredFeed = mutableStateOf(false)
@@ -175,6 +176,7 @@ class NavigationScreenModel : ScreenModel {
             status.value = it.status
             description.value = it.statusDescription
             bio.value = it.bio
+            pronouns.value = it.pronouns
 
             for (i in 1..it.bioLinks.size)
             {

@@ -13,5 +13,7 @@ data class ProfileUpdate(
     @SerializedName("status")
     var status: String = "",
     @SerializedName("statusDescription")
-    var statusDescription: String = ""
+    var statusDescription: String = "",
+    @SerializedName("pronouns")
+    var pronouns: String = "",
 )
