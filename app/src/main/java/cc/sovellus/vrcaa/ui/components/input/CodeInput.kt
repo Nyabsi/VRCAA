@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cc.sovellus.vrcaa.App
 
 @Composable
 fun CodeInput(
@@ -58,7 +59,7 @@ fun CodeInput(
                             .width(50.dp)
                             .height(60.dp)
                             .border(
-                                1.dp, if (isSystemInDarkTheme()) {
+                                1.dp, if (App.isAppInDarkTheme()) {
                                     Color.White
                                 } else {
                                     Color.Black
