@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
@@ -35,12 +36,15 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteEditDialog
 import cc.sovellus.vrcaa.ui.components.layout.FavoriteHorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
 
 class FavoritesScreen : Screen {
@@ -71,9 +75,10 @@ class FavoritesScreen : Screen {
 
         val worldList = model.worldList.collectAsState()
         val avatarList = model.avatarList.collectAsState()
+        val friendList = model.friendList.collectAsState()
 
         val options = stringArrayResource(R.array.favorites_selection_options)
-        val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person)
+        val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person, Icons.Filled.Group)
 
         Column(
             modifier = Modifier
@@ -123,6 +128,7 @@ class FavoritesScreen : Screen {
                     when (model.currentIndex.intValue) {
                         0 -> ShowWorlds(model, worldList)
                         1 -> ShowAvatars(model, avatarList)
+                        2 -> ShowFriends(model, friendList)
                     }
                 }
             }
@@ -181,6 +187,38 @@ class FavoritesScreen : Screen {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
                                 navigator.parent?.parent?.push(AvatarScreen(it.id))
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.padding(4.dp))
+            }
+        }
+    }
+
+    @Composable
+    fun ShowFriends(
+        model: FavoritesScreenModel,
+        friendList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>
+    ) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        val sortedFriendList = friendList.value.toSortedMap(compareBy { it.substring(6).toInt() })
+        sortedFriendList.forEach { item ->
+            if (item.value.size > 0) {
+                FavoriteHorizontalRow(
+                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    onEdit = {
+                        model.currentSelectedGroup.value = item.key
+                        model.editDialogShown.value = true
+                    }
+                ) {
+                    items(item.value) {
+                        val user = FriendManager.getFriend(it.id)
+                        user?.let {
+                            RowItem(name = user.displayName, url = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl }) {
+                                navigator.parent?.parent?.push(UserProfileScreen(it.id))
                             }
                         }
                     }
