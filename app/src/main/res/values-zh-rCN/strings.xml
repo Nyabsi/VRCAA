@@ -224,8 +224,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">无互联网连接</string>
     <string name="misc_no_internet_description">请确保您已连接到互联网，此应用程序无法在没有互联网连接的情况下工作。</string>
-    <string name="misc_no_internet_label">关闭</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">再次按下以退出。</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">查看群组</string>
     <string name="user_dropdown_view_worlds">查看世界</string>
@@ -254,6 +255,7 @@
     <string-array name="favorites_selection_options">
         <item>世界</item>
         <item>模型</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">添加到收藏</string>
     <string name="favorite_label_remove">从收藏中移除</string>

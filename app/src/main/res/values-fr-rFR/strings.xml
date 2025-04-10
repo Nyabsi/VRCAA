@@ -224,8 +224,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Pas de connexion internet</string>
     <string name="misc_no_internet_description">Veuillez vous assurer que vous êtes connecté à internet, car cette application ne peut pas fonctionner sans connexion internet.</string>
-    <string name="misc_no_internet_label">Redémarrer</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Voir les groupes</string>
     <string name="user_dropdown_view_worlds">Voir les mondes</string>
@@ -254,6 +255,7 @@
     <string-array name="favorites_selection_options">
         <item>Mondes</item>
         <item>Avatars</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Ajouter aux favoris</string>
     <string name="favorite_label_remove">Retirer des favoris</string>

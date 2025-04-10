@@ -224,8 +224,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Keine Internetverbindung</string>
     <string name="misc_no_internet_description">Bitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind. Diese Anwendung funktioniert nicht ohne eine aktive Internetverbindung.</string>
-    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Zum Beenden erneut drücken.</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Gruppen anzeigen</string>
     <string name="user_dropdown_view_worlds">Welten anzeigen</string>
@@ -254,6 +255,7 @@
     <string-array name="favorites_selection_options">
         <item>Welten</item>
         <item>Avatare</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Zu den Favoriten hinzufügen</string>
     <string name="favorite_label_remove">Als Favorit entfernen</string>
