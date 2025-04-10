@@ -210,6 +210,9 @@ class HttpClient : BaseClient(), CoroutineScope {
                 is Result.NoInternet -> {
                     return IAuth.AuthResult(false, "Login Failed: No internet connection.")
                 }
+                is Result.RateLimited -> {
+                    return IAuth.AuthResult(false, "Login Failed: You're logging too quickly!")
+                }
                 else -> {
                     handleExceptions(result)
                     return IAuth.AuthResult(false, "Login Failed: Unknown exception from server.")
