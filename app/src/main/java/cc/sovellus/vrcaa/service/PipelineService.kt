@@ -28,6 +28,7 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
+import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
@@ -226,6 +227,31 @@ class PipelineService : Service(), CoroutineScope {
                             }
 
                             FeedManager.addFeed(feed)
+                        }
+
+                        // Oh... You don't have VRChat+ I'm sorry to hear that...
+                        if (friend.currentAvatarImageUrl != update.user.currentAvatarImageUrl) {
+                            launch {
+                                val fileId = ApiHelper.extractFileIdFromUrl(update.user.currentAvatarImageUrl)
+                                fileId?.let {
+                                    api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
+                                        var name = metadata.name
+
+                                        name = name.substring(9)
+                                        name = name.substring(0, name.indexOf('-') - 1)
+
+                                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
+                                            friendId = update.userId
+                                            friendName = update.user.displayName
+                                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }.toString()
+                                            avatarName = name
+                                        }
+
+                                        FeedManager.addFeed(feed)
+                                    }
+                                }
+                            }
+
                         }
                     }
 
