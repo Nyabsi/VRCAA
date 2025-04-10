@@ -224,8 +224,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Нет подключения к интернету</string>
     <string name="misc_no_internet_description">Пожалуйста, убедитесь, что вы подключены к Интернету, это приложение не может работать без подключения к Интернету.</string>
-    <string name="misc_no_internet_label">Перезапустить</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Показать группы</string>
     <string name="user_dropdown_view_worlds">Просмотреть миры</string>
@@ -254,6 +255,7 @@
     <string-array name="favorites_selection_options">
         <item>Миры</item>
         <item>Аватары</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Добавить в избранное</string>
     <string name="favorite_label_remove">Удалить из избранного</string>
