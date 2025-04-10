@@ -29,7 +29,7 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
         mutableState.value = ProfileState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (!CacheManager.isRefreshing())
+        if (CacheManager.isBuilt())
             fetchProfile()
     }
 

@@ -15,7 +15,7 @@ object CacheManager {
     private var worldList: MutableList<WorldCache> = mutableListOf()
     private var recentWorldList: MutableList<WorldCache> = mutableListOf()
 
-    private var cacheRefreshing: Boolean = false
+    private var cacheHasBeenBuilt: Boolean = false
 
     data class WorldCache(
         val id: String,
@@ -37,8 +37,6 @@ object CacheManager {
     }
 
     suspend fun buildCache() {
-
-        cacheRefreshing = true
 
         listeners.forEach { listener ->
             listener?.startCacheRefresh()
@@ -94,11 +92,12 @@ object CacheManager {
             listener?.endCacheRefresh()
         }
 
-        cacheRefreshing = false
+        if (!cacheHasBeenBuilt)
+            cacheHasBeenBuilt = true
     }
 
-    fun isRefreshing(): Boolean {
-        return cacheRefreshing
+    fun isBuilt(): Boolean {
+        return cacheHasBeenBuilt
     }
 
     fun isWorldCached(worldId: String): Boolean {

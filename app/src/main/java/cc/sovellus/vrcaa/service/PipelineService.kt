@@ -403,7 +403,7 @@ class PipelineService : Service(), CoroutineScope {
 
     companion object {
         private const val NOTIFICATION_ID: Int = 42069
-        private const val INITIAL_INTERVAL: Long = 50
+        private const val INITIAL_INTERVAL: Long = 1000
         private const val RESTART_INTERVAL: Long = 1800000
     }
 }
