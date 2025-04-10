@@ -132,12 +132,7 @@ class RichPresenceScreen : Screen {
                                         Text(text = "Connect Discord")
                                     }
                                 }
-                            },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    model.toggle()
-                                }
-                            )
+                            }
                         )
                     }
 
