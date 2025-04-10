@@ -29,6 +29,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.ui.components.input.PasswordInput
 import cc.sovellus.vrcaa.ui.components.input.TextInput
+import cc.sovellus.vrcaa.ui.components.misc.Logo
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
 class LoginScreen : Screen {
@@ -53,6 +54,8 @@ class LoginScreen : Screen {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Logo(size = 172.dp)
+
                 Text(text = stringResource(R.string.login_text))
 
                 TextInput(
