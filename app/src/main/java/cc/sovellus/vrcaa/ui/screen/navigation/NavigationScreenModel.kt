@@ -72,39 +72,19 @@ class NavigationScreenModel : ScreenModel {
         override fun onSessionInvalidate() {
             if (!invalidSession.value) {
                 invalidSession.value = true
-                screenModelScope.launch {
-                    val response = api.auth.login(
-                        preferences.userCredentials.first,
-                        preferences.userCredentials.second
-                    )
+                val serviceIntent = Intent(context, PipelineService::class.java)
+                context.stopService(serviceIntent)
 
-                    if (response.success && response.authType == AuthType.AUTH_NONE) {
-                        val intent = Intent(App.getContext(), PipelineService::class.java)
-                        App.getContext().stopService(intent)
+                val bundle = bundleOf()
+                bundle.putBoolean("INVALID_SESSION", true)
 
-                        val bundle = bundleOf()
-                        bundle.putBoolean("SKIP_INIT_CACHE", true)
+                val intent = Intent(context, MainActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.putExtras(bundle)
+                context.startActivity(intent)
 
-                        intent.putExtras(bundle)
-                        App.getContext().startService(intent)
-
-                        invalidSession.value = false
-                    } else {
-                        val serviceIntent = Intent(context, PipelineService::class.java)
-                        context.stopService(serviceIntent)
-
-                        val bundle = bundleOf()
-                        bundle.putBoolean("INVALID_SESSION", true)
-
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        intent.putExtras(bundle)
-                        context.startActivity(intent)
-
-                        if (context is Activity) {
-                            context.finish()
-                        }
-                    }
+                if (context is Activity) {
+                    context.finish()
                 }
             }
         }
