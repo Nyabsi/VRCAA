@@ -8,6 +8,7 @@ import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
@@ -57,7 +58,7 @@ class UserProfileScreenModel(
     fun findAvatar(callback: ((userId: String?) -> Unit?)) {
         screenModelScope.launch {
             profile?.let {
-                val fileId = extractFileIdFromUrl(it.currentAvatarImageUrl)
+                val fileId = ApiHelper.extractFileIdFromUrl(it.currentAvatarImageUrl)
 
                 if (fileId != null) {
                     api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
@@ -70,7 +71,7 @@ class UserProfileScreenModel(
                         if (searchAvatarsByName.isNotEmpty()) {
                             for (avatar in searchAvatarsByName) {
                                 avatar.imageUrl?.let {
-                                    val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
+                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
                                     if (avatarFileId == fileId) {
                                         callback(avatar.id)
                                         return@launch
@@ -84,7 +85,7 @@ class UserProfileScreenModel(
                         if (searchAvatarsByAuthor.isNotEmpty()) {
                             for (avatar in searchAvatarsByAuthor) {
                                 avatar.imageUrl?.let {
-                                    val avatarFileId = extractFileIdFromUrl(avatar.imageUrl)
+                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
                                     if (avatarFileId == fileId) {
                                         callback(avatar.id)
                                         return@launch
@@ -97,16 +98,6 @@ class UserProfileScreenModel(
                 }
             }
         }
-    }
-
-    private fun extractFileIdFromUrl(imageUrl: String): String? {
-        val startIndex = imageUrl.indexOf("file_")
-        val endIndex = imageUrl.indexOf("/", startIndex)
-        if (startIndex != -1 && endIndex != -1) {
-            val fileId = imageUrl.substring(startIndex, endIndex)
-            return fileId
-        }
-        return null
     }
 
     fun inviteToFriend(intent: String) {

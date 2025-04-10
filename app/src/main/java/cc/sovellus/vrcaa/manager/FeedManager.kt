@@ -23,7 +23,8 @@ object FeedManager {
         FRIEND_FEED_STATUS,
         FRIEND_FEED_FRIEND_REQUEST,
         FRIEND_FEED_REMOVED,
-        FRIEND_FEED_ADDED;
+        FRIEND_FEED_ADDED,
+        FRIEND_FEED_AVATAR;
 
         companion object {
             fun fromInt(value: Int) = entries.first { it.ordinal == value }
@@ -39,6 +40,7 @@ object FeedManager {
         var friendStatus: StatusHelper.Status = StatusHelper.Status.Offline,
         var travelDestination: String = "",
         var worldId: String = "",
+        var avatarName: String = "",
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
     )
 

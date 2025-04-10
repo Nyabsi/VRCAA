@@ -20,6 +20,7 @@ object DatabaseManager {
             put("friendStatus", feed.friendStatus.ordinal)
             put("travelDestination", feed.travelDestination)
             put("worldId", feed.worldId)
+            put("avatarName", feed.avatarName)
             put("feedTimestamp", feed.feedTimestamp.toEpochSecond(ZoneOffset.UTC))
         }
 
@@ -29,7 +30,7 @@ object DatabaseManager {
     fun readFeeds(): MutableList<FeedManager.Feed> {
         val cursor = dbHelper.readableDatabase.query(
             DatabaseHelper.Tables.SQL_TABLE_FEED,
-            arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "feedTimestamp"),
+            arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "avatarName", "feedTimestamp"),
             null,
             null,
             null,
@@ -50,6 +51,7 @@ object DatabaseManager {
                     friendStatus = StatusHelper.Status.fromInt(getInt(getColumnIndexOrThrow("friendStatus"))),
                     travelDestination = getString(getColumnIndexOrThrow("travelDestination")),
                     worldId = getString(getColumnIndexOrThrow("worldId")),
+                    avatarName = getString(getColumnIndexOrThrow("avatarName")),
                     feedTimestamp = LocalDateTime.ofEpochSecond(getLong(getColumnIndexOrThrow("feedTimestamp")), 0, ZoneOffset.UTC)
                 )
                 feeds.add(feed)
