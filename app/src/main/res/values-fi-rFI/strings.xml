@@ -224,8 +224,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Ei internet-yhteyttä</string>
     <string name="misc_no_internet_description">Varmista, että olet yhteydessä Internetiin, tämä sovellus ei voi toimia ilman Internet-yhteyttä.</string>
-    <string name="misc_no_internet_label">Sulje</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Näytä Ryhmät</string>
     <string name="user_dropdown_view_worlds">Näytä maailmat</string>
@@ -254,6 +255,7 @@
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
         <item>Hahmot</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>
