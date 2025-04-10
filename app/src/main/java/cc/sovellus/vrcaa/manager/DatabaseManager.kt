@@ -1,6 +1,7 @@
 package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
+import androidx.core.database.getStringOrNull
 import cc.sovellus.vrcaa.helper.DatabaseHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
@@ -51,7 +52,7 @@ object DatabaseManager {
                     friendStatus = StatusHelper.Status.fromInt(getInt(getColumnIndexOrThrow("friendStatus"))),
                     travelDestination = getString(getColumnIndexOrThrow("travelDestination")),
                     worldId = getString(getColumnIndexOrThrow("worldId")),
-                    avatarName = getString(getColumnIndexOrThrow("avatarName")),
+                    avatarName = getStringOrNull(getColumnIndex("avatarName")) ?: "",
                     feedTimestamp = LocalDateTime.ofEpochSecond(getLong(getColumnIndexOrThrow("feedTimestamp")), 0, ZoneOffset.UTC)
                 )
                 feeds.add(feed)
