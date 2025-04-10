@@ -81,7 +81,7 @@ class PipelineService : Service(), CoroutineScope {
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                     }
 
                     if (NotificationHelper.isOnWhitelist(update.userId) &&
@@ -114,7 +114,7 @@ class PipelineService : Service(), CoroutineScope {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendId = friend.id
                             friendName = friend.displayName
-                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } }
                         }
 
                         if (NotificationHelper.isOnWhitelist(friend.id) &&
@@ -173,7 +173,7 @@ class PipelineService : Service(), CoroutineScope {
                             friendName = update.user.displayName
                             travelDestination = LocationHelper.getReadableLocation(update.location)
                             worldId = update.worldId
-                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                         }
 
                         FeedManager.addFeed(feed)
@@ -196,7 +196,7 @@ class PipelineService : Service(), CoroutineScope {
                             val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                 friendId = update.userId
                                 friendName = update.user.displayName
-                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }.toString()
+                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                                 friendStatus = StatusHelper.getStatusFromString(update.user.status)
                             }
 
@@ -272,7 +272,7 @@ class PipelineService : Service(), CoroutineScope {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
                             friendId = update.userId
                             friendName = friend.displayName
-                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } }
                         }
 
                         NotificationHelper.pushNotification(
@@ -293,7 +293,7 @@ class PipelineService : Service(), CoroutineScope {
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                     }
 
                     NotificationHelper.pushNotification(
@@ -313,7 +313,7 @@ class PipelineService : Service(), CoroutineScope {
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                     }
 
                     if (NotificationHelper.isOnWhitelist(update.userId) &&
@@ -348,7 +348,7 @@ class PipelineService : Service(), CoroutineScope {
                                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
                                         friendId = notification.senderUserId
                                         friendName = notification.senderUsername
-                                        friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
+                                        friendPictureUrl = sender?.let { it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } } }.toString()
                                     }
 
                                     FeedManager.addFeed(feed)
