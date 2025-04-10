@@ -148,7 +148,7 @@ fun ProfileCard(
             }
             item {
                 Row(
-                    modifier = Modifier.padding(start = 12.dp, top = 60.dp)
+                    modifier = Modifier.padding(start = 12.dp, top = 50.dp)
                 ) {
                     Row(
                         modifier = Modifier.weight(0.70f),
