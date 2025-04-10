@@ -58,6 +58,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.AuthResponse
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
@@ -74,7 +75,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob()
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
@@ -108,7 +109,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                 if (BuildConfig.DEBUG)
                     throw RuntimeException("You're doing actions too quick! Please calm down.")
 
-                launch(Dispatchers.Main) {
+                launch {
                     Toast.makeText(
                         context,
                         "You're doing actions too quick! Please calm down.",
@@ -118,7 +119,26 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-                listener?.onSessionInvalidate()
+
+                launch {
+                    val response = api.auth.login(
+                        preferences.userCredentials.first,
+                        preferences.userCredentials.second
+                    )
+
+                    if (response.success && response.authType == AuthType.AUTH_NONE) {
+                        val intent = Intent(App.getContext(), PipelineService::class.java)
+                        App.getContext().stopService(intent)
+
+                        val bundle = bundleOf()
+                        bundle.putBoolean("SKIP_INIT_CACHE", true)
+
+                        intent.putExtras(bundle)
+                        App.getContext().startService(intent)
+                    } else {
+                        listener?.onSessionInvalidate()
+                    }
+                }
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
@@ -128,7 +148,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                 val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
 
-                launch(Dispatchers.Main) {
+                launch {
                     Toast.makeText(
                         context,
                         "API returned (400): $reason",
