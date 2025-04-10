@@ -31,6 +31,7 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.currentThemeOption
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.ThemeManager
@@ -101,7 +102,9 @@ class MainActivity : ComponentActivity() {
         }
 
         val token = preferences.authToken
-        if (token.isNotBlank() && !invalidSession && !terminateSession && !restartSession) {
+        val twoFactorToken = preferences.twoFactorToken
+
+        if (token.isNotBlank() && twoFactorToken.isNotEmpty() && !invalidSession && !terminateSession && !restartSession) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)
         }
@@ -113,7 +116,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        Content(token.isNotBlank() && !invalidSession && !terminateSession)
+                        Content(token.isNotBlank() && twoFactorToken.isNotEmpty() && !invalidSession && !terminateSession)
                     }
                 }
             }
