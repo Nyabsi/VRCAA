@@ -242,6 +242,7 @@
     <string name="profile_edit_dialog_toast_updated">已更新个人资料。</string>
     <string name="profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
     <string name="profile_edit_dialog_title_edit_profile">编辑个人资料</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">您真的要这么做吗？</string>
     <string name="logout_dialog_description">通过按下“继续”，您将退出 VRCAA，您必须重新登录才能继续使用该应用程序。</string>

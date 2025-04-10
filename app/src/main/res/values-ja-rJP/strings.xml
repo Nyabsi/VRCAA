@@ -242,6 +242,7 @@
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
     <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
     <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">ログアウトしますか？</string>
     <string name="logout_dialog_description">継続した場合、VRCAAからログアウトします。アプリを利用する為には再ログインが必要です。</string>
