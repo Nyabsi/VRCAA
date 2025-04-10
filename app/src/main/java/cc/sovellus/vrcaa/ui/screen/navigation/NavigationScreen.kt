@@ -124,6 +124,11 @@ class NavigationScreen : Screen {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.putExtras(bundle)
                 context.startActivity(intent)
+
+
+                if (context is Activity) {
+                    context.finish()
+                }
             })
         }
 
