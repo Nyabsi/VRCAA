@@ -242,6 +242,7 @@
     <string name="profile_edit_dialog_toast_updated">Profil aktualisiert.</string>
     <string name="profile_edit_dialog_toast_cancelled">Änderungen wurden verworfen.</string>
     <string name="profile_edit_dialog_title_edit_profile">Profil bearbeiten</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sind Sie sicher?</string>
     <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>

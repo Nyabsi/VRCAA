@@ -242,6 +242,7 @@
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
     <string name="profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
     <string name="profile_edit_dialog_title_edit_profile">Modifier le profil</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Êtes-vous sûr ?</string>
     <string name="logout_dialog_description">En appuyant sur \"Continuer\" ci-dessous, vous vous déconnecterez de VRCAA et vous devrez vous reconnecter pour continuer à utiliser l\'application.</string>
