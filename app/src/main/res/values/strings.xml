@@ -276,6 +276,8 @@
     <string name="misc_no_internet_label">Close</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
 
+    <string name="global_app_default_loading_text">Initializing…</string>
+
     <!-- User -->
 
     <string name="user_dropdown_view_groups">View Groups</string>
@@ -312,6 +314,7 @@
     <string-array name="favorites_selection_options">
         <item>Worlds</item>
         <item>Avatars</item>
+        <item>Friends</item>
     </string-array>
 
     <string name="favorite_label_add">Add to favorites</string>

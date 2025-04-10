@@ -36,7 +36,9 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     private val cacheListener = object : CacheManager.CacheListener {
         override fun profileUpdated(profile: User) { }
 
-        override fun startCacheRefresh() { }
+        override fun startCacheRefresh() {
+            mutableState.value = FavoriteState.Loading
+        }
 
         override fun endCacheRefresh() {
             fetchContent()
@@ -50,10 +52,12 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         mutableState.value = FavoriteState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (!CacheManager.isRefreshing())
+        if (CacheManager.isBuilt())
         {
             fetchContent()
             mutableState.value = FavoriteState.Result
+        } else {
+            mutableState.value = FavoriteState.Loading
         }
     }
 

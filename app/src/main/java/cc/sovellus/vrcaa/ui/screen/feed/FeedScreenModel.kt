@@ -45,7 +45,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
         FeedManager.setFeedListener(listener)
         CacheManager.addListener(cacheListener)
 
-        if (!CacheManager.isRefreshing())
+        if (CacheManager.isBuilt())
         {
             feedStateFlow.value = FeedManager.getFeed().toMutableStateList()
             mutableState.value = FeedState.Result
