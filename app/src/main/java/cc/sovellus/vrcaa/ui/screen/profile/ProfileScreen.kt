@@ -66,7 +66,8 @@ class ProfileScreen : Screen {
                         trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
                         statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
                         tags = profile.tags,
-                        badges = profile.badges
+                        badges = profile.badges,
+                        pronouns = profile.pronouns
                     )
                 }
             }

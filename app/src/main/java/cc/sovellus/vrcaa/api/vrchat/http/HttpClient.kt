@@ -1216,6 +1216,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             newDescription: String,
             newBio: String,
             newBioLinks: List<String>,
+            newPronouns: String,
             newAgeVerificationStatus: String?
         ): User? {
 
@@ -1227,7 +1228,8 @@ class HttpClient : BaseClient(), CoroutineScope {
                 bio = newBio,
                 bioLinks = newBioLinks,
                 status = newStatus,
-                statusDescription = newDescription
+                statusDescription = newDescription,
+                pronouns = newPronouns
             )
 
             val result = doRequest(
