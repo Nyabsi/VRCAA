@@ -121,27 +121,22 @@ class HttpClient : BaseClient(), CoroutineScope {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
                 launch {
-                    // prevent duplicate requests in event of failure
-                    if (preferences.authToken.isNotEmpty()) {
-                        preferences.authToken = ""
+                    val response = api.auth.login(
+                        preferences.userCredentials.first,
+                        preferences.userCredentials.second
+                    )
 
-                        val response = api.auth.login(
-                            preferences.userCredentials.first,
-                            preferences.userCredentials.second
-                        )
+                    if (response.success && response.authType == AuthType.AUTH_NONE) {
+                        val intent = Intent(App.getContext(), PipelineService::class.java)
+                        App.getContext().stopService(intent)
 
-                        if (response.success && response.authType == AuthType.AUTH_NONE) {
-                            val intent = Intent(App.getContext(), PipelineService::class.java)
-                            App.getContext().stopService(intent)
+                        val bundle = bundleOf()
+                        bundle.putBoolean("SKIP_INIT_CACHE", true)
 
-                            val bundle = bundleOf()
-                            bundle.putBoolean("SKIP_INIT_CACHE", true)
-
-                            intent.putExtras(bundle)
-                            App.getContext().startService(intent)
-                        } else {
-                            listener?.onSessionInvalidate()
-                        }
+                        intent.putExtras(bundle)
+                        App.getContext().startService(intent)
+                    } else {
+                        listener?.onSessionInvalidate()
                     }
                 }
             }
@@ -388,10 +383,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             when (result) {
                 is Result.Succeeded -> {
                     return Gson().fromJson(result.body, LimitedUser::class.java)
-                }
-                is Result.Unauthorized -> {
-                    handleExceptions(result)
-                    return fetchUserByUserId(userId)
                 }
                 else -> {
                     handleExceptions(result)
