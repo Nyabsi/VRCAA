@@ -22,7 +22,7 @@ class AvtrDbProvider : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "https://api.avtrdb.com/v1/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
+            url = "https://api.avtrdb.com/v2/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
             headers = headers,
             body = null
         )
