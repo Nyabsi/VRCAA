@@ -224,8 +224,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">インターネット接続</string>
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
-    <string name="misc_no_internet_label">再起動</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">所属グループを表示</string>
     <string name="user_dropdown_view_worlds">製作ワールドを表示</string>
@@ -254,6 +255,7 @@
     <string-array name="favorites_selection_options">
         <item>ワールド</item>
         <item>アバター</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">お気に入りへ追加</string>
     <string name="favorite_label_remove">お気に入りから削除</string>
