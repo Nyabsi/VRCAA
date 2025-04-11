@@ -1,7 +1,7 @@
 package cc.sovellus.vrcaa.api.vrchat.pipeline
 
-import android.util.Log
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendDelete
@@ -14,7 +14,6 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.NotificationV2
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
-import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -23,11 +22,12 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.time.Duration
 
 class PipelineSocket(
     private val token: String
 ) {
-    private val client: OkHttpClient by lazy { OkHttpClient() }
+    private val client: OkHttpClient by lazy { OkHttpClient().newBuilder().pingInterval(Duration.ofMillis(1000)).build() }
     private lateinit var socket: WebSocket
     private var shouldReconnect: Boolean = false
 
@@ -136,19 +136,11 @@ class PipelineSocket(
             override fun onFailure(
                 webSocket: WebSocket, t: Throwable, response: Response?
             ) {
-                when (response?.code) {
-                    401 -> {
-                        Log.d("VRCAA", "Pipeline was disconnected because it hit 401, attempting session renewal")
-                        socketListener?.onSessionExpire()
-                        shouldReconnect = false
-                    }
-                }
-
                 if (shouldReconnect)
                 {
                     webSocket.close(1000, null)
                     Thread.sleep(RECONNECTION_INTERVAL)
-                    connect()
+                    socketListener?.onSessionExpire()
                 }
             }
         }
@@ -193,6 +185,6 @@ class PipelineSocket(
     }
 
     companion object {
-        private const val RECONNECTION_INTERVAL: Long = 30000 // 30s
+        private const val RECONNECTION_INTERVAL: Long = 5000 // 5s
     }
 }
