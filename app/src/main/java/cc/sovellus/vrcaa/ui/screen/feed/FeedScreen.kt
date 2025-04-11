@@ -211,11 +211,11 @@ fun FeedList(feed: SnapshotStateList<FeedManager.Feed>, filter: Boolean = false)
                     val text = buildAnnotatedString {
                         append(item.friendName)
                         append(" ")
-                        append(stringResource(R.string.feed_friend_avatar_text))
-                        append(" ")
                         withStyle(style = SpanStyle(color = Color.Gray)) {
-                            append(item.avatarName)
+                            append(stringResource(R.string.feed_friend_avatar_text))
                         }
+                        append(" ")
+                        append(item.avatarName)
                     }
                     FeedItem(
                         text = text,
