@@ -164,6 +164,8 @@
     <string name="feed_friend_request_label">Заявка в друзья</string>
     <string name="feed_friend_request_text">хочет добавить вас в друзья.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">О программе</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
