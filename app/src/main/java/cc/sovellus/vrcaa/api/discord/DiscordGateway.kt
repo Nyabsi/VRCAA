@@ -139,6 +139,19 @@ class DiscordGateway(
     }
 
     fun disconnect() {
+
+        val presence = ArrayMap<String, Any?>()
+        presence["status"] = "idle"
+        presence["since"] = 0
+        presence["activities"] = arrayOf<Any>()
+        presence["afk"] = false
+
+        val presencePayload = ArrayMap<String, Any>()
+        presencePayload["op"] = 3
+        presencePayload["d"] = presence
+
+        socket?.send(gson.toJson(presencePayload))
+
         socket?.close(1000, "Closed by user")
         schedule.cancel(true)
     }
@@ -201,11 +214,10 @@ class DiscordGateway(
         activity["assets"] = assets
 
         val presence = ArrayMap<String, Any?>()
-        presence["status"] = "online"
+        presence["status"] = "idle"
         presence["since"] = 0
         presence["activities"] = arrayOf<Any>(activity)
         presence["afk"] = false
-        presence["broadcast"] = null
 
         val presencePayload = ArrayMap<String, Any>()
         presencePayload["op"] = 3
@@ -221,16 +233,18 @@ class DiscordGateway(
         deviceProperties["os"] = "Mac OS X"
         deviceProperties["browser"] = "Discord Client"
         deviceProperties["release_channel"] = "stable"
-        deviceProperties["osVersion"] = "23.2.0"
+        deviceProperties["client_version"] = "0.0.343"
+        deviceProperties["osVersion"] = "24.0.0"
         deviceProperties["osArch"] = "arm64"
         deviceProperties["appArch"] = "arm64"
         deviceProperties["systemLocale"] = "en-US"
+        deviceProperties["has_client_mods"] = false
         deviceProperties["browser_user_agent"] = USER_AGENT
-        deviceProperties["browser_version"] = "28.2.10"
+        deviceProperties["browser_version"] = "33.4.0"
+        deviceProperties["os_sdk_version"] = "24"
         deviceProperties["client_build_number"] = 285561
         deviceProperties["native_build_number"] = null
         deviceProperties["client_event_source"] = null
-        deviceProperties["design_id"] = 0
 
         val presence = ArrayMap<String, Any>()
         presence["status"] = "unknown"
@@ -243,10 +257,10 @@ class DiscordGateway(
 
         val data = ArrayMap<String, Any>()
         data["token"] = token
+        data["capabilities"] = 161789
         data["properties"] = deviceProperties
-        data["compress"] = false
-        data["capabilities"] = 16381
         data["presence"] = presence
+        data["compress"] = false
         data["client_state"] = clientState
 
         val identityPayload = ArrayMap<String, Any>()
@@ -282,7 +296,7 @@ class DiscordGateway(
         socket?.send(gson.toJson(heartbeatPayload))
     }
     companion object {
-        private const val USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.301 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36"
+        private const val USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.343 Chrome/130.0.6723.191 Electron/33.4.0 Safari/537.36"
 
         private const val APP_ID = "1219592758914977913"
         private const val APP_ASSET_LARGE_ICON = "1219760377718636665"

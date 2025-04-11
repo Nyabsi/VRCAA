@@ -278,16 +278,15 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    if (user.world != null && user.location != "offline") {
-                        CacheManager.addRecent(user.world)
-
-                        if (preferences.richPresenceEnabled) {
-                            val status = StatusHelper.getStatusFromString(user.user.status)
+                    if (user.location != "traveling:traveling") {
+                        launch {
                             val location = LocationHelper.parseLocationInfo(user.location)
-                            launch {
-                                val instance = api.instances.fetchInstance(user.location)
-                                instance?.let {
-                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                            val instance = api.instances.fetchInstance(user.location)
+                            instance?.let {
+                                CacheManager.addWorld(instance.world)
+                                if (preferences.richPresenceEnabled) {
+                                    val status = StatusHelper.getStatusFromString(user.user.status)
+                                    gateway?.sendPresence(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status)
                                 }
                             }
                         }
@@ -299,7 +298,9 @@ class PipelineService : Service(), CoroutineScope {
 
                     if (preferences.richPresenceEnabled) {
                         val status = StatusHelper.getStatusFromString(user.user.status)
-                        launch { gateway?.sendPresence(null, null, null, status) }
+                        launch {
+                            gateway?.sendPresence(null, null, null, status)
+                        }
                     }
 
                     CacheManager.updateProfile(user.user)
