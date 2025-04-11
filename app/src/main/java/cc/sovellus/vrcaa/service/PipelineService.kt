@@ -278,7 +278,7 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    if (user.location != "traveling:traveling") {
+                    if (user.location.contains("wrld_")) {
                         launch {
                             val location = LocationHelper.parseLocationInfo(user.location)
                             val instance = api.instances.fetchInstance(user.location)
