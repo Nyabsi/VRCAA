@@ -53,6 +53,8 @@ class DiscordGateway(
     private var worldName: String = ""
     private var worldUrl: String = ""
 
+    private var sessionStartTime: Long = 0
+
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
 
     private val heartbeatRunnable = Runnable {
@@ -184,6 +186,10 @@ class DiscordGateway(
             this.worldUrl = url
         }
 
+        if (sessionStartTime.toInt() == 0) {
+            sessionStartTime = System.currentTimeMillis()
+        }
+
         if (webHookUrl.isEmpty())
             assets["large_image"] =  APP_ASSET_LARGE_ICON
         else
@@ -215,7 +221,7 @@ class DiscordGateway(
 
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
-        presence["since"] = 0
+        presence["since"] = sessionStartTime
         presence["activities"] = arrayOf<Any>(activity)
         presence["afk"] = false
 
