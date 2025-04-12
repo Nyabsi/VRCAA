@@ -49,6 +49,7 @@ class GatewaySocket : CoroutineScope {
     private var worldInfo: String = ""
     private var worldName: String = ""
     private var worldUrl: String = ""
+    private var worldId: String = ""
 
     private var sessionStartTime: Long = 0
 
@@ -186,7 +187,7 @@ class GatewaySocket : CoroutineScope {
         }
     }
 
-    suspend fun sendPresence(name: String?, info: String?, url: String?, status: StatusHelper.Status) {
+    suspend fun sendPresence(name: String?, info: String?, url: String?, id: String?, status: StatusHelper.Status) {
 
         val assets = ArrayMap<String, String>()
 
@@ -202,8 +203,12 @@ class GatewaySocket : CoroutineScope {
             this.worldUrl = url
         }
 
+        if (id != null) {
+            this.worldId = id
+        }
+
         if (sessionStartTime.toInt() == 0) {
-            sessionStartTime = System.currentTimeMillis()
+            sessionStartTime = System.currentTimeMillis() / 1000
         }
 
         if (webHookUrl.isEmpty())
@@ -224,7 +229,15 @@ class GatewaySocket : CoroutineScope {
         assets["small_text"] = status.toString()
 
         val timestamps = ArrayMap<String, Any>()
-        timestamps["start"] = System.currentTimeMillis()
+        timestamps["start"] = sessionStartTime
+
+        val worldButton = ArrayMap<String, Any>()
+        worldButton["label"] = "Visit World"
+        worldButton["url"] = "https://vrchat.com/home/world/${worldId}/info"
+
+        val advertButton = ArrayMap<String, Any>()
+        advertButton["label"] = "Get VRCAA"
+        advertButton["url"] = "https://play.google.com/store/apps/details?id=cc.sovellus.vrcaa"
 
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
@@ -234,10 +247,12 @@ class GatewaySocket : CoroutineScope {
         activity["type"] = 0
         activity["timestamps"] = timestamps
         activity["assets"] = assets
+        // TODO: add a toggle
+        activity["buttons"] = arrayOf<Any>(worldButton, advertButton)
 
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
-        presence["since"] = sessionStartTime
+        presence["since"] = 0
         presence["activities"] = arrayOf<Any>(activity)
         presence["afk"] = false
 

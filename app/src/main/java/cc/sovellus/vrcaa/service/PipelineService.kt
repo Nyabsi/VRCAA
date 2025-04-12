@@ -270,7 +270,7 @@ class PipelineService : Service(), CoroutineScope {
                             instance?.let {
                                 CacheManager.addWorld(instance.world)
                                 if (preferences.richPresenceEnabled) {
-                                    GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status)
+                                    GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status, instance.worldId)
                                 }
                             }
                         }

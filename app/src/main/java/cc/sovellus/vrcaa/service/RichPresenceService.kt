@@ -28,15 +28,16 @@ class RichPresenceService : Service(), CoroutineScope {
             name: String,
             metadata: String,
             imageUrl: String,
-            status: String
+            status: String,
+            id: String
         ) {
             val newStatus = StatusHelper.getStatusFromString(status)
-            gateway.sendPresence(name, metadata, imageUrl, newStatus)
+            gateway.sendPresence(name, metadata, imageUrl, id, newStatus)
         }
 
         override suspend fun onUpdateStatus(status: String) {
             val newStatus = StatusHelper.getStatusFromString(status)
-            gateway.sendPresence(null, null, null, newStatus)
+            gateway.sendPresence(null, null, null, null, newStatus)
         }
     }
 
