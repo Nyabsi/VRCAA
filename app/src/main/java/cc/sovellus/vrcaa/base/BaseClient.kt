@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.api
+package cc.sovellus.vrcaa.base
 
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.manager.DebugManager

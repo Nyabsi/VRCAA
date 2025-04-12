@@ -42,7 +42,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
 
     init {
         mutableState.value = FeedState.Loading
-        FeedManager.setFeedListener(listener)
+        FeedManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
         if (CacheManager.isBuilt())

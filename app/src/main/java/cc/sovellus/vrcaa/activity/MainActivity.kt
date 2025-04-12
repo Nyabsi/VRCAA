@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        ThemeManager.addThemeListener(themeListener)
+        ThemeManager.addListener(themeListener)
 
         val preferences: SharedPreferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
         currentTheme.intValue = preferences.currentThemeOption

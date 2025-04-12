@@ -1,32 +1,28 @@
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
+import cc.sovellus.vrcaa.base.BaseManager
 
-object FriendManager {
-
-    private var friendListeners: MutableList<FriendListener> = mutableListOf()
-    private var friends: MutableList<Friend> = ArrayList()
+object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
     interface FriendListener {
         fun onUpdateFriends(friends: MutableList<Friend>)
     }
 
-    fun addFriendListener(listener: FriendListener) {
-        friendListeners.add(listener)
-    }
+    private var friends: MutableList<Friend> = ArrayList()
 
     fun setFriends(friends: MutableList<Friend>) {
         this.friends = friends
-        friendListeners.map {
-            it.onUpdateFriends(friends)
+        getListeners().forEach { listener ->
+            listener.onUpdateFriends(friends)
         }
     }
 
     fun addFriend(friend: Friend) {
         if (friends.find { it.id == friend.id } == null) {
             friends.add(friend)
-            friendListeners.map {
-                it.onUpdateFriends(friends)
+            getListeners().forEach { listener ->
+                listener.onUpdateFriends(friends)
             }
         }
     }
@@ -38,8 +34,8 @@ object FriendManager {
             friends.remove(friend)
         }
 
-        friendListeners.map {
-            it.onUpdateFriends(friends)
+        getListeners().forEach { listener ->
+            listener.onUpdateFriends(friends)
         }
     }
 
@@ -55,8 +51,8 @@ object FriendManager {
             friends.set(friends.indexOf(it), friend)
         }
 
-        friendListeners.map {
-            it.onUpdateFriends(friends)
+        getListeners().forEach { listener ->
+            listener.onUpdateFriends(friends)
         }
     }
 
@@ -66,8 +62,8 @@ object FriendManager {
             it.location = location
             friends.set(friends.indexOf(it), it)
         }
-        friendListeners.map {
-            it.onUpdateFriends(friends)
+        getListeners().forEach { listener ->
+            listener.onUpdateFriends(friends)
         }
     }
 
@@ -78,8 +74,8 @@ object FriendManager {
             friends.set(friends.indexOf(it), it)
         }
 
-        friendListeners.map {
-            it.onUpdateFriends(friends)
+        getListeners().forEach { listener ->
+            listener.onUpdateFriends(friends)
         }
     }
 
@@ -90,8 +86,8 @@ object FriendManager {
             friends.set(friends.indexOf(it), it)
         }
 
-        friendListeners.map {
-            it.onUpdateFriends(friends)
+        getListeners().forEach { listener ->
+            listener.onUpdateFriends(friends)
         }
     }
 

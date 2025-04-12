@@ -9,7 +9,7 @@ import androidx.core.os.bundleOf
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.BaseClient
+import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
@@ -64,7 +64,6 @@ import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import net.thauvin.erik.urlencoder.UrlEncoderUtil

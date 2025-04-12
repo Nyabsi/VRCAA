@@ -2,13 +2,14 @@ package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
 import androidx.core.database.getStringOrNull
+import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.DatabaseHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
-object DatabaseManager {
+object DatabaseManager: BaseManager<Any>() {
     private val dbHelper = DatabaseHelper()
 
     fun writeFeed(feed: FeedManager.Feed) {

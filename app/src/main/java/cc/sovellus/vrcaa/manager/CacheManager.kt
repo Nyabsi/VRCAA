@@ -1,27 +1,15 @@
 package cc.sovellus.vrcaa.manager
 
-import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlin.jvm.optionals.getOrNull
 
-object CacheManager {
-
-    private var profile: User? = null
-    private var worldList: MutableList<WorldCache> = mutableListOf()
-    private var recentWorldList: MutableList<WorldCache> = mutableListOf()
-
-    private var cacheHasBeenBuilt: Boolean = false
-
-    data class WorldCache(
-        val id: String,
-        var name: String = "???",
-        var thumbnailUrl: String = "",
-    )
+object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
     interface CacheListener {
         fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) { }
@@ -30,16 +18,22 @@ object CacheManager {
         fun profileUpdated(profile: User) { }
     }
 
-    private var listeners: MutableList<CacheListener?> = mutableListOf()
+    data class WorldCache(
+        val id: String,
+        var name: String = "???",
+        var thumbnailUrl: String = "",
+    )
 
-    fun addListener(listener: CacheListener) {
-        this.listeners.add(listener)
-    }
+    private var profile: User? = null
+    private var worldList: MutableList<WorldCache> = mutableListOf()
+    private var recentWorldList: MutableList<WorldCache> = mutableListOf()
+
+    private var cacheHasBeenBuilt: Boolean = false
 
     suspend fun buildCache() {
 
-        listeners.forEach { listener ->
-            listener?.startCacheRefresh()
+        getListeners().forEach { listener ->
+            listener.startCacheRefresh()
         }
 
         App.setLoadingText(R.string.loading_text_profile)
@@ -88,8 +82,8 @@ object CacheManager {
 
         FavoriteManager.refresh()
 
-        listeners.forEach { listener ->
-            listener?.endCacheRefresh()
+        getListeners().forEach { listener ->
+            listener.endCacheRefresh()
         }
 
         if (!cacheHasBeenBuilt)
@@ -109,10 +103,11 @@ object CacheManager {
     }
 
     fun addWorld(world: World) {
-        worldList.add(WorldCache(world.id).apply {
+        val cache = WorldCache(world.id).apply {
             name = world.name
             thumbnailUrl = world.thumbnailImageUrl
-        })
+        }
+        worldList.add(cache)
     }
 
     fun updateWorld(world: World) {
@@ -129,8 +124,8 @@ object CacheManager {
 
     fun updateProfile(profile: User) {
         this.profile = profile
-        listeners.forEach { listener ->
-            listener?.profileUpdated(profile)
+        getListeners().forEach { listener ->
+            listener.profileUpdated(profile)
         }
     }
 
@@ -140,15 +135,14 @@ object CacheManager {
 
     fun addRecent(world: World) {
         recentWorldList.removeIf { it.id == world.id }
-        recentWorldList.add(
-            0,
+        recentWorldList.add(0,
             WorldCache(world.id).apply {
                 name = world.name
                 thumbnailUrl = world.thumbnailImageUrl
             }
         )
-        listeners.forEach { listener ->
-            listener?.recentlyVisitedUpdated(recentWorldList)
+        getListeners().forEach { listener ->
+            listener.recentlyVisitedUpdated(recentWorldList)
         }
     }
 }

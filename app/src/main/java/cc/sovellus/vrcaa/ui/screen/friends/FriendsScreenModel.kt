@@ -44,7 +44,7 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     }
 
     init {
-        FriendManager.addFriendListener(listener)
+        FriendManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
         if (CacheManager.isBuilt()) {
