@@ -27,20 +27,17 @@ import java.util.concurrent.TimeUnit
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
 
-class DiscordGateway(
-    private val token: String,
-    private val webHookUrl: String
-): CoroutineScope {
+class GatewaySocket : CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
     private var socket: WebSocket? = null
     private val client: OkHttpClient by lazy { OkHttpClient() }
-    private val mp = DiscordMediaProxy(webHookUrl)
     private val gson = GsonBuilder().serializeNulls().create()
     private val inflater = Inflater()
 
     // NOTE: real client actually encodes the data into etf before sending, I haven't done that yet.
+    // NOTE 2: real client uses zstd-stream instead of zlib-stream nowadays
     private var currentGatewayUrl = "wss://gateway.discord.gg/?encoding=json&v=9&compress=zlib-stream"
 
     private var sequence: Int = 0
@@ -54,6 +51,10 @@ class DiscordGateway(
     private var worldUrl: String = ""
 
     private var sessionStartTime: Long = 0
+
+    private lateinit var mp: DiscordMediaProxy
+    private var token: String = ""
+    private var webHookUrl: String = ""
 
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
 
@@ -85,19 +86,21 @@ class DiscordGateway(
                     sequence = payload.s
                 }
 
-               when(payload.op) {
-                    0 -> handleDispatch(payload)
-                    10 -> {
+                val opcode = Opcodes.toOp(payload.op)
+                when(opcode) {
+                    Opcodes.DISPATCH -> {
+                        handleDispatch(payload)
+                    }
+                    Opcodes.HELLO -> {
                         val hello = Gson().fromJson(payload.d, Hello::class.java)
                         interval = hello.heartbeatInterval
                         schedule = scheduler.scheduleWithFixedDelay(heartbeatRunnable, interval, interval, TimeUnit.MILLISECONDS)
                     }
-                    11 -> {
+                    Opcodes.HEARTBEAT_ACK -> {
                         scheduler.schedule(heartbeatRunnable, interval, TimeUnit.MILLISECONDS)
                     }
                     else -> {
-                        if (BuildConfig.DEBUG)
-                            Log.d("VRCAA", "got unknown op: ${payload.op}")
+                        Log.d("VRCAA", "server sent unknown op: ${payload.op}")
                     }
                }
             }
@@ -126,6 +129,12 @@ class DiscordGateway(
                 Log.d("VRCAA", "response error is ${t.message}")
             }
         }
+    }
+
+    // TODO: check if it was called, before connect.
+    fun setParams(newToken: String, newWebHookUrl: String) {
+        token = newToken
+        webHookUrl = newWebHookUrl
     }
 
     fun connect() {
@@ -164,8 +173,12 @@ class DiscordGateway(
                 val ready = Gson().fromJson(payload.d, Ready::class.java)
                 sessionId = ready.sessionId
                 currentGatewayUrl = "${ready.resumeGatewayUrl}/?encoding=json&v=9&compress=zlib-stream"
+
                 if (BuildConfig.DEBUG)
                     Log.d("VRCAA", "Logged in discord with sessionId: $sessionId !")
+            }
+            else -> {
+                Log.d("VRCAA", "server sent unknown dispatch: ${payload.t}")
             }
         }
     }
@@ -301,6 +314,7 @@ class DiscordGateway(
 
         socket?.send(gson.toJson(heartbeatPayload))
     }
+
     companion object {
         private const val USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.343 Chrome/130.0.6723.191 Electron/33.4.0 Safari/537.36"
 
@@ -310,5 +324,18 @@ class DiscordGateway(
         private const val APP_ASSET_SMALL_ICON_ACTIVE = "1230448141099208735"
         private const val APP_ASSET_SMALL_ICON_ASK_ME = "1230448140818317405"
         private const val APP_ASSET_SMALL_ICON_BUSY = "1230448141203931136"
+
+        enum class Opcodes(val op: Int) {
+            UNKNOWN(-1),
+            DISPATCH(0),
+            HELLO(10),
+            HEARTBEAT_ACK(11);
+
+            companion object {
+                fun toOp(value: Int): Opcodes {
+                    return entries.find { it.op == value } ?: UNKNOWN
+                }
+            }
+        }
     }
 }

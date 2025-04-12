@@ -15,6 +15,7 @@ import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.service.PipelineService
+import cc.sovellus.vrcaa.service.RichPresenceService
 import kotlinx.coroutines.launch
 
 class RichPresenceScreenModel : ScreenModel {
@@ -39,7 +40,7 @@ class RichPresenceScreenModel : ScreenModel {
         preferences.discordToken = ""
         token.value = ""
 
-        val intent = Intent(context, PipelineService::class.java)
+        val intent = Intent(context, RichPresenceService::class.java)
         context.stopService(intent)
     }
 
@@ -51,8 +52,9 @@ class RichPresenceScreenModel : ScreenModel {
         enabled.value = !enabled.value
         preferences.richPresenceEnabled = !preferences.richPresenceEnabled
 
-        val intent = Intent(context, PipelineService::class.java)
+        val intent = Intent(context, RichPresenceService::class.java)
 
+        // we have no idea if it's actually running, nobody cares, it will start regardless.
         context.stopService(intent)
         context.startService(intent)
 

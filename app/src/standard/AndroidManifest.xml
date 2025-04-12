@@ -58,6 +58,10 @@
             android:name=".service.PipelineService"
             android:foregroundServiceType="specialUse"/>
 
+        <service
+            android:name=".service.RichPresenceService"
+            android:foregroundServiceType="specialUse"/>
+
         <receiver android:name=".widgets.FriendWidgetReceiver"
             android:exported="true"
         >

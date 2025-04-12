@@ -31,11 +31,13 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.currentThemeOption
+import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.ThemeManager
 import cc.sovellus.vrcaa.service.PipelineService
+import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 import cc.sovellus.vrcaa.ui.theme.LocalTheme
@@ -88,6 +90,11 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, PipelineService::class.java)
             stopService(intent)
 
+            if (preferences.richPresenceEnabled) {
+                val intent2 = Intent(this, RichPresenceService::class.java)
+                stopService(intent2)
+            }
+
             Toast.makeText(
                 this,
                 getString(R.string.api_session_has_expired_text),
@@ -99,6 +106,12 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             startService(intent)
+
+            if (preferences.richPresenceEnabled) {
+                val intent2 = Intent(this, RichPresenceService::class.java)
+                stopService(intent2)
+                startService(intent2)
+            }
         }
 
         val token = preferences.authToken
@@ -107,6 +120,11 @@ class MainActivity : ComponentActivity() {
         if ((token.isNotBlank() && twoFactorToken.isNotEmpty()) && !invalidSession && !terminateSession && !restartSession) {
             val intent = Intent(this, PipelineService::class.java)
             startService(intent)
+
+            if (preferences.richPresenceEnabled) {
+                val intent2 = Intent(this, RichPresenceService::class.java)
+                startService(intent2)
+            }
         }
 
         setContent {

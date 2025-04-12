@@ -13,7 +13,7 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.DiscordGateway
+import cc.sovellus.vrcaa.api.discord.GatewaySocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -36,6 +36,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
+import cc.sovellus.vrcaa.manager.GatewayManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -53,7 +54,6 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: PipelineSocket? = null
-    private var gateway: DiscordGateway? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -270,8 +270,7 @@ class PipelineService : Service(), CoroutineScope {
                             instance?.let {
                                 CacheManager.addWorld(instance.world)
                                 if (preferences.richPresenceEnabled) {
-                                    val status = StatusHelper.getStatusFromString(user.user.status)
-                                    gateway?.sendPresence(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status)
+                                    GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status)
                                 }
                             }
                         }
@@ -282,9 +281,8 @@ class PipelineService : Service(), CoroutineScope {
                     val user = msg.obj as UserUpdate
 
                     if (preferences.richPresenceEnabled) {
-                        val status = StatusHelper.getStatusFromString(user.user.status)
                         launch {
-                            gateway?.sendPresence(null, null, null, status)
+                            GatewayManager.updateStatus(user.user.status)
                         }
                     }
 
@@ -404,11 +402,6 @@ class PipelineService : Service(), CoroutineScope {
                     pipeline.connect()
                 }
             }
-
-            if (preferences.richPresenceEnabled) {
-                gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
-                gateway?.connect()
-            }
         }
 
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
@@ -451,9 +444,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onDestroy() {
         pipeline?.disconnect()
-        if (preferences.richPresenceEnabled) {
-            gateway?.disconnect()
-        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {
