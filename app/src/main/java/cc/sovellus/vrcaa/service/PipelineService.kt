@@ -87,6 +87,12 @@ class PipelineService : Service(), CoroutineScope {
                 var token = api.auth.fetchToken()
                 if (token != null) {
                     pipeline?.restartWithToken(token)
+                } else {
+                    delay(SESSION_REFRESH_INTERVAL)
+                    token = api.auth.fetchToken()
+                    if (token != null) {
+                        pipeline?.restartWithToken(token)
+                    }
                 }
             }
         }
@@ -479,5 +485,6 @@ class PipelineService : Service(), CoroutineScope {
         private const val NOTIFICATION_ID: Int = 42069
         private const val INITIAL_INTERVAL: Long = 1000
         private const val RESTART_INTERVAL: Long = 1800000
+        private const val SESSION_REFRESH_INTERVAL: Long = 5000
     }
 }
