@@ -229,7 +229,7 @@ class GatewaySocket : CoroutineScope {
         assets["small_text"] = status.toString()
 
         val timestamps = ArrayMap<String, Any>()
-        timestamps["start"] = sessionStartTime / 1000
+        timestamps["start"] = sessionStartTime
 
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
