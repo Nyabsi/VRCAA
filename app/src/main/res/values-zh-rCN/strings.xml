@@ -164,6 +164,8 @@
     <string name="feed_friend_request_label">好友请求</string>
     <string name="feed_friend_request_text">想要添加您为好友。</string>
     <string name="feed_search_placeholder">搜索用户或房间…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">关于</string>
     <string name="about_page_open_source_licenses_title">开源许可证</string>
