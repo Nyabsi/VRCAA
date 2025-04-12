@@ -135,6 +135,9 @@ class GatewaySocket : CoroutineScope {
     fun setParams(newToken: String, newWebHookUrl: String) {
         token = newToken
         webHookUrl = newWebHookUrl
+
+        if (newWebHookUrl.isNotEmpty())
+            mp = DiscordMediaProxy(webHookUrl)
     }
 
     fun connect() {
