@@ -1,6 +1,5 @@
 package cc.sovellus.vrcaa.api.vrchat.pipeline
 
-import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -33,7 +32,6 @@ class PipelineSocket(
 
     interface SocketListener {
         fun onMessage(message: Any?)
-        fun onSessionExpire()
     }
 
     private var socketListener: SocketListener? = null
@@ -138,8 +136,6 @@ class PipelineSocket(
             ) {
                 when (response?.code) {
                     401 -> {
-                        Log.d("VRCAA", "Pipeline was disconnected because it hit 401, attempting session renewal")
-                        socketListener?.onSessionExpire()
                         shouldReconnect = false
                     }
                 }
@@ -171,21 +167,6 @@ class PipelineSocket(
 
     fun disconnect() {
         socket.close(1000, null)
-    }
-
-    fun restartWithToken(newToken: String) {
-
-        shouldReconnect = false
-
-        val headers = Headers.Builder()
-            .add("User-Agent", Config.API_USER_AGENT)
-
-        val request = Request.Builder()
-            .url(url = "${Config.PIPELINE_BASE_URL}/?auth=${newToken}")
-            .headers(headers = headers.build())
-            .build()
-
-        socket = client.newWebSocket(request, listener)
     }
 
     fun setListener(listener: SocketListener) {

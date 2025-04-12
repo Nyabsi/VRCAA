@@ -11,13 +11,9 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
-import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.os.bundleOf
-import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.DiscordGateway
-import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -32,7 +28,6 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
-import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
@@ -77,24 +72,6 @@ class PipelineService : Service(), CoroutineScope {
                 serviceHandler?.obtainMessage()?.also { msg ->
                     msg.obj = message
                     serviceHandler?.sendMessage(msg)
-                }
-            }
-        }
-
-        override fun onSessionExpire() {
-            launch {
-                val response = api.auth.login(
-                    preferences.userCredentials.first,
-                    preferences.userCredentials.second
-                )
-
-                if (response.success && response.authType == AuthType.AUTH_NONE) {
-                    Log.d("VRCAA", "stage 2: new token acquired, restarting PipelineSocket")
-                    api.auth.fetchToken()?.let { token ->
-                        pipeline?.disconnect()
-                        pipeline?.restartWithToken(token)
-                        Log.d("VRCAA", "stage 3: restarted with new token")
-                    }
                 }
             }
         }
