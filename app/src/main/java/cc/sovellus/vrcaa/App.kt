@@ -58,5 +58,7 @@ class App : Application() {
 
         fun getLoadingText(): MutableState<String> { return loadingText }
         fun setLoadingText(resourceId: Int) { loadingText.value = context.getString(resourceId) }
+
+        const val PREFERENCES_NAME = "vrcaa_prefs"
     }
 }
