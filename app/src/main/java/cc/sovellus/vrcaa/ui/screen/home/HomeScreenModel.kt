@@ -53,7 +53,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
 
     init {
         mutableState.value = HomeState.Loading
-        FriendManager.addFriendListener(listener)
+        FriendManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
         if (CacheManager.isBuilt()) {

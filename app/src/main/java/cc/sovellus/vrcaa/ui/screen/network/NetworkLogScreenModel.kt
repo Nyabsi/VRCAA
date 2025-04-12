@@ -21,7 +21,7 @@ class NetworkLogScreenModel : ScreenModel {
     }
 
     init {
-        DebugManager.setListener(listener)
+        DebugManager.addListener(listener)
         val metadata = DebugManager.getMetadata()
         if (metadata.isNotEmpty())
             metadataStateFlow.value = metadata

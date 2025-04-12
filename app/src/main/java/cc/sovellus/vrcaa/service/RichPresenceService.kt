@@ -42,7 +42,7 @@ class RichPresenceService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
-        GatewayManager.setListener(listener)
+        GatewayManager.addListener(listener)
         val preferences = getSharedPreferences("vrcaa_prefs", 0)
         gateway.setParams(preferences.discordToken, preferences.richPresenceWebhookUrl)
         gateway.connect()

@@ -1,10 +1,9 @@
 package cc.sovellus.vrcaa.api.search.avtrdb
 
-import cc.sovellus.vrcaa.api.BaseClient
+import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse
 import com.google.gson.Gson
-import kotlinx.coroutines.delay
 import okhttp3.Headers
 
 class AvtrDbProvider : BaseClient() {

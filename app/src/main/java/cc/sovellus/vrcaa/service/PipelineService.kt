@@ -13,7 +13,6 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.GatewaySocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -25,9 +24,7 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
-import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
-import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
@@ -268,7 +265,11 @@ class PipelineService : Service(), CoroutineScope {
                             val location = LocationHelper.parseLocationInfo(user.location)
                             val instance = api.instances.fetchInstance(user.location)
                             instance?.let {
-                                CacheManager.addWorld(instance.world)
+                                if (CacheManager.isWorldCached(it.id))
+                                    CacheManager.updateWorld(instance.world)
+                                else
+                                    CacheManager.addWorld(instance.world)
+                                CacheManager.addRecent(instance.world)
                                 if (preferences.richPresenceEnabled) {
                                     GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status, instance.worldId)
                                 }

@@ -1,19 +1,15 @@
 package cc.sovellus.vrcaa.manager
 
+import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.util.UUID
 
 
-object FeedManager {
+object FeedManager : BaseManager<FeedManager.FeedListener>() {
 
-    private var feedListener: FeedListener? = null
-    private var feedList: MutableList<Feed> = ArrayList()
-
-    init {
-        DatabaseManager.readFeeds().map {
-            feedList.add(it)
-        }
+    interface FeedListener {
+        fun onReceiveUpdate(list: MutableList<Feed>)
     }
 
     enum class FeedType {
@@ -44,21 +40,23 @@ object FeedManager {
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
     )
 
-    interface FeedListener {
-        fun onReceiveUpdate(list: MutableList<Feed>)
+    init {
+        DatabaseManager.readFeeds().map {
+            feedList.add(it)
+        }
     }
+
+    private var feedList: MutableList<Feed> = ArrayList()
 
     fun addFeed(feed: Feed) {
         feedList.add(feed)
         DatabaseManager.writeFeed(feed)
-        feedListener?.onReceiveUpdate(feedList)
+        getListeners().forEach { listener ->
+            listener.onReceiveUpdate(feedList)
+        }
     }
 
     fun getFeed(): MutableList<Feed> {
         return feedList
-    }
-
-    fun setFeedListener(listener: FeedListener) {
-        feedListener = listener
     }
 }

@@ -1,23 +1,23 @@
 package cc.sovellus.vrcaa.manager
 
-object GatewayManager {
+import cc.sovellus.vrcaa.base.BaseManager
 
-    private var gatewayListener: GatewayListener? = null
+object GatewayManager : BaseManager<GatewayManager.GatewayListener>() {
 
     interface GatewayListener {
         suspend fun onUpdateWorld(name: String, metadata: String, imageUrl: String, status: String, id: String)
         suspend fun onUpdateStatus(status: String)
     }
 
-    fun setListener(listener: GatewayListener) {
-        gatewayListener = listener
-    }
-
     suspend fun updateWorld(name: String, metadata: String, imageUrl: String, status: String, id: String) {
-        gatewayListener?.onUpdateWorld(name, metadata, imageUrl, status, id)
+        getListeners().forEach { listener ->
+            listener.onUpdateWorld(name, metadata, imageUrl, status, id)
+        }
     }
 
     suspend fun updateStatus(status: String) {
-        gatewayListener?.onUpdateStatus(status)
+        getListeners().forEach { listener ->
+            listener.onUpdateStatus(status)
+        }
     }
 }
