@@ -44,7 +44,6 @@ import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
@@ -84,14 +83,17 @@ class PipelineService : Service(), CoroutineScope {
 
         override fun onSessionExpire() {
             launch {
-                var token = api.auth.fetchToken()
-                if (token != null) {
-                    pipeline?.restartWithToken(token)
-                } else {
-                    delay(SESSION_REFRESH_INTERVAL)
-                    token = api.auth.fetchToken()
-                    if (token != null) {
+                val response = api.auth.login(
+                    preferences.userCredentials.first,
+                    preferences.userCredentials.second
+                )
+
+                if (response.success && response.authType == AuthType.AUTH_NONE) {
+                    Log.d("VRCAA", "stage 2: new token acquired, restarting PipelineSocket")
+                    api.auth.fetchToken()?.let { token ->
+                        pipeline?.disconnect()
                         pipeline?.restartWithToken(token)
+                        Log.d("VRCAA", "stage 3: restarted with new token")
                     }
                 }
             }
@@ -485,6 +487,5 @@ class PipelineService : Service(), CoroutineScope {
         private const val NOTIFICATION_ID: Int = 42069
         private const val INITIAL_INTERVAL: Long = 1000
         private const val RESTART_INTERVAL: Long = 1800000
-        private const val SESSION_REFRESH_INTERVAL: Long = 5000
     }
 }
