@@ -239,8 +239,8 @@ class PipelineService : Service(), CoroutineScope {
                                     api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
                                         var name = metadata.name
 
-                                        name = name.substring(name.indexOf("- ") + 3)
-                                        name = name.substring(0, name.indexOf("- ") - 3)
+                                        name = name.substring(name.indexOf("- ") + 1)
+                                        name = name.substring(0, name.indexOf("- ") - 1)
 
                                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
                                             friendId = update.userId

@@ -64,8 +64,8 @@ class UserProfileScreenModel(
                     api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
                         var name = metadata.name
 
-                        name = name.substring(name.indexOf("- ") + 3)
-                        name = name.substring(0, name.indexOf("- ") - 3)
+                        name = name.substring(name.indexOf("- ") + 1)
+                        name = name.substring(0, name.indexOf("- ") - 1)
 
                         val searchAvatarsByName = avatarProvider.search(name)
                         if (searchAvatarsByName.isNotEmpty()) {
