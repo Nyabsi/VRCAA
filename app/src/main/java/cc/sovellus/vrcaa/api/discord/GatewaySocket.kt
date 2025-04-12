@@ -248,7 +248,7 @@ class GatewaySocket : CoroutineScope {
         activity["timestamps"] = timestamps
         activity["assets"] = assets
         // TODO: add a toggle
-        // activity["buttons"] = arrayOf<Any>(worldButton, advertButton)
+        activity["buttons"] = arrayOf<Any>(worldButton, advertButton)
 
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
