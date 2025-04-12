@@ -231,14 +231,6 @@ class GatewaySocket : CoroutineScope {
         val timestamps = ArrayMap<String, Any>()
         timestamps["start"] = sessionStartTime
 
-        val worldButton = ArrayMap<String, Any>()
-        worldButton["label"] = "Visit World"
-        worldButton["url"] = "https://vrchat.com/home/world/${worldId}/info"
-
-        val advertButton = ArrayMap<String, Any>()
-        advertButton["label"] = "Get VRCAA"
-        advertButton["url"] = "https://play.google.com/store/apps/details?id=cc.sovellus.vrcaa"
-
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
         activity["application_id"] = APP_ID
@@ -247,8 +239,6 @@ class GatewaySocket : CoroutineScope {
         activity["type"] = 0
         activity["timestamps"] = timestamps
         activity["assets"] = assets
-        // TODO: add a toggle
-        activity["buttons"] = arrayOf<Any>(worldButton, advertButton)
 
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
