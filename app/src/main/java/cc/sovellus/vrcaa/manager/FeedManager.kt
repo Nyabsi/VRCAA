@@ -40,13 +40,13 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
     )
 
+    private var feedList: MutableList<Feed> = ArrayList()
+
     init {
         DatabaseManager.readFeeds().map {
             feedList.add(it)
         }
     }
-
-    private var feedList: MutableList<Feed> = ArrayList()
 
     fun addFeed(feed: Feed) {
         feedList.add(feed)
