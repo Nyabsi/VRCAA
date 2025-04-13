@@ -24,6 +24,7 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
+import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
@@ -220,6 +221,30 @@ class PipelineService : Service(), CoroutineScope {
                             }
 
                             FeedManager.addFeed(feed)
+                        }
+
+                        // Oh... You don't have VRChat+ I'm sorry to hear that...
+                        if (friend.profilePicOverride.isEmpty() && friend.currentAvatarImageUrl.isNotEmpty() && friend.currentAvatarImageUrl != update.user.currentAvatarImageUrl) {
+                            launch {
+                                val fileId = ApiHelper.extractFileIdFromUrl(update.user.currentAvatarImageUrl)
+                                fileId?.let {
+                                    api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
+
+                                        val name = metadata.name.split(" - ")
+
+                                        if (name.size > 1) {
+                                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
+                                                friendId = update.userId
+                                                friendName = update.user.displayName
+                                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                                                avatarName = name[1]
+                                            }
+
+                                            FeedManager.addFeed(feed)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
