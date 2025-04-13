@@ -99,3 +99,7 @@ internal var SharedPreferences.columnCountOption: Int
 internal var SharedPreferences.fixedColumnSize: Int
     get() = getInt("fixedColumnSize", 2)
     set(it) = edit { putInt("fixedColumnSize", it) }
+
+internal var SharedPreferences.crashAnalytics: Boolean
+    get() = getBoolean("crashAnalytics", true)
+    set(it) = edit { putBoolean("crashAnalytics", it) }
