@@ -13,6 +13,8 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendDelete
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendLocation
@@ -22,8 +24,6 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
-import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
-import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
@@ -46,13 +46,14 @@ class PipelineService : Service(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + SupervisorJob()
 
-    private var preferences: SharedPreferences? = null
+    private lateinit var preferences: SharedPreferences
+
     private var pipeline: PipelineSocket? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
-    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
+    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
     private var refreshTask: Runnable = Runnable {
         launch {
@@ -77,6 +78,8 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val update = msg.obj as FriendOnline
+
+                    val friend = FriendManager.getFriend(update.userId)
 
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
@@ -245,6 +248,7 @@ class PipelineService : Service(), CoroutineScope {
                                     }
                                 }
                             }
+
                         }
                     }
 
@@ -254,8 +258,17 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    if (user.world != null && user.location != "offline") {
-                        CacheManager.addRecent(user.world)
+                    if (user.location.contains("wrld_")) {
+                        launch {
+                            val instance = api.instances.fetchInstance(user.location)
+                            instance?.let {
+                                if (CacheManager.isWorldCached(it.id))
+                                    CacheManager.updateWorld(instance.world)
+                                else
+                                    CacheManager.addWorld(instance.world)
+                                CacheManager.addRecent(instance.world)
+                            }
+                        }
                     }
                 }
 
@@ -348,7 +361,7 @@ class PipelineService : Service(), CoroutineScope {
                                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
                                         friendId = notification.senderUserId
                                         friendName = notification.senderUsername
-                                        friendPictureUrl = sender?.let { it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } } }.toString()
+                                        friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
                                     }
 
                                     FeedManager.addFeed(feed)
