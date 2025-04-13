@@ -229,21 +229,19 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         // Oh... You don't have VRChat+ I'm sorry to hear that...
-                        if (friend.currentAvatarImageUrl != update.user.currentAvatarImageUrl) {
+                        if (friend.profilePicOverride.isEmpty() && friend.currentAvatarImageUrl.isNotEmpty() && friend.currentAvatarImageUrl != update.user.currentAvatarImageUrl) {
                             launch {
                                 val fileId = ApiHelper.extractFileIdFromUrl(update.user.currentAvatarImageUrl)
                                 fileId?.let {
                                     api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
-                                        var name = metadata.name
 
-                                        name = name.substring(name.indexOf("- ") + 1)
-                                        name = name.substring(0, name.indexOf("- ") - 1)
+                                        val name = metadata.name.split(" - ")
 
                                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
                                             friendId = update.userId
                                             friendName = update.user.displayName
                                             friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
-                                            avatarName = name
+                                            avatarName = name[1]
                                         }
 
                                         FeedManager.addFeed(feed)
