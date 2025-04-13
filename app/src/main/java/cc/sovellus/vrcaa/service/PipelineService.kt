@@ -237,14 +237,16 @@ class PipelineService : Service(), CoroutineScope {
 
                                         val name = metadata.name.split(" - ")
 
-                                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
-                                            friendId = update.userId
-                                            friendName = update.user.displayName
-                                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
-                                            avatarName = name[1]
-                                        }
+                                        if (name.size > 1) {
+                                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
+                                                friendId = update.userId
+                                                friendName = update.user.displayName
+                                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                                                avatarName = name[1]
+                                            }
 
-                                        FeedManager.addFeed(feed)
+                                            FeedManager.addFeed(feed)
+                                        }
                                     }
                                 }
                             }
