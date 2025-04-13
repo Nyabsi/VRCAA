@@ -119,6 +119,22 @@ object FavoriteManager : BaseManager<Any>() {
         return api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, metadata.visibility)
     }
 
+    suspend fun updateGroupMetadataOnlyName(tag: String, metadata: FavoriteGroupMetadata): Boolean {
+
+        val tmp = tagToGroupMetadataMap
+        tagToGroupMetadataMap[tag] = metadata
+        tagToGroupMetadataMap[tag]?.size = tmp[tag]?.size ?: -1 // re-adjust size
+
+        val dType = when (metadata.type) {
+            "world" -> FavoriteType.FAVORITE_WORLD
+            "avatar" -> FavoriteType.FAVORITE_AVATAR
+            "friend" -> FavoriteType.FAVORITE_FRIEND
+            else -> FavoriteType.FAVORITE_NONE
+        }
+
+        return api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, null)
+    }
+
     // it's the 21th century, and we have computers faster than super computers in our pockets.
     fun isFavorite(type: String, id: String): Boolean {
         return when (type) {
