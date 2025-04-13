@@ -827,13 +827,15 @@ class HttpClient : BaseClient(), CoroutineScope {
             type: FavoriteType,
             tag: String,
             newDisplayName: String,
-            newVisibility: String
+            newVisibility: String?
         ): Boolean {
 
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
-            val body = "{\"displayName\":\"$newDisplayName\",\"visibility\":\"$newVisibility\"}"
+            var body = "{\"displayName\":\"$newDisplayName\"}"
+            if (newVisibility != null)
+                body = "{\"displayName\":\"$newDisplayName\",\"visibility\":\"$newVisibility\"}"
 
             val user = CacheManager.getProfile()?.id
 

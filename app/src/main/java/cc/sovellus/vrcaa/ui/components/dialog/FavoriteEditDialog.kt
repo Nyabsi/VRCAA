@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FavoriteEditDialog(
     tag: String,
+    isFriend: Boolean,
     onDismiss: () -> Unit,
     onConfirmation: (result: Boolean) -> Unit
 ) {
@@ -84,18 +85,20 @@ fun FavoriteEditDialog(
                     )
                 }
 
-                item {
-                    Text(
-                        text = stringResource(R.string.favorite_edit_visibility),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Left,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(bottom = 4.dp, top = 4.dp)
-                    )
-                }
-                item {
-                    ComboInput(options = options, selection = visibility, optionsFormat)
+                if (!isFriend) {
+                    item {
+                        Text(
+                            text = stringResource(R.string.favorite_edit_visibility),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Left,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(bottom = 4.dp, top = 4.dp)
+                        )
+                    }
+                    item {
+                        ComboInput(options = options, selection = visibility, optionsFormat)
+                    }
                 }
             }
         },
@@ -108,7 +111,10 @@ fun FavoriteEditDialog(
                     coroutineScope.launch {
                         val metadata = FavoriteManager.getGroupMetadata(tag)
                         metadata?.let {
-                            val result = FavoriteManager.updateGroupMetadata(tag, metadata.copy(displayName = name.value, visibility = visibility.value))
+                            val result = if (isFriend)
+                                FavoriteManager.updateGroupMetadataOnlyName(tag, metadata.copy(displayName = name.value))
+                            else
+                                FavoriteManager.updateGroupMetadata(tag, metadata.copy(displayName = name.value, visibility = visibility.value))
 
                             Toast.makeText(
                                 context,

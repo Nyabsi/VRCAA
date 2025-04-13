@@ -67,9 +67,17 @@ class FavoritesScreen : Screen {
     fun ShowScreen(model: FavoritesScreenModel) {
 
         if (model.editDialogShown.value) {
-            FavoriteEditDialog(model.currentSelectedGroup.value,
-                onDismiss = { model.editDialogShown.value = false },
-                onConfirmation = { model.editDialogShown.value = false }
+            FavoriteEditDialog(
+                model.currentSelectedGroup.value,
+                model.currentSelectedIsFriend.value,
+                onDismiss = {
+                    model.editDialogShown.value = false
+                    model.currentSelectedIsFriend.value = false
+                },
+                onConfirmation = {
+                    model.editDialogShown.value = false
+                    model.currentSelectedIsFriend.value = false
+                }
             )
         }
 
@@ -210,6 +218,7 @@ class FavoritesScreen : Screen {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
+                        model.currentSelectedIsFriend.value = true
                         model.currentSelectedGroup.value = item.key
                         model.editDialogShown.value = true
                     }

@@ -32,6 +32,7 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     var currentIndex = mutableIntStateOf(0)
     var currentSelectedGroup = mutableStateOf("")
     var editDialogShown = mutableStateOf(false)
+    var currentSelectedIsFriend = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun profileUpdated(profile: User) { }
