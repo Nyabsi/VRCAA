@@ -52,7 +52,7 @@ class PipelineService : Service(), CoroutineScope {
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
-    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
+    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
 
     private var refreshTask: Runnable = Runnable {
         launch {
@@ -370,7 +370,6 @@ class PipelineService : Service(), CoroutineScope {
         this.preferences = getSharedPreferences("vrcaa_prefs", 0)
 
         launch {
-            // fetchToken is used to clean "auth_xxxx_xxxx_xxxx_xxxx" token without the cookie header crap
             api.auth.fetchToken()?.let { token ->
                 pipeline = PipelineSocket(token)
                 pipeline?.let { pipeline ->

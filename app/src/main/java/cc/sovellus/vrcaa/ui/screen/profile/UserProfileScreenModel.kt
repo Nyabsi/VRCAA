@@ -62,19 +62,19 @@ class UserProfileScreenModel(
 
                 if (fileId != null) {
                     api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
-                        var name = metadata.name
 
-                        name = name.substring(9)
-                        name = name.substring(0, name.indexOf('-') - 1)
+                        val name = metadata.name.split(" - ")
 
-                        val searchAvatarsByName = avatarProvider.search(name)
-                        if (searchAvatarsByName.isNotEmpty()) {
-                            for (avatar in searchAvatarsByName) {
-                                avatar.imageUrl?.let {
-                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                    if (avatarFileId == fileId) {
-                                        callback(avatar.id)
-                                        return@launch
+                        if (name.size > 1) {
+                            val searchAvatarsByName = avatarProvider.search(name[1])
+                            if (searchAvatarsByName.isNotEmpty()) {
+                                for (avatar in searchAvatarsByName) {
+                                    avatar.imageUrl?.let {
+                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
+                                        if (avatarFileId == fileId) {
+                                            callback(avatar.id)
+                                            return@launch
+                                        }
                                     }
                                 }
                             }
