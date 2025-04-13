@@ -4,6 +4,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
@@ -24,7 +25,7 @@ class UserProfileScreenModel(
         data class Result(val profile: LimitedUser?, val instance: Instance?) : UserProfileState()
     }
 
-    private val avatarProvider = JustHPartyProvider()
+    private val avatarProvider = AvtrDbProvider()
 
     private var profile: LimitedUser? = null
     private var instance: Instance? = null
@@ -66,9 +67,9 @@ class UserProfileScreenModel(
                         val name = metadata.name.split(" - ")
 
                         if (name.size > 1) {
-                            val searchAvatarsByName = avatarProvider.search(name[1])
-                            if (searchAvatarsByName.isNotEmpty()) {
-                                for (avatar in searchAvatarsByName) {
+                            val (_, nameAvatars) = avatarProvider.search(name[1])
+                            if (nameAvatars.isNotEmpty()) {
+                                for (avatar in nameAvatars) {
                                     avatar.imageUrl?.let {
                                         val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
                                         if (avatarFileId == fileId) {
@@ -81,9 +82,9 @@ class UserProfileScreenModel(
                         }
 
                         // fallback to using author search
-                        val searchAvatarsByAuthor = avatarProvider.searchByAuthor(metadata.ownerId)
-                        if (searchAvatarsByAuthor.isNotEmpty()) {
-                            for (avatar in searchAvatarsByAuthor) {
+                        val (_, authorAvatars) = avatarProvider.search(metadata.ownerId)
+                        if (authorAvatars.isNotEmpty()) {
+                            for (avatar in authorAvatars) {
                                 avatar.imageUrl?.let {
                                     val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
                                     if (avatarFileId == fileId) {
