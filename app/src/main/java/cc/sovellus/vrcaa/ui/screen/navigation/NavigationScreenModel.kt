@@ -89,6 +89,17 @@ class NavigationScreenModel : ScreenModel {
             }
         }
 
+        override fun onSessionRefresh() {
+            val intent = Intent(App.getContext(), PipelineService::class.java)
+            App.getContext().stopService(intent)
+
+            val bundle = bundleOf()
+            bundle.putBoolean("SKIP_INIT_CACHE", true)
+
+            intent.putExtras(bundle)
+            App.getContext().startService(intent)
+        }
+
         override fun noInternet() {
             hasNoInternet.value = true
         }

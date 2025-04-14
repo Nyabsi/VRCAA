@@ -87,6 +87,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     interface SessionListener {
         fun onSessionInvalidate()
+        fun onSessionRefresh()
         fun noInternet()
     }
 
@@ -126,14 +127,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     )
 
                     if (response.success && response.authType == AuthType.AUTH_NONE) {
-                        val intent = Intent(App.getContext(), PipelineService::class.java)
-                        App.getContext().stopService(intent)
-
-                        val bundle = bundleOf()
-                        bundle.putBoolean("SKIP_INIT_CACHE", true)
-
-                        intent.putExtras(bundle)
-                        App.getContext().startService(intent)
+                        listener?.onSessionRefresh()
                     } else {
                         listener?.onSessionInvalidate()
                     }
