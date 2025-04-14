@@ -13,7 +13,6 @@ import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.DiscordGateway
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -25,9 +24,8 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
-import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
-import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
+import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
@@ -35,6 +33,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
+import cc.sovellus.vrcaa.manager.GatewayManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -52,7 +51,6 @@ class PipelineService : Service(), CoroutineScope {
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: PipelineSocket? = null
-    private var gateway: DiscordGateway? = null
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -83,10 +81,12 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendOnline -> {
                     val update = msg.obj as FriendOnline
 
+                    val friend = FriendManager.getFriend(update.userId)
+
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                     }
 
                     if (NotificationHelper.isOnWhitelist(update.userId) &&
@@ -119,7 +119,7 @@ class PipelineService : Service(), CoroutineScope {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendId = friend.id
                             friendName = friend.displayName
-                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } }
                         }
 
                         if (NotificationHelper.isOnWhitelist(friend.id) &&
@@ -178,7 +178,7 @@ class PipelineService : Service(), CoroutineScope {
                             friendName = update.user.displayName
                             travelDestination = LocationHelper.getReadableLocation(update.location)
                             worldId = update.worldId
-                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                         }
 
                         FeedManager.addFeed(feed)
@@ -201,7 +201,7 @@ class PipelineService : Service(), CoroutineScope {
                             val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_STATUS).apply {
                                 friendId = update.userId
                                 friendName = update.user.displayName
-                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }.toString()
+                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                                 friendStatus = StatusHelper.getStatusFromString(update.user.status)
                             }
 
@@ -227,6 +227,31 @@ class PipelineService : Service(), CoroutineScope {
 
                             FeedManager.addFeed(feed)
                         }
+
+                        // Oh... You don't have VRChat+ I'm sorry to hear that...
+                        if (friend.profilePicOverride.isEmpty() && friend.currentAvatarImageUrl.isNotEmpty() && friend.currentAvatarImageUrl != update.user.currentAvatarImageUrl) {
+                            launch {
+                                val fileId = ApiHelper.extractFileIdFromUrl(update.user.currentAvatarImageUrl)
+                                fileId?.let {
+                                    api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
+
+                                        val name = metadata.name.split(" - ")
+
+                                        if (name.size > 1) {
+                                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_AVATAR).apply {
+                                                friendId = update.userId
+                                                friendName = update.user.displayName
+                                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                                                avatarName = name[1]
+                                            }
+
+                                            FeedManager.addFeed(feed)
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
                     }
 
                     FriendManager.updateFriend(update.user)
@@ -235,16 +260,18 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    if (user.world != null && user.location != "offline") {
-                        CacheManager.addRecent(user.world)
-
-                        if (preferences.richPresenceEnabled) {
-                            val status = StatusHelper.getStatusFromString(user.user.status)
+                    if (user.location.contains("wrld_")) {
+                        launch {
                             val location = LocationHelper.parseLocationInfo(user.location)
-                            launch {
-                                val instance = api.instances.fetchInstance(user.location)
-                                instance?.let {
-                                    instance.world.name.let { gateway?.sendPresence(it, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, status) }
+                            val instance = api.instances.fetchInstance(user.location)
+                            instance?.let {
+                                if (CacheManager.isWorldCached(it.id))
+                                    CacheManager.updateWorld(instance.world)
+                                else
+                                    CacheManager.addWorld(instance.world)
+                                CacheManager.addRecent(instance.world)
+                                if (preferences.richPresenceEnabled) {
+                                    GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status, instance.worldId)
                                 }
                             }
                         }
@@ -255,8 +282,9 @@ class PipelineService : Service(), CoroutineScope {
                     val user = msg.obj as UserUpdate
 
                     if (preferences.richPresenceEnabled) {
-                        val status = StatusHelper.getStatusFromString(user.user.status)
-                        launch { gateway?.sendPresence(null, null, null, status) }
+                        launch {
+                            GatewayManager.updateStatus(user.user.status)
+                        }
                     }
 
                     CacheManager.updateProfile(user.user)
@@ -270,7 +298,7 @@ class PipelineService : Service(), CoroutineScope {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_REMOVED).apply {
                             friendId = update.userId
                             friendName = friend.displayName
-                            friendPictureUrl = friend.userIcon.ifEmpty { friend.currentAvatarImageUrl }
+                            friendPictureUrl = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } }
                         }
 
                         NotificationHelper.pushNotification(
@@ -291,7 +319,7 @@ class PipelineService : Service(), CoroutineScope {
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                     }
 
                     NotificationHelper.pushNotification(
@@ -311,7 +339,7 @@ class PipelineService : Service(), CoroutineScope {
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.currentAvatarImageUrl }
+                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
                     }
 
                     if (NotificationHelper.isOnWhitelist(update.userId) &&
@@ -375,14 +403,7 @@ class PipelineService : Service(), CoroutineScope {
                     pipeline.connect()
                 }
             }
-
-            if (preferences.richPresenceEnabled) {
-                gateway = DiscordGateway(preferences.discordToken, preferences.richPresenceWebhookUrl)
-                gateway?.connect()
-            }
         }
-
-        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
@@ -411,14 +432,19 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
+        val skipCacheInit = intent?.extras?.getBoolean("SKIP_INIT_CACHE") ?: false
+
+        var initialRefresh = INITIAL_INTERVAL
+        if (skipCacheInit)
+            initialRefresh = RESTART_INTERVAL
+
+        scheduler.scheduleWithFixedDelay(refreshTask, initialRefresh, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
+
         return START_STICKY_COMPATIBILITY
     }
 
     override fun onDestroy() {
         pipeline?.disconnect()
-        if (preferences.richPresenceEnabled) {
-            gateway?.disconnect()
-        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -427,7 +453,7 @@ class PipelineService : Service(), CoroutineScope {
 
     companion object {
         private const val NOTIFICATION_ID: Int = 42069
-        private const val INITIAL_INTERVAL: Long = 50
+        private const val INITIAL_INTERVAL: Long = 1000
         private const val RESTART_INTERVAL: Long = 1800000
     }
 }

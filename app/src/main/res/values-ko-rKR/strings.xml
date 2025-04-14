@@ -164,6 +164,8 @@
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
@@ -224,8 +226,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">View Groups</string>
     <string name="user_dropdown_view_worlds">View Worlds</string>
@@ -242,6 +245,7 @@
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
     <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Are you sure?</string>
     <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
@@ -253,6 +257,7 @@
     <string-array name="favorites_selection_options">
         <item>Worlds</item>
         <item>Avatars</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Add to favorites</string>
     <string name="favorite_label_remove">Remove from favorites</string>

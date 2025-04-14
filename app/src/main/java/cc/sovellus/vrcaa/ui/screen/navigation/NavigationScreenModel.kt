@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -15,13 +16,16 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
+import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
+import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
@@ -56,6 +60,7 @@ class NavigationScreenModel : ScreenModel {
     val bioLinks = mutableStateListOf("", "", "")
     val ageVerified = mutableStateOf(false)
     val verifiedStatus = mutableStateOf("")
+    val pronouns = mutableStateOf("")
 
     var feedFilterQuery = mutableStateOf("")
     var showFilteredFeed = mutableStateOf(false)
@@ -67,7 +72,6 @@ class NavigationScreenModel : ScreenModel {
         override fun onSessionInvalidate() {
             if (!invalidSession.value) {
                 invalidSession.value = true
-
                 val serviceIntent = Intent(context, PipelineService::class.java)
                 context.stopService(serviceIntent)
 
@@ -152,6 +156,7 @@ class NavigationScreenModel : ScreenModel {
             status.value = it.status
             description.value = it.statusDescription
             bio.value = it.bio
+            pronouns.value = it.pronouns
 
             for (i in 1..it.bioLinks.size)
             {

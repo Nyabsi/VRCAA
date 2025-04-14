@@ -1,19 +1,15 @@
 package cc.sovellus.vrcaa.manager
 
+import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.util.UUID
 
 
-object FeedManager {
+object FeedManager : BaseManager<FeedManager.FeedListener>() {
 
-    private var feedListener: FeedListener? = null
-    private var feedList: MutableList<Feed> = ArrayList()
-
-    init {
-        DatabaseManager.readFeeds().map {
-            feedList.add(it)
-        }
+    interface FeedListener {
+        fun onReceiveUpdate(list: MutableList<Feed>)
     }
 
     enum class FeedType {
@@ -23,7 +19,8 @@ object FeedManager {
         FRIEND_FEED_STATUS,
         FRIEND_FEED_FRIEND_REQUEST,
         FRIEND_FEED_REMOVED,
-        FRIEND_FEED_ADDED;
+        FRIEND_FEED_ADDED,
+        FRIEND_FEED_AVATAR;
 
         companion object {
             fun fromInt(value: Int) = entries.first { it.ordinal == value }
@@ -39,24 +36,27 @@ object FeedManager {
         var friendStatus: StatusHelper.Status = StatusHelper.Status.Offline,
         var travelDestination: String = "",
         var worldId: String = "",
+        var avatarName: String = "",
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
     )
 
-    interface FeedListener {
-        fun onReceiveUpdate(list: MutableList<Feed>)
+    private var feedList: MutableList<Feed> = ArrayList()
+
+    init {
+        DatabaseManager.readFeeds().map {
+            feedList.add(it)
+        }
     }
 
     fun addFeed(feed: Feed) {
         feedList.add(feed)
         DatabaseManager.writeFeed(feed)
-        feedListener?.onReceiveUpdate(feedList)
+        getListeners().forEach { listener ->
+            listener.onReceiveUpdate(feedList)
+        }
     }
 
     fun getFeed(): MutableList<Feed> {
         return feedList
-    }
-
-    fun setFeedListener(listener: FeedListener) {
-        feedListener = listener
     }
 }

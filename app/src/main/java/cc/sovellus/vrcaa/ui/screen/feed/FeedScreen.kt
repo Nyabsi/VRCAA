@@ -206,6 +206,31 @@ fun FeedList(feed: SnapshotStateList<FeedManager.Feed>, filter: Boolean = false)
                         }
                     )
                 }
+
+                FeedManager.FeedType.FRIEND_FEED_AVATAR -> {
+                    val text = buildAnnotatedString {
+                        append(item.friendName)
+                        append(" ")
+                        withStyle(style = SpanStyle(color = Color.Gray)) {
+                            append(stringResource(R.string.feed_friend_avatar_text))
+                        }
+                        append(" ")
+                        append(item.avatarName)
+                    }
+                    FeedItem(
+                        text = text,
+                        friendPictureUrl = item.friendPictureUrl,
+                        feedTimestamp = item.feedTimestamp,
+                        resourceStringTitle = R.string.feed_friend_avatar_label,
+                        onClick = {
+                            if (filter) {
+                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                            } else {
+                                navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
+                            }
+                        }
+                    )
+                }
             }
         }
     }

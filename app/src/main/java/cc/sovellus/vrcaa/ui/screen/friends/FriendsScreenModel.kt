@@ -44,13 +44,14 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     }
 
     init {
-        mutableState.value = FriendsState.Loading
-        FriendManager.addFriendListener(listener)
+        FriendManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
-        if (!CacheManager.isRefreshing()) {
+        if (CacheManager.isBuilt()) {
             friendsStateFlow.value = FriendManager.getFriends().toMutableStateList()
             mutableState.value = FriendsState.Result
+        } else {
+            mutableState.value = FriendsState.Loading
         }
     }
 }

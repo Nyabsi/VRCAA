@@ -1,9 +1,7 @@
-package cc.sovellus.vrcaa.api
+package cc.sovellus.vrcaa.base
 
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.api.vrchat.http.models.ErrorResponse
 import cc.sovellus.vrcaa.manager.DebugManager
-import com.google.gson.Gson
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType

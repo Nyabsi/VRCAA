@@ -6,7 +6,7 @@ import cc.sovellus.vrcaa.helper.NotificationHelper
 import com.google.gson.Gson
 
 // extend SharedPreferences
-internal var SharedPreferences.userCredentials: Pair<String?, String?>
+internal var SharedPreferences.userCredentials: Pair<String, String>
     get() {
         return Pair(
             getString("userCredentials_username", "")!!,

@@ -199,6 +199,8 @@
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
 
     <!-- About -->
 
@@ -273,8 +275,10 @@
 
     <string name="misc_no_internet_title">No Internet Connection</string>
     <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Close</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Press again to quit.</string>
+
+    <string name="global_app_default_loading_text">Initializing…</string>
 
     <!-- User -->
 
@@ -295,6 +299,7 @@
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
     <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
 
     <!-- Logout dialog -->
 
@@ -311,6 +316,7 @@
     <string-array name="favorites_selection_options">
         <item>Worlds</item>
         <item>Avatars</item>
+        <item>Friends</item>
     </string-array>
 
     <string name="favorite_label_add">Add to favorites</string>

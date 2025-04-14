@@ -5,9 +5,11 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.api.BaseClient
+import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
@@ -56,6 +58,7 @@ import cc.sovellus.vrcaa.api.vrchat.models.AuthResponse
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
@@ -71,11 +74,12 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
     private var listener: SessionListener? = null
+    private var authenticationCounter: Int = 0
 
     init {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
@@ -100,6 +104,10 @@ class HttpClient : BaseClient(), CoroutineScope {
                 listener?.noInternet()
             }
             Result.RateLimited -> {
+
+                if (BuildConfig.DEBUG)
+                    throw RuntimeException("You're doing actions too quick! Please calm down.")
+
                 launch {
                     Toast.makeText(
                         context,
@@ -110,7 +118,26 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-                listener?.onSessionInvalidate()
+
+                launch {
+                    val response = api.auth.login(
+                        preferences.userCredentials.first,
+                        preferences.userCredentials.second
+                    )
+
+                    if (response.success && response.authType == AuthType.AUTH_NONE) {
+                        val intent = Intent(App.getContext(), PipelineService::class.java)
+                        App.getContext().stopService(intent)
+
+                        val bundle = bundleOf()
+                        bundle.putBoolean("SKIP_INIT_CACHE", true)
+
+                        intent.putExtras(bundle)
+                        App.getContext().startService(intent)
+                    } else {
+                        listener?.onSessionInvalidate()
+                    }
+                }
             }
             Result.UnknownMethod -> {
                 if (BuildConfig.DEBUG)
@@ -158,27 +185,36 @@ class HttpClient : BaseClient(), CoroutineScope {
                         if (result.body.contains("emailOtp")) {
                             preferences.authToken = cookies[0]
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, IAuth.AuthType.AUTH_EMAIL)
+                            return IAuth.AuthResult(true, "", AuthType.AUTH_EMAIL)
                         }
 
                         if (result.body.contains("totp")) {
                             preferences.authToken = cookies[0]
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, IAuth.AuthType.AUTH_TOTP)
+                            return IAuth.AuthResult(true, "", AuthType.AUTH_TOTP)
                         }
 
                         preferences.authToken = cookies[0]
                         setAuthorization(AuthorizationType.Cookie,"${preferences.authToken} ${preferences.twoFactorToken}")
-                        return IAuth.AuthResult(true, IAuth.AuthType.AUTH_NONE)
+                        return IAuth.AuthResult(true)
                     }
-                    return IAuth.AuthResult(false)
+
+                    // if server doesn't send cookies, it means we're already authenticated.
+                    // I don't know how can you reach this statement though.
+                    return IAuth.AuthResult(true)
                 }
                 is Result.Unauthorized -> {
-                    return IAuth.AuthResult(false)
+                    return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
+                }
+                is Result.NoInternet -> {
+                    return IAuth.AuthResult(false, "Login Failed: No internet connection.")
+                }
+                is Result.RateLimited -> {
+                    return IAuth.AuthResult(false, "Login Failed: You're logging too quickly!")
                 }
                 else -> {
                     handleExceptions(result)
-                    return IAuth.AuthResult(false)
+                    return IAuth.AuthResult(false, "Login Failed: Unknown exception from server.")
                 }
             }
         }
@@ -791,13 +827,15 @@ class HttpClient : BaseClient(), CoroutineScope {
             type: FavoriteType,
             tag: String,
             newDisplayName: String,
-            newVisibility: String
+            newVisibility: String?
         ): Boolean {
 
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
-            val body = "{\"displayName\":\"$newDisplayName\",\"visibility\":\"$newVisibility\"}"
+            var body = "{\"displayName\":\"$newDisplayName\"}"
+            if (newVisibility != null)
+                body = "{\"displayName\":\"$newDisplayName\",\"visibility\":\"$newVisibility\"}"
 
             val user = CacheManager.getProfile()?.id
 
@@ -1202,6 +1240,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             newDescription: String,
             newBio: String,
             newBioLinks: List<String>,
+            newPronouns: String,
             newAgeVerificationStatus: String?
         ): User? {
 
@@ -1213,7 +1252,8 @@ class HttpClient : BaseClient(), CoroutineScope {
                 bio = newBio,
                 bioLinks = newBioLinks,
                 status = newStatus,
-                statusDescription = newDescription
+                statusDescription = newDescription,
+                pronouns = newPronouns
             )
 
             val result = doRequest(

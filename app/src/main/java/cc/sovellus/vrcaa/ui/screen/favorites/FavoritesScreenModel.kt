@@ -26,14 +26,20 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     private var avatarListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
     var avatarList = avatarListFlow.asStateFlow()
 
+    private var friendListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
+    var friendList = friendListFlow.asStateFlow()
+
     var currentIndex = mutableIntStateOf(0)
     var currentSelectedGroup = mutableStateOf("")
     var editDialogShown = mutableStateOf(false)
+    var currentSelectedIsFriend = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun profileUpdated(profile: User) { }
 
-        override fun startCacheRefresh() { }
+        override fun startCacheRefresh() {
+            mutableState.value = FavoriteState.Loading
+        }
 
         override fun endCacheRefresh() {
             fetchContent()
@@ -47,15 +53,18 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         mutableState.value = FavoriteState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (!CacheManager.isRefreshing())
+        if (CacheManager.isBuilt())
         {
             fetchContent()
             mutableState.value = FavoriteState.Result
+        } else {
+            mutableState.value = FavoriteState.Loading
         }
     }
 
     private fun fetchContent() {
         worldListFlow.update { FavoriteManager.getWorldList() }
         avatarListFlow.update { FavoriteManager.getAvatarList() }
+        friendListFlow.update { FavoriteManager.getFriendList() }
     }
 }

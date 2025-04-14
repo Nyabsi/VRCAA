@@ -164,6 +164,8 @@
     <string name="feed_friend_request_label">Заявка в друзья</string>
     <string name="feed_friend_request_text">хочет добавить вас в друзья.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">О программе</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
@@ -224,8 +226,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Нет подключения к интернету</string>
     <string name="misc_no_internet_description">Пожалуйста, убедитесь, что вы подключены к Интернету, это приложение не может работать без подключения к Интернету.</string>
-    <string name="misc_no_internet_label">Перезапустить</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Показать группы</string>
     <string name="user_dropdown_view_worlds">Просмотреть миры</string>
@@ -242,6 +245,7 @@
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
     <string name="profile_edit_dialog_title_edit_profile">Редактировать профиль</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Вы уверены?</string>
     <string name="logout_dialog_description">Нажав «Продолжить» ниже вы выйдете из VRCAA и снова войдите в систему, чтобы продолжать использовать приложение.</string>
@@ -253,6 +257,7 @@
     <string-array name="favorites_selection_options">
         <item>Миры</item>
         <item>Аватары</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Добавить в избранное</string>
     <string name="favorite_label_remove">Удалить из избранного</string>

@@ -1,13 +1,15 @@
 package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
+import androidx.core.database.getStringOrNull
+import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.DatabaseHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
-object DatabaseManager {
+object DatabaseManager: BaseManager<Any>() {
     private val dbHelper = DatabaseHelper()
 
     fun writeFeed(feed: FeedManager.Feed) {
@@ -20,6 +22,7 @@ object DatabaseManager {
             put("friendStatus", feed.friendStatus.ordinal)
             put("travelDestination", feed.travelDestination)
             put("worldId", feed.worldId)
+            put("avatarName", feed.avatarName)
             put("feedTimestamp", feed.feedTimestamp.toEpochSecond(ZoneOffset.UTC))
         }
 
@@ -29,7 +32,7 @@ object DatabaseManager {
     fun readFeeds(): MutableList<FeedManager.Feed> {
         val cursor = dbHelper.readableDatabase.query(
             DatabaseHelper.Tables.SQL_TABLE_FEED,
-            arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "feedTimestamp"),
+            arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "avatarName", "feedTimestamp"),
             null,
             null,
             null,
@@ -50,6 +53,7 @@ object DatabaseManager {
                     friendStatus = StatusHelper.Status.fromInt(getInt(getColumnIndexOrThrow("friendStatus"))),
                     travelDestination = getString(getColumnIndexOrThrow("travelDestination")),
                     worldId = getString(getColumnIndexOrThrow("worldId")),
+                    avatarName = getStringOrNull(getColumnIndex("avatarName")) ?: "",
                     feedTimestamp = LocalDateTime.ofEpochSecond(getLong(getColumnIndexOrThrow("feedTimestamp")), 0, ZoneOffset.UTC)
                 )
                 feeds.add(feed)

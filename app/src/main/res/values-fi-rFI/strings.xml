@@ -164,6 +164,8 @@
     <string name="feed_friend_request_label">Ystäväpyyntö</string>
     <string name="feed_friend_request_text">haluaa lisätä sinut ystäväksi.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">Tietoja</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
@@ -224,8 +226,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Ei internet-yhteyttä</string>
     <string name="misc_no_internet_description">Varmista, että olet yhteydessä Internetiin, tämä sovellus ei voi toimia ilman Internet-yhteyttä.</string>
-    <string name="misc_no_internet_label">Sulje</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Näytä Ryhmät</string>
     <string name="user_dropdown_view_worlds">Näytä maailmat</string>
@@ -242,6 +245,7 @@
     <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
     <string name="profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
     <string name="profile_edit_dialog_title_edit_profile">Muokkaa profiilia</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Oletko varma?</string>
     <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
@@ -253,6 +257,7 @@
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
         <item>Hahmot</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>

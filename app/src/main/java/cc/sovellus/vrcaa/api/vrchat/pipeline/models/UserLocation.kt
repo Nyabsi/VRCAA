@@ -13,9 +13,5 @@ data class UserLocation(
     @SerializedName("location")
     val location: String,
     @SerializedName("instance")
-    val instance: String,
-    @SerializedName("worldId")
-    val worldId: String,
-    @SerializedName("world")
-    val world: World?
+    val instance: String
 )

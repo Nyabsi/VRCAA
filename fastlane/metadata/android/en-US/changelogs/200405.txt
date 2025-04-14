@@ -1,0 +1,4 @@
+- A lot of UI improvements
+- Implemented Search feature for Feed
+- Badges are shown in profile
+- Misc bug fixes

@@ -1,5 +1,6 @@
 package cc.sovellus.vrcaa.ui.components.card
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +46,8 @@ fun ProfileCard(
     trustRankColor: Color,
     statusColor: Color,
     tags: List<String>,
-    badges: List<Badge>
+    badges: List<Badge>,
+    pronouns: String
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -59,9 +61,7 @@ fun ProfileCard(
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy((-50).dp),
-            modifier = Modifier
-                .height(270.dp)
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             item {
                 GlideImage(
@@ -103,18 +103,38 @@ fun ProfileCard(
 
             item {
                 Row {
-                    Text(
-                        text = displayName,
+                    Row(
                         modifier = Modifier
-                            .padding(start = 12.dp, top = 60.dp)
-                            .weight(0.70f),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Left,
-                        color = trustRankColor,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                            .weight(0.70f)
+                            .padding(start = 12.dp, top = 60.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = displayName,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Left,
+                            color = trustRankColor,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        if (pronouns.isNotEmpty()) {
+                            Badge(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                modifier = Modifier.padding(start = 8.dp)
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(2.dp),
+                                    text = pronouns,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Left,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
+                        }
+                    }
 
                     Row(
                         modifier = Modifier
@@ -152,7 +172,9 @@ fun ProfileCard(
                             .padding(end = 8.dp), horizontalArrangement = Arrangement.End
                     ) {
                         for (badge in badges) {
-                            GlideImage(model = badge.badgeImageUrl, contentDescription = null, modifier = Modifier.size(28.dp).padding(2.dp), alpha = if (badge.showcased) { 1.0f } else { 0.5f })
+                            GlideImage(model = badge.badgeImageUrl, contentDescription = null, modifier = Modifier
+                                .size(28.dp)
+                                .padding(2.dp), alpha = if (badge.showcased) { 1.0f } else { 0.5f })
                         }
                     }
                 }

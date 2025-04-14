@@ -164,6 +164,8 @@
     <string name="feed_friend_request_label">Demande d\'ami</string>
     <string name="feed_friend_request_text">veut vous ajouter comme ami.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">À propos</string>
     <string name="about_page_open_source_licenses_title">Licences Open Source</string>
@@ -224,8 +226,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Pas de connexion internet</string>
     <string name="misc_no_internet_description">Veuillez vous assurer que vous êtes connecté à internet, car cette application ne peut pas fonctionner sans connexion internet.</string>
-    <string name="misc_no_internet_label">Redémarrer</string>
+    <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
+    <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">Voir les groupes</string>
     <string name="user_dropdown_view_worlds">Voir les mondes</string>
@@ -242,6 +245,7 @@
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
     <string name="profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
     <string name="profile_edit_dialog_title_edit_profile">Modifier le profil</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Êtes-vous sûr ?</string>
     <string name="logout_dialog_description">En appuyant sur \"Continuer\" ci-dessous, vous vous déconnecterez de VRCAA et vous devrez vous reconnecter pour continuer à utiliser l\'application.</string>
@@ -253,6 +257,7 @@
     <string-array name="favorites_selection_options">
         <item>Mondes</item>
         <item>Avatars</item>
+        <item>Friends</item>
     </string-array>
     <string name="favorite_label_add">Ajouter aux favoris</string>
     <string name="favorite_label_remove">Retirer des favoris</string>

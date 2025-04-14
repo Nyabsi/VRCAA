@@ -124,6 +124,11 @@ class NavigationScreen : Screen {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.putExtras(bundle)
                 context.startActivity(intent)
+
+
+                if (context is Activity) {
+                    context.finish()
+                }
             })
         }
 
@@ -507,7 +512,7 @@ class NavigationScreen : Screen {
                                         ).show()
                                         scope.launch {
                                             CacheManager.getProfile()?.let {
-                                                api.user.updateProfileByUserId(it.id, model.status.value, model.description.value, model.bio.value, model.bioLinks, if (model.ageVerified.value) { model.verifiedStatus.value } else { null })?.let { user ->
+                                                api.user.updateProfileByUserId(it.id, model.status.value, model.description.value, model.bio.value, model.bioLinks, model.pronouns.value, if (model.ageVerified.value) { model.verifiedStatus.value } else { null })?.let { user ->
                                                     CacheManager.updateProfile(user)
                                                 }
                                             }
@@ -536,6 +541,7 @@ class NavigationScreen : Screen {
                                     }
                                 )
                             }
+
                             item {
                                 ListItem(
                                     headlineContent = {
@@ -548,6 +554,27 @@ class NavigationScreen : Screen {
                                             value = model.description.value,
                                             onValueChange = {
                                                 model.description.value = it
+                                            },
+                                            singleLine = true,
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                                        )
+                                    }
+                                )
+                            }
+
+                            item {
+                                ListItem(
+                                    headlineContent = {
+                                        Text(text = stringResource(R.string.profile_edit_dialog_title_pronouns), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 8.dp))
+                                    },
+                                    supportingContent = {
+                                        OutlinedTextField(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            value = model.pronouns.value,
+                                            onValueChange = {
+                                                if (it.length <= 32)
+                                                    model.pronouns.value = it
                                             },
                                             singleLine = true,
                                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
@@ -584,8 +611,8 @@ class NavigationScreen : Screen {
                                         },
                                         supportingContent = {
                                             ComboInput(
-                                                options = listOf("hidden", "verified", "18+"),
-                                                readableOptions = mapOf("hidden" to "Hidden", "verified" to "Verified", "18+" to "18+ Verified"),
+                                                options = listOf("hidden", "18+"),
+                                                readableOptions = mapOf("hidden" to "Hidden", "18+" to "18+ Verified"),
                                                 selection = model.verifiedStatus
                                             )
                                         }
