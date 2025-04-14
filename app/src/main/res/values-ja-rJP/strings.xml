@@ -164,8 +164,8 @@
     <string name="feed_friend_request_label">フレンド・リクエスト</string>
     <string name="feed_friend_request_text">さんがフレンドになりたいようです。</string>
     <string name="feed_search_placeholder">ユーザー/ロケーションを検索する</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_friend_avatar_label">アバターの変更</string>
+    <string name="feed_friend_avatar_text">ユーザーのアバターが変更されました： </string>
     <!-- About -->
     <string name="about_page_title">概要</string>
     <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
@@ -226,9 +226,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">インターネット接続</string>
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
-    <string name="misc_no_internet_label">Restart Application</string>
+    <string name="misc_no_internet_label">アプリの再起動</string>
     <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="global_app_default_loading_text">少女祈祷中・・・</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">所属グループを表示</string>
     <string name="user_dropdown_view_worlds">製作ワールドを表示</string>
@@ -245,7 +245,7 @@
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
     <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
     <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
+    <string name="profile_edit_dialog_title_pronouns">呼称</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">ログアウトしますか？</string>
     <string name="logout_dialog_description">継続した場合、VRCAAからログアウトします。アプリを利用する為には再ログインが必要です。</string>
@@ -257,7 +257,7 @@
     <string-array name="favorites_selection_options">
         <item>ワールド</item>
         <item>アバター</item>
-        <item>Friends</item>
+        <item>フレンド</item>
     </string-array>
     <string name="favorite_label_add">お気に入りへ追加</string>
     <string name="favorite_label_remove">お気に入りから削除</string>
