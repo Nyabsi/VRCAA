@@ -68,7 +68,7 @@ class RichPresenceService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
-        return START_STICKY_COMPATIBILITY
+        return START_STICKY
     }
 
     override fun onDestroy() {
