@@ -79,7 +79,7 @@ class HttpClient : BaseClient(), CoroutineScope {
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
     private var listener: SessionListener? = null
-    private var authenticationCounter: Int = 0
+    private var hasAuthenticationFailedOnce: Boolean = false
 
     init {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
@@ -120,16 +120,19 @@ class HttpClient : BaseClient(), CoroutineScope {
             Result.Unauthorized -> {
                 setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
-                launch {
-                    val response = api.auth.login(
-                        preferences.userCredentials.first,
-                        preferences.userCredentials.second
-                    )
+                if (!hasAuthenticationFailedOnce) {
+                    launch {
+                        val response = api.auth.login(
+                            preferences.userCredentials.first,
+                            preferences.userCredentials.second
+                        )
 
-                    if (response.success && response.authType == AuthType.AUTH_NONE) {
-                        listener?.onSessionRefresh()
-                    } else {
-                        listener?.onSessionInvalidate()
+                        if (response.success && response.authType == AuthType.AUTH_NONE) {
+                            listener?.onSessionRefresh()
+                        } else {
+                            hasAuthenticationFailedOnce = true
+                            listener?.onSessionInvalidate()
+                        }
                     }
                 }
             }
