@@ -87,7 +87,6 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     interface SessionListener {
         fun onSessionInvalidate()
-        fun onSessionRefresh()
         fun noInternet()
     }
 
@@ -128,7 +127,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                         )
 
                         if (response.success && response.authType == AuthType.AUTH_NONE) {
-                            listener?.onSessionRefresh()
+                            // listener?.onSessionRefresh()
                         } else {
                             hasAuthenticationFailedOnce = true
                             listener?.onSessionInvalidate()
