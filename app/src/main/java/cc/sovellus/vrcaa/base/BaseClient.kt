@@ -136,7 +136,9 @@ open class BaseClient {
                         )
                     }
 
-                    if (response.code == 401 && retryAfterFailure) {
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
                         doRequest(
                             method = method,
                             url = url,
@@ -147,7 +149,7 @@ open class BaseClient {
                             skipAuthorizationFailure = skipAuthorizationFailure)
                     }
 
-                    handleRequest(response, responseBody)
+                    return result
                 }
 
                 "POST" -> {
@@ -172,7 +174,9 @@ open class BaseClient {
                         )
                     }
 
-                    if (response.code == 401 && retryAfterFailure) {
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
                         doRequest(
                             method = method,
                             url = url,
@@ -183,7 +187,7 @@ open class BaseClient {
                             skipAuthorizationFailure = skipAuthorizationFailure)
                     }
 
-                    handleRequest(response, responseBody)
+                    return result
                 }
 
                 "PUT" -> {
@@ -208,7 +212,9 @@ open class BaseClient {
                         )
                     }
 
-                    if (response.code == 401 && retryAfterFailure) {
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
                         doRequest(
                             method = method,
                             url = url,
@@ -219,7 +225,7 @@ open class BaseClient {
                             skipAuthorizationFailure = skipAuthorizationFailure)
                     }
 
-                    handleRequest(response, responseBody)
+                    return result
                 }
 
                 "DELETE" -> {
@@ -244,7 +250,9 @@ open class BaseClient {
                         )
                     }
 
-                    if (response.code == 401 && retryAfterFailure) {
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
                         doRequest(
                             method = method,
                             url = url,
@@ -255,7 +263,7 @@ open class BaseClient {
                             skipAuthorizationFailure = skipAuthorizationFailure)
                     }
 
-                    handleRequest(response, responseBody)
+                    return result
                 }
 
                 else -> {

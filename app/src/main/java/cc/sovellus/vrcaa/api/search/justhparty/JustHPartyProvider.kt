@@ -34,7 +34,8 @@ class JustHPartyProvider : BaseClient() {
             method = "GET",
             url = "https://avtr.just-h.party/vrcx_search.php$params",
             headers = headers,
-            body = null
+            body = null,
+            retryAfterFailure = false
         )
 
         return when (result) {

@@ -39,7 +39,8 @@ class AvtrDbProvider : BaseClient() {
             method = "GET",
             url = "https://api.avtrdb.com/v2/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
             headers = headers,
-            body = null
+            body = null,
+            retryAfterFailure = false
         )
 
         return when (result) {

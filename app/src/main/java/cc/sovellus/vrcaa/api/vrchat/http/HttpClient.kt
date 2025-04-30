@@ -186,7 +186,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                 headers = headers,
                 body = null,
                 retryAfterFailure = false,
-                ignoreAuthorization = false,
                 skipAuthorizationFailure = true
             )
 
