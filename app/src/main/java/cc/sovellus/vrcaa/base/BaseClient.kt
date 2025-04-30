@@ -38,6 +38,7 @@ open class BaseClient {
 
     private lateinit var credentials: String
     private var authorizationType: AuthorizationType = AuthorizationType.None
+    private var skipAuthNextFailure: Boolean = false
 
     // TODO: add new response types, when required.
     sealed class Result {
@@ -68,7 +69,12 @@ open class BaseClient {
         304 -> Result.NotModified
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest(responseBody)
-        401 -> Result.Unauthorized
+        401 -> {
+            if (!skipAuthNextFailure)
+                onAuthorizationFailure()
+            skipAuthNextFailure = false
+            Result.Unauthorized
+        }
         403 -> Result.Forbidden
         404 -> Result.NotFound
         500 -> Result.InternalError
@@ -80,7 +86,9 @@ open class BaseClient {
         url: String,
         headers: Headers.Builder,
         body: String?,
+        retryAfterFailure: Boolean = true, //  assume "onAuthorizationFailure" is implemented
         ignoreAuthorization: Boolean = false,
+        skipAuthorizationFailure: Boolean = false
     ): Result {
 
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
@@ -97,6 +105,9 @@ open class BaseClient {
                 else -> {}
             }
         }
+
+        if (skipAuthorizationFailure)
+            skipAuthNextFailure = true
 
         val finalHeaders = headers.build()
 
@@ -125,6 +136,17 @@ open class BaseClient {
                         )
                     }
 
+                    if (response.code == 401 && retryAfterFailure) {
+                        doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure)
+                    }
+
                     handleRequest(response, responseBody)
                 }
 
@@ -148,6 +170,17 @@ open class BaseClient {
                                 payload = responseBody
                             )
                         )
+                    }
+
+                    if (response.code == 401 && retryAfterFailure) {
+                        doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure)
                     }
 
                     handleRequest(response, responseBody)
@@ -175,6 +208,17 @@ open class BaseClient {
                         )
                     }
 
+                    if (response.code == 401 && retryAfterFailure) {
+                        doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure)
+                    }
+
                     handleRequest(response, responseBody)
                 }
 
@@ -200,6 +244,17 @@ open class BaseClient {
                         )
                     }
 
+                    if (response.code == 401 && retryAfterFailure) {
+                        doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure)
+                    }
+
                     handleRequest(response, responseBody)
                 }
 
@@ -215,6 +270,8 @@ open class BaseClient {
             Result.NoInternet
         }
     }
+
+    protected open fun onAuthorizationFailure() { }
 
     fun setAuthorization(type: AuthorizationType, credentials: String) {
         this.credentials = credentials

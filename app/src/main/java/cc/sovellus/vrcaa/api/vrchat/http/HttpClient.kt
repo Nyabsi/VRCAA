@@ -92,10 +92,29 @@ class HttpClient : BaseClient(), CoroutineScope {
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
     private var listener: SessionListener? = null
-    private var hasAuthenticationFailedOnce: Boolean = false
 
     init {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+    }
+
+    private var reAuthorizationFailureCount: Int = 0
+
+    override fun onAuthorizationFailure() {
+        setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
+
+        if (reAuthorizationFailureCount < Config.MAX_TOKEN_REFRESH_ATTEMPT) {
+            launch {
+                val response = api.auth.login(
+                    preferences.userCredentials.first,
+                    preferences.userCredentials.second
+                )
+
+                if (response.success || response.authType == AuthType.AUTH_NONE) {
+                    reAuthorizationFailureCount++
+                    listener?.onSessionInvalidate()
+                }
+            }
+        }
     }
 
     interface SessionListener {
@@ -127,25 +146,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                         "You're doing actions too quick! Please calm down.",
                         Toast.LENGTH_SHORT
                     ).show()
-                }
-            }
-            Result.Unauthorized -> {
-                setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-
-                if (!hasAuthenticationFailedOnce) {
-                    launch {
-                        val response = api.auth.login(
-                            preferences.userCredentials.first,
-                            preferences.userCredentials.second
-                        )
-
-                        if (response.success && response.authType == AuthType.AUTH_NONE) {
-                            // listener?.onSessionRefresh()
-                        } else {
-                            hasAuthenticationFailedOnce = true
-                            listener?.onSessionInvalidate()
-                        }
-                    }
                 }
             }
             Result.UnknownMethod -> {
@@ -184,13 +184,19 @@ class HttpClient : BaseClient(), CoroutineScope {
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user",
                 headers = headers,
-                body = null
+                body = null,
+                retryAfterFailure = false,
+                ignoreAuthorization = false,
+                skipAuthorizationFailure = true
             )
 
             when (result) {
                 is Result.Succeeded -> {
                     val cookies = result.response.headers("Set-Cookie")
                     if (cookies.isNotEmpty()) {
+                        // reset authorization failure count after successful logon
+                        reAuthorizationFailureCount = 0
+
                         if (result.body.contains("emailOtp")) {
                             preferences.authToken = cookies[0]
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
@@ -228,14 +234,14 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun verify(type: IAuth.AuthType, code: String): IAuth.AuthResult {
+        override suspend fun verify(type: AuthType, code: String): IAuth.AuthResult {
 
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
             val dParameter = when (type) {
-                IAuth.AuthType.AUTH_EMAIL -> "emailotp"
-                IAuth.AuthType.AUTH_TOTP -> "totp"
+                AuthType.AUTH_EMAIL -> "emailotp"
+                AuthType.AUTH_TOTP -> "totp"
                 else -> { "" }
             }
 
@@ -243,7 +249,9 @@ class HttpClient : BaseClient(), CoroutineScope {
                 method = "POST",
                 url = "${Config.API_BASE_URL}/auth/twofactorauth/${dParameter}/verify",
                 headers = headers,
-                body =  Gson().toJson(Code(code))
+                body =  Gson().toJson(Code(code)),
+                retryAfterFailure = false,
+                skipAuthorizationFailure = true
             )
 
             when (result) {
