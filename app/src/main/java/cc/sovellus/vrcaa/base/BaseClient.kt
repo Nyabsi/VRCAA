@@ -151,7 +151,7 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        lastRequest = RequestObject(
+                        return doRequest(
                             method = method,
                             url = url,
                             headers = headers,
@@ -190,7 +190,7 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        lastRequest = RequestObject(
+                        return doRequest(
                             method = method,
                             url = url,
                             headers = headers,
@@ -229,7 +229,7 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        lastRequest = RequestObject(
+                        return doRequest(
                             method = method,
                             url = url,
                             headers = headers,
@@ -268,7 +268,7 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        lastRequest = RequestObject(
+                        return doRequest(
                             method = method,
                             url = url,
                             headers = headers,
@@ -295,17 +295,7 @@ open class BaseClient {
         }
     }
 
-    protected open suspend fun onAuthorizationFailure() {
-        doRequest(
-            method = lastRequest.method,
-            url = lastRequest.url,
-            headers = lastRequest.headers,
-            body = lastRequest.body,
-            retryAfterFailure = lastRequest.retryAfterFailure,
-            ignoreAuthorization = lastRequest.ignoreAuthorization,
-            skipAuthorizationFailure = lastRequest.skipAuthorizationFailure
-        )
-    }
+    protected open suspend fun onAuthorizationFailure() { }
 
     fun setAuthorization(type: AuthorizationType, credentials: String) {
         this.credentials = credentials
