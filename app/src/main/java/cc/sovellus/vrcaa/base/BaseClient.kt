@@ -55,13 +55,25 @@ open class BaseClient {
         data object Forbidden : Result()
     }
 
+    data class RequestObject(
+        val method: String,
+        val url: String,
+        val headers: Headers.Builder,
+        val body: String?,
+        val retryAfterFailure: Boolean,
+        val ignoreAuthorization: Boolean,
+        val skipAuthorizationFailure: Boolean
+    )
+
+    lateinit var lastRequest: RequestObject
+
     enum class AuthorizationType {
         None,
         Cookie,
         Bearer
     }
 
-    private fun handleRequest(
+    private suspend fun handleRequest(
         response: Response,
         responseBody: String
     ): Result = when (response.code) {
@@ -139,14 +151,15 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        doRequest(
+                        lastRequest = RequestObject(
                             method = method,
                             url = url,
                             headers = headers,
                             body = body,
                             retryAfterFailure = retryAfterFailure,
                             ignoreAuthorization = ignoreAuthorization,
-                            skipAuthorizationFailure = skipAuthorizationFailure)
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
                     }
 
                     return result
@@ -177,14 +190,15 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        doRequest(
+                        lastRequest = RequestObject(
                             method = method,
                             url = url,
                             headers = headers,
                             body = body,
                             retryAfterFailure = retryAfterFailure,
                             ignoreAuthorization = ignoreAuthorization,
-                            skipAuthorizationFailure = skipAuthorizationFailure)
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
                     }
 
                     return result
@@ -215,14 +229,15 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        doRequest(
+                        lastRequest = RequestObject(
                             method = method,
                             url = url,
                             headers = headers,
                             body = body,
                             retryAfterFailure = retryAfterFailure,
                             ignoreAuthorization = ignoreAuthorization,
-                            skipAuthorizationFailure = skipAuthorizationFailure)
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
                     }
 
                     return result
@@ -253,14 +268,15 @@ open class BaseClient {
                     val result = handleRequest(response, responseBody)
 
                     if (result == Result.Unauthorized && retryAfterFailure) {
-                        doRequest(
+                        lastRequest = RequestObject(
                             method = method,
                             url = url,
                             headers = headers,
                             body = body,
                             retryAfterFailure = retryAfterFailure,
                             ignoreAuthorization = ignoreAuthorization,
-                            skipAuthorizationFailure = skipAuthorizationFailure)
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
                     }
 
                     return result
@@ -279,7 +295,17 @@ open class BaseClient {
         }
     }
 
-    protected open fun onAuthorizationFailure() { }
+    protected open suspend fun onAuthorizationFailure() {
+        doRequest(
+            method = lastRequest.method,
+            url = lastRequest.url,
+            headers = lastRequest.headers,
+            body = lastRequest.body,
+            retryAfterFailure = lastRequest.retryAfterFailure,
+            ignoreAuthorization = lastRequest.ignoreAuthorization,
+            skipAuthorizationFailure = lastRequest.skipAuthorizationFailure
+        )
+    }
 
     fun setAuthorization(type: AuthorizationType, credentials: String) {
         this.credentials = credentials
