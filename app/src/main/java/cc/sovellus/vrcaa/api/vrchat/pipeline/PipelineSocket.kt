@@ -30,18 +30,27 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.api.vrchat.Config
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import kotlin.coroutines.CoroutineContext
 
 class PipelineSocket(
-    private val token: String
-) {
+    private var token: String
+): CoroutineScope {
+
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+
     private val client: OkHttpClient by lazy { OkHttpClient() }
     private lateinit var socket: WebSocket
     private var shouldReconnect: Boolean = false
@@ -143,6 +152,7 @@ class PipelineSocket(
             override fun onClosing(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
+                // TODO: is this *really* what we want?
                 webSocket.close(1000, null)
                 shouldReconnect = false
             }
@@ -150,17 +160,10 @@ class PipelineSocket(
             override fun onFailure(
                 webSocket: WebSocket, t: Throwable, response: Response?
             ) {
-                when (response?.code) {
-                    401 -> {
-                        shouldReconnect = false
-                    }
-                }
-
                 if (shouldReconnect)
                 {
                     webSocket.close(1000, null)
-                    Thread.sleep(RECONNECTION_INTERVAL)
-                    connect()
+                    reconnect()
                 }
             }
         }
@@ -181,15 +184,21 @@ class PipelineSocket(
         socket = client.newWebSocket(request, listener)
     }
 
+    fun reconnect() {
+        launch {
+            api.auth.fetchToken()?.let { tkn ->
+                token = tkn
+                Thread.sleep(Config.RECONNECTION_INTERVAL)
+                connect()
+            }
+        }
+    }
+
     fun disconnect() {
         socket.close(1000, null)
     }
 
     fun setListener(listener: SocketListener) {
         socketListener = listener
-    }
-
-    companion object {
-        private const val RECONNECTION_INTERVAL: Long = 30000 // 30s
     }
 }
