@@ -309,20 +309,20 @@
     <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
     <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Світла</item>
+        <item>Темна</item>
         <item>System</item>
     </string-array>
     <string-array name="column_count_options">
         <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>Виправлено</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">Тема</string>
+    <string name="theme_page_section_display_title">Дисплей</string>
+    <string name="theme_page_section_column_title">Кількість стовпців</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
+    <string name="advanced_page_title">Розширені налаштування</string>
+    <string name="advanced_page_network_logging">Логування мережі</string>
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
