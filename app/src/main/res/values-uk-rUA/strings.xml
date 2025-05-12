@@ -11,7 +11,7 @@
         <item>Офлайн</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Онлайн Друзів</string>
     <string name="home_recently_visited">Нещодавні відвідані</string>
     <string name="home_offline_friends">Офлайнові</string>
     <string name="home_friend_locations">Розташування друзів</string>
