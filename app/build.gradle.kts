@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.mikepenz.aboutlibraries.plugin") version "10.10.0"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -117,6 +118,7 @@ dependencies {
     implementation("androidx.compose.material3:material3-android:1.3.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose-android:2.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.firebase:firebase-crashlytics:19.4.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
