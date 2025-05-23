@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cc.sovellus.vrcaa.activity.CrashActivity
+import cc.sovellus.vrcaa.extension.crashAnalytics
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
