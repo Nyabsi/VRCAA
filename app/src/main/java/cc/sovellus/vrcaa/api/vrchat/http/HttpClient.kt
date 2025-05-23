@@ -102,15 +102,13 @@ class HttpClient : BaseClient(), CoroutineScope {
     override suspend fun onAuthorizationFailure() {
         setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
-        if (reAuthorizationFailureCount < Config.MAX_TOKEN_REFRESH_ATTEMPT) {
+        if (reAuthorizationFailureCount > Config.MAX_TOKEN_REFRESH_ATTEMPT) {
             val response = api.auth.login(
                 preferences.userCredentials.first,
                 preferences.userCredentials.second
             )
 
-            if (response.success || response.authType == AuthType.AUTH_NONE) {
-                super.onAuthorizationFailure()
-            } else {
+            if (!response.success) {
                 reAuthorizationFailureCount++
                 listener?.onSessionInvalidate()
             }
