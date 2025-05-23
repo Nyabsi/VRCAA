@@ -51,26 +51,6 @@ class AdvancedScreenModel : ScreenModel {
         ).show()
     }
 
-    @SuppressLint("BatteryLife")
-    fun disableBatteryOptimizations() {
-        val manager = getSystemService(context, PowerManager::class.java)
-        manager?.let { pm ->
-            if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
-                val intent = Intent(
-                    Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                    Uri.parse("package:${context.packageName}")
-                )
-                context.startActivity(intent)
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.about_page_battery_optimizations_toast),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
     fun killBackgroundService() {
         val intent = Intent(context, PipelineService::class.java)
         context.stopService(intent)
