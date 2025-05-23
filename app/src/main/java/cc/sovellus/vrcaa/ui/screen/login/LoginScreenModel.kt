@@ -37,8 +37,8 @@ class LoginScreenModel : ScreenModel {
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
 
-    var username = mutableStateOf(preferences.userCredentials.first.let { it ?: "" })
-    var password = mutableStateOf(preferences.userCredentials.second.let { it ?: "" })
+    var username = mutableStateOf(preferences.userCredentials.first)
+    var password = mutableStateOf(preferences.userCredentials.second)
 
     fun doLogin(callback: (success: Boolean, type: IAuth.AuthType) -> Unit) {
         screenModelScope.launch {

@@ -74,7 +74,6 @@ class RichPresenceWebViewLogin : Screen {
 
                         settings.javaScriptEnabled = true
                         settings.domStorageEnabled = true
-                        settings.databaseEnabled = true
 
                         webViewClient = object : WebViewClient() {
 

@@ -56,7 +56,7 @@ class DiscordMediaProxy(
         val headers = Headers.Builder()
         headers["User-Agent"] = userAgent
 
-        val result = doRequest(
+        doRequest(
             method = "DELETE",
             url = "$webHookUrl/messages/${id}",
             headers = headers,

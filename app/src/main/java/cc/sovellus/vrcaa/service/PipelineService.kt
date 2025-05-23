@@ -97,8 +97,6 @@ class PipelineService : Service(), CoroutineScope {
                 is FriendOnline -> {
                     val update = msg.obj as FriendOnline
 
-                    val friend = FriendManager.getFriend(update.userId)
-
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName

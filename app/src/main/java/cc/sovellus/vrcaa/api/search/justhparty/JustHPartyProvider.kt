@@ -19,8 +19,8 @@ package cc.sovellus.vrcaa.api.search.justhparty
 import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.search.SearchAvatar
 import com.google.gson.Gson
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import okhttp3.Headers
-import java.net.URLEncoder
 
 class JustHPartyProvider : BaseClient() {
 
@@ -50,7 +50,7 @@ class JustHPartyProvider : BaseClient() {
 
     suspend fun search(query: String): ArrayList<SearchAvatar>
     {
-        return when (val result = sendRequest("?search=${URLEncoder.encode(query)}&n=5000")) {
+        return when (val result = sendRequest("?search=${UrlEncoderUtil.encode(query)}&n=5000")) {
             is String -> {
                 Gson().fromJson(result, Avatars::class.java) ?: arrayListOf()
             }
@@ -60,7 +60,7 @@ class JustHPartyProvider : BaseClient() {
 
     suspend fun searchByAuthor(query: String): ArrayList<SearchAvatar>
     {
-        return when (val result = sendRequest("?authorId=${URLEncoder.encode(query)}")) {
+        return when (val result = sendRequest("?authorId=${UrlEncoderUtil.encode(query)}")) {
             is String -> {
                 Gson().fromJson(result, Avatars::class.java) ?: arrayListOf()
             }

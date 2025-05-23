@@ -60,7 +60,6 @@ class NotificationScreen(
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val context = LocalContext.current
 
         val model = rememberScreenModel { NotificationScreenModel(friendId) }
 
