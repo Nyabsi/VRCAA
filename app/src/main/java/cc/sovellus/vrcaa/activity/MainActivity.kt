@@ -70,11 +70,6 @@ class MainActivity : BaseActivity() {
             var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
 
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
-            }
-
             Toast.makeText(
                 this,
                 getString(R.string.api_session_has_expired_text),
@@ -86,12 +81,6 @@ class MainActivity : BaseActivity() {
             var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             startService(intent)
-
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
-                startService(intent)
-            }
         }
 
         val token = preferences.authToken
@@ -102,11 +91,6 @@ class MainActivity : BaseActivity() {
         if (validSession) {
             var intent = Intent(this, PipelineService::class.java)
             startService(intent)
-
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                startService(intent)
-            }
         }
     }
 
