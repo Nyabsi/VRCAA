@@ -87,7 +87,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
