@@ -102,7 +102,7 @@ class HttpClient : BaseClient(), CoroutineScope {
     override suspend fun onAuthorizationFailure() {
         setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
-        if (reAuthorizationFailureCount > Config.MAX_TOKEN_REFRESH_ATTEMPT) {
+        if (reAuthorizationFailureCount < Config.MAX_TOKEN_REFRESH_ATTEMPT) {
             val response = api.auth.login(
                 preferences.userCredentials.first,
                 preferences.userCredentials.second
@@ -213,7 +213,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     // if server doesn't send cookies, it means we're already authenticated.
                     // I don't know how can you reach this statement though.
-                    return IAuth.AuthResult(true)
+                    return IAuth.AuthResult(false)
                 }
                 is Result.Unauthorized -> {
                     return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
