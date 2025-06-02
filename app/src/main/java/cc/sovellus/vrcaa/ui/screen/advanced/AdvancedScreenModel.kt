@@ -59,7 +59,9 @@ class AdvancedScreenModel : ScreenModel {
                 val intent = Intent(
                     Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
                     Uri.parse("package:${context.packageName}")
-                )
+                ).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }      
                 context.startActivity(intent)
             } else {
                 Toast.makeText(
