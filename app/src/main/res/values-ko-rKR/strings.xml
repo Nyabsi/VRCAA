@@ -30,7 +30,7 @@
     <!-- Main -->
     <string name="main_search_placeholder">월드, 유저 또는 아바타 검색…</string>
     <!-- Profile -->
-    <string name="profile_label_current_location">현재 위치</string>
+    <string name="profile_label_current_location">현재 인스턴스</string>
     <string name="profile_label_note">메모</string>
     <string name="profile_label_biography">자기소개</string>
     <string name="profile_label_last_activity">마지막 활동</string>
@@ -294,16 +294,16 @@
     <string name="loading_text_online_friends">온라인 친구 목록을 불러오는 중...</string>
     <string name="loading_text_offline_friends">오프라인 친구 목록을 불러오는 중...</string>
     <string name="loading_text_recently_visited">최근 방문한 월드 목록을 불러오는 중...</string>
-    <string name="loading_text_favorites">즐겨찾기를 불러오는 중…</string>
+    <string name="loading_text_favorites">즐겨찾기 목록을 불러오는 중…</string>
     <string name="loading_text_worlds">월드 목록을 불러오는 중...</string>
     <string name="loading_text_users">유저 목록을 불러오는 중...</string>
     <string name="loading_text_avatars">아바타 목록을 불러오는 중...</string>
     <string name="loading_text_groups">그룹 목록을 불러오는 중...</string>
-    <string name="loading_text_user">유저 목록을 불러오는 중...</string>
-    <string name="loading_text_world">월드 목록을 불러오는 중...</string>
-    <string name="loading_text_avatar">아바타 목록을 불러오는 중...</string>
-    <string name="loading_text_group">그룹 목록을 불러오는 중...</string>
-    <string name="loading_text_instances">인스턴스 목록을 불러오는 중...</string>
+    <string name="loading_text_user">유저 정보를 불러오는 중...</string>
+    <string name="loading_text_world">월드 정보를 불러오는 중...</string>
+    <string name="loading_text_avatar">아바타 정보를 불러오는 중...</string>
+    <string name="loading_text_group">그룹 정보를 불러오는 중...</string>
+    <string name="loading_text_instances">인스턴스 정보를 불러오는 중...</string>
     <!-- Theming -->
     <string name="theme_page_title">테마</string>
     <string name="theme_page_minimalist_mode_text">간소화 모드</string>
@@ -314,16 +314,16 @@
         <item>기기</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>자동 조절</item>
+        <item>자동</item>
         <item>고정</item>
     </string-array>
     <string name="theme_page_section_theme_title">테마</string>
-    <string name="theme_page_section_display_title">화면 구성</string>
+    <string name="theme_page_section_display_title">화면</string>
     <string name="theme_page_section_column_title">열 수</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">고급 설정</string>
     <string name="advanced_page_network_logging">네트워크 로깅</string>
-    <string name="advanced_page_network_logging_description">HTTP 및 WebSocket 트래픽 인터셉트</string>
+    <string name="advanced_page_network_logging_description">HTTP 및 WebSocket 트래픽 포착</string>
     <string name="advanced_page_view_network_logs">네트워크 로그 보기</string>
     <string name="advanced_page_battery_optimization">배터리 최적화 비활성화</string>
     <string name="advanced_page_battery_optimization_description">실시간 네트워크 이벤트가 수신되지 않는 문제를 해결하는 데 도움이 될 수 있습니다.</string>
