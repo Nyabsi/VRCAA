@@ -24,7 +24,7 @@
     <string name="login_toast_wrong_code">코드를 다시 한 번 확인해 주세요.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">이메일로 전송된 숫자 코드를 입력하세요</string>
-    <string name="auth_text_app">인증기 앱의 숫자 코드를 입력하세요</string>
+    <string name="auth_text_app">인증 앱의 코드를 입력해 주세요.</string>
     <string name="auth_button_text">인증</string>
     <string name="auth_button_paste">붙여넣기</string>
     <!-- Main -->
@@ -35,14 +35,14 @@
     <string name="profile_label_biography">자기소개</string>
     <string name="profile_label_last_activity">마지막 활동</string>
     <string name="profile_label_date_joined">계정 생성일</string>
-    <string name="profile_text_no_biography">설명 없음.</string>
+    <string name="profile_text_no_biography">자기소개 없음</string>
     <string name="profile_user_dropdown_manage_notifications">알림 관리</string>
     <string name="profile_user_dropdown_view_groups">그룹 보기</string>
-    <string name="profile_user_dropdown_view_avatar">아바타 보기</string>
+    <string name="profile_user_dropdown_view_avatar">아바타 상세정보 보기</string>
     <string name="profile_user_dropdown_invite_self">나에게 초대 보내기</string>
     <string name="profile_user_not_found_message">유저를 찾을 수 없습니다.</string>
-    <string name="profile_user_avatar_private">비공개 아바타입니다!</string>
-    <string name="profile_user_avatar_unreachable">아바타를 찾을 수 없습니다!</string>
+    <string name="profile_user_avatar_private">비공개 아바타입니다.</string>
+    <string name="profile_user_avatar_unreachable">아바타를 찾을 수 없습니다.</string>
     <string name="profile_user_toast_invite_sent">초대가 전송되었습니다! 게임 클라이언트를 확인하세요.</string>
     <string name="profile_mutual_groups_text">같이 있는 그룹</string>
     <!-- Search -->
@@ -50,17 +50,17 @@
     <string name="search_filter_category_worlds">월드</string>
     <string name="search_filter_category_worlds_featured">추천</string>
     <string name="search_filter_category_worlds_sort_by">정렬</string>
-    <string name="search_filter_category_worlds_count">결과 수 제한</string>
+    <string name="search_filter_category_worlds_count">표시 수</string>
     <string name="search_filter_category_users">유저</string>
-    <string name="search_filter_category_users_count">결과 수 제한</string>
+    <string name="search_filter_category_users_count">표시 수</string>
     <string name="search_filter_category_avatars">아바타</string>
     <string name="search_filter_category_avatars_provider">제공자</string>
     <string name="search_filter_category_groups">그룹</string>
-    <string name="search_filter_category_groups_count">결과 수 제한</string>
+    <string name="search_filter_category_groups_count">표시 수</string>
     <string name="copy_id_label">ID 복사</string>
     <string name="copied_toast">%1$s의 ID를 복사했습니다.</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">결과 수 제한</string>
+    <string name="search_filter_label_count">표시 수</string>
     <string name="search_filter_button_reset">초기화</string>
     <string name="search_filter_button_apply">적용</string>
     <string-array name="search_selection_options">
@@ -76,7 +76,7 @@
     <string name="settings_item_theming">표시 설정</string>
     <string name="settings_item_theming_description">표시 설정 구성 및 간소화 모드</string>
     <string name="settings_item_rich_presence">활동 상태 (실험적)</string>
-    <string name="settings_item_rich_presence_description">디스코드 활동 상태 표시 연동</string>
+    <string name="settings_item_rich_presence_description">Discord 활동 상태 표시 연동</string>
     <string name="settings_item_advanced_settings">고급</string>
     <string name="settings_item_advanced_settings_description">고급 로그 기록 및 추가 기능</string>
     <string name="settings_item_logout">로그아웃</string>
@@ -94,7 +94,7 @@
     <string name="world_title_version">버전</string>
     <string name="world_title_heat">히트</string>
     <string name="world_title_popularity">인기</string>
-    <string name="world_title_platform">Unity Packages</string>
+    <string name="world_title_platform">유니티 패키지</string>
     <string name="world_title_labs_publication_date">Labs 공개일</string>
     <string name="world_toast_not_found">비공개이거나 존재하지 않는 월드입니다.</string>
     <string-array name="world_selection_options">
@@ -117,28 +117,28 @@
     <string name="tabs_label_settings">설정</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA가 백그라운드에서 친구 활동을 모니터링 중입니다.</string>
-    <string name="notification_service_title_online">친구가 온라인 상태가 되었습니다!</string>
-    <string name="notification_service_description_online">친구 %1$s님이 온라인 상태가 되었습니다!</string>
-    <string name="notification_service_title_offline">친구가 오프라인 상태가 되었습니다!</string>
-    <string name="notification_service_description_offline">친구 %1$s님이 오프라인 상태가 되었습니다!</string>
-    <string name="notification_service_title_location">친구가 위치를 변경했습니다!</string>
+    <string name="notification_service_title_online">친구가 온라인 상태가 되었습니다.</string>
+    <string name="notification_service_description_online">친구 %1$s님이 온라인 상태가 되었습니다.</string>
+    <string name="notification_service_title_offline">친구가 오프라인 상태가 되었습니다.</string>
+    <string name="notification_service_description_offline">친구 %1$s님이 오프라인 상태가 되었습니다.</string>
+    <string name="notification_service_title_location">친구가 위치를 변경했습니다.</string>
     <string name="notification_service_description_location">친구 %1$s님이 %2$s로 이동했습니다.</string>
     <string name="notification_service_title_friend_removed">친구가 당신을 친구 목록에서 제거했습니다.</string>
-    <string name="notification_service_description_friend_removed">%1$s님과 더 이상 친구가 아닙니다. :(</string>
-    <string name="notification_service_title_friend_added">새로운 친구가 생겼습니다!</string>
-    <string name="notification_service_description_friend_added">%1$s님과 이제 친구입니다!</string>
+    <string name="notification_service_description_friend_removed">%1$s님과 더 이상 친구가 아닙니다.</string>
+    <string name="notification_service_title_friend_added">새로운 친구가 생겼습니다.</string>
+    <string name="notification_service_description_friend_added">%1$s님과 이제 친구입니다.</string>
     <string name="notification_title_player">의 알림</string>
     <string name="notification_label_enable">알림 활성화</string>
     <string name="notification_label_intent_online">온라인 알림</string>
     <string name="notification_label_intent_offline">오프라인 알림</string>
     <string name="notification_label_intent_location">위치 알림</string>
     <string name="notification_label_intent_status">상태 변경 알림</string>
-    <string name="notification_service_title_status">친구가 상태를 변경했습니다!</string>
+    <string name="notification_service_title_status">친구가 상태를 변경했습니다.</string>
     <string name="notification_service_description_status">친구 %1$s님이 상태를 %2$s에서 %3$s(으)로 변경했습니다.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">아바타 변경</string>
     <string name="avatar_dropdown_label_remove_favorite">즐겨찾기 해제</string>
-    <string name="avatar_dropdown_toast_select_avatar">아바타가 선택되었습니다!</string>
+    <string name="avatar_dropdown_toast_select_avatar">아바타가 선택되었습니다.</string>
     <string name="avatar_title_description">설명</string>
     <string name="avatar_title_created_at">최초 업로드</string>
     <string name="avatar_title_updated_at">마지막 업데이트</string>
@@ -157,15 +157,15 @@
     <string name="feed_location_text">님이 위치를 변경했습니다:</string>
     <string name="feed_status_label">상태</string>
     <string name="feed_status_text">님이 상태를 변경했습니다:</string>
-    <string name="feed_added_label">Friend Added</string>
+    <string name="feed_added_label">친구 추가됨</string>
     <string name="feed_added_text">님이 당신을 친구로 추가했습니다.</string>
-    <string name="feed_removed_label">Friend Removed</string>
+    <string name="feed_removed_label">친구 삭제됨</string>
     <string name="feed_removed_text">님이 당신을 친구 목록에서 제거했습니다.</string>
     <string name="feed_friend_request_label">친구 요청</string>
     <string name="feed_friend_request_text">님이 친구가 되고 싶어합니다.</string>
     <string name="feed_search_placeholder">유저 혹은 위치 검색...</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_friend_avatar_label">아바타 변경</string>
+    <string name="feed_friend_avatar_text">님이 아바타를 변경했습니다:</string>
     <!-- About -->
     <string name="about_page_title">정보</string>
     <string name="about_page_open_source_licenses_title">오픈 소스 라이선스</string>
@@ -178,72 +178,72 @@
     <string name="api_session_has_expired_text">세션이 만료되었습니다. 다시 로그인해 주세요.</string>
     <string name="api_avatar_select_failed">"아바타 선택에 실패했습니다."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Discord로 로그인</string>
-    <string name="discord_login_title_verify">2차 인증</string>
+    <string name="discord_login_title">Discord 로그인</string>
+    <string name="discord_login_title_verify">2단계 인증</string>
     <string name="discord_login_label_username">사용자명</string>
     <string name="discord_login_label_password">비밀번호</string>
     <string name="discord_login_toast_wrong_credentials">사용자명 또는 비밀번호가 올바르지 않습니다.</string>
-    <string name="discord_login_toast_wrong_code">추가 인증 코드가 올바르지 않아요.</string>
+    <string name="discord_login_toast_wrong_code">인증에 실패했습니다. 인증 코드를 다시 확인해 주세요.</string>
     <string name="discord_login_button_login">로그인</string>
     <string name="discord_login_button_verify">인증</string>
     <string name="discord_login_restarted_service_toast">변경 사항 적용을 위해 서비스를 재시작했습니다.</string>
     <string name="discord_login_label_enable">활동 상태 표시 활성화</string>
-    <string name="discord_login_label_set_webhook">웹훅 Url 설정</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_label_set_webhook">Webhook URL 설정</string>
+    <string name="discord_login_description_set_webhook">월드 썸네일 기능 사용 시 필요 (선택사항)</string>
+    <string name="discord_login_description_enable">Discord에 현재 상태 표시</string>
     <string name="discord_login_label_logout">로그아웃</string>
-    <string name="discord_login_description_logout">Revoke your access token</string>
+    <string name="discord_login_description_logout">액세스 토큰 해제</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">재시작</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_title_text">치명적인 오류가 발생했습니다.</string>
+    <string name="crash_button_restart_text">다시 시작</string>
+    <string name="crash_button_copy_log_text">정보 복사</string>
+    <string name="crash_button_report_text">문제 신고</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
         <item>정보</item>
         <item>인스턴스</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
+    <string name="group_toast_not_found_message">그룹을 찾을 수 없습니다. 입력한 정보를 확인해 주세요.</string>
     <string name="group_page_label_description">설명</string>
     <string name="group_page_label_rules">규칙</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
+    <string name="group_page_dropdown_view_author">작성자 프로필 보기</string>
+    <string name="group_page_dropdown_accept_invite">초대 수락</string>
+    <string name="group_page_dropdown_request_invite">초대 요청</string>
+    <string name="group_page_dropdown_request_invite_cancel">초대 요청 취소</string>
     <string name="group_page_dropdown_join_group">그룹 가입</string>
     <string name="group_page_dropdown_leave_group">그룹 탈퇴</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
+    <string name="group_page_toast_invite_requested">초대 요청을 보냈습니다.</string>
+    <string name="group_page_toast_invite_requested_fail">초대 요청에 실패했습니다.</string>
+    <string name="group_page_toast_invite_requested_cancel">초대 요청을 취소했습니다.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">초대 요청 취소에 실패했습니다.</string>
+    <string name="group_page_toast_join_group">그룹에 가입했습니다.</string>
+    <string name="group_page_toast_join_group_fail">그룹 가입에 실패했습니다.</string>
+    <string name="group_page_toast_leave_group">그룹을 탈퇴했습니다.</string>
+    <string name="group_page_toast_leave_group_fail">그룹 탈퇴에 실패했습니다.</string>
+    <string name="group_user_no_groups_message">이 유저는 어떤 그룹에도 소속되어 있지 않습니다.</string>
+    <string name="group_user_failed_to_fetch_groups">그룹을 불러오는 데 실패했습니다. 다시 시도해 주세요.</string>
     <string name="group_user_viewing_groups_username">%1$s님의 그룹</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="misc_no_internet_title">인터넷 연결 없음</string>
+    <string name="misc_no_internet_description">인터넷 연결을 확인해 주세요. 이 애플리케이션은 오프라인 상태에서는 사용할 수 없습니다.</string>
+    <string name="misc_no_internet_label">애플리케이션 다시 시작</string>
+    <string name="misc_exit_toast_label">한 번 더 누르면 앱이 종료됩니다.</string>
+    <string name="global_app_default_loading_text">초기화 중…</string>
     <!-- User -->
-    <string name="user_dropdown_view_groups">View Groups</string>
-    <string name="user_dropdown_view_worlds">View Worlds</string>
-    <string name="user_dropdown_view_avatars">View Avatars</string>
-    <string name="user_dropdown_view_favorites">즐겨찾기 보기</string>
+    <string name="user_dropdown_view_groups">소속된 그룹 보기</string>
+    <string name="user_dropdown_view_worlds">제작한 월드 보기</string>
+    <string name="user_dropdown_view_avatars">제작한 아바타 보기</string>
+    <string name="user_dropdown_view_favorites">즐겨찾기 목록 보기</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">상태</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">연령 인증 공개여부</string>
+    <string name="profile_edit_dialog_title_status_description">상태 설명</string>
     <string name="profile_edit_dialog_title_bio">자기소개</string>
     <string name="profile_edit_dialog_title_bio_links">소셜 링크</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
+    <string name="profile_edit_dialog_button_update">변경</string>
+    <string name="profile_edit_dialog_button_cancel">취소</string>
+    <string name="profile_edit_dialog_toast_updated">프로필이 변경되었습니다.</string>
+    <string name="profile_edit_dialog_toast_cancelled">변경을 취소했습니다.</string>
     <string name="profile_edit_dialog_title_edit_profile">프로필 편집</string>
     <string name="profile_edit_dialog_title_pronouns">대명사</string>
     <!-- Logout dialog -->
@@ -252,8 +252,8 @@
     <string name="logout_dialog_continue">확인</string>
     <string name="logout_dialog_cancel">취소</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list">친구의 현재 위치 보기</string>
+    <string name="widget_name_loading_text">로딩 중...</string>
     <string-array name="favorites_selection_options">
         <item>월드</item>
         <item>아바타</item>
@@ -268,7 +268,7 @@
     <string name="favorite_dialog_button_add">추가</string>
     <string name="favorite_dialog_button_cancel">취소</string>
     <string name="favorite_dialog_title">"즐겨찾기 추가"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
+    <string name="favorite_page_title">즐겨찾기 목록</string>
     <string name="favorite_edit_title">%1$s 수정</string>
     <string name="favorite_edit_display_name">표시 이름</string>
     <string name="favorite_edit_visibility">공개 설정</string>
@@ -286,7 +286,7 @@
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s님의 월드</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">아바타 보기</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">변경 사항을 적용하려면 앱을 다시 시작해야 합니다.</string>
     <!-- Loading Texts -->
