@@ -18,7 +18,7 @@
     <!-- Login -->
     <string name="login_text">VRC Android Assistant에 로그인</string>
     <string name="login_label_username">닉네임 혹은 이메일</string>
-    <string name="login_label_password">암호</string>
+    <string name="login_label_password">비밀번호</string>
     <string name="login_button_text">로그인</string>
     <string name="login_toast_wrong_credentials">닉네임 또는 비밀번호가 올바르지 않습니다.</string>
     <string name="login_toast_wrong_code">코드를 다시 한 번 확인해 주세요.</string>
@@ -175,13 +175,13 @@
     <string name="license_title">오픈소스 라이선스</string>
     <string name="about_page_developer_mode">개발자 모드 활성화</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">세션이 만료되었어요. 다시 로그인해 주세요.</string>
-    <string name="api_avatar_select_failed">"아바타를 선택할 수 없어요."</string>
+    <string name="api_session_has_expired_text">세션이 만료되었습니다. 다시 로그인해 주세요.</string>
+    <string name="api_avatar_select_failed">"아바타 선택에 실패했습니다."</string>
     <!-- Discord Rich Presence -->
     <string name="discord_login_title">Discord로 로그인</string>
     <string name="discord_login_title_verify">2차 인증</string>
     <string name="discord_login_label_username">사용자명</string>
-    <string name="discord_login_label_password">암호</string>
+    <string name="discord_login_label_password">비밀번호</string>
     <string name="discord_login_toast_wrong_credentials">사용자명 또는 비밀번호가 올바르지 않습니다.</string>
     <string name="discord_login_toast_wrong_code">추가 인증 코드가 올바르지 않아요.</string>
     <string name="discord_login_button_login">로그인</string>
