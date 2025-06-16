@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="result_not_found"></string>
+    <string name="legal_disclaimer">""</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favorite</item>
