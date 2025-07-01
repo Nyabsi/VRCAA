@@ -37,6 +37,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -63,12 +64,6 @@ class PipelineSocket(
 
     private val listener by lazy {
         object : WebSocketListener() {
-            override fun onOpen(
-                webSocket: WebSocket, response: Response
-            ) {
-                shouldReconnect = true
-            }
-
             override fun onMessage(
                 webSocket: WebSocket, text: String
             ) {
@@ -149,12 +144,13 @@ class PipelineSocket(
                 }
             }
 
-            override fun onClosing(
+            override fun onClosed(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                // TODO: is this *really* what we want?
-                webSocket.close(1000, null)
-                shouldReconnect = false
+                 if (shouldReconnect)
+                {
+                    reconnect()
+                }
             }
 
             override fun onFailure(
@@ -162,7 +158,6 @@ class PipelineSocket(
             ) {
                 if (shouldReconnect)
                 {
-                    webSocket.close(1000, null)
                     reconnect()
                 }
             }
@@ -170,9 +165,8 @@ class PipelineSocket(
     }
 
     fun connect() {
-
-        shouldReconnect = false
-
+        shouldReconnect = true
+        
         val headers = Headers.Builder()
             .add("User-Agent", Config.API_USER_AGENT)
 
@@ -185,16 +179,18 @@ class PipelineSocket(
     }
 
     fun reconnect() {
+        disconnect()
         launch {
+            delay(Config.RECONNECTION_INTERVAL)
             api.auth.fetchToken()?.let { tkn ->
                 token = tkn
-                Thread.sleep(Config.RECONNECTION_INTERVAL)
                 connect()
             }
         }
     }
 
     fun disconnect() {
+        shouldReconnect = false
         socket.close(1000, null)
     }
 
