@@ -98,32 +98,35 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val update = msg.obj as FriendOnline
+                    val friend = FriendManager.getFriend(update.userId)
 
-                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
-                        friendId = update.userId
-                        friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                    if (friend != null && friend.platform.isEmpty() && friend.location == "offline") {
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                            friendId = update.userId
+                            friendName = update.user.displayName
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                        }
+
+                        if (NotificationHelper.isOnWhitelist(update.userId) &&
+                            NotificationHelper.isIntentEnabled(
+                                update.userId,
+                                NotificationHelper.Intents.FRIEND_FLAG_ONLINE
+                            )
+                        ) {
+                            NotificationHelper.pushNotification(
+                                title = application.getString(R.string.notification_service_title_online),
+                                content = application.getString(R.string.notification_service_description_online)
+                                    .format(update.user.displayName),
+                                channel = NotificationHelper.CHANNEL_ONLINE_ID
+                            )
+                        }
+
+                        FeedManager.addFeed(feed)
+
+                        FriendManager.updatePlatform(update.userId, update.platform)
+                        FriendManager.updateLocation(update.userId, update.location)
+                        FriendManager.updateFriend(update.user)
                     }
-
-                    if (NotificationHelper.isOnWhitelist(update.userId) &&
-                        NotificationHelper.isIntentEnabled(
-                            update.userId,
-                            NotificationHelper.Intents.FRIEND_FLAG_ONLINE
-                        )
-                    ) {
-                        NotificationHelper.pushNotification(
-                            title = application.getString(R.string.notification_service_title_online),
-                            content = application.getString(R.string.notification_service_description_online)
-                                .format(update.user.displayName),
-                            channel = NotificationHelper.CHANNEL_ONLINE_ID
-                        )
-                    }
-
-                    FeedManager.addFeed(feed)
-
-                    FriendManager.updatePlatform(update.userId, update.platform)
-                    FriendManager.updateLocation(update.userId, update.location)
-                    FriendManager.updateFriend(update.user)
                 }
 
                 is FriendOffline -> {
@@ -131,7 +134,7 @@ class PipelineService : Service(), CoroutineScope {
                     val update = msg.obj as FriendOffline
                     val friend = FriendManager.getFriend(update.userId)
 
-                    if (friend != null) {
+                    if (friend != null && friend.platform.isNotEmpty() && friend.location != "offline") {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendId = friend.id
                             friendName = friend.displayName
