@@ -46,6 +46,10 @@ import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.TimeZone
 
 class ProfileScreen : Screen {
 
@@ -101,6 +105,20 @@ class ProfileScreen : Screen {
                     ) {
                         SubHeader(title = stringResource(R.string.profile_label_biography))
                         Description(text = profile.bio)
+
+                        if (profile.lastActivity.isNotEmpty()) {
+                            val userTimeZone = TimeZone.getDefault().toZoneId()
+                            val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                                .withLocale(Locale.getDefault())
+
+                            val lastActivity = ZonedDateTime.parse(profile.lastActivity).withZoneSameInstant(userTimeZone).format(formatter)
+
+                            SubHeader(title = stringResource(R.string.profile_label_last_activity))
+                            Description(text = lastActivity)
+                        }
+
+                        SubHeader(title = stringResource(R.string.profile_label_date_joined))
+                        Description(text = profile.dateJoined)
                     }
                 }
             }
