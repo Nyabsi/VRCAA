@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.DeveloperMode
 import androidx.compose.material.icons.outlined.Image
@@ -244,6 +245,26 @@ class SettingsScreen : Screen {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
                                 BuildConfig.CROWDIN_URL.toUri()
+                            )
+                            context.startActivity(intent)
+                        }
+                    )
+                )
+            }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.settings_kofi_donation_button)) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Filled.Coffee,
+                            contentDescription = null
+                        )
+                    },
+                    modifier = Modifier.clickable(
+                        onClick = {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                BuildConfig.KOFI_URL.toUri()
                             )
                             context.startActivity(intent)
                         }

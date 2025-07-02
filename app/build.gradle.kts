@@ -26,6 +26,7 @@ android {
         buildConfigField("String", "GIT_BRANCH", "\"${getBranch()}\"")
         buildConfigField("String", "DISCORD_URL", "\"https://discord.gg/aJs8qJXuT3\"")
         buildConfigField("String", "CROWDIN_URL", "\"https://crowdin.com/project/vrcaa\"")
+        buildConfigField("String", "KOFI_URL", "\"https://ko-fi.com/Nyabsi\"")
     }
 
     buildTypes {
