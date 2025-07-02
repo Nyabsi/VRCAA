@@ -41,6 +41,7 @@ jobs:
 
     - name: Sign app APK (${{ matrix.platform }})
       uses: noriban/sign-android-release@v5.1
+      id: signed_apk
       with:
         releaseDirectory: app/build/outputs/apk/${{ matrix.platform }}/release
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
@@ -53,8 +54,8 @@ jobs:
     - name: Upload APK artifact for ${{ matrix.platform }}
       uses: actions/upload-artifact@v4
       with:
-        name: VRCAA-${{ matrix.platform }}-apk
-        path: app/build/outputs/apk/pico/release/VRCAA-${{ matrix.platform }}-signed.apk
+        name: VRCAA-${{ matrix.platform }}.apk
+        path: ${{ steps.signed_apk.outputs.signedReleaseFile }}
 
   publish:
     if: contains(github.event.head_commit.message, '[Skip-CI]') == false
@@ -64,19 +65,19 @@ jobs:
     - name: Download APK Standard APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-standard-signed.apk
+        name: VRCAA-standard.apk
         path: ./apks
 
     - name: Download APK Quest APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-quest-signed.apk
+        name: VRCAA-quest.apk
         path: ./apks
 
     - name: Download APK Pico APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-pico-signed.apk
+        name: VRCAA-pico.apk
         path: ./apks
 
     - name: Publish release to Github
@@ -87,6 +88,6 @@ jobs:
         prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          ./apks/VRCAA-standard-signed.apk
-          ./apks/VRCAA-quest-signed.apk
-          ./apks/VRCAA-pico-signed.apk
+          ./apks/VRCAA-standard.apk
+          ./apks/VRCAA-quest.apk
+          ./apks/VRCAA-pico.apk
