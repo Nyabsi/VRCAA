@@ -12,7 +12,7 @@
     </string-array>
     <!-- Home -->
     <string name="home_active_friends">アクティブ</string>
-    <string name="home_recently_visited">最近訪れたワールド</string>
+    <string name="home_recently_visited">最近訪問</string>
     <string name="home_offline_friends">オフライン</string>
     <string name="home_friend_locations">フレンドのインスタンス</string>
     <!-- Login -->
