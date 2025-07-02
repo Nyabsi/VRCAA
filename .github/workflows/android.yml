@@ -63,6 +63,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+    - name: Create apks directory
+      run: mkdir -p ./apks
+
     - name: Download APK Standard APK
       uses: actions/download-artifact@v4
       with:
