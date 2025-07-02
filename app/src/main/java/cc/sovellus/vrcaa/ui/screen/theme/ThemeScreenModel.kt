@@ -29,7 +29,7 @@ import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.extension.minimalistMode
 
 class ThemeScreenModel : ScreenModel {
-    val preferences: SharedPreferences = App.getContext().getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+    val preferences: SharedPreferences = App.getContext().getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
     val minimalistMode = mutableStateOf(preferences.minimalistMode)
     var currentIndex = mutableIntStateOf(preferences.currentThemeOption)
     var currentColumnIndex = mutableIntStateOf(preferences.columnCountOption)

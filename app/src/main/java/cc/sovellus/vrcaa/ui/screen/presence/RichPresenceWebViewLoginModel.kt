@@ -25,7 +25,7 @@ import java.io.File
 class RichPresenceWebViewLoginModel : ScreenModel {
 
     private val context: Context = App.getContext()
-    private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
+    private val preferences = context.getSharedPreferences(App.PREFERENCES_NAME, 0)
 
     fun extractToken(): Boolean {
 

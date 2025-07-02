@@ -28,6 +28,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
@@ -407,7 +408,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
 
-        this.preferences = getSharedPreferences("vrcaa_prefs", 0)
+        this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
         launch {
             api.auth.fetchToken()?.let { token ->

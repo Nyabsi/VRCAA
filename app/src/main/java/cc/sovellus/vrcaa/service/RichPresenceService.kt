@@ -22,6 +22,7 @@ import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.GatewaySocket
 import cc.sovellus.vrcaa.extension.discordToken
@@ -59,7 +60,7 @@ class RichPresenceService : Service(), CoroutineScope {
 
     override fun onCreate() {
         GatewayManager.addListener(listener)
-        val preferences = getSharedPreferences("vrcaa_prefs", 0)
+        val preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
         gateway.setParams(preferences.discordToken, preferences.richPresenceWebhookUrl)
         gateway.connect()
     }

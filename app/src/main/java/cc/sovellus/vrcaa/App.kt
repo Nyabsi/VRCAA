@@ -39,7 +39,7 @@ class App : Application() {
         super.onCreate()
 
         context = this
-        preferences = getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+        preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
 
         networkLogging.value = preferences.networkLogging
         minimalistModeEnabled.value = preferences.minimalistMode

@@ -57,7 +57,7 @@ class SearchResultScreenModel(
     }
 
     private val context: Context = App.getContext()
-    val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+    val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
 
     private val avtrDbProvider = AvtrDbProvider()
     private val justHPartyProvider = JustHPartyProvider()

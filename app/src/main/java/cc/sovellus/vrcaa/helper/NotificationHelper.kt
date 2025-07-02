@@ -32,7 +32,7 @@ import cc.sovellus.vrcaa.extension.notificationWhitelist
 import com.google.gson.annotations.SerializedName
 
 object NotificationHelper {
-    private val preferences: SharedPreferences = App.getContext().getSharedPreferences("vrcaa_prefs", 0)
+    private val preferences: SharedPreferences = App.getContext().getSharedPreferences(App.PREFERENCES_NAME, 0)
     private var notificationCounter: Int = 0
 
     enum class Intents {

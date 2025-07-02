@@ -54,7 +54,7 @@ import kotlinx.coroutines.launch
 class NavigationScreenModel : ScreenModel {
 
     private val context: Context = App.getContext()
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
+    private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     var searchModeActivated = mutableStateOf(false)
     var searchText = mutableStateOf("")

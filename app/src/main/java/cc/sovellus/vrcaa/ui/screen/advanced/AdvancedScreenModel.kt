@@ -35,7 +35,7 @@ import androidx.core.net.toUri
 class AdvancedScreenModel : ScreenModel {
 
     private val context: Context = App.getContext()
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+    private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
 
     val networkLoggingMode = mutableStateOf(preferences.networkLogging)
 

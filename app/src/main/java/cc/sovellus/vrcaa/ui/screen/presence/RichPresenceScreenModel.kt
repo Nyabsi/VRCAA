@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class RichPresenceScreenModel : ScreenModel {
 
     private val context: Context = App.getContext()
-    private val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
+    private val preferences = context.getSharedPreferences(App.PREFERENCES_NAME, 0)
 
     var token = mutableStateOf(preferences.discordToken)
     var enabled = mutableStateOf(preferences.richPresenceEnabled)

@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.bundleOf
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.extension.authToken
@@ -60,7 +61,7 @@ fun LogoutDialog(
 
                         api.auth.logout()
 
-                        val preferences = context.getSharedPreferences("vrcaa_prefs", 0)
+                        val preferences = context.getSharedPreferences(App.PREFERENCES_NAME, 0)
                         preferences.authToken = ""
                         preferences.twoFactorToken = ""
                         preferences.userCredentials = Pair("", "")
