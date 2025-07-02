@@ -148,7 +148,7 @@ class NetworkLogScreen : Screen {
                 .padding(1.dp),
             state = rememberLazyListState()
         ) {
-            items(metadata.value.filter { it.type == DebugManager.DebugType.DEBUG_TYPE_HTTP }) {
+            items(metadata.value.filter { it.type == DebugManager.DebugType.DEBUG_TYPE_HTTP }.asReversed()) {
                 ListItem(
                     overlineContent = {
                         Text(text = it.code.toString())
@@ -210,7 +210,7 @@ class NetworkLogScreen : Screen {
                 .padding(1.dp),
             state = rememberLazyListState()
         ) {
-            items(metadata.value.filter { it.type == DebugManager.DebugType.DEBUG_TYPE_PIPELINE }) {
+            items(metadata.value.filter { it.type == DebugManager.DebugType.DEBUG_TYPE_PIPELINE }.asReversed()) {
                 ListItem(
                     headlineContent = {
                         if (!it.unknown) {
