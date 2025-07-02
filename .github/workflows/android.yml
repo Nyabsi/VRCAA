@@ -2,7 +2,7 @@ name: Publish nightly
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -10,8 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[Skip-CI]') == false
 
+    strategy:
+      matrix:
+        platform: [standard, quest, pico]
+
     steps:
     - uses: actions/checkout@v4
+
     - name: set up JDK 21
       uses: actions/setup-java@v4
       with:
@@ -21,14 +26,13 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      
+
     - name: Build Release with Gradle
       run: ./gradlew assembleRelease
 
-    - name: Rename built apk(s)
-      run: mv app/build/outputs/apk/standard/release/app-standard-release.apk app/build/outputs/apk/standard/release/VRCAA.apk &&
-           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/quest/release/VRCAA-quest.apk &&
-           mv app/build/outputs/apk/pico/release/app-pico-release.apk app/build/outputs/apk/pico/release/VRCAA-pico.apk
+    - name: Rename built apk
+      run: |
+        mv app/build/outputs/apk/${{ matrix.platform }}/release/app-${{ matrix.platform }}-release.apk app/build/outputs/apk/${{ matrix.platform }}/release/VRCAA-${{ matrix.platform }}.apk
 
     - name: Setup build tool version variable
       shell: bash
@@ -37,11 +41,11 @@ jobs:
         echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
         echo Last build tool version is: $BUILD_TOOL_VERSION
 
-    - name: Sign app APK (Standard)
+    - name: Sign app APK (${{ matrix.platform }})
       uses: noriban/sign-android-release@v5.1
-      id: sign_standard
+      id: sign_${{ matrix.platform }}
       with:
-        releaseDirectory: app/build/outputs/apk/standard/release
+        releaseDirectory: app/build/outputs/apk/${{ matrix.platform }}/release
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -49,31 +53,10 @@ jobs:
       env:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
-    - name: Sign app APK (Quest)
-      uses: noriban/sign-android-release@v5.1
-      id: sign_quest
-      with:
-        releaseDirectory: app/build/outputs/apk/quest/release
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-      env:
-        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
-
-    - name: Sign app APK (Pico)
-      uses: noriban/sign-android-release@v5.1
-      id: sign_pico
-      with:
-        releaseDirectory: app/build/outputs/apk/pico/release
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-      env:
-        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
-
-
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
       with:
