@@ -64,25 +64,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Create apks directory
-      run: mkdir -p ./apks
+      run: mkdir apks
 
     - name: Download APK Standard APK
       uses: actions/download-artifact@v4
       with:
         name: VRCAA-standard.apk
-        path: ./apks
+        path: apks
 
     - name: Download APK Quest APK
       uses: actions/download-artifact@v4
       with:
         name: VRCAA-quest.apk
-        path: ./apks
+        path: apks
 
     - name: Download APK Pico APK
       uses: actions/download-artifact@v4
       with:
         name: VRCAA-pico.apk
-        path: ./apks
+        path: apks
 
     - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
@@ -92,6 +92,6 @@ jobs:
         prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          ./apks/VRCAA-standard.apk
-          ./apks/VRCAA-quest.apk
-          ./apks/VRCAA-pico.apk
+          apks/VRCAA-standard.apk
+          apks/VRCAA-quest.apk
+          apks/VRCAA-pico.apk
