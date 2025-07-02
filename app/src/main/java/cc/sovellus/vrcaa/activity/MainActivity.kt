@@ -86,12 +86,12 @@ class MainActivity : BaseActivity() {
         if (restartSession) {
             var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
-            startService(intent)
+            startForegroundService(intent)
 
             if (preferences.richPresenceEnabled) {
                 intent = Intent(this, RichPresenceService::class.java)
                 stopService(intent)
-                startService(intent)
+                startForegroundService(intent)
             }
         }
 
@@ -102,11 +102,11 @@ class MainActivity : BaseActivity() {
 
         if (validSession) {
             var intent = Intent(this, PipelineService::class.java)
-            startService(intent)
+            startForegroundService(intent)
 
             if (preferences.richPresenceEnabled) {
                 intent = Intent(this, RichPresenceService::class.java)
-                startService(intent)
+                startForegroundService(intent)
             }
         }
     }
