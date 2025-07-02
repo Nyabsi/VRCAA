@@ -25,8 +25,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build Release with Gradle
-      run: ./gradlew assembleRelease
+    - name: Build Release for ${{ matrix.platform }} with Gradle
+      run: ./gradlew assemble${{ matrix.platform }}Release
 
     - name: Rename built apk
       run: |
