@@ -7,7 +7,7 @@
     <string-array name="friend_selection_options">
         <item>Favorite</item>
         <item>Online</item>
-        <item>বাংলা </item>
+        <item>Website</item>
         <item>Offline</item>
     </string-array>
     <!-- Home -->
