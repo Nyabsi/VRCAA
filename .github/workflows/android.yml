@@ -41,7 +41,6 @@ jobs:
 
     - name: Sign app APK (${{ matrix.platform }})
       uses: noriban/sign-android-release@v5.1
-      id: sign_${{ matrix.platform }}
       with:
         releaseDirectory: app/build/outputs/apk/${{ matrix.platform }}/release
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
