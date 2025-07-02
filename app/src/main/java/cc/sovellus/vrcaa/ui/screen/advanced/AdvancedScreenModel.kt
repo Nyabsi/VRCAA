@@ -21,17 +21,16 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.PowerManager
 import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.ContextCompat.getSystemService
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.service.PipelineService
+import androidx.core.net.toUri
 
 class AdvancedScreenModel : ScreenModel {
 
@@ -53,12 +52,12 @@ class AdvancedScreenModel : ScreenModel {
 
     @SuppressLint("BatteryLife")
     fun disableBatteryOptimizations() {
-        val manager = getSystemService(context, PowerManager::class.java)
+        val manager = context.getSystemService(PowerManager::class.java)
         manager?.let { pm ->
             if (!pm.isIgnoringBatteryOptimizations(context.packageName)) {
                 val intent = Intent(
                     Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                    Uri.parse("package:${context.packageName}")
+                    "package:${context.packageName}".toUri()
                 ).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }      
