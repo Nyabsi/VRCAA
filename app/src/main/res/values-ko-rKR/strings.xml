@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">표시할 항목이 없습니다!</string>
-    <string name="legal_disclaimer">"VRCAA는 VRC Inc. 및 그 계열사의 승인을 받은 제품이 아닙니다."</string>
+    <string name="legal_disclaimer">"VRCAA는 VRChat Inc. 및 그 계열사의 승인을 받은 제품이 아닙니다."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>친한 친구</item>
@@ -17,18 +17,18 @@
     <string name="home_friend_locations">친구 위치</string>
     <!-- Login -->
     <string name="login_text">VRC Android Assistant에 로그인</string>
-    <string name="login_label_username">이름 혹은 이메일</string>
+    <string name="login_label_username">닉네임 혹은 이메일</string>
     <string name="login_label_password">비밀번호</string>
     <string name="login_button_text">로그인</string>
-    <string name="login_toast_wrong_credentials">이름 또는 비밀번호가 올바르지 않습니다.</string>
+    <string name="login_toast_wrong_credentials">닉네임 또는 비밀번호가 올바르지 않습니다.</string>
     <string name="login_toast_wrong_code">코드를 다시 한 번 확인해 주세요.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">이메일로 전송된 숫자 코드를 입력하세요</string>
-    <string name="auth_text_app">인증 코드를 입력해 주세요.</string>
+    <string name="auth_text_app">인증 앱의 코드를 입력해 주세요.</string>
     <string name="auth_button_text">인증</string>
-    <string name="auth_button_paste">붙이기</string>
+    <string name="auth_button_paste">붙여넣기</string>
     <!-- Main -->
-    <string name="main_search_placeholder">검색…</string>
+    <string name="main_search_placeholder">월드, 유저 또는 아바타 검색…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">현재 인스턴스</string>
     <string name="profile_label_note">메모</string>
@@ -38,23 +38,23 @@
     <string name="profile_text_no_biography">자기소개 없음</string>
     <string name="profile_user_dropdown_manage_notifications">알림 관리</string>
     <string name="profile_user_dropdown_view_groups">그룹 보기</string>
-    <string name="profile_user_dropdown_view_avatar">Avatar 정보 보기</string>
+    <string name="profile_user_dropdown_view_avatar">아바타 상세정보 보기</string>
     <string name="profile_user_dropdown_invite_self">나에게 초대 보내기</string>
-    <string name="profile_user_not_found_message">사용자를 찾을 수 없습니다.</string>
-    <string name="profile_user_avatar_private">비공개 Avatar입니다.</string>
-    <string name="profile_user_avatar_unreachable">Avatar를 찾을 수 없습니다.</string>
+    <string name="profile_user_not_found_message">유저를 찾을 수 없습니다.</string>
+    <string name="profile_user_avatar_private">비공개 아바타입니다.</string>
+    <string name="profile_user_avatar_unreachable">아바타를 찾을 수 없습니다.</string>
     <string name="profile_user_toast_invite_sent">초대가 전송되었습니다! 게임 클라이언트를 확인하세요.</string>
     <string name="profile_mutual_groups_text">같이 있는 그룹</string>
     <!-- Search -->
     <string name="search_text_result">검색 결과:</string>
-    <string name="search_filter_category_worlds">Worlds</string>
+    <string name="search_filter_category_worlds">월드</string>
     <string name="search_filter_category_worlds_featured">추천</string>
     <string name="search_filter_category_worlds_sort_by">정렬</string>
     <string name="search_filter_category_worlds_count">표시 수</string>
-    <string name="search_filter_category_users">사람</string>
+    <string name="search_filter_category_users">유저</string>
     <string name="search_filter_category_users_count">표시 수</string>
-    <string name="search_filter_category_avatars">Avarars</string>
-    <string name="search_filter_category_avatars_provider">제공</string>
+    <string name="search_filter_category_avatars">아바타</string>
+    <string name="search_filter_category_avatars_provider">제공자</string>
     <string name="search_filter_category_groups">그룹</string>
     <string name="search_filter_category_groups_count">표시 수</string>
     <string name="copy_id_label">ID 복사</string>
