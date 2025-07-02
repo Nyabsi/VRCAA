@@ -119,10 +119,9 @@ fun ProfileCard(
             item {
                 Row {
                     Row(
-                        modifier = Modifier
-                            .weight(0.70f)
-                            .padding(start = 12.dp, top = 60.dp),
+                        modifier = Modifier.padding(start = 12.dp, top = 60.dp),
                         verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
                             text = displayName,
@@ -154,8 +153,8 @@ fun ProfileCard(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.30f)
-                            .padding(end = 4.dp), horizontalArrangement = Arrangement.End
+                            .padding(end = 4.dp),
+                        horizontalArrangement = Arrangement.End
                     ) {
                         Languages(languages = tags, modifier = Modifier.padding(top = 8.dp))
                     }
@@ -163,10 +162,10 @@ fun ProfileCard(
             }
             item {
                 Row(
-                    modifier = Modifier.padding(start = 12.dp, top = 50.dp)
+                    modifier = Modifier.padding(start = 12.dp, top = 50.dp),
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Row(
-                        modifier = Modifier.weight(0.70f),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
@@ -183,8 +182,8 @@ fun ProfileCard(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.30f)
-                            .padding(end = 8.dp), horizontalArrangement = Arrangement.End
+                            .padding(end = 8.dp),
+                        horizontalArrangement = Arrangement.End
                     ) {
                         for (badge in badges) {
                             GlideImage(model = badge.badgeImageUrl, contentDescription = null, modifier = Modifier
