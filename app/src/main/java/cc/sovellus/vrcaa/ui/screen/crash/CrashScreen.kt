@@ -47,6 +47,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
+import androidx.core.net.toUri
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -128,7 +129,7 @@ fun CrashScreen(
                 Button(onClick = {
                     val intent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(BuildConfig.DISCORD_URL)
+                        BuildConfig.DISCORD_URL.toUri()
                     )
                     context.startActivity(intent)
                 }) {

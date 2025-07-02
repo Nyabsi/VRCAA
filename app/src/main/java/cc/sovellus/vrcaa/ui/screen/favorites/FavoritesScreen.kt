@@ -165,7 +165,7 @@ class FavoritesScreen : Screen {
 
         val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
         sortedWorldList.forEach { item ->
-            if (item.value.size > 0) {
+            if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
@@ -196,7 +196,7 @@ class FavoritesScreen : Screen {
 
         val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
         sortedAvatarList.forEach { item ->
-            if (item.value.size > 0) {
+            if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
@@ -227,7 +227,7 @@ class FavoritesScreen : Screen {
 
         val sortedFriendList = friendList.value.toSortedMap(compareBy { it.substring(6).toInt() })
         sortedFriendList.forEach { item ->
-            if (item.value.size > 0) {
+            if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {

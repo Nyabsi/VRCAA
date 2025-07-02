@@ -65,8 +65,6 @@ open class BaseClient {
         val skipAuthorizationFailure: Boolean
     )
 
-    lateinit var lastRequest: RequestObject
-
     enum class AuthorizationType {
         None,
         Cookie,

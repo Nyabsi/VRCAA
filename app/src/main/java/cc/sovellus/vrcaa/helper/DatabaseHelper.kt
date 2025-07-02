@@ -18,7 +18,6 @@ package cc.sovellus.vrcaa.helper
 
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.helper.DatabaseHelper.Queries.SQL_FEED_TABLE_V2_MIGRATION
 
