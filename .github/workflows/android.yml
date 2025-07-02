@@ -51,10 +51,10 @@ jobs:
       env:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
-    - name: Upload APK artifact for ${{ matrix.platform }}
+    - name: Upload signed APK artifact for ${{ matrix.platform }}
       uses: actions/upload-artifact@v4
       with:
-        name: VRCAA-${{ matrix.platform }}.zip
+        name: VRCAA-${{ matrix.platform }}-signed.apk
         path: ${{ steps.signed_apk.outputs.signedReleaseFile }}
 
   publish:
@@ -63,29 +63,23 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Create apks directory
-      run: mkdir ./apks
-
-    - name: Download APK Standard APK
+    - name: Download Standard APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-standard.zip
-        path: ./apks
+        name: VRCAA-standard-signed.apk
+        path: .
 
-    - name: Download APK Quest APK
+    - name: Download Quest APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-quest.zip
-        path: ./apks
+        name: VRCAA-quest-signed.apk
+        path: .
 
-    - name: Download APK Pico APK
+    - name: Download Pico APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-pico.zip
-        path: ./apks
-
-    - name: Unzip artifacts
-      run: unzip ./apks/*.zip -d .
+        name: VRCAA-pico-signed.apk
+        path: .
 
     - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
@@ -95,6 +89,6 @@ jobs:
         prerelease: false
         title: "${{ env.GITHUB_SHA }}"
         files: |
-          ./VRCAA-standard-signed.apk
-          ./VRCAA-quest-signed.apk
-          ./VRCAA-pico-signed.apk
+          VRCAA-standard-signed.apk
+          VRCAA-quest-signed.apk
+          VRCAA-pico-signed.apk
