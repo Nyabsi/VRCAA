@@ -61,7 +61,7 @@ fun ComboInput(
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(

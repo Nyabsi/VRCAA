@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.ui.components.dialog
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.AlertDialog
@@ -72,7 +73,7 @@ fun FavoriteEditDialog(
     }
 
     AlertDialog(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(16.dp).fillMaxWidth(),
 
         title = {
             Text(text = stringResource(R.string.favorite_edit_title).format(staticName.value))
@@ -98,6 +99,7 @@ fun FavoriteEditDialog(
                         value = name.value,
                         onValueChange = { name.value = it },
                         singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
 
