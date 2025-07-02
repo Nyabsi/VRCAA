@@ -109,8 +109,8 @@ fun ProfileCard(
                                 .clip(RoundedCornerShape(50)),
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center,
-                            loading = placeholder(R.drawable.icon_placeholder),
-                            failure = placeholder(R.drawable.icon_placeholder)
+                            loading = placeholder(R.drawable.image_placeholder),
+                            failure = placeholder(R.drawable.image_placeholder)
                         )
                     }
                 }
