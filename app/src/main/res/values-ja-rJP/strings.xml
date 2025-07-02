@@ -164,8 +164,8 @@
     <string name="feed_friend_request_label">フレンド・リクエスト</string>
     <string name="feed_friend_request_text">さんがフレンドになりたいようです。</string>
     <string name="feed_search_placeholder">ユーザー/ロケーションを検索する</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_friend_avatar_label">アバターの変更</string>
+    <string name="feed_friend_avatar_text">ユーザーのアバターが変更されました：</string>
     <!-- About -->
     <string name="about_page_title">概要</string>
     <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
