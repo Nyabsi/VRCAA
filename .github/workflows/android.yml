@@ -54,7 +54,7 @@ jobs:
     - name: Upload APK artifact for ${{ matrix.platform }}
       uses: actions/upload-artifact@v4
       with:
-        name: VRCAA-${{ matrix.platform }}
+        name: VRCAA-${{ matrix.platform }}.zip
         path: ${{ steps.signed_apk.outputs.signedReleaseFile }}
 
   publish:
@@ -69,23 +69,23 @@ jobs:
     - name: Download APK Standard APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-standard
+        name: VRCAA-standard.zip
         path: ./apks
 
     - name: Download APK Quest APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-quest
+        name: VRCAA-quest.zip
         path: ./apks
 
     - name: Download APK Pico APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-pico
+        name: VRCAA-pico.zip
         path: ./apks
 
     - name: Unzip artifacts
-      run: unzip ./apks/* -d .
+      run: unzip ./apks/*.zip -d .
 
     - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
