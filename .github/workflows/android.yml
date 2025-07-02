@@ -51,7 +51,7 @@ jobs:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
     - name: Upload APK artifact for ${{ matrix.platform }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: VRCAA-${{ matrix.platform }}-apk
         path: app/build/outputs/apk/${{ matrix.platform }}/release/VRCAA-${{ matrix.platform }}.apk
@@ -62,19 +62,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download APK Standard APK
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: VRCAA-standard-apk
         path: ./apks
 
     - name: Download APK Quest APK
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: VRCAA-quest-apk
         path: ./apks
 
     - name: Download APK Pico APK
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: VRCAA-pico-apk
         path: ./apks
