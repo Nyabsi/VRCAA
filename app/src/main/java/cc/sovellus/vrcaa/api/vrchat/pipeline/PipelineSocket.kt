@@ -179,7 +179,6 @@ class PipelineSocket(
     }
 
     fun reconnect() {
-        disconnect()
         launch {
             delay(Config.RECONNECTION_INTERVAL)
             api.auth.fetchToken()?.let { tkn ->

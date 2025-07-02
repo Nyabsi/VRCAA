@@ -77,6 +77,7 @@ class PipelineService : Service(), CoroutineScope {
     private var refreshTask: Runnable = Runnable {
         launch {
             CacheManager.buildCache()
+            pipeline?.reconnect()
         }
     }
 
@@ -447,13 +448,7 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
-        val skipCacheInit = intent?.extras?.getBoolean("SKIP_INIT_CACHE") ?: false
-
-        var initialRefresh = INITIAL_INTERVAL
-        if (skipCacheInit)
-            initialRefresh = RESTART_INTERVAL
-
-        scheduler.scheduleWithFixedDelay(refreshTask, initialRefresh, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
+        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
         return START_STICKY
     }

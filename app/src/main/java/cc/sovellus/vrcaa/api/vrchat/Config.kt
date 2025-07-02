@@ -26,5 +26,5 @@ object Config {
     const val MAX_TOKEN_REFRESH_ATTEMPT = 1
     /* Pipeline */
     const val PIPELINE_BASE_URL = "wss://pipeline.vrchat.cloud"
-    const val RECONNECTION_INTERVAL: Long = 30000
+    const val RECONNECTION_INTERVAL: Long = 15000
 }
