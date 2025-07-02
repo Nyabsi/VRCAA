@@ -85,7 +85,7 @@ jobs:
         path: ./apks
 
     - name: Unzip artifacts
-      run: unzip ./apks/*.zip -d .
+      run: unzip ./apks/* -d .
 
     - name: Publish release to Github
       uses: marvinpinto/action-automatic-releases@latest
