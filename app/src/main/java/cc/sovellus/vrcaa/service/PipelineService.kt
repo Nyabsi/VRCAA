@@ -100,7 +100,7 @@ class PipelineService : Service(), CoroutineScope {
                     val update = msg.obj as FriendOnline
                     val friend = FriendManager.getFriend(update.userId)
 
-                    if (friend != null && friend.platform.isEmpty() && friend.location == "offline") {
+                    if (friend != null && (friend.platform.isEmpty() || friend.platform == "web") && friend.location == "offline") {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                             friendId = update.userId
                             friendName = update.user.displayName
