@@ -60,9 +60,9 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        val invalidSession = intent.extras?.getBoolean("INVALID_SESSION") ?: false
-        val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION") ?: false
-        val restartSession = intent.extras?.getBoolean("RESTART_SESSION") ?: false
+        val invalidSession = intent.extras?.getBoolean("INVALID_SESSION") == true
+        val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION") == true
+        val restartSession = intent.extras?.getBoolean("RESTART_SESSION") == true
 
         if (invalidSession) {
 
