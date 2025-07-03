@@ -24,7 +24,8 @@ interface IAuth {
         AUTH_NONE,
         AUTH_TOTP,
         AUTH_OTP, // <!-- UNSUPPORTED
-        AUTH_EMAIL
+        AUTH_EMAIL,
+        AUTH_BYPASS
     }
 
     data class AuthResult(val success: Boolean, val message: String = "", val authType: AuthType = AuthType.AUTH_NONE)

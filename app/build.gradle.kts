@@ -153,4 +153,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
     implementation("com.google.firebase:firebase-crashlytics:19.4.4")
+    implementation("dev.turingcomplete:kotlin-onetimepassword:2.4.1")
 }
