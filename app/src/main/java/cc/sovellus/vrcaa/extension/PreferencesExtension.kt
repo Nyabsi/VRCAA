@@ -56,10 +56,6 @@ internal var SharedPreferences.discordToken: String
     get() = getString("discordToken", "")!!
     set(it) = edit { putString("discordToken", it) }
 
-internal var SharedPreferences.richPresenceEnabled: Boolean
-    get() = getBoolean("richPresenceEnabled", false)
-    set(it) = edit { putBoolean("richPresenceEnabled", it) }
-
 internal var SharedPreferences.searchFeaturedWorlds: Boolean
     get() = getBoolean("searchFeaturedWorlds", false)
     set(it) = edit { putBoolean("searchFeaturedWorlds", it) }
@@ -84,14 +80,6 @@ internal var SharedPreferences.avatarsAmount: Int
     get() = getInt("groupsAmount", 50)
     set(it) = edit { putInt("groupsAmount", it) }
 
-internal var SharedPreferences.richPresenceWarningAcknowledged: Boolean
-    get() = getBoolean("richPresenceWarningAcknowledged", false)
-    set(it) = edit { putBoolean("richPresenceWarningAcknowledged", it) }
-
-internal var SharedPreferences.richPresenceWebhookUrl: String
-    get() = getString("richPresenceWebhookUrl", "")!!
-    set(it) = edit { putString("richPresenceWebhookUrl", it) }
-
 internal var SharedPreferences.avatarProvider: String
     get() = getString("avatarProviderPreference", "avtrdb")!!
     set(it) = edit { putString("avatarProviderPreference", it) }
@@ -115,3 +103,7 @@ internal var SharedPreferences.columnCountOption: Int
 internal var SharedPreferences.fixedColumnSize: Int
     get() = getInt("fixedColumnSize", 2)
     set(it) = edit { putInt("fixedColumnSize", it) }
+
+internal var SharedPreferences.crashAnalytics: Boolean
+    get() = getBoolean("crashAnalytics", true)
+    set(it) = edit { putBoolean("crashAnalytics", it) }

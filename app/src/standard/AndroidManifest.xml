@@ -4,11 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
     <application
         android:name=".App"
@@ -56,10 +54,6 @@
 
         <service
             android:name=".service.PipelineService"
-            android:foregroundServiceType="specialUse"/>
-
-        <service
-            android:name=".service.RichPresenceService"
             android:foregroundServiceType="specialUse"/>
 
         <receiver android:name=".widgets.FriendWidgetReceiver"

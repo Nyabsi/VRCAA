@@ -25,10 +25,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cc.sovellus.vrcaa.activity.CrashActivity
+import cc.sovellus.vrcaa.extension.crashAnalytics
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.helper.NotificationHelper
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 
 
 class App : Application() {
@@ -42,7 +45,10 @@ class App : Application() {
         networkLogging.value = preferences.networkLogging
         minimalistModeEnabled.value = preferences.minimalistMode
 
-        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+        Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
+        if (!preferences.crashAnalytics)
+            GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+
         NotificationHelper.createNotificationChannels()
 
         loadingText.value = context.getString(R.string.global_app_default_loading_text)

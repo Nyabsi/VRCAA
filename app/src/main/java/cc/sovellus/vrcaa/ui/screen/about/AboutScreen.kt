@@ -29,7 +29,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -37,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -54,6 +58,7 @@ class AboutScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { AboutScreenModel() }
 
         Scaffold(
             topBar = {
@@ -118,6 +123,35 @@ class AboutScreen : Screen {
                         },
                         supportingContent = {
                             Text(text = "Android ${Build.VERSION.RELEASE}")
+                        }
+                    )
+
+                    HorizontalDivider(
+                        color = Color.Gray,
+                        thickness = 0.5.dp
+                    )
+
+                    ListItem(
+                        headlineContent = { Text("Crash Analytics") },
+                        supportingContent = { Text("Sends anonymous statistics for application crashes, to help with development.") },
+                        trailingContent = {
+                            Switch(
+                                checked = model.crashAnalytics.value,
+                                onCheckedChange = {
+                                    model.toggleAnalytics()
+                                },
+
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                    uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer
+                                )
+                            )
+                        },
+
+                        modifier = Modifier.clickable {
+                            model.toggleAnalytics()
                         }
                     )
 

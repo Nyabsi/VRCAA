@@ -31,10 +31,8 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.service.PipelineService
-import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
@@ -71,11 +69,6 @@ class MainActivity : BaseActivity() {
             var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
 
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
-            }
-
             Toast.makeText(
                 this,
                 getString(R.string.api_session_has_expired_text),
@@ -87,12 +80,6 @@ class MainActivity : BaseActivity() {
             var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             startForegroundService(intent)
-
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
-                startForegroundService(intent)
-            }
         }
 
         val token = preferences.authToken
@@ -103,11 +90,6 @@ class MainActivity : BaseActivity() {
         if (validSession) {
             var intent = Intent(this, PipelineService::class.java)
             startForegroundService(intent)
-
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                startForegroundService(intent)
-            }
         }
     }
 
