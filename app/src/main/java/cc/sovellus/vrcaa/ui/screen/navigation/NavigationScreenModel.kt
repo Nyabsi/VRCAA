@@ -40,11 +40,13 @@ import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.manager.DatabaseManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.collections.MutableList
 
 
 class NavigationScreenModel : ScreenModel {
@@ -54,7 +56,7 @@ class NavigationScreenModel : ScreenModel {
 
     var searchModeActivated = mutableStateOf(false)
     var searchText = mutableStateOf("")
-    var searchHistory = mutableListOf<String>()
+    var searchHistory = DatabaseManager.readQueries()
     var hasNoInternet = mutableStateOf(false)
     var invalidSession = mutableStateOf(false)
 
@@ -112,8 +114,10 @@ class NavigationScreenModel : ScreenModel {
 
     fun addSearchHistory() {
         screenModelScope.launch {
-            if (searchText.value.isNotEmpty())
+            if (searchText.value.isNotEmpty()) {
                 searchHistory.add(searchText.value)
+                DatabaseManager.writeQuery(searchText.value)
+            }
             clearSearchText()
         }
     }

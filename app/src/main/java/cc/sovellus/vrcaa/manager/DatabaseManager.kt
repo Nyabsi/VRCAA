@@ -79,4 +79,29 @@ object DatabaseManager: BaseManager<Any>() {
         cursor.close()
         return feeds
     }
+
+    fun writeQuery(query: String) {
+        val values = ContentValues().apply {
+            put("query", query)
+        }
+
+        dbHelper.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, null, values)
+    }
+
+    fun readQueries(): MutableList<String> {
+        val cursor = dbHelper.readableDatabase.query(
+            DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, arrayOf("query"), null, null, null, null, null
+        )
+
+        val queries = mutableListOf<String>()
+
+        with(cursor) {
+            while (moveToNext()) {
+                queries.add(getString(getColumnIndexOrThrow("query")))
+            }
+        }
+
+        cursor.close()
+        return queries
+    }
 }
