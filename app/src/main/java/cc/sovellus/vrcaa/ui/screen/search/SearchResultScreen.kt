@@ -210,27 +210,24 @@ class SearchResultScreen(
                 failure = placeholder(R.drawable.image_placeholder)
             )
 
-            Row(
-                modifier = Modifier.padding(4.dp)
-            ) {
+            Row {
                 Text(
                     text = name,
                     textAlign = TextAlign.Start,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(0.80f)
+                    modifier = Modifier.weight(0.80f).padding(start = 6.dp)
                 )
                 if (count != null) {
-                    Text(
-                        text = count.toString(),
-                        textAlign = TextAlign.End,
-                        modifier = Modifier
-                            .weight(0.20f)
-                            .padding(end = 2.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.Group, contentDescription = null
-                    )
+                    Row(modifier = Modifier.weight(0.20f).padding(end = 2.dp)) {
+                        Text(
+                            text = count.toString(),
+                            textAlign = TextAlign.Start,
+                        )
+                        Icon(
+                            imageVector = Icons.Filled.Group, contentDescription = null
+                        )
+                    }
                 }
             }
         }
