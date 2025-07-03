@@ -80,6 +80,7 @@
     <string name="settings_item_advanced_settings">高级</string>
     <string name="settings_item_advanced_settings_description">高级日志和功能</string>
     <string name="settings_item_logout">退出登录</string>
+    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">描述</string>
     <string name="world_label_tags">标签</string>

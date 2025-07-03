@@ -80,6 +80,7 @@
     <string name="settings_item_advanced_settings">고급</string>
     <string name="settings_item_advanced_settings_description">고급 로그 기록 및 추가 기능</string>
     <string name="settings_item_logout">로그아웃</string>
+    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">설명</string>
     <string name="world_label_tags">태그</string>

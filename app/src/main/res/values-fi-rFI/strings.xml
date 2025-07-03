@@ -80,6 +80,7 @@
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_logout">Kirjaudu ulos</string>
+    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Kuvaus</string>
     <string name="world_label_tags">Tunnisteet</string>
