@@ -892,7 +892,11 @@ class NavigationScreen : Screen {
                                 },
                                 label = {
                                     if (!App.isMinimalistModeEnabled()) {
-                                        Text(text = tab.options.title)
+                                        Text(
+                                            text = tab.options.title,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
                                     }
                                 })
                         }
