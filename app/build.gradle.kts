@@ -132,7 +132,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
     implementation("com.sealwu.jsontokotlin:library:3.7.4")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
