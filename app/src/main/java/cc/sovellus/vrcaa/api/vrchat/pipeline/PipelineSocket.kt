@@ -44,6 +44,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
 class PipelineSocket(
@@ -52,7 +53,14 @@ class PipelineSocket(
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
-    private val client: OkHttpClient by lazy { OkHttpClient() }
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
     private lateinit var socket: WebSocket
     private var shouldReconnect: Boolean = false
 
