@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.base.BaseManager
+import cc.sovellus.vrcaa.helper.JsonHelper
 
 object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
@@ -60,11 +61,11 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     }
 
     fun updateFriend(friend: Friend) {
+
         val it = friends.find { it.id == friend.id }
         it?.let {
-            friend.platform = it.platform
-            friend.location = it.location
-            friends.set(friends.indexOf(it), friend)
+            val result = JsonHelper.mergeJson<Friend>(it, friend, Friend::class.java)
+            friends.set(friends.indexOf(it), result)
         }
 
         getListeners().forEach { listener ->

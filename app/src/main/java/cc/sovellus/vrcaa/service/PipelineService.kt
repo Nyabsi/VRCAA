@@ -122,9 +122,6 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         FeedManager.addFeed(feed)
-
-                        FriendManager.updatePlatform(update.userId, update.platform)
-                        FriendManager.updateLocation(update.userId, update.location)
                         FriendManager.updateFriend(update.user)
                     }
                 }
@@ -203,8 +200,6 @@ class PipelineService : Service(), CoroutineScope {
                         FeedManager.addFeed(feed)
                     }
 
-                    FriendManager.updatePlatform(update.userId, update.platform)
-                    FriendManager.updateLocation(update.userId, update.location)
                     FriendManager.updateFriend(update.user)
                 }
 
@@ -384,7 +379,6 @@ class PipelineService : Service(), CoroutineScope {
 
                     // Only update it, if they're offline, we don't want to really intervene with other states.
                     if (friend != null && friend.location == "offline") {
-                        FriendManager.updatePlatform(update.userId, update.platform)
                         FriendManager.updateFriend(update.user)
                     }
                 }
