@@ -83,7 +83,7 @@ class HomeScreen : Screen {
                 .padding(16.dp)
         ) {
             item {
-                val onlineFriends = friends.filter { it.platform != "web" && it.platform != "" }
+                val onlineFriends = friends.filter { it.platform != "web" && it.platform.isNotEmpty() }
                 if (onlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_active_friends),
@@ -200,7 +200,7 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                val offlineFriends = friends.filter { it.platform == "" }
+                val offlineFriends = friends.filter { it.platform.isEmpty() }
                 if (offlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_offline_friends),
