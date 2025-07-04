@@ -48,11 +48,23 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
         },
         overlineContent = {
             Text(friend.statusDescription.ifEmpty {
-                StatusHelper.getStatusFromString(friend.status).toString()
+                if (friend.platform.isEmpty()) { StatusHelper.Status.Offline.toString() } else { StatusHelper.getStatusFromString(friend.status).toString() }
             }, maxLines = 1)
         },
         supportingContent = {
-            Text(text = (if (friend.platform == "web") { "Active on website." } else { LocationHelper.getReadableLocation(friend.location) }), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text =
+                (if (friend.platform == "web") {
+                    "Active on website."
+                }
+                else if (friend.platform.isEmpty()) {
+                    "offline"
+                }
+                else {
+                    LocationHelper.getReadableLocation(friend.location)
+                }),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         },
         leadingContent = {
             GlideImage(
@@ -74,7 +86,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
                 modifier = Modifier.size(20.dp)
             ) {
                 Badge(
-                    containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier
+                    containerColor = if (friend.platform.isEmpty()) { StatusHelper.Status.Offline.toColor() } else { StatusHelper.getStatusFromString(friend.status).toColor() }, modifier = Modifier
                         .size(20.dp)
                         .align(Alignment.CenterHorizontally)
                 )
