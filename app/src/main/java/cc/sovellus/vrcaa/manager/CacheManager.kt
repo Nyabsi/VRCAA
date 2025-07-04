@@ -22,6 +22,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.base.BaseManager
+import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlin.jvm.optionals.getOrNull
 
@@ -139,9 +140,12 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun updateProfile(profile: User) {
-        this.profile = profile
-        getListeners().forEach { listener ->
-            listener.profileUpdated(profile)
+        this.profile?.let {
+            val result = JsonHelper.mergeJson<User>(it, profile, User::class.java)
+            this.profile = result
+            getListeners().forEach { listener ->
+                listener.profileUpdated(result)
+            }
         }
     }
 
