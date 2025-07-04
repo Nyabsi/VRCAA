@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.base
 
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -27,7 +28,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
-import ru.gildor.coroutines.okhttp.await
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
