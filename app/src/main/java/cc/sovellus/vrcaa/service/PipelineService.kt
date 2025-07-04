@@ -377,10 +377,8 @@ class PipelineService : Service(), CoroutineScope {
                     FeedManager.addFeed(feed)
                     */
 
-                    // Only update it, if they're offline, we don't want to really intervene with other states.
-                    if (friend != null && friend.location == "offline") {
-                        FriendManager.updateFriend(update.user)
-                    }
+                    FriendManager.updateFriend(update.user)
+                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is Notification -> {
