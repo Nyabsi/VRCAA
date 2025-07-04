@@ -66,8 +66,13 @@ class PipelineSocket(
     private lateinit var socket: WebSocket
     private var shouldReconnect: Boolean = false
 
+    data class PipelineEvent(
+        val content: Any,
+        val message: String
+    )
+
     interface SocketListener {
-        fun onMessage(message: Any?)
+        fun onMessage(message: PipelineEvent)
     }
 
     private var socketListener: SocketListener? = null
@@ -83,58 +88,58 @@ class PipelineSocket(
                 when (update.type) {
                     "friend-location" -> {
                         val location = Gson().fromJson(update.content, FriendLocation::class.java)
-                        socketListener?.onMessage(location)
+                        socketListener?.onMessage(PipelineEvent(location, text))
                     }
 
                     "friend-active" -> {
                         val friend = Gson().fromJson(update.content, FriendActive::class.java)
-                        socketListener?.onMessage(friend)
+                        socketListener?.onMessage(PipelineEvent(friend, text))
                     }
 
                     "friend-online" -> {
                         val friend = Gson().fromJson(update.content, FriendOnline::class.java)
-                        socketListener?.onMessage(friend)
+                        socketListener?.onMessage(PipelineEvent(friend, text))
                     }
 
                     "friend-offline" -> {
                         val friend = Gson().fromJson(update.content, FriendOffline::class.java)
-                        socketListener?.onMessage(friend)
+                        socketListener?.onMessage(PipelineEvent(friend, text))
                     }
 
                     "friend-delete" -> {
                         val friend = Gson().fromJson(update.content, FriendDelete::class.java)
-                        socketListener?.onMessage(friend)
+                        socketListener?.onMessage(PipelineEvent(friend, text))
                     }
 
                     "friend-add" -> {
                         val friend = Gson().fromJson(update.content, FriendAdd::class.java)
-                        socketListener?.onMessage(friend)
+                        socketListener?.onMessage(PipelineEvent(friend, text))
                     }
 
                     "friend-update" -> {
                         val friend = Gson().fromJson(update.content, FriendUpdate::class.java)
-                        socketListener?.onMessage(friend)
+                        socketListener?.onMessage(PipelineEvent(friend, text))
                     }
 
                     "user-location" -> {
                         val location = Gson().fromJson(update.content, UserLocation::class.java)
-                        socketListener?.onMessage(location)
+                        socketListener?.onMessage(PipelineEvent(location, text))
                     }
 
                     "user-update" -> {
                         val location = Gson().fromJson(update.content, UserUpdate::class.java)
-                        socketListener?.onMessage(location)
+                        socketListener?.onMessage(PipelineEvent(location, text))
                     }
 
                     "notification" -> {
                         val notification = Gson().fromJson(update.content, Notification::class.java)
-                        socketListener?.onMessage(notification)
+                        socketListener?.onMessage(PipelineEvent(notification, text))
                     }
 
                     "notification-v2" -> {
                         val notification =
                             Gson().fromJson(update.content, NotificationV2::class.java)
-                        socketListener?.onMessage(notification)
+                        socketListener?.onMessage(PipelineEvent(notification, text))
                     }
 
                     else -> {

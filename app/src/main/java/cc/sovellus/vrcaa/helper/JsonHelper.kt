@@ -27,6 +27,11 @@ object JsonHelper {
         return Gson().fromJson(merged, type)
     }
 
+    fun <T> mergeJson(old: T, new: String, type: Class<T>): T {
+        val merged = mergeObjects(JsonParser.parseString(Gson().toJson(old)).asJsonObject, JsonParser.parseString(new).asJsonObject)
+        return Gson().fromJson(merged, type)
+    }
+
     private fun mergeObjects(old: JsonObject, new: JsonObject): JsonObject {
         val temp = old.deepCopy()
         for (field in old.entrySet()) {

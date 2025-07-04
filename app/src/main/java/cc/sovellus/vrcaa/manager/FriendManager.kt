@@ -60,11 +60,11 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
         return friends.find { it.id == userId }
     }
 
-    fun updateFriend(friend: Friend) {
+    fun updateFriend(userId: String, message: String) {
 
-        val it = friends.find { it.id == friend.id }
+        val it = friends.find { it.id == userId }
         it?.let {
-            val result = JsonHelper.mergeJson<Friend>(it, friend, Friend::class.java)
+            val result = JsonHelper.mergeJson<Friend>(it, message, Friend::class.java)
             friends.set(friends.indexOf(it), result)
         }
 
