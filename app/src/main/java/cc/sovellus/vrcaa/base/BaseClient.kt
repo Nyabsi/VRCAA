@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.base
 
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
+import cc.sovellus.vrcaa.helper.DnsHelper
 import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -40,6 +41,7 @@ open class BaseClient {
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .dns(DnsHelper())
             .build()
     }
 
