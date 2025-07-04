@@ -84,18 +84,6 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
         }
     }
 
-    fun updateStatus(userId: String, status: String) {
-        val it = friends.find { it.id == userId }
-        it?.let {
-            it.status = status
-            friends.set(friends.indexOf(it), it)
-        }
-
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
-        }
-    }
-
     fun updatePlatform(userId: String, platform: String) {
         val it = friends.find { it.id == userId }
         it?.let {

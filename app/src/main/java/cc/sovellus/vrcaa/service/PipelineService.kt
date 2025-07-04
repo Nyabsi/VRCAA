@@ -157,7 +157,6 @@ class PipelineService : Service(), CoroutineScope {
                         FeedManager.addFeed(feed)
 
                         FriendManager.updateLocation(update.userId, "offline")
-                        FriendManager.updateStatus(update.userId, "offline")
                         FriendManager.updatePlatform(update.userId, update.platform)
                     }
                 }
