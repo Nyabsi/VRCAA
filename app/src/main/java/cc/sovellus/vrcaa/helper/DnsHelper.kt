@@ -23,6 +23,13 @@ import java.net.InetAddress
 // https://stackoverflow.com/questions/64559405/how-do-i-force-my-android-app-to-use-ipv4-instead-of-ipv6
 class DnsHelper() : Dns {
     override fun lookup(hostname: String): List<InetAddress> {
-        return Dns.SYSTEM.lookup(hostname).filter { Inet4Address::class.java.isInstance(it) }
+        val query = Dns.SYSTEM.lookup(hostname)
+        val queryIPV4Filtered = query.filter { Inet4Address::class.java.isInstance(it) }
+        // if IPv4 exists, prioritize IPv4 if it doesn't then fallback to whatever is available.
+        return if (queryIPV4Filtered.isNotEmpty()) {
+            queryIPV4Filtered
+        } else {
+            query
+        }
     }
 }
