@@ -123,6 +123,8 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
                         FriendManager.updateFriend(update.user)
+                        FriendManager.updatePlatform(update.userId, update.platform)
+                        FriendManager.updateLocation(update.userId, update.location)
                     }
                 }
 
