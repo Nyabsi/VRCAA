@@ -16,20 +16,35 @@
 
 package cc.sovellus.vrcaa.helper
 
+import android.util.Log
 import okhttp3.Dns
 import java.net.Inet4Address
 import java.net.InetAddress
+import java.net.NetworkInterface
 
-// https://stackoverflow.com/questions/64559405/how-do-i-force-my-android-app-to-use-ipv4-instead-of-ipv6
 class DnsHelper() : Dns {
     override fun lookup(hostname: String): List<InetAddress> {
         val query = Dns.SYSTEM.lookup(hostname)
-        val queryIPV4Filtered = query.filter { Inet4Address::class.java.isInstance(it) }
+        val queryIPv4Filtered = query.filter { Inet4Address::class.java.isInstance(it) }
         // if IPv4 exists, prioritize IPv4 if it doesn't then fallback to whatever is available.
-        return if (queryIPV4Filtered.isNotEmpty()) {
-            queryIPV4Filtered
+        return if (queryIPv4Filtered.isNotEmpty() && hasIPV4()) {
+            queryIPv4Filtered
         } else {
             query
         }
+    }
+
+    private fun hasIPV4(): Boolean {
+        val interfaces = NetworkInterface.getNetworkInterfaces()
+        for (i in interfaces) {
+            val addresses = i.inetAddresses
+            for (address in addresses) {
+                if (!address.isLoopbackAddress && address is Inet4Address) {
+                    Log.d("VRCAA", "HTTP is capable of IPv4")
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
