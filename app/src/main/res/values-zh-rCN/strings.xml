@@ -80,6 +80,7 @@
     <string name="settings_item_advanced_settings">高级</string>
     <string name="settings_item_advanced_settings_description">高级日志和功能</string>
     <string name="settings_item_logout">退出登录</string>
+    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">描述</string>
     <string name="world_label_tags">标签</string>
@@ -164,8 +165,8 @@
     <string name="feed_friend_request_label">好友请求</string>
     <string name="feed_friend_request_text">想要添加您为好友。</string>
     <string name="feed_search_placeholder">搜索用户或房间…</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_friend_avatar_label">更换模型</string>
+    <string name="feed_friend_avatar_text">更改模型为</string>
     <!-- About -->
     <string name="about_page_title">关于</string>
     <string name="about_page_open_source_licenses_title">开源许可证</string>
@@ -226,9 +227,9 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">无互联网连接</string>
     <string name="misc_no_internet_description">请确保您已连接到互联网，此应用程序无法在没有互联网连接的情况下工作。</string>
-    <string name="misc_no_internet_label">Restart Application</string>
+    <string name="misc_no_internet_label">重启应用</string>
     <string name="misc_exit_toast_label">再次按下以退出。</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="global_app_default_loading_text">初始化...</string>
     <!-- User -->
     <string name="user_dropdown_view_groups">查看群组</string>
     <string name="user_dropdown_view_worlds">查看世界</string>
@@ -245,7 +246,7 @@
     <string name="profile_edit_dialog_toast_updated">已更新个人资料。</string>
     <string name="profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
     <string name="profile_edit_dialog_title_edit_profile">编辑个人资料</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
+    <string name="profile_edit_dialog_title_pronouns">代词</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">您真的要这么做吗？</string>
     <string name="logout_dialog_description">通过按下“继续”，您将退出 VRCAA，您必须重新登录才能继续使用该应用程序。</string>
@@ -257,7 +258,7 @@
     <string-array name="favorites_selection_options">
         <item>世界</item>
         <item>模型</item>
-        <item>Friends</item>
+        <item>好友</item>
     </string-array>
     <string name="favorite_label_add">添加到收藏</string>
     <string name="favorite_label_remove">从收藏中移除</string>

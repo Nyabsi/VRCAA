@@ -1,11 +1,25 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.api.vrchat.http
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.R
@@ -54,13 +68,12 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroups
 import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
-import cc.sovellus.vrcaa.api.vrchat.models.AuthResponse
+import cc.sovellus.vrcaa.api.vrchat.http.models.AuthResponse
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
-import cc.sovellus.vrcaa.service.PipelineService
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,15 +87,32 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
 
     private val context: Context = App.getContext()
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", MODE_PRIVATE)
+    private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
     private var listener: SessionListener? = null
-    private var authenticationCounter: Int = 0
 
     init {
         setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+    }
+
+    private var reAuthorizationFailureCount: Int = 0
+
+    override suspend fun onAuthorizationFailure() {
+        setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
+
+        if (reAuthorizationFailureCount < Config.MAX_TOKEN_REFRESH_ATTEMPT) {
+            val response = api.auth.login(
+                preferences.userCredentials.first,
+                preferences.userCredentials.second
+            )
+
+            if (!response.success) {
+                reAuthorizationFailureCount++
+                listener?.onSessionInvalidate()
+            }
+        }
     }
 
     interface SessionListener {
@@ -114,29 +144,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                         "You're doing actions too quick! Please calm down.",
                         Toast.LENGTH_SHORT
                     ).show()
-                }
-            }
-            Result.Unauthorized -> {
-                setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
-
-                launch {
-                    val response = api.auth.login(
-                        preferences.userCredentials.first,
-                        preferences.userCredentials.second
-                    )
-
-                    if (response.success && response.authType == AuthType.AUTH_NONE) {
-                        val intent = Intent(App.getContext(), PipelineService::class.java)
-                        App.getContext().stopService(intent)
-
-                        val bundle = bundleOf()
-                        bundle.putBoolean("SKIP_INIT_CACHE", true)
-
-                        intent.putExtras(bundle)
-                        App.getContext().startService(intent)
-                    } else {
-                        listener?.onSessionInvalidate()
-                    }
                 }
             }
             Result.UnknownMethod -> {
@@ -175,13 +182,18 @@ class HttpClient : BaseClient(), CoroutineScope {
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user",
                 headers = headers,
-                body = null
+                body = null,
+                retryAfterFailure = false,
+                skipAuthorizationFailure = true
             )
 
             when (result) {
                 is Result.Succeeded -> {
                     val cookies = result.response.headers("Set-Cookie")
                     if (cookies.isNotEmpty()) {
+                        // reset authorization failure count after successful logon
+                        reAuthorizationFailureCount = 0
+
                         if (result.body.contains("emailOtp")) {
                             preferences.authToken = cookies[0]
                             setAuthorization(AuthorizationType.Cookie, preferences.authToken)
@@ -201,7 +213,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     // if server doesn't send cookies, it means we're already authenticated.
                     // I don't know how can you reach this statement though.
-                    return IAuth.AuthResult(true)
+                    return IAuth.AuthResult(false)
                 }
                 is Result.Unauthorized -> {
                     return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
@@ -219,14 +231,14 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun verify(type: IAuth.AuthType, code: String): IAuth.AuthResult {
+        override suspend fun verify(type: AuthType, code: String): IAuth.AuthResult {
 
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
             val dParameter = when (type) {
-                IAuth.AuthType.AUTH_EMAIL -> "emailotp"
-                IAuth.AuthType.AUTH_TOTP -> "totp"
+                AuthType.AUTH_EMAIL -> "emailotp"
+                AuthType.AUTH_TOTP -> "totp"
                 else -> { "" }
             }
 
@@ -234,7 +246,9 @@ class HttpClient : BaseClient(), CoroutineScope {
                 method = "POST",
                 url = "${Config.API_BASE_URL}/auth/twofactorauth/${dParameter}/verify",
                 headers = headers,
-                body =  Gson().toJson(Code(code))
+                body =  Gson().toJson(Code(code)),
+                retryAfterFailure = false,
+                skipAuthorizationFailure = true
             )
 
             when (result) {

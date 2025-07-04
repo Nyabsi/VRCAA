@@ -1,11 +1,25 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +44,10 @@ import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.TimeZone
 
 class ProfileScreen : Screen {
 
@@ -85,6 +103,20 @@ class ProfileScreen : Screen {
                     ) {
                         SubHeader(title = stringResource(R.string.profile_label_biography))
                         Description(text = profile.bio)
+
+                        if (profile.lastActivity.isNotEmpty()) {
+                            val userTimeZone = TimeZone.getDefault().toZoneId()
+                            val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                                .withLocale(Locale.getDefault())
+
+                            val lastActivity = ZonedDateTime.parse(profile.lastActivity).withZoneSameInstant(userTimeZone).format(formatter)
+
+                            SubHeader(title = stringResource(R.string.profile_label_last_activity))
+                            Description(text = lastActivity)
+                        }
+
+                        SubHeader(title = stringResource(R.string.profile_label_date_joined))
+                        Description(text = profile.dateJoined)
                     }
                 }
             }

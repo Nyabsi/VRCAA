@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.components.layout
 
 import androidx.compose.foundation.clickable
@@ -32,11 +48,23 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
         },
         overlineContent = {
             Text(friend.statusDescription.ifEmpty {
-                StatusHelper.getStatusFromString(friend.status).toString()
+                if (friend.platform.isEmpty()) { StatusHelper.Status.Offline.toString() } else { StatusHelper.getStatusFromString(friend.status).toString() }
             }, maxLines = 1)
         },
         supportingContent = {
-            Text(text = (if (friend.platform == "web") { "Active on website." } else { LocationHelper.getReadableLocation(friend.location) }), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text =
+                (if (friend.platform == "web") {
+                    "Active on website."
+                }
+                else if (friend.platform.isEmpty()) {
+                    "offline"
+                }
+                else {
+                    LocationHelper.getReadableLocation(friend.location)
+                }),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         },
         leadingContent = {
             GlideImage(
@@ -58,7 +86,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
                 modifier = Modifier.size(20.dp)
             ) {
                 Badge(
-                    containerColor = StatusHelper.getStatusFromString(friend.status).toColor(), modifier = Modifier
+                    containerColor = if (friend.platform.isEmpty()) { StatusHelper.Status.Offline.toColor() } else { StatusHelper.getStatusFromString(friend.status).toColor() }, modifier = Modifier
                         .size(20.dp)
                         .align(Alignment.CenterHorizontally)
                 )

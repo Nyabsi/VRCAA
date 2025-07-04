@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.App
@@ -6,6 +22,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.base.BaseManager
+import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlin.jvm.optionals.getOrNull
 
@@ -123,9 +140,12 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun updateProfile(profile: User) {
-        this.profile = profile
-        getListeners().forEach { listener ->
-            listener.profileUpdated(profile)
+        this.profile?.let {
+            val result = JsonHelper.mergeJson<User>(it, profile, User::class.java)
+            this.profile = result
+            getListeners().forEach { listener ->
+                listener.profileUpdated(result)
+            }
         }
     }
 

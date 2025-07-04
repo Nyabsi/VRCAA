@@ -1,6 +1,24 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.base
 
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.extension.await
+import cc.sovellus.vrcaa.helper.DnsHelper
 import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -11,17 +29,25 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
-import ru.gildor.coroutines.okhttp.await
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.concurrent.TimeUnit
 
 open class BaseClient {
     /* inherited classes don't need to access the client variable */
-    private val client: OkHttpClient by lazy { OkHttpClient() }
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .dns(DnsHelper())
+            .build()
+    }
 
     private lateinit var credentials: String
     private var authorizationType: AuthorizationType = AuthorizationType.None
+    private var skipAuthNextFailure: Boolean = false
 
     // TODO: add new response types, when required.
     sealed class Result {
@@ -38,13 +64,23 @@ open class BaseClient {
         data object Forbidden : Result()
     }
 
+    data class RequestObject(
+        val method: String,
+        val url: String,
+        val headers: Headers.Builder,
+        val body: String?,
+        val retryAfterFailure: Boolean,
+        val ignoreAuthorization: Boolean,
+        val skipAuthorizationFailure: Boolean
+    )
+
     enum class AuthorizationType {
         None,
         Cookie,
         Bearer
     }
 
-    private fun handleRequest(
+    private suspend fun handleRequest(
         response: Response,
         responseBody: String
     ): Result = when (response.code) {
@@ -52,7 +88,12 @@ open class BaseClient {
         304 -> Result.NotModified
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest(responseBody)
-        401 -> Result.Unauthorized
+        401 -> {
+            if (!skipAuthNextFailure)
+                onAuthorizationFailure()
+            skipAuthNextFailure = false
+            Result.Unauthorized
+        }
         403 -> Result.Forbidden
         404 -> Result.NotFound
         500 -> Result.InternalError
@@ -64,7 +105,9 @@ open class BaseClient {
         url: String,
         headers: Headers.Builder,
         body: String?,
+        retryAfterFailure: Boolean = true, //  assume "onAuthorizationFailure" is implemented
         ignoreAuthorization: Boolean = false,
+        skipAuthorizationFailure: Boolean = false
     ): Result {
 
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
@@ -81,6 +124,9 @@ open class BaseClient {
                 else -> {}
             }
         }
+
+        if (skipAuthorizationFailure)
+            skipAuthNextFailure = true
 
         val finalHeaders = headers.build()
 
@@ -109,7 +155,21 @@ open class BaseClient {
                         )
                     }
 
-                    handleRequest(response, responseBody)
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
+                        return doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
+                    }
+
+                    return result
                 }
 
                 "POST" -> {
@@ -134,7 +194,21 @@ open class BaseClient {
                         )
                     }
 
-                    handleRequest(response, responseBody)
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
+                        return doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
+                    }
+
+                    return result
                 }
 
                 "PUT" -> {
@@ -159,7 +233,21 @@ open class BaseClient {
                         )
                     }
 
-                    handleRequest(response, responseBody)
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
+                        return doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
+                    }
+
+                    return result
                 }
 
                 "DELETE" -> {
@@ -184,7 +272,21 @@ open class BaseClient {
                         )
                     }
 
-                    handleRequest(response, responseBody)
+                    val result = handleRequest(response, responseBody)
+
+                    if (result == Result.Unauthorized && retryAfterFailure) {
+                        return doRequest(
+                            method = method,
+                            url = url,
+                            headers = headers,
+                            body = body,
+                            retryAfterFailure = retryAfterFailure,
+                            ignoreAuthorization = ignoreAuthorization,
+                            skipAuthorizationFailure = skipAuthorizationFailure
+                        )
+                    }
+
+                    return result
                 }
 
                 else -> {
@@ -199,6 +301,8 @@ open class BaseClient {
             Result.NoInternet
         }
     }
+
+    protected open suspend fun onAuthorizationFailure() { }
 
     fun setAuthorization(type: AuthorizationType, credentials: String) {
         this.credentials = credentials

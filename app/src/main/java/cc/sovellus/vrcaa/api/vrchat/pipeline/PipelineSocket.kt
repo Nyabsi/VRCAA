@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.api.vrchat.pipeline
 
 import cc.sovellus.vrcaa.App
@@ -14,19 +30,39 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.api.vrchat.Config
+import cc.sovellus.vrcaa.helper.DnsHelper
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
 
 class PipelineSocket(
-    private val token: String
-) {
-    private val client: OkHttpClient by lazy { OkHttpClient() }
+    private var token: String
+): CoroutineScope {
+
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .dns(DnsHelper())
+            .build()
+    }
+
     private lateinit var socket: WebSocket
     private var shouldReconnect: Boolean = false
 
@@ -38,12 +74,6 @@ class PipelineSocket(
 
     private val listener by lazy {
         object : WebSocketListener() {
-            override fun onOpen(
-                webSocket: WebSocket, response: Response
-            ) {
-                shouldReconnect = true
-            }
-
             override fun onMessage(
                 webSocket: WebSocket, text: String
             ) {
@@ -124,36 +154,29 @@ class PipelineSocket(
                 }
             }
 
-            override fun onClosing(
+            override fun onClosed(
                 webSocket: WebSocket, code: Int, reason: String
             ) {
-                webSocket.close(1000, null)
-                shouldReconnect = false
+                 if (shouldReconnect)
+                {
+                    reconnect()
+                }
             }
 
             override fun onFailure(
                 webSocket: WebSocket, t: Throwable, response: Response?
             ) {
-                when (response?.code) {
-                    401 -> {
-                        shouldReconnect = false
-                    }
-                }
-
                 if (shouldReconnect)
                 {
-                    webSocket.close(1000, null)
-                    Thread.sleep(RECONNECTION_INTERVAL)
-                    connect()
+                    reconnect()
                 }
             }
         }
     }
 
     fun connect() {
-
-        shouldReconnect = false
-
+        shouldReconnect = true
+        
         val headers = Headers.Builder()
             .add("User-Agent", Config.API_USER_AGENT)
 
@@ -165,15 +188,22 @@ class PipelineSocket(
         socket = client.newWebSocket(request, listener)
     }
 
+    fun reconnect() {
+        launch {
+            delay(Config.RECONNECTION_INTERVAL)
+            api.auth.fetchToken()?.let { tkn ->
+                token = tkn
+                connect()
+            }
+        }
+    }
+
     fun disconnect() {
+        shouldReconnect = false
         socket.close(1000, null)
     }
 
     fun setListener(listener: SocketListener) {
         socketListener = listener
-    }
-
-    companion object {
-        private const val RECONNECTION_INTERVAL: Long = 30000 // 30s
     }
 }

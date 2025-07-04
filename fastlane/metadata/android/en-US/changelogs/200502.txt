@@ -1,0 +1,5 @@
+- Fixed pipeline connectivity reliability
+- Various of UI fixes
+- Add Date Joined & Last Activity to personal profile
+- Korean translation (thanks to HisaCat)
+- Various of stability improvements

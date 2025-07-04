@@ -1,10 +1,25 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.screen.navigation
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -16,33 +31,32 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
-import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAuth.AuthType
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
 import cc.sovellus.vrcaa.extension.groupsAmount
 import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
 import cc.sovellus.vrcaa.extension.sortWorlds
-import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
-import cc.sovellus.vrcaa.manager.ApiManager
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.manager.DatabaseManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.collections.MutableList
 
 
 class NavigationScreenModel : ScreenModel {
 
     private val context: Context = App.getContext()
-    private val preferences: SharedPreferences = context.getSharedPreferences("vrcaa_prefs", Context.MODE_PRIVATE)
+    private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     var searchModeActivated = mutableStateOf(false)
     var searchText = mutableStateOf("")
-    var searchHistory = mutableListOf<String>()
+    var searchHistory = DatabaseManager.readQueries()
     var hasNoInternet = mutableStateOf(false)
     var invalidSession = mutableStateOf(false)
 
@@ -100,8 +114,10 @@ class NavigationScreenModel : ScreenModel {
 
     fun addSearchHistory() {
         screenModelScope.launch {
-            if (searchText.value.isNotEmpty())
+            if (searchText.value.isNotEmpty()) {
                 searchHistory.add(searchText.value)
+                DatabaseManager.writeQuery(searchText.value)
+            }
             clearSearchText()
         }
     }

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
@@ -62,5 +78,30 @@ object DatabaseManager: BaseManager<Any>() {
 
         cursor.close()
         return feeds
+    }
+
+    fun writeQuery(query: String) {
+        val values = ContentValues().apply {
+            put("query", query)
+        }
+
+        dbHelper.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, null, values)
+    }
+
+    fun readQueries(): MutableList<String> {
+        val cursor = dbHelper.readableDatabase.query(
+            DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, arrayOf("query"), null, null, null, null, null
+        )
+
+        val queries = mutableListOf<String>()
+
+        with(cursor) {
+            while (moveToNext()) {
+                queries.add(getString(getColumnIndexOrThrow("query")))
+            }
+        }
+
+        cursor.close()
+        return queries
     }
 }

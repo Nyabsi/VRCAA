@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">Hier gibt es nicht mehr als Hühner!</string>
+    <string name="result_not_found">Hier gibt es nichts als Hühner!</string>
     <string name="legal_disclaimer">"VRCAA wird nicht von VRChat Inc. oder deren Partner unterstützt."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
-        <item>Favorit</item>
+        <item>Favorisieren</item>
         <item>Online</item>
         <item>Webseite</item>
         <item>Offline</item>
@@ -80,6 +80,7 @@
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_logout">Abmelden</string>
+    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Beschreibung</string>
     <string name="world_label_tags">Stichworte</string>

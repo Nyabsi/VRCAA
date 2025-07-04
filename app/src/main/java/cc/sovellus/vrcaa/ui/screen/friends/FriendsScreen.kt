@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import androidx.activity.compose.BackHandler
@@ -127,9 +143,9 @@ class FriendsScreen : Screen {
     fun ShowFriendsFavorite(
         friends: State<List<Friend>>
     ) {
-        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && it.platform != "" }
-        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") }
-        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform == "" }
+        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform.isNotEmpty() }
+        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform.isNotEmpty() }
+        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
             Column(
@@ -230,8 +246,8 @@ class FriendsScreen : Screen {
     fun ShowFriends(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && it.platform != "web" && it.platform != "" }
-        val filteredFriendsInInstances = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" && it.platform != "" }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
+        val filteredFriendsInInstances = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
 
         if (filteredFriends.isEmpty() && filteredFriendsInInstances.isEmpty()) {
             Column(
@@ -287,7 +303,7 @@ class FriendsScreen : Screen {
     fun ShowFriendsOffline(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform == "" }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),

@@ -8,27 +8,29 @@ jobs:
   build:
     permissions: write-all
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[Skip-CI]') == false
+    strategy:
+      matrix:
+        platform: [standard, quest, pico]
 
     steps:
     - uses: actions/checkout@v4
-    - name: set up JDK 17
+
+    - name: set up JDK 21
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
         cache: gradle
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      
-    - name: Build Release with Gradle
-      run: ./gradlew assembleRelease
 
-    - name: Rename built apk(s)
-      run: mv app/build/outputs/apk/standard/release/app-standard-release.apk app/build/outputs/apk/standard/release/VRCAA.apk &&
-           mv app/build/outputs/apk/quest/release/app-quest-release.apk app/build/outputs/apk/quest/release/VRCAA-quest.apk &&
-           mv app/build/outputs/apk/pico/release/app-pico-release.apk app/build/outputs/apk/pico/release/VRCAA-pico.apk
+    - name: Build Release for ${{ matrix.platform }} with Gradle
+      run: ./gradlew assemble${{ matrix.platform }}Release
+
+    - name: Rename built apk
+      run: |
+        mv app/build/outputs/apk/${{ matrix.platform }}/release/app-${{ matrix.platform }}-release.apk app/build/outputs/apk/${{ matrix.platform }}/release/VRCAA-${{ matrix.platform }}.apk
 
     - name: Setup build tool version variable
       shell: bash
@@ -37,11 +39,11 @@ jobs:
         echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
         echo Last build tool version is: $BUILD_TOOL_VERSION
 
-    - name: Sign app APK (Standard)
+    - name: Sign app APK (${{ matrix.platform }})
       uses: noriban/sign-android-release@v5.1
-      id: sign_standard
+      id: signed_apk
       with:
-        releaseDirectory: app/build/outputs/apk/standard/release
+        releaseDirectory: app/build/outputs/apk/${{ matrix.platform }}/release
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -49,29 +51,23 @@ jobs:
       env:
         BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
-    - name: Sign app APK (Quest)
-      uses: noriban/sign-android-release@v5.1
-      id: sign_quest
+    - name: Upload signed APK artifact for ${{ matrix.platform }}
+      uses: actions/upload-artifact@v4
       with:
-        releaseDirectory: app/build/outputs/apk/quest/release
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-      env:
-        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+        name: VRCAA-${{ matrix.platform }}-signed.apk
+        path: ${{ steps.signed_apk.outputs.signedReleaseFile }}
 
-    - name: Sign app APK (Pico)
-      uses: noriban/sign-android-release@v5.1
-      id: sign_pico
+  publish:
+    permissions: write-all
+    if: contains(github.event.head_commit.message, '[Skip-CI]') == false
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Standard APK
+      uses: actions/download-artifact@v4
       with:
-        releaseDirectory: app/build/outputs/apk/pico/release
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-      env:
-        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+        name: VRCAA-standard-signed.apk
+        path: .
 
     - name: Generate Release Tag
       id: generate_release_tag
@@ -88,6 +84,6 @@ jobs:
         prerelease: false
         title: "${{ steps.generate_release_tag.outputs.release_tag }}"
         files: |
-          ${{ steps.sign_standard.outputs.signedReleaseFile }}
-          ${{ steps.sign_quest.outputs.signedReleaseFile }}
-          ${{ steps.sign_pico.outputs.signedReleaseFile }}
+          VRCAA-standard-signed.apk
+          VRCAA-quest-signed.apk
+          VRCAA-pico-signed.apk

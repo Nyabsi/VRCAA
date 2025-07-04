@@ -103,6 +103,7 @@
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_logout">Logout</string>
+    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
 
     <!-- Worlds -->
 
@@ -413,5 +414,4 @@
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
     <string name="advanced_page_kill_service">Kill background service</string>
     <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-
 </resources>

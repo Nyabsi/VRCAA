@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.service
 
 import android.app.Service
@@ -12,6 +28,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
@@ -60,6 +77,7 @@ class PipelineService : Service(), CoroutineScope {
     private var refreshTask: Runnable = Runnable {
         launch {
             CacheManager.buildCache()
+            pipeline?.reconnect()
         }
     }
 
@@ -80,34 +98,34 @@ class PipelineService : Service(), CoroutineScope {
             when (msg.obj) {
                 is FriendOnline -> {
                     val update = msg.obj as FriendOnline
-
                     val friend = FriendManager.getFriend(update.userId)
 
-                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
-                        friendId = update.userId
-                        friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                    if (friend != null && (friend.platform.isEmpty() || friend.platform == "web") && friend.location == "offline") {
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
+                            friendId = update.userId
+                            friendName = update.user.displayName
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                        }
+
+                        if (NotificationHelper.isOnWhitelist(update.userId) &&
+                            NotificationHelper.isIntentEnabled(
+                                update.userId,
+                                NotificationHelper.Intents.FRIEND_FLAG_ONLINE
+                            )
+                        ) {
+                            NotificationHelper.pushNotification(
+                                title = application.getString(R.string.notification_service_title_online),
+                                content = application.getString(R.string.notification_service_description_online)
+                                    .format(update.user.displayName),
+                                channel = NotificationHelper.CHANNEL_ONLINE_ID
+                            )
+                        }
+
+                        FeedManager.addFeed(feed)
+                        FriendManager.updateFriend(update.user)
+                        FriendManager.updatePlatform(update.userId, update.platform)
+                        FriendManager.updateLocation(update.userId, update.location)
                     }
-
-                    if (NotificationHelper.isOnWhitelist(update.userId) &&
-                        NotificationHelper.isIntentEnabled(
-                            update.userId,
-                            NotificationHelper.Intents.FRIEND_FLAG_ONLINE
-                        )
-                    ) {
-                        NotificationHelper.pushNotification(
-                            title = application.getString(R.string.notification_service_title_online),
-                            content = application.getString(R.string.notification_service_description_online)
-                                .format(update.user.displayName),
-                            channel = NotificationHelper.CHANNEL_ONLINE_ID
-                        )
-                    }
-
-                    FeedManager.addFeed(feed)
-
-                    FriendManager.updatePlatform(update.userId, update.platform)
-                    FriendManager.updateLocation(update.userId, update.location)
-                    FriendManager.updateFriend(update.user)
                 }
 
                 is FriendOffline -> {
@@ -115,7 +133,7 @@ class PipelineService : Service(), CoroutineScope {
                     val update = msg.obj as FriendOffline
                     val friend = FriendManager.getFriend(update.userId)
 
-                    if (friend != null) {
+                    if (friend != null && friend.platform.isNotEmpty() && friend.location != "offline") {
                         val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_OFFLINE).apply {
                             friendId = friend.id
                             friendName = friend.displayName
@@ -138,9 +156,8 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
 
-                        FriendManager.updateLocation(friend.id, "offline")
-                        FriendManager.updateStatus(friend.id, "offline")
-                        FriendManager.updatePlatform(friend.id, update.platform)
+                        FriendManager.updateLocation(update.userId, "offline")
+                        FriendManager.updatePlatform(update.userId, update.platform)
                     }
                 }
 
@@ -182,11 +199,11 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         FeedManager.addFeed(feed)
-                    }
 
-                    FriendManager.updatePlatform(update.userId, update.platform)
-                    FriendManager.updateLocation(update.userId, update.location)
-                    FriendManager.updateFriend(update.user)
+                        FriendManager.updateFriend(update.user)
+                        FriendManager.updateLocation(update.userId, update.location)
+                        FriendManager.updatePlatform(update.userId, update.platform)
+                    }
                 }
 
                 is FriendUpdate -> {
@@ -250,7 +267,6 @@ class PipelineService : Service(), CoroutineScope {
                                     }
                                 }
                             }
-
                         }
                     }
 
@@ -335,7 +351,11 @@ class PipelineService : Service(), CoroutineScope {
 
                 is FriendActive -> {
                     val update = msg.obj as FriendActive
+                    // val friend = FriendManager.getFriend(update.userId)
+                    // PS. Active != Offline, it implies the user become active on a secondary platform
+                    // However this does not guarantee the player actually went active on the client.
 
+                    /*
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ONLINE).apply {
                         friendId = update.userId
                         friendName = update.user.displayName
@@ -357,9 +377,10 @@ class PipelineService : Service(), CoroutineScope {
                     }
 
                     FeedManager.addFeed(feed)
+                    */
 
-                    FriendManager.updatePlatform(update.userId, update.platform)
                     FriendManager.updateFriend(update.user)
+                    FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is Notification -> {
@@ -393,7 +414,7 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
 
-        this.preferences = getSharedPreferences("vrcaa_prefs", 0)
+        this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
         launch {
             api.auth.fetchToken()?.let { token ->
@@ -432,15 +453,9 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
-        val skipCacheInit = intent?.extras?.getBoolean("SKIP_INIT_CACHE") ?: false
+        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
-        var initialRefresh = INITIAL_INTERVAL
-        if (skipCacheInit)
-            initialRefresh = RESTART_INTERVAL
-
-        scheduler.scheduleWithFixedDelay(refreshTask, initialRefresh, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
-
-        return START_STICKY_COMPATIBILITY
+        return START_STICKY
     }
 
     override fun onDestroy() {

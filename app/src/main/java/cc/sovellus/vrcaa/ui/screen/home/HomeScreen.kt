@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
@@ -67,7 +83,7 @@ class HomeScreen : Screen {
                 .padding(16.dp)
         ) {
             item {
-                val onlineFriends = friends.filter { it.platform != "web" && it.platform != "" }
+                val onlineFriends = friends.filter { it.platform != "web" && it.platform.isNotEmpty() }
                 if (onlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_active_friends),
@@ -184,7 +200,7 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                val offlineFriends = friends.filter { it.platform == "" }
+                val offlineFriends = friends.filter { it.platform.isEmpty() }
                 if (offlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_offline_friends),

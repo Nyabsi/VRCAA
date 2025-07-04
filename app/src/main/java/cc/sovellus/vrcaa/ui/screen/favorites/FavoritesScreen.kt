@@ -1,6 +1,21 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.screen.favorites
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,9 +49,7 @@ import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteEditDialog
@@ -152,7 +165,7 @@ class FavoritesScreen : Screen {
 
         val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
         sortedWorldList.forEach { item ->
-            if (item.value.size > 0) {
+            if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
@@ -183,7 +196,7 @@ class FavoritesScreen : Screen {
 
         val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
         sortedAvatarList.forEach { item ->
-            if (item.value.size > 0) {
+            if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {
@@ -214,7 +227,7 @@ class FavoritesScreen : Screen {
 
         val sortedFriendList = friendList.value.toSortedMap(compareBy { it.substring(6).toInt() })
         sortedFriendList.forEach { item ->
-            if (item.value.size > 0) {
+            if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
                     onEdit = {

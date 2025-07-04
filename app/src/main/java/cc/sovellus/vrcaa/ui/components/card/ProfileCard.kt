@@ -1,6 +1,21 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.components.card
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -94,8 +109,8 @@ fun ProfileCard(
                                 .clip(RoundedCornerShape(50)),
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center,
-                            loading = placeholder(R.drawable.icon_placeholder),
-                            failure = placeholder(R.drawable.icon_placeholder)
+                            loading = placeholder(R.drawable.image_placeholder),
+                            failure = placeholder(R.drawable.image_placeholder)
                         )
                     }
                 }
@@ -104,10 +119,9 @@ fun ProfileCard(
             item {
                 Row {
                     Row(
-                        modifier = Modifier
-                            .weight(0.70f)
-                            .padding(start = 12.dp, top = 60.dp),
+                        modifier = Modifier.padding(start = 12.dp, top = 60.dp),
                         verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
                             text = displayName,
@@ -139,8 +153,8 @@ fun ProfileCard(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.30f)
-                            .padding(end = 4.dp), horizontalArrangement = Arrangement.End
+                            .padding(end = 4.dp),
+                        horizontalArrangement = Arrangement.End
                     ) {
                         Languages(languages = tags, modifier = Modifier.padding(top = 8.dp))
                     }
@@ -148,10 +162,10 @@ fun ProfileCard(
             }
             item {
                 Row(
-                    modifier = Modifier.padding(start = 12.dp, top = 50.dp)
+                    modifier = Modifier.padding(start = 12.dp, top = 50.dp),
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Row(
-                        modifier = Modifier.weight(0.70f),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
@@ -168,8 +182,8 @@ fun ProfileCard(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.30f)
-                            .padding(end = 8.dp), horizontalArrangement = Arrangement.End
+                            .padding(end = 8.dp),
+                        horizontalArrangement = Arrangement.End
                     ) {
                         for (badge in badges) {
                             GlideImage(model = badge.badgeImageUrl, contentDescription = null, modifier = Modifier

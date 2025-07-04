@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.ui.screen.world
 
 import android.app.Activity
@@ -62,17 +78,16 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
-import cc.sovellus.vrcaa.ui.components.misc.Description
-import cc.sovellus.vrcaa.ui.components.misc.SubHeader
-import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.layout.InstanceItem
+import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
+import cc.sovellus.vrcaa.ui.components.misc.Description
+import cc.sovellus.vrcaa.ui.components.misc.SubHeader
+import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale

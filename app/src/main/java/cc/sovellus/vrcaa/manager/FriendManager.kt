@@ -1,7 +1,24 @@
+/*
+ * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.base.BaseManager
+import cc.sovellus.vrcaa.helper.JsonHelper
 
 object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
@@ -44,11 +61,11 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     }
 
     fun updateFriend(friend: Friend) {
+
         val it = friends.find { it.id == friend.id }
         it?.let {
-            friend.platform = it.platform
-            friend.location = it.location
-            friends.set(friends.indexOf(it), friend)
+            val result = JsonHelper.mergeJson<Friend>(it, friend, Friend::class.java)
+            friends.set(friends.indexOf(it), result)
         }
 
         getListeners().forEach { listener ->
@@ -62,18 +79,6 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
             it.location = location
             friends.set(friends.indexOf(it), it)
         }
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
-        }
-    }
-
-    fun updateStatus(userId: String, status: String) {
-        val it = friends.find { it.id == userId }
-        it?.let {
-            it.status = status
-            friends.set(friends.indexOf(it), it)
-        }
-
         getListeners().forEach { listener ->
             listener.onUpdateFriends(friends)
         }
