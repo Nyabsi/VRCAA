@@ -198,11 +198,10 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         FeedManager.addFeed(feed)
-
-                        FriendManager.updateFriend(update.user)
-                        FriendManager.updateLocation(update.userId, update.location)
-                        FriendManager.updatePlatform(update.userId, update.platform)
                     }
+
+                    FriendManager.updateFriend(update.user)
+                    FriendManager.updateLocation(update.userId, update.location)
                 }
 
                 is FriendUpdate -> {
