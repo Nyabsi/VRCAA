@@ -1,8 +1,8 @@
-name: Publish nightly
+name: Publish Transcript
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "transcript" ]
 
 jobs:
   build:
@@ -69,25 +69,20 @@ jobs:
         name: VRCAA-standard-signed.apk
         path: .
 
-    - name: Download Quest APK
-      uses: actions/download-artifact@v4
+    - name: Generate Release Tag
+      id: generate_release_tag
+      uses: slord399/next-release-tag@v1.0.0
       with:
-        name: VRCAA-quest-signed.apk
-        path: .
-
-    - name: Download Pico APK
-      uses: actions/download-artifact@v4
-      with:
-        name: VRCAA-pico-signed.apk
-        path: .
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        tag_prefix: 'Transcript_Latest_'
 
     - name: Publish release to Github
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: slord399/action-automatic-releases@v1.0.1
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "nightly"
+        automatic_release_tag: "${{ steps.generate_release_tag.outputs.release_tag }}"
         prerelease: false
-        title: "${{ env.GITHUB_SHA }}"
+        title: "${{ steps.generate_release_tag.outputs.release_tag }}"
         files: |
           VRCAA-standard-signed.apk
           VRCAA-quest-signed.apk
