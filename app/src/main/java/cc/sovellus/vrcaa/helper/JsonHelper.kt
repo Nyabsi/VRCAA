@@ -5,8 +5,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-
-
 object JsonHelper {
     fun <T> mergeJson(old: T, new: T, type: Class<T>): T {
         val merged = mergeObjects(JsonParser.parseString(Gson().toJson(old)).asJsonObject, JsonParser.parseString(Gson().toJson(new)).asJsonObject)
