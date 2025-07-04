@@ -31,10 +31,17 @@ import okhttp3.internal.EMPTY_REQUEST
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.concurrent.TimeUnit
 
 open class BaseClient {
     /* inherited classes don't need to access the client variable */
-    private val client: OkHttpClient by lazy { OkHttpClient() }
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
 
     private lateinit var credentials: String
     private var authorizationType: AuthorizationType = AuthorizationType.None
