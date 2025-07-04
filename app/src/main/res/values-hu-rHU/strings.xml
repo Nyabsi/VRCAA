@@ -7,7 +7,7 @@
     <string-array name="friend_selection_options">
         <item>Favorite</item>
         <item>Online</item>
-        <item>Website</item>
+        <item>Weboldal</item>
         <item>Offline</item>
     </string-array>
     <!-- Home -->
@@ -79,7 +79,7 @@
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_logout">Logout</string>
+    <string name="settings_item_logout">Kijelentkezés </string>
     <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
@@ -88,7 +88,7 @@
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
     <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
+    <string name="world_title_favorites">Kedvencek</string>
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
     <string name="world_title_publication_date">Publication Date</string>
@@ -97,25 +97,25 @@
     <string name="world_title_popularity">Popularity</string>
     <string name="world_title_platform">Unity Packages</string>
     <string name="world_title_labs_publication_date">Labs Publication Date</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_toast_not_found">A világ privát, vagy nem létezik.</string>
     <string-array name="world_selection_options">
-        <item>Info</item>
+        <item>Infó</item>
         <item>Instances</item>
     </string-array>
     <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
+    <string name="world_instance_invite_dialog_title">Biztos vagy?</string>
     <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
     <string name="world_instance_no_public_instances_message">No public instances</string>
     <string name="world_instance_failed_to_fetch_instance_message">Failed to fetch instance, try again.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_favorites">Kedvencek</string>
     <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_pictures">Pictures</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_pictures">Képek</string>
+    <string name="tabs_label_settings">Beállítások</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
@@ -145,10 +145,10 @@
     <string name="avatar_title_updated_at">Last Updated</string>
     <string name="avatar_title_content_labels">Content Labels</string>
     <string name="avatar_text_author">By %1$s</string>
-    <string name="avatar_title_version">Version</string>
+    <string name="avatar_title_version">Verzió</string>
     <string name="avatar_title_platform">Platform</string>
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
-    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
+    <string name="avatar_toast_avatar_not_found_message">Az Avatár privát vagy érvénytelen.</string>
     <!-- Feed -->
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">has come online.</string>
