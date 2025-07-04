@@ -145,7 +145,7 @@ class FriendsScreen : Screen {
     ) {
         val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_").not() && it.platform != "" }
         val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") }
-        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform == "" }
+        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && (it.platform == "" || it.location.contains("offline")) }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
             Column(
@@ -303,7 +303,7 @@ class FriendsScreen : Screen {
     fun ShowFriendsOffline(
         friends: State<List<Friend>>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform == "" }
+        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && (it.platform == "" || it.location.contains("offline")) }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
