@@ -16,7 +16,6 @@
 
 package cc.sovellus.vrcaa.helper
 
-import android.util.Log
 import okhttp3.Dns
 import java.net.Inet4Address
 import java.net.InetAddress
@@ -27,20 +26,18 @@ class DnsHelper() : Dns {
         val query = Dns.SYSTEM.lookup(hostname)
         val queryIPv4Filtered = query.filter { Inet4Address::class.java.isInstance(it) }
         // if IPv4 exists, prioritize IPv4 if it doesn't then fallback to whatever is available.
-        return if (queryIPv4Filtered.isNotEmpty() && hasIPV4()) {
+        return if (queryIPv4Filtered.isNotEmpty() && hasIPv4()) {
             queryIPv4Filtered
         } else {
             query
         }
     }
 
-    private fun hasIPV4(): Boolean {
+    private fun hasIPv4(): Boolean {
         val interfaces = NetworkInterface.getNetworkInterfaces()
         for (i in interfaces) {
-            val addresses = i.inetAddresses
-            for (address in addresses) {
+            for (address in i.inetAddresses) {
                 if (!address.isLoopbackAddress && address is Inet4Address) {
-                    Log.d("VRCAA", "HTTP is capable of IPv4")
                     return true
                 }
             }

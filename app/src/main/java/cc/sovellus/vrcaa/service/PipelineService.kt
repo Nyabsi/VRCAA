@@ -156,9 +156,9 @@ class PipelineService : Service(), CoroutineScope {
 
                         FeedManager.addFeed(feed)
 
-                        FriendManager.updateLocation(friend.id, "offline")
-                        FriendManager.updateStatus(friend.id, "offline")
-                        FriendManager.updatePlatform(friend.id, update.platform)
+                        FriendManager.updateLocation(update.userId, "offline")
+                        FriendManager.updateStatus(update.userId, "offline")
+                        FriendManager.updatePlatform(update.userId, update.platform)
                     }
                 }
 
@@ -200,9 +200,11 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         FeedManager.addFeed(feed)
-                    }
 
-                    FriendManager.updateFriend(update.user)
+                        FriendManager.updateFriend(update.user)
+                        FriendManager.updateLocation(update.userId, update.location)
+                        FriendManager.updatePlatform(update.userId, update.platform)
+                    }
                 }
 
                 is FriendUpdate -> {
@@ -266,7 +268,6 @@ class PipelineService : Service(), CoroutineScope {
                                     }
                                 }
                             }
-
                         }
                     }
 
@@ -351,7 +352,7 @@ class PipelineService : Service(), CoroutineScope {
 
                 is FriendActive -> {
                     val update = msg.obj as FriendActive
-                    val friend = FriendManager.getFriend(update.userId)
+                    // val friend = FriendManager.getFriend(update.userId)
                     // PS. Active != Offline, it implies the user become active on a secondary platform
                     // However this does not guarantee the player actually went active on the client.
 
