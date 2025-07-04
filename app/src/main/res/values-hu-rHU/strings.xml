@@ -165,7 +165,7 @@
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
     <string name="feed_search_placeholder">Search for User or Location…</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
+    <string name="feed_friend_avatar_label">avatar változás</string>
     <string name="feed_friend_avatar_text">changed their avatar to</string>
     <!-- About -->
     <string name="about_page_title">About</string>
@@ -182,26 +182,26 @@
     <string name="discord_login_title">Login to Discord</string>
     <string name="discord_login_title_verify">Verify 2FA</string>
     <string name="discord_login_label_username">Username</string>
-    <string name="discord_login_label_password">Password</string>
-    <string name="discord_login_toast_wrong_credentials">Username or password is invalid.</string>
+    <string name="discord_login_label_password">Jelszó</string>
+    <string name="discord_login_toast_wrong_credentials">Felhasználónév vagy jelszó érvénytelen.</string>
     <string name="discord_login_toast_wrong_code">The MFA code is wrong.</string>
-    <string name="discord_login_button_login">Login</string>
+    <string name="discord_login_button_login">Bejelentkezés</string>
     <string name="discord_login_button_verify">Verify</string>
     <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
     <string name="discord_login_label_enable">Enable Rich Presence</string>
     <string name="discord_login_label_set_webhook">Set Webhook Url</string>
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable">Shows your current status in discord</string>
-    <string name="discord_login_label_logout">Logout</string>
+    <string name="discord_login_label_logout">Kijelentkezés</string>
     <string name="discord_login_description_logout">Revoke your access token</string>
     <!-- Crash -->
     <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_button_restart_text">Újraindítás</string>
+    <string name="crash_button_copy_log_text">Információ másolása</string>
+    <string name="crash_button_report_text"> problémá jelentése</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
-        <item>Info</item>
+        <item>Infó</item>
         <item>Instances</item>
     </string-array>
     <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
@@ -281,7 +281,7 @@
     <!-- Activities -->
     <string-array name="activities_selection_options">
         <item>Feed</item>
-        <item>Notifications</item>
+        <item>értesítések</item>
         <item>Group Activity</item>
     </string-array>
     <!-- Worlds -->
