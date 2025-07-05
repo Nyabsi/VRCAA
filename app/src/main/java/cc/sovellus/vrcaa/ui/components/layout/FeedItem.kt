@@ -17,9 +17,12 @@
 package cc.sovellus.vrcaa.ui.components.layout
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Badge
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,17 +56,26 @@ fun FeedItem(
             Text(text, maxLines = 2, overflow = TextOverflow.Ellipsis)
         },
         leadingContent = {
-            GlideImage(
-                model = friendPictureUrl,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(50)),
-                contentScale = ContentScale.FillBounds,
-                alignment = Alignment.Center,
-                loading = placeholder(R.drawable.image_placeholder),
-                failure = placeholder(R.drawable.image_placeholder)
-            )
+            Column {
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    GlideImage(
+                        model = friendPictureUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(RoundedCornerShape(50)),
+                        contentScale = ContentScale.FillBounds,
+                        alignment = Alignment.Center,
+                        loading = placeholder(R.drawable.image_placeholder),
+                        failure = placeholder(R.drawable.image_placeholder)
+                    )
+                }
+            }
         },
         overlineContent = {
             Text(stringResource(resourceStringTitle))
