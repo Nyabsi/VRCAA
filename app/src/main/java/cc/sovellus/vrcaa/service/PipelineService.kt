@@ -82,10 +82,12 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     private val listener = object : PipelineSocket.SocketListener {
-        override fun onMessage(message: PipelineSocket.PipelineEvent) {
-            serviceHandler?.obtainMessage()?.also { msg ->
-                msg.obj = message
-                serviceHandler?.sendMessage(msg)
+        override fun onMessage(message: Any?) {
+            if (message != null) {
+                serviceHandler?.obtainMessage()?.also { msg ->
+                    msg.obj = message
+                    serviceHandler?.sendMessage(msg)
+                }
             }
         }
     }
@@ -93,10 +95,9 @@ class PipelineService : Service(), CoroutineScope {
     private inner class ServiceHandler(looper: Looper) : Handler(looper) {
 
         override fun handleMessage(msg: Message) {
-            val obj = msg.obj as PipelineSocket.PipelineEvent
-            when (obj.content) {
+            when (msg.obj) {
                 is FriendOnline -> {
-                    val update = obj.content
+                    val update = msg.obj as FriendOnline
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null && (friend.platform.isEmpty() || friend.platform == "web") && friend.location == "offline") {
@@ -121,7 +122,7 @@ class PipelineService : Service(), CoroutineScope {
                         }
 
                         FeedManager.addFeed(feed)
-                        FriendManager.updateFriend(update.userId, obj.message)
+                        FriendManager.updateFriend(update.user)
                         FriendManager.updatePlatform(update.userId, update.platform)
                         FriendManager.updateLocation(update.userId, update.location)
                     }
@@ -129,7 +130,7 @@ class PipelineService : Service(), CoroutineScope {
 
                 is FriendOffline -> {
 
-                    val update = obj.content
+                    val update = msg.obj as FriendOffline
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null && friend.platform.isNotEmpty() && friend.location != "offline") {
@@ -161,7 +162,7 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is FriendLocation -> {
-                    val update = obj.content
+                    val update = msg.obj as FriendLocation
                     val friend = FriendManager.getFriend(update.userId)
 
                     update.world?.let {
@@ -200,12 +201,12 @@ class PipelineService : Service(), CoroutineScope {
                         FeedManager.addFeed(feed)
                     }
 
-                    FriendManager.updateFriend(update.userId, obj.message)
+                    FriendManager.updateFriend(update.user)
                     FriendManager.updateLocation(update.userId, update.location)
                 }
 
                 is FriendUpdate -> {
-                    val update = obj.content
+                    val update = msg.obj as FriendUpdate
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null) {
@@ -268,11 +269,11 @@ class PipelineService : Service(), CoroutineScope {
                         }
                     }
 
-                    FriendManager.updateFriend(update.userId, obj.message)
+                    FriendManager.updateFriend(update.user)
                 }
 
                 is UserLocation -> {
-                    val user = obj.content
+                    val user = msg.obj as UserLocation
 
                     if (user.location.contains("wrld_")) {
                         launch {
@@ -293,7 +294,7 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is UserUpdate -> {
-                    val user = obj.content
+                    val user = msg.obj as UserUpdate
 
                     if (preferences.richPresenceEnabled) {
                         launch {
@@ -305,7 +306,7 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is FriendDelete -> {
-                    val update = obj.content
+                    val update = msg.obj as FriendDelete
                     val friend = FriendManager.getFriend(update.userId)
 
                     if (friend != null) {
@@ -328,7 +329,7 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is FriendAdd -> {
-                    val update = obj.content
+                    val update = msg.obj as FriendAdd
 
                     val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
                         friendId = update.userId
@@ -348,7 +349,7 @@ class PipelineService : Service(), CoroutineScope {
                 }
 
                 is FriendActive -> {
-                    val update = obj.content
+                    val update = msg.obj as FriendActive
                     // val friend = FriendManager.getFriend(update.userId)
                     // PS. Active != Offline, it implies the user become active on a secondary platform
                     // However this does not guarantee the player actually went active on the client.
@@ -377,12 +378,12 @@ class PipelineService : Service(), CoroutineScope {
                     FeedManager.addFeed(feed)
                     */
 
-                    FriendManager.updateFriend(update.userId, obj.message)
+                    FriendManager.updateFriend(update.user)
                     FriendManager.updatePlatform(update.userId, update.platform)
                 }
 
                 is Notification -> {
-                    val notification = obj.content
+                    val notification = msg.obj as Notification
 
                     launch {
                         withContext(Dispatchers.Main) {
