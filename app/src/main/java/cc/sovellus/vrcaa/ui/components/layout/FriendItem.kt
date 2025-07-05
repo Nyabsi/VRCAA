@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -67,17 +68,26 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
             )
         },
         leadingContent = {
-            GlideImage(
-                model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
-                contentDescription = null,
-                modifier = Modifier
-                    .size(56.dp)
-                    .clip(RoundedCornerShape(50)),
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
-                loading = placeholder(R.drawable.image_placeholder),
-                failure = placeholder(R.drawable.image_placeholder)
-            )
+            Column {
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    GlideImage(
+                        model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(RoundedCornerShape(50)),
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center,
+                        loading = placeholder(R.drawable.image_placeholder),
+                        failure = placeholder(R.drawable.image_placeholder)
+                    )
+                }
+            }
         },
         trailingContent = {
             Column(
