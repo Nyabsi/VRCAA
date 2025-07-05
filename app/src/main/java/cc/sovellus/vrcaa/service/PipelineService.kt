@@ -41,7 +41,6 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
-import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
@@ -50,7 +49,6 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.GatewayManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -285,9 +283,6 @@ class PipelineService : Service(), CoroutineScope {
                                 else
                                     CacheManager.addWorld(instance.world)
                                 CacheManager.addRecent(instance.world)
-                                if (preferences.richPresenceEnabled) {
-                                    GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status, instance.worldId)
-                                }
                             }
                         }
                     }
@@ -295,12 +290,6 @@ class PipelineService : Service(), CoroutineScope {
 
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
-
-                    if (preferences.richPresenceEnabled) {
-                        launch {
-                            GatewayManager.updateStatus(user.user.status)
-                        }
-                    }
 
                     CacheManager.updateProfile(user.user)
                 }
