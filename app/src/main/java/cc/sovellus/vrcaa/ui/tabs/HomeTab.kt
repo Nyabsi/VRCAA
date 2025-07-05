@@ -26,28 +26,28 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.base.BaseTab
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreen
 
-object HomeTab : Tab {
-
-    override val options: TabOptions
-        @Composable
-        get() {
-            val icon = rememberVectorPainter(Icons.Default.Home)
-            val tabName = stringResource(R.string.tabs_label_home)
-
-            return remember {
-                TabOptions(
-                    index = 0u,
-                    title = tabName,
-                    icon = icon
-                )
-            }
-        }
+object HomeTab : BaseTab() {
 
     @Composable
     override fun Content() {
         Navigator(HomeScreen())
+    }
+
+    @Composable
+    override fun provideOptions(): TabOptions {
+        val icon = rememberVectorPainter(Icons.Default.Home)
+        val tabName = stringResource(R.string.tabs_label_home)
+
+        return remember {
+            TabOptions(
+                index = 0u,
+                title = tabName,
+                icon = icon
+            )
+        }
     }
 
     private fun readResolve(): Any = HomeTab

@@ -20,20 +20,21 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreenModel.WorldsState
 import kotlinx.coroutines.launch
 
-sealed class WorldsState {
-    data object Init : WorldsState()
-    data object Loading : WorldsState()
-    data class Result(
-        val worlds: ArrayList<World>
-    ) : WorldsState()
-}
-
-class WorldsStateScreenModel(
+class WorldsScreenModel(
     private val userId: String,
     private val private: Boolean
 ) : StateScreenModel<WorldsState>(WorldsState.Init) {
+
+    sealed class WorldsState {
+        data object Init : WorldsState()
+        data object Loading : WorldsState()
+        data class Result(
+            val worlds: ArrayList<World>
+        ) : WorldsState()
+    }
 
     private var worlds: ArrayList<World> = arrayListOf()
 

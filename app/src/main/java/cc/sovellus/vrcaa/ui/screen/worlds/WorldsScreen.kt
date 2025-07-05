@@ -61,6 +61,7 @@ import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreenModel
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreenModel.WorldsState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -75,7 +76,7 @@ class WorldsScreen(
 
     @Composable
     override fun Content() {
-        val model = rememberScreenModel { WorldsStateScreenModel(userId, private) }
+        val model = rememberScreenModel { WorldsScreenModel(userId, private) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
