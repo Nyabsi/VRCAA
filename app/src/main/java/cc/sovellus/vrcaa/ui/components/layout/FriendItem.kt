@@ -21,7 +21,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Android
+import androidx.compose.material.icons.filled.Computer
+import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.filled.PhoneIphone
+import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.Badge
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -70,7 +77,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
         leadingContent = {
             Column {
                 Badge(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    containerColor = if (friend.platform.isEmpty()) { StatusHelper.Status.Offline.toColor() } else { StatusHelper.getStatusFromString(friend.status).toColor() },
                     modifier = Modifier
                         .size(64.dp)
                         .align(Alignment.CenterHorizontally)
@@ -95,11 +102,20 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.size(20.dp)
             ) {
-                Badge(
-                    containerColor = if (friend.platform.isEmpty()) { StatusHelper.Status.Offline.toColor() } else { StatusHelper.getStatusFromString(friend.status).toColor() }, modifier = Modifier
-                        .size(20.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
+                when (friend.platform) {
+                    "standalonewindows" -> {
+                        Icon(Icons.Default.Computer, null, modifier = Modifier.size(20.dp).align(Alignment.CenterHorizontally))
+                    }
+                    "android" -> {
+                        Icon(Icons.Default.Android, null, modifier = Modifier.size(20.dp).align(Alignment.CenterHorizontally))
+                    }
+                    "ios" -> {
+                        Icon(Icons.Default.PhoneIphone, null, modifier = Modifier.size(20.dp).align(Alignment.CenterHorizontally))
+                    }
+                    "web" -> {
+                        Icon(Icons.Default.Web, null, modifier = Modifier.size(20.dp).align(Alignment.CenterHorizontally))
+                    }
+                }
             }
         },
         modifier = Modifier.clickable(
