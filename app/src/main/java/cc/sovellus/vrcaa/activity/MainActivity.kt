@@ -85,7 +85,7 @@ class MainActivity : BaseActivity() {
         val token = preferences.authToken
         val twoFactorToken = preferences.twoFactorToken
 
-        validSession = ((token.isNotBlank() && twoFactorToken.isNotEmpty()) && !invalidSession && !terminateSession && !restartSession)
+        validSession = ((token.isNotBlank() && twoFactorToken.isNotEmpty()) && !invalidSession && !terminateSession)
 
         if (validSession) {
             var intent = Intent(this, PipelineService::class.java)
