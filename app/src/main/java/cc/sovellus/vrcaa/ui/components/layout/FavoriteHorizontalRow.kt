@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
@@ -47,12 +48,12 @@ fun FavoriteHorizontalRow(
             text = title,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 4.dp)
+            modifier = Modifier
         )
 
         Icon(Icons.Filled.Edit, contentDescription = null, modifier = Modifier.clickable {
             onEdit()
-        }.padding(start = 2.dp))
+        }.padding(start = 4.dp))
     }
 
     LazyRow(
