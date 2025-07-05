@@ -125,6 +125,8 @@ class NavigationScreen : Screen {
 
         if (model.hasNoInternet.value) {
             NoInternetDialog(onClick = {
+                model.hasNoInternet.value = false
+
                 val bundle = bundleOf()
                 bundle.putBoolean("RESTART_SESSION", true)
 
