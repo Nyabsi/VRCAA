@@ -16,6 +16,8 @@
 
 package cc.sovellus.vrcaa.base
 
+import android.content.Context
+import android.net.Uri
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.helper.DnsHelper
@@ -23,6 +25,8 @@ import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -63,16 +67,6 @@ open class BaseClient {
         data object NotModified : Result()
         data object Forbidden : Result()
     }
-
-    data class RequestObject(
-        val method: String,
-        val url: String,
-        val headers: Headers.Builder,
-        val body: String?,
-        val retryAfterFailure: Boolean,
-        val ignoreAuthorization: Boolean,
-        val skipAuthorizationFailure: Boolean
-    )
 
     enum class AuthorizationType {
         None,
@@ -293,6 +287,94 @@ open class BaseClient {
                     Result.UnknownMethod
                 }
             }
+        } catch (e: UnknownHostException) {
+            Result.NoInternet
+        } catch (e: SocketException) {
+            Result.NoInternet
+        } catch (e: SocketTimeoutException) {
+            Result.NoInternet
+        }
+    }
+
+    suspend fun doRequestUpload(
+        context: Context,
+        url: String,
+        headers: Headers.Builder,
+        fileUri: Uri,
+        formFields: Map<String, String> = emptyMap(),
+        retryAfterFailure: Boolean = true,
+        ignoreAuthorization: Boolean = false,
+        skipAuthorizationFailure: Boolean = false
+    ): Result {
+        if (!ignoreAuthorization) {
+            when (authorizationType) {
+                AuthorizationType.Cookie -> headers["Cookie"] = credentials
+                AuthorizationType.Bearer -> headers["Authorization"] = "Bearer $credentials"
+                else -> {}
+            }
+        }
+
+        if (skipAuthorizationFailure)
+            skipAuthNextFailure = true
+
+        val finalHeaders = headers.build()
+
+        return try {
+            val multipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+            for ((key, value) in formFields) {
+                multipartBuilder.addFormDataPart(key, value)
+            }
+
+            val mediaType = context.contentResolver.getType(fileUri)?.toMediaTypeOrNull() ?: "application/octet-stream".toMediaType()
+
+            val inputStream = context.contentResolver.openInputStream(fileUri)
+            val bytes = inputStream?.readBytes() ?: return Result.NoInternet
+
+            multipartBuilder.addFormDataPart(
+                "file",
+                "blob",
+                bytes.toRequestBody(mediaType)
+            )
+
+            val request = Request.Builder()
+                .headers(finalHeaders)
+                .url(url)
+                .post(multipartBuilder.build())
+                .build()
+
+            val response = client.newCall(request).await()
+            val responseBody = response.body?.string().orEmpty()
+
+            if (App.isNetworkLoggingEnabled()) {
+                DebugManager.addDebugMetadata(
+                    DebugManager.DebugMetadataData(
+                        type = DebugManager.DebugType.DEBUG_TYPE_HTTP,
+                        url = url,
+                        methodType = "POST",
+                        code = response.code,
+                        payload = responseBody
+                    )
+                )
+            }
+
+            val result = handleRequest(response, responseBody)
+
+            if (result == Result.Unauthorized && retryAfterFailure) {
+                return doRequestUpload(
+                    context = context,
+                    url = url,
+                    headers = headers,
+                    fileUri = fileUri,
+                    formFields = formFields,
+                    retryAfterFailure = retryAfterFailure,
+                    ignoreAuthorization = ignoreAuthorization,
+                    skipAuthorizationFailure = skipAuthorizationFailure
+                )
+            }
+
+            return result
+
         } catch (e: UnknownHostException) {
             Result.NoInternet
         } catch (e: SocketException) {

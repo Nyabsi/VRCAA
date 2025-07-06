@@ -19,6 +19,7 @@ package cc.sovellus.vrcaa.api.vrchat.http
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.net.Uri
 import android.widget.Toast
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
@@ -1334,6 +1335,35 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
+                }
+            }
+        }
+
+        override suspend fun uploadImage(tag: String, file: Uri): File? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequestUpload(
+                App.getContext(),
+                url = "${Config.API_BASE_URL}/file/image",
+                fileUri = file,
+                formFields = mapOf("tag" to tag),
+                headers = headers
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    Gson().fromJson(result.body, File::class.java)
+                }
+                is Result.NotModified -> {
+                    null
+                }
+                is Result.Forbidden -> {
+                    null
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
                 }
             }
         }
