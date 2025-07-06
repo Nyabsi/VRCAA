@@ -17,6 +17,8 @@
 package cc.sovellus.vrcaa.base
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
@@ -33,10 +35,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
+import java.io.ByteArrayOutputStream
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
+import androidx.core.graphics.scale
 
 open class BaseClient {
     /* inherited classes don't need to access the client variable */
@@ -329,12 +333,34 @@ open class BaseClient {
             val mediaType = context.contentResolver.getType(fileUri)?.toMediaTypeOrNull() ?: "application/octet-stream".toMediaType()
 
             val inputStream = context.contentResolver.openInputStream(fileUri)
-            val bytes = inputStream?.readBytes() ?: return Result.NoInternet
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+
+            val processedBitmap = if (formFields["maskTag"] == "square") {
+                val size = minOf(bitmap.width, bitmap.height)
+                val x = (bitmap.width - size) / 2
+                val y = (bitmap.height - size) / 2
+                val square = Bitmap.createBitmap(bitmap, x, y, size, size)
+
+                val targetSize = when {
+                    size >= 1024 -> 1024
+                    size >= 512 -> 512
+                    size >= 256 -> 256
+                    else -> 128
+                }
+
+                square.scale(targetSize, targetSize)
+            } else {
+                bitmap
+            }
+
+            val stream = ByteArrayOutputStream()
+            processedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val bytes = stream.toByteArray()
 
             multipartBuilder.addFormDataPart(
                 "file",
                 "blob",
-                bytes.toRequestBody(mediaType)
+                bytes.toRequestBody("image/png".toMediaType())
             )
 
             val request = Request.Builder()

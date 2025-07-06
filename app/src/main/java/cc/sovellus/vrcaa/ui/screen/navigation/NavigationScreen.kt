@@ -136,6 +136,7 @@ import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.items.ItemsScreen
 import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
+import cc.sovellus.vrcaa.ui.screen.stickers.StickersScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
 import cc.sovellus.vrcaa.ui.tabs.FeedTab
@@ -1099,7 +1100,9 @@ class NavigationScreen : Screen {
 
                                                     }
                                                     6 -> {
-
+                                                        CacheManager.getProfile()?.let {
+                                                            navigator.push(StickersScreen())
+                                                        }
                                                     }
                                                     7 -> {
                                                         CacheManager.getProfile()?.let {
