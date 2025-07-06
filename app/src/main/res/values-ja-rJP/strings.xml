@@ -305,6 +305,12 @@
     <string name="loading_text_avatar">アバター情報を読み込み中。。。</string>
     <string name="loading_text_group">グループ情報を読み込み中。。。</string>
     <string name="loading_text_instances">インスタンス情報を読み込み中。。。</string>
+    <string name="loading_text_gallery">Loading gallery…</string>
+    <string name="loading_text_icons">Loading icons…</string>
+    <string name="loading_text_prints">Loading prints…</string>
+    <string name="loading_text_stickers">Loading stickers…</string>
+    <string name="loading_text_emojis">Loading stickers…</string>
+    <string name="loading_text_items">Loading items…</string>
     <!-- Theming -->
     <string name="theme_page_title">テーマ</string>
     <string name="theme_page_minimalist_mode_text">簡易モード</string>
@@ -330,4 +336,31 @@
     <string name="advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
     <string name="advanced_page_kill_service">バックグラウンドサービスの停止</string>
     <string name="advanced_page_kill_service_description">リアルタイム更新関係のバックグラウンドサービスを停止する</string>
+    <!-- Inventory -->
+    <string-array name="inventory_selection_options">
+        <item>Gallery</item>
+        <item>User Icons</item>
+        <item>Worlds</item>
+        <item>Avatars</item>
+        <item>Groups</item>
+        <item>Emojis</item>
+        <item>Stickers</item>
+        <item>Prints</item>
+        <item>Items</item>
+    </string-array>
+    <string name="gallery_page_title">Gallery</string>
+    <string name="gallery_page_button_upload">Upload Image</string>
+    <string name="icon_gallery_page_title">User Icons</string>
+    <string name="icon_gallery_page_button_upload">Upload Icon</string>
+    <string name="prints_page_title">Prints</string>
+    <string name="prints_page_button_upload">Upload Print</string>
+    <string name="emojis_page_title">Emojis</string>
+    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="stickers_page_title">Stickers</string>
+    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="items_page_title">Items</string>
+    <string name="items_page_button_upload">Upload Items</string>
+    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_option_download">Download</string>
+    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>
