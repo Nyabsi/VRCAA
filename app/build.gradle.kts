@@ -140,7 +140,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
     implementation("com.mikepenz:aboutlibraries-core:12.2.4")
-    implementation("com.mikepenz:aboutlibraries-compose-m3-android:12.2.4@aar")
+    implementation("com.mikepenz:aboutlibraries-compose-m3-android:12.2.4")
     implementation ("androidx.glance:glance-appwidget:1.1.1")
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
