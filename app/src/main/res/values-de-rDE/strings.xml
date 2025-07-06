@@ -370,6 +370,10 @@
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string name="items_page_title">Items</string>
     <string name="items_page_button_upload">Upload Items</string>
+    <string-array name="items_page_sections">
+        <item>All Items</item>
+        <item>Archive</item>
+    </string-array>
     <string name="image_preview_dialog_title">Preview</string>
     <string name="image_preview_dialog_option_download">Download</string>
     <string name="image_preview_dialog_option_delete">Delete</string>
