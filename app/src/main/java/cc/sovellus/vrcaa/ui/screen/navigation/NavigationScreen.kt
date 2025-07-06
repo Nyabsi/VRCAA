@@ -888,7 +888,8 @@ class NavigationScreen : Screen {
                                                 value = model.usersAmount.intValue.toString(),
                                                 onValueChange = {
                                                     if (it.isNotEmpty()) model.usersAmount.intValue =
-                                                        it.toInt()
+                                                        it.toIntOrNull()
+                                                            ?: model.usersAmount.intValue
                                                 },
                                                 singleLine = true,
                                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
