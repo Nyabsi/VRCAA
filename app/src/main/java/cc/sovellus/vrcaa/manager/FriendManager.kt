@@ -65,8 +65,10 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
         val it = friends.find { it.id == friend.id }
         it?.let {
-            val result = JsonHelper.mergeDiffJson<Friend, PartialFriend>(it, friend, Friend::class.java)
-            friends.set(friends.indexOf(it), result)
+            try {
+                val result = JsonHelper.mergeDiffJson<Friend, PartialFriend>(it, friend, Friend::class.java)
+                friends.set(friends.indexOf(it), result)
+            } catch (_: Exception) { }
         }
 
         getListeners().forEach { listener ->
