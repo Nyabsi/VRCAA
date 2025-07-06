@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
@@ -79,7 +80,7 @@ class MainActivity : BaseActivity() {
         if (restartSession) {
             var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
-            startForegroundService(intent)
+            ContextCompat.startForegroundService(this, intent)
         }
 
         val token = preferences.authToken
@@ -89,7 +90,7 @@ class MainActivity : BaseActivity() {
 
         if (validSession) {
             var intent = Intent(this, PipelineService::class.java)
-            startForegroundService(intent)
+            ContextCompat.startForegroundService(this, intent)
         }
     }
 

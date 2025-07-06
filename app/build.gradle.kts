@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("com.mikepenz.aboutlibraries.plugin") version "10.10.0"
+    id("com.mikepenz.aboutlibraries.plugin") version "12.2.4"
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
@@ -145,8 +145,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
-    implementation("com.mikepenz:aboutlibraries-core:10.10.0")
-    implementation("com.mikepenz:aboutlibraries-compose-m3-android:10.10.0@aar")
+    implementation("com.mikepenz:aboutlibraries-core:12.2.4")
+    implementation("com.mikepenz:aboutlibraries-compose-m3-android:12.2.4")
     implementation ("androidx.glance:glance-appwidget:1.1.1")
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
