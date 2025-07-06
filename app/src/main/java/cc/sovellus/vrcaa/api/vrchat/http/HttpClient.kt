@@ -32,6 +32,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IAvatars
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFiles
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFiles.ImageAspectRatio
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFriends
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IGroups
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInstances
@@ -1340,15 +1341,20 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun uploadImage(tag: String, file: Uri): File? {
+        override suspend fun uploadImage(tag: String, file: Uri, aspectRatio: ImageAspectRatio): File? {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
+
+            val fields: MutableMap<String, String> = mutableMapOf("tag" to tag)
+
+            if (aspectRatio == ImageAspectRatio.IMAGE_ASPECT_RATIO_SQUARE)
+                fields.put("maskTag", "square")
 
             val result = doRequestUpload(
                 App.getContext(),
                 url = "${Config.API_BASE_URL}/file/image",
                 fileUri = file,
-                formFields = mapOf("tag" to tag),
+                formFields = fields,
                 headers = headers
             )
 
