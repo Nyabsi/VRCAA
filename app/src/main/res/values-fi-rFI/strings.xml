@@ -38,6 +38,7 @@
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
+    <!-- removed; 06-07-25 -->
     <string name="profile_user_dropdown_view_avatar">Näytä Hahmo</string>
     <string name="profile_user_dropdown_invite_self">Kutsu itseni</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
@@ -231,10 +232,19 @@
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_groups">Näytä Ryhmät</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_worlds">Näytä maailmat</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_avatars">Näytä Hahmot</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_favorites">Näytä Suosikit</string>
+    <string name="user_overlay_groups">Groups</string>
+    <string name="user_overlay_worlds">Worlds</string>
+    <string name="user_overlay_avatars">Avatars</string>
+    <string name="user_overlay_favorites">Favorites</string>
+    <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Tila</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
@@ -305,6 +315,12 @@
     <string name="loading_text_avatar">Ladataan hahmoa…</string>
     <string name="loading_text_group">Ladataan ryhmää…</string>
     <string name="loading_text_instances">Ladataan instansseja…</string>
+    <string name="loading_text_gallery">Loading gallery…</string>
+    <string name="loading_text_icons">Loading icons…</string>
+    <string name="loading_text_prints">Loading prints…</string>
+    <string name="loading_text_stickers">Loading stickers…</string>
+    <string name="loading_text_emojis">Loading stickers…</string>
+    <string name="loading_text_items">Loading items…</string>
     <!-- Theming -->
     <string name="theme_page_title">Theme</string>
     <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
@@ -330,4 +346,45 @@
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
     <string name="advanced_page_kill_service">Kill background service</string>
     <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
+    <!-- Inventory -->
+    <string-array name="inventory_selection_options">
+        <item>Gallery</item>
+        <item>User Icons</item>
+        <item>Worlds</item>
+        <item>Avatars</item>
+        <item>Groups</item>
+        <item>Emojis</item>
+        <item>Stickers</item>
+        <item>Prints</item>
+        <item>Items</item>
+    </string-array>
+    <string name="gallery_page_title">Gallery</string>
+    <string name="gallery_page_button_upload">Upload Image</string>
+    <string name="icon_gallery_page_title">User Icons</string>
+    <string name="icon_gallery_page_button_upload">Upload Icon</string>
+    <string name="prints_page_title">Prints</string>
+    <string name="prints_page_button_upload">Upload Print</string>
+    <string name="emojis_page_title">Emojis</string>
+    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string-array name="emojis_page_sections">
+        <item>Official</item>
+        <item>Custom</item>
+        <item>Archived</item>
+    </string-array>
+    <string name="stickers_page_title">Stickers</string>
+    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string-array name="sticker_page_sections">
+        <item>Official</item>
+        <item>Custom</item>
+        <item>Archived</item>
+    </string-array>
+    <string name="items_page_title">Items</string>
+    <string name="items_page_button_upload">Upload Items</string>
+    <string-array name="items_page_sections">
+        <item>All Items</item>
+        <item>Archive</item>
+    </string-array>
+    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_option_download">Download</string>
+    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>
