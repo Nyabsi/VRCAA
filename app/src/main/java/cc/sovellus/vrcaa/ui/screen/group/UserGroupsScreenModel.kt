@@ -37,12 +37,12 @@ class UserGroupsScreenModel(
 
     init {
         mutableState.value = UserGroupsState.Loading
+        App.setLoadingText(R.string.loading_text_groups)
         fetchGroups()
     }
 
     private fun fetchGroups() {
         screenModelScope.launch {
-            App.setLoadingText(R.string.loading_text_groups)
             val result = api.users.fetchGroupsByUserId(userId).sortedBy { it.ownerId != userId }
             if (result.isEmpty())
                 mutableState.value = UserGroupsState.Empty

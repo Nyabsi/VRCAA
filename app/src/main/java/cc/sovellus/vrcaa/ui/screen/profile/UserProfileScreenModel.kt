@@ -47,12 +47,12 @@ class UserProfileScreenModel(
 
     init {
         mutableState.value = UserProfileState.Loading
+        App.setLoadingText(R.string.loading_text_user)
         fetchProfile()
     }
 
     private fun fetchProfile() {
         screenModelScope.launch {
-            App.setLoadingText(R.string.loading_text_user)
             api.users.fetchUserByUserId(userId)?.let {
                 it.location.let { location ->
                     if (it.isFriend &&

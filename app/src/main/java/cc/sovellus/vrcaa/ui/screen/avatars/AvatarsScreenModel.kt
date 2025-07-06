@@ -18,6 +18,8 @@ package cc.sovellus.vrcaa.ui.screen.avatars
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -37,6 +39,7 @@ class AvatarsScreenModel : StateScreenModel<AvatarsScreenModel.AvatarsState>(Ava
 
     init {
         mutableState.value = AvatarsState.Loading
+        App.setLoadingText(R.string.loading_text_avatars)
         fetchAvatars()
     }
 

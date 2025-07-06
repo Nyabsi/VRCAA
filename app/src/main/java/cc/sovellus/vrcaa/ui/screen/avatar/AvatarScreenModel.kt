@@ -46,12 +46,12 @@ class AvatarScreenModel(
 
     init {
         mutableState.value = AvatarState.Loading
+        App.setLoadingText(R.string.loading_text_avatar)
         fetchAvatar(avatarId)
     }
 
     private fun fetchAvatar(avatarId: String) {
         screenModelScope.launch {
-            App.setLoadingText(R.string.loading_text_avatar)
             val result = api.avatars.fetchAvatarById(avatarId)
             result?.let { avtr ->
                 avatar = avtr
