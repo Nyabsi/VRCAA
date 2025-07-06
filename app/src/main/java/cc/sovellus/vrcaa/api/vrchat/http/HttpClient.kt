@@ -34,6 +34,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFiles
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFriends
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IGroups
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInstances
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IPrints
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUser
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IWorlds
@@ -71,6 +72,8 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.AuthResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.api.vrchat.http.models.Files
+import cc.sovellus.vrcaa.api.vrchat.http.models.Print
+import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
@@ -1425,6 +1428,98 @@ class HttpClient : BaseClient(), CoroutineScope {
                     return arrayListOf()
                 }
             }
+        }
+    }
+
+    val prints = object : IPrints {
+        override suspend fun fetchPrintsByUserId(userId: String): ArrayList<Print> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/prints/user/${userId}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return arrayListOf()
+                    Gson().fromJson(result.body, Prints::class.java)
+                }
+                is Result.NotModified -> {
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
+                }
+            }
+        }
+
+        override suspend fun fetchPrint(printId: String): Print? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/prints/${printId}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    Gson().fromJson(result.body, Print::class.java)
+                }
+                is Result.NotModified -> {
+                    null
+                }
+                is Result.Forbidden -> {
+                    null
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override suspend fun deletePrint(printId: String): Print? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "DELETE",
+                url = "${Config.API_BASE_URL}/prints/${printId}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    Gson().fromJson(result.body, Print::class.java)
+                }
+                is Result.NotModified -> {
+                    null
+                }
+                is Result.Forbidden -> {
+                    null
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override suspend fun editPrint(printId: String): Print? {
+            return null // STUB!
         }
     }
 }

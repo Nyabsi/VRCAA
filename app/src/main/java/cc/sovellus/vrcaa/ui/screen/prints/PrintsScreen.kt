@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cc.sovellus.vrcaa.ui.screen.gallery
+package cc.sovellus.vrcaa.ui.screen.prints
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -55,7 +55,7 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.File
+import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.components.dialog.ImageZoomDialog
@@ -64,19 +64,21 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 
-class IconGalleryScreen : Screen {
+class PrintsScreen(
+    private val userId: String
+) : Screen {
 
     override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
-        val model = rememberScreenModel { IconGalleryScreenModel() }
+        val model = rememberScreenModel { PrintsScreenModel(userId) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is IconGalleryScreenModel.IconGalleryState.Loading -> LoadingIndicatorScreen().Content()
-            is IconGalleryScreenModel.IconGalleryState.Empty -> HandleEmpty()
-            is IconGalleryScreenModel.IconGalleryState.Result -> DisplayResult(result.files, model)
+            is PrintsScreenModel.PrintsState.Loading -> LoadingIndicatorScreen().Content()
+            is PrintsScreenModel.PrintsState.Empty -> HandleEmpty()
+            is PrintsScreenModel.PrintsState.Result -> DisplayResult(result.prints, model)
             else -> {}
         }
     }
@@ -98,7 +100,7 @@ class IconGalleryScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = "User Icons")
+                        Text(text = "Prints")
                     }
                 )
             },
@@ -121,10 +123,10 @@ class IconGalleryScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable
-    private fun DisplayResult(files: ArrayList<File>, model: IconGalleryScreenModel) {
+    private fun DisplayResult(prints: ArrayList<Print>, model: PrintsScreenModel) {
         val navigator = LocalNavigator.currentOrThrow
 
-        var previewFile by remember { mutableStateOf<File.Version.File?>(null) }
+        var previewFile by remember { mutableStateOf<Print.Files?>(null) }
 
         Scaffold(
             modifier = Modifier.blur(if (previewFile != null) { 100.dp } else { 0.dp }),
@@ -139,7 +141,7 @@ class IconGalleryScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = "User Icons") // stringResource(R.string.avatars_page_title)
+                        Text(text = "Prints") // stringResource(R.string.avatars_page_title)
                     }
                 )
             },
@@ -157,7 +159,7 @@ class IconGalleryScreen : Screen {
                 ) {
                     LazyVerticalGrid(
                         columns = when (model.preferences.columnCountOption) {
-                            0 -> GridCells.Adaptive(192.dp)
+                            0 -> GridCells.Adaptive(180.dp)
                             else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                         },
                         contentPadding = PaddingValues(
@@ -167,19 +169,19 @@ class IconGalleryScreen : Screen {
                             bottom = 16.dp
                         ),
                         content = {
-                            items(files.size) {
-                                val file = files[it]
+                            items(prints.size) {
+                                val print = prints[it]
                                 GlideImage(
-                                    model = file.versions.last().file.url,
+                                    model = print.files.image,
                                     contentDescription = null,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(4.dp)
-                                        .height(192.dp)
-                                        .width(192.dp)
+                                        .height(140.dp)
+                                        .width(200.dp)
                                         .clip(RoundedCornerShape(10))
                                         .clickable(onClick = {
-                                            previewFile = file.versions.last().file
+                                            previewFile = print.files
                                         }),
                                     contentScale = ContentScale.FillBounds,
                                     loading = placeholder(R.drawable.image_placeholder),
@@ -192,8 +194,8 @@ class IconGalleryScreen : Screen {
 
                 previewFile?.let {
                     ImageZoomDialog(
-                        url = it.url,
-                        name = it.fileName,
+                        url = it.image,
+                        name = it.fileId,
                         onDismiss = { previewFile = null }
                     )
                 }
