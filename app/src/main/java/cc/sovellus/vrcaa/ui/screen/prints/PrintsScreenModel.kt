@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cc.sovellus.vrcaa.ui.screen.gallery
+package cc.sovellus.vrcaa.ui.screen.prints
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -22,38 +22,40 @@ import android.content.SharedPreferences
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.api.vrchat.http.models.File
+import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class IconGalleryScreenModel : StateScreenModel<IconGalleryScreenModel.IconGalleryState>(IconGalleryState.Init) {
+class PrintsScreenModel(
+    private val userId: String
+) : StateScreenModel<PrintsScreenModel.PrintsState>(PrintsState.Init) {
 
-    sealed class IconGalleryState {
-        data object Init : IconGalleryState()
-        data object Loading : IconGalleryState()
-        data object Empty : IconGalleryState()
+    sealed class PrintsState {
+        data object Init : PrintsState()
+        data object Loading : PrintsState()
+        data object Empty : PrintsState()
         data class Result(
-            val files: ArrayList<File>
-        ) : IconGalleryState()
+            val prints: ArrayList<Print>
+        ) : PrintsState()
     }
 
     private val context: Context = App.getContext()
     val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
-    private var files: ArrayList<File> = arrayListOf()
+    private var prints: ArrayList<Print> = arrayListOf()
 
     init {
-        mutableState.value = IconGalleryState.Loading
+        mutableState.value = PrintsState.Loading
         fetchAvatars()
     }
 
     private fun fetchAvatars() {
         screenModelScope.launch {
-            files = api.files.fetchFilesByTag("icon")
+            prints = api.prints.fetchPrintsByUserId(userId)
 
-            if (files.isEmpty())
-                mutableState.value = IconGalleryState.Empty
+            if (prints.isEmpty())
+                mutableState.value = PrintsState.Empty
             else
-                mutableState.value = IconGalleryState.Result(files)
+                mutableState.value = PrintsState.Result(prints)
         }
     }
 }

@@ -59,6 +59,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
@@ -132,6 +133,7 @@ import cc.sovellus.vrcaa.ui.screen.feed.FeedList
 import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
+import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
@@ -1053,8 +1055,8 @@ class NavigationScreen : Screen {
 
                             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)) {
 
-                                val options = listOf<String>("Gallery", "User Icons", "Worlds", "Avatars", "Groups", "Emojis", "Stickers", "Items")
-                                val icons = listOf(Icons.Default.PhotoLibrary, Icons.Default.Photo, Icons.Default.Cabin, Icons.Filled.Person, Icons.Default.Group, Icons.Default.EmojiEmotions, Icons.AutoMirrored.Filled.StickyNote2, Icons.Default.Backpack)
+                                val options = listOf<String>("Gallery", "User Icons", "Worlds", "Avatars", "Groups", "Emojis", "Stickers", "Prints", "Items")
+                                val icons = listOf(Icons.Default.PhotoLibrary, Icons.Default.Photo, Icons.Default.Cabin, Icons.Filled.Person, Icons.Default.Group, Icons.Default.EmojiEmotions, Icons.AutoMirrored.Filled.StickyNote2, Icons.Default.Print, Icons.Default.Backpack)
 
                                 options.forEachIndexed { index, label ->
 
@@ -1098,7 +1100,9 @@ class NavigationScreen : Screen {
 
                                                     }
                                                     7 -> {
-
+                                                        CacheManager.getProfile()?.let {
+                                                            navigator.push(PrintsScreen(it.id))
+                                                        }
                                                     }
                                                     8 -> {
 

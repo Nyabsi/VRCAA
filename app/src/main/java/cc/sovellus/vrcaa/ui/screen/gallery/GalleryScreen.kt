@@ -175,13 +175,13 @@ class GalleryScreen : Screen {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(4.dp)
-                                        .height(120.dp)
+                                        .height(140.dp)
                                         .width(200.dp)
-                                        .clip(RoundedCornerShape(20))
+                                        .clip(RoundedCornerShape(10))
                                         .clickable(onClick = {
                                             previewFile = file.versions.last().file
                                         }),
-                                    contentScale = ContentScale.Crop,
+                                    contentScale = ContentScale.FillBounds,
                                     loading = placeholder(R.drawable.image_placeholder),
                                     failure = placeholder(R.drawable.image_placeholder)
                                 )
