@@ -38,6 +38,7 @@
     <string name="profile_text_no_biography">Описание не указано.</string>
     <string name="profile_user_dropdown_manage_notifications">Управление уведомлениями</string>
     <string name="profile_user_dropdown_view_groups">Показать группы</string>
+    <!-- removed; 06-07-25 -->
     <string name="profile_user_dropdown_view_avatar">Показать аватары</string>
     <string name="profile_user_dropdown_invite_self">Пригласить самого себя</string>
     <string name="profile_user_not_found_message">Юзер не существует.</string>
@@ -231,10 +232,19 @@
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_groups">Показать группы</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_worlds">Просмотреть миры</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_avatars">Просмотр аватаров</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_favorites">Просмотр избранного</string>
+    <string name="user_overlay_groups">Groups</string>
+    <string name="user_overlay_worlds">Worlds</string>
+    <string name="user_overlay_avatars">Avatars</string>
+    <string name="user_overlay_favorites">Favorites</string>
+    <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Статус</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
