@@ -366,10 +366,15 @@
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string-array name="emojis_page_sections">
+        <item>Official</item>
+        <item>Custom</item>
+        <item>Archived</item>
+    </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
-        <item>Stickers</item>
+        <item>Official</item>
         <item>Custom</item>
         <item>Archived</item>
     </string-array>
