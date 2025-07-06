@@ -38,6 +38,7 @@
     <string name="profile_text_no_biography">자기소개 없음</string>
     <string name="profile_user_dropdown_manage_notifications">알림 관리</string>
     <string name="profile_user_dropdown_view_groups">그룹 보기</string>
+    <!-- removed; 06-07-25 -->
     <string name="profile_user_dropdown_view_avatar">아바타 상세정보 보기</string>
     <string name="profile_user_dropdown_invite_self">나에게 초대 보내기</string>
     <string name="profile_user_not_found_message">유저를 찾을 수 없습니다.</string>
@@ -231,10 +232,19 @@
     <string name="misc_exit_toast_label">한 번 더 누르면 앱이 종료됩니다.</string>
     <string name="global_app_default_loading_text">초기화 중…</string>
     <!-- User -->
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_groups">소속된 그룹 보기</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_worlds">제작한 월드 보기</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_avatars">제작한 아바타 보기</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_favorites">즐겨찾기 목록 보기</string>
+    <string name="user_overlay_groups">Groups</string>
+    <string name="user_overlay_worlds">Worlds</string>
+    <string name="user_overlay_avatars">Avatars</string>
+    <string name="user_overlay_favorites">Favorites</string>
+    <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">상태</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">연령 인증 공개여부</string>
