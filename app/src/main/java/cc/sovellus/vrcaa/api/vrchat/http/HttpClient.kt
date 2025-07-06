@@ -34,6 +34,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFiles
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFriends
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IGroups
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInstances
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IPrints
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUser
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
@@ -72,6 +73,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.AuthResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.api.vrchat.http.models.Files
+import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
 import cc.sovellus.vrcaa.extension.authToken
@@ -1508,5 +1510,161 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun editPrint(printId: String): Print? {
             return null // STUB!
         }
+    }
+
+    val inventory = object : IInventory {
+        override suspend fun fetchEmojis(
+            ugc: Boolean,
+            archived: Boolean,
+            n: Int,
+            offset: Int,
+            order: String,
+            items: ArrayList<Inventory.Data>
+        ): ArrayList<Inventory.Data> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            var dParameters = "?types=emoji"
+            dParameters += if (ugc) {
+                "&tags=Custom Emoji&flags=ugc"
+            } else {
+                "&notFlags=ugc"
+            }
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/inventory/${dParameters}&archived=${archived}&n=${n}&offset=${offset}&order=${order}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return items
+
+                    val json = Gson().fromJson(result.body, Inventory::class.java)
+
+                    json?.data?.forEach { avatar ->
+                        items.add(avatar)
+                    }
+
+                    fetchEmojis(ugc, archived, n, offset + n, order, items)
+                }
+                is Result.NotModified -> {
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
+                }
+            }
+        }
+
+        override suspend fun fetchStickers(
+            ugc: Boolean,
+            archived: Boolean,
+            n: Int,
+            offset: Int,
+            order: String,
+            items: ArrayList<Inventory.Data>
+        ): ArrayList<Inventory.Data> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            var dParameters = "?types=sticker"
+            dParameters += if (ugc) {
+                "&tags=Custom Sticker&flags=ugc"
+            } else {
+                "&notFlags=ugc"
+            }
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/inventory/${dParameters}&archived=${archived}&n=${n}&offset=${offset}&order=${order}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return items
+
+                    val json = Gson().fromJson(result.body, Inventory::class.java)
+
+                    json?.data?.forEach { avatar ->
+                        items.add(avatar)
+                    }
+
+                    fetchStickers(ugc, archived, n, offset + n, order, items)
+                }
+                is Result.NotModified -> {
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
+                }
+            }
+        }
+
+        override suspend fun fetchProps(
+            ugc: Boolean,
+            archived: Boolean,
+            n: Int,
+            offset: Int,
+            order: String,
+            items: ArrayList<Inventory.Data>
+        ): ArrayList<Inventory.Data> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            var dParameters = "?types=prop"
+            dParameters += if (ugc) {
+                "&tags=Custom Prop&flags=ugc"
+            } else {
+                "&notFlags=ugc"
+            }
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/inventory/${dParameters}&archived=${archived}&n=${n}&offset=${offset}&order=${order}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return items
+
+                    val json = Gson().fromJson(result.body, Inventory::class.java)
+
+                    json?.data?.forEach { avatar ->
+                        items.add(avatar)
+                    }
+
+                    fetchProps(ugc, archived, n, offset + n, order, items)
+                }
+                is Result.NotModified -> {
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
+                }
+            }
+        }
+
     }
 }
