@@ -1604,10 +1604,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    if (result.body == "[]")
-                        return items
-
                     val json = Gson().fromJson(result.body, Inventory::class.java)
+
+                    if (json.data.isEmpty())
+                        return items
 
                     json?.data?.forEach { avatar ->
                         items.add(avatar)
@@ -1655,10 +1655,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    if (result.body == "[]")
-                        return items
-
                     val json = Gson().fromJson(result.body, Inventory::class.java)
+
+                    if (json.data.isEmpty())
+                        return items
 
                     json?.data?.forEach { avatar ->
                         items.add(avatar)
@@ -1706,10 +1706,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    if (result.body == "[]")
-                        return items
-
                     val json = Gson().fromJson(result.body, Inventory::class.java)
+
+                    if (json.data.isEmpty())
+                        return items
 
                     json?.data?.forEach { avatar ->
                         items.add(avatar)
