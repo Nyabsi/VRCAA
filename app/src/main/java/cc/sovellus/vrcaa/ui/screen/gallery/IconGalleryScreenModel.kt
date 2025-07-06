@@ -43,12 +43,12 @@ class IconGalleryScreenModel : StateScreenModel<IconGalleryScreenModel.IconGalle
     private var files: ArrayList<File> = arrayListOf()
 
     init {
-        mutableState.value = IconGalleryState.Loading
-        App.setLoadingText(R.string.loading_text_icons)
-        fetchAvatars()
+        fetchIcons()
     }
 
-    private fun fetchAvatars() {
+    fun fetchIcons() {
+        mutableState.value = IconGalleryState.Loading
+        App.setLoadingText(R.string.loading_text_icons)
         screenModelScope.launch {
             files = api.files.fetchFilesByTag("icon")
 

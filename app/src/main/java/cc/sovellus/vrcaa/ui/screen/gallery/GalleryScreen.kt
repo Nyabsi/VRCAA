@@ -17,7 +17,6 @@
 package cc.sovellus.vrcaa.ui.screen.gallery
 
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -37,7 +36,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -142,7 +140,9 @@ class GalleryScreen : Screen {
         ) { uri: Uri? ->
             uri?.let {
                 scope.launch {
-                    api.files.uploadImage("gallery", uri)
+                    api.files.uploadImage("gallery", uri)?.let {
+                        model.fetchGallery()
+                    }
                 }
             }
         }

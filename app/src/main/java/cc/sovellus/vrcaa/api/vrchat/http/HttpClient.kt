@@ -89,6 +89,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import okhttp3.Headers
+import java.time.LocalDateTime
 import kotlin.coroutines.CoroutineContext
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -1539,6 +1540,39 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun editPrint(printId: String): Print? {
             return null // STUB!
+        }
+
+        override suspend fun uploadPrint(
+            file: Uri,
+            note: String,
+            timestamp: LocalDateTime
+        ): Print? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequestUpload(
+                App.getContext(),
+                url = "${Config.API_BASE_URL}/prints",
+                fileUri = file,
+                formFields = mapOf("note" to note, "timestamp" to timestamp.toString()),
+                headers = headers
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    Gson().fromJson(result.body, Print::class.java)
+                }
+                is Result.NotModified -> {
+                    null
+                }
+                is Result.Forbidden -> {
+                    null
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
         }
     }
 

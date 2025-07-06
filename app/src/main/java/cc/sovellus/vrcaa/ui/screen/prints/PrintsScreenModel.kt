@@ -45,12 +45,12 @@ class PrintsScreenModel(
     private var prints: ArrayList<Print> = arrayListOf()
 
     init {
-        mutableState.value = PrintsState.Loading
-        App.setLoadingText(R.string.loading_text_prints)
-        fetchAvatars()
+        fetchPrints()
     }
 
-    private fun fetchAvatars() {
+    fun fetchPrints() {
+        mutableState.value = PrintsState.Loading
+        App.setLoadingText(R.string.loading_text_prints)
         screenModelScope.launch {
             prints = api.prints.fetchPrintsByUserId(userId)
 
