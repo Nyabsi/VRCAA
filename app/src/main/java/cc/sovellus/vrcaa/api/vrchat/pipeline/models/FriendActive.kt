@@ -17,12 +17,11 @@
 package cc.sovellus.vrcaa.api.vrchat.pipeline.models
 
 
-import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import com.google.gson.annotations.SerializedName
 
 data class FriendActive(
     @SerializedName("user")
-    val user: Friend,
+    val user: PartialFriend,
     @SerializedName("userId")
     val userId: String,
     @SerializedName("platform")

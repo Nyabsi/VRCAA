@@ -17,7 +17,6 @@
 package cc.sovellus.vrcaa.api.vrchat.pipeline.models
 
 
-import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import com.google.gson.annotations.SerializedName
 
@@ -29,7 +28,7 @@ data class FriendLocation(
     @SerializedName("travelingToLocation")
     val travelingToLocation: String,
     @SerializedName("user")
-    val user: Friend,
+    val user: PartialFriend,
     @SerializedName("userId")
     val userId: String,
     @SerializedName("world")

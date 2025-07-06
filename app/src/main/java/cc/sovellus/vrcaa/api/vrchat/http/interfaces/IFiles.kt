@@ -16,8 +16,12 @@
 
 package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
+import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.api.vrchat.http.models.FileMetadata
 
 interface IFiles {
     suspend fun fetchMetadataByFileId(fileId: String): FileMetadata?
+    suspend fun fetchFilesByTag(tag: String, n: Int = 100, offset: Int = 0): ArrayList<File>
+    suspend fun fetchFilesByTagWithUserId(tag: String, userId: String, n: Int = 100, offset: Int = 0): ArrayList<File>
 }

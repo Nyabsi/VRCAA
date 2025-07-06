@@ -69,6 +69,8 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.AuthResponse
+import cc.sovellus.vrcaa.api.vrchat.http.models.File
+import cc.sovellus.vrcaa.api.vrchat.http.models.Files
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
@@ -1242,6 +1244,91 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     return null
+                }
+            }
+        }
+
+        override suspend fun fetchFilesByTag(
+            tag: String,
+            n: Int,
+            offset: Int
+        ): ArrayList<File> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/files?tag=${tag}&n=${n}&offset=${offset}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return arrayListOf()
+
+                    val groups: ArrayList<File> = arrayListOf()
+                    val json = Gson().fromJson(result.body, Files::class.java)
+
+                    json?.forEach { group ->
+                        groups.add(group)
+                    }
+
+                    groups
+                }
+                is Result.NotModified -> {
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
+                }
+            }
+        }
+
+        override suspend fun fetchFilesByTagWithUserId(
+            tag: String,
+            userId: String,
+            n: Int,
+            offset: Int,
+        ): ArrayList<File> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/files?tag=${tag}&n=${n}&offset=${offset}&userId=${userId}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return arrayListOf()
+
+                    val groups: ArrayList<File> = arrayListOf()
+                    val json = Gson().fromJson(result.body, Files::class.java)
+
+                    json?.forEach { group ->
+                        groups.add(group)
+                    }
+
+                    groups
+                }
+                is Result.NotModified -> {
+                    arrayListOf()
+                }
+                is Result.Forbidden -> {
+                    arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
                 }
             }
         }

@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,6 +36,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CardDefaults
@@ -250,13 +252,23 @@ class GroupScreen(
                             SegmentedButton(shape = SegmentedButtonDefaults.itemShape(
                                 index = index, count = options.size
                             ), icon = {
-                                SegmentedButtonDefaults.Icon(active = index == model.currentIndex.intValue) {
-                                    Icon(
-                                        imageVector = icons[index],
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                    )
-                                }
+                                SegmentedButtonDefaults.Icon(
+                                    active = index == model.currentIndex.intValue,
+                                    activeContent = {
+                                        Icon(
+                                            imageVector = Icons.Filled.Check,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize).offset(y = 2.5.dp)
+                                        )
+                                    },
+                                    inactiveContent = {
+                                        Icon(
+                                            imageVector = icons[index],
+                                            contentDescription = null,
+                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize).offset(y = 2.5.dp)
+                                        )
+                                    }
+                                )
                             }, onCheckedChange = {
                                 model.currentIndex.intValue = index
                             }, checked = index == model.currentIndex.intValue

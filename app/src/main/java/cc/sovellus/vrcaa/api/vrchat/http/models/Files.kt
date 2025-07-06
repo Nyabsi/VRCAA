@@ -14,13 +14,7 @@
  * limitations under the License.
  */
 
-package cc.sovellus.vrcaa.api.vrchat.pipeline.models
+package cc.sovellus.vrcaa.api.vrchat.http.models
 
-import com.google.gson.annotations.SerializedName
 
-data class FriendUpdate(
-    @SerializedName("user")
-    val user: PartialFriend,
-    @SerializedName("userId")
-    val userId: String
-)
+class Files : ArrayList<File>()
