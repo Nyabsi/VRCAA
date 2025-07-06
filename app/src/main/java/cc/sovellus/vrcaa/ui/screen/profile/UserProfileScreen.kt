@@ -76,6 +76,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -187,19 +188,21 @@ class UserProfileScreen(
         } else {
             Box(modifier = Modifier.fillMaxSize()) {
                 Scaffold(
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            isQuickMenuExpanded = false
-                        },
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    ).blur(
-                        if (isQuickMenuExpanded) {
-                            100.dp
-                        } else {
-                            0.dp
-                        }
-                    ),
+                    modifier = Modifier
+                        .clickable(
+                            onClick = {
+                                isQuickMenuExpanded = false
+                            },
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        )
+                        .blur(
+                            if (isQuickMenuExpanded) {
+                                100.dp
+                            } else {
+                                0.dp
+                            }
+                        ),
                     topBar = {
                         TopAppBar(navigationIcon = {
                             IconButton(onClick = {
@@ -336,7 +339,10 @@ class UserProfileScreen(
                     visible = isQuickMenuExpanded,
                     enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
                     exit = slideOutHorizontally(targetOffsetX = { it }) + fadeOut(),
-                    modifier = Modifier.systemBarsPadding().navigationBarsPadding().align(Alignment.TopEnd)
+                    modifier = Modifier
+                        .systemBarsPadding()
+                        .navigationBarsPadding()
+                        .align(Alignment.TopEnd)
                 ) {
                     Surface(
                         modifier = Modifier
@@ -384,32 +390,53 @@ class UserProfileScreen(
                             ) {
 
                                 val options: MutableList<String> = mutableListOf<String>()
+                                val icons: MutableList<ImageVector> = mutableListOf<ImageVector>()
 
-                                if (profile.isFriend)
+                                var notificationIndex = -1
+                                var favoriteIndex = -1
+                                var avatarIndex = -1
+                                var worldsIndex = -1
+                                var groupsIndex = -1
+                                var favoritesIndex = -1
+                                var copyIndex = -1
+
+                                if (profile.isFriend) {
                                     options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
+                                    icons.add(Icons.Default.NotificationsActive)
+                                    notificationIndex = options.size - 1
+                                }
 
-                                if (FavoriteManager.isFavorite("friend", profile.id)) {
-                                    options.add(stringResource(R.string.favorite_label_remove))
-                                } else {
-                                    options.add(stringResource(R.string.favorite_label_add))
-
+                                if (profile.isFriend) {
+                                    if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                        options.add(stringResource(R.string.favorite_label_remove))
+                                        icons.add(Icons.Default.Star)
+                                        favoriteIndex = options.size - 1
+                                    } else {
+                                        options.add(stringResource(R.string.favorite_label_add))
+                                        icons.add(Icons.Default.Star)
+                                        favoriteIndex = options.size - 1
+                                    }
                                 }
 
                                 options.add(stringResource(R.string.user_overlay_find_avatar))
-                                options.add(stringResource(R.string.user_overlay_worlds))
-                                options.add(stringResource(R.string.user_overlay_groups))
-                                options.add(stringResource(R.string.user_overlay_favorites))
-                                options.add(stringResource(R.string.copy_id_label))
+                                icons.add(Icons.Default.Person)
+                                avatarIndex = options.size - 1
 
-                                val icons = listOf(
-                                    Icons.Default.NotificationsActive,
-                                    Icons.Default.Star,
-                                    Icons.Default.Person,
-                                    Icons.Default.Cabin,
-                                    Icons.Default.Group,
-                                    Icons.Default.Star,
-                                    Icons.Default.ContentCopy
-                                )
+                                options.add(stringResource(R.string.user_overlay_worlds))
+                                icons.add(Icons.Default.Cabin)
+                                worldsIndex = options.size - 1
+
+                                options.add(stringResource(R.string.user_overlay_groups))
+                                icons.add(Icons.Default.Group)
+                                groupsIndex = options.size - 1
+
+                                options.add(stringResource(R.string.user_overlay_favorites))
+                                icons.add(Icons.Default.Star)
+                                favoritesIndex = options.size - 1
+
+                                options.add(stringResource(R.string.copy_id_label))
+                                icons.add(Icons.Default.ContentCopy)
+                                copyIndex = options.size - 1
 
                                 options.forEachIndexed { index, label ->
 
@@ -425,7 +452,7 @@ class UserProfileScreen(
                                             )
                                             .clickable(onClick = {
                                                 when (index) {
-                                                    0 -> {
+                                                    notificationIndex -> {
                                                         navigator.push(
                                                             NotificationScreen(
                                                                 profile.id,
@@ -434,8 +461,12 @@ class UserProfileScreen(
                                                         )
                                                     }
 
-                                                    1 -> {
-                                                        if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                                    favoriteIndex -> {
+                                                        if (FavoriteManager.isFavorite(
+                                                                "friend",
+                                                                profile.id
+                                                            )
+                                                        ) {
                                                             model.removeFavorite { result ->
                                                                 if (result) {
                                                                     Toast.makeText(
@@ -458,7 +489,7 @@ class UserProfileScreen(
                                                         }
                                                     }
 
-                                                    2 -> {
+                                                    avatarIndex -> {
                                                         model.findAvatar { avatarId ->
                                                             if (profile.profilePicOverride.isNotEmpty()) {
                                                                 Toast.makeText(
@@ -482,7 +513,7 @@ class UserProfileScreen(
                                                         }
                                                     }
 
-                                                    3 -> {
+                                                    worldsIndex -> {
                                                         navigator.push(
                                                             WorldsScreen(
                                                                 profile.displayName,
@@ -492,7 +523,7 @@ class UserProfileScreen(
                                                         )
                                                     }
 
-                                                    4 -> {
+                                                    groupsIndex -> {
                                                         navigator.push(
                                                             UserGroupsScreen(
                                                                 profile.displayName,
@@ -501,26 +532,30 @@ class UserProfileScreen(
                                                         )
                                                     }
 
-                                                    5 -> {
+                                                    favoritesIndex -> {
 
                                                     }
 
-                                                    6 -> {
-                                                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                                        val clip = ClipData.newPlainText(null, profile.id)
+                                                    copyIndex -> {
+                                                        val clipboard =
+                                                            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                                        val clip =
+                                                            ClipData.newPlainText(null, profile.id)
                                                         clipboard.setPrimaryClip(clip)
 
                                                         Toast.makeText(
                                                             context,
-                                                            context.getString(R.string.copied_toast).format(
-                                                                profile.displayName
-                                                            ),
+                                                            context.getString(R.string.copied_toast)
+                                                                .format(
+                                                                    profile.displayName
+                                                                ),
                                                             Toast.LENGTH_SHORT
                                                         ).show()
                                                     }
                                                 }
                                                 isQuickMenuExpanded = false
-                                            }).padding(vertical = 16.dp, horizontal = 16.dp),
+                                            })
+                                            .padding(vertical = 16.dp, horizontal = 16.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Icon(
