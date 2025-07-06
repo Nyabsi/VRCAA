@@ -24,7 +24,6 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import kotlin.jvm.optionals.getOrNull
 
 object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
@@ -111,14 +110,17 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         return cacheHasBeenBuilt
     }
 
+    @Synchronized
     fun isWorldCached(worldId: String): Boolean {
-        return worldList.stream().filter { it.id == worldId }.count().toInt() != 0
+        return worldList.any { it.id == worldId }
     }
 
+    @Synchronized
     fun getWorld(worldId: String): WorldCache {
-        return worldList.stream().filter { it.id == worldId }.findFirst().getOrNull() ?: WorldCache("invalid")
+        return worldList.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
     }
 
+    @Synchronized
     fun addWorld(world: World) {
         val cache = WorldCache(world.id).apply {
             name = world.name
@@ -127,6 +129,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         worldList.add(cache)
     }
 
+    @Synchronized
     fun updateWorld(world: World) {
         val index = worldList.indexOf(worldList.find { it.id == world.id })
         worldList[index] = WorldCache(world.id).apply {
