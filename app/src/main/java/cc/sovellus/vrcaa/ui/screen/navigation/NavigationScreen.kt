@@ -130,6 +130,7 @@ import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.feed.FeedList
 import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
+import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
@@ -1071,7 +1072,9 @@ class NavigationScreen : Screen {
                                                         }
                                                     }
                                                     1 -> {
-
+                                                        CacheManager.getProfile()?.let {
+                                                            navigator.push(IconGalleryScreen())
+                                                        }
                                                     }
                                                     2 -> {
                                                         CacheManager.getProfile()?.let {
