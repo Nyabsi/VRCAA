@@ -80,7 +80,7 @@
     <string name="settings_item_advanced_settings">上級者機能</string>
     <string name="settings_item_advanced_settings_description">詳細ログ機能</string>
     <string name="settings_item_logout">ログオフ</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">Ko-fiで支援する</string>
     <!-- Worlds -->
     <string name="world_label_description">情報</string>
     <string name="world_label_tags">タグ</string>
