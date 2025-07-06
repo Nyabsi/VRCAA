@@ -133,6 +133,7 @@ import cc.sovellus.vrcaa.ui.screen.feed.FeedList
 import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
+import cc.sovellus.vrcaa.ui.screen.items.ItemsScreen
 import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
@@ -1106,7 +1107,9 @@ class NavigationScreen : Screen {
                                                         }
                                                     }
                                                     8 -> {
-
+                                                        CacheManager.getProfile()?.let {
+                                                            navigator.push(ItemsScreen())
+                                                        }
                                                     }
                                                 }
                                                 isQuickMenuExpanded = false
