@@ -5,6 +5,7 @@ import android.content.Intent
 import android.webkit.WebStorage
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
@@ -51,7 +52,7 @@ class RichPresenceScreenModel : ScreenModel {
 
         // we have no idea if it's actually running, nobody cares, it will start regardless.
         context.stopService(intent)
-        context.startService(intent)
+        ContextCompat.startForegroundService(context, intent)
 
         Toast.makeText(
             context,
