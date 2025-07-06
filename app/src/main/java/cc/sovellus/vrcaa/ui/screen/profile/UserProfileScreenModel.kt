@@ -81,33 +81,36 @@ class UserProfileScreenModel(
 
                         val name = metadata.name.split(" - ")
 
-                        val (_, nameAvatars) = avatarProvider.search(name[1])
-                        if (nameAvatars.isNotEmpty()) {
-                            for (avatar in nameAvatars) {
-                                avatar.imageUrl?.let {
-                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                    if (avatarFileId == fileId) {
-                                        callback(avatar.id)
-                                        return@launch
+                        if (name.size > 1) {
+                            val (_, nameAvatars) = avatarProvider.search(name[1])
+                            if (nameAvatars.isNotEmpty()) {
+                                for (avatar in nameAvatars) {
+                                    avatar.imageUrl?.let {
+                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
+                                        if (avatarFileId == fileId) {
+                                            callback(avatar.id)
+                                            return@launch
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        // fallback to using author search
-                        val (_, authorAvatars) = avatarProvider.search(metadata.ownerId)
-                        if (authorAvatars.isNotEmpty()) {
-                            for (avatar in authorAvatars) {
-                                avatar.imageUrl?.let {
-                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                    if (avatarFileId == fileId) {
-                                        callback(avatar.id)
-                                        return@launch
+                            // fallback to using author search
+                            val (_, authorAvatars) = avatarProvider.search(metadata.ownerId)
+                            if (authorAvatars.isNotEmpty()) {
+                                for (avatar in authorAvatars) {
+                                    avatar.imageUrl?.let {
+                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
+                                        if (avatarFileId == fileId) {
+                                            callback(avatar.id)
+                                            return@launch
+                                        }
                                     }
                                 }
                             }
+
+                            callback(null)
                         }
-                        callback(null)
                     }
                 }
             }
