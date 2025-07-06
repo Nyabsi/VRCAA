@@ -38,6 +38,7 @@
     <string name="profile_text_no_biography">Geen beschrijving opgegeven.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <string name="profile_user_dropdown_view_groups">View Groups</string>
+    <!-- removed; 06-07-25 -->
     <string name="profile_user_dropdown_view_avatar">View Avatar</string>
     <string name="profile_user_dropdown_invite_self">Invite myself</string>
     <string name="profile_user_not_found_message">User doesn\'t exist.</string>
@@ -231,10 +232,19 @@
     <string name="misc_exit_toast_label">Press again to quit.</string>
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_groups">View Groups</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_worlds">View Worlds</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_avatars">View Avatars</string>
+    <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_favorites">View Favorites</string>
+    <string name="user_overlay_groups">Groups</string>
+    <string name="user_overlay_worlds">Worlds</string>
+    <string name="user_overlay_avatars">Avatars</string>
+    <string name="user_overlay_favorites">Favorites</string>
+    <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
