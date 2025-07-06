@@ -64,7 +64,7 @@ class GlobalExceptionHandler private constructor(
         }
 
         fun getThrowableFromIntent(intent: Intent): String {
-            return intent.getStringExtra(INTENT_EXTRA)!!
+            return intent.getStringExtra(INTENT_EXTRA) ?: ""
         }
     }
 }
