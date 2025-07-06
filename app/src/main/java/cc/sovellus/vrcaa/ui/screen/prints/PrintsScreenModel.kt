@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class PrintsScreenModel(
 
     init {
         mutableState.value = PrintsState.Loading
+        App.setLoadingText(R.string.loading_text_prints)
         fetchAvatars()
     }
 

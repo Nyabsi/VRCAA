@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -43,6 +44,7 @@ class GalleryScreenModel : StateScreenModel<GalleryScreenModel.GalleryState>(Gal
 
     init {
         mutableState.value = GalleryState.Loading
+        App.setLoadingText(R.string.loading_text_gallery)
         fetchAvatars()
     }
 

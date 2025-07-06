@@ -46,13 +46,13 @@ class GroupScreenModel(
     var clickedInstance = mutableStateOf("")
 
     init {
+        mutableState.value = GroupState.Loading
+        App.setLoadingText(R.string.loading_text_group)
         fetchGroup()
     }
 
     private fun fetchGroup() {
-        mutableState.value = GroupState.Loading
         screenModelScope.launch {
-            App.setLoadingText(R.string.loading_text_group)
             group = api.groups.fetchGroupByGroupId(groupId)
             instances = api.instances.fetchGroupInstancesById(groupId)
             mutableState.value = GroupState.Result(group, instances)

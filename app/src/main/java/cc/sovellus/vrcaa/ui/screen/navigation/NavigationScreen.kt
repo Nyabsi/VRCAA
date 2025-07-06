@@ -1056,7 +1056,7 @@ class NavigationScreen : Screen {
 
                             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)) {
 
-                                val options = listOf<String>("Gallery", "User Icons", "Worlds", "Avatars", "Groups", "Emojis", "Stickers", "Prints", "Items")
+                                val options = stringArrayResource(R.array.inventory_selection_options)
                                 val icons = listOf(Icons.Default.PhotoLibrary, Icons.Default.Photo, Icons.Default.Cabin, Icons.Filled.Person, Icons.Default.Group, Icons.Default.EmojiEmotions, Icons.AutoMirrored.Filled.StickyNote2, Icons.Default.Print, Icons.Default.Backpack)
 
                                 options.forEachIndexed { index, label ->

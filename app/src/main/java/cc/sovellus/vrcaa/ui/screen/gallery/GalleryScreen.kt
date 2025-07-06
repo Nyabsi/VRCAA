@@ -58,7 +58,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
-import cc.sovellus.vrcaa.ui.components.dialog.ImageZoomDialog
+import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -98,7 +98,7 @@ class GalleryScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = "Gallery")
+                        Text(text = stringResource(R.string.gallery_page_title))
                     }
                 )
             },
@@ -139,7 +139,7 @@ class GalleryScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = "Gallery") // stringResource(R.string.avatars_page_title)
+                        Text(text = stringResource(R.string.gallery_page_title))
                     }
                 )
             },
@@ -193,7 +193,7 @@ class GalleryScreen : Screen {
         )
 
         previewFile?.let {
-            ImageZoomDialog(
+            ImagePreviewDialog(
                 url = it.url,
                 name = it.fileName,
                 onDismiss = { previewFile = null }

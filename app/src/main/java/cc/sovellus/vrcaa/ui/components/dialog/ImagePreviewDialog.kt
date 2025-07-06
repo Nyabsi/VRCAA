@@ -42,10 +42,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.ui.components.misc.ZoomableImage
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
@@ -89,7 +91,7 @@ private fun saveGlideImageToPickedUri(imageUrl: String, pickedUri: Uri) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ImageZoomDialog(
+fun ImagePreviewDialog(
     name: String,
     url: String,
     onDismiss: () -> Unit
@@ -138,7 +140,7 @@ fun ImageZoomDialog(
                         }
                     },
                     title = {
-                        Text(text = "Preview")
+                        Text(text = stringResource(R.string.image_preview_dialog_title))
                     }
                 )
             }

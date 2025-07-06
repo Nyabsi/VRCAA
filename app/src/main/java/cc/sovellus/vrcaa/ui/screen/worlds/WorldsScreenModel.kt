@@ -18,6 +18,8 @@ package cc.sovellus.vrcaa.ui.screen.worlds
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreenModel.WorldsState
@@ -40,6 +42,7 @@ class WorldsScreenModel(
 
     init {
         mutableState.value = WorldsState.Loading
+        App.setLoadingText(R.string.loading_text_worlds)
         fetchAvatars()
     }
 

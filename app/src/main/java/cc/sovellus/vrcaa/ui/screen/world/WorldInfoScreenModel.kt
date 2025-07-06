@@ -55,12 +55,12 @@ class WorldInfoScreenModel(
 
     init {
         mutableState.value = WorldInfoState.Loading
+        App.setLoadingText(R.string.loading_text_world)
         fetchWorld()
     }
 
     private fun fetchWorld() {
         screenModelScope.launch {
-            App.setLoadingText(R.string.loading_text_world)
             val result = api.worlds.fetchWorldByWorldId(id)
 
             result?.let {
