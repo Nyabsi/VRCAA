@@ -189,15 +189,15 @@ class GalleryScreen : Screen {
                         }
                     )
                 }
-
-                previewFile?.let {
-                    ImageZoomDialog(
-                        url = it.url,
-                        name = it.fileName,
-                        onDismiss = { previewFile = null }
-                    )
-                }
             }
         )
+
+        previewFile?.let {
+            ImageZoomDialog(
+                url = it.url,
+                name = it.fileName,
+                onDismiss = { previewFile = null }
+            )
+        }
     }
 }

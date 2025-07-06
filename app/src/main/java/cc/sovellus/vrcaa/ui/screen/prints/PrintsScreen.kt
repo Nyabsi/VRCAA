@@ -191,15 +191,15 @@ class PrintsScreen(
                         }
                     )
                 }
-
-                previewFile?.let {
-                    ImageZoomDialog(
-                        url = it.image,
-                        name = it.fileId,
-                        onDismiss = { previewFile = null }
-                    )
-                }
             }
         )
+
+        previewFile?.let {
+            ImageZoomDialog(
+                url = it.image,
+                name = it.fileId,
+                onDismiss = { previewFile = null }
+            )
+        }
     }
 }
