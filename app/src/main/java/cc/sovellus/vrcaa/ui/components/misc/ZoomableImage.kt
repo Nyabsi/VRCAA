@@ -16,13 +16,17 @@
 
 package cc.sovellus.vrcaa.ui.components.misc
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -32,6 +36,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -39,34 +44,47 @@ fun ZoomableImage(
     imageUrl: String,
     modifier: Modifier = Modifier
 ) {
-    val scale = remember { mutableFloatStateOf(1f) }
-    val offset = remember { mutableStateOf(Offset.Zero) }
+    val scope = rememberCoroutineScope()
+    val scale = remember { Animatable(1.0f) }
+    val offset = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
     val containerSize = remember { mutableStateOf(androidx.compose.ui.geometry.Size.Zero) }
 
     val transformModifier = modifier
         .pointerInput(Unit) {
+            detectTapGestures(
+                onDoubleTap = {
+                    scope.launch {
+                        scale.animateTo(1.0f)
+                        offset.animateTo(Offset.Zero)
+                    }
+                }
+            )
+        }
+        .pointerInput(Unit) {
             detectTransformGestures { _, pan, zoom, _ ->
-                val newScale = (scale.floatValue * zoom).coerceIn(1f, 5f)
-                scale.floatValue = newScale
+                scope.launch {
+                    val newScale = (scale.value * zoom).coerceIn(1f, 5f)
+                    scale.snapTo(newScale)
 
-                val maxX = ((containerSize.value.width * (newScale - 1)) / 2).coerceAtLeast(0f)
-                val maxY = ((containerSize.value.height * (newScale - 1)) / 2).coerceAtLeast(0f)
+                    val maxX = ((containerSize.value.width * (newScale - 1)) / 2).coerceAtLeast(0f)
+                    val maxY = ((containerSize.value.height * (newScale - 1)) / 2).coerceAtLeast(0f)
 
-                val newOffset = offset.value + pan
-                val clampedOffset = Offset(
-                    newOffset.x.coerceIn(-maxX, maxX),
-                    newOffset.y.coerceIn(-maxY, maxY)
-                )
+                    val newOffset = offset.value + pan
+                    val clampedOffset = Offset(
+                        newOffset.x.coerceIn(-maxX, maxX),
+                        newOffset.y.coerceIn(-maxY, maxY)
+                    )
 
-                offset.value = clampedOffset
+                    offset.snapTo(clampedOffset)
+                }
             }
         }
         .onSizeChanged {
             containerSize.value = androidx.compose.ui.geometry.Size(it.width.toFloat(), it.height.toFloat())
         }
         .graphicsLayer(
-            scaleX = scale.floatValue,
-            scaleY = scale.floatValue,
+            scaleX = scale.value,
+            scaleY = scale.value,
             translationX = offset.value.x,
             translationY = offset.value.y
         )
