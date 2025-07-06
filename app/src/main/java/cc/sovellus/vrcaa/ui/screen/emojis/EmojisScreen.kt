@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cc.sovellus.vrcaa.ui.screen.stickers
+package cc.sovellus.vrcaa.ui.screen.emojis
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -53,7 +53,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -73,6 +76,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.ui.components.dialog.EmojiUploadConfigDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -80,19 +84,19 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import kotlinx.coroutines.launch
 
-class StickersScreen : Screen {
+class EmojisScreen : Screen {
 
     override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
-        val model = rememberScreenModel { StickersScreenModel() }
+        val model = rememberScreenModel { EmojisScreenModel() }
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is StickersScreenModel.StickerState.Loading -> LoadingIndicatorScreen().Content()
-            is StickersScreenModel.StickerState.Empty -> HandleEmpty()
-            is StickersScreenModel.StickerState.Result -> DisplayResult(result.stickers, result.userStickers, result.archivedStickers, model)
+            is EmojisScreenModel.EmojiState.Loading -> LoadingIndicatorScreen().Content()
+            is EmojisScreenModel.EmojiState.Empty -> HandleEmpty()
+            is EmojisScreenModel.EmojiState.Result -> DisplayResult(result.emojis, result.userEmojis, result.archivedEmojis, model)
             else -> {}
         }
     }
@@ -114,7 +118,7 @@ class StickersScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = stringResource(R.string.stickers_page_title))
+                        Text(text = stringResource(R.string.emojis_page_title))
                     }
                 )
             },
@@ -138,25 +142,38 @@ class StickersScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable
     private fun DisplayResult(
-        stickers: ArrayList<Inventory.Data>,
-        userStickers: ArrayList<Inventory.Data>,
-        archivedStickers: ArrayList<Inventory.Data>,
-        model: StickersScreenModel
+        emojis: ArrayList<Inventory.Data>,
+        userEmojis: ArrayList<Inventory.Data>,
+        archivedEmojis: ArrayList<Inventory.Data>,
+        model: EmojisScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
-
-
         val scope = rememberCoroutineScope()
+        var showEmojiDialog by remember { mutableStateOf(false) }
+
+        if (showEmojiDialog) {
+            EmojiUploadConfigDialog(
+                onDismiss = {
+                    showEmojiDialog = false
+                },
+                onConfirmation = { type ->
+                    model.currentUri.value?.let { uri ->
+                        scope.launch {
+                            api.files.uploadEmoji(type, uri)?.let {
+                                model.fetchStickers()
+                            }
+                        }
+                    }
+                    showEmojiDialog = false
+                }
+            )
+        }
+
         val pickImage = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.OpenDocument()
         ) { uri: Uri? ->
-            uri?.let {
-                scope.launch {
-                    api.files.uploadImage("sticker", uri, ImageAspectRatio.IMAGE_ASPECT_RATIO_SQUARE)?.let {
-                        model.fetchStickers()
-                    }
-                }
-            }
+            model.currentUri.value = uri
+            showEmojiDialog = true
         }
 
         Scaffold(
@@ -172,7 +189,7 @@ class StickersScreen : Screen {
                         }
                     },
                     title = {
-                        Text(text = stringResource(R.string.stickers_page_title))
+                        Text(text = stringResource(R.string.emojis_page_title))
                     }
                 )
             },
@@ -189,7 +206,7 @@ class StickersScreen : Screen {
                         )
                     },
                     text = {
-                        Text(stringResource(R.string.stickers_page_button_upload))
+                        Text(stringResource(R.string.emojis_page_button_upload))
                     }
                 )
             },
@@ -244,9 +261,9 @@ class StickersScreen : Screen {
                     }
 
                     when (model.currentIndex.intValue) {
-                        0 -> ShowItems(stickers, model)
-                        1 -> ShowItems(userStickers, model)
-                        2 -> ShowItems(archivedStickers, model)
+                        0 -> ShowItems(emojis, model)
+                        1 -> ShowItems(userEmojis, model)
+                        2 -> ShowItems(archivedEmojis, model)
                     }
                 }
             }
@@ -263,7 +280,7 @@ class StickersScreen : Screen {
 
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    private fun ShowItems(items: ArrayList<Inventory.Data>, model: StickersScreenModel) {
+    private fun ShowItems(items: ArrayList<Inventory.Data>, model: EmojisScreenModel) {
 
         if (items.isEmpty()) {
             Column(

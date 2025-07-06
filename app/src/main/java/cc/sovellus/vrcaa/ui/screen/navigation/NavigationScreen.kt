@@ -129,6 +129,7 @@ import cc.sovellus.vrcaa.ui.components.card.QuickMenuCard
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
+import cc.sovellus.vrcaa.ui.screen.emojis.EmojisScreen
 import cc.sovellus.vrcaa.ui.screen.feed.FeedList
 import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
@@ -1097,7 +1098,9 @@ class NavigationScreen : Screen {
                                                         }
                                                     }
                                                     5 -> {
-
+                                                        CacheManager.getProfile()?.let {
+                                                            navigator.push(EmojisScreen())
+                                                        }
                                                     }
                                                     6 -> {
                                                         CacheManager.getProfile()?.let {

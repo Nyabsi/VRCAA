@@ -1387,6 +1387,40 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
             }
         }
+
+        override suspend fun uploadEmoji(
+            type: String,
+            file: Uri
+        ): File? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val fields: MutableMap<String, String> = mutableMapOf("tag" to "emoji", "maskTag" to "square", "frames" to "1", "framesOverTime" to "1", "animationStyle" to type)
+
+            val result = doRequestUpload(
+                App.getContext(),
+                url = "${Config.API_BASE_URL}/file/image",
+                fileUri = file,
+                formFields = fields,
+                headers = headers
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    Gson().fromJson(result.body, File::class.java)
+                }
+                is Result.NotModified -> {
+                    null
+                }
+                is Result.Forbidden -> {
+                    null
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
     }
 
     val user = object : IUser {

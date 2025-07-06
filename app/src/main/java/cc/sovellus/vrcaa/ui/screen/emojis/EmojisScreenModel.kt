@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package cc.sovellus.vrcaa.ui.screen.stickers
+package cc.sovellus.vrcaa.ui.screen.emojis
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
@@ -29,45 +30,46 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
 
-class StickersScreenModel : StateScreenModel<StickersScreenModel.StickerState>(StickerState.Init) {
+class EmojisScreenModel : StateScreenModel<EmojisScreenModel.EmojiState>(EmojiState.Init) {
 
-    sealed class StickerState {
-        data object Init : StickerState()
-        data object Loading : StickerState()
-        data object Empty : StickerState()
+    sealed class EmojiState {
+        data object Init : EmojiState()
+        data object Loading : EmojiState()
+        data object Empty : EmojiState()
         data class Result(
-            val stickers: ArrayList<Inventory.Data>,
-            val userStickers: ArrayList<Inventory.Data>,
-            val archivedStickers: ArrayList<Inventory.Data>
-        ) : StickerState()
+            val emojis: ArrayList<Inventory.Data>,
+            val userEmojis: ArrayList<Inventory.Data>,
+            val archivedEmojis: ArrayList<Inventory.Data>
+        ) : EmojiState()
     }
 
     private val context: Context = App.getContext()
     val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
 
-    private var stickers: ArrayList<Inventory.Data> = arrayListOf()
-    private var userStickers: ArrayList<Inventory.Data> = arrayListOf()
-    private var archivedStickers: ArrayList<Inventory.Data> = arrayListOf()
+    private var emojis: ArrayList<Inventory.Data> = arrayListOf()
+    private var userEmojis: ArrayList<Inventory.Data> = arrayListOf()
+    private var archivedEmojis: ArrayList<Inventory.Data> = arrayListOf()
 
     var currentIndex = mutableIntStateOf(0)
     var previewItem = mutableStateOf<Inventory.Data?>(null)
+    var currentUri = mutableStateOf<Uri?>(null)
 
     init {
         fetchStickers()
     }
 
     fun fetchStickers() {
-        mutableState.value = StickerState.Loading
-        App.setLoadingText(R.string.loading_text_stickers)
+        mutableState.value = EmojiState.Loading
+        App.setLoadingText(R.string.loading_text_emojis)
         screenModelScope.launch {
-            stickers = api.inventory.fetchStickers(false, false)
-            userStickers = api.inventory.fetchStickers(true, false)
-            archivedStickers = api.inventory.fetchStickers(false, true)
+            emojis = api.inventory.fetchEmojis(false, false)
+            userEmojis = api.inventory.fetchEmojis(true, false)
+            archivedEmojis = api.inventory.fetchEmojis(false, true)
 
-            if (stickers.isEmpty() && userStickers.isEmpty() && archivedStickers.isEmpty())
-                mutableState.value = StickerState.Empty
+            if (emojis.isEmpty() && userEmojis.isEmpty() && archivedEmojis.isEmpty())
+                mutableState.value = EmojiState.Empty
             else
-                mutableState.value = StickerState.Result(stickers, userStickers, archivedStickers)
+                mutableState.value = EmojiState.Result(emojis, userEmojis, archivedEmojis)
         }
     }
 }
