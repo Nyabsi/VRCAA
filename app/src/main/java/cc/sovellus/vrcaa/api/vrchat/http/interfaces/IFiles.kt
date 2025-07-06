@@ -30,4 +30,5 @@ interface IFiles {
     suspend fun fetchFilesByTag(tag: String, n: Int = 100, offset: Int = 0): ArrayList<File>
     suspend fun fetchFilesByTagWithUserId(tag: String, userId: String, n: Int = 100, offset: Int = 0): ArrayList<File>
     suspend fun uploadImage(tag: String, file: Uri, aspectRatio: ImageAspectRatio = ImageAspectRatio.IMAGE_ASPECT_RATIO_ANY): File?
+    suspend fun uploadEmoji(type: String, file: Uri): File?
 }
