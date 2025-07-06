@@ -43,12 +43,12 @@ class GalleryScreenModel : StateScreenModel<GalleryScreenModel.GalleryState>(Gal
     private var files: ArrayList<File> = arrayListOf()
 
     init {
-        mutableState.value = GalleryState.Loading
-        App.setLoadingText(R.string.loading_text_gallery)
-        fetchAvatars()
+        fetchGallery()
     }
 
-    private fun fetchAvatars() {
+    fun fetchGallery() {
+        mutableState.value = GalleryState.Loading
+        App.setLoadingText(R.string.loading_text_gallery)
         screenModelScope.launch {
             files = api.files.fetchFilesByTag("gallery")
 

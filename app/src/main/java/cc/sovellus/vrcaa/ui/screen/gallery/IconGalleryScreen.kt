@@ -140,7 +140,9 @@ class IconGalleryScreen : Screen {
         ) { uri: Uri? ->
             uri?.let {
                 scope.launch {
-                    api.files.uploadImage("gallery", uri)
+                    api.files.uploadImage("icon", uri)?.let {
+                        model.fetchIcons()
+                    }
                 }
             }
         }
@@ -175,7 +177,7 @@ class IconGalleryScreen : Screen {
                         )
                     },
                     text = {
-                        Text(stringResource(R.string.gallery_page_button_upload))
+                        Text(stringResource(R.string.icon_gallery_page_button_upload))
                     }
                 )
             },
