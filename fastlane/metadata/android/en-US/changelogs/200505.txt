@@ -1,0 +1,5 @@
+- Implemented a new UI for Profile(s) that is more mobile friendly and intuitive
+- Implemented Stickers, Prints, Emojis, Items (Download, Upload & Preview)
+    - Yes! You can now upload and download your user content from VRCAA
+- Fixed crashes that may rarely occur to some people
+- Updated dependencies
