@@ -46,7 +46,6 @@ import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.collections.MutableList
 
 
 class NavigationScreenModel : ScreenModel {
@@ -82,7 +81,7 @@ class NavigationScreenModel : ScreenModel {
     private var filteredFeedStateFlow = MutableStateFlow(mutableStateListOf<FeedManager.Feed>())
     var filteredFeed = filteredFeedStateFlow.asStateFlow()
 
-    private val listener = object : HttpClient.SessionListener {
+    private val apiListener = object : HttpClient.SessionListener {
         override fun onSessionInvalidate() {
             if (!invalidSession.value) {
                 invalidSession.value = true
@@ -108,8 +107,15 @@ class NavigationScreenModel : ScreenModel {
         }
     }
 
+    private val cacheListener = object : CacheManager.CacheListener {
+        override fun endCacheRefresh() {
+            getCurrentProfileValues()
+        }
+    }
+
     init {
-        api.setSessionListener(listener)
+        api.setSessionListener(apiListener)
+        CacheManager.addListener(cacheListener)
     }
 
     fun addSearchHistory() {
