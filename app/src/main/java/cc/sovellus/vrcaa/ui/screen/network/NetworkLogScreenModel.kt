@@ -20,9 +20,12 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.manager.DebugManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class NetworkLogScreenModel : ScreenModel {
     private var metadataStateFlow = MutableStateFlow(mutableStateListOf<DebugManager.DebugMetadataData>())
@@ -32,7 +35,9 @@ class NetworkLogScreenModel : ScreenModel {
 
     private val listener = object : DebugManager.DebugListener {
         override fun onUpdateMetadata(metadata: MutableList<DebugManager.DebugMetadataData>) {
-            metadataStateFlow.value = metadata.toMutableStateList()
+            screenModelScope.launch(Dispatchers.Main) {
+                metadataStateFlow.value = metadata.toMutableStateList()
+            }
         }
     }
 
