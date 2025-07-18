@@ -64,14 +64,22 @@ fun FavoriteDialog(
                     groups.add(it.key)
                 }
 
-                selectedGroup.value = groups[0]
+                if (groups.isEmpty()) {
+                    onDismiss()
+                } else {
+                    selectedGroup.value = groups[0]
+                }
             }
             IFavorites.FavoriteType.FAVORITE_AVATAR -> {
                 FavoriteManager.getAvatarList().forEach {
                     groups.add(it.key)
                 }
 
-                selectedGroup.value = groups[0]
+                if (groups.isEmpty()) {
+                    onDismiss()
+                } else {
+                    selectedGroup.value = groups[0]
+                }
             }
 
             IFavorites.FavoriteType.FAVORITE_FRIEND -> {
@@ -79,7 +87,11 @@ fun FavoriteDialog(
                     groups.add(it.key)
                 }
 
-                selectedGroup.value = groups[0]
+                if (groups.isEmpty()) {
+                    onDismiss()
+                } else {
+                    selectedGroup.value = groups[0]
+                }
             }
 
             IFavorites.FavoriteType.FAVORITE_NONE -> {   }
