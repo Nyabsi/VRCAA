@@ -63,7 +63,7 @@ import java.util.concurrent.TimeUnit
 
 class PipelineService : Service(), CoroutineScope {
 
-    override val coroutineContext = Dispatchers.Main + SupervisorJob()
+    override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     private lateinit var preferences: SharedPreferences
 
@@ -415,16 +415,6 @@ class PipelineService : Service(), CoroutineScope {
 
         this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
-        launch {
-            api.auth.fetchToken()?.let { token ->
-                pipeline = PipelineSocket(token)
-                pipeline?.let { pipeline ->
-                    pipeline.setListener(listener)
-                    pipeline.connect()
-                }
-            }
-        }
-
         HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
@@ -452,13 +442,25 @@ class PipelineService : Service(), CoroutineScope {
             startForeground(NOTIFICATION_ID, builder.build())
         }
 
+        launch {
+            api.auth.fetchToken()?.let { token ->
+                pipeline = PipelineSocket(token)
+                pipeline?.let { pipeline ->
+                    pipeline.setListener(listener)
+                    pipeline.connect()
+                }
+            }
+        }
+
         scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
 
         return START_STICKY
     }
 
     override fun onDestroy() {
+        super.onDestroy()
         pipeline?.disconnect()
+        scheduler.shutdown()
     }
 
     override fun onBind(intent: Intent?): IBinder? {

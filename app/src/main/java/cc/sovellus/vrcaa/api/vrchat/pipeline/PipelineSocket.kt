@@ -52,7 +52,7 @@ class PipelineSocket(
     private var token: String
 ): CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+    override val coroutineContext: CoroutineContext = Dispatchers.IO + SupervisorJob()
 
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()

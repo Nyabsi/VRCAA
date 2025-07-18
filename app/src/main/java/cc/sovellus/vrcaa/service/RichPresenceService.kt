@@ -34,9 +34,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
-class RichPresenceService : Service(), CoroutineScope {
-
-    override val coroutineContext = Dispatchers.Main + SupervisorJob()
+class RichPresenceService : Service() {
 
     val gateway = GatewaySocket()
 

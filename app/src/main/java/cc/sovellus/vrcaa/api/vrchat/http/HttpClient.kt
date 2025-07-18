@@ -97,7 +97,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
+    override val coroutineContext =  Dispatchers.IO + SupervisorJob()
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
@@ -148,7 +148,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                 if (BuildConfig.DEBUG)
                     throw RuntimeException("You're doing actions too quick! Please calm down.")
 
-                launch {
+                launch(Dispatchers.Main) {
                     Toast.makeText(
                         context,
                         "You're doing actions too quick! Please calm down.",
@@ -164,7 +164,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                 val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
 
-                launch {
+                launch(Dispatchers.Main) {
                     Toast.makeText(
                         context,
                         "API returned (400): $reason",
