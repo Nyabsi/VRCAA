@@ -43,9 +43,7 @@ import java.util.concurrent.TimeUnit
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
 
-class GatewaySocket : CoroutineScope {
-
-    override val coroutineContext = Dispatchers.Main + SupervisorJob()
+class GatewaySocket {
 
     private var socket: WebSocket? = null
     private val client: OkHttpClient by lazy { OkHttpClient() }
