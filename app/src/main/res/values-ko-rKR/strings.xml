@@ -230,6 +230,7 @@
     <string name="misc_no_internet_description">인터넷 연결을 확인해 주세요. 이 애플리케이션은 오프라인 상태에서는 사용할 수 없습니다.</string>
     <string name="misc_no_internet_label">애플리케이션 다시 시작</string>
     <string name="misc_exit_toast_label">한 번 더 누르면 앱이 종료됩니다.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
     <string name="global_app_default_loading_text">초기화 중…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
