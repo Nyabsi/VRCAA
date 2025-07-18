@@ -20,6 +20,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.helper.DnsHelper
@@ -27,7 +28,6 @@ import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -35,12 +35,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
+import okhttp3.internal.http2.StreamResetException
 import java.io.ByteArrayOutputStream
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
-import androidx.core.graphics.scale
 
 open class BaseClient {
     /* inherited classes don't need to access the client variable */
@@ -70,6 +70,7 @@ open class BaseClient {
         data object UnknownMethod : Result()
         data object NotModified : Result()
         data object Forbidden : Result()
+        data class GenericException(val exception: Throwable) : Result()
     }
 
     enum class AuthorizationType {
@@ -291,12 +292,16 @@ open class BaseClient {
                     Result.UnknownMethod
                 }
             }
-        } catch (e: UnknownHostException) {
+        } catch (_: UnknownHostException) {
             Result.NoInternet
-        } catch (e: SocketException) {
+        } catch (_: SocketException) {
             Result.NoInternet
-        } catch (e: SocketTimeoutException) {
+        } catch (_: SocketTimeoutException) {
             Result.NoInternet
+        } catch (_: StreamResetException) {
+            Result.InternalError
+        } catch (e: Throwable) {
+            Result.GenericException(e)
         }
     }
 
@@ -329,8 +334,6 @@ open class BaseClient {
             for ((key, value) in formFields) {
                 multipartBuilder.addFormDataPart(key, value)
             }
-
-            val mediaType = context.contentResolver.getType(fileUri)?.toMediaTypeOrNull() ?: "application/octet-stream".toMediaType()
 
             val inputStream = context.contentResolver.openInputStream(fileUri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
@@ -401,12 +404,16 @@ open class BaseClient {
 
             return result
 
-        } catch (e: UnknownHostException) {
+        } catch (_: UnknownHostException) {
             Result.NoInternet
-        } catch (e: SocketException) {
+        } catch (_: SocketException) {
             Result.NoInternet
-        } catch (e: SocketTimeoutException) {
+        } catch (_: SocketTimeoutException) {
             Result.NoInternet
+        } catch (_: StreamResetException) {
+            Result.InternalError
+        } catch (e: Throwable) {
+            Result.GenericException(e)
         }
     }
 
