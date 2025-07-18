@@ -19,11 +19,14 @@ package cc.sovellus.vrcaa.ui.screen.feed
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.Init) {
 
@@ -38,7 +41,9 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
 
     private val listener = object : FeedManager.FeedListener {
         override fun onReceiveUpdate(list: MutableList<FeedManager.Feed>) {
-            feedStateFlow.value = list.toMutableStateList()
+            screenModelScope.launch(Dispatchers.Main) {
+                feedStateFlow.value = list.toMutableStateList()
+            }
         }
     }
 
@@ -48,7 +53,9 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
         override fun startCacheRefresh() { }
 
         override fun endCacheRefresh() {
-            feedStateFlow.value = FeedManager.getFeed().toMutableStateList()
+            screenModelScope.launch(Dispatchers.Main) {
+                feedStateFlow.value = FeedManager.getFeed().toMutableStateList()
+            }
             mutableState.value = FeedState.Result
         }
 
