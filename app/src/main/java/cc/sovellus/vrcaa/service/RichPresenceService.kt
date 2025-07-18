@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.service
 
 import android.app.Service
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
 import android.os.Build
 import android.os.IBinder
@@ -35,6 +36,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 class RichPresenceService : Service() {
+
+    private lateinit var preferences: SharedPreferences
 
     val gateway = GatewaySocket()
 
@@ -57,10 +60,7 @@ class RichPresenceService : Service() {
     }
 
     override fun onCreate() {
-        GatewayManager.addListener(listener)
-        val preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
-        gateway.setParams(preferences.discordToken, preferences.richPresenceWebhookUrl)
-        gateway.connect()
+        this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -68,7 +68,7 @@ class RichPresenceService : Service() {
         val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
-            .setContentText("Started the epic background service for the great rich presence") // application.getString(R.string.service_notification)
+            .setContentText(application.getString(R.string.service_notification_rich_presence))
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
             .setOngoing(false)
 
@@ -82,6 +82,10 @@ class RichPresenceService : Service() {
             // Older versions do not require to specify the `foregroundServiceType`
             startForeground(NOTIFICATION_ID, builder.build())
         }
+
+        GatewayManager.addListener(listener)
+        gateway.setParams(preferences.discordToken, preferences.richPresenceWebhookUrl)
+        gateway.connect()
 
         return START_STICKY
     }
