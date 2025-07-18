@@ -31,10 +31,10 @@
     <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_note">Muistiinpano</string>
     <string name="profile_label_biography">Kuvaus</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Viimeisin toiminta</string>
+    <string name="profile_label_date_joined">Liittymispäivä</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
@@ -43,7 +43,7 @@
     <string name="profile_user_dropdown_invite_self">Kutsu itseni</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
     <string name="profile_user_avatar_private">Hahmo on yksityinen!</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_avatar_unreachable">Avatari ei ole saatavilla!</string>
     <string name="profile_user_toast_invite_sent">Kutsu lähetetty! Tarkista pelisi.</string>
     <string name="profile_mutual_groups_text">Yhteiset Ryhmät</string>
     <!-- Search -->
@@ -58,8 +58,8 @@
     <string name="search_filter_category_avatars_provider">Tarjoaja</string>
     <string name="search_filter_category_groups">Ryhmät</string>
     <string name="search_filter_category_groups_count">Määrä</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="copy_id_label">Kopioi id</string>
+    <string name="copied_toast">Tunniste kopioitu onnistuneesti: %1$s</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Määrä</string>
     <string name="search_filter_button_reset">Nollaa</string>
@@ -70,15 +70,15 @@
         <item>Hahmot</item>
         <item>Ryhmät</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Lisää...</string>
     <!-- Settings -->
     <string name="settings_item_about">Tietoja</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about_description">Lisätietoja laitteestasi ja VRCAA:sta</string>
+    <string name="settings_item_theming">Ulkonäkö</string>
+    <string name="settings_item_theming_description">Ulkonäön asetukset, minimalistinen tila</string>
     <string name="settings_item_rich_presence">Rich Presence (kokeellinen)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_rich_presence_description">Discordin laajennetun läsnäolon integrointi</string>
+    <string name="settings_item_advanced_settings">Lisäasetukset</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_logout">Kirjaudu ulos</string>
     <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
