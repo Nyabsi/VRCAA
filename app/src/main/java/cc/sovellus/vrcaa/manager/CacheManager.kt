@@ -24,6 +24,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import java.util.concurrent.CopyOnWriteArrayList
 
 object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
@@ -41,8 +42,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     )
 
     private var profile: User? = null
-    private var worldList: MutableList<WorldCache> = mutableListOf()
-    private var recentWorldList: MutableList<WorldCache> = mutableListOf()
+    private var worldList: MutableList<WorldCache> = CopyOnWriteArrayList()
+    private var recentWorldList: MutableList<WorldCache> = CopyOnWriteArrayList()
 
     private var cacheHasBeenBuilt: Boolean = false
 
@@ -115,12 +116,10 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         return worldList.any { it.id == worldId }
     }
 
-    @Synchronized
     fun getWorld(worldId: String): WorldCache {
         return worldList.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
     }
 
-    @Synchronized
     fun addWorld(world: World) {
         val cache = WorldCache(world.id).apply {
             name = world.name
@@ -129,7 +128,6 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         worldList.add(cache)
     }
 
-    @Synchronized
     fun updateWorld(world: World) {
         val index = worldList.indexOf(worldList.find { it.id == world.id })
         worldList[index] = WorldCache(world.id).apply {
