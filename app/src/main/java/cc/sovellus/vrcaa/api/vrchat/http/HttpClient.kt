@@ -91,7 +91,6 @@ import kotlinx.coroutines.launch
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import okhttp3.Headers
 import java.time.LocalDateTime
-import kotlin.coroutines.CoroutineContext
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -168,6 +167,15 @@ class HttpClient : BaseClient(), CoroutineScope {
                     Toast.makeText(
                         context,
                         "API returned (400): $reason",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            is Result.GenericException -> {
+                launch(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        "API request threw unknown exception!\n${result.exception.message}\n\n",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
