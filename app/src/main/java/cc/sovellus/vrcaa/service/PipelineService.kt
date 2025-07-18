@@ -275,10 +275,10 @@ class PipelineService : Service(), CoroutineScope {
                 is UserLocation -> {
                     val user = msg.obj as UserLocation
 
-                    if (user.location.contains("wrld_")) {
+                    if (user.travelingToLocation.contains("wrld_")) {
                         launch {
-                            val location = LocationHelper.parseLocationInfo(user.location)
-                            val instance = api.instances.fetchInstance(user.location)
+                            val location = LocationHelper.parseLocationInfo(user.travelingToLocation)
+                            val instance = api.instances.fetchInstance(user.travelingToLocation)
                             instance?.let {
                                 if (CacheManager.isWorldCached(it.id))
                                     CacheManager.updateWorld(instance.world)

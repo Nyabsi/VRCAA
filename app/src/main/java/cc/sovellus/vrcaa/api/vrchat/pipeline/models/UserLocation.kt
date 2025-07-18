@@ -28,5 +28,7 @@ data class UserLocation(
     @SerializedName("location")
     val location: String,
     @SerializedName("instance")
-    val instance: String
+    val instance: String,
+    @SerializedName("travelingToLocation")
+    val travelingToLocation: String
 )
