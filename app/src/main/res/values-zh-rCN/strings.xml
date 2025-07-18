@@ -119,6 +119,7 @@
     <string name="tabs_label_settings">设置</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA 正在后台查看您的好友动态。</string>
+    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">好友上线了！</string>
     <string name="notification_service_description_online">您的好友 %1$s 上线了！</string>
     <string name="notification_service_title_offline">好友下线了！</string>
