@@ -97,7 +97,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class HttpClient : BaseClient(), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
+    override val coroutineContext =  Dispatchers.IO + SupervisorJob()
 
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
@@ -161,8 +161,8 @@ class HttpClient : BaseClient(), CoroutineScope {
                     throw RuntimeException("Invalid method used for request, make sure you're using a supported method.")
             }
             is Result.InvalidRequest -> {
-
-                val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
+                try {
+                    val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
 
                 launch {
                     Toast.makeText(
@@ -171,6 +171,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                    launch(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            "API returned (400): $reason",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (_: Throwable) { }
             }
             is Result.GenericException -> {
                 launch(Dispatchers.Main) {
