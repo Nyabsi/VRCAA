@@ -160,16 +160,17 @@ class HttpClient : BaseClient(), CoroutineScope {
                     throw RuntimeException("Invalid method used for request, make sure you're using a supported method.")
             }
             is Result.InvalidRequest -> {
+                try {
+                    val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
 
-                val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
-
-                launch(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        "API returned (400): $reason",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                    launch(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            "API returned (400): $reason",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (_: Throwable) { }
             }
             is Result.GenericException -> {
                 launch(Dispatchers.Main) {
