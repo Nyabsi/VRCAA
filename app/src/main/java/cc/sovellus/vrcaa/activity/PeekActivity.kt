@@ -44,8 +44,15 @@ class PeekActivity : BaseActivity() {
 
         val data = path?.split("/")
 
-        type = data?.get(0) ?: "unknown"
-        id = data?.get(1) ?: ""
+        data?.let {
+            if (it.size >= 2) {
+                type = data[0]
+                id = data[1]
+            } else {
+                type = "unknown"
+                id = "0"
+            }
+        }
     }
 
     @Composable
