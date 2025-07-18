@@ -17,11 +17,11 @@
     <string name="home_friend_locations">Ystävien Sijainnit</string>
     <!-- Login -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
+    <string name="login_label_username">Käyttäjänimi tai E-Mail osoite</string>
     <string name="login_label_password">Salasana</string>
     <string name="login_button_text">Kirjaudu sisään</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
-    <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
+    <string name="login_toast_wrong_credentials">Väärä käyttäjänimi tai salasana.</string>
+    <string name="login_toast_wrong_code">Vahvistus epäonnistui, tarkista koodi uudelleen</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Syötä sähköpostiisi lähetetty koodi</string>
     <string name="auth_text_app">Syötä autentikointisovelluksen antama koodi</string>
@@ -42,8 +42,8 @@
     <string name="profile_user_dropdown_view_avatar">Näytä Hahmo</string>
     <string name="profile_user_dropdown_invite_self">Kutsu itseni</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
-    <string name="profile_user_avatar_private">Hahmo on yksityinen!</string>
-    <string name="profile_user_avatar_unreachable">Avatari ei ole saatavilla!</string>
+    <string name="profile_user_avatar_private">Avatari on yksityinen!</string>
+    <string name="profile_user_avatar_unreachable">Hahmo ei ole saatavilla!</string>
     <string name="profile_user_toast_invite_sent">Kutsu lähetetty! Tarkista pelisi.</string>
     <string name="profile_mutual_groups_text">Yhteiset Ryhmät</string>
     <!-- Search -->
@@ -178,7 +178,7 @@
     <string name="about_page_developer_mode">Ota kehittäjätila käyttöön</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Istuntosi on vanhentunut, ole hyvä ja kirjaudu uudelleen.</string>
-    <string name="api_avatar_select_failed">"Avatarin valinta epäonnistui."</string>
+    <string name="api_avatar_select_failed">"Hahmon valinta epäonnistui."</string>
     <!-- Discord Rich Presence -->
     <string name="discord_login_title">Kirjaudu Discord-tilillä</string>
     <string name="discord_login_title_verify">Vahvista 2FA</string>
@@ -244,7 +244,7 @@
     <string name="user_overlay_worlds">Worlds</string>
     <string name="user_overlay_avatars">Avatars</string>
     <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_find_avatar">Löydä Hahmo</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Tila</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
@@ -256,7 +256,7 @@
     <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
     <string name="profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
     <string name="profile_edit_dialog_title_edit_profile">Muokkaa profiilia</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronominit</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Oletko varma?</string>
     <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
@@ -268,7 +268,7 @@
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
         <item>Hahmot</item>
-        <item>Friends</item>
+        <item>Kaverit</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>
@@ -285,7 +285,7 @@
     <string name="favorite_edit_visibility">Visibility</string>
     <string name="favorite_edit_discarded">Changes were discarded.</string>
     <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_dialog_button_edit">Muokkaa</string>
     <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
     <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
@@ -322,8 +322,8 @@
     <string name="loading_text_emojis">Loading stickers…</string>
     <string name="loading_text_items">Loading items…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
+    <string name="theme_page_title">Teema</string>
+    <string name="theme_page_minimalist_mode_text">Minimalistinen tila</string>
     <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
     <string-array name="theme_page_selection_options">
         <item>Light</item>
@@ -334,7 +334,7 @@
         <item>Adaptive</item>
         <item>Fixed</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
+    <string name="theme_page_section_theme_title">Teema</string>
     <string name="theme_page_section_display_title">Display</string>
     <string name="theme_page_section_column_title">Column Count</string>
     <!-- Advanced Settings -->
@@ -350,10 +350,10 @@
     <string-array name="inventory_selection_options">
         <item>Gallery</item>
         <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
+        <item>Maailmat</item>
+        <item>Hahmot</item>
+        <item>Ryhmät</item>
+        <item>Emojit</item>
         <item>Stickers</item>
         <item>Prints</item>
         <item>Items</item>
