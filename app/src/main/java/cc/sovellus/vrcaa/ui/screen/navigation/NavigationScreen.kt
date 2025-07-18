@@ -51,6 +51,7 @@ import androidx.compose.material.icons.automirrored.filled.StickyNote2
 import androidx.compose.material.icons.filled.Backpack
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.History
@@ -358,31 +359,7 @@ class NavigationScreen : Screen {
                         }
 
                         ProfileTab.options.index -> {
-                            TopAppBar(actions = {
-                                IconButton(onClick = { isMenuExpanded = true }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.MoreVert,
-                                        contentDescription = null
-                                    )
-                                    Box(
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        DropdownMenu(
-                                            expanded = isMenuExpanded,
-                                            onDismissRequest = { isMenuExpanded = false },
-                                            offset = DpOffset(0.dp, 0.dp)
-                                        ) {
-                                            DropdownMenuItem(
-                                                onClick = {
-                                                    model.getCurrentProfileValues()
-                                                    showProfileSheet = true
-                                                    isMenuExpanded = false
-                                                },
-                                                text = { Text(stringResource(R.string.profile_edit_dialog_title_edit_profile)) })
-                                        }
-                                    }
-                                }
-                            },
+                            TopAppBar(
                                 title = {
                                     Text(
                                         text = stringResource(id = R.string.tabs_label_profile),
@@ -1045,16 +1022,30 @@ class NavigationScreen : Screen {
                     ) {
                         Column {
                             CacheManager.getProfile()?.let {
-                                QuickMenuCard(
-                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                    iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                    displayName = it.displayName,
-                                    statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
-                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                    statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                    tags = it.tags,
-                                    badges = it.badges
-                                )
+                                Box {
+                                    QuickMenuCard(
+                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
+                                        displayName = it.displayName,
+                                        statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
+                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                        statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                                        tags = it.tags,
+                                        badges = it.badges
+                                    )
+                                    IconButton(
+                                        modifier = Modifier.align(Alignment.TopEnd),
+                                        onClick = {
+                                            isQuickMenuExpanded = false
+                                            showProfileSheet = true
+                                        }
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Edit,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
                             }
 
                             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)) {
