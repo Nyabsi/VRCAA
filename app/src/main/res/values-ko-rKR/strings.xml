@@ -230,6 +230,7 @@
     <string name="misc_no_internet_description">인터넷 연결을 확인해 주세요. 이 애플리케이션은 오프라인 상태에서는 사용할 수 없습니다.</string>
     <string name="misc_no_internet_label">애플리케이션 다시 시작</string>
     <string name="misc_exit_toast_label">한 번 더 누르면 앱이 종료됩니다.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
     <string name="global_app_default_loading_text">초기화 중…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -240,9 +241,9 @@
     <string name="user_dropdown_view_avatars">제작한 아바타 보기</string>
     <!-- removed; 06-07-25 -->
     <string name="user_dropdown_view_favorites">즐겨찾기 목록 보기</string>
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_avatars">Avatars</string>
+    <string name="user_overlay_groups">그룹</string>
+    <string name="user_overlay_worlds">월드</string>
+    <string name="user_overlay_avatars">아바타</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
@@ -350,11 +351,11 @@
     <string-array name="inventory_selection_options">
         <item>Gallery</item>
         <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
+        <item>월드</item>
+        <item>아바타</item>
+        <item>그룹</item>
+        <item>이모티콘</item>
+        <item>스티커</item>
         <item>Prints</item>
         <item>Items</item>
     </string-array>
@@ -367,24 +368,24 @@
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
+        <item>공식</item>
+        <item>커스텀</item>
         <item>Archived</item>
     </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
+        <item>공식</item>
+        <item>커스텀</item>
         <item>Archived</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">아이템</string>
     <string name="items_page_button_upload">Upload Items</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
+        <item>모든 아이템</item>
         <item>Archive</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_dialog_option_download">Download</string>
-    <string name="image_preview_dialog_option_delete">Delete</string>
+    <string name="image_preview_dialog_title">미리보기</string>
+    <string name="image_preview_dialog_option_download">다운로드</string>
+    <string name="image_preview_dialog_option_delete">삭제</string>
 </resources>
