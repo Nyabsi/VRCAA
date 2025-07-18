@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.ui.screen.emojis
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -70,12 +71,14 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFiles.ImageAspectRatio
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.dialog.EmojiUploadConfigDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
@@ -158,11 +161,7 @@ class EmojisScreen : Screen {
                 },
                 onConfirmation = { type ->
                     model.currentUri.value?.let { uri ->
-                        scope.launch {
-                            api.files.uploadEmoji(type, uri)?.let {
-                                model.fetchStickers()
-                            }
-                        }
+                        model.uploadFile(type, uri)
                     }
                     showEmojiDialog = false
                 }
@@ -170,7 +169,7 @@ class EmojisScreen : Screen {
         }
 
         val pickImage = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.OpenDocument()
+            ActivityResultContracts.OpenDocument()
         ) { uri: Uri? ->
             model.currentUri.value = uri
             showEmojiDialog = true
@@ -197,7 +196,17 @@ class EmojisScreen : Screen {
                 ExtendedFloatingActionButton(
                     modifier = Modifier.padding(4.dp),
                     onClick = {
-                        pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
+                        CacheManager.getProfile()?.let { profile ->
+                            if (profile.tags.contains("system_supporter")) {
+                                pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
+                            } else {
+                                Toast.makeText(
+                                    App.getContext(),
+                                    App.getContext().getString(R.string.misc_no_premium_subscription),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                     },
                     icon = {
                         Icon(
