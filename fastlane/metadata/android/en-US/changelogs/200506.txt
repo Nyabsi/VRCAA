@@ -1,0 +1,5 @@
+- Improved HTTP client stability
+- Added check for VRC+ features
+- Moved UI edit to Quick Profile Card
+- Added translation for rich presence
+- Fixed a lot premature OEM specific of crashes
