@@ -119,6 +119,7 @@
     <string name="tabs_label_settings">設定</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
+    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
     <string name="notification_service_description_online">フレンドの %1$s さんがオンラインになりました。</string>
     <string name="notification_service_title_offline">フレンドがオフラインになりました。</string>
