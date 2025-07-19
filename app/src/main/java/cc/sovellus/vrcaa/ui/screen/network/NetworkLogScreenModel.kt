@@ -35,9 +35,7 @@ class NetworkLogScreenModel : ScreenModel {
 
     private val listener = object : DebugManager.DebugListener {
         override fun onUpdateMetadata(metadata: MutableList<DebugManager.DebugMetadataData>) {
-            screenModelScope.launch(Dispatchers.Main) {
-                metadataStateFlow.value = metadata.toMutableStateList()
-            }
+            metadataStateFlow.value = metadata.toMutableStateList()
         }
     }
 
