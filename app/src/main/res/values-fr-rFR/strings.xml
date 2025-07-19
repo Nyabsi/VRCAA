@@ -119,6 +119,7 @@
     <string name="tabs_label_settings">Paramètres</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
+    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
     <string name="notification_service_description_online">%1$s est en ligne !</string>
     <string name="notification_service_title_offline">Ami s\'est déconnecté !</string>

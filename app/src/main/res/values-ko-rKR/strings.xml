@@ -119,6 +119,7 @@
     <string name="tabs_label_settings">설정</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA가 백그라운드에서 친구 활동을 모니터링 중입니다.</string>
+    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">친구가 온라인 상태가 되었습니다.</string>
     <string name="notification_service_description_online">친구 %1$s님이 온라인 상태가 되었습니다.</string>
     <string name="notification_service_title_offline">친구가 오프라인 상태가 되었습니다.</string>

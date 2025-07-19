@@ -119,6 +119,7 @@
     <string name="tabs_label_settings">Einstellungen</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
+    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">Freund ist jetzt online!</string>
     <string name="notification_service_description_online">Dein Freund, %1$s ist jetzt online!</string>
     <string name="notification_service_title_offline">Freund ist jetzt offline!</string>
