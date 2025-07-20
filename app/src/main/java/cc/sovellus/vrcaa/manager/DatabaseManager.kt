@@ -26,7 +26,7 @@ import java.time.ZoneOffset
 import java.util.UUID
 
 object DatabaseManager: BaseManager<Any>() {
-    private val dbHelper = DatabaseHelper()
+    val db = DatabaseHelper()
 
     fun writeFeed(feed: FeedManager.Feed) {
         val values = ContentValues().apply {
@@ -42,11 +42,11 @@ object DatabaseManager: BaseManager<Any>() {
             put("feedTimestamp", feed.feedTimestamp.toEpochSecond(ZoneOffset.UTC))
         }
 
-        dbHelper.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_FEED, null, values)
+        db.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_FEED, null, values)
     }
 
     fun readFeeds(): MutableList<FeedManager.Feed> {
-        val cursor = dbHelper.readableDatabase.query(
+        val cursor = db.readableDatabase.query(
             DatabaseHelper.Tables.SQL_TABLE_FEED,
             arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "avatarName", "feedTimestamp"),
             null,
@@ -85,11 +85,11 @@ object DatabaseManager: BaseManager<Any>() {
             put("query", query)
         }
 
-        dbHelper.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, null, values)
+        db.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, null, values)
     }
 
     fun readQueries(): MutableList<String> {
-        val cursor = dbHelper.readableDatabase.query(
+        val cursor = db.readableDatabase.query(
             DatabaseHelper.Tables.SQL_TABLE_SEARCH_HISTORY, arrayOf("query"), null, null, null, null, null
         )
 

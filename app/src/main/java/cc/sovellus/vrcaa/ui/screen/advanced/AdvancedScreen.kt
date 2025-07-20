@@ -84,7 +84,7 @@ class AdvancedScreen : Screen {
                         ListItem(
                             headlineContent = {
                                 Text(
-                                    text = "Networking",
+                                    text = stringResource(R.string.advanced_page_section_networking),
                                     color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -134,7 +134,7 @@ class AdvancedScreen : Screen {
                         ListItem(
                             headlineContent = {
                                 Text(
-                                    text = "Background Activities",
+                                    text = stringResource(R.string.advanced_page_section_background_activities),
                                     color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -147,6 +147,32 @@ class AdvancedScreen : Screen {
                             headlineContent = { Text(stringResource(R.string.advanced_page_kill_service)) },
                             supportingContent = { Text(stringResource(R.string.advanced_page_kill_service_description)) },
                             modifier = Modifier.clickable(onClick = { model.killBackgroundService() })
+                        )
+
+                        Spacer(modifier = Modifier.padding(4.dp))
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = stringResource(R.string.advanced_page_section_database),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        )
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.advanced_page_database_delete)) },
+                            supportingContent = { Text(stringResource(R.string.advanced_page_database_delete_description)) },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    model.deleteDatabase()
+                                }
+                            )
                         )
                     }
                 }

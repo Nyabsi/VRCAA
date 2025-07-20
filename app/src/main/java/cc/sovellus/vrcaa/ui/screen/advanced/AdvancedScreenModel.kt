@@ -27,6 +27,8 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.service.PipelineService
+import cc.sovellus.vrcaa.manager.DatabaseManager
+import java.io.File
 
 class AdvancedScreenModel : ScreenModel {
 
@@ -49,5 +51,19 @@ class AdvancedScreenModel : ScreenModel {
     fun killBackgroundService() {
         val intent = Intent(context, PipelineService::class.java)
         context.stopService(intent)
+    }
+
+    fun deleteDatabase() {
+        DatabaseManager.db.close()
+
+        val file = File(context.getDatabasePath("vrcaa.db").path)
+        file.delete()
+
+        val pm = context.packageManager
+        val intent = pm.getLaunchIntentForPackage(context.packageName)
+        val mainIntent = Intent.makeRestartActivityTask(intent?.component)
+        context.startActivity(mainIntent)
+
+        Runtime.getRuntime().exit(0)
     }
 }
