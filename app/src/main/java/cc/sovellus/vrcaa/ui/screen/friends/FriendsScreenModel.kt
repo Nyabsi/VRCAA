@@ -24,16 +24,17 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FriendManager
+import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendsState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-sealed class FriendsState {
-    data object Init : FriendsState()
-    data object Loading : FriendsState()
-    data object Result : FriendsState()
-}
-
 class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
+
+    sealed class FriendsState {
+        data object Init : FriendsState()
+        data object Loading : FriendsState()
+        data object Result : FriendsState()
+    }
 
     private var friendsStateFlow = MutableStateFlow(mutableStateListOf<Friend>())
     var friends = friendsStateFlow.asStateFlow()
@@ -60,6 +61,7 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     }
 
     init {
+        mutableState.value = FriendsState.Loading
         FriendManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
