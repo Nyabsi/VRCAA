@@ -257,7 +257,7 @@ class SearchResultScreen(
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     private fun SearchRowItemAvatar(
-        name: String, url: String, count: Int?, avatar: SearchAvatar, onClick: () -> Unit
+        name: String, url: String, avatar: SearchAvatar, onClick: () -> Unit
     ) {
         var foundWindows by remember { mutableStateOf(false) }
         var foundAndroid by remember { mutableStateOf(false) }
@@ -369,17 +369,6 @@ class SearchResultScreen(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(0.80f).padding(start = 6.dp)
                 )
-                if (count != null) {
-                    Row(modifier = Modifier.weight(0.20f).padding(end = 2.dp)) {
-                        Text(
-                            text = count.toString(),
-                            textAlign = TextAlign.Start,
-                        )
-                        Icon(
-                            imageVector = Icons.Filled.Group, contentDescription = null
-                        )
-                    }
-                }
             }
         }
     }
@@ -513,7 +502,7 @@ class SearchResultScreen(
                     ), content = {
                         items(state.value) { avatar ->
                             SearchRowItemAvatar(
-                                name = avatar.name, url = avatar.imageUrl, count = null, avatar = avatar
+                                name = avatar.name, url = avatar.imageUrl, avatar = avatar
                             ) {
                                 navigator.push(AvatarScreen(avatar.vrcId))
                             }
