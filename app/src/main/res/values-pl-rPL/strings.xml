@@ -37,19 +37,13 @@
     <string name="profile_label_date_joined">Date Joined</string>
     <string name="profile_text_no_biography">Brak opisu.</string>
     <string name="profile_user_dropdown_manage_notifications">Zarządzanie powiadomieniami</string>
-    <string name="profile_user_dropdown_view_groups">Wyświetl grupy</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_dropdown_view_avatar">View Avatar</string>
-    <string name="profile_user_dropdown_invite_self">Invite myself</string>
     <string name="profile_user_not_found_message">Użytkownik nie istnieje.</string>
     <string name="profile_user_avatar_private">Avatar is private!</string>
     <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
-    <string name="profile_user_toast_invite_sent">Invite sent! Check your game client.</string>
-    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">Wyniki dla</string>
     <string name="search_filter_category_worlds">Światy</string>
-    <string name="search_filter_category_worlds_featured">Polecane</string>
     <string name="search_filter_category_worlds_sort_by">Sortuj wg</string>
     <string name="search_filter_category_worlds_count">Ilość</string>
     <string name="search_filter_category_users">Użytkownicy</string>
@@ -95,11 +89,8 @@
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
     <string name="world_title_publication_date">Publication Date</string>
-    <string name="world_title_version">Version</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
-    <string name="world_title_platform">Unity Packages</string>
-    <string name="world_title_labs_publication_date">Labs Publication Date</string>
     <string name="world_toast_not_found">Świat jest prywatny, lub nie istnieje.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -109,15 +100,12 @@
     <string name="world_instance_invite_dialog_title">Na pewno?</string>
     <string name="world_instance_invite_dialog_description">Zamierzasz wysłać zaproszenie do siebie na tę instancję, czy na pewno chcesz to zrobić?</string>
     <string name="world_instance_no_public_instances_message">Brak publicznych instancji</string>
-    <string name="world_instance_failed_to_fetch_instance_message">Nie udało się pobrać instancji, spróbuj ponownie.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
     <string name="tabs_label_favorites">Favorites</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_activities">Activities</string>
     <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_pictures">Zdjęcia</string>
     <string name="tabs_label_settings">Ustawienia</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
@@ -142,7 +130,6 @@
     <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Change to Avatar</string>
-    <string name="avatar_dropdown_label_remove_favorite">Remove from Favorites</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar Selected!</string>
     <string name="avatar_title_description">Description</string>
     <string name="avatar_title_created_at">Creation Date</string>
@@ -150,7 +137,6 @@
     <string name="avatar_title_content_labels">Content Labels</string>
     <string name="avatar_text_author">By %1$s</string>
     <string name="avatar_title_version">Version</string>
-    <string name="avatar_title_platform">Platform</string>
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
     <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
     <!-- Feed -->
@@ -175,29 +161,16 @@
     <string name="about_page_title">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_battery_optimizations_title">Wyłącz optymalizację baterii</string>
     <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
     <string name="license_title">Open Source Licenses</string>
-    <string name="about_page_developer_mode">Enable Developer Mode</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Twoja sesja wygasła. Zaloguj się ponownie.</string>
-    <string name="api_avatar_select_failed">"Nie udało się wybrać awatara."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Zaloguj się za pomocą Discorda</string>
-    <string name="discord_login_title_verify">Zweryfikuj 2FA</string>
-    <string name="discord_login_label_username">Nazwa użytkownika</string>
-    <string name="discord_login_label_password">Hasło</string>
-    <string name="discord_login_toast_wrong_credentials">Nazwa użytkownika lub hasło jest nieprawidłowe.</string>
-    <string name="discord_login_toast_wrong_code">Nieprawidłowy kod MFA.</string>
-    <string name="discord_login_button_login">Zaloguj się</string>
-    <string name="discord_login_button_verify">Verify</string>
     <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
     <string name="discord_login_label_enable">Enable Rich Presence</string>
     <string name="discord_login_label_set_webhook">Set Webhook Url</string>
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable">Shows your current status in discord</string>
-    <string name="discord_login_label_logout">Logout</string>
-    <string name="discord_login_description_logout">Revoke your access token</string>
     <!-- Crash -->
     <string name="crash_title_text">The application encountered fatal error.</string>
     <string name="crash_button_restart_text">Restart</string>
@@ -212,7 +185,6 @@
     <string name="group_page_label_description">Description</string>
     <string name="group_page_label_rules">Rules</string>
     <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">Request Invite</string>
     <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
     <string name="group_page_dropdown_join_group">Join Group</string>
@@ -226,7 +198,6 @@
     <string name="group_page_toast_leave_group">Left the group.</string>
     <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
     <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_failed_to_fetch_groups">Failed to fetch groups, try again.</string>
     <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">No Internet Connection</string>
@@ -237,16 +208,11 @@
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_groups">View Groups</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_worlds">View Worlds</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_avatars">View Avatars</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_favorites">View Favorites</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_avatars">Avatars</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
@@ -255,11 +221,8 @@
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_button_update">Update</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Edit Profile</string>
     <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Are you sure?</string>
@@ -283,7 +246,6 @@
     <string name="favorite_dialog_button_add">Add</string>
     <string name="favorite_dialog_button_cancel">Cancel</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_page_title">Showing Favorites</string>
     <string name="favorite_edit_title">Editing %1$s</string>
     <string name="favorite_edit_display_name">Display Name</string>
     <string name="favorite_edit_visibility">Visibility</string>
@@ -293,11 +255,6 @@
     <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
     <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
-    <string-array name="activities_selection_options">
-        <item>Feed</item>
-        <item>Notifications</item>
-        <item>Group Activity</item>
-    </string-array>
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s\'s Worlds</string>
     <!-- Avatars -->
@@ -305,11 +262,6 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Loading profile…</string>
-    <string name="loading_text_online_friends">Loading online friends…</string>
-    <string name="loading_text_offline_friends">Loading offline friends…</string>
-    <string name="loading_text_recently_visited">Loading recently visited worlds…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
     <string name="loading_text_worlds">Loading worlds…</string>
     <string name="loading_text_users">Loading users…</string>
     <string name="loading_text_avatars">Loading avatars…</string>
@@ -390,11 +342,6 @@
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
-    <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
-    </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
@@ -403,12 +350,9 @@
         <item>Archived</item>
     </string-array>
     <string name="items_page_title">Items</string>
-    <string name="items_page_button_upload">Upload Items</string>
     <string-array name="items_page_sections">
         <item>All Items</item>
         <item>Archive</item>
     </string-array>
     <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_dialog_option_download">Download</string>
-    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>
