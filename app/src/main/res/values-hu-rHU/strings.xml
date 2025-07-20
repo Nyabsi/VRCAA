@@ -80,6 +80,8 @@
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_database_settings">Database &amp; Statistics</string>
+    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
     <string name="settings_item_logout">Kijelentkezés </string>
     <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
@@ -341,13 +343,33 @@
     <string name="theme_page_section_column_title">Column Count</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">Advanced Settings</string>
+    <string name="advanced_page_section_networking">Networking</string>
     <string name="advanced_page_network_logging">Network Logging</string>
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
+    <string name="advanced_page_section_background_activities">Background Activities</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
     <string name="advanced_page_kill_service">Kill background service</string>
     <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
+    <string name="advanced_page_section_database">Database</string>
+    <string name="advanced_page_database_delete">Delete Database</string>
+    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <!-- Database -->
+    <string name="database_page_title">Database &amp; Statistics</string>
+    <string name="database_page_section_statistics">Statistics</string>
+    <string name="database_page_statistics_size">Database Size</string>
+    <string name="database_page_statistics_row_count">Row Count</string>
+    <string name="database_page_section_recovery">Restore &amp; Backup</string>
+    <string name="database_page_recovery_backup">Backup Database</string>
+    <string name="database_page_recovery_backup_description">Backup your current data</string>
+    <string name="database_page_recovery_restore">Restore Database</string>
+    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_section_glide">Glide Cache</string>
+    <string name="database_page_glide_cache_size">Cache Size</string>
+    <string name="database_page_glide_clean_cache">Clean Cache</string>
+    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
+    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Gallery</item>
