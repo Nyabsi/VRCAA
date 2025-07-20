@@ -20,6 +20,10 @@ package cc.sovellus.vrcaa.api.vrchat.http.models
 import com.google.gson.annotations.SerializedName
 
 data class LimitedUser(
+    @SerializedName("ageVerificationStatus")
+    var ageVerificationStatus: String = "",
+    @SerializedName("ageVerified")
+    var ageVerified: Boolean = false,
     @SerializedName("allowAvatarCopying")
     var allowAvatarCopying: Boolean = false,
     @SerializedName("badges")
@@ -55,7 +59,7 @@ data class LimitedUser(
     @SerializedName("last_login")
     var lastLogin: String = "",
     @SerializedName("last_mobile")
-    var lastMobile: Any? = Any(),
+    var lastMobile: Any = Any(),
     @SerializedName("last_platform")
     var lastPlatform: String = "",
     @SerializedName("location")
@@ -71,7 +75,7 @@ data class LimitedUser(
     @SerializedName("pronouns")
     var pronouns: String = "",
     @SerializedName("state")
-    var state: String? = "",
+    var state: String = "",
     @SerializedName("status")
     var status: String = "",
     @SerializedName("statusDescription")
@@ -87,7 +91,5 @@ data class LimitedUser(
     @SerializedName("userIcon")
     var userIcon: String = "",
     @SerializedName("worldId")
-    var worldId: String = "",
-    @Transient
-    var isFavorite: Boolean
+    var worldId: String = ""
 )

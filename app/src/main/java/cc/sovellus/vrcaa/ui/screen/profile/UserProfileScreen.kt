@@ -271,7 +271,8 @@ class UserProfileScreen(
                                             .toColor(),
                                         tags = profile.tags,
                                         badges = profile.badges,
-                                        pronouns = profile.pronouns
+                                        pronouns = profile.pronouns,
+                                        ageVerificationStatus = profile.ageVerificationStatus
                                     )
                                 }
                             }
