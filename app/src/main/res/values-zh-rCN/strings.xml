@@ -37,19 +37,13 @@
     <string name="profile_label_date_joined">账号创建日期</string>
     <string name="profile_text_no_biography">未填写自我介绍。</string>
     <string name="profile_user_dropdown_manage_notifications">管理通知</string>
-    <string name="profile_user_dropdown_view_groups">查看群组</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_dropdown_view_avatar">查看模型</string>
-    <string name="profile_user_dropdown_invite_self">邀请自己</string>
     <string name="profile_user_not_found_message">用户不存在。</string>
     <string name="profile_user_avatar_private">模型是私密的！</string>
     <string name="profile_user_avatar_unreachable">无法访问模型！</string>
-    <string name="profile_user_toast_invite_sent">邀请已发送！请检查您的游戏客户端。</string>
-    <string name="profile_mutual_groups_text">共同群组</string>
     <!-- Search -->
     <string name="search_text_result">搜索结果：</string>
     <string name="search_filter_category_worlds">世界</string>
-    <string name="search_filter_category_worlds_featured">推荐</string>
     <string name="search_filter_category_worlds_sort_by">排序方式</string>
     <string name="search_filter_category_worlds_count">数量</string>
     <string name="search_filter_category_users">用户</string>
@@ -95,11 +89,8 @@
     <string name="world_title_capacity">推荐人数</string>
     <string name="world_title_occupants">地图内在线人数</string>
     <string name="world_title_publication_date">正式公开于</string>
-    <string name="world_title_version">版本</string>
     <string name="world_title_heat">热度</string>
     <string name="world_title_popularity">知名度</string>
-    <string name="world_title_platform">平台</string>
-    <string name="world_title_labs_publication_date">进入实验室的日期</string>
     <string name="world_toast_not_found">世界是私密的，或者不存在。</string>
     <string-array name="world_selection_options">
         <item>信息</item>
@@ -109,15 +100,12 @@
     <string name="world_instance_invite_dialog_title">您真的要这么做吗？</string>
     <string name="world_instance_invite_dialog_description">您将要向自己发送邀请到这个房间中，您真的想要这样做吗？</string>
     <string name="world_instance_no_public_instances_message">没有公开的房间。</string>
-    <string name="world_instance_failed_to_fetch_instance_message">获取房间失败，请重新尝试。</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">好友</string>
     <string name="tabs_label_home">主页</string>
     <string name="tabs_label_favorites">收藏</string>
     <string name="tabs_label_feed">动态</string>
-    <string name="tabs_label_activities">活动</string>
     <string name="tabs_label_profile">个人资料</string>
-    <string name="tabs_label_pictures">图片</string>
     <string name="tabs_label_settings">设置</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA 正在后台查看您的好友动态。</string>
@@ -142,7 +130,6 @@
     <string name="notification_service_description_status">您的好友 %1$s 将状态从 %2$s 更改为 %3$s 。</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">更换为此模型</string>
-    <string name="avatar_dropdown_label_remove_favorite">取消收藏</string>
     <string name="avatar_dropdown_toast_select_avatar">已选择此模型！</string>
     <string name="avatar_title_description">描述</string>
     <string name="avatar_title_created_at">创建时间</string>
@@ -150,7 +137,6 @@
     <string name="avatar_title_content_labels">内容标签</string>
     <string name="avatar_text_author">作者：%1$s</string>
     <string name="avatar_title_version">版本</string>
-    <string name="avatar_title_platform">平台</string>
     <string name="avatar_text_content_labels_not_found">此模型没有指定内容警告。</string>
     <string name="avatar_toast_avatar_not_found_message">此模型是私有的或无效的。</string>
     <!-- Feed -->
@@ -175,29 +161,16 @@
     <string name="about_page_title">关于</string>
     <string name="about_page_open_source_licenses_title">开源许可证</string>
     <string name="about_page_translate_title">贡献翻译</string>
-    <string name="about_page_battery_optimizations_title">禁用电池优化</string>
     <string name="about_page_battery_optimizations_toast">电池优化已被禁用。</string>
     <string name="license_title">开源许可证</string>
-    <string name="about_page_developer_mode">启用开发者模式</string>
     <!-- API -->
     <string name="api_session_has_expired_text">您的登录信息已过期，请重新登录。</string>
-    <string name="api_avatar_select_failed">"选择模型失败。"</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">登录 Discord</string>
-    <string name="discord_login_title_verify">验证 2FA</string>
-    <string name="discord_login_label_username">用户名</string>
-    <string name="discord_login_label_password">密码</string>
-    <string name="discord_login_toast_wrong_credentials">用户名或密码无效。</string>
-    <string name="discord_login_toast_wrong_code">MFA 代码错误。</string>
-    <string name="discord_login_button_login">登录</string>
-    <string name="discord_login_button_verify">验证</string>
     <string name="discord_login_restarted_service_toast">已重启服务以生效。</string>
     <string name="discord_login_label_enable">启用状态面板</string>
     <string name="discord_login_label_set_webhook">设置 Webhook URL</string>
     <string name="discord_login_description_set_webhook">显示世界缩略图（可选）</string>
     <string name="discord_login_description_enable">在 Discord 中显示您的当前状态</string>
-    <string name="discord_login_label_logout">退出登录</string>
-    <string name="discord_login_description_logout">撤销您的访问令牌</string>
     <!-- Crash -->
     <string name="crash_title_text">应用程序遇到致命错误。</string>
     <string name="crash_button_restart_text">重启</string>
@@ -212,7 +185,6 @@
     <string name="group_page_label_description">描述</string>
     <string name="group_page_label_rules">规则</string>
     <string name="group_page_dropdown_view_author">查看拥有者</string>
-    <string name="group_page_dropdown_accept_invite">接受邀请</string>
     <string name="group_page_dropdown_request_invite">申请加入</string>
     <string name="group_page_dropdown_request_invite_cancel">取消邀请</string>
     <string name="group_page_dropdown_join_group">加入群组</string>
@@ -226,7 +198,6 @@
     <string name="group_page_toast_leave_group">已离开此群组。</string>
     <string name="group_page_toast_leave_group_fail">离开此群组失败。</string>
     <string name="group_user_no_groups_message">用户不属于任何群组。</string>
-    <string name="group_user_failed_to_fetch_groups">获取群组信息失败，请重新尝试。</string>
     <string name="group_user_viewing_groups_username">%1$s 的群组</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">无互联网连接</string>
@@ -237,16 +208,11 @@
     <string name="global_app_default_loading_text">初始化...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_groups">查看群组</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_worlds">查看世界</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_avatars">查看模型</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_favorites">查看收藏</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_avatars">Avatars</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
@@ -255,11 +221,8 @@
     <string name="profile_edit_dialog_title_status_description">社交状态描述</string>
     <string name="profile_edit_dialog_title_bio">自我介绍</string>
     <string name="profile_edit_dialog_title_bio_links">社交链接</string>
-    <string name="profile_edit_dialog_button_update">更新</string>
-    <string name="profile_edit_dialog_button_cancel">取消</string>
     <string name="profile_edit_dialog_toast_updated">已更新个人资料。</string>
     <string name="profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
-    <string name="profile_edit_dialog_title_edit_profile">编辑个人资料</string>
     <string name="profile_edit_dialog_title_pronouns">代词</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">您真的要这么做吗？</string>
@@ -283,7 +246,6 @@
     <string name="favorite_dialog_button_add">添加</string>
     <string name="favorite_dialog_button_cancel">取消</string>
     <string name="favorite_dialog_title">"添加到收藏"</string>
-    <string name="favorite_page_title">显示收藏</string>
     <string name="favorite_edit_title">编辑 %1$s</string>
     <string name="favorite_edit_display_name">显示名称</string>
     <string name="favorite_edit_visibility">可见性</string>
@@ -293,11 +255,6 @@
     <string name="favorite_tab_refresh_favorites">刷新收藏夹</string>
     <string name="favorite_toast_refreshed_favorites">刷新收藏夹完成~</string>
     <!-- Activities -->
-    <string-array name="activities_selection_options">
-        <item>动态</item>
-        <item>通知</item>
-        <item>群组活动</item>
-    </string-array>
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s 的世界</string>
     <!-- Avatars -->
@@ -305,11 +262,6 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">重启应用以使更改生效。</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">加载个人资料…</string>
-    <string name="loading_text_online_friends">加载在线好友…</string>
-    <string name="loading_text_offline_friends">加载离线好友…</string>
-    <string name="loading_text_recently_visited">加载最近访问的世界…</string>
-    <string name="loading_text_favorites">加载收藏…</string>
     <string name="loading_text_worlds">加载世界…</string>
     <string name="loading_text_users">加载用户…</string>
     <string name="loading_text_avatars">加载模型…</string>
@@ -390,11 +342,6 @@
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
-    <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
-    </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
@@ -403,12 +350,9 @@
         <item>Archived</item>
     </string-array>
     <string name="items_page_title">Items</string>
-    <string name="items_page_button_upload">Upload Items</string>
     <string-array name="items_page_sections">
         <item>All Items</item>
         <item>Archive</item>
     </string-array>
     <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_dialog_option_download">Download</string>
-    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>

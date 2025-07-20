@@ -37,19 +37,13 @@
     <string name="profile_label_date_joined">Date Joined</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
     <string name="profile_user_dropdown_manage_notifications">Управление уведомлениями</string>
-    <string name="profile_user_dropdown_view_groups">Показать группы</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_dropdown_view_avatar">Показать аватары</string>
-    <string name="profile_user_dropdown_invite_self">Пригласить самого себя</string>
     <string name="profile_user_not_found_message">Юзер не существует.</string>
     <string name="profile_user_avatar_private">Аватар является приватным!</string>
     <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
-    <string name="profile_user_toast_invite_sent">Приглашение отправлено! Проверьте ваш клиент игры.</string>
-    <string name="profile_mutual_groups_text">Mutual Groups</string>
     <!-- Search -->
     <string name="search_text_result">Результаты по</string>
     <string name="search_filter_category_worlds">Миры</string>
-    <string name="search_filter_category_worlds_featured">Избранное</string>
     <string name="search_filter_category_worlds_sort_by">Сортировать по</string>
     <string name="search_filter_category_worlds_count">Количество</string>
     <string name="search_filter_category_users">Юзеры</string>
@@ -95,11 +89,8 @@
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
     <string name="world_title_publication_date">Publication Date</string>
-    <string name="world_title_version">Version</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
-    <string name="world_title_platform">Unity Packages</string>
-    <string name="world_title_labs_publication_date">Labs Publication Date</string>
     <string name="world_toast_not_found">Мир является приватным или не существует.</string>
     <string-array name="world_selection_options">
         <item>Инфо</item>
@@ -109,15 +100,12 @@
     <string name="world_instance_invite_dialog_title">Вы уверены?</string>
     <string name="world_instance_invite_dialog_description">Вы собираетесь отправить приглашение на этот инстанс, вы действительно хотите это сделать?</string>
     <string name="world_instance_no_public_instances_message">Нет публичных инстансев</string>
-    <string name="world_instance_failed_to_fetch_instance_message">Не удалось получить список инстансев, попробуйте еще раз.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Друзья</string>
     <string name="tabs_label_home">Главная</string>
     <string name="tabs_label_favorites">Favorites</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_activities">Активность</string>
     <string name="tabs_label_profile">Профиль</string>
-    <string name="tabs_label_pictures">Картинки</string>
     <string name="tabs_label_settings">Настройки</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA теперь следит за вашими друзьями в фоновом режиме.</string>
@@ -142,7 +130,6 @@
     <string name="notification_service_description_status">Ваш друг, %1$s изменил его статус с %2$s на %3$s.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Change to Avatar</string>
-    <string name="avatar_dropdown_label_remove_favorite">Удалить из избранного</string>
     <string name="avatar_dropdown_toast_select_avatar">Аватар выбран!</string>
     <string name="avatar_title_description">Описание</string>
     <string name="avatar_title_created_at">Дата создания</string>
@@ -150,7 +137,6 @@
     <string name="avatar_title_content_labels">Метки содержимого</string>
     <string name="avatar_text_author">Создано %1$s</string>
     <string name="avatar_title_version">Version</string>
-    <string name="avatar_title_platform">Platform</string>
     <string name="avatar_text_content_labels_not_found">Аватар не содержит предупреждений о содержимом.</string>
     <string name="avatar_toast_avatar_not_found_message">Аватар является либо приватным, либо недействительным.</string>
     <!-- Feed -->
@@ -175,29 +161,16 @@
     <string name="about_page_title">О программе</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
     <string name="about_page_translate_title">Помочь в переводе</string>
-    <string name="about_page_battery_optimizations_title">Отключить оптимизацию батареи</string>
     <string name="about_page_battery_optimizations_toast">Оптимизация заряда батареи уже отключена.</string>
     <string name="license_title">Лицензии с открытым исходным кодом</string>
-    <string name="about_page_developer_mode">Включить Режим Разработчика</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Срок действия вашей сессии истек. Пожалуйста, войдите снова.</string>
-    <string name="api_avatar_select_failed">"Не удалось выбрать аватар."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Войти в Discord</string>
-    <string name="discord_login_title_verify">Проверить 2FA</string>
-    <string name="discord_login_label_username">Имя пользователя</string>
-    <string name="discord_login_label_password">Пароль</string>
-    <string name="discord_login_toast_wrong_credentials">Неверное имя пользователя или пароль.</string>
-    <string name="discord_login_toast_wrong_code">Код MFA неверен.</string>
-    <string name="discord_login_button_login">Логин</string>
-    <string name="discord_login_button_verify">Подтвердить</string>
     <string name="discord_login_restarted_service_toast">Перезапустите сервис, чтобы вступить в силу.</string>
     <string name="discord_login_label_enable">Включить Rich Presence</string>
     <string name="discord_login_label_set_webhook">Установить Url Webhook</string>
     <string name="discord_login_description_set_webhook">Требуется для поддержки миниатюр мира (необязательно)</string>
     <string name="discord_login_description_enable">Показывает ваш текущий статус в discord</string>
-    <string name="discord_login_label_logout">Выйти</string>
-    <string name="discord_login_description_logout">Отозвать ваш токен доступа</string>
     <!-- Crash -->
     <string name="crash_title_text">В приложении произошла ошибка.</string>
     <string name="crash_button_restart_text">Перезапустить</string>
@@ -212,7 +185,6 @@
     <string name="group_page_label_description">Описание</string>
     <string name="group_page_label_rules">Правила</string>
     <string name="group_page_dropdown_view_author">Посмотреть профиль автора</string>
-    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">Запросить приглашение</string>
     <string name="group_page_dropdown_request_invite_cancel">Отменить запрос на приглашение</string>
     <string name="group_page_dropdown_join_group">Вступить в группу</string>
@@ -226,7 +198,6 @@
     <string name="group_page_toast_leave_group">Покинул(а) группу.</string>
     <string name="group_page_toast_leave_group_fail">Не удалось покинуть группу.</string>
     <string name="group_user_no_groups_message">Этот пользователь не является частью любой группы.</string>
-    <string name="group_user_failed_to_fetch_groups">Не удалось получить список групп, попробуйте еще раз.</string>
     <string name="group_user_viewing_groups_username">Группы %1$s</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">Нет подключения к интернету</string>
@@ -237,16 +208,11 @@
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_groups">Показать группы</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_worlds">Просмотреть миры</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_avatars">Просмотр аватаров</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_favorites">Просмотр избранного</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_avatars">Avatars</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
@@ -255,11 +221,8 @@
     <string name="profile_edit_dialog_title_status_description">Описание статуса</string>
     <string name="profile_edit_dialog_title_bio">О себе</string>
     <string name="profile_edit_dialog_title_bio_links">Соц. Сети</string>
-    <string name="profile_edit_dialog_button_update">Обновить</string>
-    <string name="profile_edit_dialog_button_cancel">Отменить</string>
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Редактировать профиль</string>
     <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Вы уверены?</string>
@@ -283,7 +246,6 @@
     <string name="favorite_dialog_button_add">Добавить</string>
     <string name="favorite_dialog_button_cancel">Отменить</string>
     <string name="favorite_dialog_title">"Добавить в избранное"</string>
-    <string name="favorite_page_title">Показ избранного</string>
     <string name="favorite_edit_title">Editing %1$s</string>
     <string name="favorite_edit_display_name">Display Name</string>
     <string name="favorite_edit_visibility">Visibility</string>
@@ -293,11 +255,6 @@
     <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
     <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
-    <string-array name="activities_selection_options">
-        <item>Лента</item>
-        <item>Уведомления</item>
-        <item>Активность группы</item>
-    </string-array>
     <!-- Worlds -->
     <string name="worlds_page_title">Миры %1$s</string>
     <!-- Avatars -->
@@ -305,11 +262,6 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Перезапустите приложение, чтобы изменения вступили в силу.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Загрузка профиля…</string>
-    <string name="loading_text_online_friends">Загрузка друзей в онлайн…</string>
-    <string name="loading_text_offline_friends">Загрузка друзей в оффлайн…</string>
-    <string name="loading_text_recently_visited">Загрузка недавно посещенных миров…</string>
-    <string name="loading_text_favorites">Загрузка избранного…</string>
     <string name="loading_text_worlds">Загрузка миров…</string>
     <string name="loading_text_users">Загрузка пользователей…</string>
     <string name="loading_text_avatars">Загрузка аватаров…</string>
@@ -390,11 +342,6 @@
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
-    <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
-    </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
@@ -403,12 +350,9 @@
         <item>Archived</item>
     </string-array>
     <string name="items_page_title">Items</string>
-    <string name="items_page_button_upload">Upload Items</string>
     <string-array name="items_page_sections">
         <item>All Items</item>
         <item>Archive</item>
     </string-array>
     <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_dialog_option_download">Download</string>
-    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>
