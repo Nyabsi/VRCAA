@@ -220,7 +220,7 @@ class EmojisScreen : Screen {
             },
             content = { padding ->
 
-                val options = stringArrayResource(R.array.sticker_page_sections)
+                val options = stringArrayResource(R.array.emojis_page_sections)
                 val icons = listOf(Icons.Filled.Unarchive, Icons.Filled.UploadFile, Icons.Filled.Archive)
 
                 Column(
