@@ -20,7 +20,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 
 interface IGroups {
 
-    suspend fun fetchGroupsByName(query: String, n: Int = 50, offset: Int = 0): ArrayList<Group>
+    suspend fun fetchGroupsByName(query: String, n: Int = 100, offset: Int = 0): ArrayList<Group>
     suspend fun fetchGroupByGroupId(groupId: String): Group?
     suspend fun joinGroupByGroupId(groupId: String): Boolean
     suspend fun leaveGroupByGroupId(groupId: String): Boolean
