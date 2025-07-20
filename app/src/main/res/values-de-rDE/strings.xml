@@ -37,19 +37,13 @@
     <string name="profile_label_date_joined">Date Joined</string>
     <string name="profile_text_no_biography">Keine Beschreibung angegeben.</string>
     <string name="profile_user_dropdown_manage_notifications">Benachrichtigungen verwalten</string>
-    <string name="profile_user_dropdown_view_groups">Gruppen anzeigen</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_dropdown_view_avatar">Avatar ansehen</string>
-    <string name="profile_user_dropdown_invite_self">Selber einladen</string>
     <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
     <string name="profile_user_avatar_private">Avatar ist privat!</string>
     <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
-    <string name="profile_user_toast_invite_sent">Einladung gesendet. Überprüfe dein Spiel.</string>
-    <string name="profile_mutual_groups_text">Gemeinsame Gruppen</string>
     <!-- Search -->
     <string name="search_text_result">Ergebnisse für</string>
     <string name="search_filter_category_worlds">Welten</string>
-    <string name="search_filter_category_worlds_featured">Hervorgehoben</string>
     <string name="search_filter_category_worlds_sort_by">Sortiere nach</string>
     <string name="search_filter_category_worlds_count">Anzahl</string>
     <string name="search_filter_category_users">Nutzer</string>
@@ -95,11 +89,8 @@
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
     <string name="world_title_publication_date">Publication Date</string>
-    <string name="world_title_version">Version</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
-    <string name="world_title_platform">Unity Packages</string>
-    <string name="world_title_labs_publication_date">Labs Publication Date</string>
     <string name="world_toast_not_found">Dieser Welt ist privat oder existiert nicht.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -109,15 +100,12 @@
     <string name="world_instance_invite_dialog_title">Sind Sie sicher?</string>
     <string name="world_instance_invite_dialog_description">Sie sind dabei, sich selbst in diese Instanz einzuladen. Wollen Sie das wirklich tun?</string>
     <string name="world_instance_no_public_instances_message">Keine öffentlichen Instanzen</string>
-    <string name="world_instance_failed_to_fetch_instance_message">Fehler beim Abrufen der Instanz, versuchen Sie es erneut.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Freunde</string>
     <string name="tabs_label_home">Startseite</string>
     <string name="tabs_label_favorites">Favoriten</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_activities">Aktivitäten</string>
     <string name="tabs_label_profile">Profil</string>
-    <string name="tabs_label_pictures">Bilder</string>
     <string name="tabs_label_settings">Einstellungen</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
@@ -142,7 +130,6 @@
     <string name="notification_service_description_status">Dein Freund %1$s änderte seinen Status von %2$s zu %3$s.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Wechsel zu Avatar</string>
-    <string name="avatar_dropdown_label_remove_favorite">Entferne von Favoriten</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar ausgewählt!</string>
     <string name="avatar_title_description">Beschreibung</string>
     <string name="avatar_title_created_at">Erstelldatum</string>
@@ -150,7 +137,6 @@
     <string name="avatar_title_content_labels">Inhaltsbezeichnungen</string>
     <string name="avatar_text_author">Von %1$s</string>
     <string name="avatar_title_version">Version</string>
-    <string name="avatar_title_platform">Platform</string>
     <string name="avatar_text_content_labels_not_found">Avatar hat keine Inhaltswarnungen angegeben.</string>
     <string name="avatar_toast_avatar_not_found_message">Dieser Avatar ist entweder privat oder ungültig.</string>
     <!-- Feed -->
@@ -175,29 +161,16 @@
     <string name="about_page_title">Info</string>
     <string name="about_page_open_source_licenses_title">Open-Source-Lizenzen</string>
     <string name="about_page_translate_title">Beim Übersetzen mithelfen</string>
-    <string name="about_page_battery_optimizations_title">Batterieoptimierung deaktivieren</string>
     <string name="about_page_battery_optimizations_toast">Batterieoptimierungen sind bereits deaktiviert.</string>
     <string name="license_title">Open-Source Lizenzen</string>
-    <string name="about_page_developer_mode">Entwicklermodus aktivieren</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.</string>
-    <string name="api_avatar_select_failed">"Auswahl des Avatars fehlgeschlagen."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Bei Discord anmelden</string>
-    <string name="discord_login_title_verify">2FA verifizieren</string>
-    <string name="discord_login_label_username">Nutzername</string>
-    <string name="discord_login_label_password">Passwort</string>
-    <string name="discord_login_toast_wrong_credentials">Benutzername oder Passwort ist ungültig.</string>
-    <string name="discord_login_toast_wrong_code">Der MFA-Code ist falsch.</string>
-    <string name="discord_login_button_login">Anmelden</string>
-    <string name="discord_login_button_verify">Überprüfen</string>
     <string name="discord_login_restarted_service_toast">Dienst neu gestartet, um aktiv zu werden.</string>
     <string name="discord_login_label_enable">Rich-Präsenz aktivieren</string>
     <string name="discord_login_label_set_webhook">Webhook-URL festlegen</string>
     <string name="discord_login_description_set_webhook">Benötigt für Verwendung von Welthumbnails (optional)</string>
     <string name="discord_login_description_enable">Zeigt deinen aktuellen Status auf Discord</string>
-    <string name="discord_login_label_logout">Abmelden</string>
-    <string name="discord_login_description_logout">Zugangs-Token widerrufen</string>
     <!-- Crash -->
     <string name="crash_title_text">In der Anwendung ist ein Fehler aufgetreten.</string>
     <string name="crash_button_restart_text">Neu starten</string>
@@ -212,7 +185,6 @@
     <string name="group_page_label_description">Beschreibung</string>
     <string name="group_page_label_rules">Regeln</string>
     <string name="group_page_dropdown_view_author">Profil des Verfassers ansehen</string>
-    <string name="group_page_dropdown_accept_invite">Accept Invite</string>
     <string name="group_page_dropdown_request_invite">Einladung anfragen</string>
     <string name="group_page_dropdown_request_invite_cancel">Einladungsanfrage abbrechen</string>
     <string name="group_page_dropdown_join_group">Gruppe beitreten</string>
@@ -226,7 +198,6 @@
     <string name="group_page_toast_leave_group">Gruppe verlassen.</string>
     <string name="group_page_toast_leave_group_fail">Fehler beim Verlassen der Gruppe.</string>
     <string name="group_user_no_groups_message">Nutzer ist in keiner Gruppe.</string>
-    <string name="group_user_failed_to_fetch_groups">Fehler beim Abrufen der Gruppen. Versuchen Sie es erneut.</string>
     <string name="group_user_viewing_groups_username">Gruppen von %1$s</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">Keine Internetverbindung</string>
@@ -237,16 +208,11 @@
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_groups">Gruppen anzeigen</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_worlds">Welten anzeigen</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_avatars">Avatare anzeigen</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_favorites">Favoriten anzeigen</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_avatars">Avatars</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
@@ -255,11 +221,8 @@
     <string name="profile_edit_dialog_title_status_description">Statusbeschreibung</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Verlinkte Webseiten</string>
-    <string name="profile_edit_dialog_button_update">Ändern</string>
-    <string name="profile_edit_dialog_button_cancel">Abbrechen</string>
     <string name="profile_edit_dialog_toast_updated">Profil aktualisiert.</string>
     <string name="profile_edit_dialog_toast_cancelled">Änderungen wurden verworfen.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Profil bearbeiten</string>
     <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sind Sie sicher?</string>
@@ -283,7 +246,6 @@
     <string name="favorite_dialog_button_add">Hinzufügen</string>
     <string name="favorite_dialog_button_cancel">Abbrechen</string>
     <string name="favorite_dialog_title">"Zu den Favoriten hinzufügen"</string>
-    <string name="favorite_page_title">Favoriten ansehen</string>
     <string name="favorite_edit_title">Bearbeite %1$s</string>
     <string name="favorite_edit_display_name">Anzeigename</string>
     <string name="favorite_edit_visibility">Sichtbarkeit</string>
@@ -293,11 +255,6 @@
     <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
     <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <!-- Activities -->
-    <string-array name="activities_selection_options">
-        <item>Für dich</item>
-        <item>Benachrichtigungen</item>
-        <item>Gruppenaktivitäten</item>
-    </string-array>
     <!-- Worlds -->
     <string name="worlds_page_title">Welten von %1$s</string>
     <!-- Avatars -->
@@ -305,11 +262,6 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Starten Sie die App neu, um die Änderungen wirksam zu machen.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Lade Profil…</string>
-    <string name="loading_text_online_friends">Lade Online-Freunde…</string>
-    <string name="loading_text_offline_friends">Lade Offline-Freunde…</string>
-    <string name="loading_text_recently_visited">Lade kürzlich besuchte Welten…</string>
-    <string name="loading_text_favorites">Lade Favoriten…</string>
     <string name="loading_text_worlds">Lade Welten…</string>
     <string name="loading_text_users">Lade Nutzer…</string>
     <string name="loading_text_avatars">Lade Avatare…</string>
@@ -390,11 +342,6 @@
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
-    <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
-    </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
@@ -403,12 +350,9 @@
         <item>Archived</item>
     </string-array>
     <string name="items_page_title">Items</string>
-    <string name="items_page_button_upload">Upload Items</string>
     <string-array name="items_page_sections">
         <item>All Items</item>
         <item>Archive</item>
     </string-array>
     <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_dialog_option_download">Download</string>
-    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>
