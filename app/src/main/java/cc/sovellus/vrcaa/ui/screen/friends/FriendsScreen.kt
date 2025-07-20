@@ -60,6 +60,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.layout.FriendItem
+import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendsState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 

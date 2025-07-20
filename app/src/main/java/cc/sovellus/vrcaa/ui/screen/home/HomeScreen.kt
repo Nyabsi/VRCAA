@@ -48,6 +48,7 @@ import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.components.layout.RowItemWithFriends
+import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
