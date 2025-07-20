@@ -16,8 +16,11 @@
 
 package cc.sovellus.vrcaa.api.search.justhparty
 
+import cc.sovellus.vrcaa.api.search.Config
+import cc.sovellus.vrcaa.api.search.models.SearchAvatarLegacy
+import cc.sovellus.vrcaa.api.search.justhparty.models.JustHPartyResponse
+import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.base.BaseClient
-import cc.sovellus.vrcaa.api.search.SearchAvatar
 import com.google.gson.Gson
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import okhttp3.Headers
@@ -27,12 +30,12 @@ class JustHPartyProvider : BaseClient() {
     private suspend fun sendRequest(params: String): String?
     {
         val headers = Headers.Builder()
-        headers["User-Agent"] = "VRCAA/0.1"
-        headers["Referer"] = "vrcaa.sovellus.cc"
+            .add("User-Agent", Config.API_USER_AGENT)
+            .add("Referer", Config.API_REFERER)
 
         val result = doRequest(
             method = "GET",
-            url = "https://avtr.just-h.party/vrcx_search.php$params",
+            url = "${Config.JUST_H_PARTY_API_BASE_URL}/vrcx_search.php$params",
             headers = headers,
             body = null,
             retryAfterFailure = false
@@ -50,23 +53,29 @@ class JustHPartyProvider : BaseClient() {
 
     suspend fun search(query: String): ArrayList<SearchAvatar>
     {
-        return when (val result = sendRequest("?search=${UrlEncoderUtil.encode(query)}&n=5000")) {
+        val avatars = when (val result = sendRequest("?search=${UrlEncoderUtil.encode(query)}&n=5000")) {
             is String -> {
-                Gson().fromJson(result, Avatars::class.java) ?: arrayListOf()
+                Gson().fromJson(result, JustHPartyResponse::class.java) ?: arrayListOf()
             }
             else -> arrayListOf()
         }
-    }
 
-    suspend fun searchByAuthor(query: String): ArrayList<SearchAvatar>
-    {
-        return when (val result = sendRequest("?authorId=${UrlEncoderUtil.encode(query)}")) {
-            is String -> {
-                Gson().fromJson(result, Avatars::class.java) ?: arrayListOf()
-            }
-            else -> arrayListOf()
+        // convert legacy -> avtr db format so we can utilize the extra data from the api
+        val result = arrayListOf<SearchAvatar>()
+        avatars.forEach { avatar ->
+            result.add(
+                SearchAvatar(
+                    vrcId = avatar.id,
+                    imageUrl = avatar.imageUrl ?: "",
+                    name = avatar.name,
+                    author = SearchAvatar.Author(
+                        name = avatar.authorName,
+                        vrcId = avatar.authorId
+                    )
+                )
+            )
         }
-    }
 
-    class Avatars : ArrayList<SearchAvatar>()
+        return result
+    }
 }
