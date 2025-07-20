@@ -37,19 +37,13 @@
     <string name="profile_label_date_joined">アカウント作成日</string>
     <string name="profile_text_no_biography">プロフィールの記載が有りません。</string>
     <string name="profile_user_dropdown_manage_notifications">通知の管理</string>
-    <string name="profile_user_dropdown_view_groups">グループの表示</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_dropdown_view_avatar">アバター詳細を表示</string>
-    <string name="profile_user_dropdown_invite_self">セルフ・インバイト</string>
     <string name="profile_user_not_found_message">このユーザーは存在しません。</string>
     <string name="profile_user_avatar_private">このアバターはプライベートです。</string>
     <string name="profile_user_avatar_unreachable">アバターを参照できません。</string>
-    <string name="profile_user_toast_invite_sent">インバイトを送信しました、ゲーム内で確認してください。</string>
-    <string name="profile_mutual_groups_text">共有するグループ</string>
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
     <string name="search_filter_category_worlds">ワールド</string>
-    <string name="search_filter_category_worlds_featured">注目</string>
     <string name="search_filter_category_worlds_sort_by">ソート</string>
     <string name="search_filter_category_worlds_count">表示数</string>
     <string name="search_filter_category_users">ユーザー</string>
@@ -95,11 +89,8 @@
     <string name="world_title_capacity">最大人数</string>
     <string name="world_title_occupants">利用中人数</string>
     <string name="world_title_publication_date">作成日時</string>
-    <string name="world_title_version">バージョン</string>
     <string name="world_title_heat">ヒート</string>
     <string name="world_title_popularity">人気度</string>
-    <string name="world_title_platform">プラットフォーム</string>
-    <string name="world_title_labs_publication_date">ラボへの公開日時</string>
     <string name="world_toast_not_found">ワールドが存在しないか、プライベートの為、取得に失敗しました。</string>
     <string-array name="world_selection_options">
         <item>概要</item>
@@ -109,15 +100,12 @@
     <string name="world_instance_invite_dialog_title">確認</string>
     <string name="world_instance_invite_dialog_description">このインスタンスへ自分を招待しますか？</string>
     <string name="world_instance_no_public_instances_message">パブリックインスタンスが存在しません。</string>
-    <string name="world_instance_failed_to_fetch_instance_message">インスタンス一覧の取得に失敗しました。再試行してください。</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">フレンド</string>
     <string name="tabs_label_home">ホーム</string>
     <string name="tabs_label_favorites">お気に入り</string>
     <string name="tabs_label_feed">フィード</string>
-    <string name="tabs_label_activities">アクティビティ</string>
     <string name="tabs_label_profile">プロフィール</string>
-    <string name="tabs_label_pictures">ピクチャー</string>
     <string name="tabs_label_settings">設定</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
@@ -142,7 +130,6 @@
     <string name="notification_service_description_status">フレンドの %1$s さんのステータスが( %2$s )から( %3$s )へ変更されました。</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">このアバターへ変更</string>
-    <string name="avatar_dropdown_label_remove_favorite">お気に入りから削除</string>
     <string name="avatar_dropdown_toast_select_avatar">アバターが選択されました。</string>
     <string name="avatar_title_description">情報</string>
     <string name="avatar_title_created_at">作成日時</string>
@@ -150,7 +137,6 @@
     <string name="avatar_title_content_labels">コンテンツラベル</string>
     <string name="avatar_text_author">作者： %1$s</string>
     <string name="avatar_title_version">バージョン</string>
-    <string name="avatar_title_platform">プラットフォーム</string>
     <string name="avatar_text_content_labels_not_found">このアバターにコンテンツラベルの登録は有りません。</string>
     <string name="avatar_toast_avatar_not_found_message">アバターが存在しないか、プライベートの為、取得に失敗しました。</string>
     <!-- Feed -->
@@ -175,29 +161,16 @@
     <string name="about_page_title">概要</string>
     <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
     <string name="about_page_translate_title">飜訳への協力</string>
-    <string name="about_page_battery_optimizations_title">バッテリーの最適化</string>
     <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
     <string name="license_title">オープンソースライセンス</string>
-    <string name="about_page_developer_mode">開発者モード</string>
     <!-- API -->
     <string name="api_session_has_expired_text">セッションが切れました、再ログインしてください。</string>
-    <string name="api_avatar_select_failed">"アバターの選択に失敗しました。"</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Discordへのログイン</string>
-    <string name="discord_login_title_verify">2段階認証</string>
-    <string name="discord_login_label_username">ユーザー名 or メールアドレス</string>
-    <string name="discord_login_label_password">パスワード</string>
-    <string name="discord_login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
-    <string name="discord_login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
-    <string name="discord_login_button_login">ログイン</string>
-    <string name="discord_login_button_verify">認証</string>
     <string name="discord_login_restarted_service_toast">サービスを再起動し、有効化しました。</string>
     <string name="discord_login_label_enable">リッチプレゼンスを有効にする</string>
     <string name="discord_login_label_set_webhook">Webhook URLを設定する</string>
     <string name="discord_login_description_set_webhook">ワールドのサムネイル表示に必要 (任意)</string>
     <string name="discord_login_description_enable">discordに現在のStatusを表示する</string>
-    <string name="discord_login_label_logout">ログアウト</string>
-    <string name="discord_login_description_logout">現在のセッショントークンを無効化します</string>
     <!-- Crash -->
     <string name="crash_title_text">アプリに致命的な障害が発生しました </string>
     <string name="crash_button_restart_text">アプリの再起動</string>
@@ -212,7 +185,6 @@
     <string name="group_page_label_description">詳細</string>
     <string name="group_page_label_rules">ルール</string>
     <string name="group_page_dropdown_view_author">作者のプロフィールを確認</string>
-    <string name="group_page_dropdown_accept_invite">招待を承諾する</string>
     <string name="group_page_dropdown_request_invite">参加を申請する</string>
     <string name="group_page_dropdown_request_invite_cancel">参加申請をキャンセルする</string>
     <string name="group_page_dropdown_join_group">グループへ参加する</string>
@@ -226,7 +198,6 @@
     <string name="group_page_toast_leave_group">グループを離脱しました。</string>
     <string name="group_page_toast_leave_group_fail">グループの離脱に失敗しました。</string>
     <string name="group_user_no_groups_message">このユーザーはどのグループにも所属していません。</string>
-    <string name="group_user_failed_to_fetch_groups">グループ情報の取得に失敗しました。再試行してください。</string>
     <string name="group_user_viewing_groups_username">%1$s さんのグループ一覧</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">インターネット接続</string>
@@ -237,16 +208,11 @@
     <string name="global_app_default_loading_text">少女祈祷中・・・</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_groups">所属グループを表示</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_worlds">製作ワールドを表示</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_avatars">製作アバターを表示</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_favorites">お気に入りを表示</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_avatars">Avatars</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <!-- Profile Edit Dialog -->
@@ -255,11 +221,8 @@
     <string name="profile_edit_dialog_title_status_description">ステータス詳細</string>
     <string name="profile_edit_dialog_title_bio">プロフィール</string>
     <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
-    <string name="profile_edit_dialog_button_update">変更</string>
-    <string name="profile_edit_dialog_button_cancel">キャンセル</string>
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
     <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
-    <string name="profile_edit_dialog_title_edit_profile">プロフィールを編集</string>
     <string name="profile_edit_dialog_title_pronouns">呼称</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">ログアウトしますか？</string>
@@ -283,7 +246,6 @@
     <string name="favorite_dialog_button_add">追加</string>
     <string name="favorite_dialog_button_cancel">キャンセル</string>
     <string name="favorite_dialog_title">"お気に入りへ追加"</string>
-    <string name="favorite_page_title">お気に入り一覧</string>
     <string name="favorite_edit_title">%1$s を編集</string>
     <string name="favorite_edit_display_name">表示名</string>
     <string name="favorite_edit_visibility">ステータスカラー</string>
@@ -293,11 +255,6 @@
     <string name="favorite_tab_refresh_favorites">お気に入りの更新</string>
     <string name="favorite_toast_refreshed_favorites">お気に入りを更新しました。</string>
     <!-- Activities -->
-    <string-array name="activities_selection_options">
-        <item>フィード</item>
-        <item>通知</item>
-        <item>グループ・アクティビティ</item>
-    </string-array>
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s さんのワールド</string>
     <!-- Avatars -->
@@ -305,11 +262,6 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">アプリを再起動して変更を反映してください。</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">プロファイルを読み込み中。。。</string>
-    <string name="loading_text_online_friends">オンラインのフレンドを読み込み中。。。</string>
-    <string name="loading_text_offline_friends">オフラインのフレンドを読み込み中。。。</string>
-    <string name="loading_text_recently_visited">最近訪れたワールドを読み込み中。。。</string>
-    <string name="loading_text_favorites">お気に入りを読み込み中。。。</string>
     <string name="loading_text_worlds">ワールドの一覧を読み込み中。。。</string>
     <string name="loading_text_users">ユーザーの一覧を読み込み中。。。</string>
     <string name="loading_text_avatars">アバターの一覧を読み込み中。。。</string>
@@ -390,11 +342,6 @@
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">Emojis</string>
     <string name="emojis_page_button_upload">Upload Emoji</string>
-    <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
-    </string-array>
     <string name="stickers_page_title">Stickers</string>
     <string name="stickers_page_button_upload">Upload Sticker</string>
     <string-array name="sticker_page_sections">
@@ -403,12 +350,9 @@
         <item>Archived</item>
     </string-array>
     <string name="items_page_title">Items</string>
-    <string name="items_page_button_upload">Upload Items</string>
     <string-array name="items_page_sections">
         <item>All Items</item>
         <item>Archive</item>
     </string-array>
     <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_dialog_option_download">Download</string>
-    <string name="image_preview_dialog_option_delete">Delete</string>
 </resources>
