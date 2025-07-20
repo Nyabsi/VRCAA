@@ -50,9 +50,6 @@ fun EmojiUploadConfigDialog(
     onDismiss: () -> Unit,
     onConfirmation: (type: String) -> Unit
 ) {
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-
     val type = remember { mutableStateOf("aura") }
     val options = listOf(
         "aura", "bats", "bees", "bounce", "cloud", "confetti", "crying",

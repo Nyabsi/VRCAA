@@ -23,7 +23,6 @@ interface IAuth {
     enum class AuthType {
         AUTH_NONE,
         AUTH_TOTP,
-        AUTH_OTP, // <!-- UNSUPPORTED
         AUTH_EMAIL
     }
 

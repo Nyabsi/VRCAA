@@ -16,8 +16,6 @@
 
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World

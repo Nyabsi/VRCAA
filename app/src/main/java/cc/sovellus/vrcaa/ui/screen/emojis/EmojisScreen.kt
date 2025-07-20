@@ -151,7 +151,6 @@ class EmojisScreen : Screen {
         model: EmojisScreenModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
-        val scope = rememberCoroutineScope()
         var showEmojiDialog by remember { mutableStateOf(false) }
 
         if (showEmojiDialog) {
