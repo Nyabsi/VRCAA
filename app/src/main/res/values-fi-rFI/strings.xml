@@ -37,19 +37,13 @@
     <string name="profile_label_date_joined">Liittymispäivä</string>
     <string name="profile_text_no_biography">Kuvausta ei ole määritelty.</string>
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
-    <string name="profile_user_dropdown_view_groups">Näytä Ryhmät</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_dropdown_view_avatar">Näytä Hahmo</string>
-    <string name="profile_user_dropdown_invite_self">Kutsu itseni</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
     <string name="profile_user_avatar_private">Avatari on yksityinen!</string>
     <string name="profile_user_avatar_unreachable">Hahmo ei ole saatavilla!</string>
-    <string name="profile_user_toast_invite_sent">Kutsu lähetetty! Tarkista pelisi.</string>
-    <string name="profile_mutual_groups_text">Yhteiset Ryhmät</string>
     <!-- Search -->
     <string name="search_text_result">Tulokset kohteelle</string>
     <string name="search_filter_category_worlds">Maailmat</string>
-    <string name="search_filter_category_worlds_featured">Suositellut</string>
     <string name="search_filter_category_worlds_sort_by">Lajitteluperuste</string>
     <string name="search_filter_category_worlds_count">Määrä</string>
     <string name="search_filter_category_users">Käyttäjät</string>
@@ -95,11 +89,8 @@
     <string name="world_title_capacity">Kapasiteetti</string>
     <string name="world_title_occupants">Käyttäjät</string>
     <string name="world_title_publication_date">Julkaisupäivä</string>
-    <string name="world_title_version">Versio</string>
     <string name="world_title_heat">Kuumuus</string>
     <string name="world_title_popularity">Suosio</string>
-    <string name="world_title_platform">Unity Paketit</string>
-    <string name="world_title_labs_publication_date">Labin julkaisupäivä</string>
     <string name="world_toast_not_found">Maailma on yksityinen, tai sitä ei ole olemassa.</string>
     <string-array name="world_selection_options">
         <item>Tiedot</item>
@@ -109,15 +100,12 @@
     <string name="world_instance_invite_dialog_title">Oletko sinä varma?</string>
     <string name="world_instance_invite_dialog_description">Olet lähettämässä kutsun itsellesi tähän instanssiin, oletko varma että halut tehdä näin?</string>
     <string name="world_instance_no_public_instances_message">Ei julkisia instansseja</string>
-    <string name="world_instance_failed_to_fetch_instance_message">Ystävien noutaminen epäonnistui, yritä uudelleen.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Kaverit</string>
     <string name="tabs_label_home">Kotisivu</string>
     <string name="tabs_label_favorites">Suosikit</string>
     <string name="tabs_label_feed">Syöte</string>
-    <string name="tabs_label_activities">Aktiviteetit</string>
     <string name="tabs_label_profile">Profiili</string>
-    <string name="tabs_label_pictures">Kuvat</string>
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
@@ -142,7 +130,6 @@
     <string name="notification_service_description_status">Ystäväsi, %1$s on muuttanut tilansa %2$s %3$s:ksi.</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Vaihda hahmoon</string>
-    <string name="avatar_dropdown_label_remove_favorite">Poista suosikeista</string>
     <string name="avatar_dropdown_toast_select_avatar">Hahmo Valittu!</string>
     <string name="avatar_title_description">Kuvaus</string>
     <string name="avatar_title_created_at">Luonti Päivämäärä</string>
@@ -150,7 +137,6 @@
     <string name="avatar_title_content_labels">Sisällön Tunnisteet</string>
     <string name="avatar_text_author">Tekijä: %1$s</string>
     <string name="avatar_title_version">Versio</string>
-    <string name="avatar_title_platform">Alusta</string>
     <string name="avatar_text_content_labels_not_found">Hahmo ei ole määritetty sisältövaroituksia.</string>
     <string name="avatar_toast_avatar_not_found_message">Hahmo on joko yksityinen tai virheellinen.</string>
     <!-- Feed -->
@@ -175,29 +161,16 @@
     <string name="about_page_title">Tietoja</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
     <string name="about_page_translate_title">Avusta Kääntämisessä</string>
-    <string name="about_page_battery_optimizations_title">Poista akun optimointi käytöstä</string>
     <string name="about_page_battery_optimizations_toast">Akun optimointi on jo pois käytöstä.</string>
     <string name="license_title">Avoimen lähdekoodin lisenssit</string>
-    <string name="about_page_developer_mode">Ota kehittäjätila käyttöön</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Istuntosi on vanhentunut, ole hyvä ja kirjaudu uudelleen.</string>
-    <string name="api_avatar_select_failed">"Hahmon valinta epäonnistui."</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_title">Kirjaudu Discord-tilillä</string>
-    <string name="discord_login_title_verify">Vahvista 2FA</string>
-    <string name="discord_login_label_username">Käyttäjänimi</string>
-    <string name="discord_login_label_password">Salasana</string>
-    <string name="discord_login_toast_wrong_credentials">Käyttäjätunnus tai salasana on virheellinen.</string>
-    <string name="discord_login_toast_wrong_code">Koodi on väärä.</string>
-    <string name="discord_login_button_login">Kirjaudu sisään</string>
-    <string name="discord_login_button_verify">Vahvista</string>
     <string name="discord_login_restarted_service_toast">Palvelu uudelleenkäynnistetty voimaan ottoa varten.</string>
     <string name="discord_login_label_enable">Aktivoi Rich Presence</string>
     <string name="discord_login_label_set_webhook">Aseta Webkoukun URL</string>
     <string name="discord_login_description_set_webhook">Vaadittu maailman pikkukuvalle (Valinnainen)</string>
     <string name="discord_login_description_enable">Näytä tämänhetkinen tilasi discord:ssa</string>
-    <string name="discord_login_label_logout">Kirjaudu ulos</string>
-    <string name="discord_login_description_logout">Peru käyttöoikeustunnus</string>
     <!-- Crash -->
     <string name="crash_title_text">Sovellus kohtasi kohtalokkaan virheen.</string>
     <string name="crash_button_restart_text">Uudelleenkäynnistä</string>
@@ -212,7 +185,6 @@
     <string name="group_page_label_description">Kuvaus</string>
     <string name="group_page_label_rules">Säännöt</string>
     <string name="group_page_dropdown_view_author">Näytä Tekijän Profiili</string>
-    <string name="group_page_dropdown_accept_invite">Hyväksy kutsu</string>
     <string name="group_page_dropdown_request_invite">Pyydä Kutsu</string>
     <string name="group_page_dropdown_request_invite_cancel">Peruuta Kutsupyyntö</string>
     <string name="group_page_dropdown_join_group">Liity ryhmään</string>
@@ -226,7 +198,6 @@
     <string name="group_page_toast_leave_group">Poistut ryhmästä.</string>
     <string name="group_page_toast_leave_group_fail">Ryhmästä poistuminen epäonnistui.</string>
     <string name="group_user_no_groups_message">Käyttäjä ei ole minkään ryhmän jäsen.</string>
-    <string name="group_user_failed_to_fetch_groups">Ryhmien noutaminen epäonnistui, yritä uudelleen.</string>
     <string name="group_user_viewing_groups_username">%1$s:n Ryhmät</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">Ei internet-yhteyttä</string>
@@ -237,16 +208,11 @@
     <string name="global_app_default_loading_text">Valmistellaan...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_groups">Näytä Ryhmät</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_worlds">Näytä maailmat</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_avatars">Näytä Hahmot</string>
     <!-- removed; 06-07-25 -->
-    <string name="user_dropdown_view_favorites">Näytä Suosikit</string>
     <string name="user_overlay_groups">Ryhmät</string>
     <string name="user_overlay_worlds">Maailmat</string>
-    <string name="user_overlay_avatars">Hahmot</string>
     <string name="user_overlay_favorites">Suosikit</string>
     <string name="user_overlay_find_avatar">Löydä Hahmo</string>
     <!-- Profile Edit Dialog -->
@@ -255,11 +221,8 @@
     <string name="profile_edit_dialog_title_status_description">Tilan kuvaus</string>
     <string name="profile_edit_dialog_title_bio">Kuvaus</string>
     <string name="profile_edit_dialog_title_bio_links">Sosiaaliset linkit</string>
-    <string name="profile_edit_dialog_button_update">Päivitä</string>
-    <string name="profile_edit_dialog_button_cancel">Peruuta</string>
     <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
     <string name="profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
-    <string name="profile_edit_dialog_title_edit_profile">Muokkaa profiilia</string>
     <string name="profile_edit_dialog_title_pronouns">Pronominit</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Oletko varma?</string>
@@ -283,7 +246,6 @@
     <string name="favorite_dialog_button_add">Lisää</string>
     <string name="favorite_dialog_button_cancel">Peruuta</string>
     <string name="favorite_dialog_title">"Lisää Suosikkeihin"</string>
-    <string name="favorite_page_title">Näytetään Suosikit</string>
     <string name="favorite_edit_title">Muokataan: %1$s</string>
     <string name="favorite_edit_display_name">Näyttönimi</string>
     <string name="favorite_edit_visibility">Näkyvyys</string>
@@ -293,11 +255,6 @@
     <string name="favorite_tab_refresh_favorites">Päivitä suosikit</string>
     <string name="favorite_toast_refreshed_favorites">Päivitä suosikit.</string>
     <!-- Activities -->
-    <string-array name="activities_selection_options">
-        <item>Syöte</item>
-        <item>Ilmoitukset</item>
-        <item>Ryhmien aktiivisuus</item>
-    </string-array>
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s:n maailmat</string>
     <!-- Avatars -->
@@ -305,11 +262,6 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Käynnistä sovellus uudelleen, jotta muutokset tulevat voimaan.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_profile">Ladataan profiilia…</string>
-    <string name="loading_text_online_friends">Ladataan verkossa olevia ystäviä…</string>
-    <string name="loading_text_offline_friends">Ladataan ei-verkossa olevia ystäviä…</string>
-    <string name="loading_text_recently_visited">Ladataan äskettäin vierailluita maailmoista…</string>
-    <string name="loading_text_favorites">Ladataan suosikkeja…</string>
     <string name="loading_text_worlds">Ladataan maailmoja…</string>
     <string name="loading_text_users">Ladataan käyttäjiä…</string>
     <string name="loading_text_avatars">Ladataan hahmoja…</string>
@@ -390,11 +342,6 @@
     <string name="prints_page_button_upload">Lähetä Tulostus</string>
     <string name="emojis_page_title">Emojit</string>
     <string name="emojis_page_button_upload">Lähetä Emoji</string>
-    <string-array name="emojis_page_sections">
-        <item>Virallinen</item>
-        <item>Muokautettu</item>
-        <item>Arkistoitu</item>
-    </string-array>
     <string name="stickers_page_title">Tarrat</string>
     <string name="stickers_page_button_upload">Lähetä Tarra</string>
     <string-array name="sticker_page_sections">
@@ -403,12 +350,9 @@
         <item>Arkistoitu</item>
     </string-array>
     <string name="items_page_title">Tavarat</string>
-    <string name="items_page_button_upload">Lähetä tavara</string>
     <string-array name="items_page_sections">
         <item>Kaikki tavarat</item>
         <item>Arkistoitu</item>
     </string-array>
     <string name="image_preview_dialog_title">Esikatselu</string>
-    <string name="image_preview_dialog_option_download">Lataa</string>
-    <string name="image_preview_dialog_option_delete">Poista</string>
 </resources>
