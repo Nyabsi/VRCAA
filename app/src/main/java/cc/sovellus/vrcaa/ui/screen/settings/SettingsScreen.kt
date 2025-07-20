@@ -33,6 +33,7 @@ import androidx.compose.material.icons.outlined.DeveloperMode
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.ImagesearchRoller
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -65,6 +66,7 @@ import cc.sovellus.vrcaa.ui.components.dialog.DisclaimerDialog
 import cc.sovellus.vrcaa.ui.components.dialog.LogoutDialog
 import cc.sovellus.vrcaa.ui.screen.about.AboutScreen
 import cc.sovellus.vrcaa.ui.screen.advanced.AdvancedScreen
+import cc.sovellus.vrcaa.ui.screen.database.DatabaseScreen
 import cc.sovellus.vrcaa.ui.screen.presence.RichPresenceScreen
 import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreen
 
@@ -204,6 +206,24 @@ class SettingsScreen : Screen {
                                 navigator.parent?.parent?.push(RichPresenceScreen())
                             else
                                 dialogState.value = true
+                        }
+                    )
+                )
+            }
+            item {
+
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.settings_item_database_settings)) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.Storage,
+                            contentDescription = null
+                        )
+                    },
+                    supportingContent = { Text(text = stringResource(R.string.settings_item_database_settings_description)) },
+                    modifier = Modifier.clickable(
+                        onClick = {
+                            navigator.parent?.parent?.push(DatabaseScreen())
                         }
                     )
                 )
