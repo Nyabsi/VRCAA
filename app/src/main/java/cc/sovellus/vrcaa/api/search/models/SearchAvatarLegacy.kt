@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package cc.sovellus.vrcaa.api.search.avtrdb.models
+package cc.sovellus.vrcaa.api.search.models
 
-
-import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import com.google.gson.annotations.SerializedName
 
-data class AvtrDbResponse(
-    @SerializedName("avatars")
-    var avatars: List<SearchAvatar> = listOf(),
-    @SerializedName("has_more")
-    var hasMore: Boolean = false
+data class SearchAvatarLegacy(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("imageUrl")
+    val imageUrl: String?,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("authorId")
+    val authorId: String = "",
+    @SerializedName("authorName")
+    val authorName: String = "",
 )

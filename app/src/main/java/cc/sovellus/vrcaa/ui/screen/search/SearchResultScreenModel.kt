@@ -27,7 +27,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.search.SearchAvatar
+import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
 import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group

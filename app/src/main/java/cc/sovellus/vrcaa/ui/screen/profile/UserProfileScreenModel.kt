@@ -85,12 +85,10 @@ class UserProfileScreenModel(
                             val (_, nameAvatars) = avatarProvider.search(name[1])
                             if (nameAvatars.isNotEmpty()) {
                                 for (avatar in nameAvatars) {
-                                    avatar.imageUrl?.let {
-                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                        if (avatarFileId == fileId) {
-                                            callback(avatar.id)
-                                            return@launch
-                                        }
+                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
+                                    if (avatarFileId == fileId) {
+                                        callback(avatar.vrcId)
+                                        return@launch
                                     }
                                 }
                             }
@@ -99,12 +97,10 @@ class UserProfileScreenModel(
                             val (_, authorAvatars) = avatarProvider.search(metadata.ownerId)
                             if (authorAvatars.isNotEmpty()) {
                                 for (avatar in authorAvatars) {
-                                    avatar.imageUrl?.let {
-                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                        if (avatarFileId == fileId) {
-                                            callback(avatar.id)
-                                            return@launch
-                                        }
+                                    val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
+                                    if (avatarFileId == fileId) {
+                                        callback(avatar.vrcId)
+                                        return@launch
                                     }
                                 }
                             }

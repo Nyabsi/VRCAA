@@ -16,8 +16,9 @@
 
 package cc.sovellus.vrcaa.api.search.avtrdb
 
+import cc.sovellus.vrcaa.api.search.Config
 import cc.sovellus.vrcaa.base.BaseClient
-import cc.sovellus.vrcaa.api.search.SearchAvatar
+import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -31,13 +32,12 @@ class AvtrDbProvider : BaseClient() {
     ): Pair<Boolean, ArrayList<SearchAvatar>>
     {
         val headers = Headers.Builder()
-
-        headers["User-Agent"] = "VRCAA/2.0.0"
-        headers["Referer"] = "vrcaa.sovellus.cc"
+            .add("User-Agent", Config.API_USER_AGENT)
+            .add("Referer", Config.API_REFERER)
 
         val result = doRequest(
             method = "GET",
-            url = "https://api.avtrdb.com/v2/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
+            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset",
             headers = headers,
             body = null,
             retryAfterFailure = false
