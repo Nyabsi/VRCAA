@@ -80,6 +80,8 @@
     <string name="settings_item_rich_presence_description">Discord 활동 상태 표시 연동</string>
     <string name="settings_item_advanced_settings">고급</string>
     <string name="settings_item_advanced_settings_description">고급 로그 기록 및 추가 기능</string>
+    <string name="settings_item_database_settings">Database &amp; Statistics</string>
+    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
     <string name="settings_item_logout">로그아웃</string>
     <string name="settings_kofi_donation_button">Ko-fi로 후원하기</string>
     <!-- Worlds -->
@@ -341,13 +343,33 @@
     <string name="theme_page_section_column_title">열 수</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">고급 설정</string>
+    <string name="advanced_page_section_networking">Networking</string>
     <string name="advanced_page_network_logging">네트워크 로깅</string>
     <string name="advanced_page_network_logging_description">HTTP 및 WebSocket 트래픽 포착</string>
     <string name="advanced_page_view_network_logs">네트워크 로그 보기</string>
+    <string name="advanced_page_section_background_activities">Background Activities</string>
     <string name="advanced_page_battery_optimization">배터리 최적화 비활성화</string>
     <string name="advanced_page_battery_optimization_description">실시간 네트워크 이벤트가 수신되지 않는 문제를 해결하는 데 도움이 될 수 있습니다.</string>
     <string name="advanced_page_kill_service">백그라운드 서비스 종료</string>
     <string name="advanced_page_kill_service_description">실시간 이벤트를 처리하는 백그라운드 서비스를 종료합니다.</string>
+    <string name="advanced_page_section_database">Database</string>
+    <string name="advanced_page_database_delete">Delete Database</string>
+    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <!-- Database -->
+    <string name="database_page_title">Database &amp; Statistics</string>
+    <string name="database_page_section_statistics">Statistics</string>
+    <string name="database_page_statistics_size">Database Size</string>
+    <string name="database_page_statistics_row_count">Row Count</string>
+    <string name="database_page_section_recovery">Restore &amp; Backup</string>
+    <string name="database_page_recovery_backup">Backup Database</string>
+    <string name="database_page_recovery_backup_description">Backup your current data</string>
+    <string name="database_page_recovery_restore">Restore Database</string>
+    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_section_glide">Glide Cache</string>
+    <string name="database_page_glide_cache_size">Cache Size</string>
+    <string name="database_page_glide_clean_cache">Clean Cache</string>
+    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
+    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Gallery</item>
