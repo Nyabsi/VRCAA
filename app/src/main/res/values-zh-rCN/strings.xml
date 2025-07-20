@@ -80,6 +80,8 @@
     <string name="settings_item_rich_presence_description">Discord 游戏状态面板集成</string>
     <string name="settings_item_advanced_settings">高级</string>
     <string name="settings_item_advanced_settings_description">高级日志和功能</string>
+    <string name="settings_item_database_settings">Database &amp; Statistics</string>
+    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
     <string name="settings_item_logout">退出登录</string>
     <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
@@ -119,6 +121,7 @@
     <string name="tabs_label_settings">设置</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA 正在后台查看您的好友动态。</string>
+    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">好友上线了！</string>
     <string name="notification_service_description_online">您的好友 %1$s 上线了！</string>
     <string name="notification_service_title_offline">好友下线了！</string>
@@ -340,13 +343,33 @@
     <string name="theme_page_section_column_title">列数</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">高级设置</string>
+    <string name="advanced_page_section_networking">Networking</string>
     <string name="advanced_page_network_logging">网络记录</string>
     <string name="advanced_page_network_logging_description">拦截 HTTP 和 WebSocket 流量</string>
     <string name="advanced_page_view_network_logs">显示网络记录</string>
+    <string name="advanced_page_section_background_activities">Background Activities</string>
     <string name="advanced_page_battery_optimization">禁用电池优化</string>
     <string name="advanced_page_battery_optimization_description">可能有助于不接收实时网络事件</string>
     <string name="advanced_page_kill_service">结束后台服务</string>
     <string name="advanced_page_kill_service_description">停止负责实时事件的后台服务</string>
+    <string name="advanced_page_section_database">Database</string>
+    <string name="advanced_page_database_delete">Delete Database</string>
+    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <!-- Database -->
+    <string name="database_page_title">Database &amp; Statistics</string>
+    <string name="database_page_section_statistics">Statistics</string>
+    <string name="database_page_statistics_size">Database Size</string>
+    <string name="database_page_statistics_row_count">Row Count</string>
+    <string name="database_page_section_recovery">Restore &amp; Backup</string>
+    <string name="database_page_recovery_backup">Backup Database</string>
+    <string name="database_page_recovery_backup_description">Backup your current data</string>
+    <string name="database_page_recovery_restore">Restore Database</string>
+    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_section_glide">Glide Cache</string>
+    <string name="database_page_glide_cache_size">Cache Size</string>
+    <string name="database_page_glide_clean_cache">Clean Cache</string>
+    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
+    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Gallery</item>
