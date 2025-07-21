@@ -386,22 +386,20 @@ class PipelineService : Service(), CoroutineScope {
                     val notification = msg.obj as Notification
 
                     launch {
-                        withContext(Dispatchers.Main) {
-                            val sender = api.users.fetchUserByUserId(notification.senderUserId)
+                        val sender = api.users.fetchUserByUserId(notification.senderUserId)
 
-                            when (notification.type) {
-                                "friendRequest" -> {
-                                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
-                                        friendId = notification.senderUserId
-                                        friendName = notification.senderUsername
-                                        friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
-                                    }
-
-                                    FeedManager.addFeed(feed)
+                        when (notification.type) {
+                            "friendRequest" -> {
+                                val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_FRIEND_REQUEST).apply {
+                                    friendId = notification.senderUserId
+                                    friendName = notification.senderUsername
+                                    friendPictureUrl = sender?.let { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } }.toString()
                                 }
 
-                                else -> {}
+                                FeedManager.addFeed(feed)
                             }
+
+                            else -> {}
                         }
                     }
                 }
