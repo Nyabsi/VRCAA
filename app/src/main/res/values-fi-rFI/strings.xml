@@ -74,8 +74,8 @@
     <string name="settings_item_rich_presence_description">Discordin laajennetun läsnäolon integrointi</string>
     <string name="settings_item_advanced_settings">Lisäasetukset</string>
     <string name="settings_item_advanced_settings_description">Kehittynyt lokitus ja ominaisuudet</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_database_settings">Tietokanta &amp; Tilastot</string>
+    <string name="settings_item_database_settings_description">Näytä tilastot, palauta &amp; varmuuskopioi tietosi</string>
     <string name="settings_item_logout">Kirjaudu ulos</string>
     <string name="settings_kofi_donation_button">Lahjoita Ko-fi:n kautta</string>
     <!-- Worlds -->
@@ -204,7 +204,7 @@
     <string name="misc_no_internet_description">Varmista, että olet yhteydessä Internetiin, tämä sovellus ei voi toimia ilman Internet-yhteyttä.</string>
     <string name="misc_no_internet_label">Käynnistä sovellus uudelleen</string>
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
+    <string name="misc_no_premium_subscription">Tämä ominaisuus edellyttää, että sinulla on aktiivinen VRChat+-tilaus.</string>
     <string name="global_app_default_loading_text">Valmistellaan...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -295,33 +295,33 @@
     <string name="theme_page_section_column_title">Sarakemäärä</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">Lisäasetukset</string>
-    <string name="advanced_page_section_networking">Networking</string>
+    <string name="advanced_page_section_networking">Verkko</string>
     <string name="advanced_page_network_logging">Verkkolokitus</string>
     <string name="advanced_page_network_logging_description">Sieppaa HTTP- ja WebSocket-liikenne</string>
     <string name="advanced_page_view_network_logs">Näytä Verkkolokit</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_section_background_activities">Taustan Toiminnot</string>
     <string name="advanced_page_battery_optimization">Poista akun optimoinnit käytöstä</string>
     <string name="advanced_page_battery_optimization_description">Voi auttaa tilanteissa, joissa reaaliaikaisia verkkotapahtumia ei vastaanoteta</string>
     <string name="advanced_page_kill_service">Lopeta taustapalvelu</string>
     <string name="advanced_page_kill_service_description">Lopettaa taustapalvelun, joka käsittelee reaaliaikaisia tapahtumia</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_section_database">Tietokanta</string>
+    <string name="advanced_page_database_delete">Poista Tietokanta</string>
+    <string name="advanced_page_database_delete_description">Poistaa tietojen tallentamisesta vastaavan sisäisen tietokannan</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_title">Tietokanta &amp; Tilastot</string>
+    <string name="database_page_section_statistics">Tilastot</string>
+    <string name="database_page_statistics_size">Tietokannan koko</string>
+    <string name="database_page_statistics_row_count">Rivien Määrä</string>
+    <string name="database_page_section_recovery">Palauta &amp; Varmuuskopiointi</string>
+    <string name="database_page_recovery_backup">Varmuuskopioi tietokanta</string>
+    <string name="database_page_recovery_backup_description">Varmuuskopioi nykyiset tietosi</string>
+    <string name="database_page_recovery_restore">Palauta tietokanta</string>
+    <string name="database_page_recovery_restore_description">Palauta edellinen varmuuskopio</string>
     <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_glide_cache_size">Välimuistin Koko</string>
+    <string name="database_page_glide_clean_cache">Puhdista välimuisti</string>
+    <string name="database_page_glide_clean_cache_description">Välimuistin puhdistaminen voi pidentää latausaikoja ja vähentää sovelluksen reagointikykyä</string>
+    <string name="database_page_glide_clean_cache_toast">Välimuisti puhdistettu!</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Galleria</item>
@@ -343,9 +343,9 @@
     <string name="emojis_page_title">Emojit</string>
     <string name="emojis_page_button_upload">Lähetä Emoji</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Virallinen</item>
+        <item>Muokautettu</item>
+        <item>Arkistoitu</item>
     </string-array>
     <string name="stickers_page_title">Tarrat</string>
     <string name="stickers_page_button_upload">Lähetä Tarra</string>
