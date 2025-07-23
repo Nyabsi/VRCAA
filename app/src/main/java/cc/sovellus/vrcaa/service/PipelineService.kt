@@ -422,36 +422,40 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        try {
+            val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle(application.getString(R.string.app_name))
+                .setContentText(application.getString(R.string.service_notification))
+                .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
 
-        val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
-            .setSmallIcon(R.drawable.ic_notification_icon)
-            .setContentTitle(application.getString(R.string.app_name))
-            .setContentText(application.getString(R.string.service_notification))
-            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                startForeground(
+                    NOTIFICATION_ID,
+                    builder.build(),
+                    FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+                )
+            } else {
+                // Older versions do not require to specify the `foregroundServiceType`
+                startForeground(NOTIFICATION_ID, builder.build())
+            }
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            startForeground(
-                NOTIFICATION_ID,
-                builder.build(),
-                FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-            )
-        } else {
-            // Older versions do not require to specify the `foregroundServiceType`
-            startForeground(NOTIFICATION_ID, builder.build())
-        }
-
-        launch {
-            api.auth.fetchToken()?.let { token ->
-                pipeline = PipelineSocket(token)
-                pipeline?.let { pipeline ->
-                    pipeline.setListener(listener)
-                    pipeline.connect()
+            launch {
+                api.auth.fetchToken()?.let { token ->
+                    pipeline = PipelineSocket(token)
+                    pipeline?.let { pipeline ->
+                        pipeline.setListener(listener)
+                        pipeline.connect()
+                    }
                 }
             }
+
+            scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
+        } catch (_:  Throwable) {
+            // TODO:  promt the user to follow "do not kill my app"
+            // . . . Should we abort here as this is basicslly unrecoverable error? 
+            Runtime.getRuntime.exit(1)
         }
-
-        scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
-
         return START_STICKY
     }
 
