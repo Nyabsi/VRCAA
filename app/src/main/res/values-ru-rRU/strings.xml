@@ -31,16 +31,16 @@
     <string name="main_search_placeholder">Искать миры, пользователей или аватары…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Текущее расположение</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_note">Примечание </string>
     <string name="profile_label_biography">О себе</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Последняя активность</string>
+    <string name="profile_label_date_joined">Дата присоединения</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
     <string name="profile_user_dropdown_manage_notifications">Управление уведомлениями</string>
     <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">Юзер не существует.</string>
     <string name="profile_user_avatar_private">Аватар является приватным!</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_avatar_unreachable">Аватар недоступен!</string>
     <!-- Search -->
     <string name="search_text_result">Результаты по</string>
     <string name="search_filter_category_worlds">Миры</string>
@@ -52,8 +52,8 @@
     <string name="search_filter_category_avatars_provider">Провайдер</string>
     <string name="search_filter_category_groups">Группы</string>
     <string name="search_filter_category_groups_count">Количество</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="copy_id_label">Копировать ID</string>
+    <string name="copied_toast">Успешно скопирован ID %1$s</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Кол-во</string>
     <string name="search_filter_button_reset">Сброс</string>
@@ -64,33 +64,33 @@
         <item>Аватары</item>
         <item>Группы</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Ещё…</string>
     <!-- Settings -->
     <string name="settings_item_about">О программе</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about_description">Подробнее о вашем устройстве и VRCAA</string>
+    <string name="settings_item_theming">Внешний вид</string>
+    <string name="settings_item_theming_description">Конфигурация внешнего вида, минималистский режим</string>
     <string name="settings_item_rich_presence">Rich Presence (экспериментальный)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_rich_presence_description">Интеграция с Discord Rich Presence</string>
+    <string name="settings_item_advanced_settings">Расширенные</string>
+    <string name="settings_item_advanced_settings_description">Расширенный логирование и функции</string>
+    <string name="settings_item_database_settings">Статистика  &amp; базы данных</string>
+    <string name="settings_item_database_settings_description">Просмотр статистики, восстановление резервной &amp; копии ваших данных</string>
     <string name="settings_item_logout">Выйти</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">Пожертвовать через Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Описание</string>
     <string name="world_label_tags">Теги</string>
     <string name="world_text_no_tags">Автор не предоставил теги.</string>
     <string name="world_title_created_at">Дата создания</string>
     <string name="world_title_updated_at">Последнее обновление</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
-    <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
-    <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_visits">Посещения</string>
+    <string name="world_title_favorites">Избранное</string>
+    <string name="world_title_capacity">Вместимость</string>
+    <string name="world_title_occupants">Участники</string>
+    <string name="world_title_publication_date">Дата публикации</string>
+    <string name="world_title_heat">Теплота</string>
+    <string name="world_title_popularity">Популярность</string>
     <string name="world_toast_not_found">Мир является приватным или не существует.</string>
     <string-array name="world_selection_options">
         <item>Инфо</item>
@@ -103,13 +103,13 @@
     <!-- Tabs -->
     <string name="tabs_label_friends">Друзья</string>
     <string name="tabs_label_home">Главная</string>
-    <string name="tabs_label_favorites">Favorites</string>
-    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_favorites">Избранное</string>
+    <string name="tabs_label_feed">Лента</string>
     <string name="tabs_label_profile">Профиль</string>
     <string name="tabs_label_settings">Настройки</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA теперь следит за вашими друзьями в фоновом режиме.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_notification_rich_presence">VRCAA теперь сообщает информацию о Rich Presence</string>
     <string name="notification_service_title_online">Друг появился в сети!</string>
     <string name="notification_service_description_online">Ваш друг, %1$s появился в сети!</string>
     <string name="notification_service_title_offline">Друг вышел из сети!</string>
@@ -136,7 +136,7 @@
     <string name="avatar_title_updated_at">Дата последнего обновления</string>
     <string name="avatar_title_content_labels">Метки содержимого</string>
     <string name="avatar_text_author">Создано %1$s</string>
-    <string name="avatar_title_version">Version</string>
+    <string name="avatar_title_version">Версия</string>
     <string name="avatar_text_content_labels_not_found">Аватар не содержит предупреждений о содержимом.</string>
     <string name="avatar_toast_avatar_not_found_message">Аватар является либо приватным, либо недействительным.</string>
     <!-- Feed -->
@@ -154,9 +154,9 @@
     <string name="feed_removed_text">удалил вас из друзей.</string>
     <string name="feed_friend_request_label">Заявка в друзья</string>
     <string name="feed_friend_request_text">хочет добавить вас в друзья.</string>
-    <string name="feed_search_placeholder">Search for User or Location…</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_search_placeholder">Поиск пользователя или местоположения…</string>
+    <string name="feed_friend_avatar_label">Изменение аватара</string>
+    <string name="feed_friend_avatar_text">изменил(а) свой аватар на</string>
     <!-- About -->
     <string name="about_page_title">О программе</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
@@ -202,28 +202,28 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Нет подключения к интернету</string>
     <string name="misc_no_internet_description">Пожалуйста, убедитесь, что вы подключены к Интернету, это приложение не может работать без подключения к Интернету.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
+    <string name="misc_no_internet_label">Перезапустить приложение</string>
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="misc_no_premium_subscription">Эта функция требует активной подписки VRChat+.</string>
+    <string name="global_app_default_loading_text">Инициализация…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">Группы</string>
+    <string name="user_overlay_worlds">Миры</string>
+    <string name="user_overlay_favorites">Избранное</string>
+    <string name="user_overlay_find_avatar">Найти аватар</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Статус</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Видимость проверки возраста</string>
     <string name="profile_edit_dialog_title_status_description">Описание статуса</string>
     <string name="profile_edit_dialog_title_bio">О себе</string>
     <string name="profile_edit_dialog_title_bio_links">Соц. Сети</string>
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
+    <string name="profile_edit_dialog_title_pronouns">Местоимения</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Вы уверены?</string>
     <string name="logout_dialog_description">Нажав «Продолжить» ниже вы выйдете из VRCAA и снова войдите в систему, чтобы продолжать использовать приложение.</string>
@@ -235,7 +235,7 @@
     <string-array name="favorites_selection_options">
         <item>Миры</item>
         <item>Аватары</item>
-        <item>Friends</item>
+        <item>Друзья</item>
     </string-array>
     <string name="favorite_label_add">Добавить в избранное</string>
     <string name="favorite_label_remove">Удалить из избранного</string>
@@ -246,14 +246,14 @@
     <string name="favorite_dialog_button_add">Добавить</string>
     <string name="favorite_dialog_button_cancel">Отменить</string>
     <string name="favorite_dialog_title">"Добавить в избранное"</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
+    <string name="favorite_edit_title">Редактирование %1$s</string>
+    <string name="favorite_edit_display_name">Отображаемое имя</string>
+    <string name="favorite_edit_visibility">Видимость</string>
+    <string name="favorite_edit_discarded">Изменения были отменены.</string>
+    <string name="favorite_edit_applied">Изменения были применены.</string>
+    <string name="favorite_dialog_button_edit">Редактировать</string>
+    <string name="favorite_tab_refresh_favorites">Обновить Избранные</string>
+    <string name="favorite_toast_refreshed_favorites">Избранные обновлены.</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">Миры %1$s</string>
@@ -271,93 +271,93 @@
     <string name="loading_text_avatar">Загрузка аватара…</string>
     <string name="loading_text_group">Загрузка группы…</string>
     <string name="loading_text_instances">Загрузка инстансев…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading stickers…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_gallery">Загрузка галереи…</string>
+    <string name="loading_text_icons">Загрузка иконок…</string>
+    <string name="loading_text_prints">Загрузка печатей…</string>
+    <string name="loading_text_stickers">Загрузка стикеров…</string>
+    <string name="loading_text_emojis">Загрузка смайликов…</string>
+    <string name="loading_text_items">Загрузка предметов...</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">Тема</string>
+    <string name="theme_page_minimalist_mode_text">Минималистский Режим</string>
+    <string name="theme_page_minimalist_mode_text_description">"Минималистский режим позволяет контенту помещаться на меньших экранах."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>Светлая</item>
+        <item>Тёмная</item>
+        <item>Система</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>Подстраивающееся</item>
+        <item>Постоянное</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">Тема</string>
+    <string name="theme_page_section_display_title">Отображение</string>
+    <string name="theme_page_section_column_title">Количество столбцов</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_section_networking">Networking</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
+    <string name="advanced_page_title">Расширенные настройки</string>
+    <string name="advanced_page_section_networking">Сеть</string>
+    <string name="advanced_page_network_logging">Сетевой журнал</string>
     <string name="advanced_page_network_logging_description">Перехватывает трафик HTTP и WebSocket</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
-    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_view_network_logs">Показать сетевые журналы</string>
+    <string name="advanced_page_section_background_activities">Фоновая деятельность</string>
+    <string name="advanced_page_battery_optimization">Отключить оптимизацию батареи</string>
+    <string name="advanced_page_battery_optimization_description">Может помочь с неполучением событий сети в режиме реального времени</string>
+    <string name="advanced_page_kill_service">Убить фоновую службу</string>
+    <string name="advanced_page_kill_service_description">Убивает фоновую службу, ответственную за события в режиме реального времени</string>
+    <string name="advanced_page_section_database">База данных</string>
+    <string name="advanced_page_database_delete">Удалить базу данных</string>
+    <string name="advanced_page_database_delete_description">Удаляет внутреннюю базу данных, ответственную за хранение данных</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
+    <string name="database_page_title">Статистика  &amp; базы данных</string>
+    <string name="database_page_section_statistics">Статистика</string>
+    <string name="database_page_statistics_size">Размер базы данных</string>
+    <string name="database_page_statistics_row_count">Количество строк</string>
+    <string name="database_page_section_recovery">Восстановить &amp; резервную копию</string>
+    <string name="database_page_recovery_backup">Создать резервную копию БД</string>
     <string name="database_page_recovery_backup_description">Создаёт резервную копию ваших текущих данных</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
-    <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_recovery_restore">Восстановить базу данных</string>
+    <string name="database_page_recovery_restore_description">Восстановить предыдущую резервную копию</string>
+    <string name="database_page_section_glide">Плавный кэш</string>
+    <string name="database_page_glide_cache_size">Размер кэша</string>
+    <string name="database_page_glide_clean_cache">Очистить кэш</string>
+    <string name="database_page_glide_clean_cache_description">Очистка кэша может увеличить время загрузки и уменьшить отзывчивость приложения</string>
+    <string name="database_page_glide_clean_cache_toast">Кэш очищен!</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
-        <item>Prints</item>
-        <item>Items</item>
+        <item>Галерея</item>
+        <item>Пользовательские иконки</item>
+        <item>Миры</item>
+        <item>Аватары</item>
+        <item>Группы</item>
+        <item>Смайлики</item>
+        <item>Стикеры</item>
+        <item>Печати</item>
+        <item>Предметы</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Выгрузить принт</string>
-    <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="gallery_page_title">Галерея</string>
+    <string name="gallery_page_button_upload">Загрузить изображение</string>
+    <string name="icon_gallery_page_title">Пользовательские Иконки</string>
+    <string name="icon_gallery_page_button_upload">Загрузить иконку</string>
+    <string name="prints_page_title">Печати</string>
+    <string name="prints_page_button_upload">Выгрузить печать</string>
+    <string name="emojis_page_title">Смайлики</string>
+    <string name="emojis_page_button_upload">Загрузить смайлики</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Официальные</item>
+        <item>Пользовательское</item>
+        <item>В архиве</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">Стикеры</string>
+    <string name="stickers_page_button_upload">Загрузить стикер</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Официальные</item>
+        <item>Пользовательское</item>
+        <item>В архиве</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">Предметы</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
-        <item>Archive</item>
+        <item>Все предметы</item>
+        <item>Архивировать</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_title">Предпросмотр</string>
 </resources>
