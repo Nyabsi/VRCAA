@@ -7,7 +7,7 @@
     <string-array name="friend_selection_options">
         <item>Suosikit</item>
         <item>Paikalla</item>
-        <item>Verkkosivuilla</item>
+        <item>Verkkosivusto</item>
         <item>Ei paikalla</item>
     </string-array>
     <!-- Home -->
@@ -109,7 +109,7 @@
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_notification_rich_presence">VRCAA raportoi nyt läsnäolotietoa.</string>
     <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
     <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
     <string name="notification_service_title_offline">Kaverisi meni pois :(</string>
@@ -317,7 +317,7 @@
     <string name="database_page_recovery_backup_description">Varmuuskopioi nykyiset tietosi</string>
     <string name="database_page_recovery_restore">Palauta tietokanta</string>
     <string name="database_page_recovery_restore_description">Palauta edellinen varmuuskopio</string>
-    <string name="database_page_section_glide">Glide Cache</string>
+    <string name="database_page_section_glide">Glide Välimuisti</string>
     <string name="database_page_glide_cache_size">Välimuistin Koko</string>
     <string name="database_page_glide_clean_cache">Puhdista välimuisti</string>
     <string name="database_page_glide_clean_cache_description">Välimuistin puhdistaminen voi pidentää latausaikoja ja vähentää sovelluksen reagointikykyä</string>
