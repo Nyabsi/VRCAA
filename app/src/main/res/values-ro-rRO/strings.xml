@@ -28,90 +28,90 @@
     <string name="auth_button_text">Verify</string>
     <string name="auth_button_paste">Lipire</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">Caută lumi, utilizatori sau avatare</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Locație Curentă</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_note">Notiță</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Ultima activitate</string>
+    <string name="profile_label_date_joined">Data alăturări</string>
     <string name="profile_text_no_biography">No description specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_not_found_message">Utilizatorul nu există</string>
+    <string name="profile_user_avatar_private">Avatarul este privat</string>
+    <string name="profile_user_avatar_unreachable">Avatarul nu poate fi găsit!</string>
     <!-- Search -->
     <string name="search_text_result">Results for</string>
-    <string name="search_filter_category_worlds">Worlds</string>
-    <string name="search_filter_category_worlds_sort_by">Sort By</string>
-    <string name="search_filter_category_worlds_count">Count</string>
-    <string name="search_filter_category_users">Users</string>
-    <string name="search_filter_category_users_count">Count</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Provider</string>
-    <string name="search_filter_category_groups">Groups</string>
-    <string name="search_filter_category_groups_count">Count</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="search_filter_category_worlds">Lumi</string>
+    <string name="search_filter_category_worlds_sort_by">Sortează după</string>
+    <string name="search_filter_category_worlds_count">Număr</string>
+    <string name="search_filter_category_users">Useri</string>
+    <string name="search_filter_category_users_count">Număr</string>
+    <string name="search_filter_category_avatars">Avatare</string>
+    <string name="search_filter_category_avatars_provider">Furnizor</string>
+    <string name="search_filter_category_groups">Grupuri</string>
+    <string name="search_filter_category_groups_count">Număr</string>
+    <string name="copy_id_label">Copiază Id</string>
+    <string name="copied_toast">Id-ul lui %1$s a fost copiat cu succes.</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
-    <string name="search_filter_button_reset">Reset</string>
-    <string name="search_filter_button_apply">Apply</string>
+    <string name="search_filter_label_count">Număr</string>
+    <string name="search_filter_button_reset">Resetează</string>
+    <string name="search_filter_button_apply">Aplică</string>
     <string-array name="search_selection_options">
         <item>Worlds</item>
         <item>Users</item>
         <item>Avatars</item>
-        <item>Groups</item>
+        <item>Grupuri</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Mai multe…</string>
     <!-- Settings -->
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about">Despre</string>
+    <string name="settings_item_about_description">Mai multe informații despre dispozitivul tă și VRCAA</string>
+    <string name="settings_item_theming">Aparență</string>
+    <string name="settings_item_theming_description">Configurarea aparenței, modul minimalist</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
-    <string name="settings_item_logout">Logout</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_item_advanced_settings">Avansat</string>
+    <string name="settings_item_advanced_settings_description">Logare avansată si caracteristici avansate</string>
+    <string name="settings_item_database_settings">Statistici &amp; bază de date</string>
+    <string name="settings_item_database_settings_description">Vezi statistici, restaurează &amp; backup la date</string>
+    <string name="settings_item_logout">Delogare</string>
+    <string name="settings_kofi_donation_button">Done azi prin Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Tags</string>
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
-    <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
-    <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_title_visits">Vizite</string>
+    <string name="world_title_favorites">Favorite</string>
+    <string name="world_title_capacity">Capacitate</string>
+    <string name="world_title_occupants">Ocupanți</string>
+    <string name="world_title_publication_date">Data publicări</string>
+    <string name="world_title_heat">Căldură</string>
+    <string name="world_title_popularity">Popularitate</string>
+    <string name="world_toast_not_found">Lumea este privată sau nu există.</string>
     <string-array name="world_selection_options">
-        <item>Info</item>
-        <item>Instances</item>
+        <item>Informație</item>
+        <item>Instanțe</item>
     </string-array>
-    <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
-    <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
-    <string name="world_instance_no_public_instances_message">No public instances</string>
+    <string name="world_author_label">De %1$s</string>
+    <string name="world_instance_invite_dialog_title">Ești sigur?</string>
+    <string name="world_instance_invite_dialog_description">Urmează să trimiți o invitație către tine in acestă instanță, sigur vrei să faci asta?</string>
+    <string name="world_instance_no_public_instances_message">Nu sunt instanțe publice.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Friends</string>
     <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
-    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_favorites">Favorite</string>
+    <string name="tabs_label_feed">Flux</string>
     <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_settings">Setări</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
-    <string name="notification_service_title_online">Friend has came online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
+    <string name="notification_service_title_online">Un prieten a intrat online!</string>
+    <string name="notification_service_description_online">Prietenul tău, %1$s a intrat online!</string>
     <string name="notification_service_title_offline">Friend has gone offline!</string>
     <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
     <string name="notification_service_title_location">Friend changed location!</string>
@@ -136,9 +136,9 @@
     <string name="avatar_title_updated_at">Last Updated</string>
     <string name="avatar_title_content_labels">Content Labels</string>
     <string name="avatar_text_author">By %1$s</string>
-    <string name="avatar_title_version">Version</string>
+    <string name="avatar_title_version">Versiune</string>
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
-    <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
+    <string name="avatar_toast_avatar_not_found_message">Avatarul e privat sau invalid.</string>
     <!-- Feed -->
     <string name="feed_online_label">Online</string>
     <string name="feed_online_text">has come online.</string>
@@ -154,21 +154,21 @@
     <string name="feed_removed_text">has removed you as friend.</string>
     <string name="feed_friend_request_label">Friend Request</string>
     <string name="feed_friend_request_text">wants to add you as friend.</string>
-    <string name="feed_search_placeholder">Search for User or Location…</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_search_placeholder">Cauta Utilizator sau Locație…</string>
+    <string name="feed_friend_avatar_label">Schimbare Avatar</string>
+    <string name="feed_friend_avatar_text">și-au schimbat avatarul în</string>
     <!-- About -->
     <string name="about_page_title">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_battery_optimizations_toast">Optimizările de baterie sunt deja oprite.</string>
     <string name="license_title">Open Source Licenses</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+    <string name="api_session_has_expired_text">Sesiunea ta a expirat, reconectare necesară.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
+    <string name="discord_login_restarted_service_toast">Reporniți service-ul pentru a lua efect.</string>
     <string name="discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
+    <string name="discord_login_label_set_webhook">Setați adresa URL a webhook-ului</string>
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable">Shows your current status in discord</string>
     <!-- Crash -->
@@ -179,7 +179,7 @@
     <!-- Groups -->
     <string-array name="group_selection_options">
         <item>Info</item>
-        <item>Instances</item>
+        <item>Instanțe</item>
     </string-array>
     <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
     <string name="group_page_label_description">Description</string>
@@ -188,117 +188,117 @@
     <string name="group_page_dropdown_request_invite">Request Invite</string>
     <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
     <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
+    <string name="group_page_dropdown_leave_group">Abandonează grupul</string>
+    <string name="group_page_toast_invite_requested">Trimite invitație.</string>
     <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
+    <string name="group_page_toast_invite_requested_cancel">Invitație abandonată.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Invitația nu a putut fi abandonată.</string>
+    <string name="group_page_toast_join_group">Alăturat grupului.</string>
+    <string name="group_page_toast_join_group_fail">Nu s-a reușit alăturarea grupului.</string>
     <string name="group_page_toast_leave_group">Left the group.</string>
     <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_user_no_groups_message">Utilizatorul nu face parte din niciun grup.</string>
+    <string name="group_user_viewing_groups_username">Grupurile lui %1$s</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="misc_no_internet_title">Fără conexiune la internet</string>
+    <string name="misc_no_internet_description">Asigură-te că ești conectat la internet, aplicația nu poate funcționa fără o conexiune la internet.</string>
+    <string name="misc_no_internet_label">Repornește Aplicația</string>
+    <string name="misc_exit_toast_label">Apasă din nou pentru a ieși.</string>
+    <string name="misc_no_premium_subscription">Această caracteristică necesită să aveți un abonament VRChat+ activ.</string>
+    <string name="global_app_default_loading_text">Inițializare...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">Grupuri</string>
+    <string name="user_overlay_worlds">Lumi</string>
+    <string name="user_overlay_favorites">Favorite</string>
+    <string name="user_overlay_find_avatar">Găsește Avatare</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
+    <string name="profile_edit_dialog_title_bio_links">Link-uri Sociale</string>
+    <string name="profile_edit_dialog_toast_updated">Actualizare profil.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Modificările au fost respinse.</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronume</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
+    <string name="logout_dialog_title">Sunteți siguri?</string>
     <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_dialog_continue">Continuă</string>
+    <string name="logout_dialog_cancel">Abandonează</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list">Vezi locațiile actuale ale prietenilor </string>
+    <string name="widget_name_loading_text">Orizontul este luminos, prietene.</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Friends</item>
+        <item>Lumi</item>
+        <item>Avatare</item>
+        <item>Prieteni</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
+    <string name="favorite_label_add">Adaugă la favorite</string>
+    <string name="favorite_label_remove">Scoate din favorite</string>
     <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
     <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
     <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
     <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
     <string name="favorite_dialog_button_add">Add</string>
     <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
+    <string name="favorite_dialog_title">"Adaugă la Favorite"</string>
+    <string name="favorite_edit_title">Editezi %1$s</string>
+    <string name="favorite_edit_display_name">Nume Afișat</string>
+    <string name="favorite_edit_visibility">Vizibilitate</string>
+    <string name="favorite_edit_discarded">Schimbările au fost înlăturate.</string>
+    <string name="favorite_edit_applied">Schimbările au fost aplicate.</string>
+    <string name="favorite_dialog_button_edit">Editează</string>
+    <string name="favorite_tab_refresh_favorites">Reîncarcă Favorite</string>
+    <string name="favorite_toast_refreshed_favorites">Favorite reîncărcate.</string>
     <!-- Activities -->
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">Lumile lui %1$s</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">Vizionează avatare</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="developer_mode_toggle_toast">Repornește aplicația ca schimbările să își facă efectul.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
+    <string name="loading_text_worlds">Încărcare lumi…</string>
+    <string name="loading_text_users">Încărcare utilizatori…</string>
     <string name="loading_text_avatars">Loading avatars…</string>
     <string name="loading_text_groups">Loading groups…</string>
     <string name="loading_text_user">Loading user…</string>
     <string name="loading_text_world">Loading world…</string>
     <string name="loading_text_avatar">Loading avatar…</string>
     <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading stickers…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_instances">Încărcare instanțe…</string>
+    <string name="loading_text_gallery">Încărcare galerie…</string>
+    <string name="loading_text_icons">Încărcare iconițe…</string>
+    <string name="loading_text_prints">Încărcare imprimeuri…</string>
+    <string name="loading_text_stickers">Încărcare autocolante…</string>
+    <string name="loading_text_emojis">Încărcare autocolante…</string>
+    <string name="loading_text_items">Încărcare obiecte…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">Teme</string>
+    <string name="theme_page_minimalist_mode_text">Mod Minimalist</string>
+    <string name="theme_page_minimalist_mode_text_description">"Modul Minimalist ajută conținutul să încapă pe ecrane mai mici."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>Luminos</item>
+        <item>Întunecat</item>
+        <item>Sistem</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>Adaptiv</item>
+        <item>Fixat</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">Temă</string>
+    <string name="theme_page_section_display_title">Arată</string>
+    <string name="theme_page_section_column_title">Număr Coloane</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
+    <string name="advanced_page_title">Setări Avansate</string>
     <string name="advanced_page_section_networking">Networking</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
-    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
+    <string name="advanced_page_network_logging">Înregistrare rețea</string>
+    <string name="advanced_page_network_logging_description">Interceptează traficul HTTP și WebSocket</string>
+    <string name="advanced_page_view_network_logs">Arată înregistrările de rețea</string>
     <string name="advanced_page_section_background_activities">Background Activities</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
