@@ -239,12 +239,12 @@
     </string-array>
     <string name="favorite_label_add">Adaugă la favorite</string>
     <string name="favorite_label_remove">Scoate din favorite</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
+    <string name="favorite_toast_favorite_added">Adăugat %1$s la favorite.</string>
+    <string name="favorite_toast_favorite_added_failed">Adăugarea %1$s la favorite a eșuat.</string>
+    <string name="favorite_toast_favorite_removed">Scos %1$s din favorite.</string>
+    <string name="favorite_toast_favorite_removed_failed">Scoaterea %1$s din favorite a eșuat.</string>
+    <string name="favorite_dialog_button_add">Adaugă</string>
+    <string name="favorite_dialog_button_cancel">Abandonează</string>
     <string name="favorite_dialog_title">"Adaugă la Favorite"</string>
     <string name="favorite_edit_title">Editezi %1$s</string>
     <string name="favorite_edit_display_name">Nume Afișat</string>
@@ -264,12 +264,12 @@
     <!-- Loading Texts -->
     <string name="loading_text_worlds">Încărcare lumi…</string>
     <string name="loading_text_users">Încărcare utilizatori…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
+    <string name="loading_text_avatars">Se încarcă avatarele...</string>
+    <string name="loading_text_groups">Se încarcă grupurile...</string>
+    <string name="loading_text_user">Se încarcă utilizatorii...</string>
+    <string name="loading_text_world">Se încarcă lumea...</string>
+    <string name="loading_text_avatar">Avatarul se încarcă...</string>
+    <string name="loading_text_group">Grupul se încarcă...</string>
     <string name="loading_text_instances">Încărcare instanțe…</string>
     <string name="loading_text_gallery">Încărcare galerie…</string>
     <string name="loading_text_icons">Încărcare iconițe…</string>
@@ -298,8 +298,8 @@
     <string name="advanced_page_section_networking">Networking</string>
     <string name="advanced_page_network_logging">Înregistrare rețea</string>
     <string name="advanced_page_network_logging_description">Interceptează traficul HTTP și WebSocket</string>
-    <string name="advanced_page_view_network_logs">Arată înregistrările de rețea</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_view_network_logs">Arată înregistrările din rețea</string>
+    <string name="advanced_page_section_background_activities">Activitățile din fundal</string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
     <string name="advanced_page_kill_service">Kill background service</string>
