@@ -454,7 +454,7 @@ class PipelineService : Service(), CoroutineScope {
         } catch (_:  Throwable) {
             // TODO:  promt the user to follow "do not kill my app"
             // . . . Should we abort here as this is basicslly unrecoverable error? 
-            Runtime.getRuntime.exit(1)
+            Runtime.getRuntime().exit(1)
         }
         return START_STICKY
     }
