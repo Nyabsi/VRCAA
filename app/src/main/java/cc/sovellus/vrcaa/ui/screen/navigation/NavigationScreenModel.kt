@@ -192,7 +192,7 @@ class NavigationScreenModel : ScreenModel {
 
     fun filterFeed() {
         val filteredFeed = FeedManager.getFeed().filter { feed ->
-            feed.friendName.contains(feedFilterQuery.value, ignoreCase = true) || (feed.travelDestination.contains(feedFilterQuery.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_LOCATION)
+            feed.friendName.contains(feedFilterQuery.value, ignoreCase = true) || (feed.travelDestination.contains(feedFilterQuery.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_LOCATION) && || (feed.avatarName.contains(feedFilterQuery.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_AVATAR)
         }
 
         filteredFeedStateFlow.value = filteredFeed.toMutableStateList()
