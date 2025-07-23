@@ -11,10 +11,10 @@
         <item>Offline</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Prieteni Online</string>
     <string name="home_recently_visited">Recently Visited</string>
     <string name="home_offline_friends">Offline Friends</string>
-    <string name="home_friend_locations">Friend Locations</string>
+    <string name="home_friend_locations">Locație Prieteni</string>
     <!-- Login -->
     <string name="login_text">Login to VRC Android Assistant</string>
     <string name="login_label_username">Username or E-Mail Address</string>
@@ -26,11 +26,11 @@
     <string name="auth_text_email">Input the code sent to your e-mail</string>
     <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_button_text">Verify</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_button_paste">Lipire</string>
     <!-- Main -->
     <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
     <!-- Profile -->
-    <string name="profile_label_current_location">Current Location</string>
+    <string name="profile_label_current_location">Locație Curentă</string>
     <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_last_activity">Last Activity</string>
