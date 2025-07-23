@@ -16,6 +16,8 @@
 
 package cc.sovellus.vrcaa.manager
 
+import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
@@ -49,6 +51,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     private var cacheHasBeenBuilt: Boolean = false
 
     suspend fun buildCache() = coroutineScope {
+        App.SetLoadingText(R.string.global_app_default_loading_text)
+        
         getListeners().forEach { listener ->
             listener.startCacheRefresh()
         }
