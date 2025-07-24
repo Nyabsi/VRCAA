@@ -51,7 +51,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     private var cacheHasBeenBuilt: Boolean = false
 
     suspend fun buildCache() = coroutineScope {
-        App.SetLoadingText(R.string.global_app_default_loading_text)
+        App.setLoadingText(R.string.global_app_default_loading_text)
         
         getListeners().forEach { listener ->
             listener.startCacheRefresh()
