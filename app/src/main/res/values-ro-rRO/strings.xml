@@ -35,14 +35,14 @@
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_last_activity">Ultima activitate</string>
     <string name="profile_label_date_joined">Data alăturări</string>
-    <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
+    <string name="profile_text_no_biography">Nici o descriere specificată.</string>
+    <string name="profile_user_dropdown_manage_notifications">Gestionare notificări</string>
     <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">Utilizatorul nu există</string>
     <string name="profile_user_avatar_private">Avatarul este privat</string>
     <string name="profile_user_avatar_unreachable">Avatarul nu poate fi găsit!</string>
     <!-- Search -->
-    <string name="search_text_result">Results for</string>
+    <string name="search_text_result">Rezultate pentru</string>
     <string name="search_filter_category_worlds">Lumi</string>
     <string name="search_filter_category_worlds_sort_by">Sortează după</string>
     <string name="search_filter_category_worlds_count">Număr</string>
@@ -59,9 +59,9 @@
     <string name="search_filter_button_reset">Resetează</string>
     <string name="search_filter_button_apply">Aplică</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
-        <item>Avatars</item>
+        <item>Lumi</item>
+        <item>Utilizatori</item>
+        <item>Avatare</item>
         <item>Grupuri</item>
     </string-array>
     <string name="search_button_more">Mai multe…</string>
@@ -76,14 +76,14 @@
     <string name="settings_item_advanced_settings_description">Logare avansată si caracteristici avansate</string>
     <string name="settings_item_database_settings">Statistici &amp; bază de date</string>
     <string name="settings_item_database_settings_description">Vezi statistici, restaurează &amp; backup la date</string>
-    <string name="settings_item_logout">Delogare</string>
-    <string name="settings_kofi_donation_button">Done azi prin Ko-fi</string>
+    <string name="settings_item_logout">Deconectare</string>
+    <string name="settings_kofi_donation_button">Donează prin Ko-fi</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
+    <string name="world_label_description">Descriere</string>
+    <string name="world_label_tags">Tag-uri</string>
+    <string name="world_text_no_tags">Autorul nu a furnizat tag-uri.</string>
+    <string name="world_title_created_at">Data creării</string>
+    <string name="world_title_updated_at">Ultima Actualizare</string>
     <string name="world_title_visits">Vizite</string>
     <string name="world_title_favorites">Favorite</string>
     <string name="world_title_capacity">Capacitate</string>
@@ -102,10 +102,10 @@
     <string name="world_instance_no_public_instances_message">Nu sunt instanțe publice.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Friends</string>
-    <string name="tabs_label_home">Home</string>
+    <string name="tabs_label_home">Acasă</string>
     <string name="tabs_label_favorites">Favorite</string>
     <string name="tabs_label_feed">Flux</string>
-    <string name="tabs_label_profile">Profile</string>
+    <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_settings">Setări</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
@@ -169,34 +169,34 @@
     <string name="discord_login_restarted_service_toast">Reporniți service-ul pentru a lua efect.</string>
     <string name="discord_login_label_enable">Enable Rich Presence</string>
     <string name="discord_login_label_set_webhook">Setați adresa URL a webhook-ului</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_description_set_webhook">Necesar pentru suport thumbnail lume (Opțional)</string>
+    <string name="discord_login_description_enable">Arată starea curentă în discord</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_title_text">Aplicația a întâmpinat o eroare fatală.</string>
+    <string name="crash_button_restart_text">Repornește</string>
+    <string name="crash_button_copy_log_text">Copiază informații</string>
+    <string name="crash_button_report_text">Raportați o problemă</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
-        <item>Info</item>
+        <item>Informații</item>
         <item>Instanțe</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
+    <string name="group_toast_not_found_message">Grupul nu a fost găsit, sunteți sigur că există?</string>
+    <string name="group_page_label_description">Descriere</string>
+    <string name="group_page_label_rules">Reguli</string>
+    <string name="group_page_dropdown_view_author">Arată Profilul Autorului</string>
+    <string name="group_page_dropdown_request_invite">Solicită o invitație</string>
+    <string name="group_page_dropdown_request_invite_cancel">Anulează invitația</string>
+    <string name="group_page_dropdown_join_group">Alătură-te Grupului</string>
     <string name="group_page_dropdown_leave_group">Abandonează grupul</string>
     <string name="group_page_toast_invite_requested">Trimite invitație.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
+    <string name="group_page_toast_invite_requested_fail">Solicitarea a eșuat.</string>
     <string name="group_page_toast_invite_requested_cancel">Invitație abandonată.</string>
     <string name="group_page_toast_invite_requested_cancel_fail">Invitația nu a putut fi abandonată.</string>
     <string name="group_page_toast_join_group">Alăturat grupului.</string>
     <string name="group_page_toast_join_group_fail">Nu s-a reușit alăturarea grupului.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
+    <string name="group_page_toast_leave_group">A părăsit grupul.</string>
+    <string name="group_page_toast_leave_group_fail">Părăsirea grupului a eșuat.</string>
     <string name="group_user_no_groups_message">Utilizatorul nu face parte din niciun grup.</string>
     <string name="group_user_viewing_groups_username">Grupurile lui %1$s</string>
     <!-- Misc -->
@@ -217,8 +217,8 @@
     <string name="user_overlay_find_avatar">Găsește Avatare</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Vizibilitatea Verificări Vârstei</string>
+    <string name="profile_edit_dialog_title_status_description">Descrierea Statusului</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Link-uri Sociale</string>
     <string name="profile_edit_dialog_toast_updated">Actualizare profil.</string>
@@ -226,7 +226,7 @@
     <string name="profile_edit_dialog_title_pronouns">Pronume</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sunteți siguri?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
+    <string name="logout_dialog_description">Apăsând butonul \"Continuă\" de mai jos, vă veți deconecta din VRCAA și va trebui sa vă reconectați pentru a continua să utilizați aplicația.</string>
     <string name="logout_dialog_continue">Continuă</string>
     <string name="logout_dialog_cancel">Abandonează</string>
     <!-- Widgets -->
@@ -300,33 +300,33 @@
     <string name="advanced_page_network_logging_description">Interceptează traficul HTTP și WebSocket</string>
     <string name="advanced_page_view_network_logs">Arată înregistrările din rețea</string>
     <string name="advanced_page_section_background_activities">Activitățile din fundal</string>
-    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_battery_optimization">Dezactivare Optimizări Baterie</string>
+    <string name="advanced_page_battery_optimization_description">Poate ajuta fără a primi evenimente de rețea în timp real</string>
+    <string name="advanced_page_kill_service">Oprește serviciul din fundal</string>
+    <string name="advanced_page_kill_service_description">Oprește serviciul din fundal responsabil de evenimente in timp real</string>
+    <string name="advanced_page_section_database">Bază de date</string>
+    <string name="advanced_page_database_delete">Șterge Bază de date</string>
+    <string name="advanced_page_database_delete_description">Șterge baza de date internă responsabilă pentru stocarea de date</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_title">Statistici &amp; bază de date</string>
+    <string name="database_page_section_statistics">Statistici</string>
+    <string name="database_page_statistics_size">Mărime bază de date</string>
+    <string name="database_page_statistics_row_count">Număr Rânduri</string>
+    <string name="database_page_section_recovery">Restaurează &amp; backup</string>
+    <string name="database_page_recovery_backup">Backup bază de date</string>
+    <string name="database_page_recovery_backup_description">Backup pentru datele curente</string>
+    <string name="database_page_recovery_restore">Restaurează bază de date</string>
+    <string name="database_page_recovery_restore_description">Restaurează backup anterior</string>
     <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_glide_cache_size">Mărime Cache</string>
+    <string name="database_page_glide_clean_cache">Curățați Memoria Cache</string>
+    <string name="database_page_glide_clean_cache_description">Curățarea memorii cache poate crește timpul de încărcare si scădea responsivitatea aplicației</string>
+    <string name="database_page_glide_clean_cache_toast">Memorie cache curățată!</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
+        <item>Galerie</item>
+        <item>Iconițe Utilizatori</item>
+        <item>Lumi</item>
         <item>Avatars</item>
         <item>Groups</item>
         <item>Emojis</item>
