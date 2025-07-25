@@ -18,7 +18,7 @@
     <!-- Login -->
     <string name="login_text">Autentifică-te în asistentul VRC Android</string>
     <string name="login_label_username">Nume de Utilizator sau Adresă de e-mail</string>
-    <string name="login_label_password">Password</string>
+    <string name="login_label_password">Parolă</string>
     <string name="login_button_text">Autentificare</string>
     <string name="login_toast_wrong_credentials">Nume de Utilizator sau Parolă greșită.</string>
     <string name="login_toast_wrong_code">Verificarea a eșuat, verificați codul din nou.</string>
@@ -101,7 +101,7 @@
     <string name="world_instance_invite_dialog_description">Urmează să trimiți o invitație către tine in acestă instanță, sigur vrei să faci asta?</string>
     <string name="world_instance_no_public_instances_message">Nu sunt instanțe publice.</string>
     <!-- Tabs -->
-    <string name="tabs_label_friends">Friends</string>
+    <string name="tabs_label_friends">Prieteni</string>
     <string name="tabs_label_home">Acasă</string>
     <string name="tabs_label_favorites">Favorite</string>
     <string name="tabs_label_feed">Flux</string>
@@ -112,7 +112,7 @@
     <string name="service_notification_rich_presence">VRCAA raportează informații despre prezență bogata.</string>
     <string name="notification_service_title_online">Un prieten a intrat online!</string>
     <string name="notification_service_description_online">Prietenul tău, %1$s a intrat online!</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
+    <string name="notification_service_title_offline">Un prieten e acum offline!</string>
     <string name="notification_service_description_offline">Prietenul tău, %1$s e acum offline!</string>
     <string name="notification_service_title_location">Un prieten și-a schimbat locația!</string>
     <string name="notification_service_description_location">Prietenul tău, %1$s a mers la %2$s.</string>
@@ -141,11 +141,11 @@
     <string name="avatar_toast_avatar_not_found_message">Avatarul e privat sau invalid.</string>
     <!-- Feed -->
     <string name="feed_online_label">Online</string>
-    <string name="feed_online_text">a intrat online.</string>
+    <string name="feed_online_text">A intrat online.</string>
     <string name="feed_offline_label">Offline</string>
-    <string name="feed_offline_text">has gone offline.</string>
+    <string name="feed_offline_text">E acum offline.</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
+    <string name="feed_location_text">A mers la</string>
     <string name="feed_status_label">Status</string>
     <string name="feed_status_text">Și-a schimbat statusul la</string>
     <string name="feed_added_label">Prieten Adăugat</string>
