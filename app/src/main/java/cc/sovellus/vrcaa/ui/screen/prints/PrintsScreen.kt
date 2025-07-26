@@ -35,6 +35,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -204,7 +205,7 @@ class PrintsScreen(
                 ) {
                     LazyVerticalGrid(
                         columns = when (model.preferences.columnCountOption) {
-                            0 -> GridCells.Adaptive(180.dp)
+                            0 -> GridCells.Adaptive(133.dp)
                             else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                         },
                         contentPadding = PaddingValues(
@@ -222,8 +223,8 @@ class PrintsScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(4.dp)
-                                        .height(140.dp)
-                                        .width(200.dp)
+                                        .height(100.dp)
+                                        .width(133.dp)
                                         .clip(RoundedCornerShape(10))
                                         .clickable(onClick = {
                                             previewFile = print.files

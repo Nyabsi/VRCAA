@@ -41,6 +41,7 @@ import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.UploadFile
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -301,7 +302,7 @@ class EmojisScreen : Screen {
         } else {
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
-                    0 -> GridCells.Adaptive(192.dp)
+                    0 -> GridCells.Adaptive(172.dp)
                     else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                 },
                 contentPadding = PaddingValues(
@@ -313,22 +314,24 @@ class EmojisScreen : Screen {
                 content = {
                     items(items.size) {
                         val item = items[it]
-                        GlideImage(
-                            model = item.imageUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                                .height(192.dp)
-                                .width(192.dp)
-                                .clip(RoundedCornerShape(10))
-                                .clickable(onClick = {
-                                    model.previewItem.value = item
-                                }),
-                            contentScale = ContentScale.FillBounds,
-                            loading = placeholder(R.drawable.image_placeholder),
-                            failure = placeholder(R.drawable.image_placeholder)
-                        )
+                        Card(Modifier.padding(4.dp)) {
+                            GlideImage(
+                                model = item.imageUrl,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(4.dp)
+                                    .height(172.dp)
+                                    .width(172.dp)
+                                    .clip(RoundedCornerShape(10))
+                                    .clickable(onClick = {
+                                        model.previewItem.value = item
+                                    }),
+                                contentScale = ContentScale.FillBounds,
+                                loading = placeholder(R.drawable.image_placeholder),
+                                failure = placeholder(R.drawable.image_placeholder)
+                            )
+                        }
                     }
                 }
             )
