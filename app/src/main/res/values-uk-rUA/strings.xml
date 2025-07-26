@@ -278,7 +278,7 @@
     <string name="loading_text_icons">Loading icons…</string>
     <string name="loading_text_prints">Loading prints…</string>
     <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading stickers…</string>
+    <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Loading items…</string>
     <!-- Theming -->
     <string name="theme_page_title">Theme</string>
