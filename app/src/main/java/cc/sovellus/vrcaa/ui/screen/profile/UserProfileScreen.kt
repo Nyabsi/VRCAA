@@ -276,7 +276,7 @@ class UserProfileScreen(
                                         horizontalAlignment = Alignment.Start,
                                         modifier = Modifier.padding(top = 16.dp)
                                     ) {
-                                        InstanceCard(profile = profile, instance = instance) {
+                                        InstanceCard(profile = profile, clickable = !isQuickMenuExpanded, instance = instance) {
                                             navigator.push(WorldScreen(instance.worldId))
                                         }
                                     }
