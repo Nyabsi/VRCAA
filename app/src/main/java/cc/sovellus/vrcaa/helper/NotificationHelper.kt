@@ -132,7 +132,7 @@ object NotificationHelper {
         val defaultChannel = NotificationChannel(
             CHANNEL_DEFAULT_ID,
             CHANNEL_DEFAULT_NAME,
-            NotificationManager.IMPORTANCE_LOW
+            NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = CHANNEL_DEFAULT_DESCRIPTION
         }
@@ -142,7 +142,7 @@ object NotificationHelper {
         val onlineChannel = NotificationChannel(
             CHANNEL_ONLINE_ID,
             CHANNEL_ONLINE_NAME,
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
             description = CHANNEL_ONLINE_DESCRIPTION
         }
@@ -152,7 +152,7 @@ object NotificationHelper {
         val offlineChannel = NotificationChannel(
             CHANNEL_OFFLINE_ID,
             CHANNEL_OFFLINE_NAME,
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
             description = CHANNEL_OFFLINE_DESCRIPTION
         }
@@ -162,7 +162,7 @@ object NotificationHelper {
         val locationChannel = NotificationChannel(
             CHANNEL_LOCATION_ID,
             CHANNEL_LOCATION_NAME,
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
             description = CHANNEL_LOCATION_DESCRIPTION
         }
@@ -172,7 +172,7 @@ object NotificationHelper {
         val statusChannel = NotificationChannel(
             CHANNEL_STATUS_ID,
             CHANNEL_STATUS_NAME,
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
             description = CHANNEL_STATUS_DESCRIPTION
         }
