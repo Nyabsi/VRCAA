@@ -456,7 +456,8 @@ class PipelineService : Service(), CoroutineScope {
             NotificationHelper.pushNotification(
                 application.getString(R.string.app_name),
                 application.getString(R.string.service_killed_by_vendor_notification),
-                NotificationHelper.CHANNEL_DEFAULT_ID
+                NotificationHelper.CHANNEL_DEFAULT_ID,
+                true
             )
         }
 
