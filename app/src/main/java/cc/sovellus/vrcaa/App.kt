@@ -30,9 +30,8 @@ import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.helper.NotificationHelper
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
-
+import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 
 class App : Application() {
 
