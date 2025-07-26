@@ -45,7 +45,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         var thumbnailUrl: String = "",
     )
 
-    private val lock = Any()
+    private val worldListLock = Any()
+    private val recentWorldLock = Any()
 
     private var profile: User? = null
     private var worldList: MutableList<WorldCache> = CopyOnWriteArrayList()
@@ -117,18 +118,22 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun addWorld(world: World) {
-        val cache = WorldCache(world.id).apply {
-            name = world.name
-            thumbnailUrl = world.thumbnailImageUrl
+        synchronized(worldListLock) {
+            val cache = WorldCache(world.id).apply {
+                name = world.name
+                thumbnailUrl = world.thumbnailImageUrl
+            }
+            worldList.add(cache)
         }
-        worldList.add(cache)
     }
 
     fun updateWorld(world: World) {
-        val index = worldList.indexOf(worldList.find { it.id == world.id })
-        worldList[index] = WorldCache(world.id).apply {
-            name = world.name
-            thumbnailUrl = world.thumbnailImageUrl
+        synchronized(worldListLock) {
+            val index = worldList.indexOf(worldList.find { it.id == world.id })
+            worldList[index] = WorldCache(world.id).apply {
+                name = world.name
+                thumbnailUrl = world.thumbnailImageUrl
+            }
         }
     }
 
@@ -151,7 +156,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun addRecentWorld(world: World) {
-        synchronized(lock) {
+        synchronized(recentWorldLock) {
             recentWorldList.removeIf { it.id == world.id }
             recentWorldList.add(0,
                 WorldCache(world.id).apply {
