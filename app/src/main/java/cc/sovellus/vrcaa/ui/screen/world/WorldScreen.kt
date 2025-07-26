@@ -209,7 +209,7 @@ class WorldScreen(
                                         if (FavoriteManager.isFavorite("world", world.id)) {
                                             DropdownMenuItem(
                                                 onClick = {
-                                                    model.removeFavorite()
+                                                    model.removeFavorite(world)
                                                     isMenuExpanded = false
                                                 },
                                                 text = { Text(stringResource(R.string.favorite_label_remove)) }
