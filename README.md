@@ -15,6 +15,8 @@ VRChat Android Assistant offers a convenient solution for managing your VRChat e
 
 <br/>
 
+# Features
+
 ## Authentication
 
 - Automatic session refreshing
