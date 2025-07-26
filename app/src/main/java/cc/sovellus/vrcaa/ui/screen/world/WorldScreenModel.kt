@@ -87,7 +87,7 @@ class WorldScreenModel(
         }
     }
 
-    fun removeFavorite() {
+    fun removeFavorite(world: World) {
         screenModelScope.launch {
             val result = FavoriteManager.removeFavorite(IFavorites.FavoriteType.FAVORITE_WORLD, world.id)
 
