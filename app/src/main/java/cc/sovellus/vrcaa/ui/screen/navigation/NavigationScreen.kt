@@ -41,8 +41,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -99,6 +101,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -1033,17 +1036,26 @@ class NavigationScreen : Screen {
                                         tags = it.tags,
                                         badges = it.badges
                                     )
-                                    IconButton(
-                                        modifier = Modifier.align(Alignment.TopEnd),
-                                        onClick = {
-                                            isQuickMenuExpanded = false
-                                            showProfileSheet = true
-                                        }
+
+                                    Box(
+                                        modifier = Modifier
+                                            .align(Alignment.TopEnd)
+                                            .padding(4.dp)
+                                            .background(Color.Black.copy(alpha = 0.6f), shape = CircleShape)
                                     ) {
-                                        Icon(
-                                            Icons.Default.Edit,
-                                            contentDescription = null
-                                        )
+                                        IconButton(
+                                            onClick = {
+                                                isQuickMenuExpanded = false
+                                                showProfileSheet = true
+                                            },
+                                            modifier = Modifier.size(36.dp)
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Edit,
+                                                contentDescription = null,
+                                                tint = Color.White
+                                            )
+                                        }
                                     }
                                 }
                             }
