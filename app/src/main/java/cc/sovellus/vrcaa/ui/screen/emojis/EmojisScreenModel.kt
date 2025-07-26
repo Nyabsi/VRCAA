@@ -55,10 +55,10 @@ class EmojisScreenModel : StateScreenModel<EmojisScreenModel.EmojiState>(EmojiSt
     var currentUri = mutableStateOf<Uri?>(null)
 
     init {
-        fetchStickers()
+        fetchEmojis()
     }
 
-    private fun fetchStickers() {
+    private fun fetchEmojis() {
         mutableState.value = EmojiState.Loading
         App.setLoadingText(R.string.loading_text_emojis)
         screenModelScope.launch {
@@ -76,7 +76,7 @@ class EmojisScreenModel : StateScreenModel<EmojisScreenModel.EmojiState>(EmojiSt
     fun uploadFile(type: String, uri: Uri) {
         screenModelScope.launch {
             api.files.uploadEmoji(type, uri)?.let {
-                fetchStickers()
+                fetchEmojis()
             }
         }
     }
