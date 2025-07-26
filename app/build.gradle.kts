@@ -15,8 +15,8 @@ android {
         applicationId = "cc.sovellus.vrcaa"
         minSdk = 27
         targetSdk = 35
-        versionCode = 200508
-        versionName = "2.5.8"
+        versionCode = 200509
+        versionName = "2.5.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -151,6 +151,6 @@ dependencies {
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
-    implementation("com.google.firebase:firebase-crashlytics:19.4.4")
+    implementation("com.google.firebase:firebase-crashlytics:20.0.0")
     implementation("dev.turingcomplete:kotlin-onetimepassword:2.4.1")
 }
