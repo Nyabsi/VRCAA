@@ -37,19 +37,13 @@ import java.io.File
 class AdvancedScreenModel : ScreenModel {
 
     private val context: Context = App.getContext()
-    private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
+    private val preferences: SharedPreferences = App.getPreferences()
 
     val networkLoggingMode = mutableStateOf(preferences.networkLogging)
 
     fun toggleLogging() {
         networkLoggingMode.value = !networkLoggingMode.value
         preferences.networkLogging = !preferences.networkLogging
-
-        Toast.makeText(
-            context,
-            context.getString(R.string.developer_mode_toggle_toast), // TODO: rename translation string
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     @SuppressLint("BatteryLife")

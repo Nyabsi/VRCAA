@@ -59,6 +59,7 @@ class App : Application() {
         private var loadingText: MutableState<String> = mutableStateOf("")
 
         fun getContext(): Context { return context }
+        fun getPreferences(): SharedPreferences { return preferences }
 
         fun isNetworkLoggingEnabled(): Boolean { return networkLogging.value }
         fun isMinimalistModeEnabled(): Boolean { return minimalistModeEnabled.value }
