@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">请确保您已连接到互联网，此应用程序无法在没有互联网连接的情况下工作。</string>
     <string name="misc_no_internet_label">重启应用</string>
     <string name="misc_exit_toast_label">再次按下以退出。</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">初始化...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
