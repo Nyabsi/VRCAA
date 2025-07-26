@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">Varmista, että olet yhteydessä Internetiin, tämä sovellus ei voi toimia ilman Internet-yhteyttä.</string>
     <string name="misc_no_internet_label">Käynnistä sovellus uudelleen</string>
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
-    <string name="misc_no_premium_subscription">Tämä ominaisuus edellyttää, että sinulla on aktiivinen VRChat+-tilaus.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">Valmistellaan...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
