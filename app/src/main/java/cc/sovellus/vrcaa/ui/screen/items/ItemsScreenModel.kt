@@ -49,10 +49,10 @@ class ItemsScreenModel : StateScreenModel<ItemsScreenModel.ItemsState>(ItemsStat
     var currentIndex = mutableIntStateOf(0)
 
     init {
-        fetchPrints()
+        fetchItems()
     }
 
-    fun fetchPrints() {
+    fun fetchItems() {
         mutableState.value = ItemsState.Loading
         App.setLoadingText(R.string.loading_text_items)
         screenModelScope.launch {
