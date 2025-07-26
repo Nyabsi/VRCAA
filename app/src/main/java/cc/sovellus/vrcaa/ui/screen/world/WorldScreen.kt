@@ -95,7 +95,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.TimeZone
 
-class WorldInfoScreen(
+class WorldScreen(
     private val worldId: String,
     private val peek: Boolean = false
 ) : Screen {
@@ -104,18 +104,13 @@ class WorldInfoScreen(
 
     @Composable
     override fun Content() {
-        val model = rememberScreenModel { WorldInfoScreenModel(worldId) }
+        val model = rememberScreenModel { WorldScreenModel(worldId) }
         val state by model.state.collectAsState()
 
         when (val result = state) {
-            is WorldInfoScreenModel.WorldInfoState.Loading -> LoadingIndicatorScreen().Content()
-            is WorldInfoScreenModel.WorldInfoState.Failure -> HandleFailure()
-            is WorldInfoScreenModel.WorldInfoState.Result -> MultiChoiceHandler(
-                result.world,
-                result.instances,
-                model
-            )
-
+            is WorldScreenModel.WorldInfoState.Loading -> LoadingIndicatorScreen().Content()
+            is WorldScreenModel.WorldInfoState.Failure -> HandleFailure()
+            is WorldScreenModel.WorldInfoState.Result -> MultiChoiceHandler(model, result.world, result.instances)
             else -> {}
         }
     }
@@ -143,9 +138,9 @@ class WorldInfoScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(
+        model: WorldScreenModel,
         world: World?,
-        instances: MutableList<Pair<String, Instance?>>,
-        model: WorldInfoScreenModel
+        instances: List<Pair<String, Instance?>>,
     ) {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
@@ -433,8 +428,8 @@ class WorldInfoScreen(
 
     @Composable
     fun ShowInstances(
-        instances: MutableList<Pair<String, Instance?>>,
-        model: WorldInfoScreenModel
+        instances: List<Pair<String, Instance?>>,
+        model: WorldScreenModel
     ) {
         val dialogState = remember { mutableStateOf(false) }
 

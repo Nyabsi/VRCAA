@@ -28,6 +28,7 @@ import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
@@ -51,8 +52,8 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
     }
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun recentlyVisitedUpdated(worlds: MutableList<WorldCache>) {
-            recentlyVisitedFlow.value = worlds.toMutableStateList()
+        override fun updateRecentlyVisitedWorlds(worlds: List<WorldCache>) {
+            recentlyVisitedFlow.update { worlds.toMutableStateList() }
         }
 
         override fun startCacheRefresh() {
@@ -63,8 +64,6 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
             fetchContent()
             mutableState.value = HomeState.Result
         }
-
-        override fun profileUpdated(profile: User) {}
     }
 
     init {
@@ -81,9 +80,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
     }
 
     private fun fetchContent() {
-        screenModelScope.launch {
-            friendsListFlow.value = FriendManager.getFriends().toMutableStateList()
-            recentlyVisitedFlow.value = CacheManager.getRecent().toMutableStateList()
-        }
+        friendsListFlow.value = FriendManager.getFriends().toMutableStateList()
+        recentlyVisitedFlow.value = CacheManager.getRecentWorlds().toMutableStateList()
     }
 }

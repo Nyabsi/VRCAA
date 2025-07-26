@@ -29,11 +29,13 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
-class WorldInfoScreenModel(
+class WorldScreenModel(
     private val id: String,
-) : StateScreenModel<WorldInfoScreenModel.WorldInfoState>(WorldInfoState.Init) {
+) : StateScreenModel<WorldScreenModel.WorldInfoState>(WorldInfoState.Init) {
 
     private val context: Context = App.getContext()
 
@@ -43,12 +45,9 @@ class WorldInfoScreenModel(
         data object Failure : WorldInfoState()
         data class Result(
             val world: World,
-            val instances: MutableList<Pair<String, Instance?>>
+            val instances: List<Pair<String, Instance?>>
         ) : WorldInfoState()
     }
-
-    private lateinit var world: World
-    private val instances: MutableList<Pair<String, Instance?>> = ArrayList()
 
     var currentTabIndex = mutableIntStateOf(0)
     var selectedInstanceId = mutableStateOf("")
@@ -63,19 +62,19 @@ class WorldInfoScreenModel(
         screenModelScope.launch {
             val result = api.worlds.fetchWorldByWorldId(id)
 
-            result?.let {
-                world = it
+            result?.let { world ->
 
                 App.setLoadingText(R.string.loading_text_instances)
 
-                val instanceIds = it.instances.map { instance -> instance[0].toString() }
-                instanceIds.forEach { id ->
-                    api.instances.fetchInstance("${it.id}:${id}").let { instance ->
-                        instances.add(Pair(id, instance))
+                val instances = world.instances.map { instance ->
+                    instance[0] as String
+                }.distinct().map { id ->
+                    async {
+                        Pair(id, api.instances.fetchInstance("${world.id}:${id}"))
                     }
-                }
+                }.awaitAll()
 
-                mutableState.value = WorldInfoState.Result(it, instances)
+                mutableState.value = WorldInfoState.Result(world, instances)
             } ?: run {
                 mutableState.value = WorldInfoState.Failure
             }

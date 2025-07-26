@@ -34,11 +34,13 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
             mutableState.value = ProfileState.Result(profile)
         }
 
-        override fun startCacheRefresh() { }
+        override fun startCacheRefresh() {
+            mutableState.value = ProfileState.Loading
+        }
 
-        override fun endCacheRefresh() { fetchProfile() }
-
-        override fun recentlyVisitedUpdated(worlds: MutableList<CacheManager.WorldCache>) { }
+        override fun endCacheRefresh() {
+            fetchProfile()
+        }
     }
 
     init {

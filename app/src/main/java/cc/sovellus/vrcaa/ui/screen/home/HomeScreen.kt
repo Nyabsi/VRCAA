@@ -51,7 +51,7 @@ import cc.sovellus.vrcaa.ui.components.layout.RowItemWithFriends
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 
 class HomeScreen : Screen {
 
@@ -152,7 +152,7 @@ class HomeScreen : Screen {
                             RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
-                                onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                                onClick = { navigator.parent?.parent?.push(WorldScreen(world.id)) }
                             )
                         }
                     }
@@ -193,7 +193,7 @@ class HomeScreen : Screen {
                                 name = world.name,
                                 url = world.thumbnailUrl,
                                 friends = friends.filter { it.location == friend.location },
-                                onClick = { navigator.parent?.parent?.push(WorldInfoScreen(world.id)) }
+                                onClick = { navigator.parent?.parent?.push(WorldScreen(world.id)) }
                             )
                         }
                     }

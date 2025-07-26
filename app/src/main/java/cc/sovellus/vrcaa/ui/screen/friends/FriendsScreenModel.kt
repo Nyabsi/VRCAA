@@ -48,16 +48,14 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     }
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun profileUpdated(profile: User) {}
-
-        override fun startCacheRefresh() {}
+        override fun startCacheRefresh() {
+            mutableState.value = FriendsState.Loading
+        }
 
         override fun endCacheRefresh() {
             friendsStateFlow.value = FriendManager.getFriends().toMutableStateList()
             mutableState.value = FriendsState.Result
         }
-
-        override fun recentlyVisitedUpdated(worlds: MutableList<CacheManager.WorldCache>) {}
     }
 
     init {

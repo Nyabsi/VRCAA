@@ -51,8 +51,6 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     var currentSelectedIsFriend = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun profileUpdated(profile: User) { }
-
         override fun startCacheRefresh() {
             mutableState.value = FavoriteState.Loading
         }
@@ -61,8 +59,6 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
             fetchContent()
             mutableState.value = FavoriteState.Result
         }
-
-        override fun recentlyVisitedUpdated(worlds: MutableList<CacheManager.WorldCache>) { }
     }
 
     init {
