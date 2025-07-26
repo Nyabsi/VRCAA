@@ -278,7 +278,7 @@
     <string name="loading_text_icons">Încărcare iconițe…</string>
     <string name="loading_text_prints">Încărcare imprimeuri…</string>
     <string name="loading_text_stickers">Încărcare autocolante…</string>
-    <string name="loading_text_emojis">Încărcare autocolante…</string>
+    <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Încărcare obiecte…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teme</string>
