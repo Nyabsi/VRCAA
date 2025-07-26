@@ -24,23 +24,26 @@ import cc.sovellus.vrcaa.helper.JsonHelper
 object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
     interface FriendListener {
-        fun onUpdateFriends(friends: MutableList<Friend>)
+        fun onUpdateFriends(friends: List<Friend>)
     }
 
     private var friends: MutableList<Friend> = ArrayList()
 
     fun setFriends(friends: MutableList<Friend>) {
         this.friends = friends
+        val listSnapshot = FriendManager.friends.toList()
         getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
+            listener.onUpdateFriends(listSnapshot)
         }
     }
 
     fun addFriend(friend: Friend) {
         if (friends.find { it.id == friend.id } == null) {
             friends.add(friend)
+
+            val listSnapshot = friends.toList()
             getListeners().forEach { listener ->
-                listener.onUpdateFriends(friends)
+                listener.onUpdateFriends(listSnapshot)
             }
         }
     }
@@ -52,8 +55,9 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
             friends.remove(friend)
         }
 
+        val listSnapshot = friends.toList()
         getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
+            listener.onUpdateFriends(listSnapshot)
         }
     }
 
@@ -71,8 +75,9 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
             } catch (_: Exception) { }
         }
 
+        val listSnapshot = friends.toList()
         getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
+            listener.onUpdateFriends(listSnapshot)
         }
     }
 
@@ -82,8 +87,10 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
             it.location = location
             friends.set(friends.indexOf(it), it)
         }
+
+        val listSnapshot = friends.toList()
         getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
+            listener.onUpdateFriends(listSnapshot)
         }
     }
 
@@ -94,12 +101,14 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
             friends.set(friends.indexOf(it), it)
         }
 
+        val listSnapshot = friends.toList()
         getListeners().forEach { listener ->
-            listener.onUpdateFriends(friends)
+            listener.onUpdateFriends(listSnapshot)
         }
     }
 
-    fun getFriends(): MutableList<Friend> {
-        return friends
+    fun getFriends(): List<Friend> {
+        val listSnapshot = friends.toList()
+        return listSnapshot
     }
 }

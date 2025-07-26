@@ -74,6 +74,7 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
     }
 
     fun getFeed(): List<Feed> {
-        return feedList.toList()
+        val listSnapshot = feedList.toList()
+        return listSnapshot
     }
 }

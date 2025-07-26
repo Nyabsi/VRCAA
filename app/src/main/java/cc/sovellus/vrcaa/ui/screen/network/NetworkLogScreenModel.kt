@@ -25,6 +25,7 @@ import cc.sovellus.vrcaa.manager.DebugManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NetworkLogScreenModel : ScreenModel {
@@ -34,15 +35,13 @@ class NetworkLogScreenModel : ScreenModel {
     var currentIndex = mutableIntStateOf(0)
 
     private val listener = object : DebugManager.DebugListener {
-        override fun onUpdateMetadata(metadata: MutableList<DebugManager.DebugMetadataData>) {
+        override fun onUpdateMetadata(metadata: List<DebugManager.DebugMetadataData>) {
             metadataStateFlow.value = metadata.toMutableStateList()
         }
     }
 
     init {
         DebugManager.addListener(listener)
-        val metadata = DebugManager.getMetadata()
-        if (metadata.isNotEmpty())
-            metadataStateFlow.value = metadata
+        metadataStateFlow.update { DebugManager.getMetadata().toMutableStateList() }
     }
 }

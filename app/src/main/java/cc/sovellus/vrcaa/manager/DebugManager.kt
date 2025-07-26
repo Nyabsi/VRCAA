@@ -16,14 +16,12 @@
 
 package cc.sovellus.vrcaa.manager
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import cc.sovellus.vrcaa.base.BaseManager
 
 object DebugManager : BaseManager<DebugManager.DebugListener>() {
 
     interface DebugListener {
-        fun onUpdateMetadata(metadata: MutableList<DebugMetadataData>)
+        fun onUpdateMetadata(metadata: List<DebugMetadataData>)
     }
 
     enum class DebugType {
@@ -45,12 +43,15 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
 
     fun addDebugMetadata(metadata: DebugMetadataData) {
         metadataList.add(metadata)
+
+        val listSnapshot = metadataList.toList()
         getListeners().forEach { listener ->
-            listener.onUpdateMetadata(metadataList)
+            listener.onUpdateMetadata(listSnapshot)
         }
     }
 
-    fun getMetadata(): SnapshotStateList<DebugMetadataData> {
-        return metadataList.toMutableStateList()
+    fun getMetadata(): List<DebugMetadataData> {
+        val listSnapshot = metadataList.toList()
+        return listSnapshot
     }
 }

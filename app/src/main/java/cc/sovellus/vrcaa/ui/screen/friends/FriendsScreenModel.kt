@@ -27,6 +27,7 @@ import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendsState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
 
@@ -42,8 +43,8 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     var currentIndex = mutableIntStateOf(0)
 
     private val listener = object : FriendManager.FriendListener {
-        override fun onUpdateFriends(friends: MutableList<Friend>) {
-            friendsStateFlow.value = friends.toMutableStateList()
+        override fun onUpdateFriends(friends: List<Friend>) {
+            friendsStateFlow.update { friends.toMutableStateList() }
         }
     }
 

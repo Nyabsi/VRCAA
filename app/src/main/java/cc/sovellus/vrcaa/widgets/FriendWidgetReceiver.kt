@@ -33,7 +33,7 @@ class FriendWidgetReceiver : GlanceAppWidgetReceiver() {
     private val coroutineScope = MainScope()
 
     val listener = object : FriendManager.FriendListener {
-        override fun onUpdateFriends(friends: MutableList<Friend>) {
+        override fun onUpdateFriends(friends: List<Friend>) {
             val intent = Intent(App.getContext(), FriendWidgetReceiver::class.java).apply {
                 action = "FRIEND_LOCATION_UPDATE"
             }
