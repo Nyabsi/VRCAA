@@ -37,6 +37,7 @@ import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Unarchive
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -224,7 +225,7 @@ class ItemsScreen : Screen {
         } else {
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
-                    0 -> GridCells.Adaptive(192.dp)
+                    0 -> GridCells.Adaptive(133.dp)
                     else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                 },
                 contentPadding = PaddingValues(
@@ -236,19 +237,21 @@ class ItemsScreen : Screen {
                 content = {
                     items(items.size) {
                         val item = items[it]
-                        GlideImage(
-                            model = item.imageUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                                .height(192.dp)
-                                .width(192.dp)
-                                .clip(RoundedCornerShape(10)),
-                            contentScale = ContentScale.FillBounds,
-                            loading = placeholder(R.drawable.image_placeholder),
-                            failure = placeholder(R.drawable.image_placeholder)
-                        )
+                        Card(Modifier.padding(4.dp)) {
+                            GlideImage(
+                                model = item.imageUrl,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(4.dp)
+                                    .height(100.dp)
+                                    .width(133.dp)
+                                    .clip(RoundedCornerShape(10)),
+                                contentScale = ContentScale.FillBounds,
+                                loading = placeholder(R.drawable.image_placeholder),
+                                failure = placeholder(R.drawable.image_placeholder)
+                            )
+                        }
                     }
                 }
             )
