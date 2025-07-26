@@ -411,6 +411,7 @@
     <string name="database_page_glide_clean_cache">Clean Cache</string>
     <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
     <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
 
     <!-- Inventory -->
 
