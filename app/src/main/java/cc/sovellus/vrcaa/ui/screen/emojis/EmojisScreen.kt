@@ -302,7 +302,7 @@ class EmojisScreen : Screen {
         } else {
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
-                    0 -> GridCells.Adaptive(172.dp)
+                    0 -> GridCells.Adaptive(132.dp)
                     else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                 },
                 contentPadding = PaddingValues(
@@ -321,8 +321,8 @@ class EmojisScreen : Screen {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(4.dp)
-                                    .height(172.dp)
-                                    .width(172.dp)
+                                    .height(132.dp)
+                                    .width(132.dp)
                                     .clip(RoundedCornerShape(10))
                                     .clickable(onClick = {
                                         model.previewItem.value = item
