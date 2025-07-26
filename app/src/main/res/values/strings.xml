@@ -281,6 +281,8 @@
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
+    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_button_apply">Apply</string>
 
     <!-- Logout dialog -->
 

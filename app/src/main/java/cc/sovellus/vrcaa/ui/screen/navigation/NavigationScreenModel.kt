@@ -147,15 +147,9 @@ class NavigationScreenModel : ScreenModel {
         preferences.avatarProvider = "avtrdb"
         preferences.groupsAmount = 50
         groupsAmount.intValue = 50
-
-        Toast.makeText(
-            context,
-            "Reset settings.",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
-    fun applySettings(silent: Boolean = false) {
+    fun applySettings() {
         preferences.searchFeaturedWorlds = featuredWorlds.value
         preferences.sortWorlds = sortWorlds.value
         preferences.worldsAmount = worldsAmount.intValue
@@ -163,14 +157,6 @@ class NavigationScreenModel : ScreenModel {
         preferences.groupsAmount = groupsAmount.intValue
         preferences.avatarsAmount = avatarsAmount.intValue
         preferences.avatarProvider = avatarProvider.value
-
-        if (!silent) {
-            Toast.makeText(
-                context,
-                "Applied settings.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     fun getCurrentProfileValues() {
