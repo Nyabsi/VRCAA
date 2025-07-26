@@ -110,11 +110,13 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun isWorldCached(worldId: String): Boolean {
-        return worldList.any { it.id == worldId }
+        val listSnapshot = worldList.toList()
+        return listSnapshot.any { it.id == worldId }
     }
 
     fun getWorld(worldId: String): WorldCache {
-        return worldList.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
+        val listSnapshot = worldList.toList()
+        return listSnapshot.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
     }
 
     fun addWorld(world: World) {

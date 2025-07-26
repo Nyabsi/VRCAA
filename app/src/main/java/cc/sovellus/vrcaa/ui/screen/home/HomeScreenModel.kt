@@ -46,8 +46,8 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
     var recentlyVisited = recentlyVisitedFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
-        override fun onUpdateFriends(friends: MutableList<Friend>) {
-            friendsListFlow.value = friends.toMutableStateList()
+        override fun onUpdateFriends(friends: List<Friend>) {
+            friendsListFlow.update { friends.toMutableStateList() }
         }
     }
 
