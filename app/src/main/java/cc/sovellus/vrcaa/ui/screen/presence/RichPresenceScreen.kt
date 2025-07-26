@@ -179,6 +179,7 @@ class RichPresenceScreen : Screen {
                                 )
                             },
                             modifier = Modifier.clickable(
+                                enabled = model.enabled.value,
                                 onClick = {
                                     model.toggle()
                                 }
@@ -194,6 +195,7 @@ class RichPresenceScreen : Screen {
                                 )
                             },
                             modifier = Modifier.clickable(
+                                enabled = model.enabled.value,
                                 onClick = {
                                     if (model.token.value.isNotEmpty())
                                         dialogState.value = true
