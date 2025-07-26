@@ -1012,119 +1012,123 @@ class NavigationScreen : Screen {
                             .zIndex(1f),
                         shadowElevation = 8.dp
                     ) {
-                        Column {
-                            CacheManager.getProfile()?.let {
-                                Box {
-                                    QuickMenuCard(
-                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                        displayName = it.displayName,
-                                        statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
-                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                        statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                        tags = it.tags,
-                                        badges = it.badges
-                                    )
+                        LazyColumn {
+                            item {
+                                CacheManager.getProfile()?.let {
+                                    Box(modifier = Modifier.fillMaxWidth()) {
+                                        QuickMenuCard(
+                                            thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                            iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
+                                            displayName = it.displayName,
+                                            statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
+                                            trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                            statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
+                                            tags = it.tags,
+                                            badges = it.badges
+                                        )
 
-                                    Box(
-                                        modifier = Modifier
-                                            .align(Alignment.TopEnd)
-                                            .padding(4.dp)
-                                            .background(Color.Black.copy(alpha = 0.6f), shape = CircleShape)
-                                    ) {
-                                        IconButton(
-                                            onClick = {
-                                                isQuickMenuExpanded = false
-                                                showProfileSheet = true
-                                            },
-                                            modifier = Modifier.size(36.dp)
+                                        Box(
+                                            modifier = Modifier
+                                                .align(Alignment.TopEnd)
+                                                .padding(4.dp)
+                                                .background(Color.Black.copy(alpha = 0.6f), shape = CircleShape)
                                         ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Edit,
-                                                contentDescription = null,
-                                                tint = Color.White
-                                            )
+                                            IconButton(
+                                                onClick = {
+                                                    isQuickMenuExpanded = false
+                                                    showProfileSheet = true
+                                                },
+                                                modifier = Modifier.size(36.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Edit,
+                                                    contentDescription = null,
+                                                    tint = Color.White
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
 
-                            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)) {
+                            item {
+                                Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)) {
 
-                                val options = stringArrayResource(R.array.inventory_selection_options)
-                                val icons = listOf(Icons.Default.PhotoLibrary, Icons.Default.Photo, Icons.Default.Cabin, Icons.Filled.Person, Icons.Default.Group, Icons.Default.EmojiEmotions, Icons.AutoMirrored.Filled.StickyNote2, Icons.Default.Print, Icons.Default.Backpack)
+                                    val options = stringArrayResource(R.array.inventory_selection_options)
+                                    val icons = listOf(Icons.Default.PhotoLibrary, Icons.Default.Photo, Icons.Default.Cabin, Icons.Filled.Person, Icons.Default.Group, Icons.Default.EmojiEmotions, Icons.AutoMirrored.Filled.StickyNote2, Icons.Default.Print, Icons.Default.Backpack)
 
-                                options.forEachIndexed { index, label ->
+                                    options.forEachIndexed { index, label ->
 
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 4.dp, horizontal = 4.dp)
-                                            .clip(RoundedCornerShape(80))
-                                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f))
-                                            .clickable(onClick = {
-                                                when (index) {
-                                                    0 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(GalleryScreen())
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 4.dp, horizontal = 4.dp)
+                                                .clip(RoundedCornerShape(80))
+                                                .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f))
+                                                .clickable(onClick = {
+                                                    when (index) {
+                                                        0 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(GalleryScreen())
+                                                            }
+                                                        }
+                                                        1 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(IconGalleryScreen())
+                                                            }
+                                                        }
+                                                        2 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(WorldsScreen(it.displayName, it.id, true))
+                                                            }
+                                                        }
+                                                        3 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(AvatarsScreen())
+                                                            }
+                                                        }
+                                                        4 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(UserGroupsScreen(it.displayName, it.id))
+                                                            }
+                                                        }
+                                                        5 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(EmojisScreen())
+                                                            }
+                                                        }
+                                                        6 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(StickersScreen())
+                                                            }
+                                                        }
+                                                        7 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(PrintsScreen(it.id))
+                                                            }
+                                                        }
+                                                        8 -> {
+                                                            CacheManager.getProfile()?.let {
+                                                                navigator.push(ItemsScreen())
+                                                            }
                                                         }
                                                     }
-                                                    1 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(IconGalleryScreen())
-                                                        }
-                                                    }
-                                                    2 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(WorldsScreen(it.displayName, it.id, true))
-                                                        }
-                                                    }
-                                                    3 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(AvatarsScreen())
-                                                        }
-                                                    }
-                                                    4 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(UserGroupsScreen(it.displayName, it.id))
-                                                        }
-                                                    }
-                                                    5 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(EmojisScreen())
-                                                        }
-                                                    }
-                                                    6 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(StickersScreen())
-                                                        }
-                                                    }
-                                                    7 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(PrintsScreen(it.id))
-                                                        }
-                                                    }
-                                                    8 -> {
-                                                        CacheManager.getProfile()?.let {
-                                                            navigator.push(ItemsScreen())
-                                                        }
-                                                    }
-                                                }
-                                                isQuickMenuExpanded = false
-                                            }).padding(vertical = 16.dp, horizontal = 16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            imageVector = icons[index],
-                                            contentDescription = null
-                                        )
+                                                    isQuickMenuExpanded = false
+                                                }).padding(vertical = 16.dp, horizontal = 16.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Icon(
+                                                imageVector = icons[index],
+                                                contentDescription = null
+                                            )
 
-                                        Text(
-                                            text = label,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.padding(start = 4.dp)
-                                        )
+                                            Text(
+                                                text = label,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                                modifier = Modifier.padding(start = 4.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }

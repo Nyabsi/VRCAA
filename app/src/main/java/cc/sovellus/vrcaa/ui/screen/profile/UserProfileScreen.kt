@@ -353,215 +353,223 @@ class UserProfileScreen(
                             .zIndex(1f),
                         shadowElevation = 8.dp
                     ) {
-                        Column {
-                            profile.let {
-                                QuickMenuCard(
-                                    thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                    iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                    displayName = it.displayName,
-                                    statusDescription = it.statusDescription.ifEmpty {
-                                        StatusHelper.getStatusFromString(
-                                            it.status
-                                        ).toString()
-                                    },
-                                    trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
-                                        .toColor(),
-                                    statusColor = StatusHelper.getStatusFromString(it.status)
-                                        .toColor(),
-                                    tags = it.tags,
-                                    badges = it.badges
-                                )
+                        LazyColumn {
+                            item {
+                                profile.let {
+                                    QuickMenuCard(
+                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
+                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
+                                        displayName = it.displayName,
+                                        statusDescription = it.statusDescription.ifEmpty {
+                                            StatusHelper.getStatusFromString(
+                                                it.status
+                                            ).toString()
+                                        },
+                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
+                                            .toColor(),
+                                        statusColor = StatusHelper.getStatusFromString(it.status)
+                                            .toColor(),
+                                        tags = it.tags,
+                                        badges = it.badges
+                                    )
+                                }
                             }
 
-                            Column(
-                                modifier = Modifier.padding(
-                                    start = 8.dp,
-                                    end = 8.dp,
-                                    top = 16.dp,
-                                    bottom = 16.dp
-                                )
-                            ) {
+                            item {
+                                Column(
+                                    modifier = Modifier.padding(
+                                        start = 8.dp,
+                                        end = 8.dp,
+                                        top = 16.dp,
+                                        bottom = 16.dp
+                                    )
+                                ) {
 
-                                val options: MutableList<String> = mutableListOf<String>()
-                                val icons: MutableList<ImageVector> = mutableListOf<ImageVector>()
+                                    val options: MutableList<String> = mutableListOf<String>()
+                                    val icons: MutableList<ImageVector> =
+                                        mutableListOf<ImageVector>()
 
-                                var notificationIndex = -1
-                                var favoriteIndex = -1
-                                var avatarIndex = -1
-                                var worldsIndex = -1
-                                var groupsIndex = -1
-                                var favoritesIndex = -1
-                                var copyIndex = -1
+                                    var notificationIndex = -1
+                                    var favoriteIndex = -1
+                                    var avatarIndex = -1
+                                    var worldsIndex = -1
+                                    var groupsIndex = -1
+                                    var favoritesIndex = -1
+                                    var copyIndex = -1
 
-                                if (profile.isFriend) {
-                                    options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
-                                    icons.add(Icons.Default.NotificationsActive)
-                                    notificationIndex = options.size - 1
-                                }
-
-                                if (profile.isFriend) {
-                                    if (FavoriteManager.isFavorite("friend", profile.id)) {
-                                        options.add(stringResource(R.string.favorite_label_remove))
-                                        icons.add(Icons.Default.Star)
-                                        favoriteIndex = options.size - 1
-                                    } else {
-                                        options.add(stringResource(R.string.favorite_label_add))
-                                        icons.add(Icons.Default.Star)
-                                        favoriteIndex = options.size - 1
+                                    if (profile.isFriend) {
+                                        options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
+                                        icons.add(Icons.Default.NotificationsActive)
+                                        notificationIndex = options.size - 1
                                     }
-                                }
 
-                                options.add(stringResource(R.string.user_overlay_find_avatar))
-                                icons.add(Icons.Default.Person)
-                                avatarIndex = options.size - 1
+                                    if (profile.isFriend) {
+                                        if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                            options.add(stringResource(R.string.favorite_label_remove))
+                                            icons.add(Icons.Default.Star)
+                                            favoriteIndex = options.size - 1
+                                        } else {
+                                            options.add(stringResource(R.string.favorite_label_add))
+                                            icons.add(Icons.Default.Star)
+                                            favoriteIndex = options.size - 1
+                                        }
+                                    }
 
-                                options.add(stringResource(R.string.user_overlay_worlds))
-                                icons.add(Icons.Default.Cabin)
-                                worldsIndex = options.size - 1
+                                    options.add(stringResource(R.string.user_overlay_find_avatar))
+                                    icons.add(Icons.Default.Person)
+                                    avatarIndex = options.size - 1
 
-                                options.add(stringResource(R.string.user_overlay_groups))
-                                icons.add(Icons.Default.Group)
-                                groupsIndex = options.size - 1
+                                    options.add(stringResource(R.string.user_overlay_worlds))
+                                    icons.add(Icons.Default.Cabin)
+                                    worldsIndex = options.size - 1
 
-                                options.add(stringResource(R.string.user_overlay_favorites))
-                                icons.add(Icons.Default.Star)
-                                favoritesIndex = options.size - 1
+                                    options.add(stringResource(R.string.user_overlay_groups))
+                                    icons.add(Icons.Default.Group)
+                                    groupsIndex = options.size - 1
 
-                                options.add(stringResource(R.string.copy_id_label))
-                                icons.add(Icons.Default.ContentCopy)
-                                copyIndex = options.size - 1
+                                    options.add(stringResource(R.string.user_overlay_favorites))
+                                    icons.add(Icons.Default.Star)
+                                    favoritesIndex = options.size - 1
 
-                                options.forEachIndexed { index, label ->
+                                    options.add(stringResource(R.string.copy_id_label))
+                                    icons.add(Icons.Default.ContentCopy)
+                                    copyIndex = options.size - 1
 
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 4.dp, horizontal = 4.dp)
-                                            .clip(RoundedCornerShape(80))
-                                            .background(
-                                                MaterialTheme.colorScheme.secondary.copy(
-                                                    alpha = 0.12f
+                                    options.forEachIndexed { index, label ->
+
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 4.dp, horizontal = 4.dp)
+                                                .clip(RoundedCornerShape(80))
+                                                .background(
+                                                    MaterialTheme.colorScheme.secondary.copy(
+                                                        alpha = 0.12f
+                                                    )
                                                 )
-                                            )
-                                            .clickable(onClick = {
-                                                when (index) {
-                                                    notificationIndex -> {
-                                                        navigator.push(
-                                                            NotificationScreen(
-                                                                profile.id,
-                                                                profile.displayName
+                                                .clickable(onClick = {
+                                                    when (index) {
+                                                        notificationIndex -> {
+                                                            navigator.push(
+                                                                NotificationScreen(
+                                                                    profile.id,
+                                                                    profile.displayName
+                                                                )
                                                             )
-                                                        )
-                                                    }
+                                                        }
 
-                                                    favoriteIndex -> {
-                                                        if (FavoriteManager.isFavorite(
-                                                                "friend",
-                                                                profile.id
-                                                            )
-                                                        ) {
-                                                            model.removeFavorite { result ->
-                                                                if (result) {
+                                                        favoriteIndex -> {
+                                                            if (FavoriteManager.isFavorite(
+                                                                    "friend",
+                                                                    profile.id
+                                                                )
+                                                            ) {
+                                                                model.removeFavorite { result ->
+                                                                    if (result) {
+                                                                        Toast.makeText(
+                                                                            context,
+                                                                            context.getString(R.string.favorite_toast_favorite_removed)
+                                                                                .format(profile.displayName),
+                                                                            Toast.LENGTH_SHORT
+                                                                        ).show()
+                                                                    } else {
+                                                                        Toast.makeText(
+                                                                            context,
+                                                                            context.getString(R.string.favorite_toast_favorite_removed_failed)
+                                                                                .format(profile.displayName),
+                                                                            Toast.LENGTH_SHORT
+                                                                        ).show()
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                favoriteDialogShown = true
+                                                            }
+                                                        }
+
+                                                        avatarIndex -> {
+                                                            model.findAvatar { avatarId ->
+                                                                if (profile.profilePicOverride.isNotEmpty()) {
                                                                     Toast.makeText(
                                                                         context,
-                                                                        context.getString(R.string.favorite_toast_favorite_removed)
-                                                                            .format(profile.displayName),
+                                                                        context.getString(R.string.profile_user_avatar_unreachable),
+                                                                        Toast.LENGTH_SHORT
+                                                                    ).show()
+                                                                    return@findAvatar Unit
+                                                                }
+                                                                if (avatarId == null) {
+                                                                    Toast.makeText(
+                                                                        context,
+                                                                        context.getString(R.string.profile_user_avatar_private),
                                                                         Toast.LENGTH_SHORT
                                                                     ).show()
                                                                 } else {
-                                                                    Toast.makeText(
-                                                                        context,
-                                                                        context.getString(R.string.favorite_toast_favorite_removed_failed)
-                                                                            .format(profile.displayName),
-                                                                        Toast.LENGTH_SHORT
-                                                                    ).show()
+                                                                    navigator.push(
+                                                                        AvatarScreen(avatarId)
+                                                                    )
                                                                 }
                                                             }
-                                                        } else {
-                                                            favoriteDialogShown = true
                                                         }
-                                                    }
 
-                                                    avatarIndex -> {
-                                                        model.findAvatar { avatarId ->
-                                                            if (profile.profilePicOverride.isNotEmpty()) {
-                                                                Toast.makeText(
-                                                                    context,
-                                                                    context.getString(R.string.profile_user_avatar_unreachable),
-                                                                    Toast.LENGTH_SHORT
-                                                                ).show()
-                                                                return@findAvatar Unit
-                                                            }
-                                                            if (avatarId == null) {
-                                                                Toast.makeText(
-                                                                    context,
-                                                                    context.getString(R.string.profile_user_avatar_private),
-                                                                    Toast.LENGTH_SHORT
-                                                                ).show()
-                                                            } else {
-                                                                navigator.push(
-                                                                    AvatarScreen(avatarId)
+                                                        worldsIndex -> {
+                                                            navigator.push(
+                                                                WorldsScreen(
+                                                                    profile.displayName,
+                                                                    profile.id,
+                                                                    false
                                                                 )
-                                                            }
+                                                            )
+                                                        }
+
+                                                        groupsIndex -> {
+                                                            navigator.push(
+                                                                UserGroupsScreen(
+                                                                    profile.displayName,
+                                                                    profile.id
+                                                                )
+                                                            )
+                                                        }
+
+                                                        favoritesIndex -> {
+
+                                                        }
+
+                                                        copyIndex -> {
+                                                            val clipboard =
+                                                                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                                            val clip =
+                                                                ClipData.newPlainText(
+                                                                    null,
+                                                                    profile.id
+                                                                )
+                                                            clipboard.setPrimaryClip(clip)
+
+                                                            Toast.makeText(
+                                                                context,
+                                                                context.getString(R.string.copied_toast)
+                                                                    .format(
+                                                                        profile.displayName
+                                                                    ),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
                                                         }
                                                     }
+                                                    isQuickMenuExpanded = false
+                                                })
+                                                .padding(vertical = 16.dp, horizontal = 16.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Icon(
+                                                imageVector = icons[index],
+                                                contentDescription = null
+                                            )
 
-                                                    worldsIndex -> {
-                                                        navigator.push(
-                                                            WorldsScreen(
-                                                                profile.displayName,
-                                                                profile.id,
-                                                                false
-                                                            )
-                                                        )
-                                                    }
-
-                                                    groupsIndex -> {
-                                                        navigator.push(
-                                                            UserGroupsScreen(
-                                                                profile.displayName,
-                                                                profile.id
-                                                            )
-                                                        )
-                                                    }
-
-                                                    favoritesIndex -> {
-
-                                                    }
-
-                                                    copyIndex -> {
-                                                        val clipboard =
-                                                            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                                        val clip =
-                                                            ClipData.newPlainText(null, profile.id)
-                                                        clipboard.setPrimaryClip(clip)
-
-                                                        Toast.makeText(
-                                                            context,
-                                                            context.getString(R.string.copied_toast)
-                                                                .format(
-                                                                    profile.displayName
-                                                                ),
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                    }
-                                                }
-                                                isQuickMenuExpanded = false
-                                            })
-                                            .padding(vertical = 16.dp, horizontal = 16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            imageVector = icons[index],
-                                            contentDescription = null
-                                        )
-
-                                        Text(
-                                            text = label,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.padding(start = 4.dp)
-                                        )
+                                            Text(
+                                                text = label,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                                modifier = Modifier.padding(start = 4.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }
