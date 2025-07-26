@@ -109,7 +109,7 @@
     <string name="tabs_label_settings">Настройки</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA теперь следит за вашими друзьями в фоновом режиме.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA был убит вашей системой! Проверьте https://dontkillmyapp.com/ для дополнительной информации.</string>
     <string name="service_notification_rich_presence">VRCAA теперь сообщает информацию о Rich Presence</string>
     <string name="notification_service_title_online">Друг появился в сети!</string>
     <string name="notification_service_description_online">Ваш друг, %1$s появился в сети!</string>
@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">Пожалуйста, убедитесь, что вы подключены к Интернету, это приложение не может работать без подключения к Интернету.</string>
     <string name="misc_no_internet_label">Перезапустить приложение</string>
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
-    <string name="misc_no_premium_subscription">Эта функция требует активной подписки VRChat+.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">Инициализация…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -225,8 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">Профиль обновлён.</string>
     <string name="profile_edit_dialog_toast_cancelled">Изменения были отменены.</string>
     <string name="profile_edit_dialog_title_pronouns">Местоимения</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">Отменить</string>
+    <string name="profile_edit_dialog_button_apply">Применить</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Вы уверены?</string>
     <string name="logout_dialog_description">Нажав «Продолжить» ниже вы выйдете из VRCAA и снова войдите в систему, чтобы продолжать использовать приложение.</string>
@@ -278,7 +278,7 @@
     <string name="loading_text_icons">Загрузка иконок…</string>
     <string name="loading_text_prints">Загрузка печатей…</string>
     <string name="loading_text_stickers">Загрузка стикеров…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
+    <string name="loading_text_emojis">Загрузка эмодзи…</string>
     <string name="loading_text_items">Загрузка предметов...</string>
     <!-- Theming -->
     <string name="theme_page_title">Тема</string>
@@ -325,7 +325,7 @@
     <string name="database_page_glide_clean_cache">Очистить кэш</string>
     <string name="database_page_glide_clean_cache_description">Очистка кэша может увеличить время загрузки и уменьшить отзывчивость приложения</string>
     <string name="database_page_glide_clean_cache_toast">Кэш очищен!</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_toast_recovery_failed">Не удалось восстановить базу данных из резервной копии! Вы уверены, что выбрали верную резервную копию базы данных?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Галерея</item>
