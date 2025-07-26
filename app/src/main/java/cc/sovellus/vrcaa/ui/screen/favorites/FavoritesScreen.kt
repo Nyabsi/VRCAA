@@ -60,7 +60,7 @@ import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 
 class FavoritesScreen : Screen {
 
@@ -188,7 +188,7 @@ class FavoritesScreen : Screen {
                     items(item.value) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
-                                navigator.parent?.parent?.push(WorldInfoScreen(it.id))
+                                navigator.parent?.parent?.push(WorldScreen(it.id))
                             }
                         }
                     }

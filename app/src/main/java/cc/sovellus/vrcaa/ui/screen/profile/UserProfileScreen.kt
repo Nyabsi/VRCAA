@@ -45,18 +45,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Reply
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Reply
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -81,7 +77,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -95,7 +90,6 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
-import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.InstanceCard
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
@@ -104,12 +98,10 @@ import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
-import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
-import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -285,7 +277,7 @@ class UserProfileScreen(
                                         modifier = Modifier.padding(top = 16.dp)
                                     ) {
                                         InstanceCard(profile = profile, instance = instance) {
-                                            navigator.push(WorldInfoScreen(instance.worldId))
+                                            navigator.push(WorldScreen(instance.worldId))
                                         }
                                     }
                                 }

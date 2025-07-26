@@ -278,16 +278,17 @@ class PipelineService : Service(), CoroutineScope {
                     if (user.travelingToLocation.contains("wrld_")) {
                         launch {
                             val location = LocationHelper.parseLocationInfo(user.travelingToLocation)
-                            val instance = api.instances.fetchInstance(user.travelingToLocation)
+                            val instance = api.instances.fetchInstance(user.location)
                             instance?.let {
-                                if (CacheManager.isWorldCached(it.id))
+                                if (CacheManager.isWorldCached(it.id)) {
                                     CacheManager.updateWorld(instance.world)
-                                else
+                                } else {
                                     CacheManager.addWorld(instance.world)
-                                CacheManager.addRecent(instance.world)
+                                }
                                 if (preferences.richPresenceEnabled) {
                                     GatewayManager.updateWorld(instance.world.name, "${location.instanceType} #${instance.name} (${instance.nUsers} of ${instance.capacity})", instance.world.imageUrl, user.user.status, instance.worldId)
                                 }
+                                CacheManager.addRecentWorld(instance.world)
                             }
                         }
                     }
@@ -453,7 +454,7 @@ class PipelineService : Service(), CoroutineScope {
             scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
         } catch (_:  Throwable) {
             // TODO:  promt the user to follow "do not kill my app"
-            // . . . Should we abort here as this is basicslly unrecoverable error? 
+            // . . . Should we abort here as this is basicslly unrecoverable error?
             Runtime.getRuntime().exit(1)
         }
         return START_STICKY

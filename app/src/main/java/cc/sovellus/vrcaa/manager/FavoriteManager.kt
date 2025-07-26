@@ -68,11 +68,11 @@ object FavoriteManager : BaseManager<Any>() {
             }
         }
 
-        val worldGroupsDeferred = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_WORLD) }
-        val avatarGroupsDeferred = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_AVATAR) }
-        val friendGroupsDeferred = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_FRIEND) }
+        val worldGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_WORLD) }.await()
+        val avatarGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_AVATAR) }.await()
+        val friendGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_FRIEND) }.await()
 
-        val worldGroupJobs = worldGroupsDeferred.await()?.map { group ->
+        worldGroups?.map { group ->
             async {
                 val worlds = api.favorites.fetchFavoriteWorlds(group.name)
                 val metadataList = worlds.map {
@@ -84,9 +84,9 @@ object FavoriteManager : BaseManager<Any>() {
                     group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
                 )
             }
-        } ?: emptyList()
+        }?.awaitAll()
 
-        val avatarGroupJobs = avatarGroupsDeferred.await()?.map { group ->
+        avatarGroups?.map { group ->
             async {
                 val avatars = api.favorites.fetchFavoriteAvatars(group.name)
                 val metadataList = avatars.map {
@@ -98,9 +98,9 @@ object FavoriteManager : BaseManager<Any>() {
                     group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
                 )
             }
-        } ?: emptyList()
+        }?.awaitAll()
 
-        val friendGroupJobs = friendGroupsDeferred.await()?.map { group ->
+        friendGroups?.map { group ->
             async {
                 val friends = api.favorites.fetchFavorites(FavoriteType.FAVORITE_FRIEND, group.name)
                 val metadataList = friends.map {
@@ -112,11 +112,8 @@ object FavoriteManager : BaseManager<Any>() {
                     group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
                 )
             }
-        } ?: emptyList()
-
-        (worldGroupJobs + avatarGroupJobs + friendGroupJobs).awaitAll()
+        }?.awaitAll()
     }
-
 
     fun getAvatarList(): SnapshotStateMap<String, SnapshotStateList<FavoriteMetadata>> {
         return avatarList

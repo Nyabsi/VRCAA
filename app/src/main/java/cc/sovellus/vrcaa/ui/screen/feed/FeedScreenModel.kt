@@ -46,16 +46,14 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
     }
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun profileUpdated(profile: User) { }
-
-        override fun startCacheRefresh() { }
+        override fun startCacheRefresh() {
+            mutableState.value = FeedState.Loading
+        }
 
         override fun endCacheRefresh() {
             feedStateFlow.value = FeedManager.getFeed().toMutableStateList()
             mutableState.value = FeedState.Result
         }
-
-        override fun recentlyVisitedUpdated(worlds: MutableList<CacheManager.WorldCache>) { }
     }
 
     init {

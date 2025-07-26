@@ -60,7 +60,7 @@ import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreenModel
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreenModel.WorldsState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -195,7 +195,7 @@ class WorldsScreen(
                                         name = world.name,
                                         url = world.thumbnailImageUrl
                                     ) {
-                                        navigator.push(WorldInfoScreen(world.id))
+                                        navigator.push(WorldScreen(world.id))
                                     }
                                 }
                             }

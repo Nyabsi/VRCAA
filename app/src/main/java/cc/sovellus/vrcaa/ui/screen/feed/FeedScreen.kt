@@ -43,7 +43,7 @@ import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 
 @Composable
 fun FeedList(feed: SnapshotStateList<FeedManager.Feed>, filter: Boolean = false) {
@@ -121,9 +121,9 @@ fun FeedList(feed: SnapshotStateList<FeedManager.Feed>, filter: Boolean = false)
                         resourceStringTitle = R.string.feed_location_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(WorldInfoScreen(item.worldId))
+                                navigator.parent?.push(WorldScreen(item.worldId))
                             } else {
-                                navigator.parent?.parent?.push(WorldInfoScreen(item.worldId))
+                                navigator.parent?.parent?.push(WorldScreen(item.worldId))
                             }
                         }
                     )

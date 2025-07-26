@@ -86,7 +86,7 @@ import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreenModel.SearchState
-import cc.sovellus.vrcaa.ui.screen.world.WorldInfoScreen
+import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -400,7 +400,7 @@ class SearchResultScreen(
                     items(state.value) { world ->
                         SearchRowItem(
                             name = world.name, url = world.imageUrl, count = world.occupants
-                        ) { navigator.push(WorldInfoScreen(world.id)) }
+                        ) { navigator.push(WorldScreen(world.id)) }
                     }
 
                     if (!model.worldLimitReached.value) {
