@@ -74,10 +74,10 @@
     <string name="settings_item_rich_presence_description">Discordリッチプレゼンス機能</string>
     <string name="settings_item_advanced_settings">上級者機能</string>
     <string name="settings_item_advanced_settings_description">詳細ログ機能</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_database_settings">データベース &amp; 統計情報</string>
+    <string name="settings_item_database_settings_description">統計情報を見る、データの復元とバックアップ</string>
     <string name="settings_item_logout">ログオフ</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">Ko-fiで支援する</string>
     <!-- Worlds -->
     <string name="world_label_description">情報</string>
     <string name="world_label_tags">タグ</string>
@@ -109,8 +109,8 @@
     <string name="tabs_label_settings">設定</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAAがシステムにより終了されました。 対策は(https://dontkillmyapp.com/)をご確認ください。</string>
+    <string name="service_notification_rich_presence">VRCAAにおいてリッチプレゼンス機能の動作を開始します。</string>
     <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
     <string name="notification_service_description_online">フレンドの %1$s さんがオンラインになりました。</string>
     <string name="notification_service_title_offline">フレンドがオフラインになりました。</string>
@@ -212,10 +212,10 @@
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">グループ</string>
+    <string name="user_overlay_worlds">ワールド</string>
+    <string name="user_overlay_favorites">お気に入り</string>
+    <string name="user_overlay_find_avatar">アバターの検索</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">ステータス</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">年齢認証状態の表示</string>
@@ -225,8 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
     <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
     <string name="profile_edit_dialog_title_pronouns">呼称</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">キャンセル</string>
+    <string name="profile_edit_dialog_button_apply">適用</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">ログアウトしますか？</string>
     <string name="logout_dialog_description">継続した場合、VRCAAからログアウトします。アプリを利用する為には再ログインが必要です。</string>
@@ -274,12 +274,12 @@
     <string name="loading_text_avatar">アバター情報を読み込み中。。。</string>
     <string name="loading_text_group">グループ情報を読み込み中。。。</string>
     <string name="loading_text_instances">インスタンス情報を読み込み中。。。</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_gallery">ギャラリーを読み込み中。。。</string>
+    <string name="loading_text_icons">アイコンを読み込み中。。。</string>
+    <string name="loading_text_prints">プリントを読み込み中。。。</string>
+    <string name="loading_text_stickers">ステッカーを読み込み中。。。</string>
+    <string name="loading_text_emojis">絵文字を読み込み中。。。</string>
+    <string name="loading_text_items">アイテムを読み込み中。。。</string>
     <!-- Theming -->
     <string name="theme_page_title">テーマ</string>
     <string name="theme_page_minimalist_mode_text">簡易モード</string>
@@ -298,70 +298,70 @@
     <string name="theme_page_section_column_title">列数</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">詳細設定</string>
-    <string name="advanced_page_section_networking">Networking</string>
+    <string name="advanced_page_section_networking">ネットワーキング</string>
     <string name="advanced_page_network_logging">ネットワークログ</string>
     <string name="advanced_page_network_logging_description">HTTPとWebSocketのトラフィックを捕捉</string>
     <string name="advanced_page_view_network_logs">ネットワークログを表示</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_section_background_activities">バックグラウンド動作</string>
     <string name="advanced_page_battery_optimization">バッテリー最適化を無効にする</string>
     <string name="advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
     <string name="advanced_page_kill_service">バックグラウンドサービスの停止</string>
     <string name="advanced_page_kill_service_description">リアルタイム更新関係のバックグラウンドサービスを停止する</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_section_database">データベース</string>
+    <string name="advanced_page_database_delete">データベースの削除</string>
+    <string name="advanced_page_database_delete_description">データを保持している内部データベースを削除する</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
-    <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_title">データベース &amp; 統計情報</string>
+    <string name="database_page_section_statistics">統計情報</string>
+    <string name="database_page_statistics_size">データベースのサイズ</string>
+    <string name="database_page_statistics_row_count">項目数</string>
+    <string name="database_page_section_recovery">復元 &amp; バックアップ</string>
+    <string name="database_page_recovery_backup">データベースのバックアップ</string>
+    <string name="database_page_recovery_backup_description">現在のデータをバックアップする</string>
+    <string name="database_page_recovery_restore">データベースの復元</string>
+    <string name="database_page_recovery_restore_description">バックアップからデータを復元する</string>
+    <string name="database_page_section_glide">Glide キャッシュ</string>
+    <string name="database_page_glide_cache_size">キャッシュサイズ</string>
+    <string name="database_page_glide_clean_cache">キャッシュのクリア</string>
+    <string name="database_page_glide_clean_cache_description">キャッシュをクリアするとロード時間が長くなったり、アプリケーションの応答性に影響が出る場合があります</string>
+    <string name="database_page_glide_clean_cache_toast">キャッシュがクリアされました。</string>
+    <string name="database_page_toast_recovery_failed">データベースの復元に失敗しました。ファイルが正しいか確認してください。</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
-        <item>Prints</item>
-        <item>Items</item>
+        <item>ギャラリー</item>
+        <item>ユーザーアイコン</item>
+        <item>ワールド</item>
+        <item>アバター</item>
+        <item>グループ</item>
+        <item>絵文字</item>
+        <item>ステッカー</item>
+        <item>プリント</item>
+        <item>アイテム</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Upload Print</string>
-    <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="gallery_page_title">ギャラリー</string>
+    <string name="gallery_page_button_upload">画像のアップロード</string>
+    <string name="icon_gallery_page_title">ユーザーアイコン</string>
+    <string name="icon_gallery_page_button_upload">アイコンのアップロード</string>
+    <string name="prints_page_title">プリント</string>
+    <string name="prints_page_button_upload">プリントのアップロード</string>
+    <string name="emojis_page_title">絵文字</string>
+    <string name="emojis_page_button_upload">絵文字のアップロード</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>公式</item>
+        <item>カスタム</item>
+        <item>アーカイブ</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">ステッカー</string>
+    <string name="stickers_page_button_upload">ステッカーのアップロード</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>公式</item>
+        <item>カスタム</item>
+        <item>アーカイブ</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">アイテム</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
-        <item>Archive</item>
+        <item>全てのアイテム</item>
+        <item>アーカイブ</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_title">プレビュー</string>
 </resources>
