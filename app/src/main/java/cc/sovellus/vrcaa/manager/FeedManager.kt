@@ -25,7 +25,7 @@ import java.util.UUID
 object FeedManager : BaseManager<FeedManager.FeedListener>() {
 
     interface FeedListener {
-        fun onReceiveUpdate(list: MutableList<Feed>)
+        fun onReceiveUpdate(list: List<Feed>)
     }
 
     enum class FeedType {
@@ -67,8 +67,9 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
     fun addFeed(feed: Feed) {
         feedList.add(feed)
         DatabaseManager.writeFeed(feed)
+        val listSnapshot = feedList.toList()
         getListeners().forEach { listener ->
-            listener.onReceiveUpdate(feedList)
+            listener.onReceiveUpdate(listSnapshot)
         }
     }
 
