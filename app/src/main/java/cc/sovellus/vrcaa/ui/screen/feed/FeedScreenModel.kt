@@ -26,6 +26,7 @@ import cc.sovellus.vrcaa.manager.FeedManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.Init) {
@@ -40,8 +41,8 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
     var feed = feedStateFlow.asStateFlow()
 
     private val listener = object : FeedManager.FeedListener {
-        override fun onReceiveUpdate(list: MutableList<FeedManager.Feed>) {
-            feedStateFlow.value = list.toMutableStateList()
+        override fun onReceiveUpdate(list: List<FeedManager.Feed>) {
+            feedStateFlow.update { list.toMutableStateList() }
         }
     }
 
