@@ -141,6 +141,7 @@
     <!-- Notifications -->
 
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
     <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
     <string name="notification_service_description_online">Your friend, %1$s has came online!</string>

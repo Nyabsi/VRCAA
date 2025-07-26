@@ -441,10 +441,13 @@ class PipelineService : Service(), CoroutineScope {
 
             scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
         } catch (_:  Throwable) {
-            // TODO:  promt the user to follow "do not kill my app"
-            // . . . Should we abort here as this is basicslly unrecoverable error? 
-            Runtime.getRuntime().exit(1)
+            NotificationHelper.pushNotification(
+                application.getString(R.string.app_name),
+                application.getString(R.string.service_killed_by_vendor_notification),
+                NotificationHelper.CHANNEL_DEFAULT_ID
+            )
         }
+
         return START_STICKY
     }
 
