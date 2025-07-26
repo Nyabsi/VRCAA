@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">Veuillez vous assurer que vous êtes connecté à internet, car cette application ne peut pas fonctionner sans connexion internet.</string>
     <string name="misc_no_internet_label">Restart Application</string>
     <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">Initializing…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->

@@ -74,8 +74,8 @@
     <string name="settings_item_rich_presence_description">Discord 활동 상태 표시 연동</string>
     <string name="settings_item_advanced_settings">고급</string>
     <string name="settings_item_advanced_settings_description">고급 로그 기록 및 추가 기능</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_database_settings">데이터베이스 및 통계</string>
+    <string name="settings_item_database_settings_description">통계를 확인하고 데이터를 복원하거나 백업합니다.</string>
     <string name="settings_item_logout">로그아웃</string>
     <string name="settings_kofi_donation_button">Ko-fi로 후원하기</string>
     <!-- Worlds -->
@@ -109,8 +109,8 @@
     <string name="tabs_label_settings">설정</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA가 백그라운드에서 친구 활동을 모니터링 중입니다.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA가 시스템에 의해 강제 종료되었습니다! 자세한 내용은 https://dontkillmyapp.com/를 확인하세요.</string>
+    <string name="service_notification_rich_presence">VRCAA가 이제 활동 상태 정보를 보고하고 있습니다.</string>
     <string name="notification_service_title_online">친구가 온라인 상태가 되었습니다.</string>
     <string name="notification_service_description_online">친구 %1$s님이 온라인 상태가 되었습니다.</string>
     <string name="notification_service_title_offline">친구가 오프라인 상태가 되었습니다.</string>
@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">인터넷 연결을 확인해 주세요. 이 애플리케이션은 오프라인 상태에서는 사용할 수 없습니다.</string>
     <string name="misc_no_internet_label">애플리케이션 다시 시작</string>
     <string name="misc_exit_toast_label">한 번 더 누르면 앱이 종료됩니다.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">초기화 중…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -214,8 +214,8 @@
     <!-- removed; 06-07-25 -->
     <string name="user_overlay_groups">그룹</string>
     <string name="user_overlay_worlds">월드</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_favorites">즐겨찾기</string>
+    <string name="user_overlay_find_avatar">아바타 찾기</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">상태</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">연령 인증 공개여부</string>
@@ -225,8 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">프로필이 변경되었습니다.</string>
     <string name="profile_edit_dialog_toast_cancelled">변경을 취소했습니다.</string>
     <string name="profile_edit_dialog_title_pronouns">대명사</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">취소</string>
+    <string name="profile_edit_dialog_button_apply">적용</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">로그아웃</string>
     <string name="logout_dialog_description">아래 \'확인\'을 누르면 VRCAA에서 로그아웃되며, 앱을 계속 사용하려면 다시 로그인해야 합니다.</string>
@@ -274,12 +274,12 @@
     <string name="loading_text_avatar">아바타 정보를 불러오는 중...</string>
     <string name="loading_text_group">그룹 정보를 불러오는 중...</string>
     <string name="loading_text_instances">인스턴스 정보를 불러오는 중...</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_gallery">갤러리를 불러오는 중...</string>
+    <string name="loading_text_icons">아이콘을 불러오는 중...</string>
+    <string name="loading_text_prints">프린트를 불러오는 중...</string>
+    <string name="loading_text_stickers">스티커를 불러오는 중...</string>
+    <string name="loading_text_emojis">이모지를 불러오는 중...</string>
+    <string name="loading_text_items">아이템을 불러오는 중...</string>
     <!-- Theming -->
     <string name="theme_page_title">테마</string>
     <string name="theme_page_minimalist_mode_text">간소화 모드</string>
@@ -298,70 +298,70 @@
     <string name="theme_page_section_column_title">열 수</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">고급 설정</string>
-    <string name="advanced_page_section_networking">Networking</string>
+    <string name="advanced_page_section_networking">네트워킹</string>
     <string name="advanced_page_network_logging">네트워크 로깅</string>
     <string name="advanced_page_network_logging_description">HTTP 및 WebSocket 트래픽 포착</string>
     <string name="advanced_page_view_network_logs">네트워크 로그 보기</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_section_background_activities">백그라운드 활동</string>
     <string name="advanced_page_battery_optimization">배터리 최적화 비활성화</string>
     <string name="advanced_page_battery_optimization_description">실시간 네트워크 이벤트가 수신되지 않는 문제를 해결하는 데 도움이 될 수 있습니다.</string>
     <string name="advanced_page_kill_service">백그라운드 서비스 종료</string>
     <string name="advanced_page_kill_service_description">실시간 이벤트를 처리하는 백그라운드 서비스를 종료합니다.</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_section_database">데이터베이스</string>
+    <string name="advanced_page_database_delete">데이터베이스 삭제</string>
+    <string name="advanced_page_database_delete_description">데이터 저장을 담당하는 내부 데이터베이스를 삭제합니다.</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
-    <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_title">데이터베이스 및 통계</string>
+    <string name="database_page_section_statistics">통계</string>
+    <string name="database_page_statistics_size">데이터베이스 크기</string>
+    <string name="database_page_statistics_row_count">행 개수</string>
+    <string name="database_page_section_recovery">복원 및 백업</string>
+    <string name="database_page_recovery_backup">데이터베이스 백업</string>
+    <string name="database_page_recovery_backup_description">현재 데이터를 백업합니다.</string>
+    <string name="database_page_recovery_restore">데이터베이스 복원</string>
+    <string name="database_page_recovery_restore_description">이전 백업을 복원합니다.</string>
+    <string name="database_page_section_glide">Glide 캐시</string>
+    <string name="database_page_glide_cache_size">캐시 크기</string>
+    <string name="database_page_glide_clean_cache">캐시 삭제</string>
+    <string name="database_page_glide_clean_cache_description">캐시를 삭제하면 로딩 시간이 늘어나고 앱 반응 속도가 느려질 수 있습니다</string>
+    <string name="database_page_glide_clean_cache_toast">캐시가 삭제되었습니다!</string>
+    <string name="database_page_toast_recovery_failed">백업으로부터 데이터베이스를 복원하는 데 실패했습니다! 선택한 백업 파일이 올바른지 확인해 주세요.</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
+        <item>갤러리</item>
+        <item>유저 아이콘</item>
         <item>월드</item>
         <item>아바타</item>
         <item>그룹</item>
         <item>이모티콘</item>
         <item>스티커</item>
-        <item>Prints</item>
-        <item>Items</item>
+        <item>프린트</item>
+        <item>아이템</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Upload Print</string>
-    <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="gallery_page_title">갤러리</string>
+    <string name="gallery_page_button_upload">이미지 업로드</string>
+    <string name="icon_gallery_page_title">유저 아이콘</string>
+    <string name="icon_gallery_page_button_upload">아이콘 업로드</string>
+    <string name="prints_page_title">프린트</string>
+    <string name="prints_page_button_upload">프린트 업로드</string>
+    <string name="emojis_page_title">이모지</string>
+    <string name="emojis_page_button_upload">이모드 업로드</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>공식</item>
+        <item>커스텀</item>
+        <item>보관됨</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">스티커</string>
+    <string name="stickers_page_button_upload">스티커 업로드</string>
     <string-array name="sticker_page_sections">
         <item>공식</item>
         <item>커스텀</item>
-        <item>Archived</item>
+        <item>보관됨</item>
     </string-array>
     <string name="items_page_title">아이템</string>
     <string-array name="items_page_sections">
         <item>모든 아이템</item>
-        <item>Archive</item>
+        <item>보관됨</item>
     </string-array>
     <string name="image_preview_dialog_title">미리보기</string>
 </resources>
