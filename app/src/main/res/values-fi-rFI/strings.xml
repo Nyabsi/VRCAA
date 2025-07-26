@@ -278,7 +278,7 @@
     <string name="loading_text_icons">Ladataan kuvakkeita...</string>
     <string name="loading_text_prints">Ladataan tulostuksia...</string>
     <string name="loading_text_stickers">Ladataan tarroja...</string>
-    <string name="loading_text_emojis">Ladataan tarroja...</string>
+    <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Ladataan tavaroita...</string>
     <!-- Theming -->
     <string name="theme_page_title">Teema</string>
