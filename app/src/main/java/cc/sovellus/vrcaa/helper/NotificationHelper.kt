@@ -100,7 +100,8 @@ object NotificationHelper {
     fun pushNotification(
         title: String,
         content: String,
-        channel: String
+        channel: String,
+        persistent: Boolean = false
     ) {
         val flags = NotificationCompat.FLAG_ONGOING_EVENT
 
@@ -109,6 +110,7 @@ object NotificationHelper {
             .setContentTitle(title)
             .setContentText(content)
             .setPriority(flags)
+            .setOngoing(persistent)
 
         val notificationManager = NotificationManagerCompat.from(App.getContext())
 
