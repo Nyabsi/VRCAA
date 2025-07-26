@@ -109,6 +109,7 @@
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
     <string name="service_notification_rich_presence">VRCAA raportoi nyt läsnäolotietoa.</string>
     <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
     <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
@@ -224,6 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
     <string name="profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronominit</string>
+    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_button_apply">Apply</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Oletko varma?</string>
     <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
@@ -322,6 +325,7 @@
     <string name="database_page_glide_clean_cache">Puhdista välimuisti</string>
     <string name="database_page_glide_clean_cache_description">Välimuistin puhdistaminen voi pidentää latausaikoja ja vähentää sovelluksen reagointikykyä</string>
     <string name="database_page_glide_clean_cache_toast">Välimuisti puhdistettu!</string>
+    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Galleria</item>
