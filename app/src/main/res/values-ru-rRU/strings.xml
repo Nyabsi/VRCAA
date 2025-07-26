@@ -278,7 +278,7 @@
     <string name="loading_text_icons">Загрузка иконок…</string>
     <string name="loading_text_prints">Загрузка печатей…</string>
     <string name="loading_text_stickers">Загрузка стикеров…</string>
-    <string name="loading_text_emojis">Загрузка смайликов…</string>
+    <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Загрузка предметов...</string>
     <!-- Theming -->
     <string name="theme_page_title">Тема</string>
