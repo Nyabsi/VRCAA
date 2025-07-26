@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
     <string name="misc_no_internet_label">アプリの再起動</string>
     <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRChat+ subscription.</string>
+    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">少女祈祷中・・・</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
