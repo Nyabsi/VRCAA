@@ -73,7 +73,7 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
         }
     }
 
-    fun getFeed(): MutableList<Feed> {
-        return feedList
+    fun getFeed(): List<Feed> {
+        return feedList.toList()
     }
 }

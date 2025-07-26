@@ -52,7 +52,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
         }
 
         override fun endCacheRefresh() {
-            feedStateFlow.value = FeedManager.getFeed().toMutableStateList()
+            feedStateFlow.update { FeedManager.getFeed().toMutableStateList() }
             mutableState.value = FeedState.Result
         }
     }
@@ -64,7 +64,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
 
         if (CacheManager.isBuilt())
         {
-            feedStateFlow.value = FeedManager.getFeed().toMutableStateList()
+            feedStateFlow.update { FeedManager.getFeed().toMutableStateList() }
             mutableState.value = FeedState.Result
         }
     }
