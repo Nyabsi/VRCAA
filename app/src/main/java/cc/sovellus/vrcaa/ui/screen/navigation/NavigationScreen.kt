@@ -508,25 +508,15 @@ class NavigationScreen : Screen {
                         ModalBottomSheet(
                             onDismissRequest = {
                                 showProfileSheet = false
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.profile_edit_dialog_toast_cancelled),
-                                    Toast.LENGTH_LONG
-                                ).show()
                             }, sheetState = profileSheetState
                         ) {
                             LazyColumn {
                                 item {
                                     ListItem(leadingContent = {
                                         OutlinedButton(onClick = {
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.profile_edit_dialog_toast_cancelled),
-                                                Toast.LENGTH_LONG
-                                            ).show()
                                             showProfileSheet = false
                                         }) {
-                                            Text("Cancel")
+                                            Text(stringResource(R.string.profile_edit_dialog_button_cancel))
                                         }
                                     }, trailingContent = {
                                         Button(onClick = {
@@ -560,7 +550,7 @@ class NavigationScreen : Screen {
                                                 }
                                             }
                                         }) {
-                                            Text("Change")
+                                            Text(stringResource(R.string.profile_edit_dialog_button_apply))
                                         }
                                     }, headlineContent = { })
                                 }
@@ -759,7 +749,6 @@ class NavigationScreen : Screen {
                         ModalBottomSheet(
                             onDismissRequest = {
                                 showSettingsSheet = false
-                                model.applySettings(true)
                             }, sheetState = settingsSheetState
                         ) {
                             LazyColumn {
