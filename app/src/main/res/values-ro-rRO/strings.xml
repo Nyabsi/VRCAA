@@ -109,6 +109,7 @@
     <string name="tabs_label_settings">Setări</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA vă monitorizează prietenii in fundal.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
     <string name="service_notification_rich_presence">VRCAA raportează informații despre prezență bogata.</string>
     <string name="notification_service_title_online">Un prieten a intrat online!</string>
     <string name="notification_service_description_online">Prietenul tău, %1$s a intrat online!</string>
@@ -224,6 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">Actualizare profil.</string>
     <string name="profile_edit_dialog_toast_cancelled">Modificările au fost respinse.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronume</string>
+    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_button_apply">Apply</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sunteți siguri?</string>
     <string name="logout_dialog_description">Apăsând butonul \"Continuă\" de mai jos, vă veți deconecta din VRCAA și va trebui sa vă reconectați pentru a continua să utilizați aplicația.</string>
@@ -322,6 +325,7 @@
     <string name="database_page_glide_clean_cache">Curățați Memoria Cache</string>
     <string name="database_page_glide_clean_cache_description">Curățarea memorii cache poate crește timpul de încărcare si scădea responsivitatea aplicației</string>
     <string name="database_page_glide_clean_cache_toast">Memorie cache curățată!</string>
+    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Galerie</item>
