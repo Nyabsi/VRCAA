@@ -235,66 +235,72 @@ object FavoriteManager : BaseManager<Any>() {
     }
 
     suspend fun addFavorite(type: FavoriteType, id: String, tag: String, metadata: FavoriteMetadata?): Boolean {
+        try {
+            val result = api.favorites.addFavorite(type, id, tag)
 
-        val result = api.favorites.addFavorite(type, id, tag)
-
-        tagToGroupMetadataMap[tag]?.let { groupMetadata ->
-            groupMetadata.size += 1
-        }
-
-        result?.let {
-            when (type) {
-                FavoriteType.FAVORITE_WORLD -> {
-                    metadata?.let {
-                        metadata.favoriteId = result.favoriteId
-                        worldList[tag]?.add(metadata)
-                    }
-                }
-                FavoriteType.FAVORITE_AVATAR -> {
-                    metadata?.let {
-                        metadata.favoriteId = result.favoriteId
-                        avatarList[tag]?.add(metadata)
-                    }
-                }
-                FavoriteType.FAVORITE_FRIEND -> {
-                    friendList[tag]?.add(FavoriteMetadata(id = id, favoriteId = result.id))
-                }
-                else -> {}
+            tagToGroupMetadataMap[tag]?.let { groupMetadata ->
+                groupMetadata.size += 1
             }
-        }
 
-        return result != null
+            result?.let {
+                when (type) {
+                    FavoriteType.FAVORITE_WORLD -> {
+                        metadata?.let {
+                            metadata.favoriteId = result.favoriteId
+                            worldList[tag]?.add(metadata)
+                        }
+                    }
+                    FavoriteType.FAVORITE_AVATAR -> {
+                        metadata?.let {
+                            metadata.favoriteId = result.favoriteId
+                            avatarList[tag]?.add(metadata)
+                        }
+                    }
+                    FavoriteType.FAVORITE_FRIEND -> {
+                        friendList[tag]?.add(FavoriteMetadata(id = id, favoriteId = result.id))
+                    }
+                    else -> {}
+                }
+            }
+
+            return result != null
+        } catch (_: Throwable) {
+            return false
+        }
     }
 
     suspend fun removeFavorite(type: FavoriteType, id: String): Boolean {
+        try {
+            val favorite = getFavoriteId(type, id)
+            favorite.first?.let { favoriteId ->
+                val result = api.favorites.removeFavorite(favoriteId)
+                if (result)
+                {
+                    when (type) {
+                        FavoriteType.FAVORITE_WORLD -> {
+                            worldList[favorite.second]?.removeIf { it.id == id }
+                        }
+                        FavoriteType.FAVORITE_AVATAR -> {
+                            avatarList[favorite.second]?.removeIf { it.id == id }
+                        }
+                        FavoriteType.FAVORITE_FRIEND -> {
+                            friendList[favorite.second]?.removeIf { it.id == id }
+                        }
 
-        val favorite = getFavoriteId(type, id)
-        favorite.first?.let { favoriteId ->
-            val result = api.favorites.removeFavorite(favoriteId)
-            if (result)
-            {
-                when (type) {
-                    FavoriteType.FAVORITE_WORLD -> {
-                        worldList[favorite.second]?.removeIf { it.id == id }
-                    }
-                    FavoriteType.FAVORITE_AVATAR -> {
-                        avatarList[favorite.second]?.removeIf { it.id == id }
-                    }
-                    FavoriteType.FAVORITE_FRIEND -> {
-                        friendList[favorite.second]?.removeIf { it.id == id }
+                        FavoriteType.FAVORITE_NONE -> { }
                     }
 
-                    FavoriteType.FAVORITE_NONE -> { }
+                    tagToGroupMetadataMap[favorite.second]?.let { groupMetadata ->
+                        groupMetadata.size -= 1
+                    }
+
                 }
-
-                tagToGroupMetadataMap[favorite.second]?.let { groupMetadata ->
-                    groupMetadata.size -= 1
-                }
-
+                return result
             }
-            return result
+            return false
+        } catch (_: Throwable) {
+            return false
         }
-        return false
     }
 
     fun getMaximumFavoritesFromTag(tag: String): Int {
