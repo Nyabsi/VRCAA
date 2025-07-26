@@ -146,6 +146,7 @@ fun ProfileCard(
                                     textAlign = TextAlign.Left,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
+                                    color = Color.White
                                 )
                             }
                         }
