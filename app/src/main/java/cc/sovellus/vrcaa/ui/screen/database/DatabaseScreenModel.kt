@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.ui.screen.database
 
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.widget.Toast
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -92,15 +93,44 @@ class DatabaseScreenModel : ScreenModel {
     }
 
     fun restoreDatabaseFromUri(uri: Uri) {
-        DatabaseManager.db.close()
+        val tempFile = File.createTempFile("restore", ".db", context.cacheDir)
 
-        val file = File(context.getDatabasePath("vrcaa.db").path)
-        file.delete()
         context.contentResolver.openInputStream(uri)?.use { inputStream ->
-            file.outputStream().use { outputStream ->
+            tempFile.outputStream().use { outputStream ->
                 inputStream.copyTo(outputStream)
             }
         }
+
+        val isValid = try {
+            val tempDb = SQLiteDatabase.openDatabase(
+                tempFile.path,
+                null,
+                SQLiteDatabase.OPEN_READONLY
+            )
+
+            val cursor = tempDb.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
+            val hasTables = cursor.use { it.count > 0 }
+            tempDb.close()
+
+            hasTables
+        } catch (_: Throwable) {
+            false
+        }
+
+        if (!isValid) {
+            tempFile.delete()
+            Toast.makeText(
+                context,
+                context.getString(R.string.database_page_toast_recovery_failed),
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+
+        DatabaseManager.db.close()
+        val databaseFile = File(context.getDatabasePath("vrcaa.db").path)
+        databaseFile.delete()
+        tempFile.copyTo(databaseFile, overwrite = true)
 
         val pm = context.packageManager
         val intent = pm.getLaunchIntentForPackage(context.packageName)
