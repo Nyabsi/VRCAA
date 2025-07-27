@@ -982,19 +982,27 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavoriteAvatars(
+        override suspend fun fetchFavoritesByUserId(
+            userId: String,
+            type: FavoriteType,
             tag: String,
             n: Int,
             offset: Int,
-            favorites: ArrayList<FavoriteAvatar>
-        ): ArrayList<FavoriteAvatar> {
-
+            favorites: ArrayList<Favorite>
+        ): ArrayList<Favorite> {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
+            val dTypeString = when (type) {
+                FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_AVATAR -> "avatar"
+                FavoriteType.FAVORITE_FRIEND -> "friend"
+                FavoriteType.FAVORITE_NONE -> ""
+            }
+
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/avatars/favorites?n=${n}&offset=${offset}&tag=${tag}",
+                url = "${Config.API_BASE_URL}/favorites?type=${dTypeString}&n=${n}&offset=${offset}&tag=${tag}&ownerId=${userId}&visibility=public",
                 headers = headers,
                 body = null
             )
@@ -1004,13 +1012,13 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return favorites
 
-                    val json = Gson().fromJson(result.body, FavoriteAvatars::class.java)
+                    val json = Gson().fromJson(result.body, Favorites::class.java)
 
                     json?.forEach { favorite ->
                         favorites.add(favorite)
                     }
 
-                    fetchFavoriteAvatars(tag, n, offset + n, favorites)
+                    fetchFavorites(type, tag, n, offset + n, favorites)
                 }
 
                 is Result.NotModified -> {
@@ -1024,8 +1032,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavoriteAvatarsByUserId(
-            userId: String,
+        override suspend fun fetchFavoriteAvatars(
             tag: String,
             n: Int,
             offset: Int,
@@ -1037,7 +1044,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/avatars/favorites?n=${n}&offset=${offset}&tag=${tag}&ownerId=${userId}&visibility=public",
+                url = "${Config.API_BASE_URL}/avatars/favorites?n=${n}&offset=${offset}&tag=${tag}",
                 headers = headers,
                 body = null
             )
