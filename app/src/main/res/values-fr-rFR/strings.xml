@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">Voir les emplacements actuels des amis</string>
     <string name="widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Mondes</item>
         <item>Avatars</item>
         <item>Friends</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Ajouter aux favoris</string>
     <string name="favorite_label_remove">Retirer des favoris</string>
