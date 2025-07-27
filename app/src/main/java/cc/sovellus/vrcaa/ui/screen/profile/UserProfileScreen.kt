@@ -95,6 +95,7 @@ import cc.sovellus.vrcaa.ui.components.card.InstanceCard
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.card.QuickMenuCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
+import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
@@ -103,6 +104,7 @@ import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.notification.NotificationScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -162,6 +164,8 @@ class UserProfileScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
+        var peekUrl by remember { mutableStateOf("") }
+        var peekProfilePicture by remember { mutableStateOf(false) }
         var favoriteDialogShown by remember { mutableStateOf(false) }
         var isQuickMenuExpanded by remember { mutableStateOf(false) }
 
@@ -189,7 +193,7 @@ class UserProfileScreen(
                             interactionSource = remember { MutableInteractionSource() }
                         )
                         .blur(
-                            if (isQuickMenuExpanded) {
+                            if (isQuickMenuExpanded || peekProfilePicture) {
                                 100.dp
                             } else {
                                 0.dp
@@ -264,8 +268,12 @@ class UserProfileScreen(
                                         tags = profile.tags,
                                         badges = profile.badges,
                                         pronouns = profile.pronouns,
-                                        ageVerificationStatus = profile.ageVerificationStatus
-                                    )
+                                        ageVerificationStatus = profile.ageVerificationStatus,
+                                        disablePeek = false
+                                    ) { url ->
+                                        peekProfilePicture = true
+                                        peekUrl = url
+                                    }
                                 }
                             }
 
@@ -576,6 +584,13 @@ class UserProfileScreen(
                         }
                     }
                 }
+            }
+            if (peekProfilePicture) {
+                ImagePreviewDialog(
+                    url = peekUrl,
+                    name = "${profile.displayName}-${LocalDateTime.now()}",
+                    onDismiss = { peekProfilePicture = false }
+                )
             }
         }
     }
