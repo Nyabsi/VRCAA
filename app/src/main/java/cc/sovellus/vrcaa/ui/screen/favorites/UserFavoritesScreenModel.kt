@@ -41,22 +41,22 @@ class UserFavoritesScreenModel(
         data object Init : UserFavoriteState()
         data object Loading : UserFavoriteState()
         data class Result(
-            val worlds: SnapshotStateMap<String, SnapshotStateList<FavoriteMetadata>>,
-            val avatars: SnapshotStateMap<String, SnapshotStateList<Avatar?>>
+            val worlds: MutableMap<String, SnapshotStateList<FavoriteMetadata>>,
+            val avatars: MutableMap<String, SnapshotStateList<Avatar?>>
         ) : UserFavoriteState()
     }
 
-    var worldList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
-    var avatarList = mutableStateMapOf<String, SnapshotStateList<Avatar?>>()
+    var worldList: MutableMap<String, SnapshotStateList<FavoriteMetadata>> = mutableStateMapOf()
+    var avatarList: MutableMap<String, SnapshotStateList<Avatar?>> = mutableStateMapOf()
     var currentIndex = mutableIntStateOf(0)
 
     init {
-        mutableState.value = UserFavoriteState.Loading
-        App.setLoadingText(R.string.loading_text_favorites)
         fetchContent()
     }
 
     private fun fetchContent() {
+        mutableState.value = UserFavoriteState.Loading
+        App.setLoadingText(R.string.loading_text_favorites)
         screenModelScope.launch {
             val worldsGroup = api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_WORLD)
             val worldResults = worldsGroup?.map { group ->
@@ -67,7 +67,7 @@ class UserFavoritesScreenModel(
                         FavoriteMetadata(it.id, it.favoriteId, it.name, it.thumbnailImageUrl)
                     }
 
-                    group.name to world
+                    group.displayName to world
                 }
             }?.awaitAll()
 
@@ -86,7 +86,7 @@ class UserFavoritesScreenModel(
                         }
                     }.awaitAll()
 
-                    group.name to avatar
+                    group.displayName to avatar
                 }
             }?.awaitAll()
 

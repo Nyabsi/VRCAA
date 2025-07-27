@@ -139,6 +139,23 @@ class UserAvatarScreen(
                                         },
                                         text = { Text(stringResource(R.string.avatar_dropdown_label_select)) }
                                     )
+                                    if (FavoriteManager.isFavorite("avatar", avatar.id)) {
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                model.removeFavorite()
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.favorite_label_remove)) }
+                                        )
+                                    } else {
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                isDialogShown = true
+                                                isMenuExpanded = false
+                                            },
+                                            text = { Text(stringResource(R.string.favorite_label_add)) }
+                                        )
+                                    }
                                     DropdownMenuItem(
                                         onClick = {
                                             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

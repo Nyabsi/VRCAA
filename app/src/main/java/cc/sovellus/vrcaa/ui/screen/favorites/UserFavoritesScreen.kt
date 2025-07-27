@@ -52,6 +52,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -70,8 +71,7 @@ class UserFavoritesScreen(
 
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val model = navigator.rememberNavigatorScreenModel { UserFavoritesScreenModel(userId) }
+        val model = rememberScreenModel { UserFavoritesScreenModel(userId) }
 
         val state by model.state.collectAsState()
 
@@ -86,8 +86,8 @@ class UserFavoritesScreen(
     @Composable
     fun ShowScreen(
         model: UserFavoritesScreenModel,
-        worlds: SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>,
-        avatars: SnapshotStateMap<String, SnapshotStateList<Avatar?>>
+        worlds: MutableMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>,
+        avatars: MutableMap<String, SnapshotStateList<Avatar?>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -179,7 +179,7 @@ class UserFavoritesScreen(
 
     @Composable
     fun ShowWorlds(
-        list: SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>
+        list: MutableMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -208,7 +208,7 @@ class UserFavoritesScreen(
 
     @Composable
     fun ShowAvatars(
-        list: SnapshotStateMap<String, SnapshotStateList<Avatar?>>
+        list: MutableMap<String, SnapshotStateList<Avatar?>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
