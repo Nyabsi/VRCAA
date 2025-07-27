@@ -285,6 +285,7 @@
     <string name="loading_text_stickers">Încărcare autocolante…</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Încărcare obiecte…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teme</string>
     <string name="theme_page_minimalist_mode_text">Mod Minimalist</string>
