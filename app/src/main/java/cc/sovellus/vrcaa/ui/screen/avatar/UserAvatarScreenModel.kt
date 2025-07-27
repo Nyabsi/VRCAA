@@ -22,8 +22,10 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
 class UserAvatarScreenModel(
@@ -54,6 +56,28 @@ class UserAvatarScreenModel(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+        }
+    }
+
+    fun removeFavorite() {
+        screenModelScope.launch {
+            val result =
+                FavoriteManager.removeFavorite(IFavorites.FavoriteType.FAVORITE_AVATAR, avatar.id)
+            if (result) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.favorite_toast_favorite_removed)
+                        .format(avatar.name),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.favorite_toast_favorite_removed_failed)
+                        .format(avatar.name),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
