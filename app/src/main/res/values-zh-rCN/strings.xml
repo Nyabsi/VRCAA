@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">查看当前好友位置</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>世界</item>
         <item>模型</item>
         <item>好友</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">添加到收藏</string>
     <string name="favorite_label_remove">从收藏中移除</string>
