@@ -33,14 +33,14 @@
     <string name="profile_label_current_location">Emplacement actuel</string>
     <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Dernière activité</string>
+    <string name="profile_label_date_joined">Date d\'inscription</string>
     <string name="profile_text_no_biography">Aucune description spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
     <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
     <string name="profile_user_avatar_private">L\'avatar est privé !</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_avatar_unreachable">L\'avatar est injoignable!</string>
     <!-- Search -->
     <string name="search_text_result">Résultats pour</string>
     <string name="search_filter_category_worlds">Mondes</string>
@@ -52,8 +52,8 @@
     <string name="search_filter_category_avatars_provider">Fournisseurs</string>
     <string name="search_filter_category_groups">Groupes</string>
     <string name="search_filter_category_groups_count">Quantité</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="copy_id_label">Copier l\'identifiant</string>
+    <string name="copied_toast">L\'identifiant de %1$s a été copié avec succès.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Quantité</string>
     <string name="search_filter_button_reset">Réinitialiser</string>
@@ -64,33 +64,33 @@
         <item>Avatars</item>
         <item>Groupes</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Plus…</string>
     <!-- Settings -->
     <string name="settings_item_about">À propos</string>
     <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
+    <string name="settings_item_theming">Apparence</string>
     <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
     <string name="settings_item_rich_presence">Rich Presence (Expérimental)</string>
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_advanced_settings">Options avancées</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
     <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
     <string name="settings_item_logout">Se déconnecter</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">Faire un don via Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Mots-clés</string>
     <string name="world_text_no_tags">L\'auteur n\'a pas fourni de mots-clés.</string>
     <string name="world_title_created_at">Date de création</string>
     <string name="world_title_updated_at">Dernière mise à jour</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
+    <string name="world_title_visits">Visites</string>
+    <string name="world_title_favorites">Favoris</string>
+    <string name="world_title_capacity">Capacité</string>
     <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_title_publication_date">Date de publication</string>
     <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_popularity">Popularité</string>
     <string name="world_toast_not_found">Monde privé ou il n\'existe pas.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -109,7 +109,7 @@
     <string name="tabs_label_settings">Paramètres</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA a été tué par votre système ! Consultez https://dontkillmyapp.com/ pour plus d\'informations.</string>
     <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
     <string name="notification_service_description_online">%1$s est en ligne !</string>
@@ -283,23 +283,23 @@
     <string name="loading_text_icons">Loading icons…</string>
     <string name="loading_text_prints">Loading prints…</string>
     <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_emojis">Chargement des émojis...</string>
+    <string name="loading_text_items">Chargement des objets...</string>
+    <string name="loading_text_favorites">Chargement des favoris…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
+    <string name="theme_page_title">Thème</string>
     <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
     <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>Clair</item>
+        <item>Sombre</item>
+        <item>Système</item>
     </string-array>
     <string-array name="column_count_options">
         <item>Adaptive</item>
         <item>Fixed</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
+    <string name="theme_page_section_theme_title">Thème</string>
     <string name="theme_page_section_display_title">Display</string>
     <string name="theme_page_section_column_title">Column Count</string>
     <!-- Advanced Settings -->
@@ -313,12 +313,12 @@
     <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
     <string name="advanced_page_kill_service">Kill background service</string>
     <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
+    <string name="advanced_page_section_database">Base de données</string>
+    <string name="advanced_page_database_delete">Supprimer la base de données</string>
     <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
     <!-- Database -->
     <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
+    <string name="database_page_section_statistics">Statistiques</string>
     <string name="database_page_statistics_size">Database Size</string>
     <string name="database_page_statistics_row_count">Row Count</string>
     <string name="database_page_section_recovery">Restore &amp; Backup</string>
@@ -330,18 +330,18 @@
     <string name="database_page_glide_cache_size">Cache Size</string>
     <string name="database_page_glide_clean_cache">Clean Cache</string>
     <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_glide_clean_cache_toast">Cache effacé !</string>
     <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
+        <item>Icônes de l\'utilisateur</item>
+        <item>Mondes</item>
         <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
-        <item>Prints</item>
+        <item>Groupes</item>
+        <item>Émojis</item>
+        <item>Autocollants</item>
+        <item>Impressions</item>
         <item>Items</item>
     </string-array>
     <string name="gallery_page_title">Gallery</string>
@@ -366,8 +366,8 @@
     </string-array>
     <string name="items_page_title">Items</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
+        <item>Tous les éléments</item>
         <item>Archive</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_title">Aperçu</string>
 </resources>
