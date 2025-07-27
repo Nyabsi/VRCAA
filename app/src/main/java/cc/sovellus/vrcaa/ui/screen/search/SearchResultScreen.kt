@@ -200,7 +200,7 @@ class SearchResultScreen(
         } else {
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
-                    0 -> GridCells.Adaptive(133.dp)
+                    0 -> GridCells.Adaptive(166.dp)
                     else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                 },contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
@@ -247,7 +247,7 @@ class SearchResultScreen(
         } else {
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
-                    0 -> GridCells.Adaptive(133.dp)
+                    0 -> GridCells.Adaptive(166.dp)
                     else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                 },contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
@@ -303,7 +303,7 @@ class SearchResultScreen(
             } else {
                 LazyVerticalGrid(
                     columns = when (model.preferences.columnCountOption) {
-                        0 -> GridCells.Adaptive(180.dp)
+                        0 -> GridCells.Adaptive(166.dp)
                         else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                     },contentPadding = PaddingValues(
                         start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
@@ -353,7 +353,7 @@ class SearchResultScreen(
         } else {
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
-                    0 -> GridCells.Adaptive(133.dp)
+                    0 -> GridCells.Adaptive(166.dp)
                     else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                 },contentPadding = PaddingValues(
                     start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
