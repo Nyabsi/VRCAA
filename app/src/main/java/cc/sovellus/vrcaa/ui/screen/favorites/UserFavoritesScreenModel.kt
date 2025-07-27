@@ -19,7 +19,6 @@ package cc.sovellus.vrcaa.ui.screen.favorites
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -27,8 +26,8 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.FavoriteManager.FavoriteMetadata
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
@@ -41,12 +40,12 @@ class UserFavoritesScreenModel(
         data object Init : UserFavoriteState()
         data object Loading : UserFavoriteState()
         data class Result(
-            val worlds: MutableMap<String, SnapshotStateList<FavoriteMetadata>>,
+            val worlds: MutableMap<String, SnapshotStateList<World?>>,
             val avatars: MutableMap<String, SnapshotStateList<Avatar?>>
         ) : UserFavoriteState()
     }
 
-    var worldList: MutableMap<String, SnapshotStateList<FavoriteMetadata>> = mutableStateMapOf()
+    var worldList: MutableMap<String, SnapshotStateList<World?>> = mutableStateMapOf()
     var avatarList: MutableMap<String, SnapshotStateList<Avatar?>> = mutableStateMapOf()
     var currentIndex = mutableIntStateOf(0)
 
@@ -61,13 +60,15 @@ class UserFavoritesScreenModel(
             val worldsGroup = api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_WORLD)
             val worldResults = worldsGroup?.map { group ->
                 async {
-                    val worlds = api.favorites.fetchFavoriteWorldsByUserId(userId, group.name)
+                    val worlds = api.favorites.fetchFavoritesByUserId(userId, FavoriteType.FAVORITE_WORLD, group.name)
 
-                    val world = worlds.map {
-                        FavoriteMetadata(it.id, it.favoriteId, it.name, it.thumbnailImageUrl)
-                    }
+                    val avatar = worlds.map {
+                        async {
+                            api.worlds.fetchWorldByWorldId(it.favoriteId)
+                        }
+                    }.awaitAll()
 
-                    group.displayName to world
+                    group.displayName to avatar
                 }
             }?.awaitAll()
 

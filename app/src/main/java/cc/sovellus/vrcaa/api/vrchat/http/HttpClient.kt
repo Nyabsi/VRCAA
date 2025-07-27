@@ -1135,48 +1135,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
             }
         }
-
-        override suspend fun fetchFavoriteWorldsByUserId(
-            userId: String,
-            tag: String,
-            n: Int,
-            offset: Int,
-            favorites: ArrayList<FavoriteWorld>
-        ): ArrayList<FavoriteWorld> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
-            val result = doRequest(
-                method = "GET",
-                url = "${Config.API_BASE_URL}/worlds/favorites?n=${n}&offset=${offset}&tag=${tag}&ownerId=${userId}&visibility=public",
-                headers = headers,
-                body = null
-            )
-
-            return when (result) {
-                is Result.Succeeded -> {
-                    if (result.body == "[]")
-                        return favorites
-
-                    val json = Gson().fromJson(result.body, FavoriteWorlds::class.java)
-
-                    json?.forEach { favorite ->
-                        favorites.add(favorite)
-                    }
-
-                    fetchFavoriteWorlds(tag, n, offset + n, favorites)
-                }
-
-                is Result.NotModified -> {
-                    return favorites
-                }
-
-                else -> {
-                    handleExceptions(result)
-                    return arrayListOf()
-                }
-            }
-        }
     }
 
     val avatars = object : IAvatars {
