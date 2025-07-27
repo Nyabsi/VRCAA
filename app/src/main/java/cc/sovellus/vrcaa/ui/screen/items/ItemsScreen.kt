@@ -19,13 +19,16 @@ package cc.sovellus.vrcaa.ui.screen.items
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -223,6 +227,7 @@ class ItemsScreen : Screen {
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
+            val window = LocalWindowInfo.current
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
                     0 -> GridCells.Adaptive(133.dp)
@@ -244,8 +249,9 @@ class ItemsScreen : Screen {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(4.dp)
-                                    .height(100.dp)
-                                    .width(133.dp)
+                                    .heightIn(100.dp)
+                                    .widthIn(133.dp, (window.containerSize.width.dp / 2))
+                                    .aspectRatio(4f / 3f)
                                     .clip(RoundedCornerShape(10)),
                                 contentScale = ContentScale.FillBounds,
                                 loading = placeholder(R.drawable.image_placeholder),

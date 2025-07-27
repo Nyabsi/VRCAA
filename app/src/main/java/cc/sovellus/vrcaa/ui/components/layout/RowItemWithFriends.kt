@@ -21,11 +21,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -36,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -55,14 +60,16 @@ fun RowItemWithFriends(
     friends: List<Friend>,
     onClick: () -> Unit
 ) {
+    val window = LocalWindowInfo.current
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         ),
         modifier = Modifier
-            .height(185.dp)
-            .width(240.dp)
-            .fillMaxWidth()
+            .heightIn(100.dp, window.containerSize.height.dp.coerceAtMost(175.dp).coerceAtLeast(100.dp))
+            .widthIn(133.dp, window.containerSize.width.dp.coerceAtMost(233.dp).coerceAtLeast(133.dp))
+            .aspectRatio(4f / 3f)
             .clickable(onClick = { onClick() })
     ) {
         Box (
@@ -73,7 +80,7 @@ fun RowItemWithFriends(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp),
+                    .fillMaxHeight(0.80f),
                 contentScale = ContentScale.Crop,
                 loading = placeholder(R.drawable.image_placeholder),
                 failure = placeholder(R.drawable.image_placeholder)

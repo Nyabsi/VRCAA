@@ -119,7 +119,7 @@ fun ImagePreviewDialog(
             contentWindowInsets = WindowInsets(0),
             topBar = {
                 TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = Color.Transparent),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White.copy(alpha =  0.8f)),
                     navigationIcon = {
                         IconButton(onClick = { onDismiss() }) {
                             Icon(
