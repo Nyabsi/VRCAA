@@ -203,6 +203,15 @@ class UserFavoritesScreen(
                     Spacer(modifier = Modifier.padding(4.dp))
                 }
             }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
         }
     }
 
@@ -233,6 +242,15 @@ class UserFavoritesScreen(
 
                     Spacer(modifier = Modifier.padding(4.dp))
                 }
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
             }
         }
     }
