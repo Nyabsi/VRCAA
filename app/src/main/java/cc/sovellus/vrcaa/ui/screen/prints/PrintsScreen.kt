@@ -211,7 +211,7 @@ class PrintsScreen(
                     val window = LocalWindowInfo.current
                     LazyVerticalGrid(
                         columns = when (model.preferences.columnCountOption) {
-                            0 -> GridCells.Adaptive(133.dp)
+                            0 -> GridCells.Adaptive(166.dp)
                             else -> GridCells.Fixed(model.preferences.fixedColumnSize)
                         },
                         contentPadding = PaddingValues(
@@ -229,8 +229,8 @@ class PrintsScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(4.dp)
-                                        .heightIn(100.dp)
-                                        .widthIn(133.dp, (window.containerSize.width.dp / 2))
+                                        .heightIn(125.dp)
+                                        .widthIn(166.dp, (window.containerSize.width.dp / 2))
                                         .aspectRatio(16f / 10f)
                                         .clip(RoundedCornerShape(10))
                                         .clickable(onClick = {

@@ -58,8 +58,8 @@ fun GridItem(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth()
-            .heightIn(100.dp)
-            .widthIn(133.dp, (window.containerSize.width.dp / 2))
+            .heightIn(125.dp)
+            .widthIn(166.dp, (window.containerSize.width.dp / 2))
             .aspectRatio(4f / 3f)
             .clickable(onClick = { onClick() })
     ) {
