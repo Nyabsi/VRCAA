@@ -285,6 +285,7 @@
     <string name="loading_text_stickers">Loading stickers…</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">主题</string>
     <string name="theme_page_minimalist_mode_text">简约模式</string>
