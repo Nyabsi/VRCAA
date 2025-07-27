@@ -57,7 +57,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
-import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.ui.components.layout.FavoriteHorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.UserAvatarScreen
@@ -87,7 +87,7 @@ class UserFavoritesScreen(
     @Composable
     fun ShowScreen(
         model: UserFavoritesScreenModel,
-        worlds: MutableMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>,
+        worlds: MutableMap<String, SnapshotStateList<World?>>,
         avatars: MutableMap<String, SnapshotStateList<Avatar?>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
@@ -180,7 +180,7 @@ class UserFavoritesScreen(
 
     @Composable
     fun ShowWorlds(
-        list: MutableMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>
+        list: MutableMap<String, SnapshotStateList<World?>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -193,9 +193,11 @@ class UserFavoritesScreen(
                         onEdit = {}
                     ) {
                         items(item.value) {
-                            RowItem(name = it.name, url = it.thumbnailUrl) {
-                                if (it.name != "???") {
-                                    navigator.push(WorldScreen(it.id))
+                            it?.let {
+                                RowItem(name = it.name, url = it.thumbnailImageUrl) {
+                                    if (it.name != "???") {
+                                        navigator.push(WorldScreen(it.id))
+                                    }
                                 }
                             }
                         }
