@@ -39,8 +39,8 @@ interface IFavorites {
     suspend fun removeFavorite(favoriteId: String): Boolean
     suspend fun updateFavoriteGroup(type: FavoriteType, tag: String, newDisplayName: String, newVisibility: String?): Boolean
     suspend fun fetchFavorites(type: FavoriteType, tag: String, n: Int = 100, offset: Int = 0, favorites: ArrayList<Favorite> = arrayListOf()): ArrayList<Favorite>
+    suspend fun fetchFavoritesByUserId(userId: String, type: FavoriteType, tag: String, n: Int = 100, offset: Int = 0, favorites: ArrayList<Favorite> = arrayListOf()): ArrayList<Favorite>
     suspend fun fetchFavoriteAvatars(tag: String, n: Int = 100, offset: Int = 0, favorites: ArrayList<FavoriteAvatar> = arrayListOf()): ArrayList<FavoriteAvatar>
-    suspend fun fetchFavoriteAvatarsByUserId(userId: String, tag: String, n: Int = 100, offset: Int = 0, favorites: ArrayList<FavoriteAvatar> = arrayListOf()): ArrayList<FavoriteAvatar>
     suspend fun fetchFavoriteWorlds(tag: String, n: Int = 100, offset: Int = 0, favorites: ArrayList<FavoriteWorld> = arrayListOf()): ArrayList<FavoriteWorld>
     suspend fun fetchFavoriteWorldsByUserId(userId: String, tag: String, n: Int = 100, offset: Int = 0, favorites: ArrayList<FavoriteWorld> = arrayListOf()): ArrayList<FavoriteWorld>
 }
