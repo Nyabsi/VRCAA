@@ -180,6 +180,7 @@ class FavoritesScreen : Screen {
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    allowEdit = true,
                     onEdit = {
                         model.currentSelectedGroup.value = item.key
                         model.editDialogShown.value = true
@@ -211,6 +212,7 @@ class FavoritesScreen : Screen {
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    allowEdit = true,
                     onEdit = {
                         model.currentSelectedGroup.value = item.key
                         model.editDialogShown.value = true
@@ -242,6 +244,7 @@ class FavoritesScreen : Screen {
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    allowEdit = true,
                     onEdit = {
                         model.currentSelectedIsFriend.value = true
                         model.currentSelectedGroup.value = item.key

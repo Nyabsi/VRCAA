@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun FavoriteHorizontalRow(
     title: String,
+    allowEdit: Boolean,
     onEdit: () -> Unit,
     content: LazyListScope.() -> Unit,
 ) {
@@ -51,9 +52,11 @@ fun FavoriteHorizontalRow(
             modifier = Modifier
         )
 
-        Icon(Icons.Filled.Edit, contentDescription = null, modifier = Modifier.clickable {
-            onEdit()
-        }.padding(start = 4.dp))
+        if (allowEdit) {
+            Icon(Icons.Filled.Edit, contentDescription = null, modifier = Modifier.clickable {
+                onEdit()
+            }.padding(start = 4.dp))
+        }
     }
 
     LazyRow(
