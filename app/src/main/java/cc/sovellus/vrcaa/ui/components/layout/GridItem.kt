@@ -17,17 +17,25 @@
 package cc.sovellus.vrcaa.ui.components.layout
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,11 +46,11 @@ import com.bumptech.glide.integration.compose.placeholder
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SearchRowItem(
-    name: String,
-    url: String,
-    onClick: () -> Unit
+fun GridItem(
+    name: String, url: String, count: Int?, onClick: () -> Unit
 ) {
+    val window = LocalWindowInfo.current
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -50,8 +58,9 @@ fun SearchRowItem(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth()
-            .height(150.dp)
-            .width(200.dp)
+            .heightIn(100.dp)
+            .widthIn(133.dp, (window.containerSize.width.dp / 2))
+            .aspectRatio(4f / 3f)
             .clickable(onClick = { onClick() })
     ) {
 
@@ -60,22 +69,43 @@ fun SearchRowItem(
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
-                .width(200.dp),
+                .fillMaxHeight(0.80f),
             contentScale = ContentScale.Crop,
             loading = placeholder(R.drawable.image_placeholder),
             failure = placeholder(R.drawable.image_placeholder)
         )
 
         Row(
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = name,
-                textAlign = TextAlign.Start,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 4.dp),
+                textAlign = TextAlign.Start
             )
+
+            if (count != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(
+                        text = count.toString(),
+                        modifier = Modifier.padding(end = 2.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Group,
+                        contentDescription = null
+                    )
+                }
+            }
         }
     }
 }

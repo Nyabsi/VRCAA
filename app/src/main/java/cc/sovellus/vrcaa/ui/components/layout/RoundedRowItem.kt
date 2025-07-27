@@ -19,7 +19,9 @@ package cc.sovellus.vrcaa.ui.components.layout
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Text
@@ -28,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
@@ -44,12 +47,14 @@ fun RoundedRowItem(
     status: String,
     onClick: () -> Unit
 ) {
+    val window = LocalWindowInfo.current
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.clickable(
             onClick = { onClick() }
-        ).size(100.dp)
+        ).sizeIn(80.dp, 80.dp, 100.dp, 100.dp).aspectRatio(1f / 1f)
     ) {
         Badge(
             containerColor = StatusHelper.getStatusFromString(status).toColor(), modifier = Modifier.size(72.dp).align(Alignment.CenterHorizontally)

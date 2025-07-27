@@ -48,7 +48,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.extension.columnCountOption
 import cc.sovellus.vrcaa.extension.fixedColumnSize
-import cc.sovellus.vrcaa.ui.components.layout.SearchRowItem
+import cc.sovellus.vrcaa.ui.components.layout.GridItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.theme.ThemeScreenModel
@@ -155,9 +155,10 @@ class AvatarsScreen : Screen {
                         content = {
                             items(avatars.size) {
                                 val avatar = avatars[it]
-                                SearchRowItem(
+                                GridItem(
                                     name = avatar.name,
-                                    url = avatar.thumbnailImageUrl
+                                    url = avatar.thumbnailImageUrl,
+                                    count = null
                                 ) {
                                     navigator.push(AvatarScreen(avatar.id))
                                 }
