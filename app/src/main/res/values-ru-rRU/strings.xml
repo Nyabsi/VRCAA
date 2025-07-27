@@ -285,6 +285,7 @@
     <string name="loading_text_stickers">Загрузка стикеров…</string>
     <string name="loading_text_emojis">Загрузка эмодзи…</string>
     <string name="loading_text_items">Загрузка предметов...</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Тема</string>
     <string name="theme_page_minimalist_mode_text">Минималистский Режим</string>
