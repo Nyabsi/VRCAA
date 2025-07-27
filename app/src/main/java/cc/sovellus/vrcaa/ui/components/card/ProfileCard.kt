@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.components.card
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,7 +64,9 @@ fun ProfileCard(
     tags: List<String>,
     badges: List<Badge>,
     pronouns: String,
-    ageVerificationStatus: String
+    ageVerificationStatus: String,
+    disablePeek: Boolean = true,
+    onPeek: (url: String) -> Unit
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -85,7 +88,12 @@ fun ProfileCard(
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(160.dp),
+                        .height(160.dp)
+                        .clickable(
+                            enabled = !disablePeek,
+                            onClick = {
+                            onPeek(thumbnailUrl)
+                        }),
                     contentScale = ContentScale.Crop,
                     loading = placeholder(R.drawable.image_placeholder),
                     failure = placeholder(R.drawable.image_placeholder)
@@ -101,6 +109,11 @@ fun ProfileCard(
                         modifier = Modifier
                             .size(80.dp)
                             .align(Alignment.CenterHorizontally)
+                            .clickable(
+                                enabled = !disablePeek,
+                                onClick = {
+                                onPeek(iconUrl)
+                            })
                     ) {
                         GlideImage(
                             model = iconUrl,

@@ -87,7 +87,7 @@ class ProfileScreen : Screen {
                         badges = profile.badges,
                         pronouns = profile.pronouns,
                         ageVerificationStatus = profile.ageVerificationStatus
-                    )
+                    ) { }
                 }
             }
 
