@@ -119,7 +119,7 @@ fun ImagePreviewDialog(
             contentWindowInsets = WindowInsets(0),
             topBar = {
                 TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White.copy(alpha =  0.8f)),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                     navigationIcon = {
                         IconButton(onClick = { onDismiss() }) {
                             Icon(
@@ -144,9 +144,9 @@ fun ImagePreviewDialog(
                     }
                 )
             }
-        ) { _ ->
+        ) { innerPadding ->
             Box(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())
             ) {
                 ZoomableImage(
                     imageUrl = url,
