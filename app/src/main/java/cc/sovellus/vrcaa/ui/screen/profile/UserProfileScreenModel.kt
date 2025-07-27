@@ -16,18 +16,27 @@
 
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.snapshots.SnapshotStateMap
+import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.FavoriteManager.FavoriteMetadata
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlin.collections.set
 
 class UserProfileScreenModel(
     private val userId: String
@@ -37,7 +46,10 @@ class UserProfileScreenModel(
         data object Init : UserProfileState()
         data object Loading : UserProfileState()
         data object Failure : UserProfileState()
-        data class Result(val profile: LimitedUser?, val instance: Instance?) : UserProfileState()
+        data class Result(
+            val profile: LimitedUser?,
+            val instance: Instance?
+        ) : UserProfileState()
     }
 
     private val avatarProvider = AvtrDbProvider()
@@ -64,6 +76,7 @@ class UserProfileScreenModel(
                     }
                 }
                 profile = it
+
                 mutableState.value = UserProfileState.Result(profile, instance)
             } ?: run {
                 mutableState.value = UserProfileState.Failure
