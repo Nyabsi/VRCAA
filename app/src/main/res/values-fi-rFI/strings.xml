@@ -285,6 +285,7 @@
     <string name="loading_text_stickers">Ladataan tarroja...</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Ladataan tavaroita...</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teema</string>
     <string name="theme_page_minimalist_mode_text">Minimalistinen tila</string>
