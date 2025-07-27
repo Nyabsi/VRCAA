@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
     <string name="widget_name_loading_text">Taivas on kirkas ystäväni.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
         <item>Hahmot</item>
         <item>Kaverit</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>
