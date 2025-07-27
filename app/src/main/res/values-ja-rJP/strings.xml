@@ -285,6 +285,7 @@
     <string name="loading_text_stickers">ステッカーを読み込み中。。。</string>
     <string name="loading_text_emojis">絵文字を読み込み中。。。</string>
     <string name="loading_text_items">アイテムを読み込み中。。。</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">テーマ</string>
     <string name="theme_page_minimalist_mode_text">簡易モード</string>
