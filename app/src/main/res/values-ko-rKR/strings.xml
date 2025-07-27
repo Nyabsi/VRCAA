@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">친구의 현재 위치 보기</string>
     <string name="widget_name_loading_text">로딩 중...</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>월드</item>
         <item>아바타</item>
         <item>친구</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">즐겨찾기 추가</string>
     <string name="favorite_label_remove">즐겨찾기 해제</string>
