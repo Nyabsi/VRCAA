@@ -1,0 +1,5 @@
+- Rewrote the UI for profile pages
+- Added database backup & restore
+- Added content downloading and uploading
+- Improved load time up to ~5x times
+- Stability improvements
