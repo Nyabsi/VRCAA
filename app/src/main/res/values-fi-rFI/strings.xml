@@ -109,7 +109,7 @@
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
+    <string name="service_killed_by_vendor_notification">Järjestelmä lopetti VRCAAn! Tarkista https://dontkillmyapp.com/ saadaksesi lisätietoja.</string>
     <string name="service_notification_rich_presence">VRCAA raportoi nyt läsnäolotietoa.</string>
     <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
     <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
