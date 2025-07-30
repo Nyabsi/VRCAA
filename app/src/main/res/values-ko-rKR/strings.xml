@@ -235,15 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">친구의 현재 위치 보기</string>
     <string name="widget_name_loading_text">로딩 중...</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="favorite_page_title">즐겨찾기</string>
     <string-array name="favorites_selection_options">
         <item>월드</item>
         <item>아바타</item>
         <item>친구</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>월드</item>
+        <item>아바타</item>
     </string-array>
     <string name="favorite_label_add">즐겨찾기 추가</string>
     <string name="favorite_label_remove">즐겨찾기 해제</string>
@@ -285,7 +285,7 @@
     <string name="loading_text_stickers">스티커를 불러오는 중...</string>
     <string name="loading_text_emojis">이모지를 불러오는 중...</string>
     <string name="loading_text_items">아이템을 불러오는 중...</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_favorites">즐겨찾기를 불러오는 중...</string>
     <!-- Theming -->
     <string name="theme_page_title">테마</string>
     <string name="theme_page_minimalist_mode_text">간소화 모드</string>
