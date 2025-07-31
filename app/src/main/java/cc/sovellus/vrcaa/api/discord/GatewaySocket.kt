@@ -251,9 +251,8 @@ class GatewaySocket {
         val timestamps = ArrayMap<String, Any>()
         timestamps["start"] = sessionStartTime
 
-        val button = ArrayMap<String, Any?>()
-        button["label"] = "See in Website"
-        button["url"] = "https://vrchat.com/home/world/${id}/info"
+        val party = ArrayMap<String, Any?>()
+        button["size"] = arrayOf<Any>(16, 64)
         
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
@@ -270,7 +269,7 @@ class GatewaySocket {
         activity["status_display_type"] = 1
         activity["timestamps"] = timestamps
         activity["assets"] = assets
-        activity["buttons"] = arrayOf<Any>(button)
+        activity["party"] = party
 
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
