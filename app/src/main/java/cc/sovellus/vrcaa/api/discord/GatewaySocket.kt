@@ -251,21 +251,26 @@ class GatewaySocket {
         val timestamps = ArrayMap<String, Any>()
         timestamps["start"] = sessionStartTime
 
+        val button = ArrayMap<String, Any?>()
+        button["label"] = "See in Website"
+        button["url"] = "https://vrchat.com/home/world/${id}/info"
+        
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
         activity["application_id"] = APP_ID
         if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { 
             activity["state"] = worldName
-            activity["state_url"] = "https://vrchat.com/home/world/${id}/info"
+            activity["details_url"] = "https://vrchat.com/home/world/${id}/info"
         } else { 
             activity["state"] = "User location hidden."
-            activity["state_url"] = ""
+            activity["details_url"] = ""
         }
         activity["details"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { worldInfo } else { status.toString() }
         activity["type"] = 0
         activity["status_display_type"] = 1
         activity["timestamps"] = timestamps
         activity["assets"] = assets
+        activity["buttons"] = arrayOf<Any>(button)
 
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
