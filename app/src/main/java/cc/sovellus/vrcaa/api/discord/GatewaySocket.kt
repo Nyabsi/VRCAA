@@ -225,11 +225,17 @@ class GatewaySocket {
             sessionStartTime = System.currentTimeMillis()
         }
 
-        if (webHookUrl.isEmpty())
+        if (webHookUrl.isEmpty()) {
             assets["large_image"] =  APP_ASSET_LARGE_ICON
-        else
-            assets["large_image"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { mp.convertImageUrl(worldUrl) } else { APP_ASSET_LARGE_ICON }
-
+        } else {
+             if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { 
+                assets["large_image"] = mp.convertImageUrl(worldUrl)
+                assets["large_url"] = "https://vrchat.com/home/world/${id}/info"
+            } else { 
+                assets["large_image"] = APP_ASSET_LARGE_ICON
+                assets["large_url"] = ""
+            }
+        }
         assets["large_text"] = "Powered by VRCAA"
 
         assets["small_image"] = when(status) {
@@ -248,9 +254,16 @@ class GatewaySocket {
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
         activity["application_id"] = APP_ID
-        activity["state"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { worldName } else { "User location hidden." }
+        if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { 
+            activity["state"] = worldName
+            activity["state_url"] = "https://vrchat.com/home/world/${id}/info"
+        } else { 
+            activity["state"] = "User location hidden."
+            activity["state_url"] = ""
+        }
         activity["details"] = if (status == StatusHelper.Status.JoinMe || status == StatusHelper.Status.Active) { worldInfo } else { status.toString() }
         activity["type"] = 0
+        activity["status_display_type"] = 1
         activity["timestamps"] = timestamps
         activity["assets"] = assets
 
