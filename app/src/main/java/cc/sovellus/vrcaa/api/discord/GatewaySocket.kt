@@ -252,7 +252,7 @@ class GatewaySocket {
         timestamps["start"] = sessionStartTime
 
         val party = ArrayMap<String, Any?>()
-        button["size"] = arrayOf<Any>(16, 64)
+        party["size"] = arrayOf<Any>(16, 64)
         
         val activity = ArrayMap<String, Any>()
         activity["name"] = "VRChat"
