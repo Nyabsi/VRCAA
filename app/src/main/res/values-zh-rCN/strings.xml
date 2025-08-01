@@ -74,10 +74,10 @@
     <string name="settings_item_rich_presence_description">Discord 游戏状态面板集成</string>
     <string name="settings_item_advanced_settings">高级</string>
     <string name="settings_item_advanced_settings_description">高级日志和功能</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_database_settings">数据库和统计信息</string>
+    <string name="settings_item_database_settings_description">查看统计信息, 备份和恢复您的数据</string>
     <string name="settings_item_logout">退出登录</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">通过 Ko-fi 给我买杯咖啡</string>
     <!-- Worlds -->
     <string name="world_label_description">描述</string>
     <string name="world_label_tags">标签</string>
@@ -109,8 +109,8 @@
     <string name="tabs_label_settings">设置</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA 正在后台查看您的好友动态。</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA 进程被您的系统终止了! 访问 https://dontkillmyapp.com 获取更多信息</string>
+    <string name="service_notification_rich_presence">VRCAA 现在开始推送更丰富的玩家状态信息</string>
     <string name="notification_service_title_online">好友上线了！</string>
     <string name="notification_service_description_online">您的好友 %1$s 上线了！</string>
     <string name="notification_service_title_offline">好友下线了！</string>
@@ -205,17 +205,17 @@
     <string name="misc_no_internet_description">请确保您已连接到互联网，此应用程序无法在没有互联网连接的情况下工作。</string>
     <string name="misc_no_internet_label">重启应用</string>
     <string name="misc_exit_toast_label">再次按下以退出。</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
+    <string name="misc_no_premium_subscription">此功能需要您有活跃的 VRC+ 订阅</string>
     <string name="global_app_default_loading_text">初始化...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">群组</string>
+    <string name="user_overlay_worlds">世界</string>
+    <string name="user_overlay_favorites">收藏</string>
+    <string name="user_overlay_find_avatar">查看模型</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">社交状态</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">年龄验证可见性</string>
@@ -225,8 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">已更新个人资料。</string>
     <string name="profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
     <string name="profile_edit_dialog_title_pronouns">代词</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">取消</string>
+    <string name="profile_edit_dialog_button_apply">应用</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">您真的要这么做吗？</string>
     <string name="logout_dialog_description">通过按下“继续”，您将退出 VRCAA，您必须重新登录才能继续使用该应用程序。</string>
@@ -235,7 +235,7 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">查看当前好友位置</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="favorite_page_title">收藏</string>
     <string-array name="favorites_selection_options">
         <item>世界</item>
         <item>模型</item>
