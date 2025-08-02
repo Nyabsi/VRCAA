@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">インターネットへの接続を確認してください。このアプリはオフライン動作に対応していません。</string>
     <string name="misc_no_internet_label">アプリの再起動</string>
     <string name="misc_exit_toast_label">もう一度押すと終了できます。</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
+    <string name="misc_no_premium_subscription">の機能を利用するには有効なVRC+のサブスクリプションが必要です。</string>
     <string name="global_app_default_loading_text">少女祈祷中・・・</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">フレンドの現在地を表示する</string>
     <string name="widget_name_loading_text">少女祈祷中・・・</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>ワールド</item>
         <item>アバター</item>
         <item>フレンド</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">お気に入りへ追加</string>
     <string name="favorite_label_remove">お気に入りから削除</string>
@@ -280,6 +285,7 @@
     <string name="loading_text_stickers">ステッカーを読み込み中。。。</string>
     <string name="loading_text_emojis">絵文字を読み込み中。。。</string>
     <string name="loading_text_items">アイテムを読み込み中。。。</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">テーマ</string>
     <string name="theme_page_minimalist_mode_text">簡易モード</string>

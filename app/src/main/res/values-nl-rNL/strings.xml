@@ -7,14 +7,14 @@
     <string-array name="friend_selection_options">
         <item>Favoriet</item>
         <item>Online</item>
-        <item>Website</item>
+        <item>Webpagina</item>
         <item>Offline</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Online Vrienden</string>
     <string name="home_recently_visited">Onlangs bezocht</string>
     <string name="home_offline_friends">Offline Vrienden</string>
-    <string name="home_friend_locations">Friend Locations</string>
+    <string name="home_friend_locations">Vriend Locaties</string>
     <!-- Login -->
     <string name="login_text">Inloggen op VRC Android Assistant</string>
     <string name="login_label_username">Gebruikersnaam of e-mailadres</string>
@@ -26,69 +26,69 @@
     <string name="auth_text_email">Voer de code in die naar uw e-mail verzonden is</string>
     <string name="auth_text_app">Voer de code van uw verificatie-app in</string>
     <string name="auth_button_text">Verifiëren</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_button_paste">Plakken</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">Zoeken naar Werelden, gebruikers of avatars...</string>
     <!-- Profile -->
-    <string name="profile_label_current_location">Current Location</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_current_location">Huidige locatie</string>
+    <string name="profile_label_note">Notitie</string>
     <string name="profile_label_biography">Over mij</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Laatste Activiteit</string>
+    <string name="profile_label_date_joined">Lid Sinds</string>
     <string name="profile_text_no_biography">Geen beschrijving opgegeven.</string>
-    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
+    <string name="profile_user_dropdown_manage_notifications">Notificaties beheren</string>
     <!-- removed; 06-07-25 -->
-    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_not_found_message">Gebruiker bestaat niet.</string>
+    <string name="profile_user_avatar_private">Avatar is privé!</string>
+    <string name="profile_user_avatar_unreachable">Avatar is onbereikbaar!</string>
     <!-- Search -->
     <string name="search_text_result">Resultaten voor</string>
-    <string name="search_filter_category_worlds">Worlds</string>
-    <string name="search_filter_category_worlds_sort_by">Sort By</string>
-    <string name="search_filter_category_worlds_count">Count</string>
-    <string name="search_filter_category_users">Users</string>
-    <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_worlds">Wereld</string>
+    <string name="search_filter_category_worlds_sort_by">Sorteer Op</string>
+    <string name="search_filter_category_worlds_count">Wereld Aantal</string>
+    <string name="search_filter_category_users">Gebruikers</string>
+    <string name="search_filter_category_users_count">Aantal</string>
     <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Provider</string>
-    <string name="search_filter_category_groups">Groups</string>
-    <string name="search_filter_category_groups_count">Count</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="search_filter_category_avatars_provider">Aanbieder</string>
+    <string name="search_filter_category_groups">Groepen</string>
+    <string name="search_filter_category_groups_count">Aantal</string>
+    <string name="copy_id_label">Kopieer ID</string>
+    <string name="copied_toast">%1$s\'s ID succesvol gekopieerd.</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
-    <string name="search_filter_button_reset">Reset</string>
-    <string name="search_filter_button_apply">Apply</string>
+    <string name="search_filter_label_count">Aantal</string>
+    <string name="search_filter_button_reset">Herstel</string>
+    <string name="search_filter_button_apply">Toepassen</string>
     <string-array name="search_selection_options">
         <item>Werelden</item>
         <item>Gebruikers</item>
         <item>Avatars</item>
-        <item>Groups</item>
+        <item>Groepen</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Meer...</string>
     <!-- Settings -->
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about">Over</string>
+    <string name="settings_item_about_description">Meer informatie over jouw apparaat en VRCAA</string>
+    <string name="settings_item_theming">Weergave</string>
+    <string name="settings_item_theming_description">Weergave configuratie, simpele modus</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
-    <string name="settings_item_logout">Logout</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_item_advanced_settings">Geavanceerd</string>
+    <string name="settings_item_advanced_settings_description">Geavanceerd logging en functies</string>
+    <string name="settings_item_database_settings">Database &amp; Statistieken</string>
+    <string name="settings_item_database_settings_description">Bekijk statistieken, back-up &amp; herstel je data</string>
+    <string name="settings_item_logout">Uitloggen</string>
+    <string name="settings_kofi_donation_button">Doneer via Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Beschrijving</string>
     <string name="world_label_tags">Tags</string>
     <string name="world_text_no_tags">De auteur heeft geen tags opgegeven.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
-    <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_title_created_at">Datum Aangemaakt</string>
+    <string name="world_title_updated_at">Laatst Bijgewerkt</string>
+    <string name="world_title_visits">Bezoeken</string>
+    <string name="world_title_favorites">Favorieten</string>
+    <string name="world_title_capacity">Capaciteit</string>
+    <string name="world_title_occupants">Aanwezigen</string>
+    <string name="world_title_publication_date">Datum Gepubliceerd</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
     <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">See current friend locations</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Worlds</item>
         <item>Avatars</item>
         <item>Friends</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Add to favorites</string>
     <string name="favorite_label_remove">Remove from favorites</string>
@@ -280,6 +285,7 @@
     <string name="loading_text_stickers">Loading stickers…</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Theme</string>
     <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>

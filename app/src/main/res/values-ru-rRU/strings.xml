@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">Пожалуйста, убедитесь, что вы подключены к Интернету, это приложение не может работать без подключения к Интернету.</string>
     <string name="misc_no_internet_label">Перезапустить приложение</string>
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
+    <string name="misc_no_premium_subscription">Эта функция требует активной подписки VRC+.</string>
     <string name="global_app_default_loading_text">Инициализация…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">Посмотреть текущее местоположение друзей</string>
     <string name="widget_name_loading_text">Горизонт светлый, мой друг.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Миры</item>
         <item>Аватары</item>
         <item>Друзья</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Добавить в избранное</string>
     <string name="favorite_label_remove">Удалить из избранного</string>
@@ -280,6 +285,7 @@
     <string name="loading_text_stickers">Загрузка стикеров…</string>
     <string name="loading_text_emojis">Загрузка эмодзи…</string>
     <string name="loading_text_items">Загрузка предметов...</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Тема</string>
     <string name="theme_page_minimalist_mode_text">Минималистский Режим</string>

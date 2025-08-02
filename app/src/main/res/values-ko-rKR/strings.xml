@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">인터넷 연결을 확인해 주세요. 이 애플리케이션은 오프라인 상태에서는 사용할 수 없습니다.</string>
     <string name="misc_no_internet_label">애플리케이션 다시 시작</string>
     <string name="misc_exit_toast_label">한 번 더 누르면 앱이 종료됩니다.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
+    <string name="misc_no_premium_subscription">이 기능을 사용하려면 VRC+ 구독이 활성화되어 있어야 합니다.</string>
     <string name="global_app_default_loading_text">초기화 중…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">친구의 현재 위치 보기</string>
     <string name="widget_name_loading_text">로딩 중...</string>
+    <string name="favorite_page_title">즐겨찾기</string>
     <string-array name="favorites_selection_options">
         <item>월드</item>
         <item>아바타</item>
         <item>친구</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>월드</item>
+        <item>아바타</item>
     </string-array>
     <string name="favorite_label_add">즐겨찾기 추가</string>
     <string name="favorite_label_remove">즐겨찾기 해제</string>
@@ -280,6 +285,7 @@
     <string name="loading_text_stickers">스티커를 불러오는 중...</string>
     <string name="loading_text_emojis">이모지를 불러오는 중...</string>
     <string name="loading_text_items">아이템을 불러오는 중...</string>
+    <string name="loading_text_favorites">즐겨찾기를 불러오는 중...</string>
     <!-- Theming -->
     <string name="theme_page_title">테마</string>
     <string name="theme_page_minimalist_mode_text">간소화 모드</string>

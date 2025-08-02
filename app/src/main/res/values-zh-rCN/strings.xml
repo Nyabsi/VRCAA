@@ -74,10 +74,10 @@
     <string name="settings_item_rich_presence_description">Discord 游戏状态面板集成</string>
     <string name="settings_item_advanced_settings">高级</string>
     <string name="settings_item_advanced_settings_description">高级日志和功能</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_database_settings">数据库和统计信息</string>
+    <string name="settings_item_database_settings_description">查看统计信息, 备份和恢复您的数据</string>
     <string name="settings_item_logout">退出登录</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">通过 Ko-fi 给我买杯咖啡</string>
     <!-- Worlds -->
     <string name="world_label_description">描述</string>
     <string name="world_label_tags">标签</string>
@@ -109,8 +109,8 @@
     <string name="tabs_label_settings">设置</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA 正在后台查看您的好友动态。</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA 进程被您的系统终止了! 访问 https://dontkillmyapp.com 获取更多信息</string>
+    <string name="service_notification_rich_presence">VRCAA 现在开始推送更丰富的玩家状态信息</string>
     <string name="notification_service_title_online">好友上线了！</string>
     <string name="notification_service_description_online">您的好友 %1$s 上线了！</string>
     <string name="notification_service_title_offline">好友下线了！</string>
@@ -205,17 +205,17 @@
     <string name="misc_no_internet_description">请确保您已连接到互联网，此应用程序无法在没有互联网连接的情况下工作。</string>
     <string name="misc_no_internet_label">重启应用</string>
     <string name="misc_exit_toast_label">再次按下以退出。</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
+    <string name="misc_no_premium_subscription">此功能需要您有活跃的 VRC+ 订阅</string>
     <string name="global_app_default_loading_text">初始化...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">群组</string>
+    <string name="user_overlay_worlds">世界</string>
+    <string name="user_overlay_favorites">收藏</string>
+    <string name="user_overlay_find_avatar">查看模型</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">社交状态</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">年龄验证可见性</string>
@@ -225,8 +225,8 @@
     <string name="profile_edit_dialog_toast_updated">已更新个人资料。</string>
     <string name="profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
     <string name="profile_edit_dialog_title_pronouns">代词</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">取消</string>
+    <string name="profile_edit_dialog_button_apply">应用</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">您真的要这么做吗？</string>
     <string name="logout_dialog_description">通过按下“继续”，您将退出 VRCAA，您必须重新登录才能继续使用该应用程序。</string>
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">查看当前好友位置</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="favorite_page_title">收藏</string>
     <string-array name="favorites_selection_options">
         <item>世界</item>
         <item>模型</item>
         <item>好友</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>世界</item>
+        <item>模型</item>
     </string-array>
     <string name="favorite_label_add">添加到收藏</string>
     <string name="favorite_label_remove">从收藏中移除</string>
@@ -274,12 +279,13 @@
     <string name="loading_text_avatar">加载模型…</string>
     <string name="loading_text_group">加载群组…</string>
     <string name="loading_text_instances">加载房间…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
+    <string name="loading_text_gallery">加载图库中…</string>
+    <string name="loading_text_icons">加载图标中…</string>
     <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_stickers">加载贴纸中…</string>
+    <string name="loading_text_emojis">加载 emoji 中…</string>
+    <string name="loading_text_items">加载物品中…</string>
+    <string name="loading_text_favorites">加载收藏…</string>
     <!-- Theming -->
     <string name="theme_page_title">主题</string>
     <string name="theme_page_minimalist_mode_text">简约模式</string>
@@ -298,33 +304,33 @@
     <string name="theme_page_section_column_title">列数</string>
     <!-- Advanced Settings -->
     <string name="advanced_page_title">高级设置</string>
-    <string name="advanced_page_section_networking">Networking</string>
+    <string name="advanced_page_section_networking">网络</string>
     <string name="advanced_page_network_logging">网络记录</string>
     <string name="advanced_page_network_logging_description">拦截 HTTP 和 WebSocket 流量</string>
     <string name="advanced_page_view_network_logs">显示网络记录</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_section_background_activities">后台活动</string>
     <string name="advanced_page_battery_optimization">禁用电池优化</string>
     <string name="advanced_page_battery_optimization_description">可能有助于不接收实时网络事件</string>
     <string name="advanced_page_kill_service">结束后台服务</string>
     <string name="advanced_page_kill_service_description">停止负责实时事件的后台服务</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_section_database">数据库</string>
+    <string name="advanced_page_database_delete">删除数据库</string>
+    <string name="advanced_page_database_delete_description">删除负责存储数据的内部数据库</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_title">数据库和统计信息</string>
+    <string name="database_page_section_statistics">统计数据</string>
+    <string name="database_page_statistics_size">数据库大小</string>
+    <string name="database_page_statistics_row_count">行计数</string>
+    <string name="database_page_section_recovery">还原 &amp; 备份</string>
+    <string name="database_page_recovery_backup">备份数据库</string>
+    <string name="database_page_recovery_backup_description">备份您当前的数据</string>
+    <string name="database_page_recovery_restore">还原数据库</string>
+    <string name="database_page_recovery_restore_description">还原上一个备份</string>
     <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_glide_cache_size">缓存大小</string>
+    <string name="database_page_glide_clean_cache">清理缓存</string>
+    <string name="database_page_glide_clean_cache_description">清理缓存可能会延长加载时间并降低应用程序的流畅度</string>
+    <string name="database_page_glide_clean_cache_toast">已清理缓存</string>
     <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
@@ -334,7 +340,7 @@
         <item>Avatars</item>
         <item>Groups</item>
         <item>Emojis</item>
-        <item>Stickers</item>
+        <item>贴纸</item>
         <item>Prints</item>
         <item>Items</item>
     </string-array>

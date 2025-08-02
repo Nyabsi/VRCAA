@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">Vezi locațiile actuale ale prietenilor </string>
     <string name="widget_name_loading_text">Orizontul este luminos, prietene.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Lumi</item>
         <item>Avatare</item>
         <item>Prieteni</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Adaugă la favorite</string>
     <string name="favorite_label_remove">Scoate din favorite</string>
@@ -280,6 +285,7 @@
     <string name="loading_text_stickers">Încărcare autocolante…</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Încărcare obiecte…</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teme</string>
     <string name="theme_page_minimalist_mode_text">Mod Minimalist</string>

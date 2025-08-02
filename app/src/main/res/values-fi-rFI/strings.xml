@@ -109,7 +109,7 @@
     <string name="tabs_label_settings">Asetukset</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
+    <string name="service_killed_by_vendor_notification">Järjestelmä lopetti VRCAAn! Tarkista https://dontkillmyapp.com/ saadaksesi lisätietoja.</string>
     <string name="service_notification_rich_presence">VRCAA raportoi nyt läsnäolotietoa.</string>
     <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
     <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
@@ -205,7 +205,7 @@
     <string name="misc_no_internet_description">Varmista, että olet yhteydessä Internetiin, tämä sovellus ei voi toimia ilman Internet-yhteyttä.</string>
     <string name="misc_no_internet_label">Käynnistä sovellus uudelleen</string>
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
+    <string name="misc_no_premium_subscription">Tämä ominaisuus edellyttää, että sinulla on aktiivinen VRChat+ tilaus.</string>
     <string name="global_app_default_loading_text">Valmistellaan...</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
     <string name="widget_name_loading_text">Taivas on kirkas ystäväni.</string>
+    <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
         <item>Hahmot</item>
         <item>Kaverit</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Worlds</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>
@@ -280,6 +285,7 @@
     <string name="loading_text_stickers">Ladataan tarroja...</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Ladataan tavaroita...</string>
+    <string name="loading_text_favorites">Loading favorites…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teema</string>
     <string name="theme_page_minimalist_mode_text">Minimalistinen tila</string>
