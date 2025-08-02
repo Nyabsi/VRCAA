@@ -33,14 +33,14 @@
     <string name="profile_label_current_location">Emplacement actuel</string>
     <string name="profile_label_note">Note</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Dernière activité</string>
+    <string name="profile_label_date_joined">Date d\'inscription</string>
     <string name="profile_text_no_biography">Aucune description spécifiée.</string>
     <string name="profile_user_dropdown_manage_notifications">Gérer les notifications</string>
     <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">L\'utilisateur n\'existe pas.</string>
     <string name="profile_user_avatar_private">L\'avatar est privé !</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_avatar_unreachable">L\'avatar est injoignable!</string>
     <!-- Search -->
     <string name="search_text_result">Résultats pour</string>
     <string name="search_filter_category_worlds">Mondes</string>
@@ -52,8 +52,8 @@
     <string name="search_filter_category_avatars_provider">Fournisseurs</string>
     <string name="search_filter_category_groups">Groupes</string>
     <string name="search_filter_category_groups_count">Quantité</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="copy_id_label">Copier l\'ID</string>
+    <string name="copied_toast">L\'identifiant de %1$s a été copié avec succès.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Quantité</string>
     <string name="search_filter_button_reset">Réinitialiser</string>
@@ -64,33 +64,33 @@
         <item>Avatars</item>
         <item>Groupes</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Plus…</string>
     <!-- Settings -->
     <string name="settings_item_about">À propos</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about_description">Plus d\'informations à propos de votre appareil et VRCAA</string>
+    <string name="settings_item_theming">Apparence</string>
+    <string name="settings_item_theming_description">Configuration de l\'apparence, mode minimaliste</string>
     <string name="settings_item_rich_presence">Rich Presence (Expérimental)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_rich_presence_description">Intégration du Rich Presence de Discord</string>
+    <string name="settings_item_advanced_settings">Options avancées</string>
+    <string name="settings_item_advanced_settings_description">Journalisation et fonctionnalités avancées</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
     <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
-    <string name="settings_item_logout">Se déconnecter</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_item_logout">Déconnecter</string>
+    <string name="settings_kofi_donation_button">Faire un don via Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Mots-clés</string>
     <string name="world_text_no_tags">L\'auteur n\'a pas fourni de mots-clés.</string>
     <string name="world_title_created_at">Date de création</string>
     <string name="world_title_updated_at">Dernière mise à jour</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
+    <string name="world_title_visits">Visites</string>
+    <string name="world_title_favorites">Favoris</string>
+    <string name="world_title_capacity">Capacité</string>
     <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
-    <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_publication_date">Date de publication</string>
+    <string name="world_title_heat">Popularité</string>
+    <string name="world_title_popularity">Popularité</string>
     <string name="world_toast_not_found">Monde privé ou il n\'existe pas.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -104,13 +104,13 @@
     <string name="tabs_label_friends">Amis</string>
     <string name="tabs_label_home">Domicile</string>
     <string name="tabs_label_favorites">Favoris</string>
-    <string name="tabs_label_feed">Feed</string>
+    <string name="tabs_label_feed">Flux</string>
     <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_settings">Paramètres</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA a été tué par votre système ! Consultez https://dontkillmyapp.com/ pour plus d\'informations.</string>
+    <string name="service_notification_rich_presence">VRCAA envoie maintenant des informations au Rich Presence.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
     <string name="notification_service_description_online">%1$s est en ligne !</string>
     <string name="notification_service_title_offline">Ami s\'est déconnecté !</string>
@@ -155,9 +155,9 @@
     <string name="feed_removed_text">vous a retiré de ses amis.</string>
     <string name="feed_friend_request_label">Demande d\'ami</string>
     <string name="feed_friend_request_text">veut vous ajouter comme ami.</string>
-    <string name="feed_search_placeholder">Search for User or Location…</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_search_placeholder">Rechercher un utilisateur ou un monde…</string>
+    <string name="feed_friend_avatar_label">Avatar modifié</string>
+    <string name="feed_friend_avatar_text">a changé son avatar pour</string>
     <!-- About -->
     <string name="about_page_title">À propos</string>
     <string name="about_page_open_source_licenses_title">Licences Open Source</string>
@@ -203,30 +203,30 @@
     <!-- Misc -->
     <string name="misc_no_internet_title">Pas de connexion internet</string>
     <string name="misc_no_internet_description">Veuillez vous assurer que vous êtes connecté à internet, car cette application ne peut pas fonctionner sans connexion internet.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
+    <string name="misc_no_internet_label">Redémarrer l’application</string>
     <string name="misc_exit_toast_label">Appuyez à nouveau pour quitter.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="misc_no_premium_subscription">Cette fonctionnalité nécessite un abonnement VRC+ actif.</string>
+    <string name="global_app_default_loading_text">Initialisation…</string>
     <!-- User -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
     <!-- removed; 06-07-25 -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">Groupes</string>
+    <string name="user_overlay_worlds">Mondes</string>
+    <string name="user_overlay_favorites">Favoris</string>
+    <string name="user_overlay_find_avatar">Trouver un avatar</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Statut</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Visibilité de la vérification d\'âge</string>
     <string name="profile_edit_dialog_title_status_description">Description du statut</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Liens sociaux</string>
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
     <string name="profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronoms</string>
+    <string name="profile_edit_dialog_button_cancel">Annuler</string>
+    <string name="profile_edit_dialog_button_apply">Appliquer</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Êtes-vous sûr ?</string>
     <string name="logout_dialog_description">En appuyant sur \"Continuer\" ci-dessous, vous vous déconnecterez de VRCAA et vous devrez vous reconnecter pour continuer à utiliser l\'application.</string>
@@ -235,10 +235,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list">Voir les emplacements actuels des amis</string>
     <string name="widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>
+    <string name="favorite_page_title">Favoris</string>
     <string-array name="favorites_selection_options">
         <item>Mondes</item>
         <item>Avatars</item>
-        <item>Friends</item>
+        <item>Amis</item>
+    </string-array>
+    <string-array name="user_favorites_selection_options">
+        <item>Mondes</item>
+        <item>Avatars</item>
     </string-array>
     <string name="favorite_label_add">Ajouter aux favoris</string>
     <string name="favorite_label_remove">Retirer des favoris</string>
@@ -255,8 +260,8 @@
     <string name="favorite_edit_discarded">Les modifications ont été ignorées.</string>
     <string name="favorite_edit_applied">Les modifications ont été appliquées.</string>
     <string name="favorite_dialog_button_edit">Modifier</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
+    <string name="favorite_tab_refresh_favorites">Actualiser les Favoris</string>
+    <string name="favorite_toast_refreshed_favorites">Favoris actualisés.</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">Monde de %1$s</string>
@@ -274,94 +279,95 @@
     <string name="loading_text_avatar">Chargement de l\'avatar…</string>
     <string name="loading_text_group">Chargement du groupe…</string>
     <string name="loading_text_instances">Chargement des instances…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_gallery">Chargement de la galerie…</string>
+    <string name="loading_text_icons">Chargement des icônes…</string>
+    <string name="loading_text_prints">Chargement des impressions…</string>
+    <string name="loading_text_stickers">Chargement des autocollants…</string>
+    <string name="loading_text_emojis">Chargement des émojis...</string>
+    <string name="loading_text_items">Chargement des objets...</string>
+    <string name="loading_text_favorites">Chargement des favoris…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">Thème</string>
+    <string name="theme_page_minimalist_mode_text">Mode minimaliste</string>
+    <string name="theme_page_minimalist_mode_text_description">"Le mode minimaliste permet d'ajuster le contenu sur les écrans plus petits."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>Clair</item>
+        <item>Sombre</item>
+        <item>Système</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>Adaptatif</item>
+        <item>Fixe</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">Thème</string>
+    <string name="theme_page_section_display_title">Afficher</string>
+    <string name="theme_page_section_column_title">Nombre de colonnes</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_section_networking">Networking</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
-    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
-    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_title">Options avancées</string>
+    <string name="advanced_page_section_networking">Réseau</string>
+    <string name="advanced_page_network_logging">Journalisation réseau</string>
+    <string name="advanced_page_network_logging_description">Intercepter le trafic HTTP et WebSocket</string>
+    <string name="advanced_page_view_network_logs">Afficher les journaux du réseau</string>
+    <string name="advanced_page_section_background_activities">Activités en arrière-plan</string>
+    <string name="advanced_page_battery_optimization">Désactiver les optimisations de la batterie</string>
+    <string name="advanced_page_battery_optimization_description">Peut aider à ne pas recevoir d\'événements réseau en temps réel</string>
+    <string name="advanced_page_kill_service">Tuer le service d\'arrière-plan</string>
+    <string name="advanced_page_kill_service_description">Tuer le service d\'arrière-plan responsable des événements en temps réel</string>
+    <string name="advanced_page_section_database">Base de données</string>
+    <string name="advanced_page_database_delete">Supprimer la base de données</string>
+    <string name="advanced_page_database_delete_description">Supprime la base de données interne responsable du stockage des données</string>
     <!-- Database -->
     <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
+    <string name="database_page_section_statistics">Statistiques</string>
+    <string name="database_page_statistics_size">Taille de la base de données</string>
+    <string name="database_page_statistics_row_count">Nombre de lignes</string>
     <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
-    <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_recovery_backup">Sauvegarder la base de données</string>
+    <string name="database_page_recovery_backup_description">Sauvegarder vos données actuelles</string>
+    <string name="database_page_recovery_restore">Restaurer la base de données</string>
+    <string name="database_page_recovery_restore_description">Restaurer la sauvegarde précédente</string>
+    <string name="database_page_section_glide">Cache Glide</string>
+    <string name="database_page_glide_cache_size">Taille du cache</string>
+    <string name="database_page_glide_clean_cache">Vider le cache</string>
+    <string name="database_page_glide_clean_cache_description">Nettoyer le cache peut augmenter les temps de chargement et diminuer la réactivité de l\'application</string>
+    <string name="database_page_glide_clean_cache_toast">Cache effacé !</string>
+    <string name="database_page_toast_recovery_failed">Impossible de restaurer la base de données à partir de la sauvegarde ! Êtes-vous sûr de vouloir sélectionner la sauvegarde de la base de données valide ?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
+        <item>Galerie</item>
+        <item>Icônes de l\'utilisateur</item>
+        <item>Mondes</item>
         <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
-        <item>Prints</item>
+        <item>Groupes</item>
+        <item>Émojis</item>
+        <item>Autocollants</item>
+        <item>Impressions</item>
         <item>Items</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Upload Print</string>
-    <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="gallery_page_title">Galerie</string>
+    <string name="gallery_page_button_upload">Téléverser une image</string>
+    <string name="icon_gallery_page_title">Icônes de l\'utilisateur</string>
+    <string name="icon_gallery_page_button_upload">Téléverser une icône</string>
+    <string name="prints_page_title">Impressions</string>
+    <string name="prints_page_button_upload">Téléverser une impression</string>
+    <string name="emojis_page_title">Émojis</string>
+    <string name="emojis_page_button_upload">Téléverser un émoji</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Officiel</item>
+        <item>Personnalisé</item>
+        <item>Archivé</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">Autocollants</string>
+    <string name="stickers_page_button_upload">Téléverser un autocollant</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Officiel</item>
+        <item>Personnalisé</item>
+        <item>Archivé</item>
     </string-array>
     <string name="items_page_title">Items</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
+        <item>Tous les items</item>
         <item>Archive</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_title">Aperçu</string>
 </resources>
