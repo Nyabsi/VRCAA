@@ -281,7 +281,7 @@
     <string name="loading_text_instances">加载房间…</string>
     <string name="loading_text_gallery">加载图库中…</string>
     <string name="loading_text_icons">加载图标中…</string>
-    <string name="loading_text_prints">Loading prints…</string>
+    <string name="loading_text_prints">加载拍立得中…</string>
     <string name="loading_text_stickers">加载贴纸中…</string>
     <string name="loading_text_emojis">加载 emoji 中…</string>
     <string name="loading_text_items">加载物品中…</string>
@@ -325,8 +325,8 @@
     <string name="database_page_recovery_backup">备份数据库</string>
     <string name="database_page_recovery_backup_description">备份您当前的数据</string>
     <string name="database_page_recovery_restore">还原数据库</string>
-    <string name="database_page_recovery_restore_description">还原上一个备份</string>
-    <string name="database_page_section_glide">Glide Cache</string>
+    <string name="database_page_recovery_restore_description">还原您选择的备份文件</string>
+    <string name="database_page_section_glide">Glide 缓存</string>
     <string name="database_page_glide_cache_size">缓存大小</string>
     <string name="database_page_glide_clean_cache">清理缓存</string>
     <string name="database_page_glide_clean_cache_description">清理缓存可能会延长加载时间并降低应用程序的流畅度</string>
