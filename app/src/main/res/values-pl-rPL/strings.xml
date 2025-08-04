@@ -11,10 +11,10 @@
         <item>Niedostępny</item>
     </string-array>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Znajomi online</string>
     <string name="home_recently_visited">Ostatnio odwiedzone</string>
     <string name="home_offline_friends">Nieaktywni znajomi</string>
-    <string name="home_friend_locations">Friend Locations</string>
+    <string name="home_friend_locations">Lokacje znajomych</string>
     <!-- Login -->
     <string name="login_text">Zaloguj się do VRC AA</string>
     <string name="login_label_username">Nazwa użytkownika lub adres e-mail</string>
@@ -28,19 +28,19 @@
     <string name="auth_button_text">Potwierdź</string>
     <string name="auth_button_paste">Wklej</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">Szukaj światów, użytkowników lub awatarów…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Aktualna lokalizacja</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_note">Notatka</string>
     <string name="profile_label_biography">O mnie</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Ostatnia aktywność</string>
+    <string name="profile_label_date_joined">Data dołączenia</string>
     <string name="profile_text_no_biography">Brak opisu.</string>
     <string name="profile_user_dropdown_manage_notifications">Zarządzanie powiadomieniami</string>
     <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">Użytkownik nie istnieje.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
+    <string name="profile_user_avatar_private">Awatar jest prywatny!</string>
+    <string name="profile_user_avatar_unreachable">Awatar jest nieosiągalny!</string>
     <!-- Search -->
     <string name="search_text_result">Wyniki dla</string>
     <string name="search_filter_category_worlds">Światy</string>
@@ -48,14 +48,14 @@
     <string name="search_filter_category_worlds_count">Ilość</string>
     <string name="search_filter_category_users">Użytkownicy</string>
     <string name="search_filter_category_users_count">Ilość</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Provider</string>
+    <string name="search_filter_category_avatars">Awatary</string>
+    <string name="search_filter_category_avatars_provider">Dostawca</string>
     <string name="search_filter_category_groups">Grupy</string>
     <string name="search_filter_category_groups_count">Ilość</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
+    <string name="copy_id_label">Kopiuj Id</string>
+    <string name="copied_toast">Pomyślnie skopiowano Id %1$s.</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
+    <string name="search_filter_label_count">Ilość</string>
     <string name="search_filter_button_reset">Reset</string>
     <string name="search_filter_button_apply">Zastosuj</string>
     <string-array name="search_selection_options">
@@ -64,33 +64,33 @@
         <item>Awatary</item>
         <item>Grupy</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Pokaż więcej…</string>
     <!-- Settings -->
     <string name="settings_item_about">Informacje</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_about_description">Więcej informacji o twoim urządzeniu i VRCAA</string>
+    <string name="settings_item_theming">Wygląd</string>
+    <string name="settings_item_theming_description">Ustawienia wyglądu, tryb minimalistyczny</string>
     <string name="settings_item_rich_presence">Rich Presence (Eksperymentalne)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_rich_presence_description">Integracja z Discord rich-presence</string>
+    <string name="settings_item_advanced_settings">Zaawansowane</string>
+    <string name="settings_item_advanced_settings_description">Zaawansowane logi i właściwości</string>
+    <string name="settings_item_database_settings">Statystyki bazy danych &amp;</string>
+    <string name="settings_item_database_settings_description">Pokaż statystyki, przywróć &amp; zrób kopię zapasową swoich danych</string>
     <string name="settings_item_logout">Wyloguj się</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">Wspomóż na Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Tags</string>
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
-    <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_title_updated_at">Ostatnio aktualizowane</string>
+    <string name="world_title_visits">Odwiedziny</string>
+    <string name="world_title_favorites">Ulubione</string>
+    <string name="world_title_capacity">Pojemność</string>
+    <string name="world_title_occupants">Liczba użytkowników</string>
+    <string name="world_title_publication_date">Data publikacji</string>
     <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_popularity">Popularność</string>
     <string name="world_toast_not_found">Świat jest prywatny, lub nie istnieje.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
@@ -101,28 +101,28 @@
     <string name="world_instance_invite_dialog_description">Zamierzasz wysłać zaproszenie do siebie na tę instancję, czy na pewno chcesz to zrobić?</string>
     <string name="world_instance_no_public_instances_message">Brak publicznych instancji</string>
     <!-- Tabs -->
-    <string name="tabs_label_friends">Friends</string>
+    <string name="tabs_label_friends">Znajomi</string>
     <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
-    <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
+    <string name="tabs_label_favorites">Ulubione</string>
+    <string name="tabs_label_feed">Tablica</string>
+    <string name="tabs_label_profile">Profil</string>
     <string name="tabs_label_settings">Ustawienia</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
-    <string name="notification_service_title_online">Friend has came online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
-    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
-    <string name="notification_service_title_location">Friend changed location!</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
-    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
-    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
-    <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
-    <string name="notification_title_player">\'s Notifications</string>
-    <string name="notification_label_enable">Enable Notifications</string>
+    <string name="service_notification">VRCAA teraz monitoruje twoich znajomych w tle.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA zostało zamknięte przez Twój system! Sprawdź https://dontkillmyapp.com/ po więcej informacji.</string>
+    <string name="service_notification_rich_presence">VRCAA teraz nadaje informacje rich-presence.</string>
+    <string name="notification_service_title_online">Znajomy stał się online!</string>
+    <string name="notification_service_description_online">Twój znajomy, %1$s, stał się online!</string>
+    <string name="notification_service_title_offline">Znajomy stał się offline!</string>
+    <string name="notification_service_description_offline">Twój znajomy, %1$s, stał się offline!</string>
+    <string name="notification_service_title_location">Znajomy zmienił lokacje!</string>
+    <string name="notification_service_description_location">Twój znajomy, %1$s, poszedł do %2$s.</string>
+    <string name="notification_service_title_friend_removed">Twój znajomy Cię usunął.</string>
+    <string name="notification_service_description_friend_removed">Twój znajomy, %1$s, już nie jest twoim znajomym :(</string>
+    <string name="notification_service_title_friend_added">Masz nowego znajomego!</string>
+    <string name="notification_service_description_friend_added">%1$s jest teraz twoim znajomym!</string>
+    <string name="notification_title_player">Powiadomienia</string>
+    <string name="notification_label_enable">Włącz powiadomienia</string>
     <string name="notification_label_intent_online">Online Notifications</string>
     <string name="notification_label_intent_offline">Offline Notifications</string>
     <string name="notification_label_intent_location">Location Notifications</string>
