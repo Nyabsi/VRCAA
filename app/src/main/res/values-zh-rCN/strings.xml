@@ -335,7 +335,7 @@
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>图库</item>
-        <item>User Icons</item>
+        <item></item>
         <item>世界</item>
         <item>模型</item>
         <item>群组</item>
