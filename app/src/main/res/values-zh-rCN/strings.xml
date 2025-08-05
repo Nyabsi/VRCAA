@@ -281,7 +281,7 @@
     <string name="loading_text_instances">加载房间…</string>
     <string name="loading_text_gallery">加载图库中…</string>
     <string name="loading_text_icons">加载图标中…</string>
-    <string name="loading_text_prints">Loading prints…</string>
+    <string name="loading_text_prints">加载拍立得中…</string>
     <string name="loading_text_stickers">加载贴纸中…</string>
     <string name="loading_text_emojis">加载 emoji 中…</string>
     <string name="loading_text_items">加载物品中…</string>
@@ -310,7 +310,7 @@
     <string name="advanced_page_view_network_logs">显示网络记录</string>
     <string name="advanced_page_section_background_activities">后台活动</string>
     <string name="advanced_page_battery_optimization">禁用电池优化</string>
-    <string name="advanced_page_battery_optimization_description">可能有助于不接收实时网络事件</string>
+    <string name="advanced_page_battery_optimization_description">可能有助于改善不接收实时网络事件的问题</string>
     <string name="advanced_page_kill_service">结束后台服务</string>
     <string name="advanced_page_kill_service_description">停止负责实时事件的后台服务</string>
     <string name="advanced_page_section_database">数据库</string>
@@ -323,51 +323,51 @@
     <string name="database_page_statistics_row_count">行计数</string>
     <string name="database_page_section_recovery">还原 &amp; 备份</string>
     <string name="database_page_recovery_backup">备份数据库</string>
-    <string name="database_page_recovery_backup_description">备份您当前的数据</string>
+    <string name="database_page_recovery_backup_description">备份数据库到文件</string>
     <string name="database_page_recovery_restore">还原数据库</string>
-    <string name="database_page_recovery_restore_description">还原上一个备份</string>
-    <string name="database_page_section_glide">Glide Cache</string>
+    <string name="database_page_recovery_restore_description">从文件恢复数据库备份</string>
+    <string name="database_page_section_glide">Glide 缓存</string>
     <string name="database_page_glide_cache_size">缓存大小</string>
     <string name="database_page_glide_clean_cache">清理缓存</string>
     <string name="database_page_glide_clean_cache_description">清理缓存可能会延长加载时间并降低应用程序的流畅度</string>
     <string name="database_page_glide_clean_cache_toast">已清理缓存</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_toast_recovery_failed">从备份恢复数据库失败！您确定选择了有效的数据库备份文件吗？</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
+        <item>图库</item>
+        <item></item>
+        <item>世界</item>
+        <item>模型</item>
+        <item>群组</item>
         <item>Emojis</item>
         <item>贴纸</item>
-        <item>Prints</item>
-        <item>Items</item>
+        <item>拍立得</item>
+        <item>物品</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
+    <string name="gallery_page_title">图库</string>
+    <string name="gallery_page_button_upload">上传图片</string>
     <string name="icon_gallery_page_title">User Icons</string>
     <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Upload Print</string>
+    <string name="prints_page_title">拍立得</string>
+    <string name="prints_page_button_upload">上传拍立得</string>
     <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="emojis_page_button_upload">上传 Emoji</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>官方</item>
+        <item>自定义</item>
+        <item>已归档</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">贴纸</string>
+    <string name="stickers_page_button_upload">上传贴纸</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>官方</item>
+        <item>自定义</item>
+        <item>已归档</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">物品</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
-        <item>Archive</item>
+        <item>所有物品</item>
+        <item>已归档</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_title">预览</string>
 </resources>
