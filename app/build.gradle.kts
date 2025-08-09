@@ -145,4 +145,5 @@ dependencies {
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 }
