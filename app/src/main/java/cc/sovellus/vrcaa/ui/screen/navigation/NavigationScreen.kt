@@ -371,7 +371,11 @@ class NavigationScreen : Screen {
                                     )
                                 },
                                 navigationIcon = {
-                                    IconButton(onClick = { isQuickMenuExpanded = true }) {
+                                    IconButton(onClick = {
+                                        if (CacheManager.isBuilt()) {
+                                            isQuickMenuExpanded = true
+                                        }
+                                    }) {
                                         Icon(
                                             imageVector = Icons.Filled.Menu,
                                             contentDescription = null
@@ -383,7 +387,11 @@ class NavigationScreen : Screen {
 
                         FavoritesTab.options.index -> {
                             TopAppBar(actions = {
-                                IconButton(onClick = { isMenuExpanded = true }) {
+                                IconButton(onClick = {
+                                    if (CacheManager.isBuilt()) {
+                                        isMenuExpanded = true
+                                    }
+                                }) {
                                     Icon(
                                         imageVector = Icons.Filled.MoreVert,
                                         contentDescription = null
