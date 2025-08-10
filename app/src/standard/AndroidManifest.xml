@@ -25,12 +25,14 @@
 
         <activity
             android:name=".activity.CrashActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
             android:theme="@style/Theme.VRCAA"
             android:fitsSystemWindows="true">
         </activity>
 
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
             android:exported="true"
             android:theme="@style/Theme.VRCAA"
             android:fitsSystemWindows="true">
@@ -42,6 +44,7 @@
 
         <activity
             android:name=".activity.PeekActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
