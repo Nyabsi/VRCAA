@@ -1,3 +1,8 @@
+@file:OptIn(ExperimentalEncodingApi::class)
+
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -29,6 +34,24 @@ android {
         buildConfigField("String", "KOFI_URL", "\"https://ko-fi.com/Nyabsi\"")
     }
 
+    signingConfigs {
+        create("release") {
+            val storeFileEnv = System.getenv("SIGNING_STORE_FILE")
+            val storePasswordEnv = System.getenv("SIGNING_STORE_PASSWORD")
+            val keyAliasEnv = System.getenv("SIGNING_KEY_ALIAS")
+            val keyPasswordEnv = System.getenv("SIGNING_KEY_PASSWORD")
+
+            if (storeFileEnv != null && File(storeFileEnv).exists()) {
+                storeFile = file(storeFileEnv)
+                storePassword = storePasswordEnv
+                keyAlias = keyAliasEnv
+                keyPassword = keyPasswordEnv
+            } else {
+                println("Warning: Release signing configuration not fully set up from environment variables.")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -37,6 +60,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

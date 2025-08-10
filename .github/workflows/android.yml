@@ -22,40 +22,43 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Decode Keystore and Set Environment Variables
+      env:
+          SIGNING_KEY_BASE64: ${{ secrets.SIGNING_KEY }}
+          SIGNING_STORE_PASSWORD_SECRET: ${{ secrets.KEY_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS_SECRET: ${{ secrets.ALIAS }}
+          SIGNING_KEY_PASSWORD_SECRET: ${{ secrets.KEY_PASSWORD }}
+      run: |
+          echo "Decoding Keystore..."
+          KEYSTORE_FILE_PATH="${{ github.workspace }}/release.jks"
+          
+          echo $SIGNING_KEY_BASE64 | base64 --decode > $KEYSTORE_FILE_PATH
+
+          echo "SIGNING_STORE_FILE=$KEYSTORE_FILE_PATH" >> $GITHUB_ENV
+          echo "SIGNING_STORE_PASSWORD=$SIGNING_STORE_PASSWORD_SECRET" >> $GITHUB_ENV
+          echo "SIGNING_KEY_ALIAS=$SIGNING_KEY_ALIAS_SECRET" >> $GITHUB_ENV
+          echo "SIGNING_KEY_PASSWORD=$SIGNING_KEY_PASSWORD_SECRET" >> $GITHUB_ENV
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Build Release for ${{ matrix.platform }} with Gradle
       run: ./gradlew assemble${{ matrix.platform }}Release
 
+    - name: Clean up Keystore
+      if: always()
+      run: |
+        rm -f "${{ github.workspace }}/release.jks"
+
     - name: Rename built apk
       run: |
-        mv app/build/outputs/apk/${{ matrix.platform }}/release/app-${{ matrix.platform }}-release.apk app/build/outputs/apk/${{ matrix.platform }}/release/VRCAA-${{ matrix.platform }}.apk
-
-    - name: Setup build tool version variable
-      shell: bash
-      run: |
-        BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
-        echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
-        echo Last build tool version is: $BUILD_TOOL_VERSION
-
-    - name: Sign app APK (${{ matrix.platform }})
-      uses: noriban/sign-android-release@v5.1
-      id: signed_apk
-      with:
-        releaseDirectory: app/build/outputs/apk/${{ matrix.platform }}/release
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-      env:
-        BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+        mv app/build/outputs/apk/${{ matrix.platform }}/release/app-${{ matrix.platform }}-release.apk app/build/outputs/apk/${{ matrix.platform }}/release/VRCAA-${{ matrix.platform }}-signed.apk
 
     - name: Upload signed APK artifact for ${{ matrix.platform }}
       uses: actions/upload-artifact@v4
       with:
         name: VRCAA-${{ matrix.platform }}-signed.apk
-        path: ${{ steps.signed_apk.outputs.signedReleaseFile }}
+        path: app/build/outputs/apk/${{ matrix.platform }}/release/VRCAA-${{ matrix.platform }}-signed.apk
 
   publish:
     permissions: write-all
