@@ -128,7 +128,7 @@ object FavoriteManager : BaseManager<Any>() {
     }
 
     fun getDisplayNameFromTag(tag: String): String {
-        return tagToGroupMetadataMap[tag]?.displayName ?: tagToGroupMetadataMap[tag]?.name ?: "???"
+        return tagToGroupMetadataMap[tag]?.displayName ?: tagToGroupMetadataMap[tag]?.name ?: tag
     }
 
     fun getGroupMetadata(tag: String): FavoriteGroupMetadata? {
