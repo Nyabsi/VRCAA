@@ -14,12 +14,12 @@ plugins {
 
 android {
     namespace = "cc.sovellus.vrcaa"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "cc.sovellus.vrcaa"
         minSdk = 27
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 200604
         versionName = "2.6.4"
 
