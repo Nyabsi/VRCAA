@@ -303,15 +303,13 @@ object FavoriteManager : BaseManager<Any>() {
         }
     }
 
-    fun getMaximumFavoritesFromTag(tag: String): Int {
-        tagToGroupMetadataMap[tag]?.let { metadata ->
-            favoriteLimits?.let { limits ->
-                return when (metadata.type) {
-                    "world" -> limits.maxFavoritesPerGroup.world
-                    "avatar" -> limits.maxFavoritesPerGroup.avatar
-                    "friend" -> limits.maxFavoritesPerGroup.friend
-                    else -> -1
-                }
+    fun getMaximumFavoritesForType(type: FavoriteType): Int {
+        favoriteLimits?.let { limits ->
+            return when (type) {
+                FavoriteType.FAVORITE_WORLD -> limits.maxFavoritesPerGroup.world
+                FavoriteType.FAVORITE_AVATAR -> limits.maxFavoritesPerGroup.avatar
+                FavoriteType.FAVORITE_FRIEND -> limits.maxFavoritesPerGroup.friend
+                FavoriteType.FAVORITE_NONE -> 0
             }
         }
         return -1
