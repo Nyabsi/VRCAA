@@ -53,7 +53,7 @@ import com.bumptech.glide.integration.compose.placeholder
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun InstanceCard(profile: LimitedUser, instance: Instance, clickable: Boolean, callback: () -> Unit) {
+fun InstanceCard(profile: LimitedUser, instance: Instance, callback: () -> Unit) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -63,7 +63,6 @@ fun InstanceCard(profile: LimitedUser, instance: Instance, clickable: Boolean, c
             .widthIn(Dp.Unspecified, 520.dp)
             .fillMaxWidth()
             .clickable(
-                enabled = clickable,
                 onClick = {
                     callback()
                 })
