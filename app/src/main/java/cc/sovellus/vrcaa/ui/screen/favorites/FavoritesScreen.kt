@@ -52,6 +52,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteEditDialog
@@ -179,7 +180,7 @@ class FavoritesScreen : Screen {
         sortedWorldList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
-                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_WORLD)})",
                     allowEdit = true,
                     onEdit = {
                         model.currentSelectedGroup.value = item.key
@@ -211,7 +212,7 @@ class FavoritesScreen : Screen {
         sortedAvatarList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
-                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_AVATAR)})",
                     allowEdit = true,
                     onEdit = {
                         model.currentSelectedGroup.value = item.key
@@ -243,7 +244,7 @@ class FavoritesScreen : Screen {
         sortedFriendList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
-                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesFromTag(item.key)})",
+                    title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_FRIEND)})",
                     allowEdit = true,
                     onEdit = {
                         model.currentSelectedIsFriend.value = true
