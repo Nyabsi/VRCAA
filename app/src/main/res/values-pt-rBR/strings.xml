@@ -64,13 +64,13 @@
         <item>Avatares</item>
         <item>Grupos</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Mais opções...</string>
     <!-- Settings -->
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
-    <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
+    <string name="settings_item_about">Sobre</string>
+    <string name="settings_item_about_description">Mais informações sobre seu dispositivo e VRCAA</string>
+    <string name="settings_item_theming">Aparência </string>
+    <string name="settings_item_theming_description">Configuração de aparência, modo minimalista</string>
+    <string name="settings_item_rich_presence">Presença Rica (Experimental)</string>
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
