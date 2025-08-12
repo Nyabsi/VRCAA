@@ -71,10 +71,10 @@
     <string name="settings_item_theming">Aparência </string>
     <string name="settings_item_theming_description">Configuração de aparência, modo minimalista</string>
     <string name="settings_item_rich_presence">Presença Rica (Experimental)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_rich_presence_description">Integração de presença rica do Discord</string>
+    <string name="settings_item_advanced_settings">Avançados </string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
+    <string name="settings_item_database_settings">Banco de dados e estatísticas</string>
     <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
     <string name="settings_item_logout">Logout</string>
     <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
