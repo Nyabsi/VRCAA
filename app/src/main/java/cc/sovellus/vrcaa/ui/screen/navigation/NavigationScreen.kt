@@ -183,14 +183,16 @@ class NavigationScreen : Screen {
             })
         }
 
-        val tabs = arrayListOf(
-            HomeTab,
-            FriendsTab,
-            FavoritesTab,
-            FeedTab,
-            ProfileTab,
-            SettingsTab
-        )
+        val tabs = remember {
+            arrayListOf(
+                HomeTab,
+                FriendsTab,
+                FavoritesTab,
+                FeedTab,
+                ProfileTab,
+                SettingsTab
+            )
+        }
 
         TabNavigator(HomeTab, tabDisposable = {
             TabDisposable(
