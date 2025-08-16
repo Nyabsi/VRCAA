@@ -69,6 +69,8 @@ class GatewaySocket {
         var worldThumbnailUrl: String = "",
         var worldId: String = "",
         var instanceInfo: String = "",
+        var instanceNonce: String = "",
+        var instanceType: String = "",
         var userStatus: StatusHelper.Status = StatusHelper.Status.Offline
     )
 
@@ -262,8 +264,8 @@ class GatewaySocket {
             "User location hidden."
         }
 
-        activity["state_url"] = if (info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) {
-            "https://vrchat.com/home/world/${info.worldId}/info"
+        activity["details_url"] = if ((info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) && (info.instanceType == "Public" || info.instanceType == "Group" || info.instanceType == "Group+")) {
+            "vrchat://launch?ref=vrchat.com&id=${info.instanceNonce}"
         } else {
             ""
         }

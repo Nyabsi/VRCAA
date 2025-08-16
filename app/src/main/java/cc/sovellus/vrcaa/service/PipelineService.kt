@@ -293,6 +293,8 @@ class PipelineService : Service(), CoroutineScope {
                                         worldThumbnailUrl = instance.world.thumbnailImageUrl
                                         worldId = instance.world.id
                                         instanceInfo = "${location.instanceType} #${instance.name}"
+                                        instanceNonce = user.location
+                                        instanceType = location.instanceType
                                         userStatus = StatusHelper.getStatusFromString(user.user.status)
                                     }
                                     GatewayManager.updateWorld(info)

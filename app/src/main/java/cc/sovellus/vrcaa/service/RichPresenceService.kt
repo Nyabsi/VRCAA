@@ -49,6 +49,8 @@ class RichPresenceService : Service() {
                 worldThumbnailUrl = info.worldThumbnailUrl
                 worldId = info.worldId
                 instanceInfo = info.instanceInfo
+                instanceNonce = info.instanceNonce
+                instanceType = info.instanceType
                 userStatus = info.userStatus
             }
             gateway.sendPresence(presence)
