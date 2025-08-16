@@ -179,7 +179,7 @@ class RichPresenceScreen : Screen {
                                 )
                             },
                             modifier = Modifier.clickable(
-                                enabled = model.enabled.value,
+                                enabled = model.token.value.isNotEmpty(),
                                 onClick = {
                                     model.toggle()
                                 }
