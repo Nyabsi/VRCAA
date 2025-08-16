@@ -61,25 +61,25 @@ class SearchResultScreenModel(
     private val justHPartyProvider = JustHPartyProvider()
 
     private var worldOffset = 0
-    private val worldStateFlow = MutableStateFlow(mutableStateListOf<World>())
+    private val worldStateFlow = MutableStateFlow(listOf<World>())
 
     var worldLimitReached = mutableStateOf(false)
     val worlds = worldStateFlow.asStateFlow()
 
     private var userOffset = 0
-    private val userStateFlow = MutableStateFlow(mutableStateListOf<LimitedUser>())
+    private val userStateFlow = MutableStateFlow(listOf<LimitedUser>())
 
     var userLimitReached = mutableStateOf(false)
     val users = userStateFlow.asStateFlow()
 
     private var avatarOffset = 0
-    private val avatarStateFlow = MutableStateFlow(mutableStateListOf<SearchAvatar>())
+    private val avatarStateFlow = MutableStateFlow(listOf<SearchAvatar>())
 
     var avatarLimitReached = mutableStateOf(false)
     val avatars = avatarStateFlow.asStateFlow()
 
     private var groupOffset = 0
-    private val groupStateFlow = MutableStateFlow(mutableStateListOf<Group>())
+    private val groupStateFlow = MutableStateFlow(listOf<Group>())
 
     var groupLimitReached = mutableStateOf(false)
     val groups = groupStateFlow.asStateFlow()
@@ -101,7 +101,7 @@ class SearchResultScreenModel(
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds,
                 offset = worldOffset
-            ).toMutableStateList()
+            )
 
             App.setLoadingText(R.string.loading_text_users)
 
@@ -109,7 +109,7 @@ class SearchResultScreenModel(
                 query = query,
                 n = preferences.usersAmount,
                 offset = userOffset
-            ).toMutableStateList()
+            )
 
             App.setLoadingText(R.string.loading_text_avatars)
 
@@ -121,11 +121,11 @@ class SearchResultScreenModel(
                         offset = avatarOffset
                     )
                     avatarLimitReached.value = result.first
-                    avatarStateFlow.value = result.second.toMutableStateList()
+                    avatarStateFlow.value = result.second
                 }
                 "justhparty" -> {
                     avatarLimitReached.value = true // doesn't support pagination
-                    avatarStateFlow.value = justHPartyProvider.search(query).toMutableStateList()
+                    avatarStateFlow.value = justHPartyProvider.search(query)
                 }
             }
 
@@ -135,7 +135,7 @@ class SearchResultScreenModel(
                 query = query,
                 n = preferences.groupsAmount,
                 offset = groupOffset
-            ).toMutableStateList()
+            )
 
             mutableState.value = SearchState.Result
         }
@@ -151,7 +151,7 @@ class SearchResultScreenModel(
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds,
                 offset = worldOffset
-            ).toMutableStateList()
+            )
 
             if (worlds.isEmpty())
                 worldLimitReached.value = true
@@ -169,7 +169,7 @@ class SearchResultScreenModel(
                 query = query,
                 n = preferences.usersAmount,
                 offset = userOffset
-            ).toMutableStateList()
+            )
 
             if (users.isEmpty())
                 userLimitReached.value = true
@@ -192,7 +192,7 @@ class SearchResultScreenModel(
             if (result.first)
                 avatarLimitReached.value = true
             else
-                avatarStateFlow.value += result.second.toMutableStateList()
+                avatarStateFlow.value += result.second
         }
     }
 
@@ -205,7 +205,7 @@ class SearchResultScreenModel(
                 query = query,
                 n = preferences.groupsAmount,
                 offset = groupOffset
-            ).toMutableStateList()
+            )
 
             if (groups.isEmpty())
                 groupLimitReached.value = true
