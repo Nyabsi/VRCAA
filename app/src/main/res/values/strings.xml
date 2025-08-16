@@ -261,11 +261,6 @@
 
     <!-- User -->
 
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
     <string name="user_overlay_favorites">Favorites</string>
@@ -347,6 +342,8 @@
     </string-array>
 
     <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
+    <string name="debug_notification_title_out_of_memory">Notice!</string>
+    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
 
     <!-- Loading Texts -->
 
