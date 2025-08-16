@@ -21,76 +21,88 @@ import com.google.gson.annotations.SerializedName
 
 data class WebHookResponse(
     @SerializedName("attachments")
-    val attachments: List<Any>,
+    var attachments: List<Any> = listOf(),
     @SerializedName("author")
-    val author: Author,
+    var author: Author = Author(),
     @SerializedName("channel_id")
-    val channelId: String,
+    var channelId: String = "",
     @SerializedName("components")
-    val components: List<Any>,
+    var components: List<Any> = listOf(),
     @SerializedName("content")
-    val content: String,
+    var content: String = "",
     @SerializedName("edited_timestamp")
-    val editedTimestamp: Any?,
+    var editedTimestamp: Any = Any(),
     @SerializedName("embeds")
-    val embeds: List<Embed>,
+    var embeds: List<Embed> = listOf(),
     @SerializedName("flags")
-    val flags: Int,
+    var flags: Int = 0,
     @SerializedName("id")
-    val id: String,
+    var id: String = "",
     @SerializedName("mention_everyone")
-    val mentionEveryone: Boolean,
+    var mentionEveryone: Boolean = false,
     @SerializedName("mention_roles")
-    val mentionRoles: List<Any>,
+    var mentionRoles: List<Any> = listOf(),
     @SerializedName("mentions")
-    val mentions: List<Any>,
+    var mentions: List<Any> = listOf(),
     @SerializedName("pinned")
-    val pinned: Boolean,
+    var pinned: Boolean = false,
     @SerializedName("timestamp")
-    val timestamp: String,
+    var timestamp: String = "",
     @SerializedName("tts")
-    val tts: Boolean,
+    var tts: Boolean = false,
     @SerializedName("type")
-    val type: Int,
+    var type: Int = 0,
     @SerializedName("webhook_id")
-    val webhookId: String
+    var webhookId: String = ""
 ) {
     data class Author(
         @SerializedName("avatar")
-        val avatar: Any?,
+        var avatar: Any = Any(),
         @SerializedName("bot")
-        val bot: Boolean,
+        var bot: Boolean = false,
         @SerializedName("clan")
-        val clan: Any?,
+        var clan: Any = Any(),
         @SerializedName("discriminator")
-        val discriminator: String,
+        var discriminator: String = "",
         @SerializedName("flags")
-        val flags: Int,
+        var flags: Int = 0,
         @SerializedName("global_name")
-        val globalName: Any?,
+        var globalName: Any = Any(),
         @SerializedName("id")
-        val id: String,
+        var id: String = "",
+        @SerializedName("primary_guild")
+        var primaryGuild: Any = Any(),
         @SerializedName("public_flags")
-        val publicFlags: Int,
+        var publicFlags: Int = 0,
         @SerializedName("username")
-        val username: String
+        var username: String = ""
     )
 
     data class Embed(
+        @SerializedName("content_scan_version")
+        var contentScanVersion: Int = 0,
         @SerializedName("image")
-        val image: Image,
+        var image: Image = Image(),
         @SerializedName("type")
-        val type: String
+        var type: String = ""
     ) {
         data class Image(
+            @SerializedName("content_type")
+            var contentType: String = "",
+            @SerializedName("flags")
+            var flags: Int = 0,
             @SerializedName("height")
-            val height: Int,
+            var height: Int = 0,
+            @SerializedName("placeholder")
+            var placeholder: String = "",
+            @SerializedName("placeholder_version")
+            var placeholderVersion: Int = 0,
             @SerializedName("proxy_url")
-            val proxyUrl: String,
+            var proxyUrl: String = "",
             @SerializedName("url")
-            val url: String,
+            var url: String = "",
             @SerializedName("width")
-            val width: Int
+            var width: Int = 0
         )
     }
 }
