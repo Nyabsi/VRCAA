@@ -208,10 +208,6 @@
     <string name="misc_no_premium_subscription">Cette fonctionnalité nécessite un abonnement VRC+ actif.</string>
     <string name="global_app_default_loading_text">Initialisation…</string>
     <!-- User -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
     <string name="user_overlay_groups">Groupes</string>
     <string name="user_overlay_worlds">Mondes</string>
     <string name="user_overlay_favorites">Favoris</string>
@@ -269,6 +265,8 @@
     <string name="avatars_page_title">Afficher les avatars</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Redémarrez l\'application pour que les modifications prennent effet.</string>
+    <string name="debug_notification_title_out_of_memory">Notice!</string>
+    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">Chargement des mondes…</string>
     <string name="loading_text_users">Chargement des utilisateurs…</string>

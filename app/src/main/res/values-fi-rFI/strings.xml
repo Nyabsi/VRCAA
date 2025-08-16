@@ -208,10 +208,6 @@
     <string name="misc_no_premium_subscription">Tämä ominaisuus edellyttää, että sinulla on aktiivinen VRChat+ tilaus.</string>
     <string name="global_app_default_loading_text">Valmistellaan...</string>
     <!-- User -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
     <string name="user_overlay_groups">Ryhmät</string>
     <string name="user_overlay_worlds">Maailmat</string>
     <string name="user_overlay_favorites">Suosikit</string>
@@ -269,6 +265,8 @@
     <string name="avatars_page_title">Näytetään hahmoja</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Käynnistä sovellus uudelleen, jotta muutokset tulevat voimaan.</string>
+    <string name="debug_notification_title_out_of_memory">Notice!</string>
+    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">Ladataan maailmoja…</string>
     <string name="loading_text_users">Ladataan käyttäjiä…</string>
