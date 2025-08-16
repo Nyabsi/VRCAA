@@ -262,7 +262,7 @@ class GatewaySocket {
             "User location hidden."
         }
 
-        activity["details_url"] = if (info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) {
+        activity["state_url"] = if (info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) {
             "https://vrchat.com/home/world/${info.worldId}/info"
         } else {
             ""
@@ -276,7 +276,7 @@ class GatewaySocket {
 
         activity["type"] = 0
         activity["status_display_type"] = 1
-        activity["timestamps"] = timestamps
+        // activity["timestamps"] = timestamps
         activity["assets"] = assets
         // activity["party"] = party
 
