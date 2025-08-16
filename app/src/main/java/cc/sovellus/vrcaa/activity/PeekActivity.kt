@@ -63,9 +63,7 @@ class PeekActivity : BaseActivity() {
         }
 
         if (earlyFinish) {
-            var url = "http://www.vrchat.com"
-            url += path
-            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+            val intent = Intent(Intent.ACTION_VIEW, "http://www.vrchat.com/$path".toUri())
             startActivity(intent)
             finish()
         }
