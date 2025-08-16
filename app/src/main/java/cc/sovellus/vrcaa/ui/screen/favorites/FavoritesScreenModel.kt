@@ -36,13 +36,13 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         data object Result : FavoriteState()
     }
 
-    private var worldListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
+    private var worldListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
     var worldList = worldListFlow.asStateFlow()
 
-    private var avatarListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
+    private var avatarListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
     var avatarList = avatarListFlow.asStateFlow()
 
-    private var friendListFlow = MutableStateFlow(mutableStateMapOf<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>())
+    private var friendListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
     var friendList = friendListFlow.asStateFlow()
 
     var currentIndex = mutableIntStateOf(0)
