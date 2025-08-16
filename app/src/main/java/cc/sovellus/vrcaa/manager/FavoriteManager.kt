@@ -16,7 +16,6 @@
 
 package cc.sovellus.vrcaa.manager
 
-import androidx.compose.runtime.mutableStateMapOf
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.base.BaseManager
@@ -45,11 +44,11 @@ object FavoriteManager : BaseManager<Any>() {
 
     private var favoriteLimits: FavoriteLimits? = null
 
-    private var worldList = mutableStateMapOf<String, MutableList<FavoriteMetadata>>()
-    private var avatarList = mutableStateMapOf<String, MutableList<FavoriteMetadata>>()
-    private var friendList = mutableStateMapOf<String, MutableList<FavoriteMetadata>>()
+    private var worldList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
+    private var avatarList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
+    private var friendList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
 
-    private var tagToGroupMetadataMap = mutableStateMapOf<String, FavoriteGroupMetadata>()
+    private var tagToGroupMetadataMap = mutableMapOf<String, FavoriteGroupMetadata>()
 
     suspend fun refresh() = coroutineScope {
         favoriteLimits = api.favorites.fetchLimits()
