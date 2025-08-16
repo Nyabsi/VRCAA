@@ -26,36 +26,39 @@ import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.GatewaySocket
+import cc.sovellus.vrcaa.api.discord.GatewaySocket.PresenceInfo
 import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.GatewayManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 
 class RichPresenceService : Service() {
 
     private lateinit var preferences: SharedPreferences
 
+    val presence: PresenceInfo = PresenceInfo()
     val gateway = GatewaySocket()
 
     val listener = object : GatewayManager.GatewayListener {
         override suspend fun onUpdateWorld(
-            name: String,
-            metadata: String,
-            imageUrl: String,
-            status: String,
-            id: String
+            info: PresenceInfo
         ) {
-            val newStatus = StatusHelper.getStatusFromString(status)
-            gateway.sendPresence(name, metadata, imageUrl, id, newStatus)
+            presence.apply {
+                worldName = info.worldName
+                worldThumbnailUrl = info.worldThumbnailUrl
+                worldId = info.worldId
+                instanceInfo = info.instanceInfo
+                userStatus = info.userStatus
+            }
+            gateway.sendPresence(presence)
         }
 
         override suspend fun onUpdateStatus(status: String) {
-            val newStatus = StatusHelper.getStatusFromString(status)
-            gateway.sendPresence(null, null, null, null, newStatus)
+            presence.apply {
+                userStatus = StatusHelper.getStatusFromString(status)
+            }
+            gateway.sendPresence(presence)
         }
     }
 
@@ -84,7 +87,6 @@ class RichPresenceService : Service() {
         }
 
         GatewayManager.addListener(listener)
-        gateway.setParams(preferences.discordToken, preferences.richPresenceWebhookUrl)
         gateway.connect()
 
         return START_STICKY

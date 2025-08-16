@@ -16,18 +16,19 @@
 
 package cc.sovellus.vrcaa.manager
 
+import cc.sovellus.vrcaa.api.discord.GatewaySocket
 import cc.sovellus.vrcaa.base.BaseManager
 
 object GatewayManager : BaseManager<GatewayManager.GatewayListener>() {
 
     interface GatewayListener {
-        suspend fun onUpdateWorld(name: String, metadata: String, imageUrl: String, status: String, id: String)
+        suspend fun onUpdateWorld(info: GatewaySocket.PresenceInfo)
         suspend fun onUpdateStatus(status: String)
     }
 
-    suspend fun updateWorld(name: String, metadata: String, imageUrl: String, status: String, id: String) {
+    suspend fun updateWorld(info: GatewaySocket.PresenceInfo) {
         getListeners().forEach { listener ->
-            listener.onUpdateWorld(name, metadata, imageUrl, status, id)
+            listener.onUpdateWorld(info)
         }
     }
 
