@@ -81,71 +81,66 @@ fun GroupCard(
                 }
             })
     ) {
-        LazyColumn(
+        Column(
             verticalArrangement = Arrangement.spacedBy((-50).dp),
             modifier = Modifier.height(220.dp).fillMaxSize()
         ) {
-            item {
-                Column(
-                    modifier = Modifier.height(180.dp)
+            Column(
+                modifier = Modifier.height(180.dp)
+            ) {
+                GlideImage(
+                    model = bannerUrl,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp),
+                    contentScale = ContentScale.Crop,
+                    loading = placeholder(R.drawable.image_placeholder),
+                    failure = placeholder(R.drawable.image_placeholder)
+                )
+            }
+
+            Column(
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            ) {
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest, modifier = Modifier
+                        .size(80.dp)
+                        .align(Alignment.CenterHorizontally)
                 ) {
                     GlideImage(
-                        model = bannerUrl,
+                        model = iconUrl,
                         contentDescription = null,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp),
+                            .size(72.dp)
+                            .clip(RoundedCornerShape(50)),
                         contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center,
                         loading = placeholder(R.drawable.image_placeholder),
                         failure = placeholder(R.drawable.image_placeholder)
                     )
                 }
             }
 
-            item {
-                Column(
-                    modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            Row {
+                Text(
+                    text = groupName,
+                    modifier = Modifier.padding(start = 104.dp).weight(0.70f),
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    textAlign = TextAlign.Start,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().weight(0.30f).padding(end = 8.dp), horizontalArrangement = Arrangement.End
                 ) {
-                    Badge(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest, modifier = Modifier
-                            .size(80.dp)
-                            .align(Alignment.CenterHorizontally)
-                    ) {
-                        GlideImage(
-                            model = iconUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(72.dp)
-                                .clip(RoundedCornerShape(50)),
-                            contentScale = ContentScale.Crop,
-                            alignment = Alignment.Center,
-                            loading = placeholder(R.drawable.image_placeholder),
-                            failure = placeholder(R.drawable.image_placeholder)
-                        )
-                    }
-                }
-            }
-
-            item {
-                Row {
-                    Text(
-                        text = groupName,
-                        modifier = Modifier.padding(start = 104.dp).weight(0.70f),
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        textAlign = TextAlign.Start,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth().weight(0.30f).padding(end = 8.dp), horizontalArrangement = Arrangement.End
-                    ) {
-                        languages?.let {
-                            Languages(languages = it, true)
-                        }
+                    languages?.let {
+                        Languages(languages = it, true)
                     }
                 }
             }
         }
+
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
