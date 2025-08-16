@@ -39,21 +39,21 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
         data object Result : HomeState()
     }
 
-    private var friendsListFlow = MutableStateFlow(mutableStateListOf<Friend>())
+    private var friendsListFlow = MutableStateFlow(listOf<Friend>())
     var friendsList = friendsListFlow.asStateFlow()
 
-    private var recentlyVisitedFlow = MutableStateFlow(mutableStateListOf<WorldCache>())
+    private var recentlyVisitedFlow = MutableStateFlow(listOf<WorldCache>())
     var recentlyVisited = recentlyVisitedFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: List<Friend>) {
-            friendsListFlow.update { friends.toMutableStateList() }
+            friendsListFlow.update { friends}
         }
     }
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun updateRecentlyVisitedWorlds(worlds: List<WorldCache>) {
-            recentlyVisitedFlow.update { worlds.toMutableStateList() }
+            recentlyVisitedFlow.update { worlds }
         }
 
         override fun startCacheRefresh() {

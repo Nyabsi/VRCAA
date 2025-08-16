@@ -78,7 +78,7 @@ class NavigationScreenModel : ScreenModel {
     var feedFilterQuery = mutableStateOf("")
     var showFilteredFeed = mutableStateOf(false)
 
-    private var filteredFeedStateFlow = MutableStateFlow(mutableStateListOf<FeedManager.Feed>())
+    private var filteredFeedStateFlow = MutableStateFlow(listOf<FeedManager.Feed>())
     var filteredFeed = filteredFeedStateFlow.asStateFlow()
 
     private val apiListener = object : HttpClient.SessionListener {
@@ -181,6 +181,6 @@ class NavigationScreenModel : ScreenModel {
             feed.friendName.contains(feedFilterQuery.value, ignoreCase = true) || (feed.travelDestination.contains(feedFilterQuery.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_LOCATION) || (feed.avatarName.contains(feedFilterQuery.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_AVATAR)
         }
 
-        filteredFeedStateFlow.value = filteredFeed.toMutableStateList()
+        filteredFeedStateFlow.value = filteredFeed
     }
 }

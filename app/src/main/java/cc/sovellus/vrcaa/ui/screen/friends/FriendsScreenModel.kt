@@ -37,14 +37,14 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
         data object Result : FriendsState()
     }
 
-    private var friendsStateFlow = MutableStateFlow(mutableStateListOf<Friend>())
+    private var friendsStateFlow = MutableStateFlow(listOf<Friend>())
     var friends = friendsStateFlow.asStateFlow()
 
     var currentIndex = mutableIntStateOf(0)
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: List<Friend>) {
-            friendsStateFlow.update { friends.toMutableStateList() }
+            friendsStateFlow.update { friends }
         }
     }
 

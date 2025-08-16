@@ -29,19 +29,19 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NetworkLogScreenModel : ScreenModel {
-    private var metadataStateFlow = MutableStateFlow(mutableStateListOf<DebugManager.DebugMetadataData>())
+    private var metadataStateFlow = MutableStateFlow(listOf<DebugManager.DebugMetadataData>())
     var metadata = metadataStateFlow.asStateFlow()
 
     var currentIndex = mutableIntStateOf(0)
 
     private val listener = object : DebugManager.DebugListener {
         override fun onUpdateMetadata(metadata: List<DebugManager.DebugMetadataData>) {
-            metadataStateFlow.value = metadata.toMutableStateList()
+            metadataStateFlow.value = metadata
         }
     }
 
     init {
         DebugManager.addListener(listener)
-        metadataStateFlow.update { DebugManager.getMetadata().toMutableStateList() }
+        metadataStateFlow.update { DebugManager.getMetadata() }
     }
 }

@@ -46,7 +46,7 @@ import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 
 @Composable
-fun FeedList(feed: SnapshotStateList<FeedManager.Feed>, filter: Boolean = false) {
+fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
     val navigator = LocalNavigator.currentOrThrow
 
     LazyColumn(
