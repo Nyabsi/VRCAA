@@ -17,8 +17,6 @@
 package cc.sovellus.vrcaa.manager
 
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.snapshots.SnapshotStateMap
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.base.BaseManager
@@ -47,9 +45,9 @@ object FavoriteManager : BaseManager<Any>() {
 
     private var favoriteLimits: FavoriteLimits? = null
 
-    private var worldList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
-    private var avatarList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
-    private var friendList = mutableStateMapOf<String, SnapshotStateList<FavoriteMetadata>>()
+    private var worldList = mutableStateMapOf<String, MutableList<FavoriteMetadata>>()
+    private var avatarList = mutableStateMapOf<String, MutableList<FavoriteMetadata>>()
+    private var friendList = mutableStateMapOf<String, MutableList<FavoriteMetadata>>()
 
     private var tagToGroupMetadataMap = mutableStateMapOf<String, FavoriteGroupMetadata>()
 
@@ -58,13 +56,13 @@ object FavoriteManager : BaseManager<Any>() {
 
         favoriteLimits?.let {
             repeat(it.maxFavoriteGroups.world) { i ->
-                worldList["worlds${i + 1}"] = SnapshotStateList()
+                worldList["worlds${i + 1}"] = mutableListOf<FavoriteMetadata>()
             }
             repeat(it.maxFavoriteGroups.avatar) { i ->
-                avatarList["avatars${i + 1}"] = SnapshotStateList()
+                avatarList["avatars${i + 1}"] = mutableListOf<FavoriteMetadata>()
             }
             repeat(it.maxFavoriteGroups.friend) { i ->
-                friendList["group_$i"] = SnapshotStateList()
+                friendList["group_$i"] = mutableListOf<FavoriteMetadata>()
             }
         }
 
@@ -115,15 +113,15 @@ object FavoriteManager : BaseManager<Any>() {
         }?.awaitAll()
     }
 
-    fun getAvatarList(): SnapshotStateMap<String, SnapshotStateList<FavoriteMetadata>> {
+    fun getAvatarList(): MutableMap<String, MutableList<FavoriteMetadata>> {
         return avatarList
     }
 
-    fun getWorldList(): SnapshotStateMap<String, SnapshotStateList<FavoriteMetadata>> {
+    fun getWorldList(): MutableMap<String, MutableList<FavoriteMetadata>> {
         return worldList
     }
 
-    fun getFriendList(): SnapshotStateMap<String, SnapshotStateList<FavoriteMetadata>> {
+    fun getFriendList(): MutableMap<String, MutableList<FavoriteMetadata>> {
         return friendList
     }
 
