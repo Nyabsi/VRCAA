@@ -29,6 +29,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.NetworkWifi
+import androidx.compose.material.icons.filled.Route
 import androidx.compose.material.icons.filled.RssFeed
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Close
@@ -71,7 +72,7 @@ class NetworkLogScreen : Screen {
         val model = navigator.rememberNavigatorScreenModel { NetworkLogScreenModel() }
 
         val options = stringArrayResource(R.array.debug_selection_options)
-        val icons = listOf(Icons.Filled.NetworkWifi, Icons.Filled.RssFeed)
+        val icons = listOf(Icons.Filled.NetworkWifi, Icons.Filled.RssFeed, Icons.Filled.Route)
 
         Scaffold(
             topBar = {
@@ -130,6 +131,7 @@ class NetworkLogScreen : Screen {
                     when (model.currentIndex.intValue) {
                         0 -> ShowHTTPTraffic(model)
                         1 -> ShowPipelineTraffic(model)
+                        2 -> ShowGatewayTraffic(model)
                     }
                 }
             }
@@ -211,6 +213,63 @@ class NetworkLogScreen : Screen {
             state = rememberLazyListState()
         ) {
             items(metadata.value.filter { it.type == DebugManager.DebugType.DEBUG_TYPE_PIPELINE }.asReversed()) {
+                ListItem(
+                    headlineContent = {
+                        if (!it.unknown) {
+                            Text(
+                                text = it.name.uppercase(Locale.ROOT),
+                                color = Color.Green
+                            )
+                        } else {
+                            Text(
+                                text = it.name.uppercase(Locale.ROOT),
+                                color = Color.Red
+                            )
+                        }
+                    },
+                    supportingContent = {
+                        Text(text = "Click to view the payload")
+                    },
+                    leadingContent = {
+                        if (!it.unknown) {
+                            Icon(
+                                imageVector = Icons.Outlined.Check,
+                                contentDescription = null,
+                                modifier = Modifier.offset(y = 4.dp)
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Outlined.Close,
+                                contentDescription = null,
+                                modifier = Modifier.offset(y = 4.dp)
+                            )
+                        }
+                    },
+                    trailingContent = {
+                        Text(text = "${it.payload.length} bytes")
+                    },
+                    modifier = Modifier.clickable {
+                        navigator.push(PacketViewScreen(it.payload))
+                    }
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun ShowGatewayTraffic(model: NetworkLogScreenModel) {
+        val navigator = LocalNavigator.currentOrThrow
+        val metadata = model.metadata.collectAsState()
+
+        LazyColumn(
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(1.dp),
+            state = rememberLazyListState()
+        ) {
+            items(metadata.value.filter { it.type == DebugManager.DebugType.DEBUG_TYPE_GATEWAY }
+                .asReversed()) {
                 ListItem(
                     headlineContent = {
                         if (!it.unknown) {

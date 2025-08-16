@@ -29,7 +29,8 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
 
     enum class DebugType {
         DEBUG_TYPE_HTTP,
-        DEBUG_TYPE_PIPELINE
+        DEBUG_TYPE_PIPELINE,
+        DEBUG_TYPE_GATEWAY
     }
 
     data class DebugMetadataData(

@@ -340,6 +340,7 @@
     <string-array name="debug_selection_options" translatable="false">
         <item>HTTP Traffic</item>
         <item>Pipeline Traffic</item>
+        <item>Gateway</item>
     </string-array>
 
     <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>

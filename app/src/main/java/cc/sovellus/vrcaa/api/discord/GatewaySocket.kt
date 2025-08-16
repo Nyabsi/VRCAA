@@ -18,11 +18,13 @@ package cc.sovellus.vrcaa.api.discord
 
 import android.util.ArrayMap
 import android.util.Log
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.discord.models.websocket.Hello
 import cc.sovellus.vrcaa.api.discord.models.websocket.Incoming
 import cc.sovellus.vrcaa.api.discord.models.websocket.Ready
 import cc.sovellus.vrcaa.helper.StatusHelper
+import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -186,18 +188,27 @@ class GatewaySocket {
     }
 
     private fun handleDispatch(payload: Incoming) {
+        var isUnknown = false
         when (payload.t as String) {
             "READY" -> {
                 val ready = Gson().fromJson(payload.d, Ready::class.java)
                 sessionId = ready.sessionId
                 currentGatewayUrl = "${ready.resumeGatewayUrl}/?encoding=json&v=9&compress=zlib-stream"
-
-                if (BuildConfig.DEBUG)
-                    Log.d("VRCAA", "Logged in discord with sessionId: $sessionId !")
             }
             else -> {
-                Log.d("VRCAA", "server sent unknown dispatch: ${payload.t}")
+                isUnknown = true
             }
+        }
+
+        if (App.isNetworkLoggingEnabled()) {
+            DebugManager.addDebugMetadata(
+                DebugManager.DebugMetadataData(
+                    type = DebugManager.DebugType.DEBUG_TYPE_GATEWAY,
+                    name = payload.t,
+                    unknown = isUnknown,
+                    payload = Gson().toJson(payload.d)
+                )
+            )
         }
     }
 
