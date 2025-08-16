@@ -208,10 +208,6 @@
     <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">Inițializare...</string>
     <!-- User -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
-    <!-- removed; 06-07-25 -->
     <string name="user_overlay_groups">Grupuri</string>
     <string name="user_overlay_worlds">Lumi</string>
     <string name="user_overlay_favorites">Favorite</string>
@@ -269,6 +265,8 @@
     <string name="avatars_page_title">Vizionează avatare</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Repornește aplicația ca schimbările să își facă efectul.</string>
+    <string name="debug_notification_title_out_of_memory">Notice!</string>
+    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">Încărcare lumi…</string>
     <string name="loading_text_users">Încărcare utilizatori…</string>
