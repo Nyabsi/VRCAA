@@ -41,8 +41,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
@@ -96,10 +94,6 @@ class FavoritesScreen : Screen {
                 }
             )
         }
-
-        val worldList = model.worldList.collectAsState()
-        val avatarList = model.avatarList.collectAsState()
-        val friendList = model.friendList.collectAsState()
 
         val options = stringArrayResource(R.array.favorites_selection_options)
         val icons = listOf(Icons.Filled.Cabin, Icons.Filled.Person, Icons.Filled.Group)
@@ -160,9 +154,9 @@ class FavoritesScreen : Screen {
             ) {
                 item {
                     when (model.currentIndex.intValue) {
-                        0 -> ShowWorlds(model, worldList)
-                        1 -> ShowAvatars(model, avatarList)
-                        2 -> ShowFriends(model, friendList)
+                        0 -> ShowWorlds(model)
+                        1 -> ShowAvatars(model)
+                        2 -> ShowFriends(model)
                     }
                 }
             }
@@ -172,8 +166,8 @@ class FavoritesScreen : Screen {
     @Composable
     fun ShowWorlds(
         model: FavoritesScreenModel,
-        worldList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>
     ) {
+        val worldList = model.worldList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
         val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
@@ -204,8 +198,8 @@ class FavoritesScreen : Screen {
     @Composable
     fun ShowAvatars(
         model: FavoritesScreenModel,
-        avatarList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>
     ) {
+        val avatarList = model.avatarList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
         val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
@@ -235,9 +229,9 @@ class FavoritesScreen : Screen {
 
     @Composable
     fun ShowFriends(
-        model: FavoritesScreenModel,
-        friendList: State<SnapshotStateMap<String, SnapshotStateList<FavoriteManager.FavoriteMetadata>>>
+        model: FavoritesScreenModel
     ) {
+        val friendList = model.friendList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
         val sortedFriendList = friendList.value.toSortedMap(compareBy { it.substring(6).toInt() })
