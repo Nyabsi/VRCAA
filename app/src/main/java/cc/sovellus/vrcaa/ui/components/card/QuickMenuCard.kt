@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.MaterialTheme
@@ -65,114 +64,78 @@ fun QuickMenuCard(
             .fillMaxWidth()
     ) {
 
-        LazyColumn(
+        Column(
             verticalArrangement = Arrangement.spacedBy((-50).dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            item {
-                GlideImage(
-                    model = thumbnailUrl,
-                    contentDescription = null,
+            GlideImage(
+                model = thumbnailUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp),
+                contentScale = ContentScale.Crop,
+                loading = placeholder(R.drawable.image_placeholder),
+                failure = placeholder(R.drawable.image_placeholder)
+            )
+
+            Column(
+                modifier = Modifier.padding(start = 16.dp)
+            ) {
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp),
-                    contentScale = ContentScale.Crop,
-                    loading = placeholder(R.drawable.image_placeholder),
-                    failure = placeholder(R.drawable.image_placeholder)
-                )
-            }
-
-            item {
-                Column(
-                    modifier = Modifier.padding(start = 16.dp)
+                        .size(80.dp)
+                        .align(Alignment.CenterHorizontally)
                 ) {
-                    Badge(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    GlideImage(
+                        model = iconUrl,
+                        contentDescription = null,
                         modifier = Modifier
-                            .size(80.dp)
-                            .align(Alignment.CenterHorizontally)
-                    ) {
-                        GlideImage(
-                            model = iconUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(72.dp)
-                                .clip(RoundedCornerShape(50)),
-                            contentScale = ContentScale.Crop,
-                            alignment = Alignment.Center,
-                            loading = placeholder(R.drawable.image_placeholder),
-                            failure = placeholder(R.drawable.image_placeholder)
-                        )
-                    }
+                            .size(72.dp)
+                            .clip(RoundedCornerShape(50)),
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center,
+                        loading = placeholder(R.drawable.image_placeholder),
+                        failure = placeholder(R.drawable.image_placeholder)
+                    )
                 }
             }
 
-            item {
-                Row {
-                    Row(
-                        modifier = Modifier.padding(start = 12.dp, top = 60.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        Text(
-                            text = displayName,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            textAlign = TextAlign.Left,
-                            color = trustRankColor,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-
-                    /*
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 4.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        Languages(languages = tags, modifier = Modifier.padding(top = 8.dp))
-                    }
-
-                     */
-                }
-            }
-            item {
+            Row {
                 Row(
-                    modifier = Modifier.padding(start = 12.dp, top = 50.dp),
+                    modifier = Modifier.padding(start = 12.dp, top = 60.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
-                        Text(
-                            modifier = Modifier.padding(start = 8.dp),
-                            text = statusDescription,
-                            textAlign = TextAlign.Left,
-                            fontWeight = FontWeight.SemiBold,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-                    }
-                    /*
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        for (badge in badges) {
-                            if (badge.showcased) {
-                                GlideImage(model = badge.badgeImageUrl, contentDescription = null, modifier = Modifier
-                                    .size(28.dp)
-                                    .padding(2.dp), alpha = if (badge.showcased) { 1.0f } else { 0.5f })
-                            }
-                        }
-                    }
+                    Text(
+                        text = displayName,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Left,
+                        color = trustRankColor,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
 
-                     */
+            Row(
+                modifier = Modifier.padding(start = 12.dp, top = 50.dp),
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Badge(containerColor = statusColor, modifier = Modifier.size(16.dp))
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp),
+                        text = statusDescription,
+                        textAlign = TextAlign.Left,
+                        fontWeight = FontWeight.SemiBold,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
                 }
             }
         }

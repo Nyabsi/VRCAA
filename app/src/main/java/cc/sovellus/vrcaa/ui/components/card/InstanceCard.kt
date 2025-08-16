@@ -112,47 +112,46 @@ fun InstanceCard(profile: LimitedUser, instance: Instance, callback: () -> Unit)
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = "(${instance.nUsers} of ${instance.world.capacity})",
+                        text = "(${instance.userCount} of ${instance.world.capacity})",
                         textAlign = TextAlign.Left,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
 
-                    // TODO: move this away from UI
                     if (result.regionId.isNotEmpty()) {
                         when (result.regionId.lowercase()) {
                             "eu" -> Image(
                                 painter = painterResource(R.drawable.flag_eu),
                                 modifier = Modifier.padding(start = 6.dp),
-                                contentDescription = "Region flag"
+                                contentDescription = null
                             )
                             "jp" -> Image(
                                 painter = painterResource(R.drawable.flag_jp),
                                 modifier = Modifier.padding(start = 6.dp),
-                                contentDescription = "Region flag"
+                                contentDescription = null
                             )
                             "us" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
                                 modifier = Modifier.padding(start = 6.dp),
-                                contentDescription = "Region flag"
+                                contentDescription = null
                             )
                             "use" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
                                 modifier = Modifier.padding(start = 6.dp),
-                                contentDescription = "Region flag"
+                                contentDescription = null
                             )
                             "usw" -> Image(
                                 painter = painterResource(R.drawable.flag_us),
                                 modifier = Modifier.padding(start = 6.dp),
-                                contentDescription = "Region flag"
+                                contentDescription = null
                             )
                         }
                     } else {
                         Image(
                             painter = painterResource(R.drawable.flag_us),
                             modifier = Modifier.padding(start = 6.dp),
-                            contentDescription = "Region flag",
+                            contentDescription = null,
                         )
                     }
                 }

@@ -18,13 +18,13 @@ package cc.sovellus.vrcaa.ui.components.card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -83,111 +83,99 @@ fun WorldCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .height(240.dp)
+            .heightIn(Dp.Unspecified, 260.dp)
             .widthIn(Dp.Unspecified, 520.dp)
-            .fillMaxWidth()
     ) {
-
-        LazyColumn(
-            modifier = Modifier
-                .height(240.dp)
-                .fillMaxSize()
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(160.dp),
+            contentAlignment = Alignment.TopStart
         ) {
-            item {
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(160.dp),
-                    contentAlignment = Alignment.TopStart
-                ) {
-                    GlideImage(
-                        model = world.thumbnailImageUrl,
-                        contentDescription = null,
+            GlideImage(
+                model = world.thumbnailImageUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp)
+                    .zIndex(0f),
+                contentScale = ContentScale.Crop,
+                loading = placeholder(R.drawable.image_placeholder),
+                failure = placeholder(R.drawable.image_placeholder)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 8.dp)
+                    .zIndex(1f),
+                horizontalArrangement = Arrangement.End
+            ) {
+                if (foundWindows) {
+                    Badge(
+                        containerColor = Color(0, 168, 252, 191),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp)
-                            .zIndex(0f),
-                        contentScale = ContentScale.Crop,
-                        loading = placeholder(R.drawable.image_placeholder),
-                        failure = placeholder(R.drawable.image_placeholder)
+                            .height(height = 26.dp)
+                            .padding(start = 2.dp, top = 8.dp),
+                        content = {
+                            Text(
+                                text = "Windows"
+                            )
+                        }
                     )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp)
-                            .zIndex(1f),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        if (foundWindows) {
-                            Badge(
-                                containerColor = Color(0, 168, 252, 191),
-                                modifier = Modifier
-                                    .height(height = 26.dp)
-                                    .padding(start = 2.dp, top = 8.dp),
-                                content = {
-                                    Text(
-                                        text = "Windows"
-                                    )
-                                }
-                            )
-                        }
-
-                        if (foundAndroid) {
-                            Badge(
-                                containerColor = Color(103, 215, 129, 191),
-                                modifier = Modifier
-                                    .height(height = 26.dp)
-                                    .padding(start = 2.dp, top = 8.dp),
-                                content = {
-                                    Text(
-                                        text = "Android"
-                                    )
-                                }
-                            )
-                        }
-
-                        if (foundDarwin) {
-                            Badge(
-                                containerColor = Color(121, 136, 151, 191),
-                                modifier = Modifier
-                                    .height(height = 26.dp)
-                                    .padding(start = 2.dp, top = 8.dp),
-                                content = {
-                                    Text(
-                                        text = "iOS"
-                                    )
-                                }
-                            )
-                        }
-                    }
                 }
-            }
 
-            item {
-                Row {
-                    Text(
-                        text = world.name,
+                if (foundAndroid) {
+                    Badge(
+                        containerColor = Color(103, 215, 129, 191),
                         modifier = Modifier
-                            .padding(start = 8.dp, top = 4.dp),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Left,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                            .height(height = 26.dp)
+                            .padding(start = 2.dp, top = 8.dp),
+                        content = {
+                            Text(
+                                text = "Android"
+                            )
+                        }
+                    )
+                }
+
+                if (foundDarwin) {
+                    Badge(
+                        containerColor = Color(121, 136, 151, 191),
+                        modifier = Modifier
+                            .height(height = 26.dp)
+                            .padding(start = 2.dp, top = 8.dp),
+                        content = {
+                            Text(
+                                text = "iOS"
+                            )
+                        }
                     )
                 }
             }
+        }
 
-            item {
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = stringResource(R.string.world_author_label).format(world.authorName),
-                    textAlign = TextAlign.Left,
-                    fontWeight = FontWeight.SemiBold,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
-                )
-            }
+        Column(
+            modifier = Modifier.padding(4.dp)
+        ) {
+            Text(
+                text = world.name,
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 4.dp),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Left,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Text(
+                modifier = Modifier.padding(start = 8.dp),
+                text = stringResource(R.string.world_author_label).format(world.authorName),
+                textAlign = TextAlign.Left,
+                fontWeight = FontWeight.SemiBold,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
         }
     }
 }
