@@ -331,22 +331,25 @@ class PipelineService : Service(), CoroutineScope {
 
                 is FriendAdd -> {
                     val update = msg.obj as FriendAdd
+                    val friend = FriendManager.getFriend(update.userId)
 
-                    val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
-                        friendId = update.userId
-                        friendName = update.user.displayName
-                        friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                    if (friend == null) {
+                        val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_ADDED).apply {
+                            friendId = update.userId
+                            friendName = update.user.displayName
+                            friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                        }
+
+                        NotificationHelper.pushNotification(
+                            title = application.getString(R.string.notification_service_title_friend_added),
+                            content = application.getString(R.string.notification_service_description_friend_added)
+                                .format(update.user.displayName),
+                            channel = NotificationHelper.CHANNEL_STATUS_ID
+                        )
+
+                        FeedManager.addFeed(feed)
+                        FriendManager.addFriend(update.user)
                     }
-
-                    NotificationHelper.pushNotification(
-                        title = application.getString(R.string.notification_service_title_friend_added),
-                        content = application.getString(R.string.notification_service_description_friend_added)
-                            .format(update.user.displayName),
-                        channel = NotificationHelper.CHANNEL_STATUS_ID
-                    )
-
-                    FeedManager.addFeed(feed)
-                    FriendManager.addFriend(update.user)
                 }
 
                 is FriendActive -> {
