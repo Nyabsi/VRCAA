@@ -1,8 +1,10 @@
-name: Publish nightly
+name: Build & Publish Nightly
 
 on:
-  push:
-    branches: ["main"]
+  schedule:
+    - cron: '0 21 * * *'
+  # push:
+  #   branches: ["main"]
 
 jobs:
   build:
