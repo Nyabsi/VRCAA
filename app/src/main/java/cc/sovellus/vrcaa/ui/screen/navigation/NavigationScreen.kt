@@ -172,7 +172,7 @@ class NavigationScreen : Screen {
                 bundle.putBoolean("RESTART_SESSION", true)
 
                 val intent = Intent(context, MainActivity::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.putExtras(bundle)
                 context.startActivity(intent)
 
@@ -194,7 +194,7 @@ class NavigationScreen : Screen {
             )
         }
 
-        TabNavigator(HomeTab, tabDisposable = {
+        TabNavigator(tabs[0], tabDisposable = {
             TabDisposable(
                 navigator = it, tabs = tabs
             )
