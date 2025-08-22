@@ -91,7 +91,7 @@ jobs:
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "nightly"
-        prerelease: false
+        prerelease: true
         title: "${{ env.GITHUB_SHA }}"
         files: |
           VRCAA-standard-signed.apk
