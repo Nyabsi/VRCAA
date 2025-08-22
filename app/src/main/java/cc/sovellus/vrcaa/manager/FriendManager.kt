@@ -31,7 +31,7 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
     fun setFriends(friends: MutableList<Friend>) {
         this.friends = friends
-        val listSnapshot = FriendManager.friends.toList()
+        val listSnapshot = friends.toList()
         getListeners().forEach { listener ->
             listener.onUpdateFriends(listSnapshot)
         }
