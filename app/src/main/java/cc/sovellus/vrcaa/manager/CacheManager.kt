@@ -47,6 +47,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
     private val worldListLock = Any()
     private val recentWorldLock = Any()
+    private val profileLock = Any()
 
     private var profile: User? = null
     private var worldList: MutableList<WorldCache> = CopyOnWriteArrayList()
@@ -144,11 +145,13 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun updateProfile(profile: User) {
-        this.profile?.let {
-            val result = JsonHelper.mergeJson<User>(it, profile, User::class.java)
-            this.profile = result
-            getListeners().forEach { listener ->
-                listener.profileUpdated(result)
+        synchronized(profileLock) {
+            this.profile?.let {
+                val result = JsonHelper.mergeJson<User>(it, profile, User::class.java)
+                this.profile = result
+                getListeners().forEach { listener ->
+                    listener.profileUpdated(result)
+                }
             }
         }
     }
