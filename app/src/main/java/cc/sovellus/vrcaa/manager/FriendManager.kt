@@ -66,13 +66,13 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     }
 
     fun updateFriend(friend: PartialFriend) {
-
         val it = friends.find { it.id == friend.id }
         it?.let {
-            try {
+            val index = friends.indexOf(it)
+            if (index != -1) {
                 val result = JsonHelper.mergeDiffJson<Friend, PartialFriend>(it, friend, Friend::class.java)
-                friends.set(friends.indexOf(it), result)
-            } catch (_: Exception) { }
+                friends[index] = result
+            }
         }
 
         val listSnapshot = friends.toList()
@@ -84,8 +84,11 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     fun updateLocation(userId: String, location: String) {
         val it = friends.find { it.id == userId }
         it?.let {
-            it.location = location
-            friends.set(friends.indexOf(it), it)
+            val index = friends.indexOf(it)
+            if (index != -1) {
+                it.location = location
+                friends[index] = it
+            }
         }
 
         val listSnapshot = friends.toList()
@@ -97,8 +100,11 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     fun updatePlatform(userId: String, platform: String) {
         val it = friends.find { it.id == userId }
         it?.let {
-            it.platform = platform
-            friends.set(friends.indexOf(it), it)
+            val index = friends.indexOf(it)
+            if (index != -1) {
+                it.platform = platform
+                friends[index] = it
+            }
         }
 
         val listSnapshot = friends.toList()
