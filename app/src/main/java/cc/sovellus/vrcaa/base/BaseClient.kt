@@ -19,6 +19,7 @@ package cc.sovellus.vrcaa.base
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.util.Log
 import androidx.core.graphics.scale
@@ -354,7 +355,29 @@ open class BaseClient {
 
                 square.scale(targetSize, targetSize)
             } else {
-                bitmap
+                val originalWidth = bitmap.width
+                val originalHeight = bitmap.height
+                val targetAspectRatio = 16f / 9f
+
+                val currentAspectRatio = originalWidth.toFloat() / originalHeight
+
+                val scaledBitmap = if (currentAspectRatio > targetAspectRatio) {
+                    val targetWidth = (originalHeight * targetAspectRatio).toInt()
+                    val xOffset = (originalWidth - targetWidth) / 2
+                    Bitmap.createBitmap(bitmap, xOffset, 0, targetWidth, originalHeight)
+                } else if (currentAspectRatio < targetAspectRatio) {
+                    val targetHeight = (originalWidth / targetAspectRatio).toInt()
+                    val yOffset = (originalHeight - targetHeight) / 2
+                    Bitmap.createBitmap(bitmap, 0, yOffset, originalWidth, targetHeight)
+                } else {
+                    bitmap
+                }
+                if (scaledBitmap.height > scaledBitmap.width) {
+                    val matrix = Matrix().apply { postRotate(90f) }
+                    Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.width, scaledBitmap.height, matrix, true)
+                } else {
+                    scaledBitmap
+                }
             }
 
             val stream = ByteArrayOutputStream()
