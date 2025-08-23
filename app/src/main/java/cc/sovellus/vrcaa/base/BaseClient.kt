@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
@@ -340,11 +341,20 @@ open class BaseClient {
             val inputStream = context.contentResolver.openInputStream(fileUri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
 
-            val processedBitmap = if (formFields["maskTag"] == "square") {
-                val size = minOf(bitmap.width, bitmap.height)
-                val x = (bitmap.width - size) / 2
-                val y = (bitmap.height - size) / 2
-                val square = Bitmap.createBitmap(bitmap, x, y, size, size)
+            val isSquare = formFields["maskTag"] == "square"
+
+            val normalizedBitmap = if (!isSquare && bitmap.height > bitmap.width) {
+                val matrix = Matrix().apply { postRotate(90f) }
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            } else {
+                bitmap
+            }
+
+            val processedBitmap = if (isSquare) {
+                val size = minOf(normalizedBitmap.width, normalizedBitmap.height)
+                val x = (normalizedBitmap.width - size) / 2
+                val y = (normalizedBitmap.height - size) / 2
+                val square = Bitmap.createBitmap(normalizedBitmap, x, y, size, size)
 
                 val targetSize = when {
                     size >= 1024 -> 1024
@@ -355,33 +365,14 @@ open class BaseClient {
 
                 square.scale(targetSize, targetSize)
             } else {
-                val originalWidth = bitmap.width
-                val originalHeight = bitmap.height
-                val targetAspectRatio = 16f / 9f
-
-                val currentAspectRatio = originalWidth.toFloat() / originalHeight
-
-                val scaledBitmap = if (currentAspectRatio > targetAspectRatio) {
-                    val targetWidth = (originalHeight * targetAspectRatio).toInt()
-                    val xOffset = (originalWidth - targetWidth) / 2
-                    Bitmap.createBitmap(bitmap, xOffset, 0, targetWidth, originalHeight)
-                } else if (currentAspectRatio < targetAspectRatio) {
-                    val targetHeight = (originalWidth / targetAspectRatio).toInt()
-                    val yOffset = (originalHeight - targetHeight) / 2
-                    Bitmap.createBitmap(bitmap, 0, yOffset, originalWidth, targetHeight)
-                } else {
-                    bitmap
-                }
-                if (scaledBitmap.height > scaledBitmap.width) {
-                    val matrix = Matrix().apply { postRotate(90f) }
-                    Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.width, scaledBitmap.height, matrix, true)
-                } else {
-                    scaledBitmap
-                }
+                val width = normalizedBitmap.width.toFloat()
+                val height = normalizedBitmap.height.toFloat()
+                val ratio = minOf(1920f / width, 1080f / height, 1f)
+                normalizedBitmap.scale((width * ratio).toInt(), (height * ratio).toInt(), true)
             }
 
             val stream = ByteArrayOutputStream()
-            processedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            processedBitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream)
             val bytes = stream.toByteArray()
 
             multipartBuilder.addFormDataPart(
