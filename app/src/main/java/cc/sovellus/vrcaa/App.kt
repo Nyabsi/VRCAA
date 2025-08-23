@@ -42,11 +42,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        context = this
+        context = applicationContext
         preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
-
-        networkLogging.value = preferences.networkLogging
-        minimalistModeEnabled.value = preferences.minimalistMode
 
         Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
         if (!preferences.crashAnalytics)
@@ -54,7 +51,7 @@ class App : Application() {
 
         NotificationHelper.createNotificationChannels()
 
-        loadingText.value = context.getString(R.string.global_app_default_loading_text)
+        loadingText.value = applicationContext.getString(R.string.global_app_default_loading_text)
 
         if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
             api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
@@ -66,16 +63,13 @@ class App : Application() {
         private lateinit var context: Context
         private lateinit var preferences: SharedPreferences
 
-        private var networkLogging: MutableState<Boolean> = mutableStateOf(false)
-        private var minimalistModeEnabled: MutableState<Boolean> = mutableStateOf(false)
-
         private var loadingText: MutableState<String> = mutableStateOf("")
 
         fun getContext(): Context { return context }
         fun getPreferences(): SharedPreferences { return preferences }
 
-        fun isNetworkLoggingEnabled(): Boolean { return networkLogging.value }
-        fun isMinimalistModeEnabled(): Boolean { return minimalistModeEnabled.value }
+        fun isNetworkLoggingEnabled(): Boolean { return preferences.networkLogging }
+        fun isMinimalistModeEnabled(): Boolean { return preferences.minimalistMode }
 
         @Composable
         fun isAppInDarkTheme(): Boolean {
