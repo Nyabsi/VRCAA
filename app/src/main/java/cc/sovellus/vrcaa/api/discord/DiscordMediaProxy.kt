@@ -32,15 +32,11 @@ class DiscordMediaProxy(
     private fun handleRequest(result: Result): String? {
         return when (result) {
             is Result.Succeeded -> {
-                if (BuildConfig.DEBUG)
-                    Log.d("VRCAA", result.body)
-                result.body
+                return result.body
             }
 
             is Result.UnhandledResult -> {
-                if (BuildConfig.DEBUG)
-                    Log.d("VRCAA", "Unknown response type from server, ${result.response.code}")
-                null
+                return null
             }
 
             Result.UnknownMethod -> {

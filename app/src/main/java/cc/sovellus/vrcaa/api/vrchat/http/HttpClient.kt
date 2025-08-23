@@ -353,7 +353,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     val friends = object : IFriends {
 
-        override suspend fun fetchFriends(
+        override tailrec suspend fun fetchFriends(
             offline: Boolean,
             n: Int,
             offset: Int,
@@ -376,10 +376,8 @@ class HttpClient : BaseClient(), CoroutineScope {
                         return friends
 
                     val json = Gson().fromJson(result.body, Friends::class.java)
-                    json?.forEach { friend ->
-                        friends.add(friend)
-                    }
 
+                    friends.addAll(json)
                     fetchFriends(offline, n, offset + n, friends)
                 }
                 is Result.NotModified -> {
@@ -441,21 +439,19 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val users: ArrayList<LimitedUser> = arrayListOf()
                     val json = Gson().fromJson(result.body, Users::class.java)
-                    json?.forEach { user ->
-                        users.add(user)
-                    }
 
-                    users
+                    users.addAll(json)
+                    return users
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    arrayListOf()
+                    return arrayListOf()
                 }
             }
         }
@@ -645,15 +641,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val worlds: ArrayList<World> = arrayListOf()
                     val json = Gson().fromJson(result.body, Worlds::class.java)
-                    json?.forEach { world ->
-                        worlds.add(world)
-                    }
 
-                    worlds
+                    worlds.addAll(json)
+                    return worlds
                 }
                 else -> {
                     handleExceptions(result)
-                    arrayListOf()
+                    return arrayListOf()
                 }
             }
         }
@@ -691,10 +685,8 @@ class HttpClient : BaseClient(), CoroutineScope {
                         result.body,
                         Worlds::class.java
                     )
-                    json?.forEach { world ->
-                        worlds.add(world)
-                    }
 
+                    worlds.addAll(json)
                     fetchWorldsByAuthorId(userId, private, n, offset + n, worlds)
                 }
                 is Result.NotModified -> {
@@ -927,7 +919,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavorites(
+        override tailrec suspend fun fetchFavorites(
             type: FavoriteType,
             tag: String,
             n: Int,
@@ -959,10 +951,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val json = Gson().fromJson(result.body, Favorites::class.java)
 
-                    json?.forEach { favorite ->
-                        favorites.add(favorite)
-                    }
-
+                    favorites.addAll(json)
                     fetchFavorites(type, tag, n, offset + n, favorites)
                 }
 
@@ -977,7 +966,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavoritesByUserId(
+        override tailrec suspend fun fetchFavoritesByUserId(
             userId: String,
             type: FavoriteType,
             tag: String,
@@ -1009,10 +998,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val json = Gson().fromJson(result.body, Favorites::class.java)
 
-                    json?.forEach { favorite ->
-                        favorites.add(favorite)
-                    }
-
+                    favorites.addAll(json)
                     fetchFavorites(type, tag, n, offset + n, favorites)
                 }
 
@@ -1027,7 +1013,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavoriteAvatars(
+        override tailrec suspend fun fetchFavoriteAvatars(
             tag: String,
             n: Int,
             offset: Int,
@@ -1051,10 +1037,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val json = Gson().fromJson(result.body, FavoriteAvatars::class.java)
 
-                    json?.forEach { favorite ->
-                        favorites.add(favorite)
-                    }
-
+                    favorites.addAll(json)
                     fetchFavoriteAvatars(tag, n, offset + n, favorites)
                 }
 
@@ -1069,7 +1052,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavoriteWorlds(
+        override tailrec suspend fun fetchFavoriteWorlds(
             tag: String,
             n: Int,
             offset: Int,
@@ -1093,10 +1076,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val json = Gson().fromJson(result.body, FavoriteWorlds::class.java)
 
-                    json?.forEach { favorite ->
-                        favorites.add(favorite)
-                    }
-
+                    favorites.addAll(json)
                     fetchFavoriteWorlds(tag, n, offset + n, favorites)
                 }
 
@@ -1191,19 +1171,17 @@ class HttpClient : BaseClient(), CoroutineScope {
                         return arrayListOf()
 
                     val groups: ArrayList<Group> = arrayListOf()
+
                     val json = Gson().fromJson(result.body, Groups::class.java)
 
-                    json?.forEach { group ->
-                        groups.add(group)
-                    }
-
-                    groups
+                    groups.addAll(json)
+                    return groups
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1365,17 +1343,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val groups: ArrayList<File> = arrayListOf()
                     val json = Gson().fromJson(result.body, Files::class.java)
 
-                    json?.forEach { group ->
-                        groups.add(group)
-                    }
-
-                    groups
+                    groups.addAll(json)
+                    return groups
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1408,17 +1383,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val groups: ArrayList<File> = arrayListOf()
                     val json = Gson().fromJson(result.body, Files::class.java)
 
-                    json?.forEach { group ->
-                        groups.add(group)
-                    }
-
-                    groups
+                    groups.addAll(json)
+                    return groups
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1446,13 +1418,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    Gson().fromJson(result.body, File::class.java)
+                    return Gson().fromJson(result.body, File::class.java)
                 }
                 is Result.NotModified -> {
-                    null
+                    return null
                 }
                 is Result.Forbidden -> {
-                    null
+                    return null
                 }
                 else -> {
                     handleExceptions(result)
@@ -1480,13 +1452,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    Gson().fromJson(result.body, File::class.java)
+                    return Gson().fromJson(result.body, File::class.java)
                 }
                 is Result.NotModified -> {
-                    null
+                    return null
                 }
                 is Result.Forbidden -> {
-                    null
+                    return null
                 }
                 else -> {
                     handleExceptions(result)
@@ -1537,7 +1509,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchOwnedAvatars(
+        override tailrec suspend fun fetchOwnedAvatars(
             n: Int,
             offset: Int,
             avatars: ArrayList<Avatar>
@@ -1560,10 +1532,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val json = Gson().fromJson(result.body, Avatars::class.java)
 
-                    json?.forEach { avatar ->
-                        avatars.add(avatar)
-                    }
-
+                    avatars.addAll(json)
                     fetchOwnedAvatars(n, offset + n, avatars)
                 }
                 is Result.NotModified -> {
@@ -1593,13 +1562,13 @@ class HttpClient : BaseClient(), CoroutineScope {
                 is Result.Succeeded -> {
                     if (result.body == "[]")
                         return arrayListOf()
-                    Gson().fromJson(result.body, Prints::class.java)
+                    return Gson().fromJson(result.body, Prints::class.java)
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1621,13 +1590,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    Gson().fromJson(result.body, Print::class.java)
+                    return Gson().fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
-                    null
+                    return null
                 }
                 is Result.Forbidden -> {
-                    null
+                    return null
                 }
                 else -> {
                     handleExceptions(result)
@@ -1649,13 +1618,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    Gson().fromJson(result.body, Print::class.java)
+                    return Gson().fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
-                    null
+                    return null
                 }
                 is Result.Forbidden -> {
-                    null
+                    return null
                 }
                 else -> {
                     handleExceptions(result)
@@ -1686,13 +1655,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    Gson().fromJson(result.body, Print::class.java)
+                    return Gson().fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
-                    null
+                    return null
                 }
                 is Result.Forbidden -> {
-                    null
+                    return null
                 }
                 else -> {
                     handleExceptions(result)
@@ -1703,13 +1672,13 @@ class HttpClient : BaseClient(), CoroutineScope {
     }
 
     val inventory = object : IInventory {
-        override suspend fun fetchEmojis(
+        override tailrec suspend fun fetchEmojis(
             ugc: Boolean,
             archived: Boolean,
             n: Int,
             offset: Int,
             order: String,
-            items: ArrayList<Inventory.Data>
+            emojis: ArrayList<Inventory.Data>
         ): ArrayList<Inventory.Data> {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
@@ -1733,19 +1702,16 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = Gson().fromJson(result.body, Inventory::class.java)
 
                     if (json.data.isEmpty())
-                        return items
+                        return emojis
 
-                    json?.data?.forEach { avatar ->
-                        items.add(avatar)
-                    }
-
-                    fetchEmojis(ugc, archived, n, offset + n, order, items)
+                    emojis.addAll(json.data)
+                    fetchEmojis(ugc, archived, n, offset + n, order, emojis)
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1754,13 +1720,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchStickers(
+        override tailrec suspend fun fetchStickers(
             ugc: Boolean,
             archived: Boolean,
             n: Int,
             offset: Int,
             order: String,
-            items: ArrayList<Inventory.Data>
+            stickers: ArrayList<Inventory.Data>
         ): ArrayList<Inventory.Data> {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
@@ -1784,19 +1750,16 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = Gson().fromJson(result.body, Inventory::class.java)
 
                     if (json.data.isEmpty())
-                        return items
+                        return stickers
 
-                    json?.data?.forEach { avatar ->
-                        items.add(avatar)
-                    }
-
-                    fetchStickers(ugc, archived, n, offset + n, order, items)
+                    stickers.addAll(json.data)
+                    fetchStickers(ugc, archived, n, offset + n, order, stickers)
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1805,13 +1768,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchProps(
+        override tailrec suspend fun fetchProps(
             ugc: Boolean,
             archived: Boolean,
             n: Int,
             offset: Int,
             order: String,
-            items: ArrayList<Inventory.Data>
+            props: ArrayList<Inventory.Data>
         ): ArrayList<Inventory.Data> {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
@@ -1835,19 +1798,16 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = Gson().fromJson(result.body, Inventory::class.java)
 
                     if (json.data.isEmpty())
-                        return items
+                        return props
 
-                    json?.data?.forEach { avatar ->
-                        items.add(avatar)
-                    }
-
-                    fetchProps(ugc, archived, n, offset + n, order, items)
+                    props.addAll(json.data)
+                    fetchProps(ugc, archived, n, offset + n, order, props)
                 }
                 is Result.NotModified -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    arrayListOf()
+                    return arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
@@ -1855,6 +1815,5 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
             }
         }
-
     }
 }
