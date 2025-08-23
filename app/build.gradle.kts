@@ -20,8 +20,8 @@ android {
         applicationId = "cc.sovellus.vrcaa"
         minSdk = 27
         targetSdk = 36
-        versionCode = 200607
-        versionName = "2.6.7"
+        versionCode = 200608
+        versionName = "2.6.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -131,10 +131,6 @@ fun runGitCommand(command: ProcessBuilder) : String? {
         logger.error("$e: Cannot find git")
         return null
     }
-}
-
-aboutLibraries {
-    excludeFields = arrayOf("generated")
 }
 
 dependencies {
