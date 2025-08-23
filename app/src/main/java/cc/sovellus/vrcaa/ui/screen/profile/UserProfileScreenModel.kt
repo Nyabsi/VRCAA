@@ -95,7 +95,7 @@ class UserProfileScreenModel(
                         val name = metadata.name.split(" - ")
 
                         if (name.size > 1) {
-                            val (_, nameAvatars) = avatarProvider.search(name[1])
+                            val nameAvatars = avatarProvider.searchAll(name[1])
                             if (nameAvatars.isNotEmpty()) {
                                 for (avatar in nameAvatars) {
                                     val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
@@ -107,7 +107,7 @@ class UserProfileScreenModel(
                             }
 
                             // fallback to using author search
-                            val (_, authorAvatars) = avatarProvider.search(metadata.ownerId)
+                            val authorAvatars = avatarProvider.searchAll(metadata.ownerId)
                             if (authorAvatars.isNotEmpty()) {
                                 for (avatar in authorAvatars) {
                                     val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
