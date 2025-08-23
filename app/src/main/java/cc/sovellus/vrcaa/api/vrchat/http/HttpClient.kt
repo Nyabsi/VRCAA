@@ -103,10 +103,6 @@ class HttpClient : BaseClient(), CoroutineScope {
     private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
     private var listener: SessionListener? = null
 
-    init {
-        setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
-    }
-
     private var reAuthorizationFailureCount: Int = 0
 
     override suspend fun onAuthorizationFailure() {
@@ -164,13 +160,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                 try {
                     val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
 
-                launch(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        "API returned (400): $reason",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
                     launch(Dispatchers.Main) {
                         Toast.makeText(
                             context,
@@ -216,35 +205,22 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             when (result) {
                 is Result.Succeeded -> {
+                    reAuthorizationFailureCount = 0
+
                     val cookies = result.response.headers("Set-Cookie")
                     if (cookies.isNotEmpty()) {
-                        // reset authorization failure count after successful logon
-                        reAuthorizationFailureCount = 0
-
-                        if (result.body.contains("emailOtp")) {
-                            preferences.authToken = cookies[0]
-                            setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-                            return IAuth.AuthResult(true, "", AuthType.AUTH_EMAIL)
-                        }
-
-                        if (result.body.contains("totp")) {
-                            preferences.authToken = cookies[0]
-                            setAuthorization(AuthorizationType.Cookie, preferences.authToken)
-
-                            return if (username == Base64.decode("cGFzdXBhbGxv").decodeToString())
-                                IAuth.AuthResult(true, "", AuthType.AUTH_BYPASS)
-                            else
-                                IAuth.AuthResult(true, "", AuthType.AUTH_TOTP)
+                        val dType = when {
+                            result.body.contains("emailOtp") -> AuthType.AUTH_EMAIL
+                            result.body.contains("totp") -> AuthType.AUTH_TOTP
+                            else -> AuthType.AUTH_NONE
                         }
 
                         preferences.authToken = cookies[0]
-                        setAuthorization(AuthorizationType.Cookie,"${preferences.authToken} ${preferences.twoFactorToken}")
-                        return IAuth.AuthResult(true)
+                        setAuthorization(AuthorizationType.Cookie, preferences.authToken)
+                        return IAuth.AuthResult(true, "", dType)
                     }
 
-                    // if server doesn't send cookies, it means we're already authenticated.
-                    // I don't know how can you reach this statement though.
-                    return IAuth.AuthResult(false)
+                    return IAuth.AuthResult(true)
                 }
                 is Result.Unauthorized -> {
                     return IAuth.AuthResult(false, context.getString(R.string.login_toast_wrong_credentials))
@@ -294,7 +270,6 @@ class HttpClient : BaseClient(), CoroutineScope {
                 is Result.Succeeded -> {
                     val cookies = result.response.headers("Set-Cookie")
                     preferences.twoFactorToken = cookies[0]
-
                     setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
                     return IAuth.AuthResult(true)
                 }

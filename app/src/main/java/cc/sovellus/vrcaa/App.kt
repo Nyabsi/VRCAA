@@ -25,11 +25,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cc.sovellus.vrcaa.activity.CrashActivity
+import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
+import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.crashAnalytics
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
+import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import com.google.firebase.Firebase
 import com.google.firebase.crashlytics.crashlytics
 
@@ -51,6 +55,10 @@ class App : Application() {
         NotificationHelper.createNotificationChannels()
 
         loadingText.value = context.getString(R.string.global_app_default_loading_text)
+
+        if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
+            api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+        }
     }
 
     companion object {
