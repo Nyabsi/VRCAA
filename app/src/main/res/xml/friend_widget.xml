@@ -4,5 +4,6 @@
     android:minHeight="40dp"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen">
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="hide_from_picker">
 </appwidget-provider>
