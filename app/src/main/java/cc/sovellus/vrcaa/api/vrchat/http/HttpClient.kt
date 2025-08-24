@@ -999,7 +999,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = Gson().fromJson(result.body, Favorites::class.java)
 
                     favorites.addAll(json)
-                    fetchFavorites(type, tag, n, offset + n, favorites)
+                    fetchFavoritesByUserId(userId, type, tag, n, offset + n, favorites)
                 }
 
                 is Result.NotModified -> {
