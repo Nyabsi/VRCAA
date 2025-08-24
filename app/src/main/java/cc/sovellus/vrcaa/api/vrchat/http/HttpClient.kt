@@ -1649,7 +1649,8 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun uploadPrint(
             file: Uri,
             note: String,
-            timestamp: LocalDateTime
+            timestamp: LocalDateTime,
+            border: Boolean
         ): Print? {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
@@ -1660,7 +1661,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                 fileUri = file,
                 formFields = mapOf("note" to note, "timestamp" to timestamp.toString()),
                 headers = headers,
-                addWhiteBorder = true
+                addWhiteBorder = border
             )
 
             return when (result) {

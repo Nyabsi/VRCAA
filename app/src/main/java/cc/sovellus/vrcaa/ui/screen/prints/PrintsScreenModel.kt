@@ -17,9 +17,9 @@
 package cc.sovellus.vrcaa.ui.screen.prints
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.net.Uri
+import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
@@ -43,8 +43,10 @@ class PrintsScreenModel(
     }
 
     private val context: Context = App.getContext()
-    val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
+    val preferences: SharedPreferences = App.getPreferences()
+
     private var prints: ArrayList<Print> = arrayListOf()
+    var currentUri = mutableStateOf<Uri?>(null)
 
     init {
         fetchPrints()
@@ -63,10 +65,10 @@ class PrintsScreenModel(
         }
     }
 
-    fun uploadFile(uri: Uri?) {
+    fun uploadFile(uri: Uri?, note: String, border: Boolean) {
         uri?.let {
             screenModelScope.launch {
-                api.prints.uploadPrint(uri, "", LocalDateTime.now())?.let {
+                api.prints.uploadPrint(uri, note, LocalDateTime.now(), border)?.let {
                     fetchPrints()
                 }
             }
