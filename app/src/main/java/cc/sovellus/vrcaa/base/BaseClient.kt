@@ -19,10 +19,12 @@ package cc.sovellus.vrcaa.base
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.Rect
 import android.net.Uri
-import android.util.Log
-import android.widget.Toast
+import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
@@ -314,6 +316,7 @@ open class BaseClient {
         headers: Headers.Builder,
         fileUri: Uri,
         formFields: Map<String, String> = emptyMap(),
+        addWhiteBorder: Boolean = false,
         retryAfterFailure: Boolean = true,
         ignoreAuthorization: Boolean = false,
         skipAuthorizationFailure: Boolean = false
@@ -365,14 +368,32 @@ open class BaseClient {
 
                 square.scale(targetSize, targetSize)
             } else {
-                val width = normalizedBitmap.width.toFloat()
-                val height = normalizedBitmap.height.toFloat()
-                val ratio = minOf(1280f / width, 720f / height, 1f)
-                normalizedBitmap.scale((width * ratio).toInt(), (height * ratio).toInt(), true)
+                normalizedBitmap.scale(1440, 1080)
+            }
+
+            val finalBitmap = if (addWhiteBorder) {
+                val bitmapWithBorder = createBitmap(2048, 1440)
+                val canvas = Canvas(bitmapWithBorder)
+                canvas.drawColor(Color.WHITE)
+
+                val xBorderOffset =  (2048 - processedBitmap.width) / 2
+                val yBorderOffset = 69
+                val dstRect = Rect(
+                    xBorderOffset,
+                    yBorderOffset,
+                    xBorderOffset + processedBitmap.width,
+                    yBorderOffset + processedBitmap.height
+                )
+
+                canvas.drawBitmap(processedBitmap, null, dstRect, null)
+
+                bitmapWithBorder
+            } else {
+                processedBitmap
             }
 
             val stream = ByteArrayOutputStream()
-            processedBitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream)
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream)
             val bytes = stream.toByteArray()
 
             multipartBuilder.addFormDataPart(
