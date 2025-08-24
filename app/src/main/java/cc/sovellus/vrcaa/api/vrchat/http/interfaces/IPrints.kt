@@ -10,5 +10,5 @@ interface IPrints {
     suspend fun fetchPrint(printId: String): Print?
     suspend fun deletePrint(printId: String): Print?
     suspend fun editPrint(printId: String): Print?
-    suspend fun uploadPrint(file: Uri, note: String, timestamp: LocalDateTime): Print?
+    suspend fun uploadPrint(file: Uri, note: String, timestamp: LocalDateTime, border: Boolean): Print?
 }
