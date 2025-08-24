@@ -367,7 +367,7 @@ open class BaseClient {
             } else {
                 val width = normalizedBitmap.width.toFloat()
                 val height = normalizedBitmap.height.toFloat()
-                val ratio = minOf(1920f / width, 1080f / height, 1f)
+                val ratio = minOf(1280f / width, 720f / height, 1f)
                 normalizedBitmap.scale((width * ratio).toInt(), (height * ratio).toInt(), true)
             }
 
