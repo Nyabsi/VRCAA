@@ -21,9 +21,9 @@ import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -63,11 +63,11 @@ fun ZoomableImage(
         .pointerInput(Unit) {
             detectTransformGestures { _, pan, zoom, _ ->
                 scope.launch {
-                    val newScale = (scale.value * zoom).coerceIn(1f, 5f)
+                    val newScale = (scale.value * zoom).coerceIn(1f, 2f)
                     scale.snapTo(newScale)
 
                     val maxX = ((containerSize.value.width * (newScale - 1)) / 2).coerceAtLeast(0f)
-                    val maxY = ((containerSize.value.height * (newScale - 1)) / 2).coerceAtLeast(0f)
+                    val maxY = maxX / 2
 
                     val newOffset = offset.value + pan
                     val clampedOffset = Offset(
@@ -92,9 +92,10 @@ fun ZoomableImage(
     GlideImage(
         model = imageUrl,
         contentDescription = null,
-        contentScale = ContentScale.Fit,
+        contentScale = ContentScale.None,
         modifier = transformModifier
             .fillMaxSize()
+            .aspectRatio(16.0f / 10.0f)
             .background(Color.Transparent)
     )
 }
