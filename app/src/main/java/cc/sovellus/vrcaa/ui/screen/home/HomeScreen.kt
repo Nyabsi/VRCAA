@@ -110,8 +110,8 @@ class HomeScreen : Screen {
                         title = stringResource(R.string.home_active_friends)
                     ) {
                         items(
-                            onlineFriends.sortedBy { StatusHelper.getStatusFromString(it.status) },
-                            key = { it.id }) { friend ->
+                            onlineFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                        ) { friend ->
                             RoundedRowItem(
                                 name = friend.displayName,
                                 url = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
@@ -148,7 +148,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_recently_visited)
                     ) {
-                        items(recent, key = { it.id }) { world ->
+                        items(recent) { world ->
                             RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
@@ -186,8 +186,8 @@ class HomeScreen : Screen {
                         title = stringResource(R.string.home_friend_locations)
                     ) {
                         items(
-                            friendLocations.distinctBy { it.location.split(':')[0] },
-                            key = { it.id }) { friend ->
+                            friendLocations.distinctBy { it.location.split(':')[0] }
+                        ) { friend ->
                             val world = CacheManager.getWorld(friend.location.split(':')[0])
                             RowItemWithFriends(
                                 name = world.name,
@@ -226,7 +226,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_offline_friends)
                     ) {
-                        items(offlineFriends, key = { it.id }) { friend ->
+                        items(offlineFriends) { friend ->
                             RowItem(
                                 name = friend.displayName,
                                 url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
