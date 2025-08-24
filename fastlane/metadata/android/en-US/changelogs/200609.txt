@@ -1,0 +1,2 @@
+- A lot of changes, please read the Github for them
+- Stability & Performance improvements
