@@ -146,7 +146,9 @@ fun ImagePreviewDialog(
             }
         ) { innerPadding ->
             Box(
-                modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = innerPadding.calculateTopPadding())
             ) {
                 ZoomableImage(
                     imageUrl = url,
