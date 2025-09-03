@@ -123,8 +123,8 @@
     <string name="notification_service_description_friend_added">%1$s jest teraz twoim znajomym!</string>
     <string name="notification_title_player">Powiadomienia</string>
     <string name="notification_label_enable">Włącz powiadomienia</string>
-    <string name="notification_label_intent_online">Online Notifications</string>
-    <string name="notification_label_intent_offline">Offline Notifications</string>
+    <string name="notification_label_intent_online">Powiadomienia</string>
+    <string name="notification_label_intent_offline">Powiadomienia</string>
     <string name="notification_label_intent_location">Location Notifications</string>
     <string name="notification_label_intent_status">Status Change Notifications</string>
     <string name="notification_service_title_status">Friend changed status!</string>

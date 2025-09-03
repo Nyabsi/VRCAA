@@ -265,8 +265,8 @@
     <string name="avatars_page_title">아바타 보기</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">변경 사항을 적용하려면 앱을 다시 시작해야 합니다.</string>
-    <string name="debug_notification_title_out_of_memory">Notice!</string>
-    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
+    <string name="debug_notification_title_out_of_memory">알림</string>
+    <string name="debug_notification_content_out_of_memory">애플리케이션의 메모리가 부족하여 작업을 계속하기 위해 디버그 캐시를 삭제했습니다.</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">월드 목록을 불러오는 중...</string>
     <string name="loading_text_users">유저 목록을 불러오는 중...</string>
