@@ -110,7 +110,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA 現在正在後台自動追蹤你的好友動態</string>
     <string name="service_killed_by_vendor_notification">VRCAA 已被你的系統終止了！請檢查 https://dontkillmyapp.com/ 以取得更多資訊</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_notification_rich_presence">VRCAA 現在會回報詳細的遊戲狀態資訊</string>
     <string name="notification_service_title_online">好友已上線！</string>
     <string name="notification_service_description_online">你的好友，%1$s 已上線！</string>
     <string name="notification_service_title_offline">好友已離線！</string>
@@ -155,26 +155,26 @@
     <string name="feed_removed_text">已將你從好友移除</string>
     <string name="feed_friend_request_label">好友請求</string>
     <string name="feed_friend_request_text">想要新增你為好友</string>
-    <string name="feed_search_placeholder">Search for User or Location…</string>
-    <string name="feed_friend_avatar_label">Avatar Change</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_search_placeholder">搜尋用戶或地點...</string>
+    <string name="feed_friend_avatar_label">角色變更</string>
+    <string name="feed_friend_avatar_text">變更角色為</string>
     <!-- About -->
-    <string name="about_page_title">About</string>
-    <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
-    <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
-    <string name="license_title">Open Source Licenses</string>
+    <string name="about_page_title">關於</string>
+    <string name="about_page_open_source_licenses_title">開放原始碼授權</string>
+    <string name="about_page_translate_title">協助翻譯</string>
+    <string name="about_page_battery_optimizations_toast">電池最佳化已停用</string>
+    <string name="license_title">開放原始碼授權</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+    <string name="api_session_has_expired_text">你的連線已逾期. 請重新再登入.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_restarted_service_toast">已重啟服務並生效</string>
+    <string name="discord_login_label_enable">啟用 Discord 狀態 (RPC)</string>
+    <string name="discord_login_label_set_webhook">設定 Webhook Url</string>
+    <string name="discord_login_description_set_webhook">顯示世界縮圖 (可選)</string>
+    <string name="discord_login_description_enable">在 Discord 中顯示你的當前狀態</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
+    <string name="crash_title_text">應用程式遇到致命錯誤</string>
+    <string name="crash_button_restart_text">重啟</string>
     <string name="crash_button_copy_log_text">Copy Information</string>
     <string name="crash_button_report_text">Report Issue</string>
     <!-- Groups -->
