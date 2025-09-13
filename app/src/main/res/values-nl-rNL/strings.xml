@@ -71,7 +71,7 @@
     <string name="settings_item_theming">Weergave</string>
     <string name="settings_item_theming_description">Weergave configuratie, simpele modus</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
+    <string name="settings_item_rich_presence_description">Discord rich-presence intergratie</string>
     <string name="settings_item_advanced_settings">Geavanceerd</string>
     <string name="settings_item_advanced_settings_description">Geavanceerd logging en functies</string>
     <string name="settings_item_database_settings">Database &amp; Statistieken</string>
