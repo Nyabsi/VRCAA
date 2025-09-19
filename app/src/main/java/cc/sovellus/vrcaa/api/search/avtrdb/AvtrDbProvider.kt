@@ -20,8 +20,6 @@ import cc.sovellus.vrcaa.api.search.Config
 import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse
-import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.http.models.Friends
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import okhttp3.Headers
@@ -40,7 +38,7 @@ class AvtrDbProvider : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset",
+            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
             headers = headers,
             body = null,
             retryAfterFailure = false
@@ -51,7 +49,6 @@ class AvtrDbProvider : BaseClient() {
 
                 val avatars: ArrayList<SearchAvatar> = arrayListOf()
                 val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
-
                 avatars.addAll(json.avatars)
                 return Pair(!json.hasMore, avatars)
             }
@@ -78,7 +75,7 @@ class AvtrDbProvider : BaseClient() {
 
         val result = doRequest(
             method = "GET",
-            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset",
+            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
             headers = headers,
             body = null,
             retryAfterFailure = false
@@ -88,11 +85,11 @@ class AvtrDbProvider : BaseClient() {
             is Result.Succeeded -> {
 
                 val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
+                avatars.addAll(json.avatars)
 
                 if (!json.hasMore)
                     return avatars
 
-                avatars.addAll(json.avatars)
                 delay(1000) // 1rq/s rl
                 searchAll(query, n, offset + 1, avatars)
             }
