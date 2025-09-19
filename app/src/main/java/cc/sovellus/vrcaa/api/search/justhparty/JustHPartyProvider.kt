@@ -17,9 +17,8 @@
 package cc.sovellus.vrcaa.api.search.justhparty
 
 import cc.sovellus.vrcaa.api.search.Config
-import cc.sovellus.vrcaa.api.search.models.SearchAvatarLegacy
-import cc.sovellus.vrcaa.api.search.justhparty.models.JustHPartyResponse
 import cc.sovellus.vrcaa.api.search.models.SearchAvatar
+import cc.sovellus.vrcaa.api.search.justhparty.models.JustHPartyResponse
 import cc.sovellus.vrcaa.base.BaseClient
 import com.google.gson.Gson
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
@@ -59,23 +58,6 @@ class JustHPartyProvider : BaseClient() {
             }
             else -> arrayListOf()
         }
-
-        // convert legacy -> avtr db format so we can utilize the extra data from the api
-        val result = arrayListOf<SearchAvatar>()
-        avatars.forEach { avatar ->
-            result.add(
-                SearchAvatar(
-                    vrcId = avatar.id,
-                    imageUrl = avatar.imageUrl ?: "",
-                    name = avatar.name,
-                    author = SearchAvatar.Author(
-                        name = avatar.authorName,
-                        vrcId = avatar.authorId
-                    )
-                )
-            )
-        }
-
-        return result
+        return avatars
     }
 }

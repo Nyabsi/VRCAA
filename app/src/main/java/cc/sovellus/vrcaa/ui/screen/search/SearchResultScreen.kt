@@ -310,9 +310,9 @@ class SearchResultScreen(
                     ), content = {
                         items(state.value) { avatar ->
                             GridItem(
-                                name = avatar.name, url = avatar.imageUrl, count = null
+                                name = avatar.name, url = avatar.imageUrl ?: "", count = null
                             ) {
-                                navigator.push(AvatarScreen(avatar.vrcId))
+                                navigator.push(AvatarScreen(avatar.id))
                             }
                         }
 
