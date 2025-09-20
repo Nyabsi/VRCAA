@@ -224,7 +224,7 @@
     <string name="profile_edit_dialog_button_cancel">Cancel</string>
     <string name="profile_edit_dialog_button_apply">Aplicar</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">¿Estas seguro?</string>
+    <string name="logout_dialog_title">¿Estás seguro?</string>
     <string name="logout_dialog_description">Al Presionar \"Continuar\" a continuación, cerrará la sesión de VRCAA y deberás volver a iniciar sesión para seguir utilizando la aplicación.</string>
     <string name="logout_dialog_continue">Continuar</string>
     <string name="logout_dialog_cancel">Cancelar</string>
