@@ -165,63 +165,63 @@
     <string name="about_page_battery_optimizations_toast">Las optimizaciones de batería ya están deshabilitadas.</string>
     <string name="license_title">Licencias de código abierto</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+    <string name="api_session_has_expired_text">Tu sesión ha expirado, por favor inicia sesión de nuevo.</string>
     <!-- Discord Rich Presence -->
     <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
     <string name="discord_login_label_enable">Enable Rich Presence</string>
     <string name="discord_login_label_set_webhook">Set Webhook Url</string>
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_description_enable">Muestra tu estado actual en discord</string>
     <!-- Crash -->
     <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_button_restart_text">Reiniciar</string>
+    <string name="crash_button_copy_log_text">Copiar Información</string>
+    <string name="crash_button_report_text">Reportar Error</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
         <item>Info</item>
-        <item>Instances</item>
+        <item>Estancias</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_toast_not_found_message">El grupo no se encontró, estás seguro de que existe?</string>
+    <string name="group_page_label_description">Descripción</string>
+    <string name="group_page_label_rules">Reglas</string>
+    <string name="group_page_dropdown_view_author">Ver Perfil del Autor</string>
+    <string name="group_page_dropdown_request_invite">Solicitar Invitación</string>
+    <string name="group_page_dropdown_request_invite_cancel">Cancelar la Solicitud de Invitación</string>
+    <string name="group_page_dropdown_join_group">Unirse al Grupo</string>
+    <string name="group_page_dropdown_leave_group">Dejar Grupo</string>
+    <string name="group_page_toast_invite_requested">Solicitud de invitación enviada.</string>
+    <string name="group_page_toast_invite_requested_fail">Error al solicitar invitación.</string>
+    <string name="group_page_toast_invite_requested_cancel">Solicitud de invitación cancelada.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Error al cancelar la solicitud de invitación.</string>
+    <string name="group_page_toast_join_group">Te uniste al grupo.</string>
+    <string name="group_page_toast_join_group_fail">Error al unirse al grupo.</string>
+    <string name="group_page_toast_leave_group">Abandonó el grupo.</string>
+    <string name="group_page_toast_leave_group_fail">Error al abandonar el grupo.</string>
+    <string name="group_user_no_groups_message">El usuario no forma parte de ningún grupo.</string>
+    <string name="group_user_viewing_groups_username">Grupos de %1$s</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
+    <string name="misc_no_internet_title">Sin Conexión a Internet</string>
+    <string name="misc_no_internet_description">Asegúrate de estar conectado a Internet, ya que esta aplicación no funciona sin conexión a Internet.</string>
+    <string name="misc_no_internet_label">Reinicia la Aplicación</string>
+    <string name="misc_exit_toast_label">Presiona otra vez para salir.</string>
+    <string name="misc_no_premium_subscription">Esta función requiere que tengas una suscripción activa a VRC+.</string>
+    <string name="global_app_default_loading_text">Inicializando…</string>
     <!-- User -->
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_groups">Grupos</string>
+    <string name="user_overlay_worlds">Mundos</string>
+    <string name="user_overlay_favorites">Favoritos</string>
+    <string name="user_overlay_find_avatar">Encontrar Avatar</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
-    <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_title_status">Estado</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Visibilidad de la verificación de edad</string>
+    <string name="profile_edit_dialog_title_status_description">Descripción del Estado</string>
+    <string name="profile_edit_dialog_title_bio">Biografía</string>
+    <string name="profile_edit_dialog_title_bio_links">Enlaces</string>
+    <string name="profile_edit_dialog_toast_updated">Perfil actualizado.</string>
+    <string name="profile_edit_dialog_toast_cancelled">Los cambios se descartaron.</string>
+    <string name="profile_edit_dialog_title_pronouns">Pronombres</string>
+    <string name="profile_edit_dialog_button_cancel">Cancelar</string>
     <string name="profile_edit_dialog_button_apply">Aplicar</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">¿Estás seguro?</string>
@@ -265,45 +265,45 @@
     <string name="avatars_page_title">Viendo avatares</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Reinicia la aplicación para que los cambios tengan efecto.</string>
-    <string name="debug_notification_title_out_of_memory">Notice!</string>
+    <string name="debug_notification_title_out_of_memory">¡Aviso!</string>
     <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_worlds">Cargando mundos…</string>
+    <string name="loading_text_users">Cargando usuarios…</string>
+    <string name="loading_text_avatars">Cargando avatares…</string>
+    <string name="loading_text_groups">Cargando grupos…</string>
+    <string name="loading_text_user">Cargando usuario…</string>
+    <string name="loading_text_world">Cargando mundo…</string>
+    <string name="loading_text_avatar">Cargando avatar…</string>
+    <string name="loading_text_group">Cargando grupo…</string>
+    <string name="loading_text_instances">Cargando estancias…</string>
+    <string name="loading_text_gallery">Cargando galería…</string>
+    <string name="loading_text_icons">Cargando iconos…</string>
+    <string name="loading_text_prints">Cargando instantáneas…</string>
+    <string name="loading_text_stickers">Cargando pegatinas…</string>
+    <string name="loading_text_emojis">Cargando emojis…</string>
+    <string name="loading_text_items">Cargando objetos…</string>
+    <string name="loading_text_favorites">Cargando favoritos…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">Tema</string>
+    <string name="theme_page_minimalist_mode_text">Modo Minimalista</string>
+    <string name="theme_page_minimalist_mode_text_description">"El modo minimalista ayuda a que el contenido se adapte a pantallas más pequeñas."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>Luz</item>
+        <item>Oscuro</item>
+        <item>Sistema</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>Adaptativo</item>
+        <item>Fijo</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">Tema</string>
+    <string name="theme_page_section_display_title">Pantalla</string>
+    <string name="theme_page_section_column_title">Número de Columnas</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_section_networking">Networking</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
+    <string name="advanced_page_title">Configuración Avanzada</string>
+    <string name="advanced_page_section_networking">Redes</string>
+    <string name="advanced_page_network_logging">Registro de Red</string>
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
     <string name="advanced_page_section_background_activities">Background Activities</string>
@@ -323,49 +323,49 @@
     <string name="database_page_recovery_backup">Backup Database</string>
     <string name="database_page_recovery_backup_description">Backup your current data</string>
     <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
+    <string name="database_page_recovery_restore_description">Restaurar anterior copia de seguridad</string>
     <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
+    <string name="database_page_glide_cache_size">Tamaño Caché</string>
+    <string name="database_page_glide_clean_cache">Limpiar Caché</string>
     <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
+    <string name="database_page_glide_clean_cache_toast">¡Caché limpiado!</string>
     <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
+        <item>Galería</item>
+        <item>Iconos de Usuarios</item>
+        <item>Mundos</item>
+        <item>Avatares</item>
+        <item>Grupos</item>
         <item>Emojis</item>
-        <item>Stickers</item>
-        <item>Prints</item>
-        <item>Items</item>
+        <item>Pegatinas</item>
+        <item>Instantáneas</item>
+        <item>Objetos</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Upload Print</string>
+    <string name="gallery_page_title">Galería</string>
+    <string name="gallery_page_button_upload">Subir Imagen</string>
+    <string name="icon_gallery_page_title">Iconos de Usuarios</string>
+    <string name="icon_gallery_page_button_upload">Subir Icono</string>
+    <string name="prints_page_title">Instantáneas</string>
+    <string name="prints_page_button_upload">Subir instantánea</string>
     <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="emojis_page_button_upload">Subir Emoji</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Oficial</item>
+        <item>Personalizado</item>
+        <item>Archivado</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">Pegatinas</string>
+    <string name="stickers_page_button_upload">Subir Pegatina</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>Oficial</item>
+        <item>Personalizado</item>
+        <item>Archivado</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">Objetos</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
-        <item>Archive</item>
+        <item>Todos los objetos</item>
+        <item>Archivo</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_dialog_title">Vista Previa</string>
 </resources>
