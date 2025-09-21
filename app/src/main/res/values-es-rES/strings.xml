@@ -7,7 +7,7 @@
     <string-array name="friend_selection_options">
         <item>Favorito</item>
         <item>En Línea</item>
-        <item>Website</item>
+        <item>Sitio Web</item>
         <item>Desconectado</item>
     </string-array>
     <!-- Home -->
@@ -16,8 +16,8 @@
     <string name="home_offline_friends">Amigos Desconectados</string>
     <string name="home_friend_locations">Ubicaciones de Amigos</string>
     <!-- Login -->
-    <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
+    <string name="login_text">Inicia sesión en VRC Android Assistant</string>
+    <string name="login_label_username">Nombre de usuario o dirección de correo electrónico</string>
     <string name="login_label_password">Contraseña</string>
     <string name="login_button_text">Iniciar Sesión</string>
     <string name="login_toast_wrong_credentials">Ususuario o contraseña incorrectos</string>
@@ -67,7 +67,7 @@
     <string name="search_button_more">Mas…</string>
     <!-- Settings -->
     <string name="settings_item_about">Acerca de</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
+    <string name="settings_item_about_description">Más información acerca de tu dispositivo y de VRCAA</string>
     <string name="settings_item_theming">Apariencia</string>
     <string name="settings_item_theming_description">Configuración de la apariencia, modo minimalista</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
@@ -79,34 +79,34 @@
     <string name="settings_item_logout">Cerrar sesión</string>
     <string name="settings_kofi_donation_button">Dona a través de Ko-fi</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
-    <string name="world_title_created_at">Creation Date</string>
-    <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
-    <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_label_description">Descripción</string>
+    <string name="world_label_tags">Etiquetas</string>
+    <string name="world_text_no_tags">El autor no ha añadido etiquetas.</string>
+    <string name="world_title_created_at">Fecha de creación</string>
+    <string name="world_title_updated_at">Última actualización</string>
+    <string name="world_title_visits">Visitas</string>
+    <string name="world_title_favorites">Favoritos</string>
+    <string name="world_title_capacity">Capacidad</string>
+    <string name="world_title_occupants">Ocupantes</string>
+    <string name="world_title_publication_date">Fecha de publicación</string>
     <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_title_popularity">Popularidad</string>
+    <string name="world_toast_not_found">El mundo es privado, o no existe.</string>
     <string-array name="world_selection_options">
-        <item>Info</item>
-        <item>Instances</item>
+        <item>Información</item>
+        <item>Estancias</item>
     </string-array>
-    <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
+    <string name="world_author_label">Por %1$s</string>
+    <string name="world_instance_invite_dialog_title">¿Estás seguro?</string>
     <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
     <string name="world_instance_no_public_instances_message">No public instances</string>
     <!-- Tabs -->
-    <string name="tabs_label_friends">Friends</string>
-    <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_friends">Amigos</string>
+    <string name="tabs_label_home">Casa</string>
+    <string name="tabs_label_favorites">Favoritos</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_profile">Perfil</string>
+    <string name="tabs_label_settings">Ajustes</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
@@ -316,13 +316,13 @@
     <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
     <!-- Database -->
     <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
+    <string name="database_page_section_statistics">Estadísticas</string>
+    <string name="database_page_statistics_size">Tamaño de la base de datos</string>
+    <string name="database_page_statistics_row_count">Número de filas</string>
     <string name="database_page_section_recovery">Restore &amp; Backup</string>
     <string name="database_page_recovery_backup">Backup Database</string>
     <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
+    <string name="database_page_recovery_restore">Reestablecer base de datos</string>
     <string name="database_page_recovery_restore_description">Restaurar anterior copia de seguridad</string>
     <string name="database_page_section_glide">Glide Cache</string>
     <string name="database_page_glide_cache_size">Tamaño Caché</string>
