@@ -64,20 +64,20 @@
         <item>Avatares</item>
         <item>Grupos</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Mas…</string>
     <!-- Settings -->
-    <string name="settings_item_about">About</string>
+    <string name="settings_item_about">Acerca de</string>
     <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_theming">Apariencia</string>
+    <string name="settings_item_theming_description">Configuración de la apariencia, modo minimalista</string>
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_advanced_settings">Avanzado</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
     <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
-    <string name="settings_item_logout">Logout</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_item_logout">Cerrar sesión</string>
+    <string name="settings_kofi_donation_button">Dona a través de Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Tags</string>
