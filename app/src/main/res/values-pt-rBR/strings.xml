@@ -73,13 +73,13 @@
     <string name="settings_item_rich_presence">Presença Rica (Experimental)</string>
     <string name="settings_item_rich_presence_description">Integração de presença rica do Discord</string>
     <string name="settings_item_advanced_settings">Avançados </string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_advanced_settings_description">Registros e recursos avançados</string>
     <string name="settings_item_database_settings">Banco de dados e estatísticas</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
-    <string name="settings_item_logout">Logout</string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_item_database_settings_description">Ver estatísticas, restaurar &amp; fazer backup de seus dados</string>
+    <string name="settings_item_logout">Desconectar</string>
+    <string name="settings_kofi_donation_button">Doar através do Ko-fi</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
+    <string name="world_label_description">Descrição</string>
     <string name="world_label_tags">Tags</string>
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
