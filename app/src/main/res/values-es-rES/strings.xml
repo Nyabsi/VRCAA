@@ -45,17 +45,17 @@
     <string name="search_text_result">Resultados para</string>
     <string name="search_filter_category_worlds">Mundos</string>
     <string name="search_filter_category_worlds_sort_by">Ordenar por</string>
-    <string name="search_filter_category_worlds_count">Count</string>
+    <string name="search_filter_category_worlds_count">Número</string>
     <string name="search_filter_category_users">Usuarios</string>
-    <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_users_count">Número</string>
     <string name="search_filter_category_avatars">Avatares</string>
     <string name="search_filter_category_avatars_provider">Proveedor</string>
     <string name="search_filter_category_groups">Grupos</string>
-    <string name="search_filter_category_groups_count">Count</string>
+    <string name="search_filter_category_groups_count">Número</string>
     <string name="copy_id_label">Copiar Id</string>
     <string name="copied_toast">Se copió con éxito el Id de %1$s</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
+    <string name="search_filter_label_count">Número</string>
     <string name="search_filter_button_reset">Resetear</string>
     <string name="search_filter_button_apply">Aplicar</string>
     <string-array name="search_selection_options">
@@ -99,7 +99,7 @@
     <string name="world_author_label">Por %1$s</string>
     <string name="world_instance_invite_dialog_title">¿Estás seguro?</string>
     <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
-    <string name="world_instance_no_public_instances_message">No public instances</string>
+    <string name="world_instance_no_public_instances_message">No estancias públicas</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Amigos</string>
     <string name="tabs_label_home">Casa</string>
@@ -108,8 +108,8 @@
     <string name="tabs_label_profile">Perfil</string>
     <string name="tabs_label_settings">Ajustes</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
+    <string name="service_notification">VRCAA ahora está monitorizando a tus amigos en segundo plano.</string>
+    <string name="service_killed_by_vendor_notification">¡VRCAA fue detenido por tu sistema! Visita https://dontkillmyapp.com/ para más información.</string>
     <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">¡Un amigo se ha conectado!</string>
     <string name="notification_service_description_online">¡Tu amigo  %1$s se ha conectado!</string>
@@ -121,7 +121,7 @@
     <string name="notification_service_description_friend_removed">Tu amigo, %1$s ya no es tu amigo :(</string>
     <string name="notification_service_title_friend_added">¡Tienes un nuevo amigo!</string>
     <string name="notification_service_description_friend_added">¡%1$s ahora es tu amigo!</string>
-    <string name="notification_title_player">\'s Notifications</string>
+    <string name="notification_title_player">Notificaciones de </string>
     <string name="notification_label_enable">Habilitar Notificaciones</string>
     <string name="notification_label_intent_online">Notificaciones de Conexión</string>
     <string name="notification_label_intent_offline">Notificaciones de Desconexión</string>
@@ -173,7 +173,7 @@
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable">Muestra tu estado actual en discord</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
+    <string name="crash_title_text">La aplicación ha encontrado un error grave.</string>
     <string name="crash_button_restart_text">Reiniciar</string>
     <string name="crash_button_copy_log_text">Copiar Información</string>
     <string name="crash_button_report_text">Reportar Error</string>
