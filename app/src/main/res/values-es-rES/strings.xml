@@ -306,7 +306,7 @@
     <string name="advanced_page_network_logging">Registro de Red</string>
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
     <string name="advanced_page_view_network_logs">Mostrar registros de red</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_section_background_activities">Actividades fondo </string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
     <string name="advanced_page_battery_optimization_description">Puede ayudar en no recibir eventos de red en tiempo-real</string>
     <string name="advanced_page_kill_service">Matar servicio del fondo</string>
@@ -320,8 +320,8 @@
     <string name="database_page_statistics_size">Tamaño de la base de datos</string>
     <string name="database_page_statistics_row_count">Número de filas</string>
     <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
+    <string name="database_page_recovery_backup">Reserva Base de Datos</string>
+    <string name="database_page_recovery_backup_description">Reserva tus datos corrientes</string>
     <string name="database_page_recovery_restore">Reestablecer base de datos</string>
     <string name="database_page_recovery_restore_description">Restaurar anterior copia de seguridad</string>
     <string name="database_page_section_glide">Glide Cache</string>
