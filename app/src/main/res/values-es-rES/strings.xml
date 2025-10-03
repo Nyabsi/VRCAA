@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="result_not_found">¡No hay nada más que gallinas aquí!</string>
+    <string name="legal_disclaimer">"VRCAA no está respaldado por VRChat Inc. tampoco ninguno de sus afiliados."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favorito</item>
@@ -20,12 +20,12 @@
     <string name="login_label_username">Nombre de usuario o dirección de correo electrónico</string>
     <string name="login_label_password">Contraseña</string>
     <string name="login_button_text">Iniciar Sesión</string>
-    <string name="login_toast_wrong_credentials">Ususuario o contraseña incorrectos</string>
+    <string name="login_toast_wrong_credentials">Usuario o contraseña incorrecta </string>
     <string name="login_toast_wrong_code">Fallo al verificar, comprueba el código de nuevo</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Introduzca el código enviado a tu correo electrónico</string>
-    <string name="auth_text_app">Introduzca el código de tu autenticador</string>
-    <string name="auth_button_text">Verificar</string>
+    <string name="auth_text_app">Introduzca el código de tu Aplicación de autenticador</string>
+    <string name="auth_button_text">Verifica</string>
     <string name="auth_button_paste">Pegar</string>
     <!-- Main -->
     <string name="main_search_placeholder">Buscar por mundos, usuarios o avatares</string>
@@ -45,17 +45,17 @@
     <string name="search_text_result">Resultados para</string>
     <string name="search_filter_category_worlds">Mundos</string>
     <string name="search_filter_category_worlds_sort_by">Ordenar por</string>
-    <string name="search_filter_category_worlds_count">Count</string>
+    <string name="search_filter_category_worlds_count">Número</string>
     <string name="search_filter_category_users">Usuarios</string>
-    <string name="search_filter_category_users_count">Count</string>
+    <string name="search_filter_category_users_count">Número</string>
     <string name="search_filter_category_avatars">Avatares</string>
     <string name="search_filter_category_avatars_provider">Proveedor</string>
     <string name="search_filter_category_groups">Grupos</string>
-    <string name="search_filter_category_groups_count">Count</string>
+    <string name="search_filter_category_groups_count">Número</string>
     <string name="copy_id_label">Copiar Id</string>
     <string name="copied_toast">Se copió con éxito el Id de %1$s</string>
     <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
+    <string name="search_filter_label_count">Número</string>
     <string name="search_filter_button_reset">Resetear</string>
     <string name="search_filter_button_apply">Aplicar</string>
     <string-array name="search_selection_options">
@@ -73,7 +73,7 @@
     <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
     <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
     <string name="settings_item_advanced_settings">Avanzado</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
+    <string name="settings_item_advanced_settings_description">Registro y características avanzado</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
     <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
     <string name="settings_item_logout">Cerrar sesión</string>
@@ -89,7 +89,7 @@
     <string name="world_title_capacity">Capacidad</string>
     <string name="world_title_occupants">Ocupantes</string>
     <string name="world_title_publication_date">Fecha de publicación</string>
-    <string name="world_title_heat">Heat</string>
+    <string name="world_title_heat">Calor</string>
     <string name="world_title_popularity">Popularidad</string>
     <string name="world_toast_not_found">El mundo es privado, o no existe.</string>
     <string-array name="world_selection_options">
@@ -99,7 +99,7 @@
     <string name="world_author_label">Por %1$s</string>
     <string name="world_instance_invite_dialog_title">¿Estás seguro?</string>
     <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
-    <string name="world_instance_no_public_instances_message">No public instances</string>
+    <string name="world_instance_no_public_instances_message">No estancias públicas</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Amigos</string>
     <string name="tabs_label_home">Casa</string>
@@ -108,8 +108,8 @@
     <string name="tabs_label_profile">Perfil</string>
     <string name="tabs_label_settings">Ajustes</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
+    <string name="service_notification">VRCAA ahora está monitorizando a tus amigos en segundo plano.</string>
+    <string name="service_killed_by_vendor_notification">¡VRCAA fue detenido por tu sistema! Visita https://dontkillmyapp.com/ para más información.</string>
     <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">¡Un amigo se ha conectado!</string>
     <string name="notification_service_description_online">¡Tu amigo  %1$s se ha conectado!</string>
@@ -121,7 +121,7 @@
     <string name="notification_service_description_friend_removed">Tu amigo, %1$s ya no es tu amigo :(</string>
     <string name="notification_service_title_friend_added">¡Tienes un nuevo amigo!</string>
     <string name="notification_service_description_friend_added">¡%1$s ahora es tu amigo!</string>
-    <string name="notification_title_player">\'s Notifications</string>
+    <string name="notification_title_player">Notificaciones de </string>
     <string name="notification_label_enable">Habilitar Notificaciones</string>
     <string name="notification_label_intent_online">Notificaciones de Conexión</string>
     <string name="notification_label_intent_offline">Notificaciones de Desconexión</string>
@@ -173,7 +173,7 @@
     <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable">Muestra tu estado actual en discord</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
+    <string name="crash_title_text">La aplicación ha encontrado un error grave.</string>
     <string name="crash_button_restart_text">Reiniciar</string>
     <string name="crash_button_copy_log_text">Copiar Información</string>
     <string name="crash_button_report_text">Reportar Error</string>
@@ -305,14 +305,14 @@
     <string name="advanced_page_section_networking">Redes</string>
     <string name="advanced_page_network_logging">Registro de Red</string>
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
+    <string name="advanced_page_view_network_logs">Mostrar registros de red</string>
+    <string name="advanced_page_section_background_activities">Actividades fondo </string>
     <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
+    <string name="advanced_page_battery_optimization_description">Puede ayudar en no recibir eventos de red en tiempo-real</string>
+    <string name="advanced_page_kill_service">Matar servicio del fondo</string>
+    <string name="advanced_page_kill_service_description">Mata el servicio del fondo responsable de los eventos en tiempo-real</string>
+    <string name="advanced_page_section_database">Base de datos</string>
+    <string name="advanced_page_database_delete">Eliminar base de datos</string>
     <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
     <!-- Database -->
     <string name="database_page_title">Database &amp; Statistics</string>
@@ -320,8 +320,8 @@
     <string name="database_page_statistics_size">Tamaño de la base de datos</string>
     <string name="database_page_statistics_row_count">Número de filas</string>
     <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
+    <string name="database_page_recovery_backup">Reserva Base de Datos</string>
+    <string name="database_page_recovery_backup_description">Reserva tus datos corrientes</string>
     <string name="database_page_recovery_restore">Reestablecer base de datos</string>
     <string name="database_page_recovery_restore_description">Restaurar anterior copia de seguridad</string>
     <string name="database_page_section_glide">Glide Cache</string>
