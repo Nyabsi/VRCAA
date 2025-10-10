@@ -50,8 +50,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     private val profileLock = Any()
 
     private var profile: User? = null
-    private var worldList: MutableList<WorldCache> = CopyOnWriteArrayList()
-    private var recentWorldList: MutableList<WorldCache> = CopyOnWriteArrayList()
+    private var worldList: MutableList<WorldCache> = ArrayList()
+    private var recentWorldList: MutableList<WorldCache> = ArrayList()
 
     private var cacheHasBeenBuilt: Boolean = false
 
@@ -157,7 +157,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun getRecentWorlds(): List<WorldCache> {
-        return recentWorldList
+        val listSnapshot = recentWorldList.toList()
+        return listSnapshot
     }
 
     fun addRecentWorld(world: World) {
