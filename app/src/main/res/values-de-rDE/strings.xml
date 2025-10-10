@@ -10,6 +10,14 @@
         <item>Webseite</item>
         <item>Offline</item>
     </string-array>
+    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
+    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
+    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
+    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
+    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Aktive Freunde</string>
     <string name="home_recently_visited">Zuletzt besucht</string>
@@ -37,10 +45,10 @@
     <string name="profile_label_date_joined">Registriert am</string>
     <string name="profile_text_no_biography">Keine Beschreibung angegeben.</string>
     <string name="profile_user_dropdown_manage_notifications">Benachrichtigungen verwalten</string>
-    <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
     <string name="profile_user_avatar_private">Avatar ist privat!</string>
     <string name="profile_user_avatar_unreachable">Avatar nicht verfügbar</string>
+    <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Ergebnisse für</string>
     <string name="search_filter_category_worlds">Welten</string>
@@ -70,8 +78,8 @@
     <string name="settings_item_about_description">Weitere Informationen zu Ihrem Gerät und VRCAA</string>
     <string name="settings_item_theming">Darstellung</string>
     <string name="settings_item_theming_description">Erscheinungsbild und minimalistischer Modus</string>
-    <string name="settings_item_rich_presence">Rich Presence (Experimentell)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence Integration</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimentell)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence Integration</string>
     <string name="settings_item_advanced_settings">Erweiterte Einstellungen</string>
     <string name="settings_item_advanced_settings_description">Erweitertes Logging und Funktionen</string>
     <string name="settings_item_database_settings">Datenbank &amp; Statistiken</string>
@@ -110,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
     <string name="service_killed_by_vendor_notification">VRCAA wurde von ihrem Gerät beendet. Siehe https://dontkillmyapp.com/ für weitere Informationen.</string>
-    <string name="service_notification_rich_presence">VRCAA meldet jetzt rich-presence Information.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA meldet jetzt rich-presence Information.</string>
     <string name="notification_service_title_online">Freund ist jetzt online!</string>
     <string name="notification_service_description_online">Dein Freund, %1$s ist jetzt online!</string>
     <string name="notification_service_title_offline">Freund ist jetzt offline!</string>
@@ -129,6 +137,13 @@
     <string name="notification_label_intent_status">Statusänderungs-Benachrichtigungen</string>
     <string name="notification_service_title_status">Freund änderte seinen Status!</string>
     <string name="notification_service_description_status">Dein Freund %1$s änderte seinen Status von %2$s zu %3$s.</string>
+    <string name="notifications_page_title">Notifications</string>
+    <string name="notifications_type_friend_request">Friend Request</string>
+    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
+    <string name="notification_dialog_title">Notification</string>
+    <string name="notification_dialog_description">What do you want to do with this notification?</string>
+    <string name="notification_dialog_button_delete">Delete</string>
+    <string name="notification_dialog_button_read">Mark As Read</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Wechsel zu Avatar</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar ausgewählt!</string>
@@ -162,16 +177,16 @@
     <string name="about_page_title">Info</string>
     <string name="about_page_open_source_licenses_title">Open-Source-Lizenzen</string>
     <string name="about_page_translate_title">Beim Übersetzen mithelfen</string>
-    <string name="about_page_battery_optimizations_toast">Batterieoptimierungen sind bereits deaktiviert.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Batterieoptimierungen sind bereits deaktiviert.</string>
     <string name="license_title">Open-Source Lizenzen</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">Dienst neu gestartet, um aktiv zu werden.</string>
-    <string name="discord_login_label_enable">Rich-Präsenz aktivieren</string>
-    <string name="discord_login_label_set_webhook">Webhook-URL festlegen</string>
-    <string name="discord_login_description_set_webhook">Benötigt für Verwendung von Welthumbnails (optional)</string>
-    <string name="discord_login_description_enable">Zeigt deinen aktuellen Status auf Discord</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Dienst neu gestartet, um aktiv zu werden.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Rich-Präsenz aktivieren</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Webhook-URL festlegen</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Benötigt für Verwendung von Welthumbnails (optional)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Zeigt deinen aktuellen Status auf Discord</string>
     <!-- Crash -->
     <string name="crash_title_text">In der Anwendung ist ein Fehler aufgetreten.</string>
     <string name="crash_button_restart_text">Neu starten</string>
@@ -207,11 +222,22 @@
     <string name="misc_exit_toast_label">Zum Beenden erneut drücken.</string>
     <string name="misc_no_premium_subscription">Diese Funktion benötigt ein aktives VRC+ Abonnement.</string>
     <string name="global_app_default_loading_text">Wird initialisiert</string>
+    <string name="generic_text_public">Public</string>
+    <string name="generic_text_private">Private</string>
+    <string name="generic_text_upload">Upload</string>
+    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_ok">OK</string>
     <!-- User -->
+    <string name="user_overlay_friend_add">Add Friend</string>
+    <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_accept">Accept Request</string>
+    <string name="user_overlay_friend_cancel">Cancel Request</string>
     <string name="user_overlay_groups">Gruppen</string>
     <string name="user_overlay_worlds">Welten</string>
     <string name="user_overlay_favorites">Favoriten</string>
     <string name="user_overlay_find_avatar">Avatar suchen</string>
+    <string name="user_overlay_invite">Invite Me</string>
+    <string name="user_overlay_note">Add Note</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Sichtbarkeit Altersverifizierung</string>
@@ -219,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Verlinkte Webseiten</string>
     <string name="profile_edit_dialog_toast_updated">Profil aktualisiert.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Änderungen wurden verworfen.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Änderungen wurden verworfen.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronomen</string>
     <string name="profile_edit_dialog_button_cancel">Abbrechen</string>
     <string name="profile_edit_dialog_button_apply">Übernehmen</string>
@@ -227,8 +253,8 @@
     <string name="logout_dialog_title">Sind Sie sicher?</string>
     <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">Aktuellen Freundestandorte ansehen</string>
-    <string name="widget_name_loading_text">Der Horizont ist hell, mein Freund.</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Aktuellen Freundestandorte ansehen</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">Der Horizont ist hell, mein Freund.</string>
     <string name="favorite_page_title">Favoriten</string>
     <string-array name="favorites_selection_options">
         <item>Welten</item>
@@ -282,6 +308,7 @@
     <string name="loading_text_emojis">Emojis werden geladen…</string>
     <string name="loading_text_items">Items werden geladen...</string>
     <string name="loading_text_favorites">Favoriten werden geladen...</string>
+    <string name="loading_text_notifications">Loading notifications…</string>
     <!-- Theming -->
     <string name="theme_page_title">Erscheinungsbild</string>
     <string name="theme_page_minimalist_mode_text">Minimalistischer Modus</string>
@@ -305,8 +332,8 @@
     <string name="advanced_page_network_logging_description">HTTP- und WebSocket-Verkehr abfangen</string>
     <string name="advanced_page_view_network_logs">Netzwerkprotokoll anzeigen</string>
     <string name="advanced_page_section_background_activities">Hintergrundaktivitäten</string>
-    <string name="advanced_page_battery_optimization">Batterieoptimierung deaktivieren</string>
-    <string name="advanced_page_battery_optimization_description">Kann helfen, wenn Ereignisse nicht in Echtzeit empfangen werden</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Batterieoptimierung deaktivieren</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">Kann helfen, wenn Ereignisse nicht in Echtzeit empfangen werden</string>
     <string name="advanced_page_kill_service">Hintergrunddienst beenden</string>
     <string name="advanced_page_kill_service_description">Beendet den für Echtzeit-Events verantwortlichen Hintergrunddienst</string>
     <string name="advanced_page_section_database">Datenbank</string>
@@ -366,4 +393,6 @@
         <item>Archiv </item>
     </string-array>
     <string name="image_preview_dialog_title">Vorschau</string>
+    <string name="image_preview_toast_picture_saved">Saved picture.</string>
+    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
 </resources>
