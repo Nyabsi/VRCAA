@@ -267,6 +267,12 @@
 
     <string name="global_app_default_loading_text">Initializing…</string>
 
+    <string name="generic_text_public">Public</string>
+    <string name="generic_text_private">Private</string>
+    <string name="generic_text_upload">Upload</string>
+    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_ok">OK</string>
+
     <!-- User -->
 
     <string name="user_overlay_friend_add">Add Friend</string>
@@ -295,8 +301,6 @@
 
     <string name="logout_dialog_title">Are you sure?</string>
     <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
-    <string name="logout_dialog_continue">Continue</string>
-    <string name="logout_dialog_cancel">Cancel</string>
 
     <!-- Widgets -->
 
@@ -480,4 +484,7 @@
     </string-array>
 
     <string name="image_preview_dialog_title">Preview</string>
+    <string name="image_preview_toast_picture_saved">Saved picture.</string>
+    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
+
 </resources>

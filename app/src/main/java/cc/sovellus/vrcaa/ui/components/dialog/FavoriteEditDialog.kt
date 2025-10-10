@@ -60,7 +60,7 @@ fun FavoriteEditDialog(
 
     val visibility = remember { mutableStateOf("") }
     val options = listOf("private", "public")
-    val optionsFormat = mapOf("private" to "Private", "public" to "Public")
+    val optionsFormat = mapOf("private" to stringResource(R.string.generic_text_private), "public" to stringResource(R.string.generic_text_public))
 
     LaunchedEffect(Unit) {
         val metadata = FavoriteManager.getGroupMetadata(tag)

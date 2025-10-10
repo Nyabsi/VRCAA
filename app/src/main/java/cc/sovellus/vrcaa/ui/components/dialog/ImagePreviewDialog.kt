@@ -71,7 +71,7 @@ private fun saveGlideImageToPickedUri(imageUrl: String, pickedUri: Uri) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(
                     App.getContext(),
-                    "Saved picture.",
+                    App.getContext().getString(R.string.image_preview_toast_picture_saved),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -80,7 +80,7 @@ private fun saveGlideImageToPickedUri(imageUrl: String, pickedUri: Uri) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(
                     App.getContext(),
-                    "Unable to save picture.",
+                    App.getContext().getString(R.string.image_preview_toast_picture_save_failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
