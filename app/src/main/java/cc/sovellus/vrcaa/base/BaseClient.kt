@@ -29,6 +29,7 @@ import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.helper.DnsHelper
+import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -46,8 +47,11 @@ import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
 
 open class BaseClient {
+
+    private val tlsHelper = TLSHelper()
     /* inherited classes don't need to access the client variable */
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -55,6 +59,7 @@ open class BaseClient {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .dns(DnsHelper())
+            .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
             .build()
     }
 

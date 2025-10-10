@@ -31,6 +31,7 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.helper.DnsHelper
+import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.DebugManager
 import com.google.gson.Gson
@@ -54,12 +55,14 @@ class PipelineSocket(
 
     override val coroutineContext: CoroutineContext = Dispatchers.IO + SupervisorJob()
 
+    private val tlsHelper = TLSHelper()
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .dns(DnsHelper())
+            .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
             .build()
     }
 
