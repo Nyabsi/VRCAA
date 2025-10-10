@@ -33,7 +33,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cc.sovellus.vrcaa.R
 
 @Composable
 fun PrintUploadConfigDialog(
@@ -97,7 +99,7 @@ fun PrintUploadConfigDialog(
                     onConfirmation(note.value, enableBorder.value)
                 }
             ) {
-                Text("Upload")
+                Text(stringResource(R.string.generic_text_upload))
             }
         },
         dismissButton = {
@@ -106,7 +108,7 @@ fun PrintUploadConfigDialog(
                     onDismiss()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.generic_text_cancel))
             }
         }
     )

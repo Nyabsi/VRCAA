@@ -25,6 +25,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import cc.sovellus.vrcaa.R
 
 @Composable
 fun InputDialog(
@@ -58,7 +60,7 @@ fun InputDialog(
                     onConfirmation()
                 }
             ) {
-                Text("Ok")
+                Text(stringResource(R.string.generic_text_ok))
             }
         },
         dismissButton = {
@@ -67,7 +69,7 @@ fun InputDialog(
                     onDismiss()
                 }
             ) {
-                Text("Discard")
+                Text(stringResource(R.string.generic_text_cancel))
             }
         }
     )

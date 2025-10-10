@@ -70,13 +70,13 @@ fun LogoutDialog(
                         bundle.putBoolean("TERMINATE_SESSION", true)
 
                         intent = Intent(context, MainActivity::class.java)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         intent.putExtras(bundle)
                         context.startActivity(intent)
                     }
                 }
             ) {
-                Text(stringResource(R.string.logout_dialog_continue))
+                Text(stringResource(R.string.generic_text_ok))
             }
         },
         dismissButton = {
@@ -85,7 +85,7 @@ fun LogoutDialog(
                     onDismiss()
                 }
             ) {
-                Text(stringResource(R.string.logout_dialog_cancel))
+                Text(stringResource(R.string.generic_text_cancel))
             }
         }
     )

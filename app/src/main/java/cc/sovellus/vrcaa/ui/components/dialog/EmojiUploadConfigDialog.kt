@@ -100,7 +100,7 @@ fun EmojiUploadConfigDialog(
                     onConfirmation(type.value)
                 }
             ) {
-                Text("Upload")
+                Text(stringResource(R.string.generic_text_upload))
             }
         },
         dismissButton = {
@@ -109,7 +109,7 @@ fun EmojiUploadConfigDialog(
                     onDismiss()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.generic_text_cancel))
             }
         }
     )
