@@ -19,8 +19,10 @@ package cc.sovellus.vrcaa.ui.screen.login
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -63,76 +65,87 @@ class MfaScreen(
             navigator.rememberNavigatorScreenModel { MfaScreenModel(authType) }
 
         Scaffold { padding ->
-            Column(
+            Box(
                 modifier = Modifier
-                    .widthIn(Dp.Unspecified, 520.dp)
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(top = padding.calculateTopPadding()),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Column(
+                    modifier = Modifier
+                        .widthIn(Dp.Unspecified, 520.dp)
+                        .align(Alignment.Center),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
-                Text(
-                    text = if (authType == IAuth.AuthType.AUTH_EMAIL) {
-                        stringResource(R.string.auth_text_email)
-                    } else {
-                        stringResource(R.string.auth_text_app)
-                    }
-                )
-
-                CodeInput(
-                    input = screenModel.code
-                )
-
-                Button(modifier = Modifier
-                    .width(200.dp)
-                    .padding(4.dp), onClick = {
-                    screenModel.verify { result ->
-                        if (result) {
-                            navigator.replace(NavigationScreen())
+                    Text(
+                        text = if (authType == IAuth.AuthType.AUTH_EMAIL) {
+                            stringResource(R.string.auth_text_email)
+                        } else {
+                            stringResource(R.string.auth_text_app)
                         }
-                    }
-                }) {
-                    Text(text = stringResource(R.string.auth_button_text))
-                }
+                    )
 
-                Button(modifier = Modifier
-                    .width(200.dp)
-                    .padding(4.dp), onClick = {
-                    val clipboard: ClipboardManager? =
-                        context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                    if (clipboard?.hasPrimaryClip() == true) {
-                        val clipData = clipboard.primaryClip
-                        if ((clipData?.itemCount ?: 0) > 0) {
-                            val clipItem = clipData?.getItemAt(0)
-                            val clipText = clipItem?.text?.toString()
-                            if (clipText?.length == 6) {
-                                screenModel.code.value = clipText
-                                screenModel.verify { result ->
-                                    if (result) {
-                                        navigator.replace(NavigationScreen())
+                    CodeInput(
+                        input = screenModel.code
+                    )
+
+                    Button(
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(4.dp), onClick = {
+                            screenModel.verify { result ->
+                                if (result) {
+                                    navigator.replace(NavigationScreen())
+                                }
+                            }
+                        }) {
+                        Text(text = stringResource(R.string.auth_button_text))
+                    }
+
+                    Button(
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(4.dp), onClick = {
+                            val clipboard: ClipboardManager? =
+                                context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                            if (clipboard?.hasPrimaryClip() == true) {
+                                val clipData = clipboard.primaryClip
+                                if ((clipData?.itemCount ?: 0) > 0) {
+                                    val clipItem = clipData?.getItemAt(0)
+                                    val clipText = clipItem?.text?.toString()
+                                    if (clipText?.length == 6) {
+                                        screenModel.code.value = clipText
+                                        screenModel.verify { result ->
+                                            if (result) {
+                                                navigator.replace(NavigationScreen())
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
+                        }) {
+                        Text(text = stringResource(R.string.auth_button_paste))
                     }
-                }) {
-                    Text(text = stringResource(R.string.auth_button_paste))
                 }
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(start = 16.dp, end = 16.dp, bottom = padding.calculateBottomPadding()),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.legal_disclaimer),
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    fontSize = 12.sp
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = padding.calculateBottomPadding()
+                        ),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.legal_disclaimer),
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        fontSize = 12.sp
+                    )
+                }
             }
         }
     }

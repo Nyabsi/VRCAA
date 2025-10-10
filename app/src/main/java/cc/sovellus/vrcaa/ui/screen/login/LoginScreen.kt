@@ -17,11 +17,15 @@
 package cc.sovellus.vrcaa.ui.screen.login
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -62,59 +66,70 @@ class LoginScreen : Screen {
         var passwordVisibility by remember { mutableStateOf(false) }
 
         Scaffold { padding ->
-            Column(
+            Box(
                 modifier = Modifier
-                    .widthIn(Dp.Unspecified, 520.dp)
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(top = padding.calculateTopPadding()),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Logo(size = 172.dp)
+                ) {
+                Column(
+                    modifier = Modifier
+                        .widthIn(Dp.Unspecified, 520.dp)
+                        .align(Alignment.Center),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Logo(size = 172.dp)
 
-                Text(text = stringResource(R.string.login_text))
+                    Text(text = stringResource(R.string.login_text))
 
-                TextInput(
-                    title = stringResource(R.string.login_label_username),
-                    input = screenModel.username
-                )
+                    TextInput(
+                        title = stringResource(R.string.login_label_username),
+                        input = screenModel.username
+                    )
 
-                PasswordInput(title = stringResource(R.string.login_label_password),
-                    input = screenModel.password,
-                    visible = passwordVisibility,
-                    onVisibilityChange = {
-                        passwordVisibility = !passwordVisibility
-                    })
+                    PasswordInput(
+                        title = stringResource(R.string.login_label_password),
+                        input = screenModel.password,
+                        visible = passwordVisibility,
+                        onVisibilityChange = {
+                            passwordVisibility = !passwordVisibility
+                        })
 
-                Button(modifier = Modifier
-                    .width(200.dp)
-                    .padding(8.dp), onClick = {
-                    screenModel.doLogin { result, type ->
-                        if (result) {
-                            if (type == IAuth.AuthType.AUTH_NONE)
-                                navigator.replace(NavigationScreen())
-                            else
-                                navigator.replace(MfaScreen(type))
-                        }
+                    Button(
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(8.dp), onClick = {
+                            screenModel.doLogin { result, type ->
+                                if (result) {
+                                    if (type == IAuth.AuthType.AUTH_NONE)
+                                        navigator.replace(NavigationScreen())
+                                    else
+                                        navigator.replace(MfaScreen(type))
+                                }
+                            }
+                        }) {
+                        Text(text = stringResource(R.string.login_button_text))
                     }
-                }) {
-                    Text(text = stringResource(R.string.login_button_text))
                 }
-            }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = padding.calculateBottomPadding(), start = 16.dp, end = 16.dp),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.legal_disclaimer),
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    fontSize = 12.sp
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            bottom = padding.calculateBottomPadding(),
+                            start = 16.dp,
+                            end = 16.dp
+                        ),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.legal_disclaimer),
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        fontSize = 12.sp
+                    )
+                }
             }
         }
     }
