@@ -31,6 +31,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
 import cc.sovellus.vrcaa.extension.groupsAmount
@@ -42,6 +43,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.DatabaseManager
 import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -81,6 +83,8 @@ class NavigationScreenModel : ScreenModel {
     private var filteredFeedStateFlow = MutableStateFlow(listOf<FeedManager.Feed>())
     var filteredFeed = filteredFeedStateFlow.asStateFlow()
 
+    val notificationsCount = mutableIntStateOf(0)
+
     private val apiListener = object : HttpClient.SessionListener {
         override fun onSessionInvalidate() {
             if (!invalidSession.value) {
@@ -113,9 +117,16 @@ class NavigationScreenModel : ScreenModel {
         }
     }
 
+    private val notificationListener = object : NotificationManager.NotificationListener {
+        override fun onUpdateNotifications(notifications: List<Notification>) {
+            notificationsCount.intValue = notifications.size
+        }
+    }
+
     init {
         api.setSessionListener(apiListener)
         CacheManager.addListener(cacheListener)
+        NotificationManager.addListener(notificationListener)
     }
 
     fun addSearchHistory() {

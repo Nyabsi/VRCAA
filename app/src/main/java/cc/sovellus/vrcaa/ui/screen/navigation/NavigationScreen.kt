@@ -59,6 +59,7 @@ import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoLibrary
@@ -68,6 +69,8 @@ import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -105,6 +108,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -129,6 +134,7 @@ import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.ui.components.card.QuickMenuCard
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
@@ -139,6 +145,7 @@ import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.items.ItemsScreen
+import cc.sovellus.vrcaa.ui.screen.notifications.NotificationsScreen
 import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.stickers.StickersScreen
@@ -434,6 +441,37 @@ class NavigationScreen : Screen {
                         }
 
                         FeedTab.options.index -> {
+                            TopAppBar(
+                                actions = {
+                                    IconButton(
+                                        modifier = Modifier.size(64.dp, 64.dp),
+                                        onClick = {
+                                            if (CacheManager.isBuilt()) {
+                                                // ladies and gentlemen, we got 'em.
+                                                navigator.push(NotificationsScreen())
+                                            }
+                                        }) {
+                                        BadgedBox(
+                                            badge = {
+                                                if (model.notificationsCount.intValue > 0) {
+                                                    Badge {
+                                                        Text("${model.notificationsCount.intValue}")
+                                                    }
+                                                }
+                                            }
+                                        ) {
+                                            Icon(Icons.Filled.Notifications, contentDescription = null)
+                                        }
+                                    }
+                                },
+                                title = {
+                                    Text(
+                                        text = stringResource(id = R.string.tabs_label_feed),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                },
+                            )
                             Column(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalArrangement = Arrangement.Center,

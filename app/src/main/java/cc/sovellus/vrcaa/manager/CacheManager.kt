@@ -68,6 +68,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         val onlineFriends = async { api.friends.fetchFriends(false) }.await()
         val offlineFriends = async { api.friends.fetchFriends(true) }.await()
         val recentWorlds = async { api.worlds.fetchRecent() }.await()
+        val notifications = async { api.notifications.fetchNotifications() }.await()
+
         async { FavoriteManager.refresh() }.await()
 
         val userLocations = onlineFriends.mapNotNull { friend ->
@@ -83,6 +85,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         val friendList: MutableList<Friend> = mutableListOf()
         friendList.addAll((onlineFriends + offlineFriends))
         FriendManager.setFriends(friendList)
+
+        NotificationManager.setNotifications(notifications)
 
         worldList.addAll(userLocations.filterNotNull().filter { !isWorldCached(it.id) }.map {
             WorldCache(it.id).apply {
