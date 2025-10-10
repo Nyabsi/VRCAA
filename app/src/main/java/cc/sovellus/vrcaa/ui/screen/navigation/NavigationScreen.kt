@@ -1070,9 +1070,7 @@ class NavigationScreen : Screen {
                                             displayName = it.displayName,
                                             statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
                                             trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                            statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                            tags = it.tags,
-                                            badges = it.badges
+                                            statusColor = StatusHelper.getStatusFromString(it.status).toColor()
                                         )
 
                                         Box(
