@@ -78,8 +78,8 @@
     <string name="settings_item_about_description">Lisätietoja laitteestasi ja VRCAA:sta</string>
     <string name="settings_item_theming">Ulkonäkö</string>
     <string name="settings_item_theming_description">Ulkonäön asetukset, minimalistinen tila</string>
-    <string name="settings_item_rich_presence">Rich Presence (kokeellinen)</string>
-    <string name="settings_item_rich_presence_description">Discordin laajennetun läsnäolon integrointi</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (kokeellinen)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discordin laajennetun läsnäolon integrointi</string>
     <string name="settings_item_advanced_settings">Lisäasetukset</string>
     <string name="settings_item_advanced_settings_description">Kehittynyt lokitus ja ominaisuudet</string>
     <string name="settings_item_database_settings">Tietokanta &amp; Tilastot</string>
@@ -118,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA tarkkailee nyt ystäviäsi taustalla.</string>
     <string name="service_killed_by_vendor_notification">Järjestelmä lopetti VRCAAn! Tarkista https://dontkillmyapp.com/ saadaksesi lisätietoja.</string>
-    <string name="service_notification_rich_presence">VRCAA raportoi nyt läsnäolotietoa.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA raportoi nyt läsnäolotietoa.</string>
     <string name="notification_service_title_online">Kaverisi on tullut paikalle!</string>
     <string name="notification_service_description_online">Ystäväsi, %1$s on tullut paikalle!</string>
     <string name="notification_service_title_offline">Kaverisi meni pois :(</string>
@@ -177,16 +177,16 @@
     <string name="about_page_title">Tietoja</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
     <string name="about_page_translate_title">Avusta Kääntämisessä</string>
-    <string name="about_page_battery_optimizations_toast">Akun optimointi on jo pois käytöstä.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Akun optimointi on jo pois käytöstä.</string>
     <string name="license_title">Avoimen lähdekoodin lisenssit</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Istuntosi on vanhentunut, ole hyvä ja kirjaudu uudelleen.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">Palvelu uudelleenkäynnistetty voimaan ottoa varten.</string>
-    <string name="discord_login_label_enable">Aktivoi Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Aseta Webkoukun URL</string>
-    <string name="discord_login_description_set_webhook">Vaadittu maailman pikkukuvalle (Valinnainen)</string>
-    <string name="discord_login_description_enable">Näytä tämänhetkinen tilasi discord:ssa</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Palvelu uudelleenkäynnistetty voimaan ottoa varten.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Aktivoi Rich Presence</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Aseta Webkoukun URL</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Vaadittu maailman pikkukuvalle (Valinnainen)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Näytä tämänhetkinen tilasi discord:ssa</string>
     <!-- Crash -->
     <string name="crash_title_text">Sovellus kohtasi kohtalokkaan virheen.</string>
     <string name="crash_button_restart_text">Uudelleenkäynnistä</string>
@@ -245,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">Kuvaus</string>
     <string name="profile_edit_dialog_title_bio_links">Sosiaaliset linkit</string>
     <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronominit</string>
     <string name="profile_edit_dialog_button_cancel">Cancel</string>
     <string name="profile_edit_dialog_button_apply">Apply</string>
@@ -253,8 +253,8 @@
     <string name="logout_dialog_title">Oletko varma?</string>
     <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
-    <string name="widget_name_loading_text">Taivas on kirkas ystäväni.</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">Taivas on kirkas ystäväni.</string>
     <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
@@ -332,8 +332,8 @@
     <string name="advanced_page_network_logging_description">Sieppaa HTTP- ja WebSocket-liikenne</string>
     <string name="advanced_page_view_network_logs">Näytä Verkkolokit</string>
     <string name="advanced_page_section_background_activities">Taustan Toiminnot</string>
-    <string name="advanced_page_battery_optimization">Poista akun optimoinnit käytöstä</string>
-    <string name="advanced_page_battery_optimization_description">Voi auttaa tilanteissa, joissa reaaliaikaisia verkkotapahtumia ei vastaanoteta</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Poista akun optimoinnit käytöstä</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">Voi auttaa tilanteissa, joissa reaaliaikaisia verkkotapahtumia ei vastaanoteta</string>
     <string name="advanced_page_kill_service">Lopeta taustapalvelu</string>
     <string name="advanced_page_kill_service_description">Lopettaa taustapalvelun, joka käsittelee reaaliaikaisia tapahtumia</string>
     <string name="advanced_page_section_database">Tietokanta</string>
