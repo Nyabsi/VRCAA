@@ -16,6 +16,8 @@
     <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
     <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
     <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
+    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Prieteni Online</string>
     <string name="home_recently_visited">Vizitat Recent</string>
@@ -46,6 +48,7 @@
     <string name="profile_user_not_found_message">Utilizatorul nu există</string>
     <string name="profile_user_avatar_private">Avatarul este privat</string>
     <string name="profile_user_avatar_unreachable">Avatarul nu poate fi găsit!</string>
+    <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Rezultate pentru</string>
     <string name="search_filter_category_worlds">Lumi</string>
@@ -75,8 +78,8 @@
     <string name="settings_item_about_description">Mai multe informații despre dispozitivul tă și VRCAA</string>
     <string name="settings_item_theming">Aparență</string>
     <string name="settings_item_theming_description">Configurarea aparenței, modul minimalist</string>
-    <string name="settings_item_rich_presence">Prezența Bogată (Experimental)</string>
-    <string name="settings_item_rich_presence_description">Integrare prezență bogată in Discord</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Prezența Bogată (Experimental)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Integrare prezență bogată in Discord</string>
     <string name="settings_item_advanced_settings">Avansat</string>
     <string name="settings_item_advanced_settings_description">Logare avansată si caracteristici avansate</string>
     <string name="settings_item_database_settings">Statistici &amp; bază de date</string>
@@ -115,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA vă monitorizează prietenii in fundal.</string>
     <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA raportează informații despre prezență bogata.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA raportează informații despre prezență bogata.</string>
     <string name="notification_service_title_online">Un prieten a intrat online!</string>
     <string name="notification_service_description_online">Prietenul tău, %1$s a intrat online!</string>
     <string name="notification_service_title_offline">Un prieten e acum offline!</string>
@@ -134,6 +137,13 @@
     <string name="notification_label_intent_status">Notificări pentru schimbare de status</string>
     <string name="notification_service_title_status">Prietenul tău și-a schimbat statusul!</string>
     <string name="notification_service_description_status">Prietenul tău, %1$s și-a schimbat statusul de la %2$s la %3$s.</string>
+    <string name="notifications_page_title">Notifications</string>
+    <string name="notifications_type_friend_request">Friend Request</string>
+    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
+    <string name="notification_dialog_title">Notification</string>
+    <string name="notification_dialog_description">What do you want to do with this notification?</string>
+    <string name="notification_dialog_button_delete">Delete</string>
+    <string name="notification_dialog_button_read">Mark As Read</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Schimbare în Avatar</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar selectat!</string>
@@ -167,16 +177,16 @@
     <string name="about_page_title">Despre</string>
     <string name="about_page_open_source_licenses_title">Licențe Open Source</string>
     <string name="about_page_translate_title">Contribuie la traducere</string>
-    <string name="about_page_battery_optimizations_toast">Optimizările de baterie sunt deja oprite.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Optimizările de baterie sunt deja oprite.</string>
     <string name="license_title">Licențe Open Source</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Sesiunea ta a expirat, reconectare necesară.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">Reporniți service-ul pentru a lua efect.</string>
-    <string name="discord_login_label_enable">Activează Prezență Bogată</string>
-    <string name="discord_login_label_set_webhook">Setați adresa URL a webhook-ului</string>
-    <string name="discord_login_description_set_webhook">Necesar pentru suport thumbnail lume (Opțional)</string>
-    <string name="discord_login_description_enable">Arată starea curentă în discord</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Reporniți service-ul pentru a lua efect.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Activează Prezență Bogată</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Setați adresa URL a webhook-ului</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Necesar pentru suport thumbnail lume (Opțional)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Arată starea curentă în discord</string>
     <!-- Crash -->
     <string name="crash_title_text">Aplicația a întâmpinat o eroare fatală.</string>
     <string name="crash_button_restart_text">Repornește</string>
@@ -220,12 +230,14 @@
     <!-- User -->
     <string name="user_overlay_friend_add">Add Friend</string>
     <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_accept">Accept Request</string>
     <string name="user_overlay_friend_cancel">Cancel Request</string>
     <string name="user_overlay_groups">Grupuri</string>
     <string name="user_overlay_worlds">Lumi</string>
     <string name="user_overlay_favorites">Favorite</string>
     <string name="user_overlay_find_avatar">Găsește Avatare</string>
     <string name="user_overlay_invite">Invite Me</string>
+    <string name="user_overlay_note">Add Note</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Vizibilitatea Verificări Vârstei</string>
@@ -233,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Link-uri Sociale</string>
     <string name="profile_edit_dialog_toast_updated">Actualizare profil.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Modificările au fost respinse.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Modificările au fost respinse.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronume</string>
     <string name="profile_edit_dialog_button_cancel">Cancel</string>
     <string name="profile_edit_dialog_button_apply">Apply</string>
@@ -241,8 +253,8 @@
     <string name="logout_dialog_title">Sunteți siguri?</string>
     <string name="logout_dialog_description">Apăsând butonul \"Continuă\" de mai jos, vă veți deconecta din VRCAA și va trebui sa vă reconectați pentru a continua să utilizați aplicația.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">Vezi locațiile actuale ale prietenilor </string>
-    <string name="widget_name_loading_text">Orizontul este luminos, prietene.</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Vezi locațiile actuale ale prietenilor </string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">Orizontul este luminos, prietene.</string>
     <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>Lumi</item>
@@ -296,6 +308,7 @@
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Încărcare obiecte…</string>
     <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_notifications">Loading notifications…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teme</string>
     <string name="theme_page_minimalist_mode_text">Mod Minimalist</string>
@@ -319,8 +332,8 @@
     <string name="advanced_page_network_logging_description">Interceptează traficul HTTP și WebSocket</string>
     <string name="advanced_page_view_network_logs">Arată înregistrările din rețea</string>
     <string name="advanced_page_section_background_activities">Activitățile din fundal</string>
-    <string name="advanced_page_battery_optimization">Dezactivare Optimizări Baterie</string>
-    <string name="advanced_page_battery_optimization_description">Poate ajuta fără a primi evenimente de rețea în timp real</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Dezactivare Optimizări Baterie</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">Poate ajuta fără a primi evenimente de rețea în timp real</string>
     <string name="advanced_page_kill_service">Oprește serviciul din fundal</string>
     <string name="advanced_page_kill_service_description">Oprește serviciul din fundal responsabil de evenimente in timp real</string>
     <string name="advanced_page_section_database">Bază de date</string>
