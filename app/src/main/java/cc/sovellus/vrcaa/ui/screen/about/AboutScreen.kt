@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -60,6 +62,8 @@ class AboutScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val model = navigator.rememberNavigatorScreenModel { AboutScreenModel() }
 
+        val scrollState = rememberScrollState()
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -79,6 +83,7 @@ class AboutScreen : Screen {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .verticalScroll(scrollState)
                         .padding(
                             bottom = it.calculateBottomPadding(),
                             top = it.calculateTopPadding()
