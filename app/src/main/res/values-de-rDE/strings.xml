@@ -10,6 +10,12 @@
         <item>Webseite</item>
         <item>Offline</item>
     </string-array>
+    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
+    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
+    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
+    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Aktive Freunde</string>
     <string name="home_recently_visited">Zuletzt besucht</string>
@@ -37,7 +43,6 @@
     <string name="profile_label_date_joined">Registriert am</string>
     <string name="profile_text_no_biography">Keine Beschreibung angegeben.</string>
     <string name="profile_user_dropdown_manage_notifications">Benachrichtigungen verwalten</string>
-    <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
     <string name="profile_user_avatar_private">Avatar ist privat!</string>
     <string name="profile_user_avatar_unreachable">Avatar nicht verfügbar</string>
@@ -207,11 +212,20 @@
     <string name="misc_exit_toast_label">Zum Beenden erneut drücken.</string>
     <string name="misc_no_premium_subscription">Diese Funktion benötigt ein aktives VRC+ Abonnement.</string>
     <string name="global_app_default_loading_text">Wird initialisiert</string>
+    <string name="generic_text_public">Public</string>
+    <string name="generic_text_private">Private</string>
+    <string name="generic_text_upload">Upload</string>
+    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_ok">OK</string>
     <!-- User -->
+    <string name="user_overlay_friend_add">Add Friend</string>
+    <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_cancel">Cancel Request</string>
     <string name="user_overlay_groups">Gruppen</string>
     <string name="user_overlay_worlds">Welten</string>
     <string name="user_overlay_favorites">Favoriten</string>
     <string name="user_overlay_find_avatar">Avatar suchen</string>
+    <string name="user_overlay_invite">Invite Me</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Sichtbarkeit Altersverifizierung</string>
@@ -226,8 +240,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sind Sie sicher?</string>
     <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>
-    <string name="logout_dialog_continue">Fortfahren</string>
-    <string name="logout_dialog_cancel">Abbrechen</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Aktuellen Freundestandorte ansehen</string>
     <string name="widget_name_loading_text">Der Horizont ist hell, mein Freund.</string>
@@ -368,4 +380,6 @@
         <item>Archiv </item>
     </string-array>
     <string name="image_preview_dialog_title">Vorschau</string>
+    <string name="image_preview_toast_picture_saved">Saved picture.</string>
+    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
 </resources>
