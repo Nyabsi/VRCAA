@@ -64,6 +64,8 @@
     <string name="profile_user_avatar_private">Avatar is private!</string>
     <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
 
+    <string name="profile_user_note_dialog_title">Set Note</string>
+
     <!-- Search -->
 
     <string name="search_text_result">Results for</string>
@@ -283,6 +285,7 @@
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <string name="user_overlay_invite">Invite Me</string>
+    <string name="user_overlay_note">Add Note</string>
 
     <!-- Profile Edit Dialog -->
 
