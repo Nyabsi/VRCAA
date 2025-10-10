@@ -100,7 +100,7 @@ class ProfileScreen : Screen {
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp).widthIn(Dp.Unspecified, 520.dp),
+                        modifier = Modifier.padding(top = 16.dp).defaultMinSize(minHeight = 80.dp).widthIn(0.dp, 520.dp),
                     ) {
                         SubHeader(title = stringResource(R.string.profile_label_biography))
                         Description(text = profile.bio)

@@ -247,7 +247,7 @@ class AvatarScreen(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp
                         ),
-                        modifier = Modifier.widthIn(Dp.Unspecified, 520.dp)
+                        modifier = Modifier.widthIn(0.dp, 520.dp)
                     ) {
                         SubHeader(title = stringResource(R.string.avatar_title_description))
                         Description(text = avatar.description)

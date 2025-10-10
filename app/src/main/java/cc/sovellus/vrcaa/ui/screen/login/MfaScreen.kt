@@ -72,7 +72,7 @@ class MfaScreen(
             ) {
                 Column(
                     modifier = Modifier
-                        .widthIn(Dp.Unspecified, 520.dp)
+                        .widthIn(0.dp, 520.dp)
                         .align(Alignment.Center),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally

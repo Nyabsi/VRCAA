@@ -78,7 +78,7 @@ fun ProfileCard(
         ),
         modifier = Modifier
             .height(270.dp)
-            .widthIn(Dp.Unspecified, 520.dp)
+            .widthIn(0.dp, 520.dp)
             .fillMaxWidth()
     ) {
         Column(

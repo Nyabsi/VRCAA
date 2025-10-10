@@ -348,7 +348,7 @@ class WorldScreen(
                         ),
                         modifier = Modifier
                             .padding(bottom = 16.dp)
-                            .widthIn(Dp.Unspecified, 520.dp)
+                            .widthIn(0.dp, 520.dp)
                     ) {
                         SubHeader(title = stringResource(R.string.world_label_description))
                         Description(text = world.description)
@@ -360,7 +360,7 @@ class WorldScreen(
                         ),
                         modifier = Modifier
                             .padding(bottom = 16.dp)
-                            .widthIn(Dp.Unspecified, 520.dp)
+                            .widthIn(0.dp, 520.dp)
                     ) {
                         val userTimeZone = TimeZone.getDefault().toZoneId()
                         val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
