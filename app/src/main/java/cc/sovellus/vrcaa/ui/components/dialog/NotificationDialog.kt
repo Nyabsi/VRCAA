@@ -30,8 +30,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.launch
@@ -51,9 +53,9 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
-                Text(text = "Notification", style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(R.string.notification_dialog_title), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "What do you want to do with this notification?", style = MaterialTheme.typography.bodyMedium)
+                Text(text = stringResource(R.string.notification_dialog_description), style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(24.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -62,7 +64,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                     TextButton(onClick = {
                         onDismiss()
                     }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.generic_text_cancel))
                     }
                     TextButton(onClick = {
                         coroutineScope.launch {
@@ -71,7 +73,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                             onDismiss()
                         }
                     }) {
-                        Text("Delete")
+                        Text(stringResource(R.string.notification_dialog_button_delete))
                     }
                     TextButton(onClick = {
                         coroutineScope.launch {
@@ -79,7 +81,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                             onDismiss()
                         }
                     }) {
-                        Text("Mark As Read")
+                        Text(stringResource(R.string.notification_dialog_button_read))
                     }
                 }
             }
