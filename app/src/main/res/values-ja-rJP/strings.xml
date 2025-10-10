@@ -78,8 +78,8 @@
     <string name="settings_item_about_description">あなたのデバイスとVRCAAに関するより詳細な情報</string>
     <string name="settings_item_theming">外観</string>
     <string name="settings_item_theming_description">外観設定、簡易モード</string>
-    <string name="settings_item_rich_presence">リッチプレゼンス (実験中)</string>
-    <string name="settings_item_rich_presence_description">Discordリッチプレゼンス機能</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">リッチプレゼンス (実験中)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discordリッチプレゼンス機能</string>
     <string name="settings_item_advanced_settings">上級者機能</string>
     <string name="settings_item_advanced_settings_description">詳細ログ機能</string>
     <string name="settings_item_database_settings">データベース &amp; 統計情報</string>
@@ -118,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAAが常駐してフレンドの動きを見守っています。</string>
     <string name="service_killed_by_vendor_notification">VRCAAがシステムにより終了されました。 対策は(https://dontkillmyapp.com/)をご確認ください。</string>
-    <string name="service_notification_rich_presence">VRCAAにおいてリッチプレゼンス機能の動作を開始します。</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAAにおいてリッチプレゼンス機能の動作を開始します。</string>
     <string name="notification_service_title_online">フレンドがオンラインになりました。</string>
     <string name="notification_service_description_online">フレンドの %1$s さんがオンラインになりました。</string>
     <string name="notification_service_title_offline">フレンドがオフラインになりました。</string>
@@ -177,16 +177,16 @@
     <string name="about_page_title">概要</string>
     <string name="about_page_open_source_licenses_title">オープンソースライセンス</string>
     <string name="about_page_translate_title">飜訳への協力</string>
-    <string name="about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">バッテリーの最適化は既に無効化されています。</string>
     <string name="license_title">オープンソースライセンス</string>
     <!-- API -->
     <string name="api_session_has_expired_text">セッションが切れました、再ログインしてください。</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">サービスを再起動し、有効化しました。</string>
-    <string name="discord_login_label_enable">リッチプレゼンスを有効にする</string>
-    <string name="discord_login_label_set_webhook">Webhook URLを設定する</string>
-    <string name="discord_login_description_set_webhook">ワールドのサムネイル表示に必要 (任意)</string>
-    <string name="discord_login_description_enable">discordに現在のStatusを表示する</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">サービスを再起動し、有効化しました。</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">リッチプレゼンスを有効にする</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Webhook URLを設定する</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">ワールドのサムネイル表示に必要 (任意)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">discordに現在のStatusを表示する</string>
     <!-- Crash -->
     <string name="crash_title_text">アプリに致命的な障害が発生しました </string>
     <string name="crash_button_restart_text">アプリの再起動</string>
@@ -245,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">プロフィール</string>
     <string name="profile_edit_dialog_title_bio_links">プロフィール・リンク</string>
     <string name="profile_edit_dialog_toast_updated">プロフィールを変更しました。</string>
-    <string name="profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">変更をキャンセルしました。</string>
     <string name="profile_edit_dialog_title_pronouns">呼称</string>
     <string name="profile_edit_dialog_button_cancel">キャンセル</string>
     <string name="profile_edit_dialog_button_apply">適用</string>
@@ -253,8 +253,8 @@
     <string name="logout_dialog_title">ログアウトしますか？</string>
     <string name="logout_dialog_description">継続した場合、VRCAAからログアウトします。アプリを利用する為には再ログインが必要です。</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">フレンドの現在地を表示する</string>
-    <string name="widget_name_loading_text">少女祈祷中・・・</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">フレンドの現在地を表示する</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">少女祈祷中・・・</string>
     <string name="favorite_page_title">Favorites</string>
     <string-array name="favorites_selection_options">
         <item>ワールド</item>
@@ -332,8 +332,8 @@
     <string name="advanced_page_network_logging_description">HTTPとWebSocketのトラフィックを捕捉</string>
     <string name="advanced_page_view_network_logs">ネットワークログを表示</string>
     <string name="advanced_page_section_background_activities">バックグラウンド動作</string>
-    <string name="advanced_page_battery_optimization">バッテリー最適化を無効にする</string>
-    <string name="advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">バッテリー最適化を無効にする</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">リアルタイム更新の問題への対応向け</string>
     <string name="advanced_page_kill_service">バックグラウンドサービスの停止</string>
     <string name="advanced_page_kill_service_description">リアルタイム更新関係のバックグラウンドサービスを停止する</string>
     <string name="advanced_page_section_database">データベース</string>
