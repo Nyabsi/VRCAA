@@ -78,8 +78,8 @@
     <string name="settings_item_about_description">关于您的设备和 VRCAA 的更多信息</string>
     <string name="settings_item_theming">外观</string>
     <string name="settings_item_theming_description">外观配置，简约模式</string>
-    <string name="settings_item_rich_presence">状态面板（实验性）</string>
-    <string name="settings_item_rich_presence_description">Discord 游戏状态面板集成</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">状态面板（实验性）</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord 游戏状态面板集成</string>
     <string name="settings_item_advanced_settings">高级</string>
     <string name="settings_item_advanced_settings_description">高级日志和功能</string>
     <string name="settings_item_database_settings">数据库和统计信息</string>
@@ -118,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA 正在后台查看您的好友动态。</string>
     <string name="service_killed_by_vendor_notification">VRCAA 进程被您的系统终止了! 访问 https://dontkillmyapp.com 获取更多信息</string>
-    <string name="service_notification_rich_presence">VRCAA 现在开始推送更丰富的玩家状态信息</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA 现在开始推送更丰富的玩家状态信息</string>
     <string name="notification_service_title_online">好友上线了！</string>
     <string name="notification_service_description_online">您的好友 %1$s 上线了！</string>
     <string name="notification_service_title_offline">好友下线了！</string>
@@ -177,16 +177,16 @@
     <string name="about_page_title">关于</string>
     <string name="about_page_open_source_licenses_title">开源许可证</string>
     <string name="about_page_translate_title">贡献翻译</string>
-    <string name="about_page_battery_optimizations_toast">电池优化已被禁用。</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">电池优化已被禁用。</string>
     <string name="license_title">开源许可证</string>
     <!-- API -->
     <string name="api_session_has_expired_text">您的登录信息已过期，请重新登录。</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">已重启服务以生效。</string>
-    <string name="discord_login_label_enable">启用状态面板</string>
-    <string name="discord_login_label_set_webhook">设置 Webhook URL</string>
-    <string name="discord_login_description_set_webhook">显示世界缩略图（可选）</string>
-    <string name="discord_login_description_enable">在 Discord 中显示您的当前状态</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">已重启服务以生效。</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">启用状态面板</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">设置 Webhook URL</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">显示世界缩略图（可选）</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">在 Discord 中显示您的当前状态</string>
     <!-- Crash -->
     <string name="crash_title_text">应用程序遇到致命错误。</string>
     <string name="crash_button_restart_text">重启</string>
@@ -245,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">自我介绍</string>
     <string name="profile_edit_dialog_title_bio_links">社交链接</string>
     <string name="profile_edit_dialog_toast_updated">已更新个人资料。</string>
-    <string name="profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">更改已被丢弃。</string>
     <string name="profile_edit_dialog_title_pronouns">代词</string>
     <string name="profile_edit_dialog_button_cancel">取消</string>
     <string name="profile_edit_dialog_button_apply">应用</string>
@@ -253,8 +253,8 @@
     <string name="logout_dialog_title">您真的要这么做吗？</string>
     <string name="logout_dialog_description">通过按下“继续”，您将退出 VRCAA，您必须重新登录才能继续使用该应用程序。</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">查看当前好友位置</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">查看当前好友位置</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
     <string name="favorite_page_title">收藏</string>
     <string-array name="favorites_selection_options">
         <item>世界</item>
@@ -332,8 +332,8 @@
     <string name="advanced_page_network_logging_description">拦截 HTTP 和 WebSocket 流量</string>
     <string name="advanced_page_view_network_logs">显示网络记录</string>
     <string name="advanced_page_section_background_activities">后台活动</string>
-    <string name="advanced_page_battery_optimization">禁用电池优化</string>
-    <string name="advanced_page_battery_optimization_description">可能有助于改善不接收实时网络事件的问题</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">禁用电池优化</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">可能有助于改善不接收实时网络事件的问题</string>
     <string name="advanced_page_kill_service">结束后台服务</string>
     <string name="advanced_page_kill_service_description">停止负责实时事件的后台服务</string>
     <string name="advanced_page_section_database">数据库</string>
