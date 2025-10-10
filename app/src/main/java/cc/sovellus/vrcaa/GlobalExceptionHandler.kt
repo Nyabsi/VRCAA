@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import kotlin.system.exitProcess
 
 class GlobalExceptionHandler private constructor(
@@ -28,8 +29,14 @@ class GlobalExceptionHandler private constructor(
 
     override fun uncaughtException(thread: Thread, exception: Throwable) {
         try {
-            launchActivity(applicationContext, activityToBeLaunched, exception)
-            exitProcess(0)
+            if (exception is OutOfMemoryError) {
+                // OEMs tend to throw these like it's candy
+                // 99.9% it is an false positive, let's continue execution.
+                return
+            } else {
+                launchActivity(applicationContext, activityToBeLaunched, exception)
+                exitProcess(0)
+            }
         } catch (_: Exception) {
             defaultHandler.uncaughtException(thread, exception)
         }
