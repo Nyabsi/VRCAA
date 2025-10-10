@@ -226,8 +226,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">你確定嗎？</string>
     <string name="logout_dialog_description">按下下方的「繼續」，擬將登出 VRCAA，並必須重新登入才能繼續使用應用程式。</string>
-    <string name="logout_dialog_continue">繼續</string>
-    <string name="logout_dialog_cancel">取消</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">查看當前好友位置</string>
     <string name="widget_name_loading_text">The horizon is bright, my friend.</string>

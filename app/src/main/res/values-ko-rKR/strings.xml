@@ -226,8 +226,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">로그아웃</string>
     <string name="logout_dialog_description">아래 \'확인\'을 누르면 VRCAA에서 로그아웃되며, 앱을 계속 사용하려면 다시 로그인해야 합니다.</string>
-    <string name="logout_dialog_continue">확인</string>
-    <string name="logout_dialog_cancel">취소</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">친구의 현재 위치 보기</string>
     <string name="widget_name_loading_text">로딩 중...</string>

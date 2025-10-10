@@ -107,8 +107,8 @@
     <string name="settings_item_about_description">More information about your device and VRCAA</string>
     <string name="settings_item_theming">Appearance</string>
     <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
-    <string name="settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_rich_presence_description">Discord rich-presence integration</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimental)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence integration</string>
     <string name="settings_item_advanced_settings">Advanced</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
@@ -155,7 +155,7 @@
 
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
     <string name="notification_service_title_online">Friend has came online!</string>
     <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
     <string name="notification_service_title_offline">Friend has gone offline!</string>
@@ -224,7 +224,7 @@
     <string name="about_page_title">About</string>
     <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
     <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
     <string name="license_title">Open Source Licenses</string>
 
     <!-- API -->
@@ -233,11 +233,11 @@
 
     <!-- Discord Rich Presence -->
 
-    <string name="discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Set Webhook Url</string>
-    <string name="discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Restarted service to take effect.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Enable Rich Presence</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Set Webhook Url</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Shows your current status in discord</string>
 
     <!-- Crash -->
 
@@ -310,7 +310,7 @@
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Social Links</string>
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
     <string name="profile_edit_dialog_button_cancel">Cancel</string>
     <string name="profile_edit_dialog_button_apply">Apply</string>
@@ -322,8 +322,8 @@
 
     <!-- Widgets -->
 
-    <string name="widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text">The horizon is bright, my friend.</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">See current friend locations</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
 
     <string name="favorite_page_title">Favorites</string>
 
@@ -428,8 +428,8 @@
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
     <string name="advanced_page_view_network_logs">Show Network Logs</string>
     <string name="advanced_page_section_background_activities">Background Activities</string>
-    <string name="advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Disable Battery Optimizations</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
     <string name="advanced_page_kill_service">Kill background service</string>
     <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
     <string name="advanced_page_section_database">Database</string>

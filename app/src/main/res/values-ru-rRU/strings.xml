@@ -226,8 +226,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Вы уверены?</string>
     <string name="logout_dialog_description">Нажав «Продолжить» ниже вы выйдете из VRCAA и снова войдите в систему, чтобы продолжать использовать приложение.</string>
-    <string name="logout_dialog_continue">Продолжить</string>
-    <string name="logout_dialog_cancel">Отмена</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Посмотреть текущее местоположение друзей</string>
     <string name="widget_name_loading_text">Горизонт светлый, мой друг.</string>

@@ -226,8 +226,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Oletko varma?</string>
     <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
-    <string name="logout_dialog_continue">Jatka</string>
-    <string name="logout_dialog_cancel">Peruuta</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
     <string name="widget_name_loading_text">Taivas on kirkas ystäväni.</string>

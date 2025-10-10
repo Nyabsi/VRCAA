@@ -226,8 +226,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sind Sie sicher?</string>
     <string name="logout_dialog_description">Durch das Drücken von \"Weiter\" werden Sie von VRCAA abgemeldet und Sie müssen sich erneut anmelden, um die App weiter nutzen zu können.</string>
-    <string name="logout_dialog_continue">Fortfahren</string>
-    <string name="logout_dialog_cancel">Abbrechen</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Aktuellen Freundestandorte ansehen</string>
     <string name="widget_name_loading_text">Der Horizont ist hell, mein Freund.</string>

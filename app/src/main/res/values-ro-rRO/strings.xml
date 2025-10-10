@@ -226,8 +226,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Sunteți siguri?</string>
     <string name="logout_dialog_description">Apăsând butonul \"Continuă\" de mai jos, vă veți deconecta din VRCAA și va trebui sa vă reconectați pentru a continua să utilizați aplicația.</string>
-    <string name="logout_dialog_continue">Continuă</string>
-    <string name="logout_dialog_cancel">Abandonează</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Vezi locațiile actuale ale prietenilor </string>
     <string name="widget_name_loading_text">Orizontul este luminos, prietene.</string>
