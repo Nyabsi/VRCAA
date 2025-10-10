@@ -78,8 +78,8 @@
     <string name="settings_item_about_description">기기 및 VRCAA에 대한 추가 정보.</string>
     <string name="settings_item_theming">표시 설정</string>
     <string name="settings_item_theming_description">표시 설정 구성 및 간소화 모드</string>
-    <string name="settings_item_rich_presence">활동 상태 (실험적)</string>
-    <string name="settings_item_rich_presence_description">Discord 활동 상태 표시 연동</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">활동 상태 (실험적)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord 활동 상태 표시 연동</string>
     <string name="settings_item_advanced_settings">고급</string>
     <string name="settings_item_advanced_settings_description">고급 로그 기록 및 추가 기능</string>
     <string name="settings_item_database_settings">데이터베이스 및 통계</string>
@@ -118,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA가 백그라운드에서 친구 활동을 모니터링 중입니다.</string>
     <string name="service_killed_by_vendor_notification">VRCAA가 시스템에 의해 강제 종료되었습니다! 자세한 내용은 https://dontkillmyapp.com/를 확인하세요.</string>
-    <string name="service_notification_rich_presence">VRCAA가 이제 활동 상태 정보를 보고하고 있습니다.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA가 이제 활동 상태 정보를 보고하고 있습니다.</string>
     <string name="notification_service_title_online">친구가 온라인 상태가 되었습니다.</string>
     <string name="notification_service_description_online">친구 %1$s님이 온라인 상태가 되었습니다.</string>
     <string name="notification_service_title_offline">친구가 오프라인 상태가 되었습니다.</string>
@@ -177,16 +177,16 @@
     <string name="about_page_title">정보</string>
     <string name="about_page_open_source_licenses_title">오픈 소스 라이선스</string>
     <string name="about_page_translate_title">번역에 기여하기</string>
-    <string name="about_page_battery_optimizations_toast">배터리 최적화가 이미 비활성화되어 있습니다.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">배터리 최적화가 이미 비활성화되어 있습니다.</string>
     <string name="license_title">오픈소스 라이선스</string>
     <!-- API -->
     <string name="api_session_has_expired_text">세션이 만료되었습니다. 다시 로그인해 주세요.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">변경 사항 적용을 위해 서비스를 재시작했습니다.</string>
-    <string name="discord_login_label_enable">활동 상태 표시 활성화</string>
-    <string name="discord_login_label_set_webhook">Webhook URL 설정</string>
-    <string name="discord_login_description_set_webhook">월드 썸네일 기능 사용 시 필요 (선택사항)</string>
-    <string name="discord_login_description_enable">Discord에 현재 상태 표시</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">변경 사항 적용을 위해 서비스를 재시작했습니다.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">활동 상태 표시 활성화</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Webhook URL 설정</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">월드 썸네일 기능 사용 시 필요 (선택사항)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Discord에 현재 상태 표시</string>
     <!-- Crash -->
     <string name="crash_title_text">치명적인 오류가 발생했습니다.</string>
     <string name="crash_button_restart_text">다시 시작</string>
@@ -245,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">자기소개</string>
     <string name="profile_edit_dialog_title_bio_links">소셜 링크</string>
     <string name="profile_edit_dialog_toast_updated">프로필이 변경되었습니다.</string>
-    <string name="profile_edit_dialog_toast_cancelled">변경을 취소했습니다.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">변경을 취소했습니다.</string>
     <string name="profile_edit_dialog_title_pronouns">대명사</string>
     <string name="profile_edit_dialog_button_cancel">취소</string>
     <string name="profile_edit_dialog_button_apply">적용</string>
@@ -253,8 +253,8 @@
     <string name="logout_dialog_title">로그아웃</string>
     <string name="logout_dialog_description">아래 \'확인\'을 누르면 VRCAA에서 로그아웃되며, 앱을 계속 사용하려면 다시 로그인해야 합니다.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">친구의 현재 위치 보기</string>
-    <string name="widget_name_loading_text">로딩 중...</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">친구의 현재 위치 보기</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">로딩 중...</string>
     <string name="favorite_page_title">즐겨찾기</string>
     <string-array name="favorites_selection_options">
         <item>월드</item>
@@ -332,8 +332,8 @@
     <string name="advanced_page_network_logging_description">HTTP 및 WebSocket 트래픽 포착</string>
     <string name="advanced_page_view_network_logs">네트워크 로그 보기</string>
     <string name="advanced_page_section_background_activities">백그라운드 활동</string>
-    <string name="advanced_page_battery_optimization">배터리 최적화 비활성화</string>
-    <string name="advanced_page_battery_optimization_description">실시간 네트워크 이벤트가 수신되지 않는 문제를 해결하는 데 도움이 될 수 있습니다.</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">배터리 최적화 비활성화</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">실시간 네트워크 이벤트가 수신되지 않는 문제를 해결하는 데 도움이 될 수 있습니다.</string>
     <string name="advanced_page_kill_service">백그라운드 서비스 종료</string>
     <string name="advanced_page_kill_service_description">실시간 이벤트를 처리하는 백그라운드 서비스를 종료합니다.</string>
     <string name="advanced_page_section_database">데이터베이스</string>
