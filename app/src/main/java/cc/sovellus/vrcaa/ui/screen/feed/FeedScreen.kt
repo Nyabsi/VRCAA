@@ -73,7 +73,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_online_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
@@ -96,7 +96,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_offline_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
@@ -121,7 +121,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_location_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(WorldScreen(item.worldId))
+                                navigator.push(WorldScreen(item.worldId))
                             } else {
                                 navigator.parent?.parent?.push(WorldScreen(item.worldId))
                             }
@@ -146,7 +146,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_status_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
@@ -169,7 +169,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_added_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
@@ -192,7 +192,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_removed_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
@@ -215,7 +215,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_friend_request_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
@@ -240,7 +240,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         resourceStringTitle = R.string.feed_friend_avatar_label,
                         onClick = {
                             if (filter) {
-                                navigator.parent?.push(UserProfileScreen(item.friendId))
+                                navigator.push(UserProfileScreen(item.friendId))
                             } else {
                                 navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
                             }
