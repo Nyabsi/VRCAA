@@ -51,7 +51,6 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Navigation
-import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
@@ -79,7 +78,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -400,9 +398,7 @@ class UserProfileScreen(
                                         trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
                                             .toColor(),
                                         statusColor = StatusHelper.getStatusFromString(it.status)
-                                            .toColor(),
-                                        tags = it.tags,
-                                        badges = it.badges
+                                            .toColor()
                                     )
                                 }
                             }
@@ -433,19 +429,25 @@ class UserProfileScreen(
                                     var copyIndex = -1
 
                                     model.status?.let {
-                                        if (it.outgoingRequest) {
-                                            options.add(stringResource(R.string.user_overlay_friend_cancel))
+                                        if (it.incomingRequest) {
+                                            options.add(stringResource(R.string.user_overlay_friend_accept))
                                             icons.add(Icons.Default.Person)
                                             friendIndex = options.size - 1
                                         } else {
-                                            if (it.isFriend) {
-                                                options.add(stringResource(R.string.user_overlay_friend_remove))
+                                            if (it.outgoingRequest) {
+                                                options.add(stringResource(R.string.user_overlay_friend_cancel))
                                                 icons.add(Icons.Default.Person)
                                                 friendIndex = options.size - 1
                                             } else {
-                                                options.add(stringResource(R.string.user_overlay_friend_add))
-                                                icons.add(Icons.Default.Person)
-                                                friendIndex = options.size - 1
+                                                if (it.isFriend) {
+                                                    options.add(stringResource(R.string.user_overlay_friend_remove))
+                                                    icons.add(Icons.Default.Person)
+                                                    friendIndex = options.size - 1
+                                                } else {
+                                                    options.add(stringResource(R.string.user_overlay_friend_add))
+                                                    icons.add(Icons.Default.Person)
+                                                    friendIndex = options.size - 1
+                                                }
                                             }
                                         }
                                     }
@@ -562,6 +564,24 @@ class UserProfileScreen(
                                                                             Toast.makeText(
                                                                                 context,
                                                                                 context.getString(R.string.friend_toast_friend_request_failed)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        }
+                                                                    }
+
+                                                                    "accept" -> {
+                                                                        if (result) {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_request_accepted)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        } else {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_request_accept_failed)
                                                                                     .format(profile.displayName),
                                                                                 Toast.LENGTH_SHORT
                                                                             ).show()

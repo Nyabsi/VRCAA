@@ -54,9 +54,7 @@ fun QuickMenuCard(
     displayName: String,
     statusDescription: String,
     trustRankColor: Color,
-    statusColor: Color,
-    tags: List<String>,
-    badges: List<Badge>,
+    statusColor: Color
 ) {
     Box(
         modifier = Modifier

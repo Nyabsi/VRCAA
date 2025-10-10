@@ -59,6 +59,7 @@ import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoLibrary
@@ -68,6 +69,8 @@ import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -90,7 +93,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -134,11 +136,12 @@ import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.emojis.EmojisScreen
-import cc.sovellus.vrcaa.ui.screen.feed.FeedList
+import cc.sovellus.vrcaa.ui.screen.feed.FeedSearchScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
 import cc.sovellus.vrcaa.ui.screen.items.ItemsScreen
+import cc.sovellus.vrcaa.ui.screen.notifications.NotificationsScreen
 import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
 import cc.sovellus.vrcaa.ui.screen.stickers.StickersScreen
@@ -434,64 +437,46 @@ class NavigationScreen : Screen {
                         }
 
                         FeedTab.options.index -> {
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                SearchBar(
-                                    inputField = {
-                                        InputField(
-                                            enabled = true,
-                                            query = model.feedFilterQuery.value,
-                                            onQueryChange = {
-                                                model.feedFilterQuery.value = it
-                                            },
-                                            expanded = model.showFilteredFeed.value,
-                                            onExpandedChange = {
-                                                model.showFilteredFeed.value = it
-                                            },
-                                            placeholder = { Text(text = stringResource(id = R.string.feed_search_placeholder)) },
-                                            leadingIcon = {
-                                                if (model.showFilteredFeed.value) {
-                                                    IconButton(onClick = {
-                                                        model.showFilteredFeed.value = false
-                                                    }) {
-                                                        Icon(
-                                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                            contentDescription = null
-                                                        )
-                                                    }
-                                                } else {
-                                                    Icon(
-                                                        imageVector = Icons.Filled.Search,
-                                                        contentDescription = null
-                                                    )
-                                                }
-                                            },
-                                            onSearch = {
-                                                model.filterFeed()
-                                                model.feedFilterQuery.value = ""
+                            TopAppBar(
+                                actions = {
+                                    IconButton(
+                                        modifier = Modifier.size(64.dp, 64.dp),
+                                        onClick = {
+                                            if (CacheManager.isBuilt()) {
+                                                navigator.push(FeedSearchScreen())
                                             }
-                                        )
-                                    },
-                                    expanded = model.showFilteredFeed.value,
-                                    onExpandedChange = {},
-                                    shape = SearchBarDefaults.inputFieldShape,
-                                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
-                                    tonalElevation = if (model.showFilteredFeed.value) {
-                                        0.dp
-                                    } else {
-                                        8.dp
-                                    },
-                                    windowInsets = SearchBarDefaults.windowInsets.exclude(
-                                        WindowInsets(left = 2.dp, right = 2.dp)
+                                        }) {
+                                        Icon(Icons.Filled.Search, contentDescription = null)
+                                    }
+                                    IconButton(
+                                        modifier = Modifier.size(64.dp, 64.dp),
+                                        onClick = {
+                                            if (CacheManager.isBuilt()) {
+                                                // ladies and gentlemen, we got 'em.
+                                                navigator.push(NotificationsScreen())
+                                            }
+                                        }) {
+                                        BadgedBox(
+                                            badge = {
+                                                if (model.notificationsCount.intValue > 0) {
+                                                    Badge {
+                                                        Text("${model.notificationsCount.intValue}")
+                                                    }
+                                                }
+                                            }
+                                        ) {
+                                            Icon(Icons.Filled.Notifications, contentDescription = null)
+                                        }
+                                    }
+                                },
+                                title = {
+                                    Text(
+                                        text = stringResource(id = R.string.tabs_label_feed),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
                                     )
-                                ) {
-                                    val feed = model.filteredFeed.collectAsState()
-                                    FeedList(feed.value, true)
-                                }
-                            }
+                                },
+                            )
                         }
 
                         SettingsTab.options.index -> {
@@ -971,7 +956,7 @@ class NavigationScreen : Screen {
                     }
                 },
                     bottomBar = {
-                    if (!model.searchModeActivated.value && !model.showFilteredFeed.value) {
+                    if (!model.searchModeActivated.value) {
                         NavigationBar {
                             tabs.forEach { tab ->
                                 NavigationBarItem(selected = tabNavigator.current.key == tab.key,
@@ -1032,9 +1017,7 @@ class NavigationScreen : Screen {
                                             displayName = it.displayName,
                                             statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
                                             trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
-                                            statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                                            tags = it.tags,
-                                            badges = it.badges
+                                            statusColor = StatusHelper.getStatusFromString(it.status).toColor()
                                         )
 
                                         Box(
