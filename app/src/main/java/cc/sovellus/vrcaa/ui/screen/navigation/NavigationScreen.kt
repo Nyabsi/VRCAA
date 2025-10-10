@@ -93,7 +93,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -108,8 +107,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -134,13 +131,12 @@ import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.ui.components.card.QuickMenuCard
 import cc.sovellus.vrcaa.ui.components.dialog.NoInternetDialog
 import cc.sovellus.vrcaa.ui.components.input.ComboInput
 import cc.sovellus.vrcaa.ui.screen.avatars.AvatarsScreen
 import cc.sovellus.vrcaa.ui.screen.emojis.EmojisScreen
-import cc.sovellus.vrcaa.ui.screen.feed.FeedList
+import cc.sovellus.vrcaa.ui.screen.feed.FeedSearchScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.GalleryScreen
 import cc.sovellus.vrcaa.ui.screen.gallery.IconGalleryScreen
 import cc.sovellus.vrcaa.ui.screen.group.UserGroupsScreen
@@ -447,6 +443,15 @@ class NavigationScreen : Screen {
                                         modifier = Modifier.size(64.dp, 64.dp),
                                         onClick = {
                                             if (CacheManager.isBuilt()) {
+                                                navigator.push(FeedSearchScreen())
+                                            }
+                                        }) {
+                                        Icon(Icons.Filled.Search, contentDescription = null)
+                                    }
+                                    IconButton(
+                                        modifier = Modifier.size(64.dp, 64.dp),
+                                        onClick = {
+                                            if (CacheManager.isBuilt()) {
                                                 // ladies and gentlemen, we got 'em.
                                                 navigator.push(NotificationsScreen())
                                             }
@@ -472,64 +477,6 @@ class NavigationScreen : Screen {
                                     )
                                 },
                             )
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                SearchBar(
-                                    inputField = {
-                                        InputField(
-                                            enabled = true,
-                                            query = model.feedFilterQuery.value,
-                                            onQueryChange = {
-                                                model.feedFilterQuery.value = it
-                                            },
-                                            expanded = model.showFilteredFeed.value,
-                                            onExpandedChange = {
-                                                model.showFilteredFeed.value = it
-                                            },
-                                            placeholder = { Text(text = stringResource(id = R.string.feed_search_placeholder)) },
-                                            leadingIcon = {
-                                                if (model.showFilteredFeed.value) {
-                                                    IconButton(onClick = {
-                                                        model.showFilteredFeed.value = false
-                                                    }) {
-                                                        Icon(
-                                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                            contentDescription = null
-                                                        )
-                                                    }
-                                                } else {
-                                                    Icon(
-                                                        imageVector = Icons.Filled.Search,
-                                                        contentDescription = null
-                                                    )
-                                                }
-                                            },
-                                            onSearch = {
-                                                model.filterFeed()
-                                                model.feedFilterQuery.value = ""
-                                            }
-                                        )
-                                    },
-                                    expanded = model.showFilteredFeed.value,
-                                    onExpandedChange = {},
-                                    shape = SearchBarDefaults.inputFieldShape,
-                                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
-                                    tonalElevation = if (model.showFilteredFeed.value) {
-                                        0.dp
-                                    } else {
-                                        8.dp
-                                    },
-                                    windowInsets = SearchBarDefaults.windowInsets.exclude(
-                                        WindowInsets(left = 2.dp, right = 2.dp)
-                                    )
-                                ) {
-                                    val feed = model.filteredFeed.collectAsState()
-                                    FeedList(feed.value, true)
-                                }
-                            }
                         }
 
                         SettingsTab.options.index -> {
@@ -1009,7 +956,7 @@ class NavigationScreen : Screen {
                     }
                 },
                     bottomBar = {
-                    if (!model.searchModeActivated.value && !model.showFilteredFeed.value) {
+                    if (!model.searchModeActivated.value) {
                         NavigationBar {
                             tabs.forEach { tab ->
                                 NavigationBarItem(selected = tabNavigator.current.key == tab.key,
