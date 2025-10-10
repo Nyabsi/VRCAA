@@ -17,6 +17,8 @@
 package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
+import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
+import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 
 interface IUser {

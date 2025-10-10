@@ -37,6 +37,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFriends
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IGroups
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInstances
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.INotes
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IPrints
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUser
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
@@ -80,6 +81,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
+import cc.sovellus.vrcaa.api.vrchat.http.models.UserNoteUpdate
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
@@ -1549,6 +1551,7 @@ class HttpClient : BaseClient(), CoroutineScope {
     }
 
     val user = object : IUser {
+
         override suspend fun updateProfileByUserId(
             userId: String,
             newStatus: String,
@@ -1903,6 +1906,36 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     return arrayListOf()
+                }
+            }
+        }
+    }
+
+    val notes = object : INotes {
+
+        override suspend fun updateNote(userId: String, note: String): Notification? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val update = UserNoteUpdate(
+                targetUserId = userId,
+                note = note
+            )
+
+            val result = doRequest(
+                method = "POST",
+                url = "${Config.API_BASE_URL}/userNotes",
+                headers = headers,
+                body = Gson().toJson(update, UserNoteUpdate::class.java)
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Notification::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
                 }
             }
         }

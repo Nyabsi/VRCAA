@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.runtime.toMutableStateList
@@ -30,7 +31,9 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.helper.ApiHelper
+import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FavoriteManager.FavoriteMetadata
@@ -59,14 +62,15 @@ class UserProfileScreenModel(
     private var profile: LimitedUser? = null
     private var instance: Instance? = null
     var status: FriendStatus? = null
+    val note = mutableStateOf("")
 
     init {
-        mutableState.value = UserProfileState.Loading
-        App.setLoadingText(R.string.loading_text_user)
         fetchProfile()
     }
 
     private fun fetchProfile() {
+        mutableState.value = UserProfileState.Loading
+        App.setLoadingText(R.string.loading_text_user)
         screenModelScope.launch {
             api.users.fetchUserByUserId(userId)?.let {
                 it.location.let { location ->
@@ -137,6 +141,15 @@ class UserProfileScreenModel(
     fun inviteToFriend(intent: String) {
         screenModelScope.launch {
             api.instances.selfInvite(intent)
+        }
+    }
+
+    fun updateNote() {
+        screenModelScope.launch {
+            val user = api.notes.updateNote(userId, note.value)
+            if (user != null) {
+                fetchProfile()
+            }
         }
     }
 

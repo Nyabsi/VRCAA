@@ -45,11 +45,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Navigation
+import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
@@ -97,6 +99,7 @@ import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.card.QuickMenuCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
+import cc.sovellus.vrcaa.ui.components.dialog.InputDialog
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
@@ -170,6 +173,21 @@ class UserProfileScreen(
         var peekProfilePicture by remember { mutableStateOf(false) }
         var favoriteDialogShown by remember { mutableStateOf(false) }
         var isQuickMenuExpanded by remember { mutableStateOf(false) }
+        var noteDialogShown by remember { mutableStateOf(false) }
+
+        if (noteDialogShown) {
+            InputDialog(
+                onDismiss = {
+                    noteDialogShown = false
+                },
+                onConfirmation = {
+                    noteDialogShown = false
+                    model.updateNote()
+                },
+                title = stringResource(R.string.profile_user_note_dialog_title),
+                text = model.note
+            )
+        }
 
         if (profile == null) {
             Toast.makeText(
@@ -407,6 +425,7 @@ class UserProfileScreen(
                                     var notificationIndex = -1
                                     var favoriteIndex = -1
                                     var inviteIndex = -1
+                                    var noteIndex = -1
                                     var avatarIndex = -1
                                     var worldsIndex = -1
                                     var groupsIndex = -1
@@ -454,6 +473,10 @@ class UserProfileScreen(
                                         icons.add(Icons.Default.Navigation)
                                         inviteIndex = options.size - 1
                                     }
+
+                                    options.add(stringResource(R.string.user_overlay_note))
+                                    icons.add(Icons.AutoMirrored.Filled.Notes)
+                                    noteIndex = options.size - 1
 
                                     options.add(stringResource(R.string.user_overlay_find_avatar))
                                     icons.add(Icons.Default.Person)
@@ -589,6 +612,10 @@ class UserProfileScreen(
                                                             if (instance != null) {
                                                                 model.inviteToFriend(instance.location)
                                                             }
+                                                        }
+
+                                                        noteIndex -> {
+                                                            noteDialogShown = true
                                                         }
 
                                                         avatarIndex -> {
