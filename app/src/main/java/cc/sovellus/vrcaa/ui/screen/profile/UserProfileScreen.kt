@@ -305,7 +305,7 @@ class UserProfileScreen(
                                         modifier = Modifier
                                             .padding(top = 16.dp)
                                             .defaultMinSize(minHeight = 80.dp)
-                                            .widthIn(Dp.Unspecified, 520.dp),
+                                            .widthIn(0.dp, 520.dp),
                                     ) {
                                         if (profile.note.isNotEmpty()) {
                                             SubHeader(title = stringResource(R.string.profile_label_note))

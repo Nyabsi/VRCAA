@@ -73,7 +73,7 @@ fun GroupCard(
             .height(280.dp)
             .padding(16.dp)
             .fillMaxHeight()
-            .widthIn(Dp.Unspecified, 520.dp)
+            .widthIn(0.dp, 520.dp)
             .fillMaxWidth()
             .clickable(onClick = {
                 if (callback != null) {

@@ -60,7 +60,7 @@ fun InstanceCard(profile: LimitedUser, instance: Instance, disabled: Boolean, ca
         ),
         modifier = Modifier
             .height(160.dp)
-            .widthIn(Dp.Unspecified, 520.dp)
+            .widthIn(0.dp, 520.dp)
             .fillMaxWidth()
             .clickableIf(
                 enabled = !disabled,
