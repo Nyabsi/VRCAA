@@ -38,6 +38,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IGroups
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInstances
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.INotes
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.INotifications
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IPrints
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUser
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
@@ -79,6 +80,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Files
 import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notifications
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
 import cc.sovellus.vrcaa.api.vrchat.http.models.UserNoteUpdate
@@ -1936,6 +1938,89 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     return null
+                }
+            }
+        }
+    }
+
+    val notifications = object : INotifications {
+        override suspend fun markNotificationAsRead(notificationId: String): Notification? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "PUT",
+                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/see",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Notification::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override suspend fun hideNotification(notificationId: String): Notification? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "PUT",
+                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/hide",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Notification::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override tailrec suspend fun fetchNotifications(
+            n: Int,
+            offset: Int,
+            notifications: ArrayList<Notification>
+        ): ArrayList<Notification> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/auth/user/notifications?n=${n}&offset=${offset}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return notifications
+
+                    val json = Gson().fromJson(result.body, Notifications::class.java)
+                    notifications.addAll(json)
+                    fetchNotifications(n, offset + n, notifications)
+                }
+                is Result.NotModified -> {
+                    return notifications
+                }
+                is Result.Forbidden -> {
+                    return arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
                 }
             }
         }

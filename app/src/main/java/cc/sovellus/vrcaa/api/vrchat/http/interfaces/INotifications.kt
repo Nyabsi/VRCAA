@@ -18,6 +18,9 @@ package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 
-interface INotes {
-    suspend fun updateNote(userId: String, note: String): Notification?
+interface INotifications {
+
+    suspend fun markNotificationAsRead(notificationId: String): Notification?
+    suspend fun hideNotification(notificationId: String): Notification?
+    suspend fun fetchNotifications(n: Int = 100, offset: Int = 0, notifications: ArrayList<Notification> = arrayListOf()): ArrayList<Notification>
 }

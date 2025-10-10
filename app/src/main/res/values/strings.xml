@@ -173,6 +173,11 @@
     <string name="notification_service_title_status">Friend changed status!</string>
     <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
 
+    <string name="notifications_page_title">Notifications</string>
+
+    <string name="notifications_type_friend_request">Friend Request</string>
+    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
+
     <!-- Avatars -->
 
     <string name="avatar_dropdown_label_select">Change to Avatar</string>
@@ -384,6 +389,7 @@
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Loading items…</string>
     <string name="loading_text_favorites">Loading favorites…</string>
+    <string name="loading_text_notifications">Loading notifications…</string>
 
     <!-- Theming -->
 
