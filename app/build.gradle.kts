@@ -170,6 +170,6 @@ dependencies {
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
-    implementation("com.google.firebase:firebase-crashlytics:20.0.0")
+    implementation("com.google.firebase:firebase-crashlytics:20.0.3")
     implementation("dev.turingcomplete:kotlin-onetimepassword:2.4.1")
 }
