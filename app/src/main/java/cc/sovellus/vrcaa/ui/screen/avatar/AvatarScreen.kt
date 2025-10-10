@@ -113,7 +113,11 @@ class AvatarScreen(
                 context.finish()
             }
         } else {
-            navigator.pop()
+            val once = remember(Unit) { mutableStateOf(false) }
+            if (!once.value) {
+                navigator.pop()
+                once.value = true
+            }
         }
     }
 
