@@ -10,6 +10,12 @@
         <item>Веб-сайт</item>
         <item>Офлайн</item>
     </string-array>
+    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
+    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
+    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
+    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Друзья онлайн</string>
     <string name="home_recently_visited">Недавно посещенные</string>
@@ -37,7 +43,6 @@
     <string name="profile_label_date_joined">Дата присоединения</string>
     <string name="profile_text_no_biography">Описание не указано.</string>
     <string name="profile_user_dropdown_manage_notifications">Управление уведомлениями</string>
-    <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">Юзер не существует.</string>
     <string name="profile_user_avatar_private">Аватар является приватным!</string>
     <string name="profile_user_avatar_unreachable">Аватар недоступен!</string>
@@ -207,11 +212,20 @@
     <string name="misc_exit_toast_label">Нажмите еще раз для выхода.</string>
     <string name="misc_no_premium_subscription">Эта функция требует активной подписки VRC+.</string>
     <string name="global_app_default_loading_text">Инициализация…</string>
+    <string name="generic_text_public">Public</string>
+    <string name="generic_text_private">Private</string>
+    <string name="generic_text_upload">Upload</string>
+    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_ok">OK</string>
     <!-- User -->
+    <string name="user_overlay_friend_add">Add Friend</string>
+    <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_cancel">Cancel Request</string>
     <string name="user_overlay_groups">Группы</string>
     <string name="user_overlay_worlds">Миры</string>
     <string name="user_overlay_favorites">Избранное</string>
     <string name="user_overlay_find_avatar">Найти аватар</string>
+    <string name="user_overlay_invite">Invite Me</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Статус</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Видимость проверки возраста</string>
@@ -226,8 +240,6 @@
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Вы уверены?</string>
     <string name="logout_dialog_description">Нажав «Продолжить» ниже вы выйдете из VRCAA и снова войдите в систему, чтобы продолжать использовать приложение.</string>
-    <string name="logout_dialog_continue">Продолжить</string>
-    <string name="logout_dialog_cancel">Отмена</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list">Посмотреть текущее местоположение друзей</string>
     <string name="widget_name_loading_text">Горизонт светлый, мой друг.</string>
@@ -368,4 +380,6 @@
         <item>Архивировать</item>
     </string-array>
     <string name="image_preview_dialog_title">Предпросмотр</string>
+    <string name="image_preview_toast_picture_saved">Saved picture.</string>
+    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
 </resources>
