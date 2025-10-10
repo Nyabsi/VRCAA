@@ -17,8 +17,15 @@
 package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
+import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 
 interface IFriends {
+
+    suspend fun sendFriendRequest(userId: String): Notification?
+    suspend fun deleteFriendRequest(userId: String): Boolean
+    suspend fun removeFriend(userId: String): Boolean
+    suspend fun fetchFriendStatus(userId: String): FriendStatus?
 
     suspend fun fetchFriends(offline: Boolean, n: Int = 100, offset: Int = 0, friends: ArrayList<Friend> = arrayListOf()): ArrayList<Friend>
 }
