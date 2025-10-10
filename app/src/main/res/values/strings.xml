@@ -23,6 +23,9 @@
     <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
     <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
 
+    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
+    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+
     <!-- Home -->
 
     <string name="home_active_friends">Online Friends</string>
@@ -285,6 +288,7 @@
 
     <string name="user_overlay_friend_add">Add Friend</string>
     <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_accept">Accept Request</string>
     <string name="user_overlay_friend_cancel">Cancel Request</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
