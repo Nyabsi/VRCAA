@@ -49,6 +49,7 @@ import androidx.compose.material.icons.filled.Cabin
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
@@ -180,7 +181,11 @@ class UserProfileScreen(
                     context.finish()
                 }
             } else {
-                navigator.pop()
+                val once = remember(Unit) { mutableStateOf(false) }
+                if (!once.value) {
+                    navigator.pop()
+                    once.value = true
+                }
             }
         } else {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -398,13 +403,33 @@ class UserProfileScreen(
                                     val icons: MutableList<ImageVector> =
                                         mutableListOf<ImageVector>()
 
+                                    var friendIndex = -1
                                     var notificationIndex = -1
                                     var favoriteIndex = -1
+                                    var inviteIndex = -1
                                     var avatarIndex = -1
                                     var worldsIndex = -1
                                     var groupsIndex = -1
                                     var favoritesIndex = -1
                                     var copyIndex = -1
+
+                                    model.status?.let {
+                                        if (it.outgoingRequest) {
+                                            options.add(stringResource(R.string.user_overlay_friend_cancel))
+                                            icons.add(Icons.Default.Person)
+                                            friendIndex = options.size - 1
+                                        } else {
+                                            if (it.isFriend) {
+                                                options.add(stringResource(R.string.user_overlay_friend_remove))
+                                                icons.add(Icons.Default.Person)
+                                                friendIndex = options.size - 1
+                                            } else {
+                                                options.add(stringResource(R.string.user_overlay_friend_add))
+                                                icons.add(Icons.Default.Person)
+                                                friendIndex = options.size - 1
+                                            }
+                                        }
+                                    }
 
                                     if (profile.isFriend) {
                                         options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
@@ -422,6 +447,12 @@ class UserProfileScreen(
                                             icons.add(Icons.Default.Star)
                                             favoriteIndex = options.size - 1
                                         }
+                                    }
+
+                                    if (instance != null) {
+                                        options.add(stringResource(R.string.user_overlay_invite))
+                                        icons.add(Icons.Default.Navigation)
+                                        inviteIndex = options.size - 1
                                     }
 
                                     options.add(stringResource(R.string.user_overlay_find_avatar))
@@ -457,6 +488,66 @@ class UserProfileScreen(
                                                 )
                                                 .clickable(onClick = {
                                                     when (index) {
+                                                        friendIndex -> {
+                                                            model.handleFriendStatus { type, result ->
+                                                                when (type) {
+                                                                    "outgoing" -> {
+                                                                        if (result) {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_request_cancelled)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        } else {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_request_cancel_failed)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        }
+                                                                    }
+
+                                                                    "remove" -> {
+                                                                        if (result) {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_removed)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        } else {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_remove_failed)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        }
+                                                                    }
+
+                                                                    "request" -> {
+                                                                        if (result) {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_requested)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        } else {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_request_failed)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
                                                         notificationIndex -> {
                                                             navigator.push(
                                                                 NotificationScreen(
@@ -491,6 +582,12 @@ class UserProfileScreen(
                                                                 }
                                                             } else {
                                                                 favoriteDialogShown = true
+                                                            }
+                                                        }
+
+                                                        inviteIndex -> {
+                                                            if (instance != null) {
+                                                                model.inviteToFriend(instance.location)
                                                             }
                                                         }
 

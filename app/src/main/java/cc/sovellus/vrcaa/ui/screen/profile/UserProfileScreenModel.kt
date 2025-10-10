@@ -27,12 +27,14 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
+import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FavoriteManager.FavoriteMetadata
+import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
@@ -56,6 +58,7 @@ class UserProfileScreenModel(
 
     private var profile: LimitedUser? = null
     private var instance: Instance? = null
+    var status: FriendStatus? = null
 
     init {
         mutableState.value = UserProfileState.Loading
@@ -77,6 +80,7 @@ class UserProfileScreenModel(
                 }
                 profile = it
 
+                status = api.friends.fetchFriendStatus(it.id)
                 mutableState.value = UserProfileState.Result(profile, instance)
             } ?: run {
                 mutableState.value = UserProfileState.Failure
@@ -136,10 +140,33 @@ class UserProfileScreenModel(
         }
     }
 
+    fun handleFriendStatus(callback: (type: String, result: Boolean) -> Unit) {
+        screenModelScope.launch {
+            status?.let {
+                if (it.outgoingRequest) {
+                    val result = api.friends.deleteFriendRequest(userId)
+                    callback("outgoing", result)
+                } else {
+                    if (it.isFriend) {
+                        val result = api.friends.removeFriend(userId)
+                        if (result) {
+                            FavoriteManager.removeFavorite(FavoriteType.FAVORITE_FRIEND, userId)
+                            FriendManager.removeFriend(userId)
+                        }
+                        callback("remove", result)
+                    } else {
+                        val result = api.friends.sendFriendRequest(userId)
+                        callback("request", result != null)
+                    }
+                }
+            }
+        }
+    }
+
     fun removeFavorite(callback: (result: Boolean) -> Unit) {
         screenModelScope.launch {
             profile?.let {
-                val result = FavoriteManager.removeFavorite(IFavorites.FavoriteType.FAVORITE_FRIEND, it.id)
+                val result = FavoriteManager.removeFavorite(FavoriteType.FAVORITE_FRIEND, it.id)
                 callback(result)
             }
         }

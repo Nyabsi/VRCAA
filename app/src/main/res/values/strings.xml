@@ -14,6 +14,15 @@
         <item>Offline</item>
     </string-array>
 
+    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
+
+    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
+    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
+
+    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
+
     <!-- Home -->
 
     <string name="home_active_friends">Online Friends</string>
@@ -51,7 +60,6 @@
     <string name="profile_text_no_biography">No description specified.</string>
     <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
 
-    <!-- removed; 06-07-25 -->
     <string name="profile_user_not_found_message">User doesn\'t exist.</string>
     <string name="profile_user_avatar_private">Avatar is private!</string>
     <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
@@ -262,10 +270,14 @@
 
     <!-- User -->
 
+    <string name="user_overlay_friend_add">Add Friend</string>
+    <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_cancel">Cancel Request</string>
     <string name="user_overlay_groups">Groups</string>
     <string name="user_overlay_worlds">Worlds</string>
     <string name="user_overlay_favorites">Favorites</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
+    <string name="user_overlay_invite">Invite Me</string>
 
     <!-- Profile Edit Dialog -->
 
