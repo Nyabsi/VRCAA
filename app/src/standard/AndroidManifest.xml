@@ -56,6 +56,19 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.SafeTrampolineActivity"
+            android:exported="true"
+            android:enabled="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:launchMode="singleInstance"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="androidx.glance.appwidget.action.INVISIBLE_ACTION_TRAMPOLINE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".service.PipelineService"
             android:foregroundServiceType="specialUse"/>
