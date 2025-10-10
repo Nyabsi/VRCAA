@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
@@ -27,94 +11,96 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
         fun onUpdateFriends(friends: List<Friend>)
     }
 
-    private var friends: MutableList<Friend> = ArrayList()
+    private val friendsLock = Any()
+    private val friends: MutableList<Friend> = mutableListOf()
 
-    fun setFriends(friends: MutableList<Friend>) {
-        this.friends = friends
-        val listSnapshot = friends.toList()
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(listSnapshot)
+    fun setFriends(newFriends: List<Friend>) {
+        val snapshot: List<Friend>
+        synchronized(friendsLock) {
+            friends.clear()
+            friends.addAll(newFriends)
+            snapshot = friends.toList()
         }
+        notifyListeners(snapshot)
     }
 
     fun addFriend(friend: Friend) {
-        if (friends.find { it.id == friend.id } == null) {
-            friends.add(friend)
-
-            val listSnapshot = friends.toList()
-            getListeners().forEach { listener ->
-                listener.onUpdateFriends(listSnapshot)
+        val snapshot: List<Friend>?
+        synchronized(friendsLock) {
+            if (friends.none { it.id == friend.id }) {
+                friends.add(friend)
+                snapshot = friends.toList()
+            } else {
+                snapshot = null
             }
         }
+        snapshot?.let { notifyListeners(it) }
     }
 
     fun removeFriend(userId: String) {
-        val friend = friends.find { it.id == userId }
-
-        friend?.let {
-            friends.remove(friend)
+        val snapshot: List<Friend>?
+        synchronized(friendsLock) {
+            val removed = friends.removeIf { it.id == userId }
+            snapshot = if (removed) friends.toList() else null
         }
-
-        val listSnapshot = friends.toList()
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(listSnapshot)
-        }
+        snapshot?.let { notifyListeners(it) }
     }
 
-    fun getFriend(userId: String): Friend? {
-        return friends.find { it.id == userId }
-    }
-
-    fun updateFriend(friend: PartialFriend) {
-        val it = friends.find { it.id == friend.id }
-        it?.let {
-            val index = friends.indexOf(it)
+    fun updateFriend(partial: PartialFriend) {
+        val snapshot: List<Friend>?
+        synchronized(friendsLock) {
+            val index = friends.indexOfFirst { it.id == partial.id }
             if (index != -1) {
-                val result = JsonHelper.mergeDiffJson<Friend, PartialFriend>(it, friend, Friend::class.java)
-                friends[index] = result
+                friends[index] = JsonHelper.mergeDiffJson(friends[index], partial, Friend::class.java)
+                snapshot = friends.toList()
+            } else {
+                snapshot = null
             }
         }
-
-        val listSnapshot = friends.toList()
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(listSnapshot)
-        }
+        snapshot?.let { notifyListeners(it) }
     }
 
     fun updateLocation(userId: String, location: String) {
-        val it = friends.find { it.id == userId }
-        it?.let {
-            val index = friends.indexOf(it)
+        val snapshot: List<Friend>?
+        synchronized(friendsLock) {
+            val index = friends.indexOfFirst { it.id == userId }
             if (index != -1) {
-                it.location = location
-                friends[index] = it
+                friends[index] = friends[index].copy(location = location)
+                snapshot = friends.toList()
+            } else {
+                snapshot = null
             }
         }
-
-        val listSnapshot = friends.toList()
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(listSnapshot)
-        }
+        snapshot?.let { notifyListeners(it) }
     }
 
     fun updatePlatform(userId: String, platform: String) {
-        val it = friends.find { it.id == userId }
-        it?.let {
-            val index = friends.indexOf(it)
+        val snapshot: List<Friend>?
+        synchronized(friendsLock) {
+            val index = friends.indexOfFirst { it.id == userId }
             if (index != -1) {
-                it.platform = platform
-                friends[index] = it
+                friends[index] = friends[index].copy(platform = platform)
+                snapshot = friends.toList()
+            } else {
+                snapshot = null
             }
         }
+        snapshot?.let { notifyListeners(it) }
+    }
 
-        val listSnapshot = friends.toList()
-        getListeners().forEach { listener ->
-            listener.onUpdateFriends(listSnapshot)
+    fun getFriend(userId: String): Friend? {
+        synchronized(friendsLock) {
+            return friends.find { it.id == userId }
         }
     }
 
     fun getFriends(): List<Friend> {
-        val listSnapshot = friends.toList()
-        return listSnapshot
+        synchronized(friendsLock) {
+            return friends.toList()
+        }
+    }
+
+    private fun notifyListeners(snapshot: List<Friend>) {
+        getListeners().forEach { it.onUpdateFriends(snapshot) }
     }
 }
