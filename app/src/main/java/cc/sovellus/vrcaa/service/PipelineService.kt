@@ -42,6 +42,7 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.helper.ApiHelper
+import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
@@ -49,11 +50,11 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
+import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -376,6 +377,9 @@ class PipelineService : Service(), CoroutineScope {
 
                 is Notification -> {
                     val notification = msg.obj as Notification
+
+                    val convertedNotification = JsonHelper.convert(notification, cc.sovellus.vrcaa.api.vrchat.http.models.Notification::class.java)
+                    NotificationManager.addNotification(convertedNotification)
 
                     launch {
                         val sender = api.users.fetchUserByUserId(notification.senderUserId)
