@@ -85,6 +85,7 @@ class UserProfileScreenModel(
                 profile = it
 
                 status = api.friends.fetchFriendStatus(it.id)
+                note.value = profile?.note ?: ""
                 mutableState.value = UserProfileState.Result(profile, instance)
             } ?: run {
                 mutableState.value = UserProfileState.Failure
