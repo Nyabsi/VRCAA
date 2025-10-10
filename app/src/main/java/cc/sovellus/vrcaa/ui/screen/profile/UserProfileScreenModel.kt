@@ -157,20 +157,25 @@ class UserProfileScreenModel(
     fun handleFriendStatus(callback: (type: String, result: Boolean) -> Unit) {
         screenModelScope.launch {
             status?.let {
-                if (it.outgoingRequest) {
-                    val result = api.friends.deleteFriendRequest(userId)
-                    callback("outgoing", result)
+                if (it.incomingRequest) {
+                    val result = api.friends.sendFriendRequest(userId)
+                    callback("accept", result != null)
                 } else {
-                    if (it.isFriend) {
-                        val result = api.friends.removeFriend(userId)
-                        if (result) {
-                            FavoriteManager.removeFavorite(FavoriteType.FAVORITE_FRIEND, userId)
-                            FriendManager.removeFriend(userId)
-                        }
-                        callback("remove", result)
+                    if (it.outgoingRequest) {
+                        val result = api.friends.deleteFriendRequest(userId)
+                        callback("outgoing", result)
                     } else {
-                        val result = api.friends.sendFriendRequest(userId)
-                        callback("request", result != null)
+                        if (it.isFriend) {
+                            val result = api.friends.removeFriend(userId)
+                            if (result) {
+                                FavoriteManager.removeFavorite(FavoriteType.FAVORITE_FRIEND, userId)
+                                FriendManager.removeFriend(userId)
+                            }
+                            callback("remove", result)
+                        } else {
+                            val result = api.friends.sendFriendRequest(userId)
+                            callback("request", result != null)
+                        }
                     }
                 }
             }

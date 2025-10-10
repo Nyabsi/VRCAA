@@ -433,19 +433,25 @@ class UserProfileScreen(
                                     var copyIndex = -1
 
                                     model.status?.let {
-                                        if (it.outgoingRequest) {
-                                            options.add(stringResource(R.string.user_overlay_friend_cancel))
+                                        if (it.incomingRequest) {
+                                            options.add(stringResource(R.string.user_overlay_friend_accept))
                                             icons.add(Icons.Default.Person)
                                             friendIndex = options.size - 1
                                         } else {
-                                            if (it.isFriend) {
-                                                options.add(stringResource(R.string.user_overlay_friend_remove))
+                                            if (it.outgoingRequest) {
+                                                options.add(stringResource(R.string.user_overlay_friend_cancel))
                                                 icons.add(Icons.Default.Person)
                                                 friendIndex = options.size - 1
                                             } else {
-                                                options.add(stringResource(R.string.user_overlay_friend_add))
-                                                icons.add(Icons.Default.Person)
-                                                friendIndex = options.size - 1
+                                                if (it.isFriend) {
+                                                    options.add(stringResource(R.string.user_overlay_friend_remove))
+                                                    icons.add(Icons.Default.Person)
+                                                    friendIndex = options.size - 1
+                                                } else {
+                                                    options.add(stringResource(R.string.user_overlay_friend_add))
+                                                    icons.add(Icons.Default.Person)
+                                                    friendIndex = options.size - 1
+                                                }
                                             }
                                         }
                                     }
@@ -551,6 +557,24 @@ class UserProfileScreen(
                                                                     }
 
                                                                     "request" -> {
+                                                                        if (result) {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_requested)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        } else {
+                                                                            Toast.makeText(
+                                                                                context,
+                                                                                context.getString(R.string.friend_toast_friend_request_failed)
+                                                                                    .format(profile.displayName),
+                                                                                Toast.LENGTH_SHORT
+                                                                            ).show()
+                                                                        }
+                                                                    }
+
+                                                                    "accept" -> {
                                                                         if (result) {
                                                                             Toast.makeText(
                                                                                 context,
