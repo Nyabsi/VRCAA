@@ -78,8 +78,8 @@
     <string name="settings_item_about_description">Plus d\'informations à propos de votre appareil et VRCAA</string>
     <string name="settings_item_theming">Apparence</string>
     <string name="settings_item_theming_description">Configuration de l\'apparence, mode minimaliste</string>
-    <string name="settings_item_rich_presence">Rich Presence (Expérimental)</string>
-    <string name="settings_item_rich_presence_description">Intégration du Rich Presence de Discord</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Expérimental)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Intégration du Rich Presence de Discord</string>
     <string name="settings_item_advanced_settings">Options avancées</string>
     <string name="settings_item_advanced_settings_description">Journalisation et fonctionnalités avancées</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
@@ -118,7 +118,7 @@
     <!-- Notifications -->
     <string name="service_notification">VRCAA surveille maintenant vos amis en arrière-plan.</string>
     <string name="service_killed_by_vendor_notification">VRCAA a été tué par votre système ! Consultez https://dontkillmyapp.com/ pour plus d\'informations.</string>
-    <string name="service_notification_rich_presence">VRCAA envoie maintenant des informations au Rich Presence.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA envoie maintenant des informations au Rich Presence.</string>
     <string name="notification_service_title_online">Un ami s\'est connecté !</string>
     <string name="notification_service_description_online">%1$s est en ligne !</string>
     <string name="notification_service_title_offline">Ami s\'est déconnecté !</string>
@@ -177,16 +177,16 @@
     <string name="about_page_title">À propos</string>
     <string name="about_page_open_source_licenses_title">Licences Open Source</string>
     <string name="about_page_translate_title">Contribuer à la traduction</string>
-    <string name="about_page_battery_optimizations_toast">Les optimisations de la batterie sont déjà désactivées.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Les optimisations de la batterie sont déjà désactivées.</string>
     <string name="license_title">Licences Open Source</string>
     <!-- API -->
     <string name="api_session_has_expired_text">Votre session a expiré, veuillez vous reconnecter.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast">Redémarrez le service pour prendre effet.</string>
-    <string name="discord_login_label_enable">Activé Rich Presence</string>
-    <string name="discord_login_label_set_webhook">Définir l’URL du Webhook</string>
-    <string name="discord_login_description_set_webhook">Requis pour le support des miniatures du monde (facultatif)</string>
-    <string name="discord_login_description_enable">Affiche votre statut actuel dans discord</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Redémarrez le service pour prendre effet.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Activé Rich Presence</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Définir l’URL du Webhook</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Requis pour le support des miniatures du monde (facultatif)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Affiche votre statut actuel dans discord</string>
     <!-- Crash -->
     <string name="crash_title_text">L\'application a rencontré une erreur fatale.</string>
     <string name="crash_button_restart_text">Redémarrer</string>
@@ -245,7 +245,7 @@
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Liens sociaux</string>
     <string name="profile_edit_dialog_toast_updated">Profil actualisé.</string>
-    <string name="profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Les modifications ont été ignorées.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronoms</string>
     <string name="profile_edit_dialog_button_cancel">Annuler</string>
     <string name="profile_edit_dialog_button_apply">Appliquer</string>
@@ -253,8 +253,8 @@
     <string name="logout_dialog_title">Êtes-vous sûr ?</string>
     <string name="logout_dialog_description">En appuyant sur \"Continuer\" ci-dessous, vous vous déconnecterez de VRCAA et vous devrez vous reconnecter pour continuer à utiliser l\'application.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list">Voir les emplacements actuels des amis</string>
-    <string name="widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Voir les emplacements actuels des amis</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">L\'horizon est lumineux, mon ami.</string>
     <string name="favorite_page_title">Favoris</string>
     <string-array name="favorites_selection_options">
         <item>Mondes</item>
@@ -332,8 +332,8 @@
     <string name="advanced_page_network_logging_description">Intercepter le trafic HTTP et WebSocket</string>
     <string name="advanced_page_view_network_logs">Afficher les journaux du réseau</string>
     <string name="advanced_page_section_background_activities">Activités en arrière-plan</string>
-    <string name="advanced_page_battery_optimization">Désactiver les optimisations de la batterie</string>
-    <string name="advanced_page_battery_optimization_description">Peut aider à ne pas recevoir d\'événements réseau en temps réel</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Désactiver les optimisations de la batterie</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">Peut aider à ne pas recevoir d\'événements réseau en temps réel</string>
     <string name="advanced_page_kill_service">Tuer le service d\'arrière-plan</string>
     <string name="advanced_page_kill_service_description">Tuer le service d\'arrière-plan responsable des événements en temps réel</string>
     <string name="advanced_page_section_database">Base de données</string>
