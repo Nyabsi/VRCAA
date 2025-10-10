@@ -75,7 +75,9 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.AuthResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.api.vrchat.http.models.Files
+import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
 import cc.sovellus.vrcaa.extension.authToken
@@ -352,6 +354,93 @@ class HttpClient : BaseClient(), CoroutineScope {
     }
 
     val friends = object : IFriends {
+        override suspend fun sendFriendRequest(userId: String): Notification? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "POST",
+                url = "${Config.API_BASE_URL}/user/$userId/friendRequest",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Notification::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override suspend fun deleteFriendRequest(userId: String): Boolean {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "DELETE",
+                url = "${Config.API_BASE_URL}/user/$userId/friendRequest",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return true
+                }
+                else -> {
+                    handleExceptions(result)
+                    return false
+                }
+            }
+        }
+
+        override suspend fun removeFriend(userId: String): Boolean {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "DELETE",
+                url = "${Config.API_BASE_URL}/auth/user/friends/$userId",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return true
+                }
+                else -> {
+                    handleExceptions(result)
+                    return false
+                }
+            }
+        }
+
+        override suspend fun fetchFriendStatus(userId: String): FriendStatus? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/user/$userId/friendStatus",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, FriendStatus::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
 
         override tailrec suspend fun fetchFriends(
             offline: Boolean,
