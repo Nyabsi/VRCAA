@@ -22,14 +22,20 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 object JsonHelper {
+    private val gson = Gson()
+
     fun <T> mergeJson(old: T, new: T, type: Class<T>): T {
-        val merged = mergeObjects(JsonParser.parseString(Gson().toJson(old)).asJsonObject, JsonParser.parseString(Gson().toJson(new)).asJsonObject)
-        return Gson().fromJson(merged, type)
+        val merged = mergeObjects(JsonParser.parseString(gson.toJson(old)).asJsonObject, JsonParser.parseString(gson.toJson(new)).asJsonObject)
+        return gson.fromJson(merged, type)
     }
 
     fun <T, N> mergeDiffJson(old: T, new: N, type: Class<T>): T {
-        val merged = mergeObjects(JsonParser.parseString(Gson().toJson(old)).asJsonObject, JsonParser.parseString(Gson().toJson(new)).asJsonObject)
-        return Gson().fromJson(merged, type)
+        val merged = mergeObjects(JsonParser.parseString(gson.toJson(old)).asJsonObject, JsonParser.parseString(gson.toJson(new)).asJsonObject)
+        return gson.fromJson(merged, type)
+    }
+
+    fun <T, N> convert(data: T, type: Class<N>): N {
+        return gson.fromJson(gson.toJson(data), type)
     }
 
     private fun mergeObjects(old: JsonObject, new: JsonObject): JsonObject {
