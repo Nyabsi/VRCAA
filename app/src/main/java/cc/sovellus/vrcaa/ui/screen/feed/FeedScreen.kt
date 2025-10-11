@@ -40,6 +40,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.FeedManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.layout.FeedItem
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
@@ -238,6 +239,31 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                         friendPictureUrl = item.friendPictureUrl,
                         feedTimestamp = item.feedTimestamp,
                         resourceStringTitle = R.string.feed_friend_avatar_label,
+                        onClick = {
+                            if (filter) {
+                                navigator.push(UserProfileScreen(item.friendId))
+                            } else {
+                                navigator.parent?.parent?.push(UserProfileScreen(item.friendId))
+                            }
+                        }
+                    )
+                }
+
+                FeedManager.FeedType.FRIEND_FEED_USERNAME_CHANGE -> {
+                    val text = buildAnnotatedString {
+                        append(FriendManager.getFriend(item.friendId)?.displayName)
+                        append(" ")
+                        withStyle(style = SpanStyle(color = Color.Gray)) {
+                            append(stringResource(R.string.feed_friend_username_changed_text))
+                        }
+                        append(" ")
+                        append(item.friendName)
+                    }
+                    FeedItem(
+                        text = text,
+                        friendPictureUrl = item.friendPictureUrl,
+                        feedTimestamp = item.feedTimestamp,
+                        resourceStringTitle = R.string.feed_friend_username_changed_label,
                         onClick = {
                             if (filter) {
                                 navigator.push(UserProfileScreen(item.friendId))

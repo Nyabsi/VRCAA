@@ -250,6 +250,15 @@ class PipelineService : Service(), CoroutineScope {
                             FeedManager.addFeed(feed)
                         }
 
+                        if (friend.displayName != update.user.displayName) {
+                            val feed = FeedManager.Feed(FeedManager.FeedType.FRIEND_FEED_USERNAME_CHANGE).apply {
+                                friendId = update.userId
+                                friendName = friend.displayName // store the old name
+                                friendPictureUrl = update.user.userIcon.ifEmpty { update.user.profilePicOverride.ifEmpty { update.user.currentAvatarImageUrl } }
+                            }
+                            FeedManager.addFeed(feed)
+                        }
+
                         // Oh... You don't have VRChat+ I'm sorry to hear that...
                         if (friend.profilePicOverride.isEmpty() && friend.currentAvatarImageUrl.isNotEmpty() && friend.currentAvatarImageUrl != update.user.currentAvatarImageUrl) {
                             launch {
