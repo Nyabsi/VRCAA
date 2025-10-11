@@ -36,14 +36,18 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
 
     fun addNotification(notification: Notification) {
         synchronized(notificationLock) {
-            notifications.add(notification)
+            if (notifications.none { it.id == notification.id }) {
+                notifications.add(notification)
+            }
         }
         notifyListeners()
     }
 
     fun addNotificationV2(notification: NotificationV2) {
         synchronized(notificationLockV2) {
-            notificationsV2.add(notification)
+            if (notificationsV2.none { it.id == notification.id }) {
+                notificationsV2.add(notification)
+            }
         }
         notifyListeners()
     }
