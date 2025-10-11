@@ -180,8 +180,6 @@
     <string name="notifications_type_unknown">Unknown</string>
     <string name="notifications_type_invite">Invite</string>
     <string name="notifications_type_friend_request">Friend Request</string>
-    <string name="notifications_type_event_announcement">Event Announcement</string>
-    <string name="notifications_type_group_announcement">Group Announcement</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
 
     <string name="notification_dialog_title">Notification</string>
