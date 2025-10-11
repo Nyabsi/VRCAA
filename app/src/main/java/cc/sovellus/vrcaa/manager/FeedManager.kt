@@ -36,7 +36,8 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
         FRIEND_FEED_FRIEND_REQUEST,
         FRIEND_FEED_REMOVED,
         FRIEND_FEED_ADDED,
-        FRIEND_FEED_AVATAR;
+        FRIEND_FEED_AVATAR,
+        FRIEND_FEED_USERNAME_CHANGE;
 
         companion object {
             fun fromInt(value: Int) = entries.first { it.ordinal == value }

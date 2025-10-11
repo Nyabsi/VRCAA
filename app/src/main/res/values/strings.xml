@@ -221,6 +221,8 @@
     <string name="feed_search_placeholder">Search for User or Location…</string>
     <string name="feed_friend_avatar_label">Avatar Change</string>
     <string name="feed_friend_avatar_text">changed their avatar to</string>
+    <string name="feed_friend_username_changed_label">Username Change</string>
+    <string name="feed_friend_username_changed_text">changed their username to</string>
 
     <!-- About -->
 
