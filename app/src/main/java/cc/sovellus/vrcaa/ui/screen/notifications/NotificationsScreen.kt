@@ -245,8 +245,8 @@ class NotificationsScreen : Screen {
                                 else -> {
                                     user?.let {
                                         NotificationItem(
-                                            stringResource(R.string.notifications_type_unknown),
-                                            notification.message,
+                                            notification.type,
+                                            notification.message.ifEmpty { "This notification doesn't have an message." },
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
                                             notification.createdAt
                                         ) {
