@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">Nichts als gähnende Leere...</string>
+    <string name="result_not_found">Nichts als unendliche Leere...</string>
     <string name="legal_disclaimer">"VRCAA steht in keiner Verbindung zu VRChat Inc. oder deren Partnerunternehmen und wird von diesen nicht unterstützt."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
@@ -31,23 +31,23 @@
     <string name="login_toast_wrong_credentials">Benutzername / Passwort ist falsch.</string>
     <string name="login_toast_wrong_code">Verifizierung fehlgeschlagen, bitte überprüfe den Code erneut.</string>
     <!-- Two Auth -->
-    <string name="auth_text_email">Gebe den an deine E-Mail gesendeten Code ein</string>
-    <string name="auth_text_app">Gebe den Code deiner Authentifikation-App ein</string>
-    <string name="auth_button_text">Überprüfen</string>
+    <string name="auth_text_email">Gebe den Code ein, den du per E-Mail erhalten hast</string>
+    <string name="auth_text_app">Gebe den Code aus deiner Authenticator-App ein</string>
+    <string name="auth_button_text">Bestätigen</string>
     <string name="auth_button_paste">Einfügen</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Suche nach Welten, Nutzer oder Avatare…</string>
+    <string name="main_search_placeholder">Welten, Nutzer oder Avatare suchen…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Aktueller Standort</string>
     <string name="profile_label_note">Notiz</string>
     <string name="profile_label_biography">Biografie</string>
     <string name="profile_label_last_activity">Letzte Aktivität</string>
-    <string name="profile_label_date_joined">Registriert am</string>
+    <string name="profile_label_date_joined">Registriert Am</string>
     <string name="profile_text_no_biography">Keine Beschreibung angegeben.</string>
     <string name="profile_user_dropdown_manage_notifications">Benachrichtigungen verwalten</string>
     <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
     <string name="profile_user_avatar_private">Avatar ist privat!</string>
-    <string name="profile_user_avatar_unreachable">Avatar nicht verfügbar</string>
+    <string name="profile_user_avatar_unreachable">Avatar nicht verfügbar!</string>
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Ergebnisse für</string>
@@ -60,8 +60,8 @@
     <string name="search_filter_category_avatars_provider">Anbieter</string>
     <string name="search_filter_category_groups">Gruppen</string>
     <string name="search_filter_category_groups_count">Anzahl</string>
-    <string name="copy_id_label">Id kopieren</string>
-    <string name="copied_toast">%1$s\'s Id kopiert.</string>
+    <string name="copy_id_label">ID kopieren</string>
+    <string name="copied_toast">%1$s\'s ID kopiert.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Anzahl</string>
     <string name="search_filter_button_reset">Zurücksetzen</string>
@@ -75,7 +75,7 @@
     <string name="search_button_more">Mehr…</string>
     <!-- Settings -->
     <string name="settings_item_about">Info</string>
-    <string name="settings_item_about_description">Weitere Informationen zu Ihrem Gerät und VRCAA</string>
+    <string name="settings_item_about_description">Weitere Informationen zu deinem Gerät und VRCAA</string>
     <string name="settings_item_theming">Darstellung</string>
     <string name="settings_item_theming_description">Erscheinungsbild und minimalistischer Modus</string>
     <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimentell)</string>
