@@ -38,6 +38,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FavoriteManager.FavoriteMetadata
 import cc.sovellus.vrcaa.manager.FriendManager
+import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
@@ -141,7 +142,10 @@ class UserProfileScreenModel(
 
     fun inviteToFriend(intent: String) {
         screenModelScope.launch {
-            api.instances.selfInvite(intent)
+            val notification = api.instances.selfInvite(intent)
+            notification?.let {
+                NotificationManager.addNotification(notification)
+            }
         }
     }
 

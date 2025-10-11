@@ -23,7 +23,7 @@ data class Notification(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("details")
-    val details: String,
+    val details: Any,
     @SerializedName("id")
     val id: String,
     @SerializedName("message")

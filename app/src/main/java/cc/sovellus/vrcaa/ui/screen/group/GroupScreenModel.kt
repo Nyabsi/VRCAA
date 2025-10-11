@@ -27,6 +27,7 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstance
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.launch
 
 class GroupScreenModel(
@@ -122,7 +123,10 @@ class GroupScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api.instances.selfInvite(clickedInstance.value)
+            val notification = api.instances.selfInvite(clickedInstance.value)
+            notification?.let {
+                NotificationManager.addNotification(notification)
+            }
         }
     }
 }

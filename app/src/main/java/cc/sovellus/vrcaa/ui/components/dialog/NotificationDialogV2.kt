@@ -34,12 +34,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.INotifications
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
+import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.launch
 
 @Composable
-fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
+fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
 
     Dialog(onDismissRequest = onDismiss) {
@@ -55,7 +58,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
             ) {
                 Text(text = stringResource(R.string.notification_dialog_title), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = stringResource(R.string.notification_dialog_description), style = MaterialTheme.typography.bodyMedium)
+                Text(text = notification.message, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(24.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -68,8 +71,8 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                     }
                     TextButton(onClick = {
                         coroutineScope.launch {
-                            api.user.hideNotification(notificationId)
-                            NotificationManager.removeNotification(notificationId)
+                            api.notifications.respondToNotification(notification.id, INotifications.ResponseType.DELETE, "")
+                            NotificationManager.removeNotificationV2(notification.id)
                             onDismiss()
                         }
                     }) {
@@ -77,11 +80,12 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                     }
                     TextButton(onClick = {
                         coroutineScope.launch {
-                            api.user.markNotificationAsRead(notificationId)
+                            api.notifications.respondToNotification(notification.id, INotifications.ResponseType.UNSUBSCRIBE, "${JsonHelper.getJsonField(notification.data, "ownerId")},${notification.receiverUserId}")
+                            NotificationManager.removeNotificationV2(notification.id)
                             onDismiss()
                         }
                     }) {
-                        Text(stringResource(R.string.notification_dialog_button_read))
+                        Text(stringResource(R.string.notification_dialog_button_unsubscribe))
                     }
                 }
             }

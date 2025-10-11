@@ -35,7 +35,17 @@ object JsonHelper {
     }
 
     fun <T, N> convert(data: T, type: Class<N>): N {
-        return gson.fromJson(gson.toJson(data), type)
+        return gson.fromJson(JsonParser.parseString(gson.toJson(data)), type)
+    }
+
+    fun getJsonField(data: Any?, field: String): String? {
+        return try {
+            JsonParser.parseString(gson.toJson(data))
+                .asJsonObject[field]
+                ?.asString
+        } catch (e: Exception) {
+            null
+        }
     }
 
     private fun mergeObjects(old: JsonObject, new: JsonObject): JsonObject {
