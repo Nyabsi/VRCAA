@@ -40,10 +40,28 @@ object JsonHelper {
 
     fun getJsonField(data: Any?, field: String): String? {
         return try {
-            JsonParser.parseString(gson.toJson(data))
-                .asJsonObject[field]
-                ?.asString
-        } catch (e: Exception) {
+            var elem = JsonParser.parseString(gson.toJson(data))
+
+            if (elem.isJsonPrimitive && elem.asJsonPrimitive.isString) {
+                val s = elem.asString.trim()
+                if (s.startsWith("{") || s.startsWith("[")) {
+                    elem = JsonParser.parseString(s)
+                }
+            }
+
+            if (!elem.isJsonObject)
+                return null
+
+            val value = elem.asJsonObject.get(field) ?:
+                return null
+
+            when {
+                value.isJsonPrimitive -> value.asJsonPrimitive.run {
+                    if (isString) asString else toString()
+                }
+                else -> value.toString()
+            }
+        } catch (_: Exception) {
             null
         }
     }

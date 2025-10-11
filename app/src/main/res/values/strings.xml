@@ -178,6 +178,9 @@
     <string name="notifications_page_title">Notifications</string>
 
     <string name="notifications_type_invite">Invite</string>
+    <string name="notifications_type_invite_response">Invite Response</string>
+    <string name="notifications_type_invite_request">Invite Request</string>
+    <string name="notifications_type_invite_request_response">Invite Request Response</string>
     <string name="notifications_type_friend_request">Friend Request</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
 
@@ -194,6 +197,11 @@
     <string name="notification_dialog_button_continue">Continue</string>
     <string name="notification_dialog_button_restart">Restart</string>
     <string name="notification_dialog_button_abandon">Abandon</string>
+
+    <string name="notification_invite_text">has invited you to</string>
+    <string name="notification_invite_response_text">rejected your request to join</string>
+    <string name="notification_invite_request_text">wants to join you</string>
+    <string name="notification_invite_request_response_text">rejected your invite request</string>
 
 
     <!-- Avatars -->
