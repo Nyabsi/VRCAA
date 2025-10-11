@@ -106,7 +106,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.ACCEPT, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -118,7 +117,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.REJECT, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -130,7 +128,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.BLOCK, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -142,7 +139,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.DELETE, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -154,7 +150,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.UNSUBSCRIBE, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -166,7 +161,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.START, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -178,7 +172,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.CHOICE, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -191,7 +184,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.CONTINUE, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -203,7 +195,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.RESTART, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {
@@ -215,7 +206,6 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                 TextButton(onClick = {
                                     coroutineScope.launch {
                                         api.notifications.respondToNotification(notification.id, INotifications.ResponseType.ABANDON, response.data)
-                                        NotificationManager.removeNotificationV2(notification.id)
                                         onDismiss()
                                     }
                                 }) {

@@ -30,6 +30,9 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.api.vrchat.Config
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.HideNotification
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.NotificationV2Delete
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.SeeNotification
 import cc.sovellus.vrcaa.helper.DnsHelper
 import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
@@ -134,9 +137,25 @@ class PipelineSocket(
                         socketListener?.onMessage(notification)
                     }
 
+                    "see-notification" -> {
+                        val notification = SeeNotification(update.content)
+                        socketListener?.onMessage(notification)
+                    }
+
+                    "hide-notification" -> {
+                        val notification = HideNotification(update.content)
+                        socketListener?.onMessage(notification)
+                    }
+
                     "notification-v2" -> {
                         val notification =
                             Gson().fromJson(update.content, NotificationV2::class.java)
+                        socketListener?.onMessage(notification)
+                    }
+
+                    "notification-v2-delete" -> {
+                        val notification =
+                            Gson().fromJson(update.content, NotificationV2Delete::class.java)
                         socketListener?.onMessage(notification)
                     }
 

@@ -47,9 +47,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -58,6 +64,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialog
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialogV2
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
@@ -70,7 +77,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NotificationItem(title: String, message: String, url: String, date: String, onClick: () -> Unit) {
+fun NotificationItem(title: String, message: AnnotatedString, url: String, date: String, onClick: () -> Unit) {
     ListItem(
         overlineContent = {
             Text(
@@ -82,7 +89,7 @@ fun NotificationItem(title: String, message: String, url: String, date: String, 
         headlineContent = {
             Text(
                 text = message,
-                maxLines = 2,
+                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
         },
@@ -150,12 +157,14 @@ class NotificationsScreen : Screen {
         var showDialogV2 by remember { mutableStateOf(false) }
 
         if (showDialog) {
-            NotificationDialog(
-                model.currentNotificationId.value,
-                onDismiss = {
-                    showDialog = false
-                }
-            )
+            model.currentNotification.value?.let {
+                NotificationDialog(
+                    it,
+                    onDismiss = {
+                        showDialog = false
+                    }
+                )
+            }
         }
 
         if (showDialogV2) {
@@ -204,10 +213,13 @@ class NotificationsScreen : Screen {
                         state = rememberLazyListState()
                     ) {
                         items(notificationsV2.value) { notificationV2 ->
+                            val text = buildAnnotatedString {
+                                append(notificationV2.message)
+                            }
                             NotificationItem(
                                 // if it's some strange notification, just show the type instead of title.
                                 notificationV2.title ?: notificationV2.type,
-                                notificationV2.message,
+                                text,
                                 notificationV2.imageUrl ?: "", // an image url is not an guarantee.
                                 notificationV2.createdAt
                             ) {
@@ -221,39 +233,188 @@ class NotificationsScreen : Screen {
                             when (notification.type) {
                                 "friendRequest" -> {
                                     user?.let {
+                                        val text = buildAnnotatedString {
+                                            append(stringResource(R.string.notifications_type_friend_request_content).format(notification.senderUsername))
+                                        }
                                         NotificationItem(
                                             stringResource(R.string.notifications_type_friend_request),
-                                            stringResource(R.string.notifications_type_friend_request_content).format(notification.senderUsername),
+                                            text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
                                             notification.createdAt
                                         ) {
-                                            model.currentNotificationId.value = notification.id
+                                            model.currentNotification.value = notification
+                                            showDialog = true
+                                        }
+                                    }
+                                }
+                                "message" -> {
+                                    user?.let {
+                                        val text = buildAnnotatedString {
+                                            append(notification.message)
+                                        }
+                                        NotificationItem(
+                                            user.displayName,
+                                            text,
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
+                                            model.currentNotification.value = notification
                                             showDialog = true
                                         }
                                     }
                                 }
                                 "invite" -> {
                                     user?.let {
+                                        val text = buildAnnotatedString {
+                                            if (notification.message.isNotEmpty()) {
+                                                append(notification.message)
+                                            } else {
+                                                append(user.displayName)
+                                                append(" ")
+                                                withStyle(style = SpanStyle(color = Color.Gray)) {
+                                                    append(stringResource(R.string.notification_invite_text))
+                                                }
+                                                append(" ")
+                                                append(JsonHelper.getJsonField(notification.details, "worldName") ?: "Invalid Name")
+                                                val message = JsonHelper.getJsonField(notification.details, "inviteMessage")
+                                                message?.let {
+                                                    append(":")
+                                                    append(" ")
+                                                    withStyle(style = SpanStyle(color = Color.Gray, fontStyle = FontStyle.Italic)) {
+                                                        append("\"")
+                                                        append(message)
+                                                        append("\"")
+                                                    }
+                                                }
+                                            }
+                                        }
+
                                         NotificationItem(
                                             stringResource(R.string.notifications_type_invite),
-                                            notification.message,
+                                            text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
                                             notification.createdAt
                                         ) {
-                                            model.currentNotificationId.value = notification.id
+                                            model.currentNotification.value = notification
+                                            showDialog = true
+                                        }
+                                    }
+                                }
+                                "inviteResponse" -> {
+                                    user?.let {
+                                        val text = buildAnnotatedString {
+                                            if (notification.message.isNotEmpty()) {
+                                                append(notification.message)
+                                            } else {
+                                                append(user.displayName)
+                                                append(" ")
+                                                withStyle(style = SpanStyle(color = Color.Gray)) {
+                                                    append(stringResource(R.string.notification_invite_response_text))
+                                                }
+                                                val message = JsonHelper.getJsonField(notification.details, "responseMessage")
+                                                message?.let {
+                                                    append(":")
+                                                    append(" ")
+                                                    withStyle(style = SpanStyle(color = Color.Gray, fontStyle = FontStyle.Italic)) {
+                                                        append("\"")
+                                                        append(message)
+                                                        append("\"")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        NotificationItem(
+                                            stringResource(R.string.notifications_type_invite_response),
+                                            text,
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
+                                            model.currentNotification.value = notification
+                                            showDialog = true
+                                        }
+                                    }
+                                }
+                                "requestInvite" -> {
+                                    user?.let {
+                                        val text = buildAnnotatedString {
+                                            if (notification.message.isNotEmpty()) {
+                                                append(notification.message)
+                                            } else {
+                                                append(user.displayName)
+                                                append(" ")
+                                                withStyle(style = SpanStyle(color = Color.Gray)) {
+                                                    append(stringResource(R.string.notification_invite_request_text))
+                                                }
+                                                val message = JsonHelper.getJsonField(notification.details, "requestMessage")
+                                                message?.let {
+                                                    append(":")
+                                                    append(" ")
+                                                    withStyle(style = SpanStyle(color = Color.Gray, fontStyle = FontStyle.Italic)) {
+                                                        append("\"")
+                                                        append(message)
+                                                        append("\"")
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        NotificationItem(
+                                            stringResource(R.string.notifications_type_invite_request),
+                                            text,
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
+                                            model.currentNotification.value = notification
+                                            showDialog = true
+                                        }
+                                    }
+                                }
+                                "requestInviteResponse" -> {
+                                    user?.let {
+                                        val text = buildAnnotatedString {
+                                            if (notification.message.isNotEmpty()) {
+                                                append(notification.message)
+                                            } else {
+                                                append(user.displayName)
+                                                append(" ")
+                                                withStyle(style = SpanStyle(color = Color.Gray)) {
+                                                    append(stringResource(R.string.notification_invite_request_response_text))
+                                                }
+                                                val message = JsonHelper.getJsonField(notification.details, "responseMessage")
+                                                message?.let {
+                                                    append(":")
+                                                    append(" ")
+                                                    withStyle(style = SpanStyle(color = Color.Gray, fontStyle = FontStyle.Italic)) {
+                                                        append("\"")
+                                                        append(message)
+                                                        append("\"")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        NotificationItem(
+                                            stringResource(R.string.notifications_type_invite_request_response),
+                                            text,
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
+                                            model.currentNotification.value = notification
                                             showDialog = true
                                         }
                                     }
                                 }
                                 else -> {
                                     user?.let {
+                                        val text = buildAnnotatedString {
+                                            append(notification.message.ifEmpty { "This notification doesn't have an message." })
+                                        }
                                         NotificationItem(
                                             notification.type,
-                                            notification.message.ifEmpty { "This notification doesn't have an message." },
+                                            text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
                                             notification.createdAt
                                         ) {
-                                            model.currentNotificationId.value = notification.id
+                                            model.currentNotification.value = notification
                                             showDialog = true
                                         }
                                     }

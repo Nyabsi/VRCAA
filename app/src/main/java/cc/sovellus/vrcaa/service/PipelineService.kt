@@ -38,8 +38,11 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendOffline
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendOnline
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendUpdate
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.HideNotification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.NotificationV2
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.NotificationV2Delete
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.SeeNotification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.helper.ApiHelper
@@ -410,10 +413,27 @@ class PipelineService : Service(), CoroutineScope {
                     }
                 }
 
+                is SeeNotification -> {
+                    val notification = msg.obj as SeeNotification
+                    NotificationManager.removeNotification(notification.notificationId)
+                }
+
+                is HideNotification -> {
+                    val notification = msg.obj as HideNotification
+                    NotificationManager.removeNotification(notification.notificationId)
+                }
+
                 is NotificationV2 -> {
                     val notification = msg.obj as NotificationV2
                     val convertedNotification = JsonHelper.convert(notification, cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2::class.java)
                     NotificationManager.addNotificationV2(convertedNotification)
+                }
+
+                is NotificationV2Delete -> {
+                    val notification = msg.obj as NotificationV2Delete
+                    notification.ids.forEach { id ->
+                        NotificationManager.removeNotificationV2(id)
+                    }
                 }
 
                 else -> {}

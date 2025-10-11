@@ -53,7 +53,7 @@ class NotificationsScreenModel : StateScreenModel<NotificationsScreenModel.Notif
     var users: List<LimitedUser?> = arrayListOf<LimitedUser?>()
 
     var currentIndex = mutableIntStateOf(0)
-    var currentNotificationId = mutableStateOf("")
+    var currentNotification = mutableStateOf<Notification?>(null)
     var currentNotificationV2 = mutableStateOf<NotificationV2?>(null)
 
     private val listener = object : NotificationManager.NotificationListener {

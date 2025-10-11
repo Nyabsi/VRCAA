@@ -34,12 +34,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.launch
 
 @Composable
-fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
+fun NotificationDialog(notification: Notification, onDismiss: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
 
     Dialog(onDismissRequest = onDismiss) {
@@ -56,7 +57,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                 Text(text = stringResource(R.string.notification_dialog_title), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(R.string.notification_dialog_description), style = MaterialTheme.typography.bodyMedium)
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -68,8 +69,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                     }
                     TextButton(onClick = {
                         coroutineScope.launch {
-                            api.user.hideNotification(notificationId)
-                            NotificationManager.removeNotification(notificationId)
+                            api.user.hideNotification(notification.id)
                             onDismiss()
                         }
                     }) {
@@ -77,7 +77,7 @@ fun NotificationDialog(notificationId: String, onDismiss: () -> Unit) {
                     }
                     TextButton(onClick = {
                         coroutineScope.launch {
-                            api.user.markNotificationAsRead(notificationId)
+                            api.user.markNotificationAsRead(notification.id)
                             onDismiss()
                         }
                     }) {
