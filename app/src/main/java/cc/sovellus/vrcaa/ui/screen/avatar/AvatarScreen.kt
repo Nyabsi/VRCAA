@@ -78,7 +78,8 @@ import java.util.TimeZone
 
 class AvatarScreen(
     private val avatarId: String,
-    private val peek: Boolean = false
+    private val peek: Boolean = false,
+    private val onInvalidAvatar: (() -> Unit)? = null
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -102,23 +103,29 @@ class AvatarScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        Toast.makeText(
-            context,
-            stringResource(R.string.avatar_toast_avatar_not_found_message),
-            Toast.LENGTH_SHORT
-        ).show()
-
         if (peek) {
             if (context is Activity) {
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.avatar_toast_avatar_not_found_message),
+                    Toast.LENGTH_SHORT
+                ).show()
                 context.finish()
             }
         } else {
             val once = remember(Unit) { mutableStateOf(false) }
             if (!once.value) {
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.avatar_toast_avatar_not_found_message),
+                    Toast.LENGTH_SHORT
+                ).show()
                 navigator.pop()
                 once.value = true
             }
         }
+
+        onInvalidAvatar?.invoke()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

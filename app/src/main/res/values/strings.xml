@@ -363,6 +363,9 @@
     <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
     <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
 
+    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
+    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
+
     <!-- Activities -->
 
     <!-- Worlds -->
