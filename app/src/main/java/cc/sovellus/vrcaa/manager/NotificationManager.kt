@@ -38,6 +38,7 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
         synchronized(notificationLock) {
             notifications.add(notification)
         }
+        notifyListeners()
     }
 
     fun addNotificationV2(notification: NotificationV2) {

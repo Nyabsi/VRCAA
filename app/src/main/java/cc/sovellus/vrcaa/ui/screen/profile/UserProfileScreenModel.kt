@@ -142,10 +142,7 @@ class UserProfileScreenModel(
 
     fun inviteToFriend(intent: String) {
         screenModelScope.launch {
-            val notification = api.instances.selfInvite(intent)
-            notification?.let {
-                NotificationManager.addNotification(notification)
-            }
+            api.instances.selfInvite(intent)
         }
     }
 

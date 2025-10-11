@@ -84,10 +84,7 @@ class WorldScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            val notification = api.instances.selfInvite(selectedInstanceId.value)
-            notification?.let {
-                NotificationManager.addNotification(notification)
-            }
+            api.instances.selfInvite(selectedInstanceId.value)
         }
     }
 

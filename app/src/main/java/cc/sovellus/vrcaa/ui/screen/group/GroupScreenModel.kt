@@ -123,10 +123,7 @@ class GroupScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            val notification = api.instances.selfInvite(clickedInstance.value)
-            notification?.let {
-                NotificationManager.addNotification(notification)
-            }
+            api.instances.selfInvite(clickedInstance.value)
         }
     }
 }
