@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">Nichts als gähnende Leere...</string>
-    <string name="legal_disclaimer">"VRCAA wird nicht von VRChat Inc. oder deren Partner unterstützt."</string>
+    <string name="legal_disclaimer">"VRCAA steht in keiner Verbindung zu VRChat Inc. oder deren Partnerunternehmen und wird von diesen nicht unterstützt."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favorisieren</item>
@@ -20,16 +20,16 @@
     <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Aktive Freunde</string>
-    <string name="home_recently_visited">Zuletzt besucht</string>
-    <string name="home_offline_friends">Freunde offline</string>
-    <string name="home_friend_locations">Freunde Standorte</string>
+    <string name="home_recently_visited">Zuletzt Besucht</string>
+    <string name="home_offline_friends">Offline-Freunde</string>
+    <string name="home_friend_locations">Standorte von Freunden</string>
     <!-- Login -->
     <string name="login_text">Bei VRC Android Assistant anmelden</string>
-    <string name="login_label_username">Benutzername oder E-Mail-Adresse</string>
+    <string name="login_label_username">Benutzername / E-Mail</string>
     <string name="login_label_password">Passwort</string>
     <string name="login_button_text">Anmelden</string>
-    <string name="login_toast_wrong_credentials">Benutzername oder Passwort falsch.</string>
-    <string name="login_toast_wrong_code">Fehler beim Überprüfen. Verifiziere Sie den Code und versuchen Sie es erneut.</string>
+    <string name="login_toast_wrong_credentials">Benutzername / Passwort ist falsch.</string>
+    <string name="login_toast_wrong_code">Verifizierung fehlgeschlagen, bitte überprüfe den Code erneut.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Gebe den an deine E-Mail gesendeten Code ein</string>
     <string name="auth_text_app">Gebe den Code deiner Authentifikation-App ein</string>
