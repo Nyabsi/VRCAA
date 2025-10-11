@@ -187,6 +187,10 @@
     <string name="notification_dialog_button_delete">Delete</string>
     <string name="notification_dialog_button_read">Mark As Read</string>
     <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
+    <string name="notification_dialog_button_accept">Accept</string>
+    <string name="notification_dialog_button_reject">Reject</string>
+    <string name="notification_dialog_button_block">Block</string>
+
 
     <!-- Avatars -->
 

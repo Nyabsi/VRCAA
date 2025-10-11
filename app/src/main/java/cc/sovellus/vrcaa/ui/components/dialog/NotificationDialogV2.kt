@@ -69,23 +69,68 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                     }) {
                         Text(stringResource(R.string.generic_text_cancel))
                     }
-                    TextButton(onClick = {
-                        coroutineScope.launch {
-                            api.notifications.respondToNotification(notification.id, INotifications.ResponseType.DELETE, "")
-                            NotificationManager.removeNotificationV2(notification.id)
-                            onDismiss()
+                    for (response in notification.responses) {
+                        when (response.type) {
+                            "accept" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.ACCEPT, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_accept))
+                                }
+                            }
+
+                            "reject" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.REJECT, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_reject))
+                                }
+                            }
+
+                            "block" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.BLOCK, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_block))
+                                }
+                            }
+
+                            "delete" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.DELETE, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_delete))
+                                }
+                            }
+
+                            "unsubscribe" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.UNSUBSCRIBE, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_unsubscribe))
+                                }
+                            }
                         }
-                    }) {
-                        Text(stringResource(R.string.notification_dialog_button_delete))
-                    }
-                    TextButton(onClick = {
-                        coroutineScope.launch {
-                            api.notifications.respondToNotification(notification.id, INotifications.ResponseType.UNSUBSCRIBE, "${JsonHelper.getJsonField(notification.data, "ownerId")},${notification.receiverUserId}")
-                            NotificationManager.removeNotificationV2(notification.id)
-                            onDismiss()
-                        }
-                    }) {
-                        Text(stringResource(R.string.notification_dialog_button_unsubscribe))
                     }
                 }
             }
