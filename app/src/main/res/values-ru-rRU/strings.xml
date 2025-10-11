@@ -138,8 +138,10 @@
     <string name="notification_service_title_status">Статус друга изменен!</string>
     <string name="notification_service_description_status">Ваш друг, %1$s изменил его статус с %2$s на %3$s.</string>
     <string name="notifications_page_title">Notifications</string>
-    <string name="notifications_type_unknown">Unknown</string>
     <string name="notifications_type_invite">Invite</string>
+    <string name="notifications_type_invite_response">Invite Response</string>
+    <string name="notifications_type_invite_request">Invite Request</string>
+    <string name="notifications_type_invite_request_response">Invite Request Response</string>
     <string name="notifications_type_friend_request">Friend Request</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
     <string name="notification_dialog_title">Notification</string>
@@ -147,6 +149,17 @@
     <string name="notification_dialog_button_delete">Delete</string>
     <string name="notification_dialog_button_read">Mark As Read</string>
     <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
+    <string name="notification_dialog_button_accept">Accept</string>
+    <string name="notification_dialog_button_reject">Reject</string>
+    <string name="notification_dialog_button_block">Block</string>
+    <string name="notification_dialog_button_start">Start</string>
+    <string name="notification_dialog_button_continue">Continue</string>
+    <string name="notification_dialog_button_restart">Restart</string>
+    <string name="notification_dialog_button_abandon">Abandon</string>
+    <string name="notification_invite_text">has invited you to</string>
+    <string name="notification_invite_response_text">rejected your request to join</string>
+    <string name="notification_invite_request_text">wants to join you</string>
+    <string name="notification_invite_request_response_text">rejected your invite request</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Change to Avatar</string>
     <string name="avatar_dropdown_toast_select_avatar">Аватар выбран!</string>
@@ -176,6 +189,8 @@
     <string name="feed_search_placeholder">Поиск пользователя или местоположения…</string>
     <string name="feed_friend_avatar_label">Изменение аватара</string>
     <string name="feed_friend_avatar_text">изменил(а) свой аватар на</string>
+    <string name="feed_friend_username_changed_label">Username Change</string>
+    <string name="feed_friend_username_changed_text">changed their username to</string>
     <!-- About -->
     <string name="about_page_title">О программе</string>
     <string name="about_page_open_source_licenses_title">Лицензии с открытым исходным кодом</string>
@@ -285,6 +300,8 @@
     <string name="favorite_dialog_button_edit">Редактировать</string>
     <string name="favorite_tab_refresh_favorites">Обновить Избранные</string>
     <string name="favorite_toast_refreshed_favorites">Избранные обновлены.</string>
+    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
+    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">Миры %1$s</string>
