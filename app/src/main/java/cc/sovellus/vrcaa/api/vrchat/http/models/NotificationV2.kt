@@ -21,15 +21,15 @@ data class NotificationV2(
     @SerializedName("ignoreDND")
     var ignoreDND: Boolean = false,
     @SerializedName("imageUrl")
-    var imageUrl: String = "",
+    var imageUrl: String?,
     @SerializedName("isSystem")
     var isSystem: Boolean = false,
     @SerializedName("link")
-    var link: String = "",
+    var link: String?,
     @SerializedName("linkText")
-    var linkText: String = "",
+    var linkText: String?,
     @SerializedName("linkTextKey")
-    var linkTextKey: String = "",
+    var linkTextKey: String?,
     @SerializedName("message")
     var message: String = "",
     @SerializedName("messageKey")
@@ -49,9 +49,9 @@ data class NotificationV2(
     @SerializedName("senderUsername")
     var senderUsername: String?,
     @SerializedName("title")
-    var title: String = "",
+    var title: String?,
     @SerializedName("titleKey")
-    var titleKey: String = "",
+    var titleKey: String?,
     @SerializedName("type")
     var type: String = "",
     @SerializedName("updatedAt")

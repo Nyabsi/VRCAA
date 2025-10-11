@@ -25,7 +25,13 @@ interface INotifications {
         REJECT,
         BLOCK,
         DELETE,
-        UNSUBSCRIBE;
+        UNSUBSCRIBE,
+        // VRRat
+        START,
+        CHOICE,
+        CONTINUE,
+        RESTART,
+        ABANDON;
 
         override fun toString(): String {
             return when (this) {
@@ -34,6 +40,11 @@ interface INotifications {
                 BLOCK -> "block"
                 DELETE -> "delete"
                 UNSUBSCRIBE -> "unsubscribe"
+                START -> "start"
+                CHOICE -> "choice"
+                CONTINUE -> "continue"
+                RESTART -> "restart"
+                ABANDON -> "abandon"
             }
         }
     }
