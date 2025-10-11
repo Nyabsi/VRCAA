@@ -21,11 +21,17 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 interface INotifications {
 
     enum class ResponseType {
+        ACCEPT,
+        REJECT,
+        BLOCK,
         DELETE,
         UNSUBSCRIBE;
 
         override fun toString(): String {
             return when (this) {
+                ACCEPT -> "accept"
+                REJECT -> "reject"
+                BLOCK -> "block"
                 DELETE -> "delete"
                 UNSUBSCRIBE -> "unsubscribe"
             }
