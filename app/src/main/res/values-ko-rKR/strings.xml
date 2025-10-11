@@ -138,7 +138,6 @@
     <string name="notification_service_title_status">친구가 상태를 변경했습니다.</string>
     <string name="notification_service_description_status">친구 %1$s님이 상태를 %2$s에서 %3$s(으)로 변경했습니다.</string>
     <string name="notifications_page_title">Notifications</string>
-    <string name="notifications_type_unknown">Unknown</string>
     <string name="notifications_type_invite">Invite</string>
     <string name="notifications_type_friend_request">Friend Request</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
@@ -147,6 +146,9 @@
     <string name="notification_dialog_button_delete">Delete</string>
     <string name="notification_dialog_button_read">Mark As Read</string>
     <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
+    <string name="notification_dialog_button_accept">Accept</string>
+    <string name="notification_dialog_button_reject">Reject</string>
+    <string name="notification_dialog_button_block">Block</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">아바타 변경</string>
     <string name="avatar_dropdown_toast_select_avatar">아바타가 선택되었습니다.</string>
@@ -176,6 +178,8 @@
     <string name="feed_search_placeholder">유저 혹은 위치 검색...</string>
     <string name="feed_friend_avatar_label">아바타 변경</string>
     <string name="feed_friend_avatar_text">님이 아바타를 변경했습니다:</string>
+    <string name="feed_friend_username_changed_label">Username Change</string>
+    <string name="feed_friend_username_changed_text">changed their username to</string>
     <!-- About -->
     <string name="about_page_title">정보</string>
     <string name="about_page_open_source_licenses_title">오픈 소스 라이선스</string>
@@ -285,6 +289,8 @@
     <string name="favorite_dialog_button_edit">수정</string>
     <string name="favorite_tab_refresh_favorites">즐겨찾기 새로고침</string>
     <string name="favorite_toast_refreshed_favorites">즐겨찾기를 새로고침했습니다.</string>
+    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
+    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s님의 월드</string>
