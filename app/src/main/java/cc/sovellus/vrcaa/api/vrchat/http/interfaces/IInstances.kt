@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstance
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 
 interface IInstances {
 
@@ -60,7 +61,7 @@ interface IInstances {
     }
 
     suspend fun fetchInstance(intent: String): Instance?
-    suspend fun selfInvite(intent: String): Boolean
+    suspend fun selfInvite(intent: String): Notification?
     suspend fun fetchGroupInstancesById(groupId: String): ArrayList<GroupInstance>
     suspend fun createInstance(worldId: String, type: InstanceType, region: InstanceRegion, ownerId: String?, canRequestInvite: Boolean): Instance?
 }

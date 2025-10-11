@@ -41,6 +41,7 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendOffline
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendOnline
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendUpdate
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.pipeline.models.NotificationV2
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
@@ -423,6 +424,12 @@ class PipelineService : Service(), CoroutineScope {
                             else -> {}
                         }
                     }
+                }
+
+                is NotificationV2 -> {
+                    val notification = msg.obj as NotificationV2
+                    val convertedNotification = JsonHelper.convert(notification, cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2::class.java)
+                    NotificationManager.addNotificationV2(convertedNotification)
                 }
 
                 else -> {}

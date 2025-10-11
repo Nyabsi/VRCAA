@@ -24,6 +24,9 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
+import cc.sovellus.vrcaa.api.vrchat.http.models.Notifications
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationsV2
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.async
@@ -43,35 +46,49 @@ class NotificationsScreenModel : StateScreenModel<NotificationsScreenModel.Notif
 
     private var notificationStateFlow = MutableStateFlow(listOf<Notification>())
     var notifications = notificationStateFlow.asStateFlow()
+
+    private var notificationV2StateFlow = MutableStateFlow(listOf<NotificationV2>())
+    var notificationsV2 = notificationV2StateFlow.asStateFlow()
+
     var users: List<LimitedUser?> = arrayListOf<LimitedUser?>()
 
     var currentIndex = mutableIntStateOf(0)
     var currentNotificationId = mutableStateOf("")
+    var currentNotificationV2 = mutableStateOf<NotificationV2?>(null)
 
     private val listener = object : NotificationManager.NotificationListener {
         override fun onUpdateNotifications(notifications: List<Notification>) {
+            mutableState.value = NotificationsState.Loading
             notificationStateFlow.value = notifications
             fetchUsersFromNotifications()
         }
+
+        override fun onUpdateNotificationsV2(notifications: List<NotificationV2>) {
+            mutableState.value = NotificationsState.Loading
+            notificationV2StateFlow.value = notifications
+            mutableState.value = NotificationsState.Loaded
+        }
+
+        override fun onUpdateNotificationCount(count: Int) { }
     }
 
     fun fetchUsersFromNotifications() {
-        mutableState.value = NotificationsState.Loading
-        notificationStateFlow.update { NotificationManager.getNotifications() }
         screenModelScope.launch {
-            users = notificationStateFlow.value.filter { it.senderUserId.isNotEmpty() && users.find { user -> user?.id == it.senderUserId }  == null }.map {
+            users += notificationStateFlow.value.filter { it.senderUserId.isNotEmpty() && users.find { user -> user?.id == it.senderUserId }  == null }.map {
                 async {
                     api.users.fetchUserByUserId(it.senderUserId)
                 }
             }.awaitAll()
+            mutableState.value = NotificationsState.Loaded
         }
-        mutableState.value = NotificationsState.Loaded
     }
 
     init {
-        mutableState.value = NotificationsState.Init
+        mutableState.value = NotificationsState.Loading
         App.setLoadingText(R.string.loading_text_notifications)
         NotificationManager.addListener(listener)
+        notificationStateFlow.update { NotificationManager.getNotifications() }
+        notificationV2StateFlow.update { NotificationManager.getNotificationsV2() }
         fetchUsersFromNotifications()
     }
 }

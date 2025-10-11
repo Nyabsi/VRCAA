@@ -16,11 +16,22 @@
 
 package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
-import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 
 interface INotifications {
 
-    suspend fun markNotificationAsRead(notificationId: String): Notification?
-    suspend fun hideNotification(notificationId: String): Notification?
-    suspend fun fetchNotifications(n: Int = 100, offset: Int = 0, notifications: ArrayList<Notification> = arrayListOf()): ArrayList<Notification>
+    enum class ResponseType {
+        DELETE,
+        UNSUBSCRIBE;
+
+        override fun toString(): String {
+            return when (this) {
+                DELETE -> "delete"
+                UNSUBSCRIBE -> "unsubscribe"
+            }
+        }
+    }
+
+    suspend fun respondToNotification(notificationId: String, type: ResponseType, response: String): String
+    suspend fun fetchNotifications(n: Int = 100): ArrayList<NotificationV2>
 }

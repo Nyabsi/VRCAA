@@ -57,8 +57,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialog
+import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialogV2
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -67,6 +69,57 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.text.ifEmpty
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun NotificationItem(type: String, message: String, url: String, date: String, onClick: () -> Unit) {
+    ListItem(
+        overlineContent = {
+            Text(
+                text = type,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        headlineContent = {
+            Text(
+                text = message,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        leadingContent = {
+            Column {
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    GlideImage(
+                        model = url,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(RoundedCornerShape(50)),
+                        contentScale = ContentScale.FillBounds,
+                        alignment = Alignment.Center,
+                        loading = placeholder(R.drawable.image_placeholder),
+                        failure = placeholder(R.drawable.image_placeholder)
+                    )
+                }
+            }
+        },
+        trailingContent = {
+            val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                .withLocale(Locale.getDefault())
+            Text(text = ZonedDateTime.parse(date).format(formatter))
+        },
+        modifier = Modifier.clickable {
+            onClick()
+        }
+    )
+}
 
 class NotificationsScreen : Screen {
 
@@ -92,6 +145,7 @@ class NotificationsScreen : Screen {
         val navigator: Navigator = LocalNavigator.currentOrThrow
 
         var showDialog by remember { mutableStateOf(false) }
+        var showDialogV2 by remember { mutableStateOf(false) }
 
         if (showDialog) {
             NotificationDialog(
@@ -100,6 +154,17 @@ class NotificationsScreen : Screen {
                     showDialog = false
                 }
             )
+        }
+
+        if (showDialogV2) {
+            model.currentNotificationV2.value?.let {
+                NotificationDialogV2(
+                    it,
+                    onDismiss = {
+                        showDialogV2 = false
+                    }
+                )
+            }
         }
 
         Scaffold(
@@ -127,6 +192,7 @@ class NotificationsScreen : Screen {
                         )
                 ) {
                     val notifications = model.notifications.collectAsState()
+                    val notificationsV2 = model.notificationsV2.collectAsState()
 
                     LazyColumn(
                         Modifier
@@ -135,71 +201,59 @@ class NotificationsScreen : Screen {
                             .padding(1.dp),
                         state = rememberLazyListState()
                     ) {
+                        items(notificationsV2.value) { notificationV2 ->
+                            NotificationItem(
+                                notificationV2.title,
+                                notificationV2.message,
+                                notificationV2.imageUrl,
+                                notificationV2.createdAt
+                            ) {
+                                model.currentNotificationV2.value = notificationV2
+                                showDialogV2 = true
+                            }
+                        }
+
                         items(notifications.value) { notification ->
+                            val user = remember { model.users.find { it?.id == notification.senderUserId } }
                             when (notification.type) {
                                 "friendRequest" -> {
-                                    val user = remember { model.users.find { it?.id == notification.senderUserId } }
-                                    ListItem(
-                                        overlineContent = {
-                                            Text(text = stringResource(R.string.notifications_type_friend_request))
-                                        },
-                                        headlineContent = {
-                                            Text(stringResource(R.string.notifications_type_friend_request_content).format(notification.senderUsername))
-                                        },
-                                        leadingContent = {
-                                            Column {
-                                                Badge(
-                                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                                                    modifier = Modifier
-                                                        .size(64.dp)
-                                                        .align(Alignment.CenterHorizontally)
-                                                ) {
-                                                    GlideImage(
-                                                        model = user?.userIcon?.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } } ?: "",
-                                                        contentDescription = null,
-                                                        modifier = Modifier
-                                                            .size(56.dp)
-                                                            .clip(RoundedCornerShape(50)),
-                                                        contentScale = ContentScale.FillBounds,
-                                                        alignment = Alignment.Center,
-                                                        loading = placeholder(R.drawable.image_placeholder),
-                                                        failure = placeholder(R.drawable.image_placeholder)
-                                                    )
-                                                }
-                                            }
-                                        },
-                                        trailingContent = {
-                                            val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
-                                                .withLocale(Locale.getDefault())
-                                            Text(text = ZonedDateTime.parse(notification.createdAt).format(formatter))
-                                        },
-                                        modifier = Modifier.clickable {
+                                    user?.let {
+                                        NotificationItem(
+                                            stringResource(R.string.notifications_type_friend_request),
+                                            stringResource(R.string.notifications_type_friend_request_content).format(notification.senderUsername),
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
                                             model.currentNotificationId.value = notification.id
                                             showDialog = true
                                         }
-                                    )
+                                    }
+                                }
+                                "invite" -> {
+                                    user?.let {
+                                        NotificationItem(
+                                            stringResource(R.string.notifications_type_invite),
+                                            notification.message,
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
+                                            model.currentNotificationId.value = notification.id
+                                            showDialog = true
+                                        }
+                                    }
                                 }
                                 else -> {
-                                    ListItem(
-                                        overlineContent = {
-                                            Text(text = notification.type)
-                                        },
-                                        headlineContent = {
-                                            Text("This type is not known!")
-                                        },
-                                        supportingContent = {
-                                            Text("contact me @ discord and let me know.")
-                                        },
-                                        trailingContent = {
-                                            val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
-                                                .withLocale(Locale.getDefault())
-                                            Text(text = ZonedDateTime.parse(notification.createdAt).format(formatter))
-                                        },
-                                        modifier = Modifier.clickable {
+                                    user?.let {
+                                        NotificationItem(
+                                            stringResource(R.string.notifications_type_unknown),
+                                            notification.message,
+                                            user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
+                                            notification.createdAt
+                                        ) {
                                             model.currentNotificationId.value = notification.id
                                             showDialog = true
                                         }
-                                    )
+                                    }
                                 }
                             }
                         }

@@ -29,6 +29,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
@@ -83,7 +84,10 @@ class WorldScreenModel(
 
     fun selfInvite() {
         screenModelScope.launch {
-            api.instances.selfInvite(selectedInstanceId.value)
+            val notification = api.instances.selfInvite(selectedInstanceId.value)
+            notification?.let {
+                NotificationManager.addNotification(notification)
+            }
         }
     }
 

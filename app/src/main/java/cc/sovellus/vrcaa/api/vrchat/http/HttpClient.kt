@@ -80,7 +80,10 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Files
 import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationResponse
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notifications
+import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationsV2
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
 import cc.sovellus.vrcaa.api.vrchat.http.models.UserNoteUpdate
@@ -589,7 +592,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun selfInvite(intent: String): Boolean {
+        override suspend fun selfInvite(intent: String): Notification? {
 
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
@@ -603,14 +606,14 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             when (result) {
                 is Result.Succeeded -> {
-                    return true
+                    return Gson().fromJson(result.body, Notification::class.java)
                 }
                 is Result.NotFound -> {
-                    return false
+                    return null
                 }
                 else -> {
                     handleExceptions(result)
-                    return false
+                    return null
                 }
             }
         }
@@ -1554,6 +1557,87 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     val user = object : IUser {
 
+        override suspend fun markNotificationAsRead(notificationId: String): Notification? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "PUT",
+                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/see",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Notification::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override suspend fun hideNotification(notificationId: String): Notification? {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "PUT",
+                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/hide",
+                headers = headers,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return Gson().fromJson(result.body, Notification::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override tailrec suspend fun fetchNotifications(
+            n: Int,
+            offset: Int,
+            notifications: ArrayList<Notification>
+        ): ArrayList<Notification> {
+            val headers = Headers.Builder()
+                .add("User-Agent", Config.API_USER_AGENT)
+
+            val result = doRequest(
+                method = "GET",
+                url = "${Config.API_BASE_URL}/auth/user/notifications?n=${n}&offset=${offset}",
+                headers = headers,
+                body = null
+            )
+
+            return when (result) {
+                is Result.Succeeded -> {
+                    if (result.body == "[]")
+                        return notifications
+
+                    val json = Gson().fromJson(result.body, Notifications::class.java)
+                    notifications.addAll(json)
+                    fetchNotifications(n, offset + n, notifications)
+                }
+                is Result.NotModified -> {
+                    return notifications
+                }
+                is Result.Forbidden -> {
+                    return arrayListOf()
+                }
+                else -> {
+                    handleExceptions(result)
+                    return arrayListOf()
+                }
+            }
+        }
+
         override suspend fun updateProfileByUserId(
             userId: String,
             newStatus: String,
@@ -1944,76 +2028,53 @@ class HttpClient : BaseClient(), CoroutineScope {
     }
 
     val notifications = object : INotifications {
-        override suspend fun markNotificationAsRead(notificationId: String): Notification? {
+        override suspend fun respondToNotification(
+            notificationId: String,
+            type: INotifications.ResponseType,
+            response: String
+        ): String {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
+            val response = NotificationResponse(
+                responseType = type.toString(),
+                responseData = response
+            )
+
             val result = doRequest(
-                method = "PUT",
-                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/see",
+                method = "POST",
+                url = "${Config.API_BASE_URL}/notifications/$notificationId/respond",
                 headers = headers,
-                body = null
+                body = Gson().toJson(response, NotificationResponse::class.java)
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
+                    return result.body
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    return ""
                 }
             }
         }
 
-        override suspend fun hideNotification(notificationId: String): Notification? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
-            val result = doRequest(
-                method = "PUT",
-                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/hide",
-                headers = headers,
-                body = null
-            )
-
-            when (result) {
-                is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
-                }
-                else -> {
-                    handleExceptions(result)
-                    return null
-                }
-            }
-        }
-
-        override tailrec suspend fun fetchNotifications(
-            n: Int,
-            offset: Int,
-            notifications: ArrayList<Notification>
-        ): ArrayList<Notification> {
+        override suspend fun fetchNotifications(
+            n: Int
+        ): ArrayList<NotificationV2> {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user/notifications?n=${n}&offset=${offset}",
+                url = "${Config.API_BASE_URL}/notifications?n=${n}",
                 headers = headers,
                 body = null
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    if (result.body == "[]")
-                        return notifications
-
-                    val json = Gson().fromJson(result.body, Notifications::class.java)
-                    notifications.addAll(json)
-                    fetchNotifications(n, offset + n, notifications)
-                }
-                is Result.NotModified -> {
-                    return notifications
+                    return Gson().fromJson(result.body, NotificationsV2::class.java)
                 }
                 is Result.Forbidden -> {
                     return arrayListOf()
