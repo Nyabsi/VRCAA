@@ -97,7 +97,8 @@ import java.util.TimeZone
 
 class WorldScreen(
     private val worldId: String,
-    private val peek: Boolean = false
+    private val peek: Boolean = false,
+    private val onInvalidWorld: (() -> Unit)? = null
 ) : Screen {
 
     override val key = uniqueScreenKey
@@ -120,19 +121,30 @@ class WorldScreen(
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        Toast.makeText(
-            context,
-            stringResource(R.string.world_toast_not_found),
-            Toast.LENGTH_SHORT
-        ).show()
-
         if (peek) {
             if (context is Activity) {
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.world_toast_not_found),
+                    Toast.LENGTH_SHORT
+                ).show()
                 context.finish()
             }
         } else {
             navigator.pop()
+            val once = remember(Unit) { mutableStateOf(false) }
+            if (!once.value) {
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.world_toast_not_found),
+                    Toast.LENGTH_SHORT
+                ).show()
+                navigator.pop()
+                once.value = true
+            }
         }
+
+        onInvalidWorld?.invoke()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

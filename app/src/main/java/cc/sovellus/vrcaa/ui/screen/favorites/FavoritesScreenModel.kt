@@ -21,12 +21,16 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 
 class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState>(FavoriteState.Init) {
 
@@ -49,6 +53,9 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     var currentSelectedGroup = mutableStateOf("")
     var editDialogShown = mutableStateOf(false)
     var currentSelectedIsFriend = mutableStateOf(false)
+    var currentSelectedType = mutableStateOf(IFavorites.FavoriteType.FAVORITE_NONE)
+    var currentSelectedId = mutableStateOf("")
+    var deleteDialogShown = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun startCacheRefresh() {
@@ -78,5 +85,14 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         worldListFlow.update { FavoriteManager.getWorldList() }
         avatarListFlow.update { FavoriteManager.getAvatarList() }
         friendListFlow.update { FavoriteManager.getFriendList() }
+    }
+
+    fun removeFavorite() {
+        screenModelScope.launch {
+            mutableState.value = FavoriteState.Loading
+            FavoriteManager.removeFavorite(currentSelectedType.value, currentSelectedId.value)
+            fetchContent()
+            mutableState.value = FavoriteState.Result
+        }
     }
 }
