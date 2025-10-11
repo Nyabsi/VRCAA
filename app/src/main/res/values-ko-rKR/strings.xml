@@ -138,12 +138,15 @@
     <string name="notification_service_title_status">친구가 상태를 변경했습니다.</string>
     <string name="notification_service_description_status">친구 %1$s님이 상태를 %2$s에서 %3$s(으)로 변경했습니다.</string>
     <string name="notifications_page_title">Notifications</string>
+    <string name="notifications_type_unknown">Unknown</string>
+    <string name="notifications_type_invite">Invite</string>
     <string name="notifications_type_friend_request">Friend Request</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
     <string name="notification_dialog_title">Notification</string>
     <string name="notification_dialog_description">What do you want to do with this notification?</string>
     <string name="notification_dialog_button_delete">Delete</string>
     <string name="notification_dialog_button_read">Mark As Read</string>
+    <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">아바타 변경</string>
     <string name="avatar_dropdown_toast_select_avatar">아바타가 선택되었습니다.</string>
