@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.ui.screen.notifications
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -57,8 +58,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
-import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialog
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialogV2
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
@@ -68,15 +67,14 @@ import com.bumptech.glide.integration.compose.placeholder
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import kotlin.text.ifEmpty
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NotificationItem(type: String, message: String, url: String, date: String, onClick: () -> Unit) {
+fun NotificationItem(title: String, message: String, url: String, date: String, onClick: () -> Unit) {
     ListItem(
         overlineContent = {
             Text(
-                text = type,
+                text = title,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -89,25 +87,29 @@ fun NotificationItem(type: String, message: String, url: String, date: String, o
             )
         },
         leadingContent = {
-            Column {
-                Badge(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                    modifier = Modifier
-                        .size(64.dp)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    GlideImage(
-                        model = url,
-                        contentDescription = null,
+            if (url.isNotEmpty()) {
+                Column {
+                    Badge(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                         modifier = Modifier
-                            .size(56.dp)
-                            .clip(RoundedCornerShape(50)),
-                        contentScale = ContentScale.FillBounds,
-                        alignment = Alignment.Center,
-                        loading = placeholder(R.drawable.image_placeholder),
-                        failure = placeholder(R.drawable.image_placeholder)
-                    )
+                            .size(64.dp)
+                            .align(Alignment.CenterHorizontally)
+                    ) {
+                        GlideImage(
+                            model = url,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(56.dp)
+                                .clip(RoundedCornerShape(50)),
+                            contentScale = ContentScale.FillBounds,
+                            alignment = Alignment.Center,
+                            loading = placeholder(R.drawable.image_placeholder),
+                            failure = placeholder(R.drawable.image_placeholder)
+                        )
+                    }
                 }
+            } else {
+                Box(modifier = Modifier.size(64.dp))
             }
         },
         trailingContent = {
@@ -203,9 +205,10 @@ class NotificationsScreen : Screen {
                     ) {
                         items(notificationsV2.value) { notificationV2 ->
                             NotificationItem(
-                                notificationV2.title,
+                                // if it's some strange notification, just show the type instead of title.
+                                notificationV2.title ?: notificationV2.type,
                                 notificationV2.message,
-                                notificationV2.imageUrl,
+                                notificationV2.imageUrl ?: "", // an image url is not an guarantee.
                                 notificationV2.createdAt
                             ) {
                                 model.currentNotificationV2.value = notificationV2

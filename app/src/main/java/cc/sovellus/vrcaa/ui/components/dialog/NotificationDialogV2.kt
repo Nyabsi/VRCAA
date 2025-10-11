@@ -18,18 +18,26 @@ package cc.sovellus.vrcaa.ui.components.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -39,8 +47,12 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
@@ -59,10 +71,29 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                 Text(text = stringResource(R.string.notification_dialog_title), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = notification.message, style = MaterialTheme.typography.bodyMedium)
-                Spacer(modifier = Modifier.height(24.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                notification.imageUrl?.let {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    GlideImage(
+                        model = notification.imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .height(250.dp)
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(10)),
+                        contentScale = ContentScale.FillBounds,
+                        alignment = Alignment.Center,
+                        loading = placeholder(R.drawable.image_placeholder),
+                        failure = placeholder(R.drawable.image_placeholder)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     TextButton(onClick = {
                         onDismiss()
@@ -128,6 +159,67 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                                     }
                                 }) {
                                     Text(stringResource(R.string.notification_dialog_button_unsubscribe))
+                                }
+                            }
+
+                            "start" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.START, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_start))
+                                }
+                            }
+
+                            "choice" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.CHOICE, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    // choice populates from server ideally.
+                                    Text(response.text)
+                                }
+                            }
+
+                            "continue" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.CONTINUE, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_continue))
+                                }
+                            }
+
+                            "restart" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.RESTART, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_restart))
+                                }
+                            }
+
+                            "abandon" -> {
+                                TextButton(onClick = {
+                                    coroutineScope.launch {
+                                        api.notifications.respondToNotification(notification.id, INotifications.ResponseType.ABANDON, response.data)
+                                        NotificationManager.removeNotificationV2(notification.id)
+                                        onDismiss()
+                                    }
+                                }) {
+                                    Text(stringResource(R.string.notification_dialog_button_abandon))
                                 }
                             }
                         }
