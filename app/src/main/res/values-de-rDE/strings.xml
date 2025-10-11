@@ -149,6 +149,10 @@
     <string name="notification_dialog_button_accept">Accept</string>
     <string name="notification_dialog_button_reject">Reject</string>
     <string name="notification_dialog_button_block">Block</string>
+    <string name="notification_dialog_button_start">Start</string>
+    <string name="notification_dialog_button_continue">Continue</string>
+    <string name="notification_dialog_button_restart">Restart</string>
+    <string name="notification_dialog_button_abandon">Abandon</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Wechsel zu Avatar</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar ausgewählt!</string>
