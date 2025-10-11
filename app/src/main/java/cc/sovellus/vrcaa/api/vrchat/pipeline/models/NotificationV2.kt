@@ -77,7 +77,7 @@ data class NotificationV2(
 ) {
     data class Response(
         @SerializedName("data")
-        var `data`: Any = Any(),
+        var `data`: String = "",
         @SerializedName("icon")
         var icon: String = "",
         @SerializedName("text")
