@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">Nichts als gähnende Leere...</string>
-    <string name="legal_disclaimer">"VRCAA wird nicht von VRChat Inc. oder deren Partner unterstützt."</string>
+    <string name="result_not_found">Nichts als unendliche Leere...</string>
+    <string name="legal_disclaimer">"VRCAA steht in keiner Verbindung zu VRChat Inc. oder deren Partnerunternehmen und wird von diesen nicht unterstützt."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favorisieren</item>
@@ -20,34 +20,34 @@
     <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Aktive Freunde</string>
-    <string name="home_recently_visited">Zuletzt besucht</string>
-    <string name="home_offline_friends">Freunde offline</string>
-    <string name="home_friend_locations">Freunde Standorte</string>
+    <string name="home_recently_visited">Zuletzt Besucht</string>
+    <string name="home_offline_friends">Offline-Freunde</string>
+    <string name="home_friend_locations">Standorte von Freunden</string>
     <!-- Login -->
     <string name="login_text">Bei VRC Android Assistant anmelden</string>
-    <string name="login_label_username">Benutzername oder E-Mail-Adresse</string>
+    <string name="login_label_username">Benutzername / E-Mail</string>
     <string name="login_label_password">Passwort</string>
     <string name="login_button_text">Anmelden</string>
-    <string name="login_toast_wrong_credentials">Benutzername oder Passwort falsch.</string>
-    <string name="login_toast_wrong_code">Fehler beim Überprüfen. Verifiziere Sie den Code und versuchen Sie es erneut.</string>
+    <string name="login_toast_wrong_credentials">Benutzername / Passwort ist falsch.</string>
+    <string name="login_toast_wrong_code">Verifizierung fehlgeschlagen, bitte überprüfe den Code erneut.</string>
     <!-- Two Auth -->
-    <string name="auth_text_email">Gebe den an deine E-Mail gesendeten Code ein</string>
-    <string name="auth_text_app">Gebe den Code deiner Authentifikation-App ein</string>
-    <string name="auth_button_text">Überprüfen</string>
+    <string name="auth_text_email">Gebe den Code ein, den du per E-Mail erhalten hast</string>
+    <string name="auth_text_app">Gebe den Code aus deiner Authenticator-App ein</string>
+    <string name="auth_button_text">Bestätigen</string>
     <string name="auth_button_paste">Einfügen</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Suche nach Welten, Nutzer oder Avatare…</string>
+    <string name="main_search_placeholder">Welten, Nutzer oder Avatare suchen…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Aktueller Standort</string>
     <string name="profile_label_note">Notiz</string>
     <string name="profile_label_biography">Biografie</string>
     <string name="profile_label_last_activity">Letzte Aktivität</string>
-    <string name="profile_label_date_joined">Registriert am</string>
+    <string name="profile_label_date_joined">Registriert Am</string>
     <string name="profile_text_no_biography">Keine Beschreibung angegeben.</string>
     <string name="profile_user_dropdown_manage_notifications">Benachrichtigungen verwalten</string>
     <string name="profile_user_not_found_message">Benutzer existiert nicht.</string>
     <string name="profile_user_avatar_private">Avatar ist privat!</string>
-    <string name="profile_user_avatar_unreachable">Avatar nicht verfügbar</string>
+    <string name="profile_user_avatar_unreachable">Avatar nicht verfügbar!</string>
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Ergebnisse für</string>
@@ -60,8 +60,8 @@
     <string name="search_filter_category_avatars_provider">Anbieter</string>
     <string name="search_filter_category_groups">Gruppen</string>
     <string name="search_filter_category_groups_count">Anzahl</string>
-    <string name="copy_id_label">Id kopieren</string>
-    <string name="copied_toast">%1$s\'s Id kopiert.</string>
+    <string name="copy_id_label">ID kopieren</string>
+    <string name="copied_toast">%1$s\'s ID kopiert.</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">Anzahl</string>
     <string name="search_filter_button_reset">Zurücksetzen</string>
@@ -75,7 +75,7 @@
     <string name="search_button_more">Mehr…</string>
     <!-- Settings -->
     <string name="settings_item_about">Info</string>
-    <string name="settings_item_about_description">Weitere Informationen zu Ihrem Gerät und VRCAA</string>
+    <string name="settings_item_about_description">Weitere Informationen zu deinem Gerät und VRCAA</string>
     <string name="settings_item_theming">Darstellung</string>
     <string name="settings_item_theming_description">Erscheinungsbild und minimalistischer Modus</string>
     <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimentell)</string>
@@ -89,54 +89,54 @@
     <!-- Worlds -->
     <string name="world_label_description">Beschreibung</string>
     <string name="world_label_tags">Stichworte</string>
-    <string name="world_text_no_tags">Der Autor hat keine Stichworte angegeben.</string>
-    <string name="world_title_created_at">Erstelldatum</string>
-    <string name="world_title_updated_at">Zuletzt aktualisiert</string>
+    <string name="world_text_no_tags">Der Autor hat keine Stichwörter angegeben.</string>
+    <string name="world_title_created_at">Erstellungsdatum</string>
+    <string name="world_title_updated_at">Zuletzt Aktualisiert</string>
     <string name="world_title_visits">Besuche</string>
     <string name="world_title_favorites">Favoriten</string>
     <string name="world_title_capacity">Kapazität</string>
-    <string name="world_title_occupants">vor Ort</string>
+    <string name="world_title_occupants">Vor Ort</string>
     <string name="world_title_publication_date">Veröffentlichungsdatum</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Beliebtheit</string>
-    <string name="world_toast_not_found">Dieser Welt ist privat oder existiert nicht.</string>
+    <string name="world_toast_not_found">Welt ist privat oder existiert nicht.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
         <item>Instanzen</item>
     </string-array>
     <string name="world_author_label">Von %1$s</string>
-    <string name="world_instance_invite_dialog_title">Sind Sie sicher?</string>
-    <string name="world_instance_invite_dialog_description">Sie sind dabei, sich selbst in diese Instanz einzuladen. Wollen Sie das wirklich tun?</string>
+    <string name="world_instance_invite_dialog_title">Bist du sicher?</string>
+    <string name="world_instance_invite_dialog_description">Du bist dabei, dir selbst eine Einladung zu dieser Instanz zu schicken. Willst du das wirklich tun?</string>
     <string name="world_instance_no_public_instances_message">Keine öffentlichen Instanzen</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Freunde</string>
-    <string name="tabs_label_home">Startseite</string>
+    <string name="tabs_label_home">Start</string>
     <string name="tabs_label_favorites">Favoriten</string>
     <string name="tabs_label_feed">Feed</string>
     <string name="tabs_label_profile">Profil</string>
-    <string name="tabs_label_settings">Einstellungen</string>
+    <string name="tabs_label_settings">Optionen</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA überwacht nun Ihre Freunde im Hintergrund.</string>
+    <string name="service_notification">VRCAA hält nun ein Auge auf deine Freunde im Hintergrund.</string>
     <string name="service_killed_by_vendor_notification">VRCAA wurde von ihrem Gerät beendet. Siehe https://dontkillmyapp.com/ für weitere Informationen.</string>
-    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA meldet jetzt rich-presence Information.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA meldet jetzt Rich Presence Information.</string>
     <string name="notification_service_title_online">Freund ist jetzt online!</string>
     <string name="notification_service_description_online">Dein Freund, %1$s ist jetzt online!</string>
     <string name="notification_service_title_offline">Freund ist jetzt offline!</string>
-    <string name="notification_service_description_offline">Dein Freund %1$s ist jetzt offline!</string>
-    <string name="notification_service_title_location">Freund hat seinen Standort geändert!</string>
+    <string name="notification_service_description_offline">Dein Freund, %1$s ist jetzt offline!</string>
+    <string name="notification_service_title_location">Dein Freund ist jetzt woanders!</string>
     <string name="notification_service_description_location">Dein Freund, %1$s ging zu %2$s.</string>
     <string name="notification_service_title_friend_removed">Dein Freund hat Dich entfernt.</string>
-    <string name="notification_service_description_friend_removed">Dein Freund, %1$s ist nicht mehr dein Freund :(</string>
+    <string name="notification_service_description_friend_removed">%1$s hat dich entfreundet :(</string>
     <string name="notification_service_title_friend_added">Du hast einen neuen Freund!</string>
-    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
-    <string name="notification_title_player">\'s Benachrichtigung</string>
-    <string name="notification_label_enable">Aktiviere Benachrichtigungen</string>
+    <string name="notification_service_description_friend_added">%1$s ist jetzt dein Freund!</string>
+    <string name="notification_title_player">\'s Benachrichtigungen</string>
+    <string name="notification_label_enable">Benachrichtigungen Aktivieren</string>
     <string name="notification_label_intent_online">Online Benachrichtigungen</string>
     <string name="notification_label_intent_offline">Offline Benachrichtigungen</string>
     <string name="notification_label_intent_location">Standort Benachrichtigungen</string>
     <string name="notification_label_intent_status">Statusänderungs-Benachrichtigungen</string>
-    <string name="notification_service_title_status">Freund änderte seinen Status!</string>
-    <string name="notification_service_description_status">Dein Freund %1$s änderte seinen Status von %2$s zu %3$s.</string>
+    <string name="notification_service_title_status">Freund hat seinen Status geändert!</string>
+    <string name="notification_service_description_status">Dein Freund, %1$s hat seinen Status von %2$s zu %3$s geändert.</string>
     <string name="notifications_page_title">Notifications</string>
     <string name="notifications_type_invite">Invite</string>
     <string name="notifications_type_invite_response">Invite Response</string>
@@ -162,10 +162,10 @@
     <string name="notification_invite_request_response_text">rejected your invite request</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Wechsel zu Avatar</string>
-    <string name="avatar_dropdown_toast_select_avatar">Avatar ausgewählt!</string>
+    <string name="avatar_dropdown_toast_select_avatar">Avatar Gewechselt!</string>
     <string name="avatar_title_description">Beschreibung</string>
-    <string name="avatar_title_created_at">Erstelldatum</string>
-    <string name="avatar_title_updated_at">Zuletzt geändert</string>
+    <string name="avatar_title_created_at">Erstellungsdatum</string>
+    <string name="avatar_title_updated_at">Zuletzt Geändert</string>
     <string name="avatar_title_content_labels">Inhaltsbezeichnungen</string>
     <string name="avatar_text_author">Von %1$s</string>
     <string name="avatar_title_version">Version</string>
@@ -187,8 +187,8 @@
     <string name="feed_friend_request_label">Freundschaftsanfrage</string>
     <string name="feed_friend_request_text">möchte dich als Freund hinzufügen.</string>
     <string name="feed_search_placeholder">Nach Benutzer oder Standort suchen</string>
-    <string name="feed_friend_avatar_label">Avatarwechsel</string>
-    <string name="feed_friend_avatar_text">änderte deren Avatar zu</string>
+    <string name="feed_friend_avatar_label">Avatar Gewechselt</string>
+    <string name="feed_friend_avatar_text">änderte den Avatar zu</string>
     <string name="feed_friend_username_changed_label">Username Change</string>
     <string name="feed_friend_username_changed_text">changed their username to</string>
     <!-- About -->
