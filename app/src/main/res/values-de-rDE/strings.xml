@@ -187,8 +187,8 @@
     <string name="feed_friend_request_label">Freundschaftsanfrage</string>
     <string name="feed_friend_request_text">möchte dich als Freund hinzufügen.</string>
     <string name="feed_search_placeholder">Nach Benutzer oder Standort suchen</string>
-    <string name="feed_friend_avatar_label">Avatarwechsel</string>
-    <string name="feed_friend_avatar_text">änderte deren Avatar zu</string>
+    <string name="feed_friend_avatar_label">Avatar Gewechselt</string>
+    <string name="feed_friend_avatar_text">änderte den Avatar zu</string>
     <string name="feed_friend_username_changed_label">Username Change</string>
     <string name="feed_friend_username_changed_text">changed their username to</string>
     <!-- About -->
