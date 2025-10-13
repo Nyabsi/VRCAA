@@ -25,6 +25,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -60,9 +61,9 @@ class StickersScreenModel : StateScreenModel<StickersScreenModel.StickerState>(S
         mutableState.value = StickerState.Loading
         App.setLoadingText(R.string.loading_text_stickers)
         screenModelScope.launch {
-            stickers = api.inventory.fetchStickers(false, false)
-            userStickers = api.inventory.fetchStickers(true, false)
-            archivedStickers = api.inventory.fetchStickers(false, true)
+            stickers = api.inventory.fetchInventory(IInventory.PropType.STICKER, arrayListOf(), arrayListOf(), arrayListOf("ugc"), false)
+            userStickers = api.inventory.fetchInventory(IInventory.PropType.STICKER, arrayListOf("Custom Sticker"), arrayListOf("ugc"), arrayListOf(), false)
+            archivedStickers = api.inventory.fetchInventory(IInventory.PropType.STICKER, arrayListOf(), arrayListOf(), arrayListOf("ugc"), true)
 
             if (stickers.isEmpty() && userStickers.isEmpty() && archivedStickers.isEmpty())
                 mutableState.value = StickerState.Empty

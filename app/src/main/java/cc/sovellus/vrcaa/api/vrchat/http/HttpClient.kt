@@ -1861,27 +1861,39 @@ class HttpClient : BaseClient(), CoroutineScope {
     }
 
     val inventory = object : IInventory {
-        override tailrec suspend fun fetchEmojis(
-            ugc: Boolean,
+        override tailrec suspend fun fetchInventory(
+            type: IInventory.PropType,
+            tags: List<String>,
+            flags: List<String>,
+            notFlags: List<String>,
             archived: Boolean,
             n: Int,
             offset: Int,
             order: String,
-            emojis: ArrayList<Inventory.Data>
+            items: ArrayList<Inventory.Data>
         ): ArrayList<Inventory.Data> {
             val headers = Headers.Builder()
                 .add("User-Agent", Config.API_USER_AGENT)
 
-            var dParameters = "?types=emoji"
-            dParameters += if (ugc) {
-                "&tags=Custom Emoji&flags=ugc"
-            } else {
-                "&notFlags=ugc"
-            }
-
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/inventory/${dParameters}&archived=${archived}&n=${n}&offset=${offset}&order=${order}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/inventory/?types=${type}")
+                    if (tags.isNotEmpty()) {
+                        append("&tags=${tags.joinToString(",")}")
+                    }
+                    if (flags.isNotEmpty()) {
+                        append("&flags=${flags.joinToString(",")}")
+                    }
+                    if (notFlags.isNotEmpty()) {
+                        append("&notFlags=${notFlags.joinToString(",")}")
+                    }
+                    append("&archived=${archived}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                    append("&order=${order}")
+                },
                 headers = headers,
                 body = null
             )
@@ -1891,106 +1903,10 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = Gson().fromJson(result.body, Inventory::class.java)
 
                     if (json.data.isEmpty())
-                        return emojis
+                        return items
 
-                    emojis.addAll(json.data)
-                    fetchEmojis(ugc, archived, n, offset + n, order, emojis)
-                }
-                is Result.NotModified -> {
-                    return arrayListOf()
-                }
-                is Result.Forbidden -> {
-                    return arrayListOf()
-                }
-                else -> {
-                    handleExceptions(result)
-                    return arrayListOf()
-                }
-            }
-        }
-
-        override tailrec suspend fun fetchStickers(
-            ugc: Boolean,
-            archived: Boolean,
-            n: Int,
-            offset: Int,
-            order: String,
-            stickers: ArrayList<Inventory.Data>
-        ): ArrayList<Inventory.Data> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
-            var dParameters = "?types=sticker"
-            dParameters += if (ugc) {
-                "&tags=Custom Sticker&flags=ugc"
-            } else {
-                "&notFlags=ugc"
-            }
-
-            val result = doRequest(
-                method = "GET",
-                url = "${Config.API_BASE_URL}/inventory/${dParameters}&archived=${archived}&n=${n}&offset=${offset}&order=${order}",
-                headers = headers,
-                body = null
-            )
-
-            return when (result) {
-                is Result.Succeeded -> {
-                    val json = Gson().fromJson(result.body, Inventory::class.java)
-
-                    if (json.data.isEmpty())
-                        return stickers
-
-                    stickers.addAll(json.data)
-                    fetchStickers(ugc, archived, n, offset + n, order, stickers)
-                }
-                is Result.NotModified -> {
-                    return arrayListOf()
-                }
-                is Result.Forbidden -> {
-                    return arrayListOf()
-                }
-                else -> {
-                    handleExceptions(result)
-                    return arrayListOf()
-                }
-            }
-        }
-
-        override tailrec suspend fun fetchProps(
-            ugc: Boolean,
-            archived: Boolean,
-            n: Int,
-            offset: Int,
-            order: String,
-            props: ArrayList<Inventory.Data>
-        ): ArrayList<Inventory.Data> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
-            var dParameters = "?types=prop"
-            dParameters += if (ugc) {
-                "&tags=Custom Prop&flags=ugc"
-            } else {
-                "&notFlags=ugc"
-            }
-
-            val result = doRequest(
-                method = "GET",
-                url = "${Config.API_BASE_URL}/inventory/${dParameters}&archived=${archived}&n=${n}&offset=${offset}&order=${order}",
-                headers = headers,
-                body = null
-            )
-
-            return when (result) {
-                is Result.Succeeded -> {
-                    val json = Gson().fromJson(result.body, Inventory::class.java)
-
-                    if (json.data.isEmpty())
-                        return props
-
-                    props.addAll(json.data)
-                    fetchProps(ugc, archived, n, offset + n, order, props)
+                    items.addAll(json.data)
+                    fetchInventory(type, tags, flags, notFlags, archived, n, offset + n, order, items)
                 }
                 is Result.NotModified -> {
                     return arrayListOf()

@@ -24,6 +24,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -56,8 +57,8 @@ class ItemsScreenModel : StateScreenModel<ItemsScreenModel.ItemsState>(ItemsStat
         mutableState.value = ItemsState.Loading
         App.setLoadingText(R.string.loading_text_items)
         screenModelScope.launch {
-            items = api.inventory.fetchProps(false, false)
-            archivedItems = api.inventory.fetchProps(false, true)
+            items = api.inventory.fetchInventory(IInventory.PropType.PROP, arrayListOf(), arrayListOf(), arrayListOf("ugc"), false)
+            archivedItems = api.inventory.fetchInventory(IInventory.PropType.PROP, arrayListOf(), arrayListOf(), arrayListOf("ugc"), true)
 
             if (items.isEmpty() && archivedItems.isEmpty())
                 mutableState.value = ItemsState.Empty
