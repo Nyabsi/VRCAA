@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -46,8 +47,17 @@ class App : Application() {
         preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
 
         Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
-        if (!preferences.crashAnalytics)
+        if (!preferences.crashAnalytics) {
             GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+        } else {
+            Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+                if (throwable is OutOfMemoryError) {
+                    Log.e("VRCAA", "Out of memory on thread ${thread.name}", throwable)
+                } else {
+                    Thread.getDefaultUncaughtExceptionHandler()?.uncaughtException(thread, throwable)
+                }
+            }
+        }
 
         NotificationHelper.createNotificationChannels()
 
