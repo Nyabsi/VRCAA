@@ -16,11 +16,14 @@
 
 package cc.sovellus.vrcaa.ui.components.misc
 
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -42,7 +45,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ZoomableImage(
     imageUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClose: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val scale = remember { Animatable(1.0f) }
@@ -78,6 +82,14 @@ fun ZoomableImage(
                     offset.snapTo(clampedOffset)
                 }
             }
+        }
+        .pointerInput(Unit) {
+            detectVerticalDragGestures (
+                onVerticalDrag = { _, amount ->
+                    if (amount >= 100.0f)
+                        onClose()
+                }
+            )
         }
         .onSizeChanged {
             containerSize.value = androidx.compose.ui.geometry.Size(it.width.toFloat(), it.height.toFloat())
