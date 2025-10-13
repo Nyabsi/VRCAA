@@ -26,6 +26,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.launch
@@ -62,9 +63,9 @@ class EmojisScreenModel : StateScreenModel<EmojisScreenModel.EmojiState>(EmojiSt
         mutableState.value = EmojiState.Loading
         App.setLoadingText(R.string.loading_text_emojis)
         screenModelScope.launch {
-            emojis = api.inventory.fetchEmojis(false, false)
-            userEmojis = api.inventory.fetchEmojis(true, false)
-            archivedEmojis = api.inventory.fetchEmojis(false, true)
+            emojis = api.inventory.fetchInventory(IInventory.PropType.EMOJI, arrayListOf(), arrayListOf(), arrayListOf("ugc"), false)
+            userEmojis = api.inventory.fetchInventory(IInventory.PropType.EMOJI, arrayListOf("Custom Emoji"), arrayListOf("ugc"), arrayListOf(), false)
+            archivedEmojis = api.inventory.fetchInventory(IInventory.PropType.EMOJI, arrayListOf(), arrayListOf(), arrayListOf("ugc"), true)
 
             if (emojis.isEmpty() && userEmojis.isEmpty() && archivedEmojis.isEmpty())
                 mutableState.value = EmojiState.Empty
