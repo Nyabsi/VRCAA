@@ -124,7 +124,8 @@ fun ImagePreviewDialog(
                         IconButton(onClick = { onDismiss() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = Color.White
                             )
                         }
                     },
@@ -135,12 +136,13 @@ fun ImagePreviewDialog(
                         }) {
                             Icon(
                                 imageVector = Icons.Default.Download,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = Color.White
                             )
                         }
                     },
                     title = {
-                        Text(text = stringResource(R.string.image_preview_dialog_title))
+                        Text(text = stringResource(R.string.image_preview_dialog_title), color = Color.White)
                     }
                 )
             }
