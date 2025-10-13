@@ -21,6 +21,12 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,9 +42,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,6 +60,7 @@ import cc.sovellus.vrcaa.ui.components.misc.ZoomableImage
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -89,7 +98,7 @@ private fun saveGlideImageToPickedUri(imageUrl: String, pickedUri: Uri) {
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun ImagePreviewDialog(
     name: String,
@@ -106,56 +115,82 @@ fun ImagePreviewDialog(
         }
     }
 
+    var isVisible by remember { mutableStateOf(true) }
+    var slideExit by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isVisible) {
+        if (!isVisible) {
+            delay(250)
+            onDismiss()
+        }
+    }
+
     Dialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { isVisible = false },
         properties = DialogProperties(
             usePlatformDefaultWidth = false,
             decorFitsSystemWindows = false
         )
     ) {
-        Scaffold(
-            modifier = Modifier.fillMaxSize().padding(0.dp),
-            containerColor = Color.Transparent,
-            contentWindowInsets = WindowInsets(0),
-            topBar = {
-                TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                    navigationIcon = {
-                        IconButton(onClick = { onDismiss() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = {
-                            pendingImageUrl = url
-                            launcher.launch("${name}.png")
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Download,
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    title = {
-                        Text(text = stringResource(R.string.image_preview_dialog_title), color = Color.White)
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Box(
+        AnimatedVisibility(
+            visible = isVisible,
+            exit = if (slideExit)
+                slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut()
+            else
+                slideOutHorizontally(targetOffsetX = { it }) + fadeOut()
+        ) {
+            Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding())
-            ) {
-                ZoomableImage(
-                    imageUrl = url,
-                    modifier = Modifier.fillMaxSize()
-                )
+                    .padding(0.dp),
+                containerColor = Color.Transparent,
+                contentWindowInsets = WindowInsets(0),
+                topBar = {
+                    TopAppBar(
+                        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+                        navigationIcon = {
+                            IconButton(onClick = { isVisible = false }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = null,
+                                    tint = Color.White
+                                )
+                            }
+                        },
+                        actions = {
+                            IconButton(onClick = {
+                                pendingImageUrl = url
+                                launcher.launch("${name}.png")
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Download,
+                                    contentDescription = null,
+                                    tint = Color.White
+                                )
+                            }
+                        },
+                        title = {
+                            Text(
+                                text = stringResource(R.string.image_preview_dialog_title),
+                                color = Color.White
+                            )
+                        }
+                    )
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = innerPadding.calculateTopPadding())
+                ) {
+                    ZoomableImage(
+                        imageUrl = url,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        slideExit = true
+                        isVisible = false
+                    }
+                }
             }
         }
     }
