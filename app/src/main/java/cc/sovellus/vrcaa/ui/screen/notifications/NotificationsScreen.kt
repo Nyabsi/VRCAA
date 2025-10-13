@@ -65,19 +65,21 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.JsonHelper
+import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialog
 import cc.sovellus.vrcaa.ui.components.dialog.NotificationDialogV2
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NotificationItem(title: String, message: AnnotatedString, url: String, date: String, onClick: () -> Unit) {
+fun NotificationItem(title: String, message: AnnotatedString, url: String, date: String, urlHandler: (resolvedUrl: String) -> Unit, onClick: () -> Unit) {
     ListItem(
         overlineContent = {
             Text(
@@ -107,7 +109,10 @@ fun NotificationItem(title: String, message: AnnotatedString, url: String, date:
                             contentDescription = null,
                             modifier = Modifier
                                 .size(56.dp)
-                                .clip(RoundedCornerShape(50)),
+                                .clip(RoundedCornerShape(50))
+                                .clickable(onClick = {
+                                    urlHandler(url)
+                                }),
                             contentScale = ContentScale.FillBounds,
                             alignment = Alignment.Center,
                             loading = placeholder(R.drawable.image_placeholder),
@@ -155,6 +160,9 @@ class NotificationsScreen : Screen {
 
         var showDialog by remember { mutableStateOf(false) }
         var showDialogV2 by remember { mutableStateOf(false) }
+
+        var peekUrl by remember { mutableStateOf("") }
+        var peekNotificationImage by remember { mutableStateOf(false) }
 
         if (showDialog) {
             model.currentNotification.value?.let {
@@ -221,7 +229,11 @@ class NotificationsScreen : Screen {
                                 notificationV2.title ?: notificationV2.type,
                                 text,
                                 notificationV2.imageUrl ?: "", // an image url is not an guarantee.
-                                notificationV2.createdAt
+                                notificationV2.createdAt,
+                                urlHandler = { resolvedUrl ->
+                                    peekUrl = resolvedUrl
+                                    peekNotificationImage = true
+                                }
                             ) {
                                 model.currentNotificationV2.value = notificationV2
                                 showDialogV2 = true
@@ -240,7 +252,11 @@ class NotificationsScreen : Screen {
                                             stringResource(R.string.notifications_type_friend_request),
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -256,7 +272,11 @@ class NotificationsScreen : Screen {
                                             user.displayName,
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -293,7 +313,11 @@ class NotificationsScreen : Screen {
                                             stringResource(R.string.notifications_type_invite),
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -327,7 +351,11 @@ class NotificationsScreen : Screen {
                                             stringResource(R.string.notifications_type_invite_response),
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -362,7 +390,11 @@ class NotificationsScreen : Screen {
                                             stringResource(R.string.notifications_type_invite_request),
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -396,7 +428,11 @@ class NotificationsScreen : Screen {
                                             stringResource(R.string.notifications_type_invite_request_response),
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -412,7 +448,11 @@ class NotificationsScreen : Screen {
                                             notification.type,
                                             text,
                                             user.userIcon.ifEmpty { user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl } },
-                                            notification.createdAt
+                                            notification.createdAt,
+                                            urlHandler = { resolvedUrl ->
+                                                peekUrl = resolvedUrl
+                                                peekNotificationImage = true
+                                            }
                                         ) {
                                             model.currentNotification.value = notification
                                             showDialog = true
@@ -421,6 +461,13 @@ class NotificationsScreen : Screen {
                                 }
                             }
                         }
+                    }
+                    if (peekNotificationImage) {
+                        ImagePreviewDialog(
+                            url = peekUrl,
+                            name = "${LocalDateTime.now()}",
+                            onDismiss = { peekNotificationImage = false }
+                        )
                     }
                 }
             }

@@ -26,7 +26,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -56,6 +58,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -67,26 +70,11 @@ fun NotificationDialogV2(notification: NotificationV2, onDismiss: () -> Unit) {
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
+                    .verticalScroll(scrollState)
             ) {
                 Text(text = stringResource(R.string.notification_dialog_title), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = notification.message, style = MaterialTheme.typography.bodyMedium)
-                notification.imageUrl?.let {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    GlideImage(
-                        model = notification.imageUrl,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(250.dp)
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(10)),
-                        contentScale = ContentScale.FillBounds,
-                        alignment = Alignment.Center,
-                        loading = placeholder(R.drawable.image_placeholder),
-                        failure = placeholder(R.drawable.image_placeholder)
-                    )
-                }
                 Spacer(modifier = Modifier.height(8.dp))
                 FlowRow(
                     modifier = Modifier
