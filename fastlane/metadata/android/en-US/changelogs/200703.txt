@@ -1,0 +1,10 @@
+- Added functionality to Remove/Add friends
+- Added ability to Add/Edit/Remove user notes
+- Added back ability to send self invites to friend instances
+- Implemented Notifications
+    - You can find them from the Feed Tab
+- Improved Feed Tab layout
+- Now you can remove invalid/privated favorites from Favorites tab
+- Added new feed type for username change to keep track of name changes
+- Fixed Login + MFA layout for tablets
+- Various of crash fixes and stability improvements
