@@ -30,7 +30,6 @@ import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.GatewaySocket
 import cc.sovellus.vrcaa.api.discord.GatewaySocket.PresenceInfo
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
@@ -59,12 +58,10 @@ import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.GatewayManager
 import cc.sovellus.vrcaa.manager.NotificationManager
-import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -85,6 +82,7 @@ class PipelineService : Service(), CoroutineScope {
 
     private var refreshTask: Runnable = Runnable {
         launch {
+            Runtime.getRuntime().gc()
             CacheManager.buildCache()
             pipeline?.reconnect()
         }
