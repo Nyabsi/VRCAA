@@ -38,7 +38,6 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -186,7 +185,7 @@ class FavoritesScreen : Screen {
         val worldList = model.worldList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
+        val sortedWorldList = worldList.value
         sortedWorldList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
@@ -226,7 +225,7 @@ class FavoritesScreen : Screen {
         val avatarList = model.avatarList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
+        val sortedAvatarList = avatarList.value
         sortedAvatarList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
@@ -266,7 +265,7 @@ class FavoritesScreen : Screen {
         val friendList = model.friendList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        val sortedFriendList = friendList.value.toSortedMap(compareBy { it.substring(6).toInt() })
+        val sortedFriendList = friendList.value
         sortedFriendList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
