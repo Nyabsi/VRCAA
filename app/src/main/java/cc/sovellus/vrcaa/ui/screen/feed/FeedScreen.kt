@@ -24,7 +24,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -56,7 +55,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
             .padding(1.dp),
         state = rememberLazyListState()
     ) {
-        items(feed.reversed())
+        items(feed)
         { item ->
             when (item.type) {
                 FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
@@ -298,7 +297,7 @@ class FeedScreen : Screen {
 
     @Composable
     fun ShowScreen(model: FeedScreenModel) {
-        val feed = model.feed.collectAsState()
+        val feed = model.feedList.collectAsState()
         FeedList(feed.value)
     }
 }

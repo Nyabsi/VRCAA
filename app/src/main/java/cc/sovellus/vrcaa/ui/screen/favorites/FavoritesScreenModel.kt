@@ -17,20 +17,19 @@
 package cc.sovellus.vrcaa.ui.screen.favorites
 
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
-import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 
 class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState>(FavoriteState.Init) {
 
@@ -41,13 +40,25 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     }
 
     private var worldListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
-    var worldList = worldListFlow.asStateFlow()
+    private var _worldList = worldListFlow.asStateFlow()
+
+    val worldList = _worldList.map { world ->
+        world.toSortedMap(compareBy { it.substring(6).toInt() })
+    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
     private var avatarListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
-    var avatarList = avatarListFlow.asStateFlow()
+    private var _avatarList = avatarListFlow.asStateFlow()
+
+    val avatarList = _avatarList.map { world ->
+        world.toSortedMap(compareBy { it.substring(7).toInt() })
+    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
     private var friendListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
-    var friendList = friendListFlow.asStateFlow()
+    private var _friendList = friendListFlow.asStateFlow()
+
+    val friendList = _friendList.map { world ->
+        world.toSortedMap(compareBy { it.substring(6).toInt() })
+    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
     var currentIndex = mutableIntStateOf(0)
     var currentSelectedGroup = mutableStateOf("")
