@@ -56,7 +56,6 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 open class BaseClient {
 
     private val tlsHelper = TLSHelper()
-    /* inherited classes don't need to access the client variable */
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -67,19 +66,17 @@ open class BaseClient {
             .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
             .addInterceptor { chain ->
                 val original = chain.request()
-                val type = authorizationType
-                val creds = credentials
 
                 if (skipNextAuthorization.load()) {
                     skipNextAuthorization.exchange(false)
                     return@addInterceptor chain.proceed(original)
                 }
 
-                if (type == AuthorizationType.None || creds.isEmpty()) {
+                if (authorizationType == AuthorizationType.None || credentials.isEmpty()) {
                     return@addInterceptor chain.proceed(original)
                 }
 
-                val hasHeader = when (type) {
+                val hasHeader = when (authorizationType) {
                     AuthorizationType.Cookie ->
                         original.header("Cookie") != null
                     AuthorizationType.Bearer ->
@@ -91,11 +88,11 @@ open class BaseClient {
                 }
 
                 val builder = original.newBuilder()
-                when (type) {
+                when (authorizationType) {
                     AuthorizationType.Cookie ->
-                        builder.addHeader("Cookie", creds)
+                        builder.addHeader("Cookie", credentials)
                     AuthorizationType.Bearer ->
-                        builder.addHeader("Authorization", "Bearer $creds")
+                        builder.addHeader("Authorization", "Bearer $credentials")
                     else -> {}
                 }
 
