@@ -205,8 +205,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user",
-                headers = headers,
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user")
+                },
+                headers = headers.build(),
                 body = null,
                 retryAfterFailure = false,
                 skipAuthorizationFailure = true
@@ -257,7 +260,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/auth/twofactorauth/${dParameter}/verify",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/twofactorauth/")
+                    append(dParameter)
+                    append("/verify")
+                },
                 headers = GENERIC_HEADER,
                 body =  gson.toJson(Code(code)),
                 retryAfterFailure = false,
@@ -282,13 +290,14 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun logout(): Boolean {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "PUT",
-                url = "${Config.API_BASE_URL}/logout",
-                headers = headers,
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/logout")
+                },
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -307,7 +316,10 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -327,7 +339,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -349,7 +364,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/user/$userId/friendRequest",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/user/")
+                    append(userId)
+                    append("/friendRequest")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -369,7 +389,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "DELETE",
-                url = "${Config.API_BASE_URL}/user/$userId/friendRequest",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/user/")
+                    append(userId)
+                    append("/friendRequest")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -389,7 +414,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "DELETE",
-                url = "${Config.API_BASE_URL}/auth/user/friends/$userId",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/user/friends/")
+                    append(userId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -409,7 +438,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/user/$userId/friendStatus",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/user/")
+                    append(userId)
+                    append("/friendStatus")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -434,7 +468,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user/friends?offline=${offline}&n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user/friends")
+                    append("?offline=${offline}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -466,7 +506,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/users/${userId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/users/")
+                    append(userId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -490,7 +534,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/users?search=${query}&n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/users")
+                    append("?search=${query}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -523,7 +573,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/users/${userId}/groups",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/users/")
+                    append(userId)
+                    append("/groups")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -546,7 +601,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/instances/${intent}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/instances/")
+                    append(intent)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -566,7 +625,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/invite/myself/to/${intent}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/invite/myself/to/")
+                    append(intent)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -589,7 +652,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/groups/${groupId}/instances",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/groups/")
+                    append(groupId)
+                    append("/instances")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -623,7 +691,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/instances",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/instances")
+                },
                 headers = GENERIC_HEADER,
                 body = body
             )
@@ -646,7 +717,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/worlds/recent?featured=false",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/worlds/recent")
+                    append("?featured=false")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -671,7 +746,15 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/worlds?featured=false&n=${n}&sort=${sort}&search=${query}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/worlds")
+                    append("?featured=false")
+                    append("&n=${n}")
+                    append("&sort=${sort}")
+                    append("&search=${query}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -710,7 +793,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/worlds?releaseStatus=${releaseStatus}&sort=updated&order=descending&userId=${userId}&n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/worlds")
+                    append("?releaseStatus=${releaseStatus}")
+                    // TODO: document all options and make them changeable dynamically
+                    append("&sort=updated")
+                    append("&order=descending")
+                    append("&userId=${userId}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -745,7 +838,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/worlds/${worldId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/worlds/")
+                    append(worldId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -768,7 +865,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user/favoritelimits",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user")
+                    append("/favoritelimits")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -795,7 +896,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/favorite/groups?type=${dTypeString}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorite/groups")
+                    append("?type=${dTypeString}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -825,7 +930,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/favorite/groups?type=${dTypeString}&ownerId=${userId}&visibility=public",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorite/groups")
+                    append("?type=${dTypeString}")
+                    append("&ownerId=${userId}")
+                    append("&visibility=public")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -858,7 +969,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/favorites",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorites")
+                },
                 headers = GENERIC_HEADER,
                 body = body
             )
@@ -878,7 +992,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "DELETE",
-                url = "${Config.API_BASE_URL}/favorites/${favoriteId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorites/")
+                    append(favoriteId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -919,7 +1037,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "PUT",
-                url = "${Config.API_BASE_URL}/favorite/group/${dTypeString}/${tag}/${user}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorite/group/")
+                    append(dTypeString)
+                    append("/${tag}")
+                    append("/${user}")
+                },
                 headers = GENERIC_HEADER,
                 body = body
             )
@@ -955,7 +1079,14 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/favorites?type=${dTypeString}&n=${n}&offset=${offset}&tag=${tag}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorites")
+                    append("?type=${dTypeString}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                    append("&tag=${tag}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1000,7 +1131,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/favorites?type=${dTypeString}&n=${n}&offset=${offset}&tag=${tag}&ownerId=${userId}&visibility=public",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/favorites")
+                    append("?type=${dTypeString}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                    append("&tag=${tag}")
+                    append("&ownerId=${userId}")
+                    append("&visibility=public")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1036,7 +1176,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/avatars/favorites?n=${n}&offset=${offset}&tag=${tag}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/avatars/favorites")
+                    append("?n=${n}")
+                    append("&offset=${offset}")
+                    append("&tag=${tag}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1072,7 +1218,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/worlds/favorites?n=${n}&offset=${offset}&tag=${tag}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/worlds/favorites")
+                    append("?n=${n}")
+                    append("&offset=${offset}")
+                    append("&tag=${tag}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1106,7 +1258,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "PUT",
-                url = "${Config.API_BASE_URL}/avatars/${avatarId}/select",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/avatars/")
+                    append(avatarId)
+                    append("/select")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1129,7 +1286,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/avatars/${avatarId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/avatars/")
+                    append(avatarId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1159,7 +1320,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/groups?query=${query}&n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/groups")
+                    append("?query=${query}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1193,7 +1360,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/groups/${groupId}?includeRoles=true&purpose=group",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/groups/")
+                    append(groupId)
+                    append("?includeRoles=true")
+                    append("&purpose=group")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1216,7 +1389,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/groups/${groupId}/join?confirmOverrideBlock=false",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/groups/")
+                    append(groupId)
+                    append("/join")
+                    append("?confirmOverrideBlock=false")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1239,7 +1418,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/groups/${groupId}/leave",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/groups/")
+                    append(groupId)
+                    append("/leave")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1262,7 +1446,12 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "DELETE",
-                url = "${Config.API_BASE_URL}/groups/${groupId}/requests",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/groups/")
+                    append(groupId)
+                    append("/requests")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1288,7 +1477,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/file/${fileId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/file/")
+                    append(fileId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1312,7 +1505,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/files?tag=${tag}&n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/files")
+                    append("?tag=${tag}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1350,7 +1549,14 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/files?tag=${tag}&n=${n}&offset=${offset}&userId=${userId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/files")
+                    append("?tag=${tag}")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                    append("&userId=${userId}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1388,7 +1594,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequestUpload(
                 App.getContext(),
-                url = "${Config.API_BASE_URL}/file/image",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/file/image")
+                },
                 fileUri = file,
                 formFields = fields,
                 headers = GENERIC_HEADER
@@ -1420,7 +1629,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequestUpload(
                 App.getContext(),
-                url = "${Config.API_BASE_URL}/file/image",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/file/image")
+                },
                 fileUri = file,
                 formFields = fields,
                 headers = GENERIC_HEADER
@@ -1450,7 +1662,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "PUT",
-                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/see",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user/notifications/")
+                    append(notificationId)
+                    append("/see")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1470,7 +1687,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "PUT",
-                url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/hide",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user/notifications/")
+                    append(notificationId)
+                    append("/hide")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1494,7 +1716,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/auth/user/notifications?n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/auth/user/notifications")
+                    append("?n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1542,7 +1769,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "PUT",
-                url = "${Config.API_BASE_URL}/users/${userId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/users/")
+                    append(userId)
+                },
                 headers = GENERIC_HEADER,
                 body = gson.toJson(update, ProfileUpdate::class.java)
             )
@@ -1566,7 +1797,16 @@ class HttpClient : BaseClient(), CoroutineScope {
             
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/avatars?releaseStatus=all&sort=updated&order=descending&user=me&n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/avatars")
+                    append("?releaseStatus=all")
+                    append("&sort=updated")
+                    append("&order=descending")
+                    append("&user=me")
+                    append("&n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1602,7 +1842,13 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/prints/user/${userId}?n=${n}&offset=${offset}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/prints/user/")
+                    append(userId)
+                    append("?n=${n}")
+                    append("&offset=${offset}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1634,7 +1880,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/prints/${printId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/prints/")
+                    append(printId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1660,7 +1910,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "DELETE",
-                url = "${Config.API_BASE_URL}/prints/${printId}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/prints/")
+                    append(printId)
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1695,7 +1949,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequestUpload(
                 App.getContext(),
-                url = "${Config.API_BASE_URL}/prints",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/prints")
+                },
                 fileUri = file,
                 formFields = mapOf("note" to note, "timestamp" to timestamp.toString()),
                 headers = GENERIC_HEADER,
@@ -1791,7 +2048,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/userNotes",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/userNotes")
+                },
                 headers = GENERIC_HEADER,
                 body = gson.toJson(update, UserNoteUpdate::class.java)
             )
@@ -1822,7 +2082,12 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "POST",
-                url = "${Config.API_BASE_URL}/notifications/$notificationId/respond",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/notifications/")
+                    append(notificationId)
+                    append("/respond")
+                },
                 headers = GENERIC_HEADER,
                 body = gson.toJson(response, NotificationResponse::class.java)
             )
@@ -1844,7 +2109,11 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val result = doRequest(
                 method = "GET",
-                url = "${Config.API_BASE_URL}/notifications?n=${n}",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/notifications")
+                    append("?n=${n}")
+                },
                 headers = GENERIC_HEADER,
                 body = null
             )
@@ -1867,5 +2136,6 @@ class HttpClient : BaseClient(), CoroutineScope {
     companion object {
         private val GENERIC_HEADER = Headers.Builder()
             .add("User-Agent", Config.API_USER_AGENT)
+            .build()
     }
 }

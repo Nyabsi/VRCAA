@@ -27,10 +27,12 @@ import android.net.Uri
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.helper.DnsHelper
 import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.DebugManager
+import okhttp3.ConnectionPool
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -47,7 +49,6 @@ import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
 
 open class BaseClient {
 
@@ -58,14 +59,52 @@ open class BaseClient {
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .connectionPool(ConnectionPool(5, 5, TimeUnit.MINUTES))
             .dns(DnsHelper())
             .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val type = authorizationType
+                val creds = credentials
+
+                if (skipNextAuthorization) {
+                    skipNextAuthorization = false
+                    return@addInterceptor chain.proceed(original)
+                }
+
+                if (type == AuthorizationType.None || creds.isEmpty()) {
+                    return@addInterceptor chain.proceed(original)
+                }
+
+                val hasHeader = when (type) {
+                    AuthorizationType.Cookie ->
+                        original.header("Cookie") != null
+                    AuthorizationType.Bearer ->
+                        original.header("Authorization") != null
+                    else -> false
+                }
+                if (hasHeader) {
+                    return@addInterceptor chain.proceed(original)
+                }
+
+                val builder = original.newBuilder()
+                when (type) {
+                    AuthorizationType.Cookie ->
+                        builder.addHeader("Cookie", creds)
+                    AuthorizationType.Bearer ->
+                        builder.addHeader("Authorization", "Bearer $creds")
+                    else -> {}
+                }
+
+                chain.proceed(builder.build())
+            }
             .build()
     }
 
     private lateinit var credentials: String
     private var authorizationType: AuthorizationType = AuthorizationType.None
     private var skipAuthNextFailure: Boolean = false
+    private var skipNextAuthorization: Boolean = false
 
     // TODO: add new response types, when required.
     sealed class Result {
@@ -112,9 +151,9 @@ open class BaseClient {
     suspend fun doRequest(
         method: String,
         url: String,
-        headers: Headers.Builder,
+        headers: Headers,
         body: String?,
-        retryAfterFailure: Boolean = true, //  assume "onAuthorizationFailure" is implemented
+        retryAfterFailure: Boolean = true,
         ignoreAuthorization: Boolean = false,
         skipAuthorizationFailure: Boolean = false
     ): Result {
@@ -122,29 +161,17 @@ open class BaseClient {
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
 
-        if (!ignoreAuthorization) {
-            when (authorizationType) {
-                AuthorizationType.Cookie -> {
-                    headers["Cookie"] = credentials
-                }
-                AuthorizationType.Bearer -> {
-                    headers["Authorization"] = "Bearer $credentials"
-                }
-                else -> {}
-            }
-        }
-
+        if (ignoreAuthorization)
+           skipNextAuthorization = true
         if (skipAuthorizationFailure)
             skipAuthNextFailure = true
-
-        val finalHeaders = headers.build()
 
         return try {
              when (method) {
                 "GET" -> {
 
                     val request = Request.Builder()
-                        .headers(headers = finalHeaders)
+                        .headers(headers = headers)
                         .url(url)
                         .get()
                         .build()
@@ -183,7 +210,7 @@ open class BaseClient {
 
                 "POST" -> {
                     val request = Request.Builder()
-                        .headers(headers = finalHeaders)
+                        .headers(headers = headers)
                         .url(url)
                         .post(requestBody)
                         .build()
@@ -222,7 +249,7 @@ open class BaseClient {
 
                 "PUT" -> {
                     val request = Request.Builder()
-                        .headers(headers = finalHeaders)
+                        .headers(headers = headers)
                         .url(url)
                         .put(requestBody)
                         .build()
@@ -261,7 +288,7 @@ open class BaseClient {
 
                 "DELETE" -> {
                     val request = Request.Builder()
-                        .headers(headers = finalHeaders)
+                        .headers(headers = headers)
                         .url(url)
                         .delete(requestBody)
                         .build()
@@ -318,7 +345,7 @@ open class BaseClient {
     suspend fun doRequestUpload(
         context: Context,
         url: String,
-        headers: Headers.Builder,
+        headers: Headers,
         fileUri: Uri,
         formFields: Map<String, String> = emptyMap(),
         addWhiteBorder: Boolean = false,
@@ -326,18 +353,11 @@ open class BaseClient {
         ignoreAuthorization: Boolean = false,
         skipAuthorizationFailure: Boolean = false
     ): Result {
-        if (!ignoreAuthorization) {
-            when (authorizationType) {
-                AuthorizationType.Cookie -> headers["Cookie"] = credentials
-                AuthorizationType.Bearer -> headers["Authorization"] = "Bearer $credentials"
-                else -> {}
-            }
-        }
 
+        if (ignoreAuthorization)
+            skipNextAuthorization = true
         if (skipAuthorizationFailure)
             skipAuthNextFailure = true
-
-        val finalHeaders = headers.build()
 
         return try {
             val multipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -408,7 +428,7 @@ open class BaseClient {
             )
 
             val request = Request.Builder()
-                .headers(finalHeaders)
+                .headers(headers)
                 .url(url)
                 .post(multipartBuilder.build())
                 .build()

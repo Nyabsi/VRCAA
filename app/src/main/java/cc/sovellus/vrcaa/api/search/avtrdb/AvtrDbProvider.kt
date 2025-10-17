@@ -30,16 +30,19 @@ class AvtrDbProvider : BaseClient() {
         query: String,
         n: Int = 50,
         offset: Int = 0
-    ): Pair<Boolean, ArrayList<SearchAvatar>>
-    {
-        val headers = Headers.Builder()
-            .add("User-Agent", Config.API_USER_AGENT)
-            .add("Referer", Config.API_REFERER)
+    ): Pair<Boolean, ArrayList<SearchAvatar>> {
 
         val result = doRequest(
             method = "GET",
-            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
-            headers = headers,
+            url = buildString {
+                append(Config.AVTR_DB_API_BASE_URL)
+                append("/avatar/search")
+                append("?query=${query}")
+                append("&page_size=${n}")
+                append("&page=${offset}")
+                append("&legacy=true")
+            },
+            headers = GENERIC_HEADER,
             body = null,
             retryAfterFailure = false
         )
@@ -67,16 +70,19 @@ class AvtrDbProvider : BaseClient() {
         n: Int = 50,
         offset: Int = 0,
         avatars: ArrayList<SearchAvatar> = arrayListOf()
-    ): ArrayList<SearchAvatar>
-    {
-        val headers = Headers.Builder()
-            .add("User-Agent", Config.API_USER_AGENT)
-            .add("Referer", Config.API_REFERER)
+    ): ArrayList<SearchAvatar> {
 
         val result = doRequest(
             method = "GET",
-            url = "${Config.AVTR_DB_API_BASE_URL}/avatar/search?query=$query&page_size=$n&page=$offset&legacy=true",
-            headers = headers,
+            url = buildString {
+                append(Config.AVTR_DB_API_BASE_URL)
+                append("/avatar/search")
+                append("?query=${query}")
+                append("&page_size=${n}")
+                append("&page=${offset}")
+                append("&legacy=true")
+            },
+            headers = GENERIC_HEADER,
             body = null,
             retryAfterFailure = false
         )
@@ -101,5 +107,12 @@ class AvtrDbProvider : BaseClient() {
                 return arrayListOf()
             }
         }
+    }
+
+    companion object {
+        private val GENERIC_HEADER = Headers.Builder()
+            .add("User-Agent", Config.API_USER_AGENT)
+            .add("Referer", Config.API_REFERER)
+            .build()
     }
 }
