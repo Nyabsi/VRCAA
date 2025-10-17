@@ -107,6 +107,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     override val coroutineContext =  Dispatchers.IO + SupervisorJob()
 
+    private val gson = Gson()
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
     private var listener: SessionListener? = null
@@ -166,7 +167,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
             is Result.InvalidRequest -> {
                 try {
-                    val reason = Gson().fromJson(result.body, ErrorResponse::class.java).error.message
+                    val reason = gson.fromJson(result.body, ErrorResponse::class.java).error.message
 
                     launch(Dispatchers.Main) {
                         Toast.makeText(
@@ -247,10 +248,7 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun verify(type: AuthType, code: String): IAuth.AuthResult {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val dParameter = when (type) {
                 AuthType.AUTH_EMAIL -> "emailotp"
                 AuthType.AUTH_TOTP -> "totp"
@@ -260,8 +258,8 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/auth/twofactorauth/${dParameter}/verify",
-                headers = headers,
-                body =  Gson().toJson(Code(code)),
+                headers = GENERIC_HEADER,
+                body =  gson.toJson(Code(code)),
                 retryAfterFailure = false,
                 skipAuthorizationFailure = true
             )
@@ -306,20 +304,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchToken(): String? {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, AuthResponse::class.java).token
+                    return gson.fromJson(result.body, AuthResponse::class.java).token
                 }
                 else -> {
                     handleExceptions(result)
@@ -329,19 +324,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchCurrentUser(): User? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, User::class.java)
+                    return gson.fromJson(result.body, User::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -353,19 +346,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     val friends = object : IFriends {
         override suspend fun sendFriendRequest(userId: String): Notification? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/user/$userId/friendRequest",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
+                    return gson.fromJson(result.body, Notification::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -375,13 +366,11 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun deleteFriendRequest(userId: String): Boolean {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "DELETE",
                 url = "${Config.API_BASE_URL}/user/$userId/friendRequest",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -397,13 +386,11 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun removeFriend(userId: String): Boolean {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "DELETE",
                 url = "${Config.API_BASE_URL}/auth/user/friends/$userId",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -419,19 +406,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchFriendStatus(userId: String): FriendStatus? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/user/$userId/friendStatus",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, FriendStatus::class.java)
+                    return gson.fromJson(result.body, FriendStatus::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -446,14 +431,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             friends: ArrayList<Friend>
         ): ArrayList<Friend> {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user/friends?offline=${offline}&n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -462,7 +444,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return friends
 
-                    val json = Gson().fromJson(result.body, Friends::class.java)
+                    val json = gson.fromJson(result.body, Friends::class.java)
 
                     friends.addAll(json)
                     fetchFriends(offline, n, offset + n, friends)
@@ -481,20 +463,17 @@ class HttpClient : BaseClient(), CoroutineScope {
     val users = object : IUsers {
 
         override suspend fun fetchUserByUserId(userId: String): LimitedUser? {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/users/${userId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, LimitedUser::class.java)
+                    return gson.fromJson(result.body, LimitedUser::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -508,14 +487,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<LimitedUser> {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/users?search=${query}&n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -525,7 +501,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                         return arrayListOf()
 
                     val users: ArrayList<LimitedUser> = arrayListOf()
-                    val json = Gson().fromJson(result.body, Users::class.java)
+                    val json = gson.fromJson(result.body, Users::class.java)
 
                     users.addAll(json)
                     return users
@@ -545,19 +521,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchGroupsByUserId(userId: String): ArrayList<UserGroup> {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/users/${userId}/groups",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, UserGroups::class.java)
+                    return gson.fromJson(result.body, UserGroups::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -571,19 +544,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchInstance(intent: String): Instance? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/instances/${intent}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Instance::class.java)
+                    return gson.fromJson(result.body, Instance::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -594,19 +564,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun selfInvite(intent: String): Notification? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/invite/myself/to/${intent}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
+                    return gson.fromJson(result.body, Notification::class.java)
                 }
                 is Result.NotFound -> {
                     return null
@@ -620,19 +587,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchGroupInstancesById(groupId: String): ArrayList<GroupInstance> {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/groups/${groupId}/instances",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, GroupInstances::class.java)
+                    return gson.fromJson(result.body, GroupInstances::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -649,10 +613,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             canRequestInvite: Boolean
         ): Instance? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
-            val body = Gson().toJson(InstanceCreateBody(
+            val body = gson.toJson(InstanceCreateBody(
                 worldId = worldId,
                 type = type.toString(),
                 region = region.toString(),
@@ -663,13 +624,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/instances",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = body
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Instance::class.java)
+                    return gson.fromJson(result.body, Instance::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -683,19 +644,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchRecent(): ArrayList<World> {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/worlds/recent?featured=false",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Worlds::class.java)
+                    return gson.fromJson(result.body, Worlds::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -710,14 +668,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<World> {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/worlds?featured=false&n=${n}&sort=${sort}&search=${query}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -727,7 +682,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                          return arrayListOf()
 
                     val worlds: ArrayList<World> = arrayListOf()
-                    val json = Gson().fromJson(result.body, Worlds::class.java)
+                    val json = gson.fromJson(result.body, Worlds::class.java)
 
                     worlds.addAll(json)
                     return worlds
@@ -747,9 +702,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             worlds: ArrayList<World>
         ): ArrayList<World> {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val releaseStatus = if (private) {
                 "all"
             } else {
@@ -759,7 +711,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/worlds?releaseStatus=${releaseStatus}&sort=updated&order=descending&userId=${userId}&n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -768,7 +720,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return worlds
 
-                    val json = Gson().fromJson(
+                    val json = gson.fromJson(
                         result.body,
                         Worlds::class.java
                     )
@@ -791,19 +743,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchWorldByWorldId(worldId: String): World? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/worlds/${worldId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, World::class.java)
+                    return gson.fromJson(result.body, World::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -817,19 +766,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchLimits(): FavoriteLimits? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user/favoritelimits",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, FavoriteLimits::class.java)
+                    return gson.fromJson(result.body, FavoriteLimits::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -839,9 +785,6 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchFavoriteGroups(type: FavoriteType): FavoriteGroups? {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
@@ -853,13 +796,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/favorite/groups?type=${dTypeString}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, FavoriteGroups::class.java)
+                    return gson.fromJson(result.body, FavoriteGroups::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -872,8 +815,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             userId: String,
             type: FavoriteType
         ): FavoriteGroups? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
@@ -885,13 +826,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/favorite/groups?type=${dTypeString}&ownerId=${userId}&visibility=public",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, FavoriteGroups::class.java)
+                    return gson.fromJson(result.body, FavoriteGroups::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -906,9 +847,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             tag: String
         ): FavoriteAdd? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
@@ -916,18 +854,18 @@ class HttpClient : BaseClient(), CoroutineScope {
                 FavoriteType.FAVORITE_NONE -> ""
             }
 
-            val body = Gson().toJson(FavoriteBody(dTypeString, favoriteId, arrayListOf(tag)))
+            val body = gson.toJson(FavoriteBody(dTypeString, favoriteId, arrayListOf(tag)))
 
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/favorites",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = body
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, FavoriteAdd::class.java)
+                    return gson.fromJson(result.body, FavoriteAdd::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -938,13 +876,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun removeFavorite(favoriteId: String): Boolean {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "DELETE",
                 url = "${Config.API_BASE_URL}/favorites/${favoriteId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -969,9 +904,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             newVisibility: String?
         ): Boolean {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             var body = "{\"displayName\":\"$newDisplayName\"}"
             if (newVisibility != null)
                 body = "{\"displayName\":\"$newDisplayName\",\"visibility\":\"$newVisibility\"}"
@@ -988,7 +920,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "PUT",
                 url = "${Config.API_BASE_URL}/favorite/group/${dTypeString}/${tag}/${user}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = body
             )
 
@@ -1014,9 +946,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             favorites: ArrayList<Favorite>
         ): ArrayList<Favorite> {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
@@ -1027,7 +956,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/favorites?type=${dTypeString}&n=${n}&offset=${offset}&tag=${tag}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1036,7 +965,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return favorites
 
-                    val json = Gson().fromJson(result.body, Favorites::class.java)
+                    val json = gson.fromJson(result.body, Favorites::class.java)
 
                     favorites.addAll(json)
                     fetchFavorites(type, tag, n, offset + n, favorites)
@@ -1061,8 +990,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             favorites: ArrayList<Favorite>
         ): ArrayList<Favorite> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
@@ -1074,7 +1001,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/favorites?type=${dTypeString}&n=${n}&offset=${offset}&tag=${tag}&ownerId=${userId}&visibility=public",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1083,7 +1010,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return favorites
 
-                    val json = Gson().fromJson(result.body, Favorites::class.java)
+                    val json = gson.fromJson(result.body, Favorites::class.java)
 
                     favorites.addAll(json)
                     fetchFavoritesByUserId(userId, type, tag, n, offset + n, favorites)
@@ -1106,14 +1033,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             favorites: ArrayList<FavoriteAvatar>
         ): ArrayList<FavoriteAvatar> {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/avatars/favorites?n=${n}&offset=${offset}&tag=${tag}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1122,7 +1046,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return favorites
 
-                    val json = Gson().fromJson(result.body, FavoriteAvatars::class.java)
+                    val json = gson.fromJson(result.body, FavoriteAvatars::class.java)
 
                     favorites.addAll(json)
                     fetchFavoriteAvatars(tag, n, offset + n, favorites)
@@ -1146,13 +1070,10 @@ class HttpClient : BaseClient(), CoroutineScope {
             favorites: ArrayList<FavoriteWorld>
         ): ArrayList<FavoriteWorld> {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/worlds/favorites?n=${n}&offset=${offset}&tag=${tag}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1161,7 +1082,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return favorites
 
-                    val json = Gson().fromJson(result.body, FavoriteWorlds::class.java)
+                    val json = gson.fromJson(result.body, FavoriteWorlds::class.java)
 
                     favorites.addAll(json)
                     fetchFavoriteWorlds(tag, n, offset + n, favorites)
@@ -1183,13 +1104,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun selectAvatarById(avatarId: String): Boolean {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "PUT",
                 url = "${Config.API_BASE_URL}/avatars/${avatarId}/select",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1208,20 +1126,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchAvatarById(avatarId: String): Avatar? {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/avatars/${avatarId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Avatar::class.java)
+                    return gson.fromJson(result.body, Avatar::class.java)
                 }
                 is Result.NotFound -> {
                     return null
@@ -1241,14 +1156,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<Group> {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/groups?query=${query}&n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1259,7 +1171,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                     val groups: ArrayList<Group> = arrayListOf()
 
-                    val json = Gson().fromJson(result.body, Groups::class.java)
+                    val json = gson.fromJson(result.body, Groups::class.java)
 
                     groups.addAll(json)
                     return groups
@@ -1279,19 +1191,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchGroupByGroupId(groupId: String): Group? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/groups/${groupId}?includeRoles=true&purpose=group",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Group::class.java)
+                    return gson.fromJson(result.body, Group::class.java)
                 }
                 is Result.NotFound -> {
                     return null
@@ -1305,13 +1214,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun joinGroupByGroupId(groupId: String): Boolean {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/groups/${groupId}/join?confirmOverrideBlock=false",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1331,13 +1237,10 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun leaveGroupByGroupId(groupId: String): Boolean {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/groups/${groupId}/leave",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1356,14 +1259,11 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun withdrawRequestByGroupId(groupId: String): Boolean {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "DELETE",
                 url = "${Config.API_BASE_URL}/groups/${groupId}/requests",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1386,19 +1286,16 @@ class HttpClient : BaseClient(), CoroutineScope {
 
         override suspend fun fetchMetadataByFileId(fileId: String): FileMetadata? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/file/${fileId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, FileMetadata::class.java)
+                    return gson.fromJson(result.body, FileMetadata::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -1412,13 +1309,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<File> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/files?tag=${tag}&n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1428,7 +1323,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                         return arrayListOf()
 
                     val groups: ArrayList<File> = arrayListOf()
-                    val json = Gson().fromJson(result.body, Files::class.java)
+                    val json = gson.fromJson(result.body, Files::class.java)
 
                     groups.addAll(json)
                     return groups
@@ -1452,13 +1347,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int,
         ): ArrayList<File> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/files?tag=${tag}&n=${n}&offset=${offset}&userId=${userId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1468,7 +1361,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                         return arrayListOf()
 
                     val groups: ArrayList<File> = arrayListOf()
-                    val json = Gson().fromJson(result.body, Files::class.java)
+                    val json = gson.fromJson(result.body, Files::class.java)
 
                     groups.addAll(json)
                     return groups
@@ -1487,8 +1380,6 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun uploadImage(tag: String, file: Uri, aspectRatio: ImageAspectRatio): File? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val fields: MutableMap<String, String> = mutableMapOf("tag" to tag)
 
@@ -1500,12 +1391,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                 url = "${Config.API_BASE_URL}/file/image",
                 fileUri = file,
                 formFields = fields,
-                headers = headers
+                headers = GENERIC_HEADER
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, File::class.java)
+                    return gson.fromJson(result.body, File::class.java)
                 }
                 is Result.NotModified -> {
                     return null
@@ -1524,8 +1415,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             type: String,
             file: Uri
         ): File? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val fields: MutableMap<String, String> = mutableMapOf("tag" to "emoji", "maskTag" to "square", "frames" to "1", "framesOverTime" to "1", "animationStyle" to type)
 
@@ -1534,12 +1423,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                 url = "${Config.API_BASE_URL}/file/image",
                 fileUri = file,
                 formFields = fields,
-                headers = headers
+                headers = GENERIC_HEADER
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, File::class.java)
+                    return gson.fromJson(result.body, File::class.java)
                 }
                 is Result.NotModified -> {
                     return null
@@ -1558,19 +1447,17 @@ class HttpClient : BaseClient(), CoroutineScope {
     val user = object : IUser {
 
         override suspend fun markNotificationAsRead(notificationId: String): Notification? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "PUT",
                 url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/see",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
+                    return gson.fromJson(result.body, Notification::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -1580,19 +1467,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun hideNotification(notificationId: String): Notification? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "PUT",
                 url = "${Config.API_BASE_URL}/auth/user/notifications/$notificationId/hide",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
+                    return gson.fromJson(result.body, Notification::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -1606,13 +1491,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             notifications: ArrayList<Notification>
         ): ArrayList<Notification> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/auth/user/notifications?n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1621,7 +1504,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return notifications
 
-                    val json = Gson().fromJson(result.body, Notifications::class.java)
+                    val json = gson.fromJson(result.body, Notifications::class.java)
                     notifications.addAll(json)
                     fetchNotifications(n, offset + n, notifications)
                 }
@@ -1648,9 +1531,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             newAgeVerificationStatus: String?
         ): User? {
 
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
             val update = ProfileUpdate(
                 ageVerificationStatus = newAgeVerificationStatus,
                 bio = newBio,
@@ -1663,13 +1543,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "PUT",
                 url = "${Config.API_BASE_URL}/users/${userId}",
-                headers = headers,
-                body = Gson().toJson(update, ProfileUpdate::class.java)
+                headers = GENERIC_HEADER,
+                body = gson.toJson(update, ProfileUpdate::class.java)
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, User::class.java)
+                    return gson.fromJson(result.body, User::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -1683,14 +1563,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             avatars: ArrayList<Avatar>
         ): ArrayList<Avatar> {
-
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
-
+            
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/avatars?releaseStatus=all&sort=updated&order=descending&user=me&n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1699,7 +1576,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return avatars
 
-                    val json = Gson().fromJson(result.body, Avatars::class.java)
+                    val json = gson.fromJson(result.body, Avatars::class.java)
 
                     avatars.addAll(json)
                     fetchOwnedAvatars(n, offset + n, avatars)
@@ -1722,13 +1599,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             prints: ArrayList<Print>
         ): ArrayList<Print> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/prints/user/${userId}?n=${n}&offset=${offset}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
@@ -1737,7 +1612,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     if (result.body == "[]")
                         return prints
 
-                    val json = Gson().fromJson(result.body, Prints::class.java)
+                    val json = gson.fromJson(result.body, Prints::class.java)
                     prints.addAll(json)
 
                     fetchPrintsByUserId(userId, n, offset + n, prints)
@@ -1756,19 +1631,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchPrint(printId: String): Print? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/prints/${printId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Print::class.java)
+                    return gson.fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
                     return null
@@ -1784,19 +1657,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun deletePrint(printId: String): Print? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "DELETE",
                 url = "${Config.API_BASE_URL}/prints/${printId}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Print::class.java)
+                    return gson.fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
                     return null
@@ -1821,21 +1692,19 @@ class HttpClient : BaseClient(), CoroutineScope {
             timestamp: LocalDateTime,
             border: Boolean
         ): Print? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequestUpload(
                 App.getContext(),
                 url = "${Config.API_BASE_URL}/prints",
                 fileUri = file,
                 formFields = mapOf("note" to note, "timestamp" to timestamp.toString()),
-                headers = headers,
+                headers = GENERIC_HEADER,
                 addWhiteBorder = border
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Print::class.java)
+                    return gson.fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
                     return null
@@ -1863,8 +1732,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             order: String,
             items: ArrayList<Inventory.Data>
         ): ArrayList<Inventory.Data> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
@@ -1885,13 +1752,13 @@ class HttpClient : BaseClient(), CoroutineScope {
                     append("&offset=${offset}")
                     append("&order=${order}")
                 },
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    val json = Gson().fromJson(result.body, Inventory::class.java)
+                    val json = gson.fromJson(result.body, Inventory::class.java)
 
                     if (json.data.isEmpty())
                         return items
@@ -1916,8 +1783,6 @@ class HttpClient : BaseClient(), CoroutineScope {
     val notes = object : INotes {
 
         override suspend fun updateNote(userId: String, note: String): Notification? {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val update = UserNoteUpdate(
                 targetUserId = userId,
@@ -1927,13 +1792,13 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/userNotes",
-                headers = headers,
-                body = Gson().toJson(update, UserNoteUpdate::class.java)
+                headers = GENERIC_HEADER,
+                body = gson.toJson(update, UserNoteUpdate::class.java)
             )
 
             when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, Notification::class.java)
+                    return gson.fromJson(result.body, Notification::class.java)
                 }
                 else -> {
                     handleExceptions(result)
@@ -1949,8 +1814,6 @@ class HttpClient : BaseClient(), CoroutineScope {
             type: INotifications.ResponseType,
             response: String
         ): String {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val response = NotificationResponse(
                 responseType = type.toString(),
@@ -1960,8 +1823,8 @@ class HttpClient : BaseClient(), CoroutineScope {
             val result = doRequest(
                 method = "POST",
                 url = "${Config.API_BASE_URL}/notifications/$notificationId/respond",
-                headers = headers,
-                body = Gson().toJson(response, NotificationResponse::class.java)
+                headers = GENERIC_HEADER,
+                body = gson.toJson(response, NotificationResponse::class.java)
             )
 
             when (result) {
@@ -1978,19 +1841,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun fetchNotifications(
             n: Int
         ): ArrayList<NotificationV2> {
-            val headers = Headers.Builder()
-                .add("User-Agent", Config.API_USER_AGENT)
 
             val result = doRequest(
                 method = "GET",
                 url = "${Config.API_BASE_URL}/notifications?n=${n}",
-                headers = headers,
+                headers = GENERIC_HEADER,
                 body = null
             )
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return Gson().fromJson(result.body, NotificationsV2::class.java)
+                    return gson.fromJson(result.body, NotificationsV2::class.java)
                 }
                 is Result.Forbidden -> {
                     return arrayListOf()
@@ -2001,5 +1862,10 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
             }
         }
+    }
+
+    companion object {
+        private val GENERIC_HEADER = Headers.Builder()
+            .add("User-Agent", Config.API_USER_AGENT)
     }
 }
