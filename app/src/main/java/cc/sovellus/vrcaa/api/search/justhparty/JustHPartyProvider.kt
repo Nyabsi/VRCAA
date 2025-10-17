@@ -26,16 +26,16 @@ import okhttp3.Headers
 
 class JustHPartyProvider : BaseClient() {
 
-    private suspend fun sendRequest(params: String): String?
-    {
-        val headers = Headers.Builder()
-            .add("User-Agent", Config.API_USER_AGENT)
-            .add("Referer", Config.API_REFERER)
-
+    private suspend fun sendRequest(query: String, n: Int): String? {
         val result = doRequest(
             method = "GET",
-            url = "${Config.JUST_H_PARTY_API_BASE_URL}/vrcx_search.php$params",
-            headers = headers,
+            url =  buildString {
+                append(Config.JUST_H_PARTY_API_BASE_URL)
+                append("/vrcx_search.php")
+                append("?search=${UrlEncoderUtil.encode(query)}")
+                append("&n=${n}")
+            },
+            headers = GENERIC_HEADER,
             body = null,
             retryAfterFailure = false
         )
@@ -52,12 +52,19 @@ class JustHPartyProvider : BaseClient() {
 
     suspend fun search(query: String): ArrayList<SearchAvatar>
     {
-        val avatars = when (val result = sendRequest("?search=${UrlEncoderUtil.encode(query)}&n=5000")) {
+        val avatars = when (val result = sendRequest(query, 5000)) {
             is String -> {
                 Gson().fromJson(result, JustHPartyResponse::class.java) ?: arrayListOf()
             }
             else -> arrayListOf()
         }
         return avatars
+    }
+
+    companion object {
+        private val GENERIC_HEADER = Headers.Builder()
+            .add("User-Agent", Config.API_USER_AGENT)
+            .add("Referer", Config.API_REFERER)
+            .build()
     }
 }
