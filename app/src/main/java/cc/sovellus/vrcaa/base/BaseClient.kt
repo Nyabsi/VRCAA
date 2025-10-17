@@ -424,8 +424,12 @@ open class BaseClient {
             multipartBuilder.addFormDataPart(
                 "file",
                 "blob",
-                bytes.toRequestBody("image/png".toMediaType())
+                bytes.toRequestBody("image/jpeg".toMediaType())
             )
+
+            normalizedBitmap.recycle()
+            processedBitmap.recycle()
+            finalBitmap.recycle()
 
             val request = Request.Builder()
                 .headers(headers)
