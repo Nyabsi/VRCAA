@@ -49,7 +49,10 @@ import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.atomics.AtomicBoolean
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@OptIn(ExperimentalAtomicApi::class)
 open class BaseClient {
 
     private val tlsHelper = TLSHelper()
@@ -67,8 +70,8 @@ open class BaseClient {
                 val type = authorizationType
                 val creds = credentials
 
-                if (skipNextAuthorization) {
-                    skipNextAuthorization = false
+                if (skipNextAuthorization.load()) {
+                    skipNextAuthorization.exchange(false)
                     return@addInterceptor chain.proceed(original)
                 }
 
@@ -103,8 +106,8 @@ open class BaseClient {
 
     private lateinit var credentials: String
     private var authorizationType: AuthorizationType = AuthorizationType.None
-    private var skipAuthNextFailure: Boolean = false
-    private var skipNextAuthorization: Boolean = false
+    private var skipAuthNextFailure: AtomicBoolean = AtomicBoolean(false)
+    private var skipNextAuthorization: AtomicBoolean = AtomicBoolean(false)
 
     // TODO: add new response types, when required.
     sealed class Result {
@@ -137,9 +140,9 @@ open class BaseClient {
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest(responseBody)
         401 -> {
-            if (!skipAuthNextFailure)
+            if (!skipAuthNextFailure.load())
                 onAuthorizationFailure()
-            skipAuthNextFailure = false
+            skipAuthNextFailure.exchange(false)
             Result.Unauthorized
         }
         403 -> Result.Forbidden
@@ -162,9 +165,9 @@ open class BaseClient {
         val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
 
         if (ignoreAuthorization)
-           skipNextAuthorization = true
+           skipNextAuthorization.exchange(true)
         if (skipAuthorizationFailure)
-            skipAuthNextFailure = true
+            skipAuthNextFailure.exchange(true)
 
         return try {
              when (method) {
@@ -355,9 +358,9 @@ open class BaseClient {
     ): Result {
 
         if (ignoreAuthorization)
-            skipNextAuthorization = true
+            skipNextAuthorization.exchange(true)
         if (skipAuthorizationFailure)
-            skipAuthNextFailure = true
+            skipAuthNextFailure.exchange(true)
 
         return try {
             val multipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
