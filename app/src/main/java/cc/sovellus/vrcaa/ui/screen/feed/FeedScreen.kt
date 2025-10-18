@@ -31,6 +31,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -297,7 +298,7 @@ class FeedScreen : Screen {
 
     @Composable
     fun ShowScreen(model: FeedScreenModel) {
-        val feed = model.feedList.collectAsState()
+        val feed = model.feedList.collectAsStateWithLifecycle()
         FeedList(feed.value)
     }
 }
