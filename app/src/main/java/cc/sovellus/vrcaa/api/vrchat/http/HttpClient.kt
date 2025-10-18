@@ -124,7 +124,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                 preferences.userCredentials.second
             )
 
-            if (!response.success) {
+            if ((response.success && response.authType != AuthType.AUTH_NONE) || !response.success) {
                 reAuthorizationFailureCount++
                 listener?.onSessionInvalidate()
             }
