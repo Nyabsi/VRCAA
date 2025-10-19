@@ -10,14 +10,14 @@
         <item>Website</item>
         <item>Offline</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">O seu pedido de amizade para %1$s foi cancelado.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Falha ao cancelar o pedido de amizade para %1$s.</string>
+    <string name="friend_toast_friend_removed">%1$s foi removido da sua lista de amigos.</string>
+    <string name="friend_toast_friend_remove_failed">Falha ao remover %1$s da sua lista de amigos.</string>
+    <string name="friend_toast_friend_requested">Seu pedido de amizade foi enviado para %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Falha ao enviar pedido de amizade para %1$s.</string>
+    <string name="friend_toast_friend_request_accepted">Pedido de amizade de %1$s aceito.</string>
+    <string name="friend_toast_friend_request_accept_failed">Falha ao aceitar pedido de amizade para %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Amigos Online</string>
     <string name="home_recently_visited">Visitados recentemente</string>
@@ -48,7 +48,7 @@
     <string name="profile_user_not_found_message">O usuário não existe.</string>
     <string name="profile_user_avatar_private">O avatar está privado!</string>
     <string name="profile_user_avatar_unreachable">O avatar não está acessível!</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_note_dialog_title">Definir Nota</string>
     <!-- Search -->
     <string name="search_text_result">Resultados de</string>
     <string name="search_filter_category_worlds">Mundos</string>
@@ -137,29 +137,29 @@
     <string name="notification_label_intent_status">Notificações de Mudanças de Status</string>
     <string name="notification_service_title_status">Amigo mudou o status!</string>
     <string name="notification_service_description_status">Seu amigo, %1$s mudou seu status de %2$s para %3$s.</string>
-    <string name="notifications_page_title">Notifications</string>
-    <string name="notifications_type_invite">Invite</string>
-    <string name="notifications_type_invite_response">Invite Response</string>
-    <string name="notifications_type_invite_request">Invite Request</string>
-    <string name="notifications_type_invite_request_response">Invite Request Response</string>
-    <string name="notifications_type_friend_request">Friend Request</string>
-    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
-    <string name="notification_dialog_title">Notification</string>
-    <string name="notification_dialog_description">What do you want to do with this notification?</string>
-    <string name="notification_dialog_button_delete">Delete</string>
-    <string name="notification_dialog_button_read">Mark As Read</string>
-    <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
-    <string name="notification_dialog_button_accept">Accept</string>
-    <string name="notification_dialog_button_reject">Reject</string>
-    <string name="notification_dialog_button_block">Block</string>
-    <string name="notification_dialog_button_start">Start</string>
-    <string name="notification_dialog_button_continue">Continue</string>
-    <string name="notification_dialog_button_restart">Restart</string>
-    <string name="notification_dialog_button_abandon">Abandon</string>
-    <string name="notification_invite_text">has invited you to</string>
-    <string name="notification_invite_response_text">rejected your request to join</string>
-    <string name="notification_invite_request_text">wants to join you</string>
-    <string name="notification_invite_request_response_text">rejected your invite request</string>
+    <string name="notifications_page_title">Notificações</string>
+    <string name="notifications_type_invite">Convidar</string>
+    <string name="notifications_type_invite_response">Resposta de convite</string>
+    <string name="notifications_type_invite_request">Solicitação de Convite</string>
+    <string name="notifications_type_invite_request_response">Resposta de Solicitação de Convite</string>
+    <string name="notifications_type_friend_request">Pedido de amizade</string>
+    <string name="notifications_type_friend_request_content">%1$s - quer ser seu amigo!</string>
+    <string name="notification_dialog_title">Notificação</string>
+    <string name="notification_dialog_description">O que você quer fazer com esta notificação?</string>
+    <string name="notification_dialog_button_delete">Excluir</string>
+    <string name="notification_dialog_button_read">Marcar como lida</string>
+    <string name="notification_dialog_button_unsubscribe">Cancelar inscrição</string>
+    <string name="notification_dialog_button_accept">Aceitar</string>
+    <string name="notification_dialog_button_reject">Recusar</string>
+    <string name="notification_dialog_button_block">Bloquear</string>
+    <string name="notification_dialog_button_start">Iniciar</string>
+    <string name="notification_dialog_button_continue">Continuar</string>
+    <string name="notification_dialog_button_restart">Reiniciar</string>
+    <string name="notification_dialog_button_abandon">Abandonar</string>
+    <string name="notification_invite_text">convidou você para</string>
+    <string name="notification_invite_response_text">rejeitou o seu pedido para se juntar</string>
+    <string name="notification_invite_request_text">quer se juntar a você</string>
+    <string name="notification_invite_request_response_text">rejeitou seu pedido de convite</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Mudar para Avatar</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatar Selecionado!</string>
@@ -189,8 +189,8 @@
     <string name="feed_search_placeholder">Pesquisar por Usuário ou Localização…</string>
     <string name="feed_friend_avatar_label">Mudança de Avatar</string>
     <string name="feed_friend_avatar_text">mudou o seu avatar para</string>
-    <string name="feed_friend_username_changed_label">Username Change</string>
-    <string name="feed_friend_username_changed_text">changed their username to</string>
+    <string name="feed_friend_username_changed_label">Mudança de nome de usuário</string>
+    <string name="feed_friend_username_changed_text">mudou o seu nome de usuário para</string>
     <!-- About -->
     <string name="about_page_title">Sobre</string>
     <string name="about_page_open_source_licenses_title">Licenças de Código Aberto</string>
@@ -240,22 +240,22 @@
     <string name="misc_exit_toast_label">Pressione novamente para sair.</string>
     <string name="misc_no_premium_subscription">Este recurso exige que você tenha uma assinatura VRC+ ativa.</string>
     <string name="global_app_default_loading_text">Inicializando…</string>
-    <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
-    <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_public">Público</string>
+    <string name="generic_text_private">Privado</string>
+    <string name="generic_text_upload">Fazer upload</string>
+    <string name="generic_text_cancel">Cancelar</string>
     <string name="generic_text_ok">OK</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
-    <string name="user_overlay_friend_accept">Accept Request</string>
-    <string name="user_overlay_friend_cancel">Cancel Request</string>
+    <string name="user_overlay_friend_add">Adicionar amigo</string>
+    <string name="user_overlay_friend_remove">Remover amigo</string>
+    <string name="user_overlay_friend_accept">Aceitar Pedido</string>
+    <string name="user_overlay_friend_cancel">Cancelar Pedido</string>
     <string name="user_overlay_groups">Grupos</string>
     <string name="user_overlay_worlds">Mundos</string>
     <string name="user_overlay_favorites">Favoritos</string>
     <string name="user_overlay_find_avatar">Localizar Avatar</string>
-    <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_invite">Me convide</string>
+    <string name="user_overlay_note">Adicionar Nota</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Visibilidade da Verificação de Idade</string>
@@ -300,8 +300,8 @@
     <string name="favorite_dialog_button_edit">Editar</string>
     <string name="favorite_tab_refresh_favorites">Atualizar Favoritos</string>
     <string name="favorite_toast_refreshed_favorites">Favoritos atualizados.</string>
-    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
-    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
+    <string name="favorite_remove_dialog_title">Você quer remover este favorito?</string>
+    <string name="favorite_remove_dialog_description">Este favorito não está mais disponível, pode ter sido excluído ou tornado privado pelo autor, você quer removê-lo da lista?</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">Mundos de %1$s</string>
@@ -328,7 +328,7 @@
     <string name="loading_text_emojis">Carregando emojis…</string>
     <string name="loading_text_items">Carregando itens…</string>
     <string name="loading_text_favorites">Carregando favoritos…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_notifications">Carregando Notificações…</string>
     <!-- Theming -->
     <string name="theme_page_title">Tema</string>
     <string name="theme_page_minimalist_mode_text">Modo Minimalista</string>
@@ -413,6 +413,6 @@
         <item>Arquivo</item>
     </string-array>
     <string name="image_preview_dialog_title">Pré-visualização</string>
-    <string name="image_preview_toast_picture_saved">Saved picture.</string>
-    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
+    <string name="image_preview_toast_picture_saved">Imagem salva.</string>
+    <string name="image_preview_toast_picture_save_failed">Não foi possível salvar a imagem.</string>
 </resources>
