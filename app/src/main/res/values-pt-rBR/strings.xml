@@ -10,14 +10,14 @@
         <item>Website</item>
         <item>Offline</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">O seu pedido de amizade para %1$s foi cancelado.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Falha ao cancelar o pedido de amizade para %1$s.</string>
+    <string name="friend_toast_friend_removed">%1$s foi removido da sua lista de amigos.</string>
+    <string name="friend_toast_friend_remove_failed">Falha ao remover %1$s da sua lista de amigos.</string>
+    <string name="friend_toast_friend_requested">Seu pedido de amizade foi enviado para %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Falha ao enviar pedido de amizade para %1$s.</string>
+    <string name="friend_toast_friend_request_accepted">Pedido de amizade de %1$s aceito.</string>
+    <string name="friend_toast_friend_request_accept_failed">Falha ao aceitar pedido de amizade para %1$s.</string>
     <!-- Home -->
     <string name="home_active_friends">Amigos Online</string>
     <string name="home_recently_visited">Visitados recentemente</string>
