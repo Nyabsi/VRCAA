@@ -49,14 +49,6 @@ class App : Application() {
         Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
         if (!preferences.crashAnalytics) {
             GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-        } else {
-            Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-                if (throwable is OutOfMemoryError) {
-                    Log.e("VRCAA", "Out of memory on thread ${thread.name}", throwable)
-                } else {
-                    Thread.getDefaultUncaughtExceptionHandler()?.uncaughtException(thread, throwable)
-                }
-            }
         }
 
         NotificationHelper.createNotificationChannels()
