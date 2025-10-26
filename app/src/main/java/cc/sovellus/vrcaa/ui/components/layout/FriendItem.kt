@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.components.layout
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,13 +25,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Computer
-import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.PhoneIphone
 import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,6 +45,7 @@ import cc.sovellus.vrcaa.helper.StatusHelper
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
+import com.bumptech.glide.request.RequestOptions
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -91,7 +91,17 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.Center,
                         loading = placeholder(R.drawable.image_placeholder),
-                        failure = placeholder(R.drawable.image_placeholder)
+                        failure = placeholder(R.drawable.image_placeholder),
+                        requestBuilderTransform = { requestBuilder ->
+                            requestBuilder
+                                .apply(
+                                    RequestOptions()
+                                        .override(64, 64)
+                                        .dontAnimate()
+                                        .encodeFormat(Bitmap.CompressFormat.JPEG)
+                                        .encodeQuality(70)
+                                )
+                        }
                     )
                 }
             }
