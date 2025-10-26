@@ -19,8 +19,8 @@ android {
         applicationId = "cc.sovellus.vrcaa"
         minSdk = 27
         targetSdk = 36
-        versionCode = 200704
-        versionName = "2.7.4"
+        versionCode = 200705
+        versionName = "2.7.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
