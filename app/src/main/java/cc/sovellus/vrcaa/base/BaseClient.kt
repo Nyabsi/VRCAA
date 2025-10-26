@@ -137,9 +137,10 @@ open class BaseClient {
         429 -> Result.RateLimited
         400 -> Result.InvalidRequest(responseBody)
         401 -> {
-            if (!skipAuthNextFailure.load())
+            if (skipAuthNextFailure.load()) {
                 onAuthorizationFailure()
-            skipAuthNextFailure.exchange(false)
+                skipAuthNextFailure.exchange(false)
+            }
             Result.Unauthorized
         }
         403 -> Result.Forbidden
@@ -199,7 +200,7 @@ open class BaseClient {
                             url = url,
                             headers = headers,
                             body = body,
-                            retryAfterFailure = retryAfterFailure,
+                            retryAfterFailure = false,
                             ignoreAuthorization = ignoreAuthorization,
                             skipAuthorizationFailure = skipAuthorizationFailure
                         )
@@ -238,7 +239,7 @@ open class BaseClient {
                             url = url,
                             headers = headers,
                             body = body,
-                            retryAfterFailure = retryAfterFailure,
+                            retryAfterFailure = false,
                             ignoreAuthorization = ignoreAuthorization,
                             skipAuthorizationFailure = skipAuthorizationFailure
                         )
@@ -277,7 +278,7 @@ open class BaseClient {
                             url = url,
                             headers = headers,
                             body = body,
-                            retryAfterFailure = retryAfterFailure,
+                            retryAfterFailure = false,
                             ignoreAuthorization = ignoreAuthorization,
                             skipAuthorizationFailure = skipAuthorizationFailure
                         )
@@ -316,7 +317,7 @@ open class BaseClient {
                             url = url,
                             headers = headers,
                             body = body,
-                            retryAfterFailure = retryAfterFailure,
+                            retryAfterFailure = false,
                             ignoreAuthorization = ignoreAuthorization,
                             skipAuthorizationFailure = skipAuthorizationFailure
                         )
@@ -461,7 +462,7 @@ open class BaseClient {
                     headers = headers,
                     fileUri = fileUri,
                     formFields = formFields,
-                    retryAfterFailure = retryAfterFailure,
+                    retryAfterFailure = false,
                     ignoreAuthorization = ignoreAuthorization,
                     skipAuthorizationFailure = skipAuthorizationFailure
                 )
