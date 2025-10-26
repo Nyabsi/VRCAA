@@ -26,12 +26,16 @@ import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendsState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 
 class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
 
@@ -44,33 +48,72 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     private var friendsStateFlow = MutableStateFlow(listOf<Friend>())
     private var friends = friendsStateFlow.asStateFlow()
 
-    val favoriteFriends = friends.map { friend ->
-        friend.filter { FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform.isNotEmpty() }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    data class FriendsBuckets(
+        val favoriteFriends: List<Friend> = emptyList(),
+        val favoriteFriendsInInstances: List<Friend> = emptyList(),
+        val favoriteFriendsOffline: List<Friend> = emptyList(),
+        val friendsOnWebsite: List<Friend> = emptyList(),
+        val friendsOnline: List<Friend> = emptyList(),
+        val friendsInInstances: List<Friend> = emptyList(),
+        val offlineFriends: List<Friend> = emptyList(),
+    )
 
-    val favoriteFriendsInInstances = friends.map { friend ->
-        friend.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform.isNotEmpty() }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    private fun computeBuckets(all: List<Friend>): FriendsBuckets {
+        val favorites = all.filter { FavoriteManager.isFavorite("friend", it.id) }
+        val nonFavorites = all - favorites.toSet()
 
-    val favoriteFriendsOffline = friends.map { friend ->
-        friend.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        return FriendsBuckets(
+            favoriteFriends = favorites
+                .filter { !it.location.contains("wrld_") && it.platform.isNotEmpty() }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) },
 
-    val friendsOnWebsite = friends.map { friend ->
-        friend.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform == "web" }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+            favoriteFriendsInInstances = favorites
+                .filter { it.location.contains("wrld_") && it.platform.isNotEmpty() }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) },
 
-    val friendsOnline = friends.map { friend ->
-        friend.filter { !FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+            favoriteFriendsOffline = favorites
+                .filter { it.platform.isEmpty() }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) },
 
-    val friendsInInstances = friends.map { friend ->
-        friend.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+            friendsOnWebsite = nonFavorites
+                .filter { it.platform == "web" }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) },
 
-    val offlineFriends = friends.map { friend ->
-        friend.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }.sortedBy { StatusHelper.getStatusFromString(it.status) }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+            friendsOnline = nonFavorites
+                .filter { !it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) },
+
+            friendsInInstances = nonFavorites
+                .filter { it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) },
+
+            offlineFriends = nonFavorites
+                .filter { it.platform.isEmpty() }
+                .sortedBy { StatusHelper.getStatusFromString(it.status) }
+        )
+    }
+
+    @OptIn(FlowPreview::class)
+    private val friendsBuckets = friends
+        .debounce(100)
+        .map { all ->
+            withContext(Dispatchers.Default) {
+                computeBuckets(all)
+            }
+        }
+        .stateIn(
+            screenModelScope,
+            SharingStarted.WhileSubscribed(),
+            FriendsBuckets()
+        )
+
+    val favoriteFriends get() = friendsBuckets.map { it.favoriteFriends }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
+    val favoriteFriendsInInstances get() = friendsBuckets.map { it.favoriteFriendsInInstances }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
+    val favoriteFriendsOffline get() = friendsBuckets.map { it.favoriteFriendsOffline }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
+    val friendsOnWebsite get() = friendsBuckets.map { it.friendsOnWebsite }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
+    val friendsOnline get() = friendsBuckets.map { it.friendsOnline }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
+    val friendsInInstances get() = friendsBuckets.map { it.friendsInInstances }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
+    val offlineFriends get() = friendsBuckets.map { it.offlineFriends }.stateIn(screenModelScope, SharingStarted.Eagerly, listOf())
 
     var currentIndex = mutableIntStateOf(0)
 
