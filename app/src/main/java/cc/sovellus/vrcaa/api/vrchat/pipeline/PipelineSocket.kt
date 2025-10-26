@@ -213,6 +213,7 @@ class PipelineSocket(
             delay(Config.RECONNECTION_INTERVAL)
             api.auth.fetchToken()?.let { tkn ->
                 token = tkn
+                socket.cancel()
                 connect()
             }
         }
