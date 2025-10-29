@@ -12,10 +12,10 @@
     </string-array>
     <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
     <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
+    <string name="friend_toast_friend_removed">%1$s se eliminó de tu lista de amigos</string>
+    <string name="friend_toast_friend_remove_failed">Error al eliminar a %1$s de tu lista de amigos.</string>
+    <string name="friend_toast_friend_requested">Se envió tu solicitud de amistad a %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Error al enviar tu solicitud de amistad a %1$s.</string>
     <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
     <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
     <!-- Home -->
