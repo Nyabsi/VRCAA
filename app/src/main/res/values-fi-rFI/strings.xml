@@ -281,7 +281,7 @@
     </string-array>
     <string-array name="user_favorites_selection_options">
         <item>Worlds</item>
-        <item>Avatars</item>
+        <item>Hahmot</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>
