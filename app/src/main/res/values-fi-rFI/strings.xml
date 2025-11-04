@@ -21,7 +21,7 @@
     <!-- Home -->
     <string name="home_active_friends">Ystävät paikalla</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
-    <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
+    <string name="home_offline_friends">Ei paikalla olevat kaverit</string>
     <string name="home_friend_locations">Ystävien Sijainnit</string>
     <!-- Login -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
