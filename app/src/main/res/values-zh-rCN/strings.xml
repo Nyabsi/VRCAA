@@ -10,18 +10,18 @@
         <item>网页</item>
         <item>离线</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">您向 %1$s 发出的好友申请已取消。</string>
-    <string name="friend_toast_friend_request_cancel_failed">无法取消向 %1$s 发出的好友申请。</string>
+    <string name="friend_toast_friend_request_cancelled">已拒绝 %1$s 的好友申请。</string>
+    <string name="friend_toast_friend_request_cancel_failed">对 %1$s 的好友申请拒绝失败。</string>
     <string name="friend_toast_friend_removed">现在 %1$s 已不再是您的好友了。</string>
     <string name="friend_toast_friend_remove_failed">好友 %1$s 删除失败。</string>
-    <string name="friend_toast_friend_requested">您已向 %1$s 发送好友申请。</string>
+    <string name="friend_toast_friend_requested">已向 %1$s 发送好友申请。</string>
     <string name="friend_toast_friend_request_failed">无法向 %1$s 发送好友申请。</string>
-    <string name="friend_toast_friend_request_accepted">您已同意来自 %1$s 的好友申请。</string>
+    <string name="friend_toast_friend_request_accepted">已同意来自 %1$s 的好友申请。</string>
     <string name="friend_toast_friend_request_accept_failed">无法同意来自 %1$s 的好友申请。</string>
     <!-- Home -->
-    <string name="home_active_friends">在线好友</string>
+    <string name="home_active_friends">好友（在线）</string>
     <string name="home_recently_visited">最近访问</string>
-    <string name="home_offline_friends">离线好友</string>
+    <string name="home_offline_friends">好友（离线）</string>
     <string name="home_friend_locations">好友位置</string>
     <!-- Login -->
     <string name="login_text">登录到 VRC Android Assistant</string>
@@ -46,8 +46,8 @@
     <string name="profile_text_no_biography">未填写自我介绍。</string>
     <string name="profile_user_dropdown_manage_notifications">管理通知</string>
     <string name="profile_user_not_found_message">用户不存在。</string>
-    <string name="profile_user_avatar_private">模型是私密的！</string>
-    <string name="profile_user_avatar_unreachable">无法访问模型！</string>
+    <string name="profile_user_avatar_private">该模型被设为 Private</string>
+    <string name="profile_user_avatar_unreachable">无法访问该模型</string>
     <string name="profile_user_note_dialog_title">设置备注</string>
     <!-- Search -->
     <string name="search_text_result">搜索结果：</string>
@@ -140,26 +140,26 @@
     <string name="notifications_page_title">通知设置</string>
     <string name="notifications_type_invite">邀请</string>
     <string name="notifications_type_invite_response">邀请·回应</string>
-    <string name="notifications_type_invite_request">Invite Request</string>
-    <string name="notifications_type_invite_request_response">Invite Request Response</string>
+    <string name="notifications_type_invite_request">邀请·申请</string>
+    <string name="notifications_type_invite_request_response">邀请·回应申请</string>
     <string name="notifications_type_friend_request">好友申请</string>
-    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
-    <string name="notification_dialog_title">Notification</string>
-    <string name="notification_dialog_description">What do you want to do with this notification?</string>
-    <string name="notification_dialog_button_delete">Delete</string>
-    <string name="notification_dialog_button_read">Mark As Read</string>
-    <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
-    <string name="notification_dialog_button_accept">Accept</string>
-    <string name="notification_dialog_button_reject">Reject</string>
-    <string name="notification_dialog_button_block">Block</string>
-    <string name="notification_dialog_button_start">Start</string>
-    <string name="notification_dialog_button_continue">Continue</string>
-    <string name="notification_dialog_button_restart">Restart</string>
+    <string name="notifications_type_friend_request_content">%1$s 想要成为你的好友~！</string>
+    <string name="notification_dialog_title">通知</string>
+    <string name="notification_dialog_description">请选择对此通知的处理方式</string>
+    <string name="notification_dialog_button_delete">删除</string>
+    <string name="notification_dialog_button_read">标为已读</string>
+    <string name="notification_dialog_button_unsubscribe">取消订阅</string>
+    <string name="notification_dialog_button_accept">同意</string>
+    <string name="notification_dialog_button_reject">拒绝</string>
+    <string name="notification_dialog_button_block">屏蔽</string>
+    <string name="notification_dialog_button_start">开始</string>
+    <string name="notification_dialog_button_continue">继续</string>
+    <string name="notification_dialog_button_restart">重启</string>
     <string name="notification_dialog_button_abandon">Abandon</string>
-    <string name="notification_invite_text">has invited you to</string>
-    <string name="notification_invite_response_text">rejected your request to join</string>
-    <string name="notification_invite_request_text">wants to join you</string>
-    <string name="notification_invite_request_response_text">rejected your invite request</string>
+    <string name="notification_invite_text">已邀请您加入</string>
+    <string name="notification_invite_response_text">已拒绝你加入</string>
+    <string name="notification_invite_request_text">想要加入您所在的房间</string>
+    <string name="notification_invite_request_response_text">拒绝了你的邀请</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">更换为此模型</string>
     <string name="avatar_dropdown_toast_select_avatar">已选择此模型！</string>
@@ -189,8 +189,8 @@
     <string name="feed_search_placeholder">搜索用户或房间…</string>
     <string name="feed_friend_avatar_label">更换模型</string>
     <string name="feed_friend_avatar_text">更改模型为</string>
-    <string name="feed_friend_username_changed_label">Username Change</string>
-    <string name="feed_friend_username_changed_text">changed their username to</string>
+    <string name="feed_friend_username_changed_label">更换用户名</string>
+    <string name="feed_friend_username_changed_text">更改用户名为</string>
     <!-- About -->
     <string name="about_page_title">关于</string>
     <string name="about_page_open_source_licenses_title">开源许可证</string>
@@ -242,12 +242,12 @@
     <string name="global_app_default_loading_text">初始化...</string>
     <string name="generic_text_public">Public</string>
     <string name="generic_text_private">Private</string>
-    <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_upload">上传</string>
+    <string name="generic_text_cancel">取消</string>
     <string name="generic_text_ok">OK</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_add">添加好友</string>
+    <string name="user_overlay_friend_remove">移除好友</string>
     <string name="user_overlay_friend_accept">同意请求</string>
     <string name="user_overlay_friend_cancel">取消申请</string>
     <string name="user_overlay_groups">群组</string>
@@ -300,8 +300,8 @@
     <string name="favorite_dialog_button_edit">编辑</string>
     <string name="favorite_tab_refresh_favorites">刷新收藏夹</string>
     <string name="favorite_toast_refreshed_favorites">刷新收藏夹完成~</string>
-    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
-    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
+    <string name="favorite_remove_dialog_title">确认取消收藏</string>
+    <string name="favorite_remove_dialog_description">此收藏内容已不可用。它可能已被作者删除或标记为 Private，是否将其从收藏列中删除？</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s 的世界</string>
@@ -309,8 +309,8 @@
     <string name="avatars_page_title">查看模型</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">重启应用以使更改生效。</string>
-    <string name="debug_notification_title_out_of_memory">Notice!</string>
-    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
+    <string name="debug_notification_title_out_of_memory">请注意</string>
+    <string name="debug_notification_content_out_of_memory">内存不足，请清除调试缓存以继续动作。</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">加载世界…</string>
     <string name="loading_text_users">加载用户…</string>
@@ -328,7 +328,7 @@
     <string name="loading_text_emojis">加载 emoji 中…</string>
     <string name="loading_text_items">加载物品中…</string>
     <string name="loading_text_favorites">加载收藏…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_notifications">载入通知信息……</string>
     <!-- Theming -->
     <string name="theme_page_title">主题</string>
     <string name="theme_page_minimalist_mode_text">简约模式</string>
@@ -389,8 +389,8 @@
     </string-array>
     <string name="gallery_page_title">图库</string>
     <string name="gallery_page_button_upload">上传图片</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
+    <string name="icon_gallery_page_title">用户头像</string>
+    <string name="icon_gallery_page_button_upload">上传头像</string>
     <string name="prints_page_title">拍立得</string>
     <string name="prints_page_button_upload">上传拍立得</string>
     <string name="emojis_page_title">Emojis</string>
@@ -413,6 +413,6 @@
         <item>已归档</item>
     </string-array>
     <string name="image_preview_dialog_title">预览</string>
-    <string name="image_preview_toast_picture_saved">Saved picture.</string>
-    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
+    <string name="image_preview_toast_picture_saved">图片已保存。</string>
+    <string name="image_preview_toast_picture_save_failed">无法保存图片。</string>
 </resources>
