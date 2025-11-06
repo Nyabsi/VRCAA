@@ -10,14 +10,14 @@
         <item>网页</item>
         <item>离线</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">您向 %1$s 发出的好友申请已取消。</string>
+    <string name="friend_toast_friend_request_cancel_failed">无法取消向 %1$s 发出的好友申请。</string>
+    <string name="friend_toast_friend_removed">现在 %1$s 已不再是您的好友了。</string>
+    <string name="friend_toast_friend_remove_failed">好友 %1$s 删除失败。</string>
+    <string name="friend_toast_friend_requested">您已向 %1$s 发送好友申请。</string>
+    <string name="friend_toast_friend_request_failed">无法向 %1$s 发送好友申请。</string>
+    <string name="friend_toast_friend_request_accepted">您已同意来自 %1$s 的好友申请。</string>
+    <string name="friend_toast_friend_request_accept_failed">无法同意来自 %1$s 的好友申请。</string>
     <!-- Home -->
     <string name="home_active_friends">在线好友</string>
     <string name="home_recently_visited">最近访问</string>
@@ -48,7 +48,7 @@
     <string name="profile_user_not_found_message">用户不存在。</string>
     <string name="profile_user_avatar_private">模型是私密的！</string>
     <string name="profile_user_avatar_unreachable">无法访问模型！</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_note_dialog_title">设置备注</string>
     <!-- Search -->
     <string name="search_text_result">搜索结果：</string>
     <string name="search_filter_category_worlds">世界</string>
@@ -137,12 +137,12 @@
     <string name="notification_label_intent_status">状态变更通知</string>
     <string name="notification_service_title_status">好友更改了状态！</string>
     <string name="notification_service_description_status">您的好友 %1$s 将状态从 %2$s 更改为 %3$s 。</string>
-    <string name="notifications_page_title">Notifications</string>
-    <string name="notifications_type_invite">Invite</string>
-    <string name="notifications_type_invite_response">Invite Response</string>
+    <string name="notifications_page_title">通知设置</string>
+    <string name="notifications_type_invite">邀请</string>
+    <string name="notifications_type_invite_response">邀请·回应</string>
     <string name="notifications_type_invite_request">Invite Request</string>
     <string name="notifications_type_invite_request_response">Invite Request Response</string>
-    <string name="notifications_type_friend_request">Friend Request</string>
+    <string name="notifications_type_friend_request">好友申请</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
     <string name="notification_dialog_title">Notification</string>
     <string name="notification_dialog_description">What do you want to do with this notification?</string>
@@ -223,10 +223,10 @@
     <string name="group_page_dropdown_request_invite_cancel">取消邀请</string>
     <string name="group_page_dropdown_join_group">加入群组</string>
     <string name="group_page_dropdown_leave_group">离开群组</string>
-    <string name="group_page_toast_invite_requested">已发送邀请请求。</string>
-    <string name="group_page_toast_invite_requested_fail">发送邀请请求失败。</string>
-    <string name="group_page_toast_invite_requested_cancel">已取消邀请请求。</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">取消邀请请求失败。</string>
+    <string name="group_page_toast_invite_requested">已发送邀请消息。</string>
+    <string name="group_page_toast_invite_requested_fail">无法发送邀请消息。</string>
+    <string name="group_page_toast_invite_requested_cancel">现已取消邀请。</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">无法取消邀请。</string>
     <string name="group_page_toast_join_group">已加入此群组。</string>
     <string name="group_page_toast_join_group_fail">加入此群组失败。</string>
     <string name="group_page_toast_leave_group">已离开此群组。</string>
@@ -248,14 +248,14 @@
     <!-- User -->
     <string name="user_overlay_friend_add">Add Friend</string>
     <string name="user_overlay_friend_remove">Remove Friend</string>
-    <string name="user_overlay_friend_accept">Accept Request</string>
-    <string name="user_overlay_friend_cancel">Cancel Request</string>
+    <string name="user_overlay_friend_accept">同意请求</string>
+    <string name="user_overlay_friend_cancel">取消申请</string>
     <string name="user_overlay_groups">群组</string>
     <string name="user_overlay_worlds">世界</string>
     <string name="user_overlay_favorites">收藏</string>
     <string name="user_overlay_find_avatar">查看模型</string>
-    <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_invite">向我发送邀请</string>
+    <string name="user_overlay_note">添加备注</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">社交状态</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">年龄验证可见性</string>
