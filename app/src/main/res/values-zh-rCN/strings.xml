@@ -2,7 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
     <string name="result_not_found">这里空空如也～</string>
-    <string name="legal_disclaimer">"VRCAA 并未得到 VRChat Inc. 或其任何附属公司的认可"</string>
+    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates.
+（VRCAA 并非是 VRChat Inc. 官方应用，也并未受其或任何相关附属公司认可）"</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>收藏</item>
@@ -32,7 +33,7 @@
     <string name="login_toast_wrong_code">验证失败，请检查代码。</string>
     <!-- Two Auth -->
     <string name="auth_text_email">输入发送到您电子邮件的代码</string>
-    <string name="auth_text_app">输入您身份验证应用程序中的代码</string>
+    <string name="auth_text_app">输入您身份验证应用中的代码</string>
     <string name="auth_button_text">验证</string>
     <string name="auth_button_paste">粘贴</string>
     <!-- Main -->
@@ -61,7 +62,7 @@
     <string name="search_filter_category_groups">群组</string>
     <string name="search_filter_category_groups_count">数量</string>
     <string name="copy_id_label">复制 ID</string>
-    <string name="copied_toast">复制 %1$s 的 ID 成功。</string>
+    <string name="copied_toast">成功复制 %1$s 的 ID</string>
     <!-- TODO: remove duplicate labels :) -->
     <string name="search_filter_label_count">数量</string>
     <string name="search_filter_button_reset">重置</string>
