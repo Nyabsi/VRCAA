@@ -238,26 +238,26 @@
     <string name="misc_no_internet_description">請確保你的設備處於網際網路之中，此應用程式須網絡才可工作。</string>
     <string name="misc_no_internet_label">重新啟動應用程式</string>
     <string name="misc_exit_toast_label">再次點擊即退出</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
-    <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
-    <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
-    <string name="generic_text_ok">OK</string>
+    <string name="misc_no_premium_subscription">該功能需要你有一個尚在活躍的 VRC+ 訂閲。</string>
+    <string name="global_app_default_loading_text">稍安勿躁，正在載入</string>
+    <string name="generic_text_public">公開的</string>
+    <string name="generic_text_private">私人的</string>
+    <string name="generic_text_upload">上載</string>
+    <string name="generic_text_cancel">取消</string>
+    <string name="generic_text_ok">確認</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
-    <string name="user_overlay_friend_accept">Accept Request</string>
-    <string name="user_overlay_friend_cancel">Cancel Request</string>
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
-    <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_friend_add">新增好友</string>
+    <string name="user_overlay_friend_remove">刪除好友</string>
+    <string name="user_overlay_friend_accept">接受請求</string>
+    <string name="user_overlay_friend_cancel">拒絕請求</string>
+    <string name="user_overlay_groups">群組</string>
+    <string name="user_overlay_worlds">世界</string>
+    <string name="user_overlay_favorites">收藏</string>
+    <string name="user_overlay_find_avatar">搜尋角色</string>
+    <string name="user_overlay_invite">邀請我</string>
+    <string name="user_overlay_note">新增備注</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_status">狀態</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">年齡驗證可見性</string>
     <string name="profile_edit_dialog_title_status_description">狀態描述</string>
     <string name="profile_edit_dialog_title_bio">簡介</string>
@@ -272,23 +272,23 @@
     <string name="logout_dialog_description">按下下方的「繼續」，你將登出 VRCAA，並必須重新登入才能繼續使用這個應用程式。</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">查看當前好友位置</string>
-    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">明月幾時有，把酒問青天。</string>
+    <string name="favorite_page_title">收藏</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Friends</item>
+        <item>世界</item>
+        <item>角色</item>
+        <item>好友</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>世界</item>
+        <item>角色</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
+    <string name="favorite_label_add">加入收藏</string>
+    <string name="favorite_label_remove">取消收藏</string>
+    <string name="favorite_toast_favorite_added">已将 %1$s 加入收藏。</string>
+    <string name="favorite_toast_favorite_added_failed">收藏 %1$s 失敗。</string>
+    <string name="favorite_toast_favorite_removed">已将 %1$s 移出收藏。</string>
+    <string name="favorite_toast_favorite_removed_failed">取消收藏 %1$s 失敗。</string>
     <string name="favorite_dialog_button_add">Add</string>
     <string name="favorite_dialog_button_cancel">Cancel</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
@@ -340,61 +340,61 @@
     </string-array>
     <string-array name="column_count_options">
         <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>固釘</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">主題</string>
+    <string name="theme_page_section_display_title">顯示</string>
+    <string name="theme_page_section_column_title">欄數</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
-    <string name="advanced_page_section_networking">Networking</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
+    <string name="advanced_page_title">進階設定</string>
+    <string name="advanced_page_section_networking">網路連線</string>
+    <string name="advanced_page_network_logging">網路記錄</string>
     <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
-    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_view_network_logs">展示網路記錄</string>
+    <string name="advanced_page_section_background_activities">後臺活動</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">停用電池效能最佳化設定</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">可能改善網路事件無法實時收取的問題。</string>
+    <string name="advanced_page_kill_service">停止後臺服務</string>
+    <string name="advanced_page_kill_service_description">停止收取實時事件收取的後臺服務</string>
+    <string name="advanced_page_section_database">資料庫</string>
+    <string name="advanced_page_database_delete">刪除資料庫</string>
+    <string name="advanced_page_database_delete_description">刪除存儲數據的内部資料庫。</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
-    <string name="database_page_recovery_backup">Backup Database</string>
-    <string name="database_page_recovery_backup_description">Backup your current data</string>
-    <string name="database_page_recovery_restore">Restore Database</string>
-    <string name="database_page_recovery_restore_description">Restore previous backup</string>
-    <string name="database_page_section_glide">Glide Cache</string>
-    <string name="database_page_glide_cache_size">Cache Size</string>
-    <string name="database_page_glide_clean_cache">Clean Cache</string>
-    <string name="database_page_glide_clean_cache_description">Cleaning cache may increase load times and decrease application responsiveness</string>
-    <string name="database_page_glide_clean_cache_toast">Cache cleaned!</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_title">資料庫及統計資料</string>
+    <string name="database_page_section_statistics">統計資料</string>
+    <string name="database_page_statistics_size">資料庫大小</string>
+    <string name="database_page_statistics_row_count">行數</string>
+    <string name="database_page_section_recovery">備份與還原</string>
+    <string name="database_page_recovery_backup">備份資料庫</string>
+    <string name="database_page_recovery_backup_description">將當前資料盡數備份到本地文件。</string>
+    <string name="database_page_recovery_restore">還原資料庫</string>
+    <string name="database_page_recovery_restore_description">從本地文件還原先前的資料庫。</string>
+    <string name="database_page_section_glide">Glide 快取</string>
+    <string name="database_page_glide_cache_size">快取大小</string>
+    <string name="database_page_glide_clean_cache">清除快取</string>
+    <string name="database_page_glide_clean_cache_description">清除快取可能會增長加載時長、並致使應用相應速度變慢。</string>
+    <string name="database_page_glide_clean_cache_toast">快取已清理</string>
+    <string name="database_page_toast_recovery_failed">無法從所選文件中還原資料庫，請確認所選文件為正確的資料庫備份。</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
-        <item>Gallery</item>
-        <item>User Icons</item>
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Groups</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
+        <item>圖片庫</item>
+        <item>使用者圖示</item>
+        <item>世界</item>
+        <item>角色</item>
+        <item>群組</item>
+        <item>表情符號</item>
+        <item>貼紙</item>
         <item>Prints</item>
         <item>Items</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
+    <string name="gallery_page_title">圖片庫</string>
+    <string name="gallery_page_button_upload">上傳圖片</string>
+    <string name="icon_gallery_page_title">使用者圖示</string>
+    <string name="icon_gallery_page_button_upload">上傳圖示</string>
     <string name="prints_page_title">Prints</string>
     <string name="prints_page_button_upload">Upload Print</string>
-    <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="emojis_page_title">表情符號</string>
+    <string name="emojis_page_button_upload">上傳表情符號</string>
     <string-array name="emojis_page_sections">
         <item>Official</item>
         <item>Custom</item>
