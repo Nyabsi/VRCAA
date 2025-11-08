@@ -48,7 +48,7 @@
     <string name="profile_user_not_found_message">用户不存在。</string>
     <string name="profile_user_avatar_private">該模型被設定為私人！</string>
     <string name="profile_user_avatar_unreachable">無法存取該模型！</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_note_dialog_title">添加備註</string>
     <!-- Search -->
     <string name="search_text_result">搜尋結果：</string>
     <string name="search_filter_category_worlds">世界</string>
@@ -125,11 +125,11 @@
     <string name="notification_service_description_offline">你的好友，%1$s 已離線！</string>
     <string name="notification_service_title_location">好友位置變更！</string>
     <string name="notification_service_description_location">你的好友，%1$s 前往 %2$s</string>
-    <string name="notification_service_title_friend_removed">你的好友已解除好友</string>
+    <string name="notification_service_title_friend_removed">你的好友已解除與你的好友關係</string>
     <string name="notification_service_description_friend_removed">你的好友，%1$s 已跟你斷絕好友關係 :(</string>
     <string name="notification_service_title_friend_added">你交到新好友！</string>
     <string name="notification_service_description_friend_added">%1$s 現在是你的好友！</string>
-    <string name="notification_title_player">的東芝</string>
+    <string name="notification_title_player">的通知</string>
     <string name="notification_label_enable">開啟通知</string>
     <string name="notification_label_intent_online">上線通知</string>
     <string name="notification_label_intent_offline">離線通知</string>
@@ -137,29 +137,29 @@
     <string name="notification_label_intent_status">狀態變更通知</string>
     <string name="notification_service_title_status">好友位置變更！</string>
     <string name="notification_service_description_status">你的好友，%1$s 已經將狀態從 %2$s 變更至 %3$s</string>
-    <string name="notifications_page_title">Notifications</string>
-    <string name="notifications_type_invite">Invite</string>
-    <string name="notifications_type_invite_response">Invite Response</string>
-    <string name="notifications_type_invite_request">Invite Request</string>
-    <string name="notifications_type_invite_request_response">Invite Request Response</string>
-    <string name="notifications_type_friend_request">Friend Request</string>
-    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
-    <string name="notification_dialog_title">Notification</string>
-    <string name="notification_dialog_description">What do you want to do with this notification?</string>
-    <string name="notification_dialog_button_delete">Delete</string>
-    <string name="notification_dialog_button_read">Mark As Read</string>
-    <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
-    <string name="notification_dialog_button_accept">Accept</string>
-    <string name="notification_dialog_button_reject">Reject</string>
-    <string name="notification_dialog_button_block">Block</string>
-    <string name="notification_dialog_button_start">Start</string>
-    <string name="notification_dialog_button_continue">Continue</string>
-    <string name="notification_dialog_button_restart">Restart</string>
-    <string name="notification_dialog_button_abandon">Abandon</string>
-    <string name="notification_invite_text">has invited you to</string>
-    <string name="notification_invite_response_text">rejected your request to join</string>
-    <string name="notification_invite_request_text">wants to join you</string>
-    <string name="notification_invite_request_response_text">rejected your invite request</string>
+    <string name="notifications_page_title">通知設定</string>
+    <string name="notifications_type_invite">邀請</string>
+    <string name="notifications_type_invite_response">邀請 · 回應</string>
+    <string name="notifications_type_invite_request">邀請 · 請求</string>
+    <string name="notifications_type_invite_request_response">邀請 · 請求 · 回應</string>
+    <string name="notifications_type_friend_request">好友請求</string>
+    <string name="notifications_type_friend_request_content">%1$s 希望與你成爲好友。</string>
+    <string name="notification_dialog_title">通知</string>
+    <string name="notification_dialog_description">應當如何處理此通知？</string>
+    <string name="notification_dialog_button_delete">刪除</string>
+    <string name="notification_dialog_button_read">標記為已讀</string>
+    <string name="notification_dialog_button_unsubscribe">取消訂閱</string>
+    <string name="notification_dialog_button_accept">接受</string>
+    <string name="notification_dialog_button_reject">拒絕</string>
+    <string name="notification_dialog_button_block">封鎖</string>
+    <string name="notification_dialog_button_start">開始</string>
+    <string name="notification_dialog_button_continue">繼續</string>
+    <string name="notification_dialog_button_restart">重啟</string>
+    <string name="notification_dialog_button_abandon">棄用</string>
+    <string name="notification_invite_text">正邀請你來</string>
+    <string name="notification_invite_response_text">不允許你加入</string>
+    <string name="notification_invite_request_text">想要得到你的邀請</string>
+    <string name="notification_invite_request_response_text">拒絕了你的邀請請求</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">變更為此角色</string>
     <string name="avatar_dropdown_toast_select_avatar">角色已選擇！</string>
@@ -170,9 +170,9 @@
     <string name="avatar_text_author">作者：%1$s</string>
     <string name="avatar_title_version">版本</string>
     <string name="avatar_text_content_labels_not_found">此角色沒有特定內容警告</string>
-    <string name="avatar_toast_avatar_not_found_message">此角色是私有的或已被移除了</string>
+    <string name="avatar_toast_avatar_not_found_message">此角色是私人的或已被移除了</string>
     <!-- Feed -->
-    <string name="feed_online_label">上限</string>
+    <string name="feed_online_label">上線</string>
     <string name="feed_online_text">已上線</string>
     <string name="feed_offline_label">離線</string>
     <string name="feed_offline_text">已離線。</string>
@@ -189,8 +189,8 @@
     <string name="feed_search_placeholder">搜尋用戶或地點...</string>
     <string name="feed_friend_avatar_label">角色變更</string>
     <string name="feed_friend_avatar_text">變更角色為</string>
-    <string name="feed_friend_username_changed_label">Username Change</string>
-    <string name="feed_friend_username_changed_text">changed their username to</string>
+    <string name="feed_friend_username_changed_label">變更使用者名稱</string>
+    <string name="feed_friend_username_changed_text">變更使用者名稱為</string>
     <!-- About -->
     <string name="about_page_title">關於</string>
     <string name="about_page_open_source_licenses_title">開放原始碼授權</string>
@@ -208,36 +208,36 @@
     <!-- Crash -->
     <string name="crash_title_text">應用程式遇到致命錯誤</string>
     <string name="crash_button_restart_text">重啟</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_button_copy_log_text">複製資訊</string>
+    <string name="crash_button_report_text">回報問題</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
-        <item>Info</item>
-        <item>Instances</item>
+        <item>資訊</item>
+        <item>房間</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_toast_not_found_message">無法找到該群組，你輸入的是正確的嗎？</string>
+    <string name="group_page_label_description">描述</string>
+    <string name="group_page_label_rules">規則</string>
+    <string name="group_page_dropdown_view_author">查看作者的個人檔案</string>
+    <string name="group_page_dropdown_request_invite">請求加入</string>
+    <string name="group_page_dropdown_request_invite_cancel">取消邀請請求</string>
+    <string name="group_page_dropdown_join_group">加入群組</string>
+    <string name="group_page_dropdown_leave_group">退出群組</string>
+    <string name="group_page_toast_invite_requested">邀請請求已發送。</string>
+    <string name="group_page_toast_invite_requested_fail">發送邀請請求失敗。</string>
+    <string name="group_page_toast_invite_requested_cancel">取消了邀請請求。</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">取消邀請請求失敗。</string>
+    <string name="group_page_toast_join_group">已加入群組。</string>
+    <string name="group_page_toast_join_group_fail">加入群組失敗。</string>
+    <string name="group_page_toast_leave_group">已退出群組。</string>
+    <string name="group_page_toast_leave_group_fail">退出群組失敗。</string>
+    <string name="group_user_no_groups_message">用戶不在任何群組之中。</string>
+    <string name="group_user_viewing_groups_username">%1$s 的群組</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
+    <string name="misc_no_internet_title">沒有網際網路連線</string>
+    <string name="misc_no_internet_description">請確保你的設備處於網際網路之中，此應用程式須網絡才可工作。</string>
+    <string name="misc_no_internet_label">重新啟動應用程式</string>
+    <string name="misc_exit_toast_label">再次點擊即退出</string>
     <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
     <string name="global_app_default_loading_text">Initializing…</string>
     <string name="generic_text_public">Public</string>
@@ -262,14 +262,14 @@
     <string name="profile_edit_dialog_title_status_description">狀態描述</string>
     <string name="profile_edit_dialog_title_bio">簡介</string>
     <string name="profile_edit_dialog_title_bio_links">社交連結</string>
-    <string name="profile_edit_dialog_toast_updated">以更新個人資料</string>
+    <string name="profile_edit_dialog_toast_updated">已更新個人資料</string>
     <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">變動已被捨棄</string>
     <string name="profile_edit_dialog_title_pronouns">人稱代詞</string>
     <string name="profile_edit_dialog_button_cancel">取消</string>
     <string name="profile_edit_dialog_button_apply">套用</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">你確定嗎？</string>
-    <string name="logout_dialog_description">按下下方的「繼續」，擬將登出 VRCAA，並必須重新登入才能繼續使用應用程式。</string>
+    <string name="logout_dialog_description">按下下方的「繼續」，你將登出 VRCAA，並必須重新登入才能繼續使用這個應用程式。</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">查看當前好友位置</string>
     <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
