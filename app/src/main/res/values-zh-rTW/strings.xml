@@ -12,12 +12,12 @@
     </string-array>
     <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
     <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_removed">已將 %1$s 從你的好友列表中移出。</string>
+    <string name="friend_toast_friend_remove_failed">將 %1$s 移出好友列表失敗。</string>
+    <string name="friend_toast_friend_requested">你的好友請求已發送至 %1$s。</string>
+    <string name="friend_toast_friend_request_failed">向 %1$s 發送好友請求失敗。</string>
+    <string name="friend_toast_friend_request_accepted">你已接受了來自 %1$s 的好友請求。</string>
+    <string name="friend_toast_friend_request_accept_failed">接受來自 %1$s 的好友請求失敗。</string>
     <!-- Home -->
     <string name="home_active_friends">上線的好友</string>
     <string name="home_recently_visited">最近造訪的世界</string>
@@ -135,7 +135,7 @@
     <string name="notification_label_intent_offline">離線通知</string>
     <string name="notification_label_intent_location">位置通知</string>
     <string name="notification_label_intent_status">狀態變更通知</string>
-    <string name="notification_service_title_status">好友位置變更！</string>
+    <string name="notification_service_title_status">好友狀態變更！</string>
     <string name="notification_service_description_status">你的好友，%1$s 已經將狀態從 %2$s 變更至 %3$s</string>
     <string name="notifications_page_title">通知設定</string>
     <string name="notifications_type_invite">邀請</string>
@@ -317,29 +317,29 @@
     <string name="loading_text_avatars">載入角色列表中……</string>
     <string name="loading_text_groups">載入群組列表中……</string>
     <string name="loading_text_user">載入使用者資訊中……</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
+    <string name="loading_text_world">載入世界資訊中……</string>
+    <string name="loading_text_avatar">載入角色資訊中……</string>
+    <string name="loading_text_group">載入群組資訊中……</string>
+    <string name="loading_text_instances">載入房間資訊中……</string>
+    <string name="loading_text_gallery">載入圖片庫中……</string>
+    <string name="loading_text_icons">載入圖示中……</string>
     <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_stickers">載入貼紙中……</string>
+    <string name="loading_text_emojis">載入表情符號中……</string>
+    <string name="loading_text_items">載入物品中……</string>
+    <string name="loading_text_favorites">載入收藏列表中……</string>
+    <string name="loading_text_notifications">載入通知中……</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">佈景主題</string>
+    <string name="theme_page_minimalist_mode_text">簡約模式</string>
+    <string name="theme_page_minimalist_mode_text_description">"簡約模式有助於內容資訊在較小的屏幕上顯示。"</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>亮色模式</item>
+        <item>暗色模式</item>
+        <item>跟隨系統設定</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Adaptive</item>
+        <item>自動調整</item>
         <item>固釘</item>
     </string-array>
     <string name="theme_page_section_theme_title">主題</string>
@@ -349,7 +349,7 @@
     <string name="advanced_page_title">進階設定</string>
     <string name="advanced_page_section_networking">網路連線</string>
     <string name="advanced_page_network_logging">網路記錄</string>
-    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
+    <string name="advanced_page_network_logging_description">攔截 HTTP 和 WebSocket 流量</string>
     <string name="advanced_page_view_network_logs">展示網路記錄</string>
     <string name="advanced_page_section_background_activities">後臺活動</string>
     <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">停用電池效能最佳化設定</string>
@@ -385,7 +385,7 @@
         <item>表情符號</item>
         <item>貼紙</item>
         <item>Prints</item>
-        <item>Items</item>
+        <item>物品</item>
     </string-array>
     <string name="gallery_page_title">圖片庫</string>
     <string name="gallery_page_button_upload">上傳圖片</string>
@@ -396,23 +396,23 @@
     <string name="emojis_page_title">表情符號</string>
     <string name="emojis_page_button_upload">上傳表情符號</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>官方</item>
+        <item>自訂</item>
+        <item>已存檔</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">貼紙</string>
+    <string name="stickers_page_button_upload">上傳貼紙</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>官方</item>
+        <item>自訂</item>
+        <item>已存檔</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">物品</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
-        <item>Archive</item>
+        <item>全部物品</item>
+        <item>存檔</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_toast_picture_saved">Saved picture.</string>
-    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
+    <string name="image_preview_dialog_title">預覽</string>
+    <string name="image_preview_toast_picture_saved">已儲存圖片。</string>
+    <string name="image_preview_toast_picture_save_failed">保存圖片失敗。</string>
 </resources>
