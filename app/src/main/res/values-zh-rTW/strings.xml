@@ -242,7 +242,7 @@
     <string name="global_app_default_loading_text">稍安勿躁，正在載入</string>
     <string name="generic_text_public">公開的</string>
     <string name="generic_text_private">私人的</string>
-    <string name="generic_text_upload">上載</string>
+    <string name="generic_text_upload">上傳</string>
     <string name="generic_text_cancel">取消</string>
     <string name="generic_text_ok">確認</string>
     <!-- User -->
@@ -289,34 +289,34 @@
     <string name="favorite_toast_favorite_added_failed">收藏 %1$s 失敗。</string>
     <string name="favorite_toast_favorite_removed">已将 %1$s 移出收藏。</string>
     <string name="favorite_toast_favorite_removed_failed">取消收藏 %1$s 失敗。</string>
-    <string name="favorite_dialog_button_add">Add</string>
+    <string name="favorite_dialog_button_add">新增</string>
     <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
-    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
-    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
+    <string name="favorite_dialog_title">"新增收藏"</string>
+    <string name="favorite_edit_title">正在編輯 %1$s</string>
+    <string name="favorite_edit_display_name">顯示名</string>
+    <string name="favorite_edit_visibility">可見性</string>
+    <string name="favorite_edit_discarded">變動已被捨棄</string>
+    <string name="favorite_edit_applied">變更已經套用</string>
+    <string name="favorite_dialog_button_edit">編輯</string>
+    <string name="favorite_tab_refresh_favorites">重新整理收藏</string>
+    <string name="favorite_toast_refreshed_favorites">已整理了收藏。</string>
+    <string name="favorite_remove_dialog_title">你真的要將此收藏內容移出嗎？</string>
+    <string name="favorite_remove_dialog_description">該內容現已失效，可能被原作者刪除，或被設為私密。你希望將其移出收藏嗎？</string>
     <!-- Activities -->
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">%1$s 的世界</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">查看角色</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
-    <string name="debug_notification_title_out_of_memory">Notice!</string>
+    <string name="developer_mode_toggle_toast">重新啟動以應用更改。</string>
+    <string name="debug_notification_title_out_of_memory">注意！</string>
     <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
+    <string name="loading_text_worlds">載入世界列表中……</string>
+    <string name="loading_text_users">載入使用者列表中……</string>
+    <string name="loading_text_avatars">載入角色列表中……</string>
+    <string name="loading_text_groups">載入群組列表中……</string>
+    <string name="loading_text_user">載入使用者資訊中……</string>
     <string name="loading_text_world">Loading world…</string>
     <string name="loading_text_avatar">Loading avatar…</string>
     <string name="loading_text_group">Loading group…</string>
