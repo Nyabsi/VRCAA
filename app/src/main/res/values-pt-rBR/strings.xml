@@ -129,7 +129,7 @@
     <string name="notification_service_description_friend_removed">Seu amigo, %1$s não é mais seu amigo :(</string>
     <string name="notification_service_title_friend_added">Você tem um novo amigo!</string>
     <string name="notification_service_description_friend_added">%1$s agora é seu amigo!</string>
-    <string name="notification_title_player">\'s Notifications</string>
+    <string name="notification_title_player"> Enviou Notificações</string>
     <string name="notification_label_enable">Habilitar Notificações</string>
     <string name="notification_label_intent_online">Notificações de conexão</string>
     <string name="notification_label_intent_offline">Notificações de desconexão</string>
