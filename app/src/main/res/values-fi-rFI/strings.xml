@@ -10,25 +10,25 @@
         <item>Verkkosivusto</item>
         <item>Ei paikalla</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">Kaveripyyntö %1$s :lle peruutettiin.</string>
+    <string name="friend_toast_friend_request_cancel_failed">%1$s kaveripyyntöä ei voitu peruuttaa.</string>
+    <string name="friend_toast_friend_removed"> %1$s on poistettu kaverilistasi.</string>
+    <string name="friend_toast_friend_remove_failed">%1$s ei voitu poistaa kaverilistasi.</string>
+    <string name="friend_toast_friend_requested">Kaveripyyntösi lähetettiin %1$s</string>
+    <string name="friend_toast_friend_request_failed">Kaveripyynnön lähettäminen %1$s epäonnistui.</string>
+    <string name="friend_toast_friend_request_accepted">Kaveripyyntö hyväksytty käyttäjältä %1$s.</string>
+    <string name="friend_toast_friend_request_accept_failed">Käyttäjän %1$s kaveripyyntöä ei voitu hyväksyä.</string>
     <!-- Home -->
     <string name="home_active_friends">Ystävät paikalla</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
-    <string name="home_offline_friends">Ei paikalla olevat ystävät</string>
+    <string name="home_offline_friends">Ei paikalla olevat kaverit</string>
     <string name="home_friend_locations">Ystävien Sijainnit</string>
     <!-- Login -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
-    <string name="login_label_username">Käyttäjänimi tai E-Mail osoite</string>
+    <string name="login_label_username">Käyttäjätunnus tai sähköpostiosoite</string>
     <string name="login_label_password">Salasana</string>
     <string name="login_button_text">Kirjaudu sisään</string>
-    <string name="login_toast_wrong_credentials">Väärä käyttäjänimi tai salasana.</string>
+    <string name="login_toast_wrong_credentials">Väärä käyttäjätunnus tai salasana. </string>
     <string name="login_toast_wrong_code">Vahvistus epäonnistui, tarkista koodi uudelleen</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Syötä sähköpostiisi lähetetty koodi</string>
@@ -36,7 +36,7 @@
     <string name="auth_button_text">Vahvista</string>
     <string name="auth_button_paste">Liitä</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja hahmoja…</string>
+    <string name="main_search_placeholder">Etsi maailmoja, käyttäjiä ja avatareja…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Tämänhetkinen sijainti</string>
     <string name="profile_label_note">Muistiinpano</string>
@@ -47,8 +47,8 @@
     <string name="profile_user_dropdown_manage_notifications">Hallinnoi ilmoituksia</string>
     <string name="profile_user_not_found_message">Käyttäjää ei ole olemassa.</string>
     <string name="profile_user_avatar_private">Avatari on yksityinen!</string>
-    <string name="profile_user_avatar_unreachable">Hahmo ei ole saatavilla!</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_avatar_unreachable">Avataria ei ole saatavilla!</string>
+    <string name="profile_user_note_dialog_title">Aseta Muistio</string>
     <!-- Search -->
     <string name="search_text_result">Tulokset kohteelle</string>
     <string name="search_filter_category_worlds">Maailmat</string>
@@ -56,7 +56,7 @@
     <string name="search_filter_category_worlds_count">Määrä</string>
     <string name="search_filter_category_users">Käyttäjät</string>
     <string name="search_filter_category_users_count">Määrä</string>
-    <string name="search_filter_category_avatars">Hahmot</string>
+    <string name="search_filter_category_avatars">Avatarit</string>
     <string name="search_filter_category_avatars_provider">Tarjoaja</string>
     <string name="search_filter_category_groups">Ryhmät</string>
     <string name="search_filter_category_groups_count">Määrä</string>
@@ -69,7 +69,7 @@
     <string-array name="search_selection_options">
         <item>Maailmat</item>
         <item>Käyttäjät</item>
-        <item>Hahmot</item>
+        <item>Avatarit</item>
         <item>Ryhmät</item>
     </string-array>
     <string name="search_button_more">Lisää...</string>
@@ -137,40 +137,40 @@
     <string name="notification_label_intent_status">Tilamuutoksen Ilmoitukset</string>
     <string name="notification_service_title_status">Kaveri vaihtoi tilaa!</string>
     <string name="notification_service_description_status">Ystäväsi, %1$s on muuttanut tilansa %2$s %3$s:ksi.</string>
-    <string name="notifications_page_title">Notifications</string>
-    <string name="notifications_type_invite">Invite</string>
-    <string name="notifications_type_invite_response">Invite Response</string>
-    <string name="notifications_type_invite_request">Invite Request</string>
-    <string name="notifications_type_invite_request_response">Invite Request Response</string>
-    <string name="notifications_type_friend_request">Friend Request</string>
-    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
-    <string name="notification_dialog_title">Notification</string>
-    <string name="notification_dialog_description">What do you want to do with this notification?</string>
-    <string name="notification_dialog_button_delete">Delete</string>
-    <string name="notification_dialog_button_read">Mark As Read</string>
-    <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
-    <string name="notification_dialog_button_accept">Accept</string>
-    <string name="notification_dialog_button_reject">Reject</string>
-    <string name="notification_dialog_button_block">Block</string>
-    <string name="notification_dialog_button_start">Start</string>
-    <string name="notification_dialog_button_continue">Continue</string>
-    <string name="notification_dialog_button_restart">Restart</string>
-    <string name="notification_dialog_button_abandon">Abandon</string>
-    <string name="notification_invite_text">has invited you to</string>
-    <string name="notification_invite_response_text">rejected your request to join</string>
-    <string name="notification_invite_request_text">wants to join you</string>
-    <string name="notification_invite_request_response_text">rejected your invite request</string>
+    <string name="notifications_page_title">Ilmoitukset</string>
+    <string name="notifications_type_invite">Kutsu</string>
+    <string name="notifications_type_invite_response">Kutsun Vastaus</string>
+    <string name="notifications_type_invite_request">Kutsupyyntö</string>
+    <string name="notifications_type_invite_request_response">Kutsupyynnön Vastaus</string>
+    <string name="notifications_type_friend_request">Kaveripyyntö</string>
+    <string name="notifications_type_friend_request_content">%1$s - haluaa olla kaverisi!</string>
+    <string name="notification_dialog_title">Ilmoitus</string>
+    <string name="notification_dialog_description">Mitä haluat tehdä tällä ilmoituksella?</string>
+    <string name="notification_dialog_button_delete">Poista</string>
+    <string name="notification_dialog_button_read">Merkitse luetuksi</string>
+    <string name="notification_dialog_button_unsubscribe">Peruuta tilaus</string>
+    <string name="notification_dialog_button_accept">Hyväksy</string>
+    <string name="notification_dialog_button_reject">Hylkää</string>
+    <string name="notification_dialog_button_block">Estä</string>
+    <string name="notification_dialog_button_start">Aloita</string>
+    <string name="notification_dialog_button_continue">Jatka</string>
+    <string name="notification_dialog_button_restart">Uudelleenkäynnistä</string>
+    <string name="notification_dialog_button_abandon">Hylkää</string>
+    <string name="notification_invite_text">on kutsunut sinut</string>
+    <string name="notification_invite_response_text">hylkäsi liittymis pyyntösi</string>
+    <string name="notification_invite_request_text">haluaa liittyä sinuun</string>
+    <string name="notification_invite_request_response_text">hylkäsi kutsupyyntösi</string>
     <!-- Avatars -->
-    <string name="avatar_dropdown_label_select">Vaihda hahmoon</string>
-    <string name="avatar_dropdown_toast_select_avatar">Hahmo Valittu!</string>
+    <string name="avatar_dropdown_label_select">Vaihda avatariin</string>
+    <string name="avatar_dropdown_toast_select_avatar">Avatari Valittu!</string>
     <string name="avatar_title_description">Kuvaus</string>
     <string name="avatar_title_created_at">Luonti Päivämäärä</string>
     <string name="avatar_title_updated_at">Viimeksi päivitetty</string>
     <string name="avatar_title_content_labels">Sisällön Tunnisteet</string>
     <string name="avatar_text_author">Tekijä: %1$s</string>
     <string name="avatar_title_version">Versio</string>
-    <string name="avatar_text_content_labels_not_found">Hahmo ei ole määritetty sisältövaroituksia.</string>
-    <string name="avatar_toast_avatar_not_found_message">Hahmo on joko yksityinen tai virheellinen.</string>
+    <string name="avatar_text_content_labels_not_found">Avatarilla ei ole määritetty sisältövaroituksia.</string>
+    <string name="avatar_toast_avatar_not_found_message">Avatari on joko yksityinen tai virheellinen.</string>
     <!-- Feed -->
     <string name="feed_online_label">Paikalla</string>
     <string name="feed_online_text">on tullut paikalle.</string>
@@ -187,10 +187,10 @@
     <string name="feed_friend_request_label">Ystäväpyyntö</string>
     <string name="feed_friend_request_text">haluaa lisätä sinut ystäväksi.</string>
     <string name="feed_search_placeholder">Hae käyttäjää tai sijaintia…</string>
-    <string name="feed_friend_avatar_label">Hahmon Vaihto</string>
+    <string name="feed_friend_avatar_label">Avatarin Vaihto</string>
     <string name="feed_friend_avatar_text">Vaihtoi hahmoansa muotoon</string>
-    <string name="feed_friend_username_changed_label">Username Change</string>
-    <string name="feed_friend_username_changed_text">changed their username to</string>
+    <string name="feed_friend_username_changed_label">Käyttäjätunnus vaihdettu</string>
+    <string name="feed_friend_username_changed_text">muutti käyttäjätunnuksen muotoon</string>
     <!-- About -->
     <string name="about_page_title">Tietoja</string>
     <string name="about_page_open_source_licenses_title">Avoimen lähdekoodin lisenssit</string>
@@ -240,22 +240,22 @@
     <string name="misc_exit_toast_label">Paina uudelleen lopettaaksesi...</string>
     <string name="misc_no_premium_subscription">Tämä ominaisuus edellyttää, että sinulla on aktiivinen VRChat+ tilaus.</string>
     <string name="global_app_default_loading_text">Valmistellaan...</string>
-    <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
-    <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_public">Julkinen</string>
+    <string name="generic_text_private">Yksityinen</string>
+    <string name="generic_text_upload">Lähetä</string>
+    <string name="generic_text_cancel">Peruuta</string>
     <string name="generic_text_ok">OK</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
-    <string name="user_overlay_friend_accept">Accept Request</string>
-    <string name="user_overlay_friend_cancel">Cancel Request</string>
+    <string name="user_overlay_friend_add">Lisää kaveriksi</string>
+    <string name="user_overlay_friend_remove">Poista kaveri</string>
+    <string name="user_overlay_friend_accept">Hyväksy pyyntö</string>
+    <string name="user_overlay_friend_cancel">Peru pyyntö</string>
     <string name="user_overlay_groups">Ryhmät</string>
     <string name="user_overlay_worlds">Maailmat</string>
     <string name="user_overlay_favorites">Suosikit</string>
-    <string name="user_overlay_find_avatar">Löydä Hahmo</string>
-    <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_find_avatar">Löydä Avatari</string>
+    <string name="user_overlay_invite">Kutsu Minut</string>
+    <string name="user_overlay_note">Lisää muistiinpano</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Tila</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Ikävarmennuksen näkyvyys</string>
@@ -265,23 +265,23 @@
     <string name="profile_edit_dialog_toast_updated">Profiili päivitetty.</string>
     <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Muutokset hylättiin.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronominit</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">Peruuta</string>
+    <string name="profile_edit_dialog_button_apply">Käytä</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Oletko varma?</string>
     <string name="logout_dialog_description">Painamalla alla olevaa \"Jatkaa\" kirjaudut ulos VRCAA:sta ja sinun täytyy kirjautua uudelleen jatkaaksesi sovelluksen käyttöä.</string>
     <!-- Widgets -->
     <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Näytä ystävien nykyiset sijainnit</string>
     <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">Taivas on kirkas ystäväni.</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="favorite_page_title">Suosikit</string>
     <string-array name="favorites_selection_options">
         <item>Maailmat</item>
-        <item>Hahmot</item>
+        <item>Avatarit</item>
         <item>Kaverit</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>Maailmat</item>
+        <item>Avatarit</item>
     </string-array>
     <string name="favorite_label_add">Lisää suosikkeihin</string>
     <string name="favorite_label_remove">Poista suosikeista</string>
@@ -300,35 +300,35 @@
     <string name="favorite_dialog_button_edit">Muokkaa</string>
     <string name="favorite_tab_refresh_favorites">Päivitä suosikit</string>
     <string name="favorite_toast_refreshed_favorites">Päivitä suosikit.</string>
-    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
-    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
+    <string name="favorite_remove_dialog_title">Haluatko poistaa tämän suosikin?</string>
+    <string name="favorite_remove_dialog_description">Tämä suosikki ei ole enää käytettävissä, tekijä on ehkä poistanut sen tai tehnyt sen yksityiseksi, haluatko poistaa sen luettelosta?</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s:n maailmat</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Näytetään hahmoja</string>
+    <string name="avatars_page_title">Näytetään avatareja</string>
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">Käynnistä sovellus uudelleen, jotta muutokset tulevat voimaan.</string>
-    <string name="debug_notification_title_out_of_memory">Notice!</string>
-    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
+    <string name="debug_notification_title_out_of_memory">Huomautus!</string>
+    <string name="debug_notification_content_out_of_memory">Sovellukselta on loppunut muisti! Jatkaaksesi toimintaa, virheenkorjausvälimuisti on tyhjennetty.</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">Ladataan maailmoja…</string>
     <string name="loading_text_users">Ladataan käyttäjiä…</string>
-    <string name="loading_text_avatars">Ladataan hahmoja…</string>
+    <string name="loading_text_avatars">Ladataan avataria…</string>
     <string name="loading_text_groups">Ladataan ryhmiä…</string>
     <string name="loading_text_user">Ladataan käyttäjää…</string>
     <string name="loading_text_world">Ladataan maailmaa…</string>
-    <string name="loading_text_avatar">Ladataan hahmoa…</string>
+    <string name="loading_text_avatar">Ladataan avataria…</string>
     <string name="loading_text_group">Ladataan ryhmää…</string>
     <string name="loading_text_instances">Ladataan instansseja…</string>
     <string name="loading_text_gallery">Ladataan galleriaa...</string>
     <string name="loading_text_icons">Ladataan kuvakkeita...</string>
     <string name="loading_text_prints">Ladataan tulostuksia...</string>
     <string name="loading_text_stickers">Ladataan tarroja...</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
+    <string name="loading_text_emojis">Ladataan emojeita...</string>
     <string name="loading_text_items">Ladataan tavaroita...</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_favorites">Ladataan suosikkeja…</string>
+    <string name="loading_text_notifications">Ladataan ilmoituksia…</string>
     <!-- Theming -->
     <string name="theme_page_title">Teema</string>
     <string name="theme_page_minimalist_mode_text">Minimalistinen tila</string>
@@ -374,13 +374,13 @@
     <string name="database_page_glide_clean_cache">Puhdista välimuisti</string>
     <string name="database_page_glide_clean_cache_description">Välimuistin puhdistaminen voi pidentää latausaikoja ja vähentää sovelluksen reagointikykyä</string>
     <string name="database_page_glide_clean_cache_toast">Välimuisti puhdistettu!</string>
-    <string name="database_page_toast_recovery_failed">Failed to restore database from backup! are you sure you selected valid database backup?</string>
+    <string name="database_page_toast_recovery_failed">Tietokannan palautus varmuuskopiosta epäonnistui! Oletko varma, että valitsit kelvollisen tietokannan varmuuskopion?</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
         <item>Galleria</item>
         <item>Käyttäjäkuvakkeet</item>
         <item>Maailmat</item>
-        <item>Hahmot</item>
+        <item>Avatarit</item>
         <item>Ryhmät</item>
         <item>Emojit</item>
         <item>Tarrat</item>
@@ -413,6 +413,6 @@
         <item>Arkistoitu</item>
     </string-array>
     <string name="image_preview_dialog_title">Esikatselu</string>
-    <string name="image_preview_toast_picture_saved">Saved picture.</string>
-    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
+    <string name="image_preview_toast_picture_saved">Kuva tallennettu.</string>
+    <string name="image_preview_toast_picture_save_failed">Kuvan tallentaminen epäonnistui.</string>
 </resources>
