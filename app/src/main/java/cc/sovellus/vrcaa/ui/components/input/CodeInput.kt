@@ -80,7 +80,6 @@ fun CodeInput(
                                     Color.Black
                                 }, RoundedCornerShape(8.dp)
                             )
-                            .fillMaxWidth()
                             .padding(top = 10.dp),
                         text = char,
                         textAlign = TextAlign.Center,
