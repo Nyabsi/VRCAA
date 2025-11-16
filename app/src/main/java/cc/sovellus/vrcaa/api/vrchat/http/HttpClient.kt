@@ -118,15 +118,14 @@ class HttpClient : BaseClient(), CoroutineScope {
         setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
         if (reAuthorizationFailureCount <= Config.MAX_TOKEN_REFRESH_ATTEMPT) {
-            val response = api.auth.login(
+            api.auth.login(
                 preferences.userCredentials.first,
                 preferences.userCredentials.second
             )
-
-            if ((response.success && response.authType != AuthType.AUTH_NONE) || !response.success) {
-                reAuthorizationFailureCount++
-                listener?.onSessionInvalidate()
-            }
+            reAuthorizationFailureCount++
+        } else {
+            setAuthorization(AuthorizationType.Cookie, "")
+            listener?.onSessionInvalidate()
         }
     }
 
@@ -225,6 +224,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                             else -> AuthType.AUTH_NONE
                         }
 
+                        reAuthorizationFailureCount = 0
                         preferences.authToken = cookies[0]
                         setAuthorization(AuthorizationType.Cookie, preferences.authToken)
                         return IAuth.AuthResult(true, "", dType)
