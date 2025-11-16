@@ -1,0 +1,1 @@
+Critical bug fixes due VRChat API changes.
