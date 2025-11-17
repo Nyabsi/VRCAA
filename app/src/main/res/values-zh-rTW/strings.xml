@@ -323,7 +323,7 @@
     <string name="loading_text_instances">載入房間資訊中……</string>
     <string name="loading_text_gallery">載入圖片庫中……</string>
     <string name="loading_text_icons">載入圖示中……</string>
-    <string name="loading_text_prints">Loading prints…</string>
+    <string name="loading_text_prints">載入拍立得中...</string>
     <string name="loading_text_stickers">載入貼紙中……</string>
     <string name="loading_text_emojis">載入表情符號中……</string>
     <string name="loading_text_items">載入物品中……</string>
@@ -392,7 +392,7 @@
     <string name="icon_gallery_page_title">使用者圖示</string>
     <string name="icon_gallery_page_button_upload">上傳圖示</string>
     <string name="prints_page_title">拍立得</string>
-    <string name="prints_page_button_upload">Upload Print</string>
+    <string name="prints_page_button_upload">上傳拍立得</string>
     <string name="emojis_page_title">表情符號</string>
     <string name="emojis_page_button_upload">上傳表情符號</string>
     <string-array name="emojis_page_sections">
