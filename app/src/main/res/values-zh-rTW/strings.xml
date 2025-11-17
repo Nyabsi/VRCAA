@@ -10,8 +10,8 @@
         <item>網頁</item>
         <item>離線</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">已撤回邀請%1$s當作你好友的請求。</string>
+    <string name="friend_toast_friend_request_cancel_failed">無法撤回邀請%1$s當作你好友的請求。</string>
     <string name="friend_toast_friend_removed">已將 %1$s 從你的好友列表中移出。</string>
     <string name="friend_toast_friend_remove_failed">將 %1$s 移出好友列表失敗。</string>
     <string name="friend_toast_friend_requested">你的好友請求已發送至 %1$s。</string>
@@ -145,7 +145,7 @@
     <string name="notifications_type_friend_request">好友請求</string>
     <string name="notifications_type_friend_request_content">%1$s 希望與你成爲好友。</string>
     <string name="notification_dialog_title">通知</string>
-    <string name="notification_dialog_description">應當如何處理此通知？</string>
+    <string name="notification_dialog_description">你要怎麼處理該通知呢？</string>
     <string name="notification_dialog_button_delete">刪除</string>
     <string name="notification_dialog_button_read">標記為已讀</string>
     <string name="notification_dialog_button_unsubscribe">取消訂閱</string>
@@ -215,7 +215,7 @@
         <item>資訊</item>
         <item>房間</item>
     </string-array>
-    <string name="group_toast_not_found_message">無法找到該群組，你輸入的是正確的嗎？</string>
+    <string name="group_toast_not_found_message">找不到該群組，請確認輸入關鍵字。</string>
     <string name="group_page_label_description">描述</string>
     <string name="group_page_label_rules">規則</string>
     <string name="group_page_dropdown_view_author">查看作者的個人檔案</string>
@@ -228,20 +228,20 @@
     <string name="group_page_toast_invite_requested_cancel">取消了邀請請求。</string>
     <string name="group_page_toast_invite_requested_cancel_fail">取消邀請請求失敗。</string>
     <string name="group_page_toast_join_group">已加入群組。</string>
-    <string name="group_page_toast_join_group_fail">加入群組失敗。</string>
+    <string name="group_page_toast_join_group_fail">無法加入該群組。</string>
     <string name="group_page_toast_leave_group">已退出群組。</string>
     <string name="group_page_toast_leave_group_fail">退出群組失敗。</string>
-    <string name="group_user_no_groups_message">用戶不在任何群組之中。</string>
+    <string name="group_user_no_groups_message">用戶不屬於任何群組。</string>
     <string name="group_user_viewing_groups_username">%1$s 的群組</string>
     <!-- Misc -->
     <string name="misc_no_internet_title">沒有網際網路連線</string>
-    <string name="misc_no_internet_description">請確保你的設備處於網際網路之中，此應用程式須網絡才可工作。</string>
+    <string name="misc_no_internet_description">請確保你的設備已連上網際網路，此應用程式無法在離線下運行。</string>
     <string name="misc_no_internet_label">重新啟動應用程式</string>
     <string name="misc_exit_toast_label">再次點擊即退出</string>
     <string name="misc_no_premium_subscription">該功能需要你有一個尚在活躍的 VRC+ 訂閲。</string>
-    <string name="global_app_default_loading_text">稍安勿躁，正在載入</string>
-    <string name="generic_text_public">公開的</string>
-    <string name="generic_text_private">私人的</string>
+    <string name="global_app_default_loading_text">載入中...</string>
+    <string name="generic_text_public">公開</string>
+    <string name="generic_text_private">私人</string>
     <string name="generic_text_upload">上傳</string>
     <string name="generic_text_cancel">取消</string>
     <string name="generic_text_ok">確認</string>
@@ -290,7 +290,7 @@
     <string name="favorite_toast_favorite_removed">已将 %1$s 移出收藏。</string>
     <string name="favorite_toast_favorite_removed_failed">取消收藏 %1$s 失敗。</string>
     <string name="favorite_dialog_button_add">新增</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
+    <string name="favorite_dialog_button_cancel">取消</string>
     <string name="favorite_dialog_title">"新增收藏"</string>
     <string name="favorite_edit_title">正在編輯 %1$s</string>
     <string name="favorite_edit_display_name">顯示名</string>
@@ -301,7 +301,7 @@
     <string name="favorite_tab_refresh_favorites">重新整理收藏</string>
     <string name="favorite_toast_refreshed_favorites">已整理了收藏。</string>
     <string name="favorite_remove_dialog_title">你真的要將此收藏內容移出嗎？</string>
-    <string name="favorite_remove_dialog_description">該內容現已失效，可能被原作者刪除，或被設為私密。你希望將其移出收藏嗎？</string>
+    <string name="favorite_remove_dialog_description">該收藏內容已無法使用，可能被作者刪除，或被設為私密。要從收藏中移除嗎？</string>
     <!-- Activities -->
     <!-- Worlds -->
     <string name="worlds_page_title">%1$s 的世界</string>
@@ -310,7 +310,7 @@
     <!-- Debug -->
     <string name="developer_mode_toggle_toast">重新啟動以應用更改。</string>
     <string name="debug_notification_title_out_of_memory">注意！</string>
-    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
+    <string name="debug_notification_content_out_of_memory">記憶體不足，請清除除錯暫存以繼續動作。</string>
     <!-- Loading Texts -->
     <string name="loading_text_worlds">載入世界列表中……</string>
     <string name="loading_text_users">載入使用者列表中……</string>
@@ -353,9 +353,9 @@
     <string name="advanced_page_view_network_logs">展示網路記錄</string>
     <string name="advanced_page_section_background_activities">後臺活動</string>
     <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">停用電池效能最佳化設定</string>
-    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">可能改善網路事件無法實時收取的問題。</string>
-    <string name="advanced_page_kill_service">停止後臺服務</string>
-    <string name="advanced_page_kill_service_description">停止收取實時事件收取的後臺服務</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">可能改善無法及時接收網路事件的問題。</string>
+    <string name="advanced_page_kill_service">結束背景程序</string>
+    <string name="advanced_page_kill_service_description">結束負責監聽後即時事件的背景程序</string>
     <string name="advanced_page_section_database">資料庫</string>
     <string name="advanced_page_database_delete">刪除資料庫</string>
     <string name="advanced_page_database_delete_description">刪除存儲數據的内部資料庫。</string>
@@ -366,14 +366,14 @@
     <string name="database_page_statistics_row_count">行數</string>
     <string name="database_page_section_recovery">備份與還原</string>
     <string name="database_page_recovery_backup">備份資料庫</string>
-    <string name="database_page_recovery_backup_description">將當前資料盡數備份到本地文件。</string>
+    <string name="database_page_recovery_backup_description">備份資料到本地裝置。</string>
     <string name="database_page_recovery_restore">還原資料庫</string>
-    <string name="database_page_recovery_restore_description">從本地文件還原先前的資料庫。</string>
+    <string name="database_page_recovery_restore_description">從本地裝置恢復資料庫數據。</string>
     <string name="database_page_section_glide">Glide 快取</string>
     <string name="database_page_glide_cache_size">快取大小</string>
-    <string name="database_page_glide_clean_cache">清除快取</string>
-    <string name="database_page_glide_clean_cache_description">清除快取可能會增長加載時長、並致使應用相應速度變慢。</string>
-    <string name="database_page_glide_clean_cache_toast">快取已清理</string>
+    <string name="database_page_glide_clean_cache">清除暫存</string>
+    <string name="database_page_glide_clean_cache_description">清除暫存可能會拖慢加載速度、並導致應用程式運行速度緩慢。</string>
+    <string name="database_page_glide_clean_cache_toast">暫存已清理</string>
     <string name="database_page_toast_recovery_failed">無法從所選文件中還原資料庫，請確認所選文件為正確的資料庫備份。</string>
     <!-- Inventory -->
     <string-array name="inventory_selection_options">
@@ -384,33 +384,33 @@
         <item>群組</item>
         <item>表情符號</item>
         <item>貼紙</item>
-        <item>Prints</item>
+        <item>拍立得</item>
         <item>物品</item>
     </string-array>
     <string name="gallery_page_title">圖片庫</string>
     <string name="gallery_page_button_upload">上傳圖片</string>
     <string name="icon_gallery_page_title">使用者圖示</string>
     <string name="icon_gallery_page_button_upload">上傳圖示</string>
-    <string name="prints_page_title">Prints</string>
+    <string name="prints_page_title">拍立得</string>
     <string name="prints_page_button_upload">Upload Print</string>
     <string name="emojis_page_title">表情符號</string>
     <string name="emojis_page_button_upload">上傳表情符號</string>
     <string-array name="emojis_page_sections">
         <item>官方</item>
         <item>自訂</item>
-        <item>已存檔</item>
+        <item>已封存</item>
     </string-array>
     <string name="stickers_page_title">貼紙</string>
     <string name="stickers_page_button_upload">上傳貼紙</string>
     <string-array name="sticker_page_sections">
         <item>官方</item>
         <item>自訂</item>
-        <item>已存檔</item>
+        <item>已封存</item>
     </string-array>
     <string name="items_page_title">物品</string>
     <string-array name="items_page_sections">
-        <item>全部物品</item>
-        <item>存檔</item>
+        <item>所有物品</item>
+        <item>封存</item>
     </string-array>
     <string name="image_preview_dialog_title">預覽</string>
     <string name="image_preview_toast_picture_saved">已儲存圖片。</string>
