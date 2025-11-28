@@ -36,7 +36,7 @@
     <string name="auth_button_text">Verifiëren</string>
     <string name="auth_button_paste">Plakken</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Zoeken naar Werelden, gebruikers of avatars...</string>
+    <string name="main_search_placeholder">Zoeken naar werelden, gebruikers of avatars...</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Huidige locatie</string>
     <string name="profile_label_note">Notitie</string>
@@ -79,7 +79,7 @@
     <string name="settings_item_theming">Weergave</string>
     <string name="settings_item_theming_description">Weergave configuratie, simpele modus</string>
     <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence intergratie</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence integratie</string>
     <string name="settings_item_advanced_settings">Geavanceerd</string>
     <string name="settings_item_advanced_settings_description">Geavanceerd logging en functies</string>
     <string name="settings_item_database_settings">Database &amp; Statistieken</string>
