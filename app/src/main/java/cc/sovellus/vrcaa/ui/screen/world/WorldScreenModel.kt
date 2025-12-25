@@ -46,7 +46,7 @@ class WorldScreenModel(
     data class InstanceWithFriends(
         val instance: Instance?,
         var friends: MutableList<Friend>,
-        val creator: LimitedUser?
+        val creator: String?
     )
 
     sealed class WorldInfoState {
@@ -82,7 +82,15 @@ class WorldScreenModel(
                     async {
                         val instance = api.instances.fetchInstance("${world.id}:${id}")
                         instance?.let {
-                            Pair(id, InstanceWithFriends(instance, mutableListOf(), api.users.fetchUserByUserId(instance.ownerId)))
+                            instance.ownerId?.let {
+                                if (instance.ownerId.contains("usr_")) {
+                                    Pair(id, InstanceWithFriends(instance, mutableListOf(), api.users.fetchUserByUserId(instance.ownerId)?.displayName))
+                                } else {
+                                    Pair(id, InstanceWithFriends(instance, mutableListOf(), api.groups.fetchGroupByGroupId(instance.ownerId)?.name))
+                                }
+                            } ?: run {
+                                Pair(id, InstanceWithFriends(instance, mutableListOf(), null))
+                            }
                         } ?: run {
                             Pair(id, InstanceWithFriends(null, mutableListOf(), null))
                         }
@@ -102,7 +110,15 @@ class WorldScreenModel(
                         } ?: run {
                             val instance = api.instances.fetchInstance(friend.location)
                             instance?.let {
-                                injectedUserLocations.add(Pair(location.instanceId, InstanceWithFriends(instance, mutableListOf(friend), api.users.fetchUserByUserId(instance.ownerId))))
+                                instance.ownerId?.let {
+                                    if (instance.ownerId.contains("usr_")) {
+                                        injectedUserLocations.add(Pair(location.instanceId, InstanceWithFriends(instance, mutableListOf(friend), api.users.fetchUserByUserId(instance.ownerId)?.displayName)))
+                                    } else {
+                                        injectedUserLocations.add(Pair(location.instanceId, InstanceWithFriends(instance, mutableListOf(friend), api.groups.fetchGroupByGroupId(instance.ownerId)?.name)))
+                                    }
+                                } ?: run {
+                                    injectedUserLocations.add(Pair(location.instanceId, InstanceWithFriends(instance, mutableListOf(friend), null)))
+                                }
                             } ?: run {
                                 injectedUserLocations.add(Pair(location.instanceId, InstanceWithFriends(null, mutableListOf(friend), null)))
                             }
