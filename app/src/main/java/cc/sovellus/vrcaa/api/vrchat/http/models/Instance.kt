@@ -53,7 +53,7 @@ data class Instance(
     @SerializedName("name")
     val name: String,
     @SerializedName("ownerId")
-    val ownerId: String,
+    val ownerId: String?,
     @SerializedName("permanent")
     val permanent: Boolean,
     @SerializedName("photonRegion")

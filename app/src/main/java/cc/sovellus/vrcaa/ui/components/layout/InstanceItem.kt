@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
-import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.helper.LocationHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -60,7 +59,7 @@ import com.bumptech.glide.integration.compose.placeholder
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun InstanceItem(instance: Instance, creator: LimitedUser?, friends: List<Friend>, onClick: () -> Unit) {
+fun InstanceItem(instance: Instance, creator: String?, friends: List<Friend>, onClick: () -> Unit) {
     val result = LocationHelper.parseLocationInfo(instance.instanceId)
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -75,11 +74,7 @@ fun InstanceItem(instance: Instance, creator: LimitedUser?, friends: List<Friend
             },
             overlineContent = {
                 val label = buildAnnotatedString {
-                    if (result.hiddenId.isNotEmpty() && creator?.friendRequestStatus == "completed") {
-                        append("<${creator.displayName}>")
-                    } else {
-                        append(creator?.displayName ?: instance.world.authorName)
-                    }
+                    append(creator ?: instance.world.authorName)
                     append(" ")
                     append("#${instance.name}")
                     append(" ")
