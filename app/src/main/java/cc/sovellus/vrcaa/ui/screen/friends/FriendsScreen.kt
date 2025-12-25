@@ -41,6 +41,7 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +49,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -76,7 +76,7 @@ class FriendsScreen : Screen {
             }
         )
 
-        val state by model.state.collectAsStateWithLifecycle()
+        val state by model.state.collectAsState()
 
         when (state) {
             is FriendsState.Loading -> LoadingIndicatorScreen().Content()
@@ -149,9 +149,9 @@ class FriendsScreen : Screen {
     @Composable
     fun ShowFriendsFavorite(model: FriendsScreenModel) {
 
-        val favoriteFriends = model.favoriteFriends.collectAsStateWithLifecycle()
-        val favoriteFriendsInInstances = model.favoriteFriendsInInstances.collectAsStateWithLifecycle()
-        val favoriteFriendsOffline = model.favoriteFriendsOffline.collectAsStateWithLifecycle()
+        val favoriteFriends = model.favoriteFriends.collectAsState()
+        val favoriteFriendsInInstances = model.favoriteFriendsInInstances.collectAsState()
+        val favoriteFriendsOffline = model.favoriteFriendsOffline.collectAsState()
 
         if (favoriteFriends.value.isEmpty() && favoriteFriendsInInstances.value.isEmpty() && favoriteFriendsOffline.value.isEmpty()) {
             Column(
@@ -217,7 +217,7 @@ class FriendsScreen : Screen {
     @Composable
     fun ShowFriendsOnWebsite(model: FriendsScreenModel) {
 
-        val friendsOnWebsite = model.friendsOnWebsite.collectAsStateWithLifecycle()
+        val friendsOnWebsite = model.friendsOnWebsite.collectAsState()
 
         if (friendsOnWebsite.value.isEmpty()) {
             Column(
@@ -249,8 +249,8 @@ class FriendsScreen : Screen {
     @Composable
     fun ShowFriends(model: FriendsScreenModel) {
 
-        val friendsOnline = model.friendsOnline.collectAsStateWithLifecycle()
-        val friendsInInstances = model.friendsInInstances.collectAsStateWithLifecycle()
+        val friendsOnline = model.friendsOnline.collectAsState()
+        val friendsInInstances = model.friendsInInstances.collectAsState()
 
         if (friendsOnline.value.isEmpty() && friendsInInstances.value.isEmpty()) {
             Column(
@@ -304,7 +304,7 @@ class FriendsScreen : Screen {
     @Composable
     fun ShowFriendsOffline(model: FriendsScreenModel) {
 
-        val offlineFriends = model.offlineFriends.collectAsStateWithLifecycle()
+        val offlineFriends = model.offlineFriends.collectAsState()
 
         if (offlineFriends.value.isEmpty()) {
             Column(
