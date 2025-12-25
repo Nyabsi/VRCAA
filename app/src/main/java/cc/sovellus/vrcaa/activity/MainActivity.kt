@@ -29,19 +29,19 @@ import androidx.core.content.ContextCompat
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.extension.twoFactorToken
+import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
 class MainActivity : BaseActivity() {
-
-    private var validSession = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +82,8 @@ class MainActivity : BaseActivity() {
                 getString(R.string.api_session_has_expired_text),
                 Toast.LENGTH_LONG
             ).show()
+
+            App.setIsValidSession(false)
         }
 
         if (restartSession) {
@@ -96,19 +98,14 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        val token = preferences.authToken
-        val twoFactorToken = preferences.twoFactorToken
-
-        validSession = ((token.isNotBlank() && twoFactorToken.isNotEmpty()) && !invalidSession && !terminateSession)
-
-        if (validSession) {
+        if (terminateSession) {
             var intent = Intent(this, PipelineService::class.java)
-            ContextCompat.startForegroundService(this, intent)
-
+            stopService(intent)
             if (preferences.richPresenceEnabled) {
                 intent = Intent(this, RichPresenceService::class.java)
-                ContextCompat.startForegroundService(this, intent)
+                stopService(intent)
             }
+            App.setIsValidSession(false)
         }
     }
 
@@ -116,7 +113,7 @@ class MainActivity : BaseActivity() {
     override fun Content(bundle: Bundle?) {
 
         Navigator(
-            screen = if (validSession) {
+            screen = if (App.getIsValidSession()) {
                 NavigationScreen()
             } else {
                 LoginScreen()

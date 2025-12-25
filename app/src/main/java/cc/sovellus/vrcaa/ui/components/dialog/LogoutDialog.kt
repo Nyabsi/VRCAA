@@ -56,9 +56,6 @@ fun LogoutDialog(
             TextButton(
                 onClick = {
                     coroutineScope.launch {
-                        var intent = Intent(context, PipelineService::class.java)
-                        context.stopService(intent)
-
                         api.auth.logout()
 
                         val preferences = context.getSharedPreferences(App.PREFERENCES_NAME, 0)
@@ -69,7 +66,7 @@ fun LogoutDialog(
                         val bundle = bundleOf()
                         bundle.putBoolean("TERMINATE_SESSION", true)
 
-                        intent = Intent(context, MainActivity::class.java)
+                        val intent = Intent(context, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         intent.putExtras(bundle)
                         context.startActivity(intent)
