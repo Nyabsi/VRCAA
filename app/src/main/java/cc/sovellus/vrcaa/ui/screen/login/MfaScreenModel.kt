@@ -41,6 +41,7 @@ class MfaScreenModel(
         screenModelScope.launch {
             api.auth.verify(authType, code.value).let { result ->
                 if (result.success) {
+                    App.setIsValidSession(true)
                     val intent = Intent(context, PipelineService::class.java)
                     context.startService(intent)
                     callback(true)

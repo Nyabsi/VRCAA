@@ -43,6 +43,7 @@ class LoginScreenModel : ScreenModel {
         screenModelScope.launch {
             api.auth.login(username.value, password.value).let { result ->
                 if (result.success) {
+                    App.setIsValidSession(true)
                     if (result.authType == IAuth.AuthType.AUTH_NONE) {
                         val intent = Intent(context, PipelineService::class.java)
                         context.startService(intent)
