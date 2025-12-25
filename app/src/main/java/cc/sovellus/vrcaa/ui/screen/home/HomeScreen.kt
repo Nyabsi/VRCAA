@@ -36,7 +36,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -77,10 +76,10 @@ class HomeScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
 
-        val onlineFriends = model.onlineFriends.collectAsStateWithLifecycle()
-        val friendsByLocation = model.friendsByLocation.collectAsStateWithLifecycle()
-        val offlineFriends = model.offlineFriends.collectAsStateWithLifecycle()
-        val recent = model.recentlyVisited.collectAsStateWithLifecycle()
+        val onlineFriends = model.onlineFriends.collectAsState()
+        val friendsByLocation = model.friendsByLocation.collectAsState()
+        val offlineFriends = model.offlineFriends.collectAsState()
+        val recent = model.recentlyVisited.collectAsState()
 
         LazyColumn(
             modifier = Modifier
