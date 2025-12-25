@@ -75,11 +75,8 @@ class HomeScreen : Screen {
     fun ShowScreen(model: HomeScreenModel) {
 
         val navigator = LocalNavigator.currentOrThrow
-
-        val onlineFriends = model.onlineFriends.collectAsState()
-        val friendsByLocation = model.friendsByLocation.collectAsState()
-        val offlineFriends = model.offlineFriends.collectAsState()
-        val recent = model.recentlyVisited.collectAsState()
+        val friends = model.friendsList.collectAsState().value
+        val recent = model.recentlyVisited.collectAsState().value
 
         LazyColumn(
             modifier = Modifier
@@ -87,7 +84,8 @@ class HomeScreen : Screen {
                 .padding(16.dp)
         ) {
             item {
-                if (onlineFriends.value.isEmpty()) {
+                val onlineFriends = friends.filter { it.platform != "web" && it.platform.isNotEmpty() }
+                if (onlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_active_friends),
                         fontWeight = FontWeight.Bold,
@@ -112,7 +110,7 @@ class HomeScreen : Screen {
                         title = stringResource(R.string.home_active_friends)
                     ) {
                         items(
-                            onlineFriends.value.sortedBy { StatusHelper.getStatusFromString(it.status) }
+                            onlineFriends.sortedBy { StatusHelper.getStatusFromString(it.status) }
                         ) { friend ->
                             RoundedRowItem(
                                 name = friend.displayName,
@@ -126,7 +124,7 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                if (recent.value.isEmpty()) {
+                if (recent.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_recently_visited),
                         fontWeight = FontWeight.Bold,
@@ -150,7 +148,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_recently_visited)
                     ) {
-                        items(recent.value) { world ->
+                        items(recent) { world ->
                             RowItem(
                                 name = world.name,
                                 url = world.thumbnailUrl,
@@ -161,7 +159,9 @@ class HomeScreen : Screen {
                 }
 
                 Spacer(modifier = Modifier.padding(4.dp))
-                if (friendsByLocation.value.isEmpty()) {
+
+                val friendLocations = friends.filter { it.location.contains("wrld_") }
+                if (friendLocations.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_friend_locations),
                         fontWeight = FontWeight.Bold,
@@ -185,23 +185,24 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_friend_locations)
                     ) {
-                        items(friendsByLocation.value.keys.distinctBy { it.substringBefore(':') }) { location ->
-                            val worldId = location.substringBefore(':')
-                            val world = CacheManager.getWorld(worldId)
+                        items(
+                            friendLocations.distinctBy { it.location.split(':')[0] }
+                        ) { friend ->
+                            val world = CacheManager.getWorld(friend.location.split(':')[0])
                             RowItemWithFriends(
                                 name = world.name,
                                 url = world.thumbnailUrl,
-                                friends = friendsByLocation.value[location].orEmpty(),
+                                friends = friends.filter { it.location == friend.location },
                                 onClick = { navigator.parent?.parent?.push(WorldScreen(world.id)) }
                             )
                         }
-
                     }
                 }
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                if (offlineFriends.value.isEmpty()) {
+                val offlineFriends = friends.filter { it.platform.isEmpty() }
+                if (offlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_offline_friends),
                         fontWeight = FontWeight.Bold,
@@ -225,7 +226,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_offline_friends)
                     ) {
-                        items(offlineFriends.value) { friend ->
+                        items(offlineFriends) { friend ->
                             RowItem(
                                 name = friend.displayName,
                                 url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },

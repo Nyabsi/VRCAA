@@ -16,17 +16,18 @@
 
 package cc.sovellus.vrcaa.ui.screen.feed
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.Init) {
 
@@ -37,11 +38,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
     }
 
     private var feedStateFlow = MutableStateFlow(listOf<FeedManager.Feed>())
-    private var feeds = feedStateFlow.asStateFlow()
-
-    val feedList = feeds.map { feed ->
-        feed.reversed()
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    var feed = feedStateFlow.asStateFlow()
 
     private val listener = object : FeedManager.FeedListener {
         override fun onReceiveUpdate(list: List<FeedManager.Feed>) {

@@ -16,20 +16,20 @@
 
 package cc.sovellus.vrcaa.ui.screen.home
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
+import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.CacheManager.WorldCache
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
 
@@ -39,27 +39,15 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
         data object Result : HomeState()
     }
 
-    private var friendsListFlow = MutableStateFlow(emptyList<Friend>())
-    private var friendsList = friendsListFlow.asStateFlow()
+    private var friendsListFlow = MutableStateFlow(listOf<Friend>())
+    var friendsList = friendsListFlow.asStateFlow()
 
-    val onlineFriends: StateFlow<List<Friend>> = friendsList.map { list ->
-        list.filter { it.platform != "web" && it.platform.isNotEmpty() }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
-
-    val friendsByLocation: StateFlow<Map<String, List<Friend>>> = friendsList.map { list ->
-        list.filter { it.location.contains("wrld_") }.groupBy { it.location }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyMap())
-
-    val offlineFriends: StateFlow<List<Friend>> = friendsList.map { list ->
-        list.filter { it.platform.isEmpty() }
-    }.stateIn(screenModelScope, SharingStarted.WhileSubscribed(), emptyList())
-
-    private var recentlyVisitedFlow = MutableStateFlow(emptyList<WorldCache>())
+    private var recentlyVisitedFlow = MutableStateFlow(listOf<WorldCache>())
     var recentlyVisited = recentlyVisitedFlow.asStateFlow()
 
     private val listener = object : FriendManager.FriendListener {
         override fun onUpdateFriends(friends: List<Friend>) {
-            friendsListFlow.update { friends }
+            friendsListFlow.update { friends}
         }
     }
 
@@ -92,8 +80,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
     }
 
     private fun fetchContent() {
-        friendsListFlow.value = FriendManager.getFriends()
-        recentlyVisitedFlow.value = CacheManager.getRecentWorlds()
+        friendsListFlow.value = FriendManager.getFriends().toMutableStateList()
+        recentlyVisitedFlow.value = CacheManager.getRecentWorlds().toMutableStateList()
     }
-
 }
