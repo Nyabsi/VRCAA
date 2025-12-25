@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2025. Nyabsi <nyabsi@sovellus.cc>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cc.sovellus.vrcaa.api.vrchat.http.models
 
 
@@ -28,6 +12,8 @@ data class World(
     var capacity: Int = 0,
     @SerializedName("created_at")
     var createdAt: String = "",
+    @SerializedName("defaultContentSettings")
+    var defaultContentSettings: DefaultContentSettings = DefaultContentSettings(),
     @SerializedName("description")
     var description: String = "",
     @SerializedName("favorites")
@@ -53,7 +39,7 @@ data class World(
     @SerializedName("popularity")
     var popularity: Int = 0,
     @SerializedName("previewYoutubeId")
-    var previewYoutubeId: Any? = Any(),
+    var previewYoutubeId: Any = Any(),
     @SerializedName("privateOccupants")
     var privateOccupants: Int = 0,
     @SerializedName("publicOccupants")
@@ -74,8 +60,37 @@ data class World(
     var unityPackages: List<UnityPackage> = listOf(),
     @SerializedName("updated_at")
     var updatedAt: String = "",
+    @SerializedName("urlList")
+    var urlList: List<String> = listOf(),
     @SerializedName("version")
-    var version: Long = 0,
+    var version: Int = 0,
     @SerializedName("visits")
     var visits: Int = 0
-)
+) {
+    class DefaultContentSettings
+
+    data class UnityPackage(
+        @SerializedName("assetUrl")
+        var assetUrl: String = "",
+        @SerializedName("assetVersion")
+        var assetVersion: Int = 0,
+        @SerializedName("created_at")
+        var createdAt: String = "",
+        @SerializedName("id")
+        var id: String = "",
+        @SerializedName("platform")
+        var platform: String = "",
+        @SerializedName("pluginUrl")
+        var pluginUrl: Any = Any(),
+        @SerializedName("scanStatus")
+        var scanStatus: String = "",
+        @SerializedName("unitySortNumber")
+        var unitySortNumber: Long = 0,
+        @SerializedName("unityVersion")
+        var unityVersion: String = "",
+        @SerializedName("variant")
+        var variant: String = "",
+        @SerializedName("worldSignature")
+        var worldSignature: String = ""
+    )
+}
