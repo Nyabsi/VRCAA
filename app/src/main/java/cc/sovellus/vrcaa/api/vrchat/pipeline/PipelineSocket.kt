@@ -37,6 +37,7 @@ import cc.sovellus.vrcaa.helper.DnsHelper
 import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.DebugManager
+import cc.sovellus.vrcaa.manager.DebugManager.DebugType
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +50,8 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.time.LocalDateTime
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
@@ -209,6 +212,14 @@ class PipelineSocket(
     }
 
     fun reconnect() {
+        DebugManager.addDebugMetadata(
+            DebugManager.DebugMetadataData(
+                type = DebugType.DEBUG_TYPE_PIPELINE,
+                name = "Pipeline Reconnect",
+                unknown = false,
+                payload = "${LocalDateTime.now()}"
+            )
+        )
         launch {
             delay(Config.RECONNECTION_INTERVAL)
             api.auth.fetchToken()?.let { tkn ->
