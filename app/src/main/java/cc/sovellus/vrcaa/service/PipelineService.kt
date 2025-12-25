@@ -79,7 +79,6 @@ class PipelineService : Service(), CoroutineScope {
 
     private var refreshTask: Runnable = Runnable {
         launch {
-            Runtime.getRuntime().gc()
             CacheManager.buildCache()
             pipeline?.reconnect()
         }
