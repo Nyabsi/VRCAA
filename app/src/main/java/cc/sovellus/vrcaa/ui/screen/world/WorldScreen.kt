@@ -98,6 +98,7 @@ import java.util.TimeZone
 class WorldScreen(
     private val worldId: String,
     private val peek: Boolean = false,
+    @Transient
     private val onInvalidWorld: (() -> Unit)? = null
 ) : Screen {
 
