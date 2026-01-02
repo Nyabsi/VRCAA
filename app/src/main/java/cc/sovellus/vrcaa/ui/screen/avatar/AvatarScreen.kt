@@ -79,6 +79,7 @@ import java.util.TimeZone
 class AvatarScreen(
     private val avatarId: String,
     private val peek: Boolean = false,
+    @Transient
     private val onInvalidAvatar: (() -> Unit)? = null
 ) : Screen {
 
