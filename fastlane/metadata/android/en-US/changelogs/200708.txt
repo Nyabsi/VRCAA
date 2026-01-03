@@ -1,0 +1,5 @@
+- Now private instances are shown in "Instances" Tab
+- Now "Instances" Tab shows which of your friends are in instances
+- Support for Android 6.0 devices
+- Now the application should refresh cache with less regular intervals
+- Improved stability.
