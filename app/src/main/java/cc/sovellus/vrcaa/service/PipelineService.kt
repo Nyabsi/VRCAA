@@ -442,6 +442,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
+        super.onCreate()
 
         this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
@@ -454,6 +455,8 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
+
         try {
             val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
                 .setSmallIcon(R.drawable.ic_notification_icon)
@@ -471,17 +474,6 @@ class PipelineService : Service(), CoroutineScope {
                 // Older versions do not require to specify the `foregroundServiceType`
                 startForeground(NOTIFICATION_ID, builder.build())
             }
-
-            launch {
-                api.auth.fetchToken()?.let { token ->
-                    pipeline = PipelineSocket(token)
-                    pipeline?.let { pipeline ->
-                        pipeline.setListener(listener)
-                        pipeline.connect()
-                    }
-                }
-                scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
-            }
         } catch (_:  Throwable) {
             NotificationHelper.pushNotification(
                 application.getString(R.string.app_name),
@@ -489,6 +481,17 @@ class PipelineService : Service(), CoroutineScope {
                 NotificationHelper.CHANNEL_DEFAULT_ID,
                 true
             )
+        }
+
+        launch {
+            api.auth.fetchToken()?.let { token ->
+                pipeline = PipelineSocket(token)
+                pipeline?.let { pipeline ->
+                    pipeline.setListener(listener)
+                    pipeline.connect()
+                }
+            }
+            scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
         }
 
         return START_STICKY
