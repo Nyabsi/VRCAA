@@ -30,6 +30,7 @@ android {
 
         buildConfigField("String", "GIT_HASH", "\"${getGitHash()}\"")
         buildConfigField("String", "GIT_BRANCH", "\"${getBranch()}\"")
+
         buildConfigField("String", "DISCORD_URL", "\"https://discord.gg/aJs8qJXuT3\"")
         buildConfigField("String", "CROWDIN_URL", "\"https://crowdin.com/project/vrcaa\"")
         buildConfigField("String", "KOFI_URL", "\"https://ko-fi.com/Nyabsi\"")
@@ -48,6 +49,7 @@ android {
                 keyAlias = keyAliasEnv
                 keyPassword = keyPasswordEnv
             } else {
+                // This warning can and should be ignored in local development environment, it's meant for CI
                 println("Warning: Release signing configuration not fully set up from environment variables.")
             }
         }
@@ -103,40 +105,11 @@ android {
     }
 }
 
-// credit: https://github.com/amwatson/CitraVR/blob/master/src/android/app/build.gradle.kts#L255C1-L275C2
-fun getGitHash(): String =
-    runGitCommand(ProcessBuilder("git", "rev-parse", "--short", "HEAD")) ?: "invalid-hash"
-
-fun getBranch(): String =
-    runGitCommand(ProcessBuilder("git", "rev-parse", "--abbrev-ref", "HEAD")) ?: "invalid-branch"
-
-fun runGitCommand(command: ProcessBuilder) : String? {
-    try {
-        command.directory(project.rootDir)
-        val process = command.start()
-        val inputStream = process.inputStream
-        val errorStream = process.errorStream
-        process.waitFor()
-
-        return if (process.exitValue() == 0) {
-            inputStream.bufferedReader()
-                .use { it.readText().trim() } // return the value of gitHash
-        } else {
-            val errorMessage = errorStream.bufferedReader().use { it.readText().trim() }
-            logger.error("Error running git command: $errorMessage")
-            return null
-        }
-    } catch (e: Exception) {
-        logger.error("$e: Cannot find git")
-        return null
-    }
-}
-
 dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
-    implementation("androidx.activity:activity-compose:1.12.2")
-    implementation(platform("androidx.compose:compose-bom:2025.12.01"))
+    implementation("androidx.activity:activity-compose:1.12.3")
+    implementation(platform("androidx.compose:compose-bom:2026.01.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -146,7 +119,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2025.12.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2026.01.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -160,7 +133,7 @@ dependencies {
     implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.1.0-beta03")
     implementation("cafe.adriel.voyager:voyager-tab-navigator:1.1.0-beta03")
     implementation("cafe.adriel.voyager:voyager-transitions:1.1.0-beta03")
-    implementation("androidx.activity:activity-ktx:1.12.2")
+    implementation("androidx.activity:activity-ktx:1.12.3")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
@@ -173,3 +146,51 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics:20.0.3")
     implementation("dev.turingcomplete:kotlin-onetimepassword:2.4.1")
 }
+
+// === Helpers ===
+
+internal enum class GitHashType {
+    GIT_HASH_COMMIT,
+    GIT_HASH_BRANCH;
+}
+
+internal fun getGitHash(type: GitHashType): String? {
+    try {
+        var builder = ProcessBuilder("git", "rev-parse")
+        when (type) {
+            GitHashType.GIT_HASH_COMMIT -> {
+                builder.command().add("--short")
+            }
+            GitHashType.GIT_HASH_BRANCH -> {
+                builder.command().add("--abbrev-ref")
+            }
+        }
+        builder.command().add("HEAD")
+        builder.directory(project.rootDir)
+
+        val process = builder.start()
+        val inputStream = process.inputStream
+        val errorStream = process.errorStream
+        process.waitFor()
+
+        return if (process.exitValue() == 0) {
+            inputStream.bufferedReader()
+                .use { it.readText().trim() }
+        } else {
+            val errorMessage = errorStream.bufferedReader().use { it.readText().trim() }
+            logger.error("Error running git command: $errorMessage")
+            return null
+        }
+    } catch (_: Throwable) {
+        return null
+    }
+    /* unreachable */
+    return null
+}
+
+fun getGitHash(): String =
+    getGitHash(GitHashType.GIT_HASH_COMMIT) ?: "invalid-hash"
+
+fun getBranch(): String =
+    getGitHash(GitHashType.GIT_HASH_BRANCH) ?: "invalid-branch"
+
