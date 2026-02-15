@@ -5,7 +5,7 @@
     <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
-        <item>Favorite</item>
+        <item>Ưa thích</item>
         <item>Online</item>
         <item>Website</item>
         <item>Offline</item>
@@ -25,8 +25,8 @@
     <string name="home_friend_locations">Friend Locations</string>
     <!-- Login -->
     <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
-    <string name="login_label_password">Password</string>
+    <string name="login_label_username">Tên đăng nhập hoặc E-Mail</string>
+    <string name="login_label_password">Mật khẩu</string>
     <string name="login_button_text">Login</string>
     <string name="login_toast_wrong_credentials">Wrong username or password.</string>
     <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
@@ -34,12 +34,12 @@
     <string name="auth_text_email">Input the code sent to your e-mail</string>
     <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_button_text">Verify</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_button_paste">Dán</string>
     <!-- Main -->
     <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
     <!-- Profile -->
     <string name="profile_label_current_location">Current Location</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_note">Ghi chú</string>
     <string name="profile_label_biography">Bio</string>
     <string name="profile_label_last_activity">Last Activity</string>
     <string name="profile_label_date_joined">Date Joined</string>
@@ -76,15 +76,15 @@
     <!-- Settings -->
     <string name="settings_item_about">About</string>
     <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
+    <string name="settings_item_theming">Hiển thị</string>
     <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
     <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimental)</string>
     <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
+    <string name="settings_item_advanced_settings">Nâng cao</string>
     <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
     <string name="settings_item_database_settings">Database &amp; Statistics</string>
     <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
-    <string name="settings_item_logout">Logout</string>
+    <string name="settings_item_logout">Đăng xuất</string>
     <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
@@ -93,7 +93,7 @@
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
     <string name="world_title_visits">Visits</string>
-    <string name="world_title_favorites">Favorites</string>
+    <string name="world_title_favorites">Ưa thích</string>
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
     <string name="world_title_publication_date">Publication Date</string>
@@ -109,12 +109,12 @@
     <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
     <string name="world_instance_no_public_instances_message">No public instances</string>
     <!-- Tabs -->
-    <string name="tabs_label_friends">Friends</string>
+    <string name="tabs_label_friends">Bạn bè</string>
     <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_favorites">Ưa thích</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_profile">Hồ sơ</string>
+    <string name="tabs_label_settings">Cài đặt</string>
     <!-- Notifications -->
     <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
     <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
@@ -137,21 +137,21 @@
     <string name="notification_label_intent_status">Status Change Notifications</string>
     <string name="notification_service_title_status">Friend changed status!</string>
     <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
-    <string name="notifications_page_title">Notifications</string>
+    <string name="notifications_page_title">Thông báo</string>
     <string name="notifications_type_invite">Invite</string>
     <string name="notifications_type_invite_response">Invite Response</string>
     <string name="notifications_type_invite_request">Invite Request</string>
     <string name="notifications_type_invite_request_response">Invite Request Response</string>
     <string name="notifications_type_friend_request">Friend Request</string>
     <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
-    <string name="notification_dialog_title">Notification</string>
+    <string name="notification_dialog_title">Thông báo</string>
     <string name="notification_dialog_description">What do you want to do with this notification?</string>
-    <string name="notification_dialog_button_delete">Delete</string>
-    <string name="notification_dialog_button_read">Mark As Read</string>
+    <string name="notification_dialog_button_delete">Xóa</string>
+    <string name="notification_dialog_button_read">Đánh dấu đã đọc</string>
     <string name="notification_dialog_button_unsubscribe">Unsubscribe</string>
     <string name="notification_dialog_button_accept">Accept</string>
     <string name="notification_dialog_button_reject">Reject</string>
-    <string name="notification_dialog_button_block">Block</string>
+    <string name="notification_dialog_button_block">Chặn</string>
     <string name="notification_dialog_button_start">Start</string>
     <string name="notification_dialog_button_continue">Continue</string>
     <string name="notification_dialog_button_restart">Restart</string>
@@ -172,12 +172,12 @@
     <string name="avatar_text_content_labels_not_found">Avatar has no content warnings specified.</string>
     <string name="avatar_toast_avatar_not_found_message">The avatar is either private or invalid.</string>
     <!-- Feed -->
-    <string name="feed_online_label">Online</string>
+    <string name="feed_online_label">Trực tuyến</string>
     <string name="feed_online_text">has come online.</string>
     <string name="feed_offline_label">Offline</string>
     <string name="feed_offline_text">has gone offline.</string>
     <string name="feed_location_label">GPS</string>
-    <string name="feed_location_text">went to</string>
+    <string name="feed_location_text">đi</string>
     <string name="feed_status_label">Status</string>
     <string name="feed_status_text">changed status to</string>
     <string name="feed_added_label">Friend Added</string>
@@ -243,29 +243,29 @@
     <string name="generic_text_public">Public</string>
     <string name="generic_text_private">Private</string>
     <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
+    <string name="generic_text_cancel">Hủy bỏ</string>
     <string name="generic_text_ok">OK</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
+    <string name="user_overlay_friend_add">Thêm bạn</string>
+    <string name="user_overlay_friend_remove">Xóa bạn</string>
     <string name="user_overlay_friend_accept">Accept Request</string>
     <string name="user_overlay_friend_cancel">Cancel Request</string>
-    <string name="user_overlay_groups">Groups</string>
+    <string name="user_overlay_groups">Nhóm</string>
     <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
+    <string name="user_overlay_favorites">Ưa thích</string>
     <string name="user_overlay_find_avatar">Find Avatar</string>
     <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_note">Thêm ghi chú</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
+    <string name="profile_edit_dialog_title_status">Trạng thái</string>
     <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
     <string name="profile_edit_dialog_title_status_description">Status Description</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Social Links</string>
     <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
     <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_title_pronouns">Đại từ nhân xưng</string>
+    <string name="profile_edit_dialog_button_cancel">Hủy bỏ</string>
     <string name="profile_edit_dialog_button_apply">Apply</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Are you sure?</string>
@@ -273,11 +273,11 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">See current friend locations</string>
     <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="favorite_page_title">Ưa thích</string>
     <string-array name="favorites_selection_options">
         <item>Worlds</item>
         <item>Avatars</item>
-        <item>Friends</item>
+        <item>Bạn bè</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
         <item>Worlds</item>
@@ -290,14 +290,14 @@
     <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
     <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
     <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
+    <string name="favorite_dialog_button_cancel">Hủy bỏ</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
     <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
+    <string name="favorite_edit_display_name">Tên hiển thị</string>
     <string name="favorite_edit_visibility">Visibility</string>
     <string name="favorite_edit_discarded">Changes were discarded.</string>
     <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
+    <string name="favorite_dialog_button_edit">Chỉnh sửa</string>
     <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
     <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
     <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
@@ -334,8 +334,8 @@
     <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
     <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Sáng</item>
+        <item>Tối</item>
         <item>System</item>
     </string-array>
     <string-array name="column_count_options">
