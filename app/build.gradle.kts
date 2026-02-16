@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "cc.sovellus.vrcaa"
-        minSdk = 23
+        minSdk = 27
         targetSdk = 36
         versionCode = 200708
         versionName = "2.7.8"
