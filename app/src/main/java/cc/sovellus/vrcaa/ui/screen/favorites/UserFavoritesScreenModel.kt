@@ -57,10 +57,10 @@ class UserFavoritesScreenModel(
         mutableState.value = UserFavoriteState.Loading
         App.setLoadingText(R.string.loading_text_favorites)
         screenModelScope.launch {
-            val worldsGroup = api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_WORLD)
-            val worldResults = worldsGroup?.map { group ->
+            val worldsGroup = (api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_WORLD)+api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_VRC_PLUS_WORLD))
+            val worldResults = worldsGroup.map { group ->
                 async {
-                    val worlds = api.favorites.fetchFavoritesByUserId(userId, FavoriteType.FAVORITE_WORLD, group.name)
+                    val worlds = (api.favorites.fetchFavoritesByUserId(userId, FavoriteType.FAVORITE_WORLD, group.name) + api.favorites.fetchFavoritesByUserId(userId, FavoriteType.FAVORITE_VRC_PLUS_WORLD, group.name))
 
                     val avatar = worlds.map {
                         async {
@@ -70,14 +70,14 @@ class UserFavoritesScreenModel(
 
                     group.displayName to avatar
                 }
-            }?.awaitAll()
+            }.awaitAll()
 
-            worldResults?.forEach { (name, list) ->
+            worldResults.forEach { (name, list) ->
                 worldList[name] = list.toMutableStateList()
             }
 
             val avatarGroups = api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_AVATAR)
-            val avatarResults = avatarGroups?.map { group ->
+            val avatarResults = avatarGroups.map { group ->
                 async {
                     val avatars = api.favorites.fetchFavoritesByUserId(userId, FavoriteType.FAVORITE_AVATAR, group.name)
 
@@ -89,9 +89,9 @@ class UserFavoritesScreenModel(
 
                     group.displayName to avatar
                 }
-            }?.awaitAll()
+            }.awaitAll()
 
-            avatarResults?.forEach { (name, list) ->
+            avatarResults.forEach { (name, list) ->
                 avatarList[name] = list.toMutableStateList()
             }
 

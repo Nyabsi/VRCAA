@@ -38,7 +38,6 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -186,8 +185,7 @@ class FavoritesScreen : Screen {
         val worldList = model.worldList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        val sortedWorldList = worldList.value.toSortedMap(compareBy { it.substring(6).toInt() })
-        sortedWorldList.forEach { item ->
+        worldList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_WORLD)})",
@@ -202,12 +200,12 @@ class FavoritesScreen : Screen {
                             if (it.name != "???") {
                                 navigator.parent?.parent?.push(WorldScreen(it.id) {
                                     model.deleteDialogShown.value = true
-                                    model.currentSelectedType.value = FavoriteType.FAVORITE_WORLD
+                                    model.currentSelectedType.value = if (item.key.contains("vrcPlusWorld")) { FavoriteType.FAVORITE_VRC_PLUS_WORLD } else { FavoriteType.FAVORITE_WORLD }
                                     model.currentSelectedId.value = it.id
                                 })
                             } else {
                                 model.deleteDialogShown.value = true
-                                model.currentSelectedType.value = FavoriteType.FAVORITE_WORLD
+                                model.currentSelectedType.value = if (item.key.contains("vrcPlusWorld")) { FavoriteType.FAVORITE_VRC_PLUS_WORLD } else { FavoriteType.FAVORITE_WORLD }
                                 model.currentSelectedId.value = it.id
                             }
                         }
@@ -226,8 +224,7 @@ class FavoritesScreen : Screen {
         val avatarList = model.avatarList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        val sortedAvatarList = avatarList.value.toSortedMap(compareBy { it.substring(7).toInt() })
-        sortedAvatarList.forEach { item ->
+        avatarList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_AVATAR)})",
@@ -266,8 +263,7 @@ class FavoritesScreen : Screen {
         val friendList = model.friendList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        val sortedFriendList = friendList.value.toSortedMap(compareBy { it.substring(6).toInt() })
-        sortedFriendList.forEach { item ->
+        friendList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_FRIEND)})",

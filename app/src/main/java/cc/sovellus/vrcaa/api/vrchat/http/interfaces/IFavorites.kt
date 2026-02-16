@@ -19,6 +19,7 @@ package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 import cc.sovellus.vrcaa.api.vrchat.http.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAdd
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAvatar
+import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteGroup
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteGroups
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteWorld
@@ -28,13 +29,14 @@ interface IFavorites {
     enum class FavoriteType {
         FAVORITE_NONE,
         FAVORITE_WORLD,
+        FAVORITE_VRC_PLUS_WORLD,
         FAVORITE_AVATAR,
         FAVORITE_FRIEND
     }
 
     suspend fun fetchLimits(): FavoriteLimits?
-    suspend fun fetchFavoriteGroups(type: FavoriteType): FavoriteGroups?
-    suspend fun fetchFavoriteGroupsByUserId(userId: String, type: FavoriteType): FavoriteGroups?
+    suspend fun fetchFavoriteGroups(type: FavoriteType): ArrayList<FavoriteGroup>
+    suspend fun fetchFavoriteGroupsByUserId(userId: String, type: FavoriteType): ArrayList<FavoriteGroup>
     suspend fun addFavorite(type: FavoriteType, favoriteId: String, tag: String): FavoriteAdd?
     suspend fun removeFavorite(favoriteId: String): Boolean
     suspend fun updateFavoriteGroup(type: FavoriteType, tag: String, newDisplayName: String, newVisibility: String?): Boolean
