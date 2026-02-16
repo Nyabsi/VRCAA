@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.manager
 
+import androidx.compose.runtime.mutableStateMapOf
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.base.BaseManager
@@ -48,7 +49,7 @@ object FavoriteManager : BaseManager<Any>() {
     private var avatarList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
     private var friendList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
 
-    private var tagToGroupMetadataMap = mutableMapOf<String, FavoriteGroupMetadata>()
+    private var tagToGroupMetadataMap = mutableStateMapOf<String, FavoriteGroupMetadata>()
 
     suspend fun refresh() = coroutineScope {
         favoriteLimits = api.favorites.fetchLimits()
@@ -143,6 +144,7 @@ object FavoriteManager : BaseManager<Any>() {
 
         val dType = when (metadata.type) {
             "world" -> FavoriteType.FAVORITE_WORLD
+            "vrcPlusWorld" -> FavoriteType.FAVORITE_VRC_PLUS_WORLD
             "avatar" -> FavoriteType.FAVORITE_AVATAR
             "friend" -> FavoriteType.FAVORITE_FRIEND
             else -> FavoriteType.FAVORITE_NONE
@@ -159,6 +161,7 @@ object FavoriteManager : BaseManager<Any>() {
 
         val dType = when (metadata.type) {
             "world" -> FavoriteType.FAVORITE_WORLD
+            "vrcPlusWorld" -> FavoriteType.FAVORITE_VRC_PLUS_WORLD
             "avatar" -> FavoriteType.FAVORITE_AVATAR
             "friend" -> FavoriteType.FAVORITE_FRIEND
             else -> FavoriteType.FAVORITE_NONE
@@ -170,7 +173,6 @@ object FavoriteManager : BaseManager<Any>() {
     // it's the 21th century, and we have computers faster than super computers in our pockets.
     fun isFavorite(type: String, id: String): Boolean {
         return when (type) {
-            "vrcPlusWorld",
             "world" -> {
                 worldList.forEach { group ->
                     group.value.forEach { world ->
@@ -280,7 +282,6 @@ object FavoriteManager : BaseManager<Any>() {
                 if (result)
                 {
                     when (type) {
-                        FavoriteType.FAVORITE_VRC_PLUS_WORLD,
                         FavoriteType.FAVORITE_WORLD -> {
                             worldList[favorite.second]?.removeIf { it.id == id }
                         }
@@ -292,6 +293,7 @@ object FavoriteManager : BaseManager<Any>() {
                         }
 
                         FavoriteType.FAVORITE_NONE -> { }
+                        FavoriteType.FAVORITE_VRC_PLUS_WORLD -> { }
                     }
 
                     tagToGroupMetadataMap[favorite.second]?.let { groupMetadata ->

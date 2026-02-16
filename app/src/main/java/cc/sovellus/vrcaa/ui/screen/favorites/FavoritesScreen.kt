@@ -58,6 +58,7 @@ import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
 import cc.sovellus.vrcaa.ui.components.layout.FavoriteHorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
+import cc.sovellus.vrcaa.ui.screen.favorites.FavoritesScreenModel.FavoriteState
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
@@ -72,8 +73,8 @@ class FavoritesScreen : Screen {
         val state by model.state.collectAsState()
 
         when (state) {
-            is FavoritesScreenModel.FavoriteState.Loading -> LoadingIndicatorScreen().Content()
-            is FavoritesScreenModel.FavoriteState.Result -> ShowScreen(model)
+            is FavoriteState.Loading -> LoadingIndicatorScreen().Content()
+            is FavoriteState.Result -> ShowScreen(model)
             else -> {}
         }
     }
@@ -195,17 +196,17 @@ class FavoritesScreen : Screen {
                         model.editDialogShown.value = true
                     }
                 ) {
-                    items(item.value) {
+                    items(item.value.distinct()) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
                                 navigator.parent?.parent?.push(WorldScreen(it.id) {
                                     model.deleteDialogShown.value = true
-                                    model.currentSelectedType.value = if (item.key.contains("vrcPlusWorld")) { FavoriteType.FAVORITE_VRC_PLUS_WORLD } else { FavoriteType.FAVORITE_WORLD }
+                                    model.currentSelectedType.value = FavoriteType.FAVORITE_WORLD
                                     model.currentSelectedId.value = it.id
                                 })
                             } else {
                                 model.deleteDialogShown.value = true
-                                model.currentSelectedType.value = if (item.key.contains("vrcPlusWorld")) { FavoriteType.FAVORITE_VRC_PLUS_WORLD } else { FavoriteType.FAVORITE_WORLD }
+                                model.currentSelectedType.value = FavoriteType.FAVORITE_WORLD
                                 model.currentSelectedId.value = it.id
                             }
                         }
@@ -234,7 +235,7 @@ class FavoritesScreen : Screen {
                         model.editDialogShown.value = true
                     }
                 ) {
-                    items(item.value) {
+                    items(item.value.distinct()) {
                         RowItem(name = it.name, url = it.thumbnailUrl) {
                             if (it.name != "???") {
                                 navigator.parent?.parent?.push(AvatarScreen(it.id) {
