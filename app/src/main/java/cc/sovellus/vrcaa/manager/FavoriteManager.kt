@@ -57,6 +57,9 @@ object FavoriteManager : BaseManager<Any>() {
             repeat(it.maxFavoriteGroups.world) { i ->
                 worldList["worlds${i + 1}"] = mutableListOf<FavoriteMetadata>()
             }
+            repeat(it.maxFavoriteGroups.vrcPlusWorld) { i ->
+                worldList["vrcPlusWorlds${i + 1}"] = mutableListOf<FavoriteMetadata>()
+            }
             repeat(it.maxFavoriteGroups.avatar) { i ->
                 avatarList["avatars${i + 1}"] = mutableListOf<FavoriteMetadata>()
             }
@@ -65,11 +68,11 @@ object FavoriteManager : BaseManager<Any>() {
             }
         }
 
-        val worldGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_WORLD) }.await()
+        val worldGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_WORLD) + api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_VRC_PLUS_WORLD) }.await()
         val avatarGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_AVATAR) }.await()
         val friendGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_FRIEND) }.await()
 
-        worldGroups?.map { group ->
+        worldGroups.map { group ->
             async {
                 val worlds = api.favorites.fetchFavoriteWorlds(group.name)
                 val metadataList = worlds.map {
@@ -81,9 +84,9 @@ object FavoriteManager : BaseManager<Any>() {
                     group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
                 )
             }
-        }?.awaitAll()
+        }.awaitAll()
 
-        avatarGroups?.map { group ->
+        avatarGroups.map { group ->
             async {
                 val avatars = api.favorites.fetchFavoriteAvatars(group.name)
                 val metadataList = avatars.map {
@@ -95,9 +98,9 @@ object FavoriteManager : BaseManager<Any>() {
                     group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
                 )
             }
-        }?.awaitAll()
+        }.awaitAll()
 
-        friendGroups?.map { group ->
+        friendGroups.map { group ->
             async {
                 val friends = api.favorites.fetchFavorites(FavoriteType.FAVORITE_FRIEND, group.name)
                 val metadataList = friends.map {
@@ -109,7 +112,7 @@ object FavoriteManager : BaseManager<Any>() {
                     group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
                 )
             }
-        }?.awaitAll()
+        }.awaitAll()
     }
 
     fun getAvatarList(): MutableMap<String, MutableList<FavoriteMetadata>> {
@@ -167,6 +170,7 @@ object FavoriteManager : BaseManager<Any>() {
     // it's the 21th century, and we have computers faster than super computers in our pockets.
     fun isFavorite(type: String, id: String): Boolean {
         return when (type) {
+            "vrcPlusWorld",
             "world" -> {
                 worldList.forEach { group ->
                     group.value.forEach { world ->
@@ -200,6 +204,7 @@ object FavoriteManager : BaseManager<Any>() {
 
     private fun getFavoriteId(type: FavoriteType, id: String): Pair<String?, String> {
         return when (type) {
+            FavoriteType.FAVORITE_VRC_PLUS_WORLD,
             FavoriteType.FAVORITE_WORLD -> {
                 worldList.forEach { group ->
                     group.value.forEach { world ->
@@ -241,6 +246,7 @@ object FavoriteManager : BaseManager<Any>() {
 
             result?.let {
                 when (type) {
+                    FavoriteType.FAVORITE_VRC_PLUS_WORLD,
                     FavoriteType.FAVORITE_WORLD -> {
                         metadata?.let {
                             metadata.favoriteId = result.favoriteId
@@ -274,6 +280,7 @@ object FavoriteManager : BaseManager<Any>() {
                 if (result)
                 {
                     when (type) {
+                        FavoriteType.FAVORITE_VRC_PLUS_WORLD,
                         FavoriteType.FAVORITE_WORLD -> {
                             worldList[favorite.second]?.removeIf { it.id == id }
                         }
@@ -304,6 +311,7 @@ object FavoriteManager : BaseManager<Any>() {
         favoriteLimits?.let { limits ->
             return when (type) {
                 FavoriteType.FAVORITE_WORLD -> limits.maxFavoritesPerGroup.world
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> limits.maxFavoritesPerGroup.vrcPlusWorld
                 FavoriteType.FAVORITE_AVATAR -> limits.maxFavoritesPerGroup.avatar
                 FavoriteType.FAVORITE_FRIEND -> limits.maxFavoritesPerGroup.friend
                 FavoriteType.FAVORITE_NONE -> 0

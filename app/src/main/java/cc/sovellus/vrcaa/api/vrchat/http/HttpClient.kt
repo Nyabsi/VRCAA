@@ -75,6 +75,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Users
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.api.vrchat.http.models.Worlds
 import cc.sovellus.vrcaa.api.vrchat.http.models.AuthResponse
+import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteGroup
 import cc.sovellus.vrcaa.api.vrchat.http.models.File
 import cc.sovellus.vrcaa.api.vrchat.http.models.Files
 import cc.sovellus.vrcaa.api.vrchat.http.models.FriendStatus
@@ -894,10 +895,11 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun fetchFavoriteGroups(type: FavoriteType): FavoriteGroups? {
+        override suspend fun fetchFavoriteGroups(type: FavoriteType): ArrayList<FavoriteGroup> {
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> "vrcPlusWorld"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
                 FavoriteType.FAVORITE_FRIEND -> "friend"
                 FavoriteType.FAVORITE_NONE -> ""
@@ -920,7 +922,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    return arrayListOf()
                 }
             }
         }
@@ -928,10 +930,11 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun fetchFavoriteGroupsByUserId(
             userId: String,
             type: FavoriteType
-        ): FavoriteGroups? {
+        ): ArrayList<FavoriteGroup> {
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> "vrcPlusWorld"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
                 FavoriteType.FAVORITE_FRIEND -> "friend"
                 FavoriteType.FAVORITE_NONE -> ""
@@ -956,7 +959,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    return arrayListOf()
                 }
             }
         }
@@ -969,6 +972,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> "vrcPlusWorld"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
                 FavoriteType.FAVORITE_FRIEND -> "friend"
                 FavoriteType.FAVORITE_NONE -> ""
@@ -1039,6 +1043,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> "vrcPlusWorld"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
                 FavoriteType.FAVORITE_FRIEND -> "friend"
                 FavoriteType.FAVORITE_NONE -> ""
@@ -1081,6 +1086,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> "vrcPlusWorld"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
                 FavoriteType.FAVORITE_FRIEND -> "friend"
                 FavoriteType.FAVORITE_NONE -> ""
@@ -1133,6 +1139,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"
+                FavoriteType.FAVORITE_VRC_PLUS_WORLD -> "vrcPlusWorld"
                 FavoriteType.FAVORITE_AVATAR -> "avatar"
                 FavoriteType.FAVORITE_FRIEND -> "friend"
                 FavoriteType.FAVORITE_NONE -> ""

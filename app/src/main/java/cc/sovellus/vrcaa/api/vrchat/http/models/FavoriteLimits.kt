@@ -19,6 +19,7 @@ package cc.sovellus.vrcaa.api.vrchat.http.models
 
 import com.google.gson.annotations.SerializedName
 
+
 data class FavoriteLimits(
     @SerializedName("defaultMaxFavoriteGroups")
     var defaultMaxFavoriteGroups: Int = 0,
@@ -28,4 +29,26 @@ data class FavoriteLimits(
     var maxFavoriteGroups: MaxFavoriteGroups = MaxFavoriteGroups(),
     @SerializedName("maxFavoritesPerGroup")
     var maxFavoritesPerGroup: MaxFavoritesPerGroup = MaxFavoritesPerGroup()
-)
+) {
+    data class MaxFavoriteGroups(
+        @SerializedName("avatar")
+        var avatar: Int = 0,
+        @SerializedName("friend")
+        var friend: Int = 0,
+        @SerializedName("vrcPlusWorld")
+        var vrcPlusWorld: Int = 0,
+        @SerializedName("world")
+        var world: Int = 0
+    )
+
+    data class MaxFavoritesPerGroup(
+        @SerializedName("avatar")
+        var avatar: Int = 0,
+        @SerializedName("friend")
+        var friend: Int = 0,
+        @SerializedName("vrcPlusWorld")
+        var vrcPlusWorld: Int = 0,
+        @SerializedName("world")
+        var world: Int = 0
+    )
+}

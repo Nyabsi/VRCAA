@@ -59,6 +59,7 @@ fun FavoriteDialog(
 
     LaunchedEffect(Unit) {
         when (type) {
+            IFavorites.FavoriteType.FAVORITE_VRC_PLUS_WORLD,    // never actually used here.
             IFavorites.FavoriteType.FAVORITE_WORLD -> {
                 FavoriteManager.getWorldList().forEach {
                     groups.add(it.key)
@@ -135,7 +136,11 @@ fun FavoriteDialog(
             TextButton(
                 onClick = {
                     coroutineScope.launch {
-                        val result = FavoriteManager.addFavorite(type, id, selectedGroup.value, metadata)
+                        val result = if (selectedGroup.value.contains("vrcPlusWorld")) {
+                            FavoriteManager.addFavorite(IFavorites.FavoriteType.FAVORITE_VRC_PLUS_WORLD, id, selectedGroup.value, metadata)
+                        } else {
+                            FavoriteManager.addFavorite(type, id, selectedGroup.value, metadata)
+                        }
 
                         if (result) {
                             Toast.makeText(
