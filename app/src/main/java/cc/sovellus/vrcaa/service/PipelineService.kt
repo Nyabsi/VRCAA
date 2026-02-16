@@ -77,6 +77,7 @@ class PipelineService : Service(), CoroutineScope {
 
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
+    private var foregroundStarted = false
 
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
@@ -480,22 +481,7 @@ class PipelineService : Service(), CoroutineScope {
         super.onStartCommand(intent, flags, startId)
 
         try {
-            val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
-                .setSmallIcon(R.drawable.ic_notification_icon)
-                .setContentTitle(application.getString(R.string.app_name))
-                .setContentText(application.getString(R.string.service_notification))
-                .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
-
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                startForeground(
-                    NOTIFICATION_ID,
-                    builder.build(),
-                    FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-                )
-            } else {
-                // Older versions do not require to specify the `foregroundServiceType`
-                startForeground(NOTIFICATION_ID, builder.build())
-            }
+            startService()
         } catch (_:  Throwable) {
             NotificationHelper.pushNotification(
                 application.getString(R.string.app_name),
@@ -519,10 +505,37 @@ class PipelineService : Service(), CoroutineScope {
         return START_STICKY
     }
 
+    fun startService() {
+        if (foregroundStarted) return
+        foregroundStarted = true
+
+        val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
+            .setSmallIcon(R.drawable.ic_notification_icon)
+            .setContentTitle(application.getString(R.string.app_name))
+            .setContentText(application.getString(R.string.service_notification))
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(
+                NOTIFICATION_ID,
+                builder.build(),
+                FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+            )
+        } else {
+            // Older versions do not require to specify the `foregroundServiceType`
+            startForeground(NOTIFICATION_ID, builder.build())
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         pipeline?.disconnect()
         scheduler.shutdown()
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            stopForeground(STOP_FOREGROUND_DETACH)
+        } else {
+            stopForeground(true)
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {
