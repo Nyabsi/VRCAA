@@ -29,8 +29,8 @@ import cc.sovellus.vrcaa.manager.DatabaseManager
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.internal.format
 import java.io.File
+import java.util.Locale
 
 class DatabaseScreenModel : ScreenModel {
 
@@ -38,7 +38,7 @@ class DatabaseScreenModel : ScreenModel {
 
     fun getDatabaseSizeReadable(): String {
         val file = File(context.getDatabasePath("vrcaa.db").path)
-        return format("%.2f MB", file.length().toDouble() / 1_000_000)
+        return String.format(Locale.ROOT, "%.2f MB", file.length().toDouble() / 1_000_000)
     }
 
     fun getDatabaseRowsReadable(): String {
@@ -71,7 +71,7 @@ class DatabaseScreenModel : ScreenModel {
                 size += file.length()
             }
         }
-        return format("%.2f MB", size.toDouble() / 1_000_000)
+        return String.format(Locale.ROOT, "%.2f MB", size.toDouble() / 1_000_000)
     }
 
     fun cleanGlideCache() {

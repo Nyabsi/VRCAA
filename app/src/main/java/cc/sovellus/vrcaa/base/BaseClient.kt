@@ -27,7 +27,6 @@ import android.net.Uri
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.api.vrchat.Config
 import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.helper.DnsHelper
 import cc.sovellus.vrcaa.helper.TLSHelper
@@ -42,7 +41,6 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import okhttp3.internal.EMPTY_REQUEST
 import okhttp3.internal.http2.StreamResetException
 import java.io.ByteArrayOutputStream
 import java.net.SocketException
@@ -163,7 +161,7 @@ open class BaseClient {
     ): Result {
 
         val type: MediaType = "application/json; charset=utf-8".toMediaType()
-        val requestBody: RequestBody = body?.toRequestBody(type) ?: EMPTY_REQUEST
+        val requestBody: RequestBody = body?.toRequestBody(type) ?: RequestBody.EMPTY
 
         if (ignoreAuthorization)
            skipNextAuthorization.exchange(true)
@@ -181,7 +179,7 @@ open class BaseClient {
                         .build()
 
                     val response = client.newCall(request).await()
-                    val responseBody = response.body?.string().toString()
+                    val responseBody = response.body.string()
 
                     if (App.isNetworkLoggingEnabled()) {
                         DebugManager.addDebugMetadata(
