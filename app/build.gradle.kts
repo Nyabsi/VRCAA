@@ -6,9 +6,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("com.mikepenz.aboutlibraries.plugin") version "12.2.4"
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.mikepenz.aboutlibraries.plugin") version "13.2.1"
 }
 
 android {
@@ -74,7 +74,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "21"
-        languageVersion = "2.1"
+        languageVersion = "2.3"
     }
 
     kotlin {
@@ -108,8 +108,8 @@ android {
 dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
-    implementation("androidx.activity:activity-compose:1.12.3")
-    implementation(platform("androidx.compose:compose-bom:2026.01.01"))
+    implementation("androidx.activity:activity-compose:1.12.4")
+    implementation(platform("androidx.compose:compose-bom:2026.02.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -119,31 +119,30 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2026.01.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2026.02.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
     implementation("com.sealwu.jsontokotlin:library:3.7.4")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
-    implementation("com.github.bumptech.glide:glide:4.14.2")
+    implementation("com.google.code.gson:gson:2.13.2")
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta08")
+    implementation("com.github.bumptech.glide:glide:5.0.5")
     implementation("cafe.adriel.voyager:voyager-navigator:1.1.0-beta03")
     implementation("cafe.adriel.voyager:voyager-screenmodel:1.1.0-beta03")
     implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.1.0-beta03")
     implementation("cafe.adriel.voyager:voyager-tab-navigator:1.1.0-beta03")
     implementation("cafe.adriel.voyager:voyager-transitions:1.1.0-beta03")
-    implementation("androidx.activity:activity-ktx:1.12.3")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
+    implementation("androidx.activity:activity-ktx:1.12.4")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.36.0")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
-    implementation("com.mikepenz:aboutlibraries-core:12.2.4")
-    implementation("com.mikepenz:aboutlibraries-compose-m3-android:12.2.4")
+    implementation("com.mikepenz:aboutlibraries-core:13.2.1")
+    implementation("com.mikepenz:aboutlibraries-compose-m3-android:13.2.1")
     implementation ("androidx.glance:glance-appwidget:1.1.1")
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
-    implementation("com.google.firebase:firebase-crashlytics:20.0.3")
+    implementation("com.google.firebase:firebase-crashlytics:20.0.4")
     implementation("dev.turingcomplete:kotlin-onetimepassword:2.4.1")
 }
 
