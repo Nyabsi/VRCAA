@@ -1,10 +1,13 @@
-@file:OptIn(ExperimentalEncodingApi::class)
+@file:OptIn(ExperimentalEncodingApi::class, ExperimentalBuildToolsApi::class,
+    ExperimentalKotlinGradlePluginApi::class
+)
 
+import org.jetbrains.kotlin.buildtools.api.ExperimentalBuildToolsApi
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.mikepenz.aboutlibraries.plugin") version "13.2.1"
 }
@@ -70,14 +73,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
-        languageVersion = "2.3"
-    }
-
-    kotlin {
-        jvmToolchain(21)
-    }
+    kotlin.jvmToolchain(21)
 
     buildFeatures {
         buildConfig = true
