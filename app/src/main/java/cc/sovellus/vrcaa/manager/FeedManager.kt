@@ -60,7 +60,7 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
     private var feedList: MutableList<Feed> = ArrayList()
 
     init {
-        DatabaseManager.readFeeds().map {
+        DatabaseManager.readFeeds().forEach {
             feedList.add(it)
         }
     }

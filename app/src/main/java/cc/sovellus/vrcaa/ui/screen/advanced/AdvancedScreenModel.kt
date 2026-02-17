@@ -18,7 +18,6 @@ package cc.sovellus.vrcaa.ui.screen.advanced
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.PowerManager
@@ -27,11 +26,11 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.networkLogging
-import cc.sovellus.vrcaa.service.PipelineService
 import androidx.core.net.toUri
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.DatabaseManager
+import cc.sovellus.vrcaa.service.PipelineService
 import java.io.File
 
 class AdvancedScreenModel : ScreenModel {
@@ -56,7 +55,7 @@ class AdvancedScreenModel : ScreenModel {
                     "package:${context.packageName}".toUri()
                 ).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }      
+                }
                 context.startActivity(intent)
             } else {
                 Toast.makeText(

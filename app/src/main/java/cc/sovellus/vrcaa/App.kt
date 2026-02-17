@@ -21,14 +21,12 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import cc.sovellus.vrcaa.activity.CrashActivity
 import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType

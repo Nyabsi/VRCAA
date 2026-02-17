@@ -53,14 +53,14 @@ class AvtrDbProvider : BaseClient() {
                 val avatars: ArrayList<SearchAvatar> = arrayListOf()
                 val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
                 avatars.addAll(json.avatars)
-                return Pair(!json.hasMore, avatars)
+                Pair(!json.hasMore, avatars)
             }
             is Result.RateLimited -> {
                 delay(1000)
                 search(query, n, offset)
             }
             else -> {
-                return Pair(false, arrayListOf())
+                Pair(false, arrayListOf())
             }
         }
     }
@@ -104,7 +104,7 @@ class AvtrDbProvider : BaseClient() {
                 searchAll(query, n, offset, avatars)
             }
             else -> {
-                return arrayListOf()
+                arrayListOf()
             }
         }
     }

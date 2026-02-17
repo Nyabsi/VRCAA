@@ -24,7 +24,6 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -36,16 +35,12 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
-import cc.sovellus.vrcaa.extension.twoFactorToken
-import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {

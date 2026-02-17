@@ -17,16 +17,11 @@
 package cc.sovellus.vrcaa.ui.screen.network
 
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.ScreenModel
-import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.manager.DebugManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class NetworkLogScreenModel : ScreenModel {
     private var metadataStateFlow = MutableStateFlow(listOf<DebugManager.DebugMetadataData>())

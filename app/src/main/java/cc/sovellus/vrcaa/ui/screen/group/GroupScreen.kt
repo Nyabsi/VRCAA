@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.screen.group
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -110,6 +111,7 @@ class GroupScreen(
         }
     }
 
+    @SuppressLint("LocalContextGetResourceValueCall")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MultiChoiceHandler(

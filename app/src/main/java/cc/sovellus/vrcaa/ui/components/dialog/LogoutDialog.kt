@@ -32,7 +32,6 @@ import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.service.PipelineService
 import kotlinx.coroutines.launch
 
 @Composable

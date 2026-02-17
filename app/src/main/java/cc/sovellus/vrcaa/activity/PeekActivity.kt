@@ -18,10 +18,10 @@ package cc.sovellus.vrcaa.activity
 
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.core.net.toUri
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
@@ -31,7 +31,6 @@ import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
-import androidx.core.net.toUri
 
 
 class PeekActivity : BaseActivity() {
@@ -52,7 +51,7 @@ class PeekActivity : BaseActivity() {
         var earlyFinish = false
 
         try {
-            if (data != null && data.isNotEmpty() && allowedPaths.contains(data[0])) {
+            if (!data.isNullOrEmpty() && allowedPaths.contains(data[0])) {
                 type = data[0]
                 id = data[1]
             } else {

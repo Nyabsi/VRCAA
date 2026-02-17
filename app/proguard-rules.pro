@@ -2,7 +2,6 @@
 
 -optimizationpasses 5
 -allowaccessmodification
--mergeinterfacesaggressively
 -optimizations !code/simplification/arithmetic
 -overloadaggressively
 
@@ -15,6 +14,26 @@
 # keep Compose Material/Material3 classes otherwise certain components may break.
 -keep class androidx.compose.material.** { *; }
 -keep class androidx.compose.material3.** { *; }
+
+# exclude WorkManager from ProGuard optimization
+-keep class androidx.work.** { *; }
+-keepclassmembers class * extends androidx.work.ListenableWorker {
+    <init>(android.content.Context, androidx.work.WorkerParameters);
+}
+
+-keep class androidx.work.impl.** { *; }
+-keep class androidx.work.Worker { *; }
+-keep class androidx.work.CoroutineWorker { *; }
+
+-keep class androidx.room.** { *; }
+-dontwarn androidx.room.**
+-keepclassmembers class * {
+    @androidx.room.* *;
+}
+
+# Keep anything that Room generates or reflects on
+-keep class **_Impl { *; }           # Room generated impls
+-keep class **_Entity { *; }         # if you have custom naming
 
 # OkHttp3
 

@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.components.dialog
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -43,6 +44,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import kotlinx.coroutines.launch
 
+@SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun FavoriteDialog(
     type: IFavorites.FavoriteType,

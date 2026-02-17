@@ -20,7 +20,6 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Favorite
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAdd
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteAvatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteGroup
-import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteGroups
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteWorld
 

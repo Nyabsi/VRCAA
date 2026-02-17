@@ -21,7 +21,7 @@ import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
 
-class DnsHelper() : Dns {
+class DnsHelper : Dns {
     override fun lookup(hostname: String): List<InetAddress> {
         val query = Dns.SYSTEM.lookup(hostname)
         val queryIPv4Filtered = query.filter { Inet4Address::class.java.isInstance(it) }

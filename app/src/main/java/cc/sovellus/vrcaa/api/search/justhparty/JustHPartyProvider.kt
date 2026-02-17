@@ -26,14 +26,14 @@ import okhttp3.Headers
 
 class JustHPartyProvider : BaseClient() {
 
-    private suspend fun sendRequest(query: String, n: Int): String? {
+    private suspend fun sendRequest(query: String): String? {
         val result = doRequest(
             method = "GET",
             url =  buildString {
                 append(Config.JUST_H_PARTY_API_BASE_URL)
                 append("/vrcx_search.php")
                 append("?search=${UrlEncoderUtil.encode(query)}")
-                append("&n=${n}")
+                append("&n=${5000}")
             },
             headers = GENERIC_HEADER,
             body = null,
@@ -42,7 +42,7 @@ class JustHPartyProvider : BaseClient() {
 
         return when (result) {
             is Result.Succeeded -> {
-                return result.body
+                result.body
             }
             else -> {
                 null
@@ -52,7 +52,7 @@ class JustHPartyProvider : BaseClient() {
 
     suspend fun search(query: String): ArrayList<SearchAvatar>
     {
-        val avatars = when (val result = sendRequest(query, 5000)) {
+        val avatars = when (val result = sendRequest(query)) {
             is String -> {
                 Gson().fromJson(result, JustHPartyResponse::class.java) ?: arrayListOf()
             }

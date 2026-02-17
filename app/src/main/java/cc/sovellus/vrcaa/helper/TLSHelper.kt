@@ -1,4 +1,4 @@
-package cc.sovellus.vrcaa.helper;
+package cc.sovellus.vrcaa.helper
 
 import java.security.KeyStore
 import java.security.NoSuchAlgorithmException

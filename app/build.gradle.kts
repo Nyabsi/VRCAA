@@ -20,8 +20,8 @@ android {
         applicationId = "cc.sovellus.vrcaa"
         minSdk = 27
         targetSdk = 36
-        versionCode = 200709
-        versionName = "2.7.9"
+        versionCode = 200710
+        versionName = "2.7.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -137,6 +137,7 @@ dependencies {
     implementation ("androidx.glance:glance-material3:1.1.1@aar")
     implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.6.0")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+    implementation("androidx.work:work-runtime:2.11.1")
 }
 
 // === Helpers ===
@@ -148,7 +149,7 @@ internal enum class GitHashType {
 
 internal fun getGitHash(type: GitHashType): String? {
     try {
-        var builder = ProcessBuilder("git", "rev-parse")
+        val builder = ProcessBuilder("git", "rev-parse")
         when (type) {
             GitHashType.GIT_HASH_COMMIT -> {
                 builder.command().add("--short")
@@ -171,13 +172,11 @@ internal fun getGitHash(type: GitHashType): String? {
         } else {
             val errorMessage = errorStream.bufferedReader().use { it.readText().trim() }
             logger.error("Error running git command: $errorMessage")
-            return null
+            null
         }
     } catch (_: Throwable) {
         return null
     }
-    /* unreachable */
-    return null
 }
 
 fun getGitHash(): String =
