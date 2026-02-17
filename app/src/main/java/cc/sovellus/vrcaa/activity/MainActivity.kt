@@ -24,7 +24,6 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -35,15 +34,11 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.twoFactorToken
-import cc.sovellus.vrcaa.extension.userCredentials
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
@@ -74,7 +69,7 @@ class MainActivity : BaseActivity() {
 
             preferences.authToken = ""
 
-            var intent = Intent(this, PipelineService::class.java)
+            val intent = Intent(this, PipelineService::class.java)
             stopService(intent)
 
             Toast.makeText(
@@ -87,13 +82,13 @@ class MainActivity : BaseActivity() {
         }
 
         if (restartSession) {
-            var intent = Intent(this, PipelineService::class.java)
+            val intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             ContextCompat.startForegroundService(this, intent)
         }
 
         if (terminateSession) {
-            var intent = Intent(this, PipelineService::class.java)
+            val intent = Intent(this, PipelineService::class.java)
             ContextCompat.startForegroundService(this, intent)
             stopService(intent)
             App.setIsValidSession(false)

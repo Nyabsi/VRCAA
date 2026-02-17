@@ -56,16 +56,16 @@ object FavoriteManager : BaseManager<Any>() {
 
         favoriteLimits?.let {
             repeat(it.maxFavoriteGroups.world) { i ->
-                worldList["worlds${i + 1}"] = mutableListOf<FavoriteMetadata>()
+                worldList["worlds${i + 1}"] = mutableListOf()
             }
             repeat(it.maxFavoriteGroups.vrcPlusWorld) { i ->
-                worldList["vrcPlusWorlds${i + 1}"] = mutableListOf<FavoriteMetadata>()
+                worldList["vrcPlusWorlds${i + 1}"] = mutableListOf()
             }
             repeat(it.maxFavoriteGroups.avatar) { i ->
-                avatarList["avatars${i + 1}"] = mutableListOf<FavoriteMetadata>()
+                avatarList["avatars${i + 1}"] = mutableListOf()
             }
             repeat(it.maxFavoriteGroups.friend) { i ->
-                friendList["group_$i"] = mutableListOf<FavoriteMetadata>()
+                friendList["group_$i"] = mutableListOf()
             }
         }
 

@@ -47,7 +47,7 @@ fun RoundedRowItem(
     status: String,
     onClick: () -> Unit
 ) {
-    val window = LocalWindowInfo.current
+    LocalWindowInfo.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

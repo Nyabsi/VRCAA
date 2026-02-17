@@ -57,9 +57,9 @@ class FeedSearchScreen : Screen {
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
 
-        var input = remember { mutableStateOf("") }
-        var filteredFeedStateFlow = remember { MutableStateFlow(listOf<FeedManager.Feed>()) }
-        var filteredFeed = filteredFeedStateFlow.asStateFlow()
+        val input = remember { mutableStateOf("") }
+        val filteredFeedStateFlow = remember { MutableStateFlow(listOf<FeedManager.Feed>()) }
+        val filteredFeed = filteredFeedStateFlow.asStateFlow()
 
         Scaffold { padding ->
             SearchBar(

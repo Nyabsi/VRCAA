@@ -16,11 +16,8 @@
 
 package cc.sovellus.vrcaa.api.discord
 
-import android.util.Log
-import cc.sovellus.vrcaa.BuildConfig
-import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.discord.models.WebHookResponse
-import cc.sovellus.vrcaa.api.vrchat.Config
+import cc.sovellus.vrcaa.base.BaseClient
 import com.google.gson.Gson
 import okhttp3.Headers
 
@@ -31,11 +28,11 @@ class DiscordMediaProxy(
     private fun handleRequest(result: Result): String? {
         return when (result) {
             is Result.Succeeded -> {
-                return result.body
+                result.body
             }
 
             is Result.UnhandledResult -> {
-                return null
+                null
             }
 
             Result.UnknownMethod -> {

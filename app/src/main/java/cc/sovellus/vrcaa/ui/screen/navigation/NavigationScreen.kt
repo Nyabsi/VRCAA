@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.screen.navigation
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -159,6 +160,7 @@ class NavigationScreen : Screen {
 
     override val key = uniqueScreenKey
 
+    @SuppressLint("LocalContextGetResourceValueCall")
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable
     override fun Content() {

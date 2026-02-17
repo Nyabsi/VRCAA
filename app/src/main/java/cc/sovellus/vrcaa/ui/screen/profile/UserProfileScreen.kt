@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.screen.profile
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -157,6 +158,7 @@ class UserProfileScreen(
         }
     }
 
+    @SuppressLint("LocalContextGetResourceValueCall")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Profile(
@@ -412,10 +414,8 @@ class UserProfileScreen(
                                         bottom = 16.dp
                                     )
                                 ) {
-
-                                    val options: MutableList<String> = mutableListOf<String>()
-                                    val icons: MutableList<ImageVector> =
-                                        mutableListOf<ImageVector>()
+                                    val options: MutableList<String> = mutableListOf()
+                                    val icons: MutableList<ImageVector> = mutableListOf()
 
                                     var friendIndex = -1
                                     var notificationIndex = -1

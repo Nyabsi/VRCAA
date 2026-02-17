@@ -28,8 +28,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.util.Collections
-import java.util.concurrent.CopyOnWriteArrayList
-import kotlin.collections.map
 
 object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
@@ -166,7 +164,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     fun updateProfile(profile: User) {
         synchronized(profileLock) {
             this.profile?.let {
-                val result = JsonHelper.mergeJson<User>(it, profile, User::class.java)
+                val result = JsonHelper.mergeJson(it, profile, User::class.java)
                 this.profile = result
                 getListeners().forEach { listener ->
                     listener.profileUpdated(result)

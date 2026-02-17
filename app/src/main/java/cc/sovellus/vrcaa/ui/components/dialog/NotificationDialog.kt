@@ -36,7 +36,6 @@ import androidx.compose.ui.window.Dialog
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.launch
 
 @Composable

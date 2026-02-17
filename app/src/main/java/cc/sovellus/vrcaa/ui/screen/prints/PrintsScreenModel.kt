@@ -16,7 +16,6 @@
 
 package cc.sovellus.vrcaa.ui.screen.prints
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +41,6 @@ class PrintsScreenModel(
         ) : PrintsState()
     }
 
-    private val context: Context = App.getContext()
     val preferences: SharedPreferences = App.getPreferences()
 
     private var prints: ArrayList<Print> = arrayListOf()

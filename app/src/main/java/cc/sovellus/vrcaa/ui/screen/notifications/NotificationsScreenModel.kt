@@ -25,8 +25,6 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
-import cc.sovellus.vrcaa.api.vrchat.http.models.Notifications
-import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationsV2
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.async
@@ -50,7 +48,7 @@ class NotificationsScreenModel : StateScreenModel<NotificationsScreenModel.Notif
     private var notificationV2StateFlow = MutableStateFlow(listOf<NotificationV2>())
     var notificationsV2 = notificationV2StateFlow.asStateFlow()
 
-    var users: List<LimitedUser?> = arrayListOf<LimitedUser?>()
+    var users: List<LimitedUser?> = arrayListOf()
 
     var currentIndex = mutableIntStateOf(0)
     var currentNotification = mutableStateOf<Notification?>(null)

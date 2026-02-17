@@ -500,11 +500,11 @@ class HttpClient : BaseClient(), CoroutineScope {
                     fetchFriends(offline, n, offset + n, friends)
                 }
                 is Result.NotModified -> {
-                    return friends
+                    friends
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -564,17 +564,17 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = gson.fromJson(result.body, Users::class.java)
 
                     users.addAll(json)
-                    return users
+                    users
                 }
                 is Result.NotModified -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -778,11 +778,11 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = gson.fromJson(result.body, Worlds::class.java)
 
                     worlds.addAll(json)
-                    return worlds
+                    worlds
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -832,14 +832,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                     fetchWorldsByAuthorId(userId, private, n, offset + n, worlds)
                 }
                 is Result.NotModified -> {
-                    return worlds
+                    worlds
                 }
                 is Result.Forbidden -> {
-                    return worlds
+                    worlds
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1118,12 +1118,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
 
                 is Result.NotModified -> {
-                    return favorites
+                    favorites
                 }
 
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1173,12 +1173,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
 
                 is Result.NotModified -> {
-                    return favorites
+                    favorites
                 }
 
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1215,12 +1215,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
 
                 is Result.NotModified -> {
-                    return favorites
+                    favorites
                 }
 
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1257,12 +1257,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                 }
 
                 is Result.NotModified -> {
-                    return favorites
+                    favorites
                 }
 
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1357,17 +1357,17 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = gson.fromJson(result.body, Groups::class.java)
 
                     groups.addAll(json)
-                    return groups
+                    groups
                 }
                 is Result.NotModified -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1541,17 +1541,17 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = gson.fromJson(result.body, Files::class.java)
 
                     groups.addAll(json)
-                    return groups
+                    groups
                 }
                 is Result.NotModified -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1586,17 +1586,17 @@ class HttpClient : BaseClient(), CoroutineScope {
                     val json = gson.fromJson(result.body, Files::class.java)
 
                     groups.addAll(json)
-                    return groups
+                    groups
                 }
                 is Result.NotModified -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1606,7 +1606,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             val fields: MutableMap<String, String> = mutableMapOf("tag" to tag)
 
             if (aspectRatio == ImageAspectRatio.IMAGE_ASPECT_RATIO_SQUARE)
-                fields.put("maskTag", "square")
+                fields["maskTag"] = "square"
 
             val result = doRequestUpload(
                 App.getContext(),
@@ -1621,17 +1621,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return gson.fromJson(result.body, File::class.java)
+                    gson.fromJson(result.body, File::class.java)
                 }
                 is Result.NotModified -> {
-                    return null
+                    null
                 }
                 is Result.Forbidden -> {
-                    return null
+                    null
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    null
                 }
             }
         }
@@ -1656,17 +1656,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return gson.fromJson(result.body, File::class.java)
+                    gson.fromJson(result.body, File::class.java)
                 }
                 is Result.NotModified -> {
-                    return null
+                    null
                 }
                 is Result.Forbidden -> {
-                    return null
+                    null
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    null
                 }
             }
         }
@@ -1752,14 +1752,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                     fetchNotifications(n, offset + n, notifications)
                 }
                 is Result.NotModified -> {
-                    return notifications
+                    notifications
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1838,11 +1838,11 @@ class HttpClient : BaseClient(), CoroutineScope {
                     fetchOwnedAvatars(n, offset + n, avatars)
                 }
                 is Result.NotModified -> {
-                    return avatars
+                    avatars
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1880,14 +1880,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                     fetchPrintsByUserId(userId, n, offset + n, prints)
                 }
                 is Result.NotModified -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -1907,17 +1907,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return gson.fromJson(result.body, Print::class.java)
+                    gson.fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
-                    return null
+                    null
                 }
                 is Result.Forbidden -> {
-                    return null
+                    null
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    null
                 }
             }
         }
@@ -1937,17 +1937,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return gson.fromJson(result.body, Print::class.java)
+                    gson.fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
-                    return null
+                    null
                 }
                 is Result.Forbidden -> {
-                    return null
+                    null
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    null
                 }
             }
         }
@@ -1977,17 +1977,17 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return gson.fromJson(result.body, Print::class.java)
+                    gson.fromJson(result.body, Print::class.java)
                 }
                 is Result.NotModified -> {
-                    return null
+                    null
                 }
                 is Result.Forbidden -> {
-                    return null
+                    null
                 }
                 else -> {
                     handleExceptions(result)
-                    return null
+                    null
                 }
             }
         }
@@ -2040,14 +2040,14 @@ class HttpClient : BaseClient(), CoroutineScope {
                     fetchInventory(type, tags, flags, notFlags, archived, n, offset + n, order, items)
                 }
                 is Result.NotModified -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }
@@ -2136,14 +2136,14 @@ class HttpClient : BaseClient(), CoroutineScope {
 
             return when (result) {
                 is Result.Succeeded -> {
-                    return gson.fromJson(result.body, NotificationsV2::class.java)
+                    gson.fromJson(result.body, NotificationsV2::class.java)
                 }
                 is Result.Forbidden -> {
-                    return arrayListOf()
+                    arrayListOf()
                 }
                 else -> {
                     handleExceptions(result)
-                    return arrayListOf()
+                    arrayListOf()
                 }
             }
         }

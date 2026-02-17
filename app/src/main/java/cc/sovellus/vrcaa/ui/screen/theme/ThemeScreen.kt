@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.screen.theme
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
@@ -63,6 +64,7 @@ class ThemeScreen : Screen {
 
     override val key = uniqueScreenKey
 
+    @SuppressLint("LocalContextGetResourceValueCall")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {

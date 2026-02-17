@@ -25,9 +25,6 @@ import cc.sovellus.vrcaa.api.discord.models.websocket.Ready
 import cc.sovellus.vrcaa.helper.StatusHelper
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request

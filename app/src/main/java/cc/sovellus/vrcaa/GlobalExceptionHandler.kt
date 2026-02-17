@@ -18,7 +18,6 @@ package cc.sovellus.vrcaa
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import kotlin.system.exitProcess
 
 class GlobalExceptionHandler private constructor(

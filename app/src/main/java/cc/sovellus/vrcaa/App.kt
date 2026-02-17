@@ -21,14 +21,12 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import cc.sovellus.vrcaa.activity.CrashActivity
 import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
@@ -40,9 +38,9 @@ import cc.sovellus.vrcaa.extension.networkLogging
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.service.PipelineService
 import com.google.firebase.Firebase
 import com.google.firebase.crashlytics.crashlytics
-import cc.sovellus.vrcaa.service.PipelineService
 
 class App : Application() {
 
@@ -70,7 +68,7 @@ class App : Application() {
         // this a workaround starting service in App due to slow start-up on some devices.
         Handler(Looper.getMainLooper()).postDelayed({
          if (getIsValidSession()) {
-             var intent = Intent(this, PipelineService::class.java)
+             val intent = Intent(this, PipelineService::class.java)
              ContextCompat.startForegroundService(this, intent)
          }
         }, 1500)

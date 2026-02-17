@@ -73,7 +73,7 @@ class SettingsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel() }
+        navigator.rememberNavigatorScreenModel { SettingsScreenModel() }
 
         val logoutState = remember { mutableStateOf(false) }
         

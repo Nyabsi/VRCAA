@@ -27,7 +27,6 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.GroupInstance
 import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.manager.NotificationManager
 import kotlinx.coroutines.launch
 
 class GroupScreenModel(
