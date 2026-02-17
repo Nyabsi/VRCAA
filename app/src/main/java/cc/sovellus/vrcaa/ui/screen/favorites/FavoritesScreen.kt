@@ -277,7 +277,7 @@ class FavoritesScreen : Screen {
                 ) {
                     items(item.value) {
                         val user = FriendManager.getFriend(it.id)
-                        user?.let { it, it, it ->
+                        user?.let {
                             RowItem(name = user.displayName, url = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl }) {
                                 navigator.parent?.parent?.push(UserProfileScreen(it.id))
                             }
