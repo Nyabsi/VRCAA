@@ -275,7 +275,7 @@ class FavoritesScreen : Screen {
                         model.editDialogShown.value = true
                     }
                 ) {
-                    items(item.value) {
+                    items(item.value.distinct()) {
                         val user = FriendManager.getFriend(it.id)
                         user?.let {
                             RowItem(name = user.displayName, url = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl }) {
