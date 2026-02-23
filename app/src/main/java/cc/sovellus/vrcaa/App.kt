@@ -71,7 +71,7 @@ class App : Application() {
                  ContextCompat.startForegroundService(this, intent)
              }
          }
-        }, 1500)
+        }, 2500)
     }
 
     companion object {
