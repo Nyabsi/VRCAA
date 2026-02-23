@@ -50,6 +50,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.net.SocketException
 import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
@@ -63,9 +64,8 @@ class PipelineSocket(
     private val tlsHelper = TLSHelper()
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.MINUTES)
+            .readTimeout(2, TimeUnit.MINUTES)
             .dns(DnsHelper())
             .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
             .build()
@@ -193,7 +193,16 @@ class PipelineSocket(
             ) {
                 if (shouldReconnect)
                 {
-                    reconnect()
+                    if (t is SocketException) {
+                        reconnect()
+                    } else {
+                        launch {
+                            api.auth.fetchToken()?.let {
+                                token = it
+                                reconnect()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -221,11 +230,8 @@ class PipelineSocket(
         )
         launch {
             delay(Config.RECONNECTION_INTERVAL)
-            api.auth.fetchToken()?.let { tkn ->
-                token = tkn
-                socket.cancel()
-                connect()
-            }
+            socket.cancel()
+            connect()
         }
     }
 
