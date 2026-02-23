@@ -117,7 +117,6 @@ open class BaseClient {
         data object UnknownMethod : Result()
         data object NotModified : Result()
         data object Forbidden : Result()
-        data class GenericException(val exception: Throwable) : Result()
     }
 
     enum class AuthorizationType {
@@ -339,8 +338,6 @@ open class BaseClient {
             Result.NoInternet
         } catch (_: StreamResetException) {
             Result.InternalError
-        } catch (e: Throwable) {
-            Result.GenericException(e)
         }
     }
 
@@ -479,8 +476,6 @@ open class BaseClient {
             Result.NoInternet
         } catch (_: StreamResetException) {
             Result.InternalError
-        } catch (e: Throwable) {
-            Result.GenericException(e)
         }
     }
 
