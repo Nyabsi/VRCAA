@@ -71,7 +71,7 @@ class App : Application() {
              val intent = Intent(this, PipelineService::class.java)
              ContextCompat.startForegroundService(this, intent)
          }
-        }, 1500)
+        }, 2500)
     }
 
     companion object {
