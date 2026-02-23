@@ -62,8 +62,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledThreadPoolExecutor
+import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 
@@ -79,7 +80,10 @@ class PipelineService : Service(), CoroutineScope {
     private var serviceHandler: ServiceHandler? = null
     private var foregroundStarted = false
 
-    private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
+    private val scheduler: ScheduledExecutorService =
+        ScheduledThreadPoolExecutor(1).apply {
+            rejectedExecutionHandler = ThreadPoolExecutor.CallerRunsPolicy()
+        }
 
     private var refreshTask: Runnable = Runnable {
         launch {
