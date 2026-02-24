@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Group
@@ -138,41 +140,43 @@ fun InstanceItem(instance: Instance, creator: String?, friends: List<Friend>, on
                     if (friends.isNotEmpty()) {
                         VerticalDivider(Modifier.padding(4.dp))
 
-                        friends.forEach { friend ->
-                            ElevatedCard(
-                                elevation = CardDefaults.cardElevation(
-                                    defaultElevation = 2.dp
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            ) {
-                                Row(
-                                    horizontalArrangement = Arrangement.Start,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(8.dp)
+                        LazyColumn {
+                            items(friends) { friend ->
+                                ElevatedCard(
+                                    elevation = CardDefaults.cardElevation(
+                                        defaultElevation = 2.dp
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
                                 ) {
-                                    Badge(
-                                        containerColor = StatusHelper.getStatusFromString(friend.status)
-                                            .toColor(), modifier = Modifier.size(40.dp)
+                                    Row(
+                                        horizontalArrangement = Arrangement.Start,
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.padding(8.dp)
                                     ) {
-                                        GlideImage(
-                                            model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(32.dp)
-                                                .clip(RoundedCornerShape(50)),
-                                            contentScale = ContentScale.Crop,
-                                            loading = placeholder(R.drawable.image_placeholder),
-                                            failure = placeholder(R.drawable.image_placeholder),
-                                            alpha = 0.8f
+                                        Badge(
+                                            containerColor = StatusHelper.getStatusFromString(friend.status)
+                                                .toColor(), modifier = Modifier.size(40.dp)
+                                        ) {
+                                            GlideImage(
+                                                model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .size(32.dp)
+                                                    .clip(RoundedCornerShape(50)),
+                                                contentScale = ContentScale.Crop,
+                                                loading = placeholder(R.drawable.image_placeholder),
+                                                failure = placeholder(R.drawable.image_placeholder),
+                                                alpha = 0.8f
+                                            )
+                                        }
+                                        Spacer(Modifier.padding(start = 4.dp, end = 4.dp))
+                                        Text(
+                                            text = friend.displayName,
+                                            maxLines = 1,
+                                            fontWeight = FontWeight.Normal,
                                         )
                                     }
-                                    Spacer(Modifier.padding(start = 4.dp, end = 4.dp))
-                                    Text(
-                                        text = friend.displayName,
-                                        maxLines = 1,
-                                        fontWeight = FontWeight.Normal,
-                                    )
                                 }
                             }
                         }

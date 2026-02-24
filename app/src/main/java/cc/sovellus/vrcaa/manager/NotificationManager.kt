@@ -80,9 +80,11 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
 
     private fun notifyListeners() {
         getListeners().forEach {
-            it.onUpdateNotifications(notifications.toList())
-            it.onUpdateNotificationsV2(notificationsV2.toList())
-            it.onUpdateNotificationCount(notifications.size + notificationsV2.size)
+            val i1 = getNotifications()
+            val i2 = getNotificationsV2()
+            it.onUpdateNotifications(i1)
+            it.onUpdateNotificationsV2(i2)
+            it.onUpdateNotificationCount(i1.size + i2.size)
         }
     }
 }

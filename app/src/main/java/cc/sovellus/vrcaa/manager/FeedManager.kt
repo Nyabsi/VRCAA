@@ -68,14 +68,12 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
     fun addFeed(feed: Feed) {
         feedList.add(feed)
         DatabaseManager.writeFeed(feed)
-        val listSnapshot = feedList.toList()
         getListeners().forEach { listener ->
-            listener.onReceiveUpdate(listSnapshot)
+            listener.onReceiveUpdate(getFeed())
         }
     }
 
     fun getFeed(): List<Feed> {
-        val listSnapshot = feedList.toList()
-        return listSnapshot
+        return feedList.toList()
     }
 }

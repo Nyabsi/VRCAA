@@ -478,7 +478,7 @@ class WorldScreen(
                             InstanceItem(
                                 instance = instance.instance,
                                 creator = instance.creator,
-                                friends = instance.friends.toList(),
+                                friends = instance.friends,
                                 onClick = {
                                     dialogState.value = true
                                     model.selectedInstanceId.value = instance.instance.id

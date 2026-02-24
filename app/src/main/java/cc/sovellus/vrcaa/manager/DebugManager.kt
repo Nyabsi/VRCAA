@@ -47,9 +47,8 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
     fun addDebugMetadata(metadata: DebugMetadataData) {
         try {
             metadataList.add(metadata)
-            val listSnapshot = metadataList.toList()
             getListeners().forEach { listener ->
-                listener.onUpdateMetadata(listSnapshot)
+                listener.onUpdateMetadata(getMetadata())
             }
         } catch (_: Throwable) {
             metadataList.clear()
@@ -62,7 +61,6 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
     }
 
     fun getMetadata(): List<DebugMetadataData> {
-        val listSnapshot = metadataList.toList()
-        return listSnapshot
+        return metadataList.toList()
     }
 }
