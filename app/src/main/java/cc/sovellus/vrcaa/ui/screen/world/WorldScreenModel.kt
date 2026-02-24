@@ -126,7 +126,7 @@ class WorldScreenModel(
                 }
 
                 injectedUserLocations.sortBy { it.second.friends.isEmpty() }
-                mutableState.value = WorldInfoState.Result(world, injectedUserLocations.toList())
+                mutableState.value = WorldInfoState.Result(world, injectedUserLocations)
             } ?: run {
                 mutableState.value = WorldInfoState.Failure
             }

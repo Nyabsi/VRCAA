@@ -15,77 +15,57 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     private val friends: MutableList<Friend> = mutableListOf()
 
     fun setFriends(newFriends: List<Friend>) {
-        val snapshot: List<Friend>
         synchronized(friendsLock) {
             friends.clear()
             friends.addAll(newFriends)
-            snapshot = friends.toList()
         }
-        notifyListeners(snapshot)
+        notifyListeners()
     }
 
     fun addFriend(friend: Friend) {
-        val snapshot: List<Friend>?
         synchronized(friendsLock) {
             if (friends.none { it.id == friend.id }) {
                 friends.add(friend)
-                snapshot = friends.toList()
-            } else {
-                snapshot = null
             }
         }
-        snapshot?.let { notifyListeners(it) }
+        notifyListeners()
     }
 
     fun removeFriend(userId: String) {
-        val snapshot: List<Friend>?
         synchronized(friendsLock) {
-            val removed = friends.removeIf { it.id == userId }
-            snapshot = if (removed) friends.toList() else null
+            friends.removeIf { it.id == userId }
         }
-        snapshot?.let { notifyListeners(it) }
+        notifyListeners()
     }
 
     fun updateFriend(partial: PartialFriend) {
-        val snapshot: List<Friend>?
         synchronized(friendsLock) {
             val index = friends.indexOfFirst { it.id == partial.id }
             if (index != -1) {
                 friends[index] = JsonHelper.mergeDiffJson(friends[index], partial, Friend::class.java)
-                snapshot = friends.toList()
-            } else {
-                snapshot = null
             }
         }
-        snapshot?.let { notifyListeners(it) }
+        notifyListeners()
     }
 
     fun updateLocation(userId: String, location: String) {
-        val snapshot: List<Friend>?
         synchronized(friendsLock) {
             val index = friends.indexOfFirst { it.id == userId }
             if (index != -1) {
                 friends[index] = friends[index].copy(location = location)
-                snapshot = friends.toList()
-            } else {
-                snapshot = null
             }
         }
-        snapshot?.let { notifyListeners(it) }
+        notifyListeners()
     }
 
     fun updatePlatform(userId: String, platform: String) {
-        val snapshot: List<Friend>?
         synchronized(friendsLock) {
             val index = friends.indexOfFirst { it.id == userId }
             if (index != -1) {
                 friends[index] = friends[index].copy(platform = platform)
-                snapshot = friends.toList()
-            } else {
-                snapshot = null
             }
         }
-        snapshot?.let { notifyListeners(it) }
+        notifyListeners()
     }
 
     fun getFriend(userId: String): Friend? {
@@ -100,7 +80,8 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
         }
     }
 
-    private fun notifyListeners(snapshot: List<Friend>) {
+    private fun notifyListeners() {
+        val snapshot = getFriends()
         getListeners().forEach { it.onUpdateFriends(snapshot) }
     }
 }

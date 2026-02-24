@@ -123,15 +123,13 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
     fun isWorldCached(worldId: String): Boolean {
         synchronized(worldListLock) {
-            val snapshot = worldList.toList()
-            return snapshot.any { it.id == worldId }
+            return worldList.any { it.id == worldId }
         }
     }
 
     fun getWorld(worldId: String): WorldCache {
         synchronized(worldListLock) {
-            val snapshot = worldList.toList()
-            return snapshot.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
+            return worldList.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
         }
     }
 
@@ -175,8 +173,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
     fun getRecentWorlds(): List<WorldCache> {
         synchronized(recentWorldLock) {
-            val snapshot = recentWorldList.toList()
-            return snapshot
+            return recentWorldList.toList()
         }
     }
 
@@ -191,9 +188,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
             )
         }
 
-        val listSnapshot = recentWorldList.toList()
         getListeners().forEach { listener ->
-            listener.updateRecentlyVisitedWorlds(listSnapshot)
+            listener.updateRecentlyVisitedWorlds(getRecentWorlds())
         }
     }
 }
