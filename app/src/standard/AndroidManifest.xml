@@ -34,7 +34,8 @@
             android:configChanges="orientation|screenSize|screenLayout"
             android:exported="true"
             android:theme="@style/Theme.VRCAA"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

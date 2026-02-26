@@ -49,29 +49,7 @@ class App : Application() {
 
         context = applicationContext
         preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
-
-        Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
-        if (!preferences.crashAnalytics) {
-            GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-        }
-
-        NotificationHelper.createNotificationChannels()
-
         loadingText.value = applicationContext.getString(R.string.global_app_default_loading_text)
-
-        if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
-            api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
-            setIsValidSession(true)
-        }
-
-        // https://issuetracker.google.com/issues/76112072
-        // this a workaround starting service in App due to slow start-up on some devices.
-        Handler(Looper.getMainLooper()).postDelayed({
-         if (getIsValidSession()) {
-             val intent = Intent(this, PipelineService::class.java)
-             ContextCompat.startForegroundService(this, intent)
-         }
-        }, 2500)
     }
 
     companion object {
