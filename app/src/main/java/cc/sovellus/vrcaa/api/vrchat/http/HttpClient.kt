@@ -241,12 +241,17 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun verify(type: AuthType, code: String): IAuth.AuthResult {
-            
+
             val dParameter = when (type) {
                 AuthType.AUTH_EMAIL -> "emailotp"
                 AuthType.AUTH_TOTP -> "totp"
                 else -> { "" }
             }
+
+            // Forcefully establish authToken before running check logic to prevent
+            // race conditions with onAuthorizationFailure, where request may override authorization.
+            // TODO: is this an architectural issue, or is this what I *should* do?
+            setAuthorization(AuthorizationType.Cookie, preferences.authToken)
 
             val result = doRequest(
                 method = "POST",
@@ -305,7 +310,7 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchToken(): String? {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -457,7 +462,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             friends: ArrayList<Friend>
         ): ArrayList<Friend> {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -495,7 +500,7 @@ class HttpClient : BaseClient(), CoroutineScope {
     val users = object : IUsers {
 
         override suspend fun fetchUserByUserId(userId: String): LimitedUser? {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -523,7 +528,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<LimitedUser> {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -735,7 +740,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<World> {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -1171,7 +1176,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             favorites: ArrayList<FavoriteAvatar>
         ): ArrayList<FavoriteAvatar> {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -1281,7 +1286,7 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun fetchAvatarById(avatarId: String): Avatar? {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -1315,7 +1320,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             n: Int,
             offset: Int
         ): ArrayList<Group> {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
@@ -1441,7 +1446,7 @@ class HttpClient : BaseClient(), CoroutineScope {
         }
 
         override suspend fun withdrawRequestByGroupId(groupId: String): Boolean {
-            
+
             val result = doRequest(
                 method = "DELETE",
                 url = buildString {
@@ -1792,7 +1797,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             offset: Int,
             avatars: ArrayList<Avatar>
         ): ArrayList<Avatar> {
-            
+
             val result = doRequest(
                 method = "GET",
                 url = buildString {
