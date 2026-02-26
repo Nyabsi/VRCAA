@@ -34,7 +34,6 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UpdateModel
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
 import cc.sovellus.vrcaa.helper.DnsHelper
-import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.DebugManager
 import cc.sovellus.vrcaa.manager.DebugManager.DebugType
@@ -61,13 +60,11 @@ class PipelineSocket(
 
     override val coroutineContext: CoroutineContext = Dispatchers.IO + SupervisorJob()
 
-    private val tlsHelper = TLSHelper()
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.MINUTES)
             .readTimeout(2, TimeUnit.MINUTES)
             .dns(DnsHelper())
-            .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
             .build()
     }
 

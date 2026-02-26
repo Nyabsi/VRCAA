@@ -29,7 +29,6 @@ import androidx.core.graphics.scale
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.await
 import cc.sovellus.vrcaa.helper.DnsHelper
-import cc.sovellus.vrcaa.helper.TLSHelper
 import cc.sovellus.vrcaa.manager.DebugManager
 import okhttp3.ConnectionPool
 import okhttp3.Headers
@@ -43,6 +42,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.http2.StreamResetException
 import java.io.ByteArrayOutputStream
+import java.net.ProtocolException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -53,7 +53,6 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 @OptIn(ExperimentalAtomicApi::class)
 open class BaseClient {
 
-    private val tlsHelper = TLSHelper()
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -61,7 +60,6 @@ open class BaseClient {
             .writeTimeout(30, TimeUnit.SECONDS)
             .connectionPool(ConnectionPool(5, 5, TimeUnit.MINUTES))
             .dns(DnsHelper())
-            .sslSocketFactory(tlsHelper.getSSLContext().socketFactory, tlsHelper.systemDefaultTrustManager())
             .addInterceptor { chain ->
                 val original = chain.request()
 
@@ -338,6 +336,9 @@ open class BaseClient {
             Result.NoInternet
         } catch (_: StreamResetException) {
             Result.InternalError
+        } catch (_: ProtocolException) {
+            // This should force the user to re-initialize the connection and get rid of whatever is happening.
+            Result.NoInternet
         }
     }
 
