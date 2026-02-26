@@ -62,10 +62,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.ScheduledThreadPoolExecutor
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
 
 
 class PipelineService : Service(), CoroutineScope {
@@ -79,18 +75,6 @@ class PipelineService : Service(), CoroutineScope {
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
     private var foregroundStarted = false
-
-    private val scheduler: ScheduledExecutorService =
-        ScheduledThreadPoolExecutor(1).apply {
-            rejectedExecutionHandler = ThreadPoolExecutor.CallerRunsPolicy()
-        }
-
-    private var refreshTask: Runnable = Runnable {
-        launch {
-            CacheManager.buildCache()
-            pipeline?.reconnect()
-        }
-    }
 
     private val listener = object : PipelineSocket.SocketListener {
         override fun onMessage(message: Any?) {
@@ -503,7 +487,6 @@ class PipelineService : Service(), CoroutineScope {
                     pipeline.connect()
                 }
             }
-            scheduler.scheduleWithFixedDelay(refreshTask, INITIAL_INTERVAL, RESTART_INTERVAL, TimeUnit.MILLISECONDS)
         }
 
         return START_STICKY
@@ -534,7 +517,6 @@ class PipelineService : Service(), CoroutineScope {
     override fun onDestroy() {
         super.onDestroy()
         pipeline?.disconnect()
-        scheduler.shutdown()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -543,7 +525,5 @@ class PipelineService : Service(), CoroutineScope {
 
     companion object {
         private const val NOTIFICATION_ID: Int = 42069
-        private const val INITIAL_INTERVAL: Long = 100
-        private const val RESTART_INTERVAL: Long = 1800000
     }
 }
