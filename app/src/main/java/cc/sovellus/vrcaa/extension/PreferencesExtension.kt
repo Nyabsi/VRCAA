@@ -107,3 +107,7 @@ internal var SharedPreferences.fixedColumnSize: Int
 internal var SharedPreferences.crashAnalytics: Boolean
     get() = getBoolean("crashAnalytics", true)
     set(it) = edit { putBoolean("crashAnalytics", it) }
+
+internal var SharedPreferences.timeInBackground: Long
+    get() = getLong("timeInBackground", 0L)
+    set(it) = edit { putLong("timeInBackground", it) }
