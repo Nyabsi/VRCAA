@@ -115,3 +115,7 @@ internal var SharedPreferences.columnCountOption: Int
 internal var SharedPreferences.fixedColumnSize: Int
     get() = getInt("fixedColumnSize", 2)
     set(it) = edit { putInt("fixedColumnSize", it) }
+
+internal var SharedPreferences.timeInBackground: Long
+    get() = getLong("timeInBackground", 0L)
+    set(it) = edit { putLong("timeInBackground", it) }

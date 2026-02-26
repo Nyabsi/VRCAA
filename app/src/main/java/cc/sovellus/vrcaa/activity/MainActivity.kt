@@ -27,6 +27,7 @@ import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
@@ -36,13 +37,17 @@ import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
+import cc.sovellus.vrcaa.extension.timeInBackground
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
@@ -144,6 +149,21 @@ class MainActivity : BaseActivity() {
             onBackPressed = { true }
         ) { navigator ->
             SlideTransition(navigator = navigator)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        preferences.timeInBackground = System.currentTimeMillis()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val minutes = (System.currentTimeMillis() - preferences.timeInBackground) / (1000 * 60)
+        if (minutes >= 15) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                CacheManager.buildCache()
+            }
         }
     }
 }
