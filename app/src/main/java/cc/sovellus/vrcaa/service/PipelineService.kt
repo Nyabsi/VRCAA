@@ -535,7 +535,6 @@ class PipelineService : Service(), CoroutineScope {
         super.onDestroy()
         pipeline?.disconnect()
         scheduler.shutdown()
-        stopForeground(STOP_FOREGROUND_DETACH)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
