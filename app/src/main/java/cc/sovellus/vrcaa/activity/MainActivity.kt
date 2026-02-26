@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.activity
 
 
 import android.Manifest
+import cc.sovellus.vrcaa.GlobalExceptionHandler
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -26,24 +27,41 @@ import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
+import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.richPresenceEnabled
-import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.extension.twoFactorToken
+import cc.sovellus.vrcaa.helper.NotificationHelper
+import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
+
+    override fun onStart() {
+        super.onStart()
+
+        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+        NotificationHelper.createNotificationChannels()
+
+        if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
+            api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+            App.setIsValidSession(true)
+        }
+
+        if (App.getIsValidSession()) {
+            val intent = Intent(this, PipelineService::class.java)
+            ContextCompat.startForegroundService(this, intent)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +131,6 @@ class MainActivity : BaseActivity() {
 
     @Composable
     override fun Content(bundle: Bundle?) {
-
         Navigator(
             screen = if (App.getIsValidSession()) {
                 NavigationScreen()

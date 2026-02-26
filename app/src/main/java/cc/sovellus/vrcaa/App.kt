@@ -19,27 +19,16 @@ package cc.sovellus.vrcaa
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.ContextCompat
 import cc.sovellus.vrcaa.activity.CrashActivity
-import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
-import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
-import cc.sovellus.vrcaa.extension.richPresenceEnabled
-import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
-import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.service.PipelineService
-import cc.sovellus.vrcaa.service.RichPresenceService
 
 
 class App : Application() {
@@ -50,28 +39,8 @@ class App : Application() {
         context = applicationContext
         preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
 
-        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-        NotificationHelper.createNotificationChannels()
 
         loadingText.value = applicationContext.getString(R.string.global_app_default_loading_text)
-
-        if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
-            api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
-            setIsValidSession(true)
-        }
-
-        // https://issuetracker.google.com/issues/76112072
-        // this a workaround starting service in App due to slow start-up on some devices.
-        Handler(Looper.getMainLooper()).postDelayed({
-         if (getIsValidSession()) {
-             var intent = Intent(this, PipelineService::class.java)
-             ContextCompat.startForegroundService(this, intent)
-             if (preferences.richPresenceEnabled) {
-                 intent = Intent(this, RichPresenceService::class.java)
-                 ContextCompat.startForegroundService(this, intent)
-             }
-         }
-        }, 2500)
     }
 
     companion object {

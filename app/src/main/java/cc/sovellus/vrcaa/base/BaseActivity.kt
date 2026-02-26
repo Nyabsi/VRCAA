@@ -37,7 +37,7 @@ import cc.sovellus.vrcaa.ui.theme.Theme
 open class BaseActivity : ComponentActivity() {
 
     private val currentTheme = mutableIntStateOf(-1)
-    lateinit var preferences: SharedPreferences
+    val preferences: SharedPreferences = App.getPreferences()
 
     private val themeListener = object : ThemeManager.ThemeListener {
         override fun onPreferenceUpdate(theme: Int) {
@@ -50,8 +50,6 @@ open class BaseActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         ThemeManager.addListener(themeListener)
-
-        preferences = getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
         currentTheme.intValue = preferences.currentThemeOption
 
         setContent {
