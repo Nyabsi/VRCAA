@@ -257,6 +257,11 @@ class HttpClient : BaseClient(), CoroutineScope {
                 code
             }
 
+            // Forcefully establish authToken before running check logic to prevent
+            // race conditions with onAuthorizationFailure, where request may override authorization.
+            // TODO: is this an architectural issue, or is this what I *should* do?
+            setAuthorization(AuthorizationType.Cookie, preferences.authToken)
+
             val result = doRequest(
                 method = "POST",
                 url = buildString {
