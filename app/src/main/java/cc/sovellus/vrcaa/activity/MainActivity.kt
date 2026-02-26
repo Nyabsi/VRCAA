@@ -113,11 +113,4 @@ class MainActivity : BaseActivity() {
             SlideTransition(navigator = navigator)
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch(Dispatchers.IO) {
-            CacheManager.buildCache()
-        }
-    }
 }
