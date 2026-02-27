@@ -487,7 +487,9 @@ class PipelineService : Service(), CoroutineScope {
                     pipeline.connect()
                 }
             }
+            CacheManager.buildCache()
         }
+
 
         return START_STICKY
     }

@@ -38,8 +38,6 @@ class App : Application() {
 
         context = applicationContext
         preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
-
-
         loadingText.value = applicationContext.getString(R.string.global_app_default_loading_text)
     }
 
