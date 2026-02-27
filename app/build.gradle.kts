@@ -94,9 +94,15 @@ android {
         }
         create("quest") {
             dimension = "type"
+            applicationIdSuffix = ".quest"
         }
         create("pico") {
             dimension = "type"
+            applicationIdSuffix = ".pico"
+        }
+        create("nightly") {
+            dimension = "type"
+            applicationIdSuffix = ".nightly"
         }
     }
 }
