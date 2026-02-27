@@ -68,6 +68,9 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
+        debug {
+            applicationIdSuffix = ".dev"
+        }
     }
 
     compileOptions {
