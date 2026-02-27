@@ -54,6 +54,7 @@ class MainActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
+        preferences.timeInBackground = 0
 
         Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
         if (!preferences.crashAnalytics) {
