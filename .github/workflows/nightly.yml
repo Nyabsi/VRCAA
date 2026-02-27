@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [standard, quest, pico]
+        platform: [nightly, quest, pico]
 
     steps:
     - uses: actions/checkout@v4
@@ -68,10 +68,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Download Standard APK
+    - name: Download Nightly APK
       uses: actions/download-artifact@v4
       with:
-        name: VRCAA-standard-signed.apk
+        name: VRCAA-nightly-signed.apk
         path: .
 
     - name: Download Quest APK
@@ -92,8 +92,8 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "nightly"
         prerelease: true
-        title: "${{ env.GITHUB_SHA }}"
+        title: "Nightly"
         files: |
-          VRCAA-standard-signed.apk
+          VRCAA-nightly-signed.apk
           VRCAA-quest-signed.apk
           VRCAA-pico-signed.apk
