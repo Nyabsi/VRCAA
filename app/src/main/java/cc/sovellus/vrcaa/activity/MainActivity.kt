@@ -31,7 +31,6 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.App
-import cc.sovellus.vrcaa.GlobalExceptionHandler
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
@@ -51,28 +50,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
-
-    override fun onStart() {
-        super.onStart()
-        preferences.timeInBackground = 0
-
-        Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
-        if (!preferences.crashAnalytics) {
-            GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-        }
-
-        NotificationHelper.createNotificationChannels()
-
-        if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
-            api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
-            App.setIsValidSession(true)
-        }
-
-        if (App.getIsValidSession()) {
-            val intent = Intent(this, PipelineService::class.java)
-            ContextCompat.startForegroundService(this, intent)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +77,7 @@ class MainActivity : BaseActivity() {
 
             preferences.authToken = ""
 
-            val intent = Intent(this, PipelineService::class.java)
+            var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
 
             Toast.makeText(
@@ -113,15 +90,36 @@ class MainActivity : BaseActivity() {
         }
 
         if (restartSession) {
-            val intent = Intent(this, PipelineService::class.java)
+            var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             ContextCompat.startForegroundService(this, intent)
         }
 
         if (terminateSession) {
-            val intent = Intent(this, PipelineService::class.java)
+            var intent = Intent(this, PipelineService::class.java)
             stopService(intent)
             App.setIsValidSession(false)
+        }
+
+        if (savedInstanceState == null) {
+            preferences.timeInBackground = 0
+
+            Firebase.crashlytics.isCrashlyticsCollectionEnabled = preferences.crashAnalytics
+            if (!preferences.crashAnalytics) {
+                GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+            }
+
+            NotificationHelper.createNotificationChannels()
+
+            if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
+                api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+                App.setIsValidSession(true)
+            }
+
+            if (App.getIsValidSession()) {
+                val intent = Intent(this, PipelineService::class.java)
+                ContextCompat.startForegroundService(this, intent)
+            }
         }
     }
 
@@ -150,10 +148,12 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val minutes = (System.currentTimeMillis() - preferences.timeInBackground) / (1000 * 60)
-        if (minutes >= 15) {
-            lifecycleScope.launch(Dispatchers.IO) {
-                CacheManager.buildCache()
+        if (preferences.timeInBackground > 0) {
+            val minutes = (System.currentTimeMillis() - preferences.timeInBackground) / (1000 * 60)
+            if (minutes >= 15) {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    CacheManager.buildCache()
+                }
             }
         }
     }
