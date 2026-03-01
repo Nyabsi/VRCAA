@@ -89,15 +89,13 @@ fun CrashScreen(
                     ),
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    LazyColumn {
-                        item {
-                            Text(
-                                text = exception,
-                                softWrap = true,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.padding(8.dp)
-                            )
-                        }
+                    Column {
+                        Text(
+                            text = exception,
+                            softWrap = true,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(8.dp)
+                        )
                     }
                 }
             }
