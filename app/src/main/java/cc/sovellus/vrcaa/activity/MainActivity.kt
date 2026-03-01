@@ -31,6 +31,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import cc.sovellus.vrcaa.App
+import cc.sovellus.vrcaa.GlobalExceptionHandler
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
