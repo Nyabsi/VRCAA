@@ -51,24 +51,6 @@ import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
-    override fun onStart() {
-        super.onStart()
-        preferences.timeInBackground = 0
-
-        GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
-        NotificationHelper.createNotificationChannels()
-
-        if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
-            api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
-            App.setIsValidSession(true)
-        }
-
-        if (App.getIsValidSession()) {
-            val intent = Intent(this, PipelineService::class.java)
-            ContextCompat.startForegroundService(this, intent)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -133,6 +115,23 @@ class MainActivity : BaseActivity() {
             }
             App.setIsValidSession(false)
         }
+
+        if (savedInstanceState == null) {
+            preferences.timeInBackground = 0
+
+            GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+            NotificationHelper.createNotificationChannels()
+
+            if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {
+                api.setAuthorization(AuthorizationType.Cookie, "${preferences.authToken} ${preferences.twoFactorToken}")
+                App.setIsValidSession(true)
+            }
+
+            if (App.getIsValidSession()) {
+                val intent = Intent(this, PipelineService::class.java)
+                ContextCompat.startForegroundService(this, intent)
+            }
+        }
     }
 
     @Composable
@@ -160,10 +159,12 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val minutes = (System.currentTimeMillis() - preferences.timeInBackground) / (1000 * 60)
-        if (minutes >= 15) {
-            lifecycleScope.launch(Dispatchers.IO) {
-                CacheManager.buildCache()
+        if (preferences.timeInBackground > 0) {
+            val minutes = (System.currentTimeMillis() - preferences.timeInBackground) / (1000 * 60)
+            if (minutes >= 15) {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    CacheManager.buildCache()
+                }
             }
         }
     }
