@@ -42,7 +42,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.http2.StreamResetException
 import java.io.ByteArrayOutputStream
-import java.net.ProtocolException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -115,6 +114,7 @@ open class BaseClient {
         data object UnknownMethod : Result()
         data object NotModified : Result()
         data object Forbidden : Result()
+        data class GenericException(val exception: Throwable) : Result()
     }
 
     enum class AuthorizationType {
@@ -336,9 +336,8 @@ open class BaseClient {
             Result.NoInternet
         } catch (_: StreamResetException) {
             Result.InternalError
-        } catch (_: ProtocolException) {
-            // This should force the user to re-initialize the connection and get rid of whatever is happening.
-            Result.NoInternet
+        } catch (e: Throwable) {
+            Result.GenericException(e)
         }
     }
 
@@ -477,6 +476,8 @@ open class BaseClient {
             Result.NoInternet
         } catch (_: StreamResetException) {
             Result.InternalError
+        } catch (e: Throwable) {
+            Result.GenericException(e)
         }
     }
 

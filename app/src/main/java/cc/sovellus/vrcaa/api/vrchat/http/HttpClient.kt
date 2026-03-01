@@ -179,6 +179,15 @@ class HttpClient : BaseClient(), CoroutineScope {
                     }
                 } catch (_: Throwable) { }
             }
+            is Result.GenericException -> {
+                launch(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        "API request threw unknown exception!\n${result.exception.message}\n\n",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
             else -> { /* Stub! */ }
         }
     }
