@@ -66,6 +66,11 @@ open class BaseActivity : ComponentActivity() {
         }
     }
 
+    override fun onDestroy() {
+        ThemeManager.removeListener(themeListener)
+        super.onDestroy()
+    }
+
     @Composable
     open fun Content(bundle: Bundle?) {
         throw RuntimeException("Did you forgot to override Content?")

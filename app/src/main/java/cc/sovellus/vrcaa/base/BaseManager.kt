@@ -16,15 +16,30 @@
 
 package cc.sovellus.vrcaa.base
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+
 open class BaseManager<T> {
 
-    private var listeners: MutableList<T> = mutableListOf()
+    private val listenersState = MutableStateFlow<Set<T>>(emptySet())
 
     fun addListener(listener: T) {
-        listeners.add(listener)
+        listenersState.update { current ->
+            if (listener in current) current else current + listener
+        }
     }
 
-    fun getListeners(): MutableList<T> {
-        return listeners
+    fun removeListener(listener: T) {
+        listenersState.update { current ->
+            if (listener in current) current - listener else current
+        }
+    }
+
+    fun clearListeners() {
+        listenersState.value = emptySet()
+    }
+
+    fun getListeners(): Set<T> {
+        return listenersState.value
     }
 }

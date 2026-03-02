@@ -3,6 +3,9 @@ package cc.sovellus.vrcaa.manager
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 import cc.sovellus.vrcaa.base.BaseManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object NotificationManager: BaseManager<NotificationManager.NotificationListener>() {
 
@@ -18,12 +21,21 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
     private val notifications: MutableList<Notification> = mutableListOf()
     private val notificationsV2: MutableList<NotificationV2> = mutableListOf()
 
+    private val notificationsStateFlow = MutableStateFlow<List<Notification>>(emptyList())
+    val notificationsState: StateFlow<List<Notification>> = notificationsStateFlow.asStateFlow()
+
+    private val notificationsV2StateFlow = MutableStateFlow<List<NotificationV2>>(emptyList())
+    val notificationsV2State: StateFlow<List<NotificationV2>> = notificationsV2StateFlow.asStateFlow()
+
+    private val notificationCountStateFlow = MutableStateFlow(0)
+    val notificationCountState: StateFlow<Int> = notificationCountStateFlow.asStateFlow()
+
     fun setNotifications(newNotifications: List<Notification>) {
         synchronized(notificationLock) {
             notifications.clear()
             notifications.addAll(newNotifications)
         }
-        notifyListeners()
+        publishNotifications()
     }
 
     fun setNotificationsV2(newNotifications: List<NotificationV2>) {
@@ -31,6 +43,7 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
             notificationsV2.clear()
             notificationsV2.addAll(newNotifications)
         }
+        publishNotificationsV2()
         notifyListeners()
     }
 
@@ -40,7 +53,7 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
                 notifications.add(notification)
             }
         }
-        notifyListeners()
+        publishNotifications()
     }
 
     fun addNotificationV2(notification: NotificationV2) {
@@ -49,6 +62,7 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
                 notificationsV2.add(notification)
             }
         }
+        publishNotificationsV2()
         notifyListeners()
     }
 
@@ -56,35 +70,47 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
         synchronized(notificationLock) {
             notifications.removeIf { it.id == notificationId }
         }
-        notifyListeners()
+        publishNotifications()
     }
 
     fun removeNotificationV2(notificationId: String) {
         synchronized(notificationLockV2) {
             notificationsV2.removeIf { it.id == notificationId }
         }
+        publishNotificationsV2()
         notifyListeners()
     }
 
     fun getNotifications(): List<Notification> {
-        synchronized(notificationLock) {
-            return notifications.toList()
-        }
+        return notificationsStateFlow.value
     }
 
     fun getNotificationsV2(): List<NotificationV2> {
+        return notificationsV2StateFlow.value
+    }
+
+    private fun publishNotifications() {
+        synchronized(notificationLock) {
+            notificationsStateFlow.value = notifications.toList()
+        }
+        notifyListeners()
+    }
+
+    private fun publishNotificationsV2() {
         synchronized(notificationLockV2) {
-            return notificationsV2.toList()
+            notificationsV2StateFlow.value = notificationsV2.toList()
         }
     }
 
     private fun notifyListeners() {
+        val i1 = notificationsStateFlow.value
+        val i2 = notificationsV2StateFlow.value
+        val count = i1.size + i2.size
+        notificationCountStateFlow.value = count
         getListeners().forEach {
-            val i1 = getNotifications()
-            val i2 = getNotificationsV2()
             it.onUpdateNotifications(i1)
             it.onUpdateNotificationsV2(i2)
-            it.onUpdateNotificationCount(i1.size + i2.size)
+            it.onUpdateNotificationCount(count)
         }
     }
 }

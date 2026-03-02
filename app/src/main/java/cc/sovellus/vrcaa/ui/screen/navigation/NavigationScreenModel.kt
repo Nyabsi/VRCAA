@@ -29,8 +29,6 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
-import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
-import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 import cc.sovellus.vrcaa.extension.avatarProvider
 import cc.sovellus.vrcaa.extension.avatarsAmount
 import cc.sovellus.vrcaa.extension.groupsAmount
@@ -107,19 +105,15 @@ class NavigationScreenModel : ScreenModel {
         }
     }
 
-    private val notificationListener = object : NotificationManager.NotificationListener {
-        override fun onUpdateNotifications(notifications: List<Notification>) { }
-        override fun onUpdateNotificationsV2(notifications: List<NotificationV2>) { }
-
-        override fun onUpdateNotificationCount(count: Int) {
-            notificationsCount.intValue = count
-        }
-    }
-
     init {
         api.setSessionListener(apiListener)
         CacheManager.addListener(cacheListener)
-        NotificationManager.addListener(notificationListener)
+
+        screenModelScope.launch {
+            NotificationManager.notificationCountState.collect { count ->
+                notificationsCount.intValue = count
+            }
+        }
     }
 
     fun addSearchHistory() {
@@ -178,5 +172,11 @@ class NavigationScreenModel : ScreenModel {
             ageVerified.value = it.ageVerified
             verifiedStatus.value = it.ageVerificationStatus
         }
+    }
+
+    override fun onDispose() {
+        CacheManager.removeListener(cacheListener)
+        api.clearSessionListener()
+        super.onDispose()
     }
 }

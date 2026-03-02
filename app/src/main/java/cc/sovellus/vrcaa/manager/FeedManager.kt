@@ -18,11 +18,17 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.StatusHelper
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.time.LocalDateTime
 import java.util.UUID
 
 
 object FeedManager : BaseManager<FeedManager.FeedListener>() {
+
+    // TODO: the feed should be paginated, currently we will only show latest 1000 entries, this will suffice.
+    private const val MAX_FEED_ENTRIES = 1000
 
     interface FeedListener {
         fun onReceiveUpdate(list: List<Feed>)
@@ -57,23 +63,37 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
         var feedTimestamp: LocalDateTime = LocalDateTime.now()
     )
 
-    private var feedList: MutableList<Feed> = ArrayList()
+    private val feedLock = Any()
+    private val feedList: MutableList<Feed> = ArrayList()
+    private val feedStateFlow = MutableStateFlow<List<Feed>>(emptyList())
+
+    val feedState: StateFlow<List<Feed>> = feedStateFlow.asStateFlow()
 
     init {
-        DatabaseManager.readFeeds().forEach {
-            feedList.add(it)
+        synchronized(feedLock) {
+            DatabaseManager.readFeeds().takeLast(MAX_FEED_ENTRIES).forEach {
+                feedList.add(it)
+            }
+            feedStateFlow.value = feedList.toList()
         }
     }
 
     fun addFeed(feed: Feed) {
-        feedList.add(feed)
+        synchronized(feedLock) {
+            if (feedList.size >= MAX_FEED_ENTRIES) {
+                feedList.removeAt(0)
+            }
+            feedList.add(feed)
+            feedStateFlow.value = feedList.toList()
+        }
         DatabaseManager.writeFeed(feed)
+        val snapshot = feedStateFlow.value
         getListeners().forEach { listener ->
-            listener.onReceiveUpdate(getFeed())
+            listener.onReceiveUpdate(snapshot)
         }
     }
 
     fun getFeed(): List<Feed> {
-        return feedList.toList()
+        return feedStateFlow.value
     }
 }

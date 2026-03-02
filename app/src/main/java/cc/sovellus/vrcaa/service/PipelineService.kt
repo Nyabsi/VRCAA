@@ -66,12 +66,14 @@ import kotlinx.coroutines.launch
 
 class PipelineService : Service(), CoroutineScope {
 
-    override val coroutineContext = Dispatchers.IO + SupervisorJob()
+    private val serviceJob = SupervisorJob()
+    override val coroutineContext = Dispatchers.IO + serviceJob
 
     private lateinit var preferences: SharedPreferences
 
     private var pipeline: PipelineSocket? = null
 
+    private var handlerThread: HandlerThread? = null
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
     private var foregroundStarted = false
@@ -457,7 +459,7 @@ class PipelineService : Service(), CoroutineScope {
 
         this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
-        HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
+        handlerThread = HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
             serviceLooper = looper
@@ -517,8 +519,16 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onDestroy() {
+        serviceHandler?.removeCallbacksAndMessages(null)
+        serviceHandler = null
+        serviceLooper = null
+        handlerThread?.quitSafely()
+        handlerThread = null
+
+        serviceJob.cancel()
         super.onDestroy()
         pipeline?.disconnect()
+        pipeline = null
     }
 
     override fun onBind(intent: Intent?): IBinder? {

@@ -23,12 +23,11 @@ import android.content.SharedPreferences
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import cc.sovellus.vrcaa.activity.CrashActivity
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
-import cc.sovellus.vrcaa.helper.NotificationHelper
 
 
 class App : Application() {
@@ -62,7 +61,7 @@ class App : Application() {
             return preferences.currentThemeOption != 0
         }
 
-        fun getLoadingText(): MutableState<String> { return loadingText }
+        fun getLoadingText(): State<String> { return loadingText }
         fun setLoadingText(resourceId: Int) { loadingText.value = context.getString(resourceId) }
 
         fun getIsValidSession(): Boolean { return validSession.value }

@@ -20,8 +20,13 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.NotificationHelper
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object DebugManager : BaseManager<DebugManager.DebugListener>() {
+
+    private const val MAX_DEBUG_ENTRIES = 1000
 
     interface DebugListener {
         fun onUpdateMetadata(metadata: List<DebugMetadataData>)
@@ -43,16 +48,31 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
         val payload: String
     )
 
-    private var metadataList: MutableList<DebugMetadataData> = ArrayList()
+    private val metadataLock = Any()
+    private val metadataList: MutableList<DebugMetadataData> = mutableListOf()
+    private val metadataStateFlow = MutableStateFlow<List<DebugMetadataData>>(emptyList())
+
+    val metadataState: StateFlow<List<DebugMetadataData>> = metadataStateFlow.asStateFlow()
 
     fun addDebugMetadata(metadata: DebugMetadataData) {
         try {
-            metadataList.add(metadata)
+            synchronized(metadataLock) {
+                if (metadataList.size >= MAX_DEBUG_ENTRIES) {
+                    metadataList.removeAt(0)
+                }
+                metadataList.add(metadata)
+                metadataStateFlow.value = metadataList.toList()
+            }
+
+            val snapshot = metadataStateFlow.value
             getListeners().forEach { listener ->
-                listener.onUpdateMetadata(getMetadata())
+                listener.onUpdateMetadata(snapshot)
             }
         } catch (_: Throwable) {
-            metadataList.clear()
+            synchronized(metadataLock) {
+                metadataList.clear()
+                metadataStateFlow.value = emptyList()
+            }
             NotificationHelper.pushNotification(
                 App.getContext().getString(R.string.debug_notification_title_out_of_memory),
                 App.getContext().getString(R.string.debug_notification_content_out_of_memory),
@@ -62,6 +82,6 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
     }
 
     fun getMetadata(): List<DebugMetadataData> {
-        return metadataList.toList()
+        return metadataStateFlow.value
     }
 }

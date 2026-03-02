@@ -139,6 +139,10 @@ class HttpClient : BaseClient(), CoroutineScope {
         this.listener = listener
     }
 
+    fun clearSessionListener() {
+        listener = null
+    }
+
     private fun handleExceptions(result: Result) {
         when (result) {
             Result.InternalError -> {

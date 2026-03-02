@@ -17,9 +17,6 @@
 package cc.sovellus.vrcaa.ui.screen.favorites
 
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
@@ -40,13 +37,13 @@ class UserFavoritesScreenModel(
         data object Init : UserFavoriteState()
         data object Loading : UserFavoriteState()
         data class Result(
-            val worlds: MutableMap<String, SnapshotStateList<World?>>,
-            val avatars: MutableMap<String, SnapshotStateList<Avatar?>>
+            val worlds: Map<String, List<World>>,
+            val avatars: Map<String, List<Avatar>>
         ) : UserFavoriteState()
     }
 
-    var worldList: MutableMap<String, SnapshotStateList<World?>> = mutableStateMapOf()
-    var avatarList: MutableMap<String, SnapshotStateList<Avatar?>> = mutableStateMapOf()
+    private val worldList: MutableMap<String, List<World>> = mutableMapOf()
+    private val avatarList: MutableMap<String, List<Avatar>> = mutableMapOf()
     var currentIndex = mutableIntStateOf(0)
 
     init {
@@ -73,7 +70,7 @@ class UserFavoritesScreenModel(
             }.awaitAll()
 
             worldResults.forEach { (name, list) ->
-                worldList[name] = list.toMutableStateList()
+                worldList[name] = list.filterNotNull()
             }
 
             val avatarGroups = api.favorites.fetchFavoriteGroupsByUserId(userId, FavoriteType.FAVORITE_AVATAR)
@@ -92,7 +89,7 @@ class UserFavoritesScreenModel(
             }.awaitAll()
 
             avatarResults.forEach { (name, list) ->
-                avatarList[name] = list.toMutableStateList()
+                avatarList[name] = list.filterNotNull()
             }
 
             mutableState.value = UserFavoriteState.Result(worldList, avatarList)

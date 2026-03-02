@@ -23,9 +23,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState>(FavoriteState.Init) {
@@ -36,14 +34,7 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         data object Result : FavoriteState()
     }
 
-    private var worldListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
-    var worldList = worldListFlow.asStateFlow()
-
-    private var avatarListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
-    var avatarList = avatarListFlow.asStateFlow()
-
-    private var friendListFlow = MutableStateFlow(mutableMapOf<String, MutableList<FavoriteManager.FavoriteMetadata>>())
-    var friendList = friendListFlow.asStateFlow()
+    val version: StateFlow<Long> = FavoriteManager.versionState
 
     var currentIndex = mutableIntStateOf(0)
     var currentSelectedGroup = mutableStateOf("")
@@ -59,7 +50,6 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         }
 
         override fun endCacheRefresh() {
-            fetchContent()
             mutableState.value = FavoriteState.Result
         }
     }
@@ -70,25 +60,34 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
 
         if (CacheManager.isBuilt())
         {
-            fetchContent()
             mutableState.value = FavoriteState.Result
         } else {
             mutableState.value = FavoriteState.Loading
         }
     }
 
-    private fun fetchContent() {
-        worldListFlow.update { FavoriteManager.getWorldList() }
-        avatarListFlow.update { FavoriteManager.getAvatarList() }
-        friendListFlow.update { FavoriteManager.getFriendList() }
+    fun getWorldList(): Map<String, List<FavoriteManager.FavoriteMetadata>> {
+        return FavoriteManager.getWorldList()
+    }
+
+    fun getAvatarList(): Map<String, List<FavoriteManager.FavoriteMetadata>> {
+        return FavoriteManager.getAvatarList()
+    }
+
+    fun getFriendList(): Map<String, List<FavoriteManager.FavoriteMetadata>> {
+        return FavoriteManager.getFriendList()
     }
 
     fun removeFavorite() {
         screenModelScope.launch {
             mutableState.value = FavoriteState.Loading
             FavoriteManager.removeFavorite(currentSelectedType.value, currentSelectedId.value)
-            fetchContent()
             mutableState.value = FavoriteState.Result
         }
+    }
+
+    override fun onDispose() {
+        CacheManager.removeListener(cacheListener)
+        super.onDispose()
     }
 }

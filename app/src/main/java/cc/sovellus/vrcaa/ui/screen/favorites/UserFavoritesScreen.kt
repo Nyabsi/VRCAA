@@ -44,7 +44,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
@@ -87,8 +86,8 @@ class UserFavoritesScreen(
     @Composable
     fun ShowScreen(
         model: UserFavoritesScreenModel,
-        worlds: MutableMap<String, SnapshotStateList<World?>>,
-        avatars: MutableMap<String, SnapshotStateList<Avatar?>>
+        worlds: Map<String, List<World>>,
+        avatars: Map<String, List<Avatar>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -180,7 +179,7 @@ class UserFavoritesScreen(
 
     @Composable
     fun ShowWorlds(
-        list: MutableMap<String, SnapshotStateList<World?>>
+        list: Map<String, List<World>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -193,11 +192,9 @@ class UserFavoritesScreen(
                         onEdit = {}
                     ) {
                         items(item.value) {
-                            it?.let {
-                                RowItem(name = it.name, url = it.thumbnailImageUrl) {
-                                    if (it.name != "???") {
-                                        navigator.push(WorldScreen(it.id))
-                                    }
+                            RowItem(name = it.name, url = it.thumbnailImageUrl) {
+                                if (it.name != "???") {
+                                    navigator.push(WorldScreen(it.id))
                                 }
                             }
                         }
@@ -220,7 +217,7 @@ class UserFavoritesScreen(
 
     @Composable
     fun ShowAvatars(
-        list: MutableMap<String, SnapshotStateList<Avatar?>>
+        list: Map<String, List<Avatar>>
     ) {
         val navigator = LocalNavigator.currentOrThrow
 
@@ -233,16 +230,13 @@ class UserFavoritesScreen(
                         onEdit = {}
                     ) {
                         items(item.value) {
-                            it?.let {
-                                RowItem(name = it.name, url = it.thumbnailImageUrl) {
-                                    if (it.name != "???") {
-                                        navigator.push(UserAvatarScreen(it))
-                                    }
+                            RowItem(name = it.name, url = it.thumbnailImageUrl) {
+                                if (it.name != "???") {
+                                    navigator.push(UserAvatarScreen(it))
                                 }
                             }
                         }
                     }
-
                     Spacer(modifier = Modifier.padding(4.dp))
                 }
             }

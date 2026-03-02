@@ -43,7 +43,7 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
     }
 
     override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        onDowngrade(db, oldVersion, newVersion)
+        super.onDowngrade(db, oldVersion, newVersion)
     }
 
     object Constants {

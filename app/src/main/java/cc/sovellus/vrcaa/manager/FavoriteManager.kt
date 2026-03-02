@@ -24,6 +24,9 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object FavoriteManager : BaseManager<Any>() {
 
@@ -49,10 +52,25 @@ object FavoriteManager : BaseManager<Any>() {
     private var avatarList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
     private var friendList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
 
+    private val worldListReadonly: Map<String, List<FavoriteMetadata>>
+        get() = worldList
+    private val avatarListReadonly: Map<String, List<FavoriteMetadata>>
+        get() = avatarList
+    private val friendListReadonly: Map<String, List<FavoriteMetadata>>
+        get() = friendList
+
+    private val versionStateFlow = MutableStateFlow(0L)
+    val versionState: StateFlow<Long> = versionStateFlow.asStateFlow()
+
     private var tagToGroupMetadataMap = mutableStateMapOf<String, FavoriteGroupMetadata>()
 
     suspend fun refresh() = coroutineScope {
         favoriteLimits = api.favorites.fetchLimits()
+
+        worldList.clear()
+        avatarList.clear()
+        friendList.clear()
+        tagToGroupMetadataMap.clear()
 
         favoriteLimits?.let {
             repeat(it.maxFavoriteGroups.world) { i ->
@@ -114,18 +132,20 @@ object FavoriteManager : BaseManager<Any>() {
                 )
             }
         }.awaitAll()
+
+        versionStateFlow.value += 1
     }
 
-    fun getAvatarList(): MutableMap<String, MutableList<FavoriteMetadata>> {
-        return avatarList
+    fun getAvatarList(): Map<String, List<FavoriteMetadata>> {
+        return avatarListReadonly
     }
 
-    fun getWorldList(): MutableMap<String, MutableList<FavoriteMetadata>> {
-        return worldList
+    fun getWorldList(): Map<String, List<FavoriteMetadata>> {
+        return worldListReadonly
     }
 
-    fun getFriendList(): MutableMap<String, MutableList<FavoriteMetadata>> {
-        return friendList
+    fun getFriendList(): Map<String, List<FavoriteMetadata>> {
+        return friendListReadonly
     }
 
     fun getDisplayNameFromTag(tag: String): String {
@@ -150,7 +170,11 @@ object FavoriteManager : BaseManager<Any>() {
             else -> FavoriteType.FAVORITE_NONE
         }
 
-        return api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, metadata.visibility)
+        val updated = api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, metadata.visibility)
+        if (updated) {
+            versionStateFlow.value += 1
+        }
+        return updated
     }
 
     suspend fun updateGroupMetadataOnlyName(tag: String, metadata: FavoriteGroupMetadata): Boolean {
@@ -167,7 +191,11 @@ object FavoriteManager : BaseManager<Any>() {
             else -> FavoriteType.FAVORITE_NONE
         }
 
-        return api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, null)
+        val updated = api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, null)
+        if (updated) {
+            versionStateFlow.value += 1
+        }
+        return updated
     }
 
     // it's the 21th century, and we have computers faster than super computers in our pockets.
@@ -268,6 +296,10 @@ object FavoriteManager : BaseManager<Any>() {
                 }
             }
 
+            if (result != null) {
+                versionStateFlow.value += 1
+            }
+
             return result != null
         } catch (_: Throwable) {
             return false
@@ -299,6 +331,8 @@ object FavoriteManager : BaseManager<Any>() {
                     tagToGroupMetadataMap[favorite.second]?.let { groupMetadata ->
                         groupMetadata.size -= 1
                     }
+
+                    versionStateFlow.value += 1
 
                 }
                 return result

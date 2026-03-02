@@ -4,6 +4,9 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.PartialFriend
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.JsonHelper
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
@@ -13,13 +16,16 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
 
     private val friendsLock = Any()
     private val friends: MutableList<Friend> = mutableListOf()
+    private val friendsStateFlow = MutableStateFlow<List<Friend>>(emptyList())
+
+    val friendsState: StateFlow<List<Friend>> = friendsStateFlow.asStateFlow()
 
     fun setFriends(newFriends: List<Friend>) {
         synchronized(friendsLock) {
             friends.clear()
             friends.addAll(newFriends)
         }
-        notifyListeners()
+        publishFriends()
     }
 
     fun addFriend(friend: Friend) {
@@ -28,14 +34,14 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
                 friends.add(friend)
             }
         }
-        notifyListeners()
+        publishFriends()
     }
 
     fun removeFriend(userId: String) {
         synchronized(friendsLock) {
             friends.removeIf { it.id == userId }
         }
-        notifyListeners()
+        publishFriends()
     }
 
     fun updateFriend(partial: PartialFriend) {
@@ -45,7 +51,7 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
                 friends[index] = JsonHelper.mergeDiffJson(friends[index], partial, Friend::class.java)
             }
         }
-        notifyListeners()
+        publishFriends()
     }
 
     fun updateLocation(userId: String, location: String) {
@@ -55,7 +61,7 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
                 friends[index] = friends[index].copy(location = location)
             }
         }
-        notifyListeners()
+        publishFriends()
     }
 
     fun updatePlatform(userId: String, platform: String) {
@@ -65,7 +71,7 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
                 friends[index] = friends[index].copy(platform = platform)
             }
         }
-        notifyListeners()
+        publishFriends()
     }
 
     fun getFriend(userId: String): Friend? {
@@ -75,13 +81,14 @@ object FriendManager : BaseManager<FriendManager.FriendListener>() {
     }
 
     fun getFriends(): List<Friend> {
-        synchronized(friendsLock) {
-            return friends.toList()
-        }
+        return friendsStateFlow.value
     }
 
-    private fun notifyListeners() {
-        val snapshot = getFriends()
+    private fun publishFriends() {
+        synchronized(friendsLock) {
+            friendsStateFlow.value = friends.toList()
+        }
+        val snapshot = friendsStateFlow.value
         getListeners().forEach { it.onUpdateFriends(snapshot) }
     }
 }

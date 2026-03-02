@@ -17,15 +17,12 @@
 package cc.sovellus.vrcaa.ui.screen.friends
 
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.screen.friends.FriendsScreenModel.FriendsState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
 
 class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
 
@@ -35,16 +32,9 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
         data object Result : FriendsState()
     }
 
-    private var friendsStateFlow = MutableStateFlow(listOf<Friend>())
-    var friends = friendsStateFlow.asStateFlow()
+    val friends: StateFlow<List<Friend>> = FriendManager.friendsState
 
     var currentIndex = mutableIntStateOf(0)
-
-    private val listener = object : FriendManager.FriendListener {
-        override fun onUpdateFriends(friends: List<Friend>) {
-            friendsStateFlow.update { friends }
-        }
-    }
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun startCacheRefresh() {
@@ -52,21 +42,23 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
         }
 
         override fun endCacheRefresh() {
-            friendsStateFlow.value = FriendManager.getFriends().toMutableStateList()
             mutableState.value = FriendsState.Result
         }
     }
 
     init {
         mutableState.value = FriendsState.Loading
-        FriendManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
         if (CacheManager.isBuilt()) {
-            friendsStateFlow.value = FriendManager.getFriends().toMutableStateList()
             mutableState.value = FriendsState.Result
         } else {
             mutableState.value = FriendsState.Loading
         }
+    }
+
+    override fun onDispose() {
+        CacheManager.removeListener(cacheListener)
+        super.onDispose()
     }
 }
