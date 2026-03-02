@@ -176,17 +176,4 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
-    override fun onDestroy() {
-        CacheManager.clearListeners()
-        DatabaseManager.clearListeners()
-        DebugManager.clearListeners()
-        FavoriteManager.clearListeners()
-        FeedManager.clearListeners()
-        FriendManager.clearListeners()
-        GatewayManager.clearListeners()
-        NotificationManager.clearListeners()
-        ThemeManager.clearListeners()
-        super.onDestroy()
-    }
 }
