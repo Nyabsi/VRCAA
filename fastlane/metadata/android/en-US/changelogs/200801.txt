@@ -1,0 +1,6 @@
+- Implemented support for VRC+ favourite worlds
+- Fixed issue where favorite tabs might sometimes duplicate items
+- Upgraded AGP, Kotlin and dependencies to the latest version
+- Changed background service start-up behaviour to be more reliable
+- Performance and stability fixes
+    - *I mean it.*
