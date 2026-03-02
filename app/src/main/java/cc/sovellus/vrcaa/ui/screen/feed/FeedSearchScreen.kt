@@ -34,7 +34,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -96,7 +95,7 @@ class FeedSearchScreen : Screen {
                         onSearch = {
                             filteredFeedStateFlow.value = FeedManager.getFeed().filter { feed ->
                                 feed.friendName.contains(input.value, ignoreCase = true) || (feed.travelDestination.contains(input.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_LOCATION) || (feed.avatarName.contains(input.value, ignoreCase = true) && feed.type == FeedManager.FeedType.FRIEND_FEED_AVATAR)
-                            }.toMutableStateList()
+                            }
                         }
                     )
                 },

@@ -27,6 +27,9 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.Collections
 
 object CacheManager : BaseManager<CacheManager.CacheListener>() {
@@ -51,11 +54,23 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     private var profile: User? = null
     private var worldList = Collections.synchronizedList(mutableListOf<WorldCache>())
     private var recentWorldList = Collections.synchronizedList(mutableListOf<WorldCache>())
+    private val recentWorldsStateFlow = MutableStateFlow<List<WorldCache>>(emptyList())
+
+    val recentWorldsState: StateFlow<List<WorldCache>> = recentWorldsStateFlow.asStateFlow()
 
     private var cacheHasBeenBuilt: Boolean = false
 
     suspend fun buildCache() = coroutineScope {
         cacheHasBeenBuilt = false
+
+        synchronized(worldListLock) {
+            worldList.clear()
+        }
+
+        synchronized(recentWorldLock) {
+            recentWorldList.clear()
+            recentWorldsStateFlow.value = emptyList()
+        }
 
         App.setLoadingText(R.string.global_app_default_loading_text)
         
@@ -107,6 +122,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
                     thumbnailUrl = it.thumbnailImageUrl
                 }
             })
+            recentWorldsStateFlow.value = recentWorldList.toList()
         }
 
         getListeners().forEach { listener ->
@@ -172,9 +188,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     }
 
     fun getRecentWorlds(): List<WorldCache> {
-        synchronized(recentWorldLock) {
-            return recentWorldList.toList()
-        }
+        return recentWorldsStateFlow.value
     }
 
     fun addRecentWorld(world: World) {
@@ -186,10 +200,11 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
                     thumbnailUrl = world.thumbnailImageUrl
                 }
             )
+            recentWorldsStateFlow.value = recentWorldList.toList()
         }
 
         getListeners().forEach { listener ->
-            listener.updateRecentlyVisitedWorlds(getRecentWorlds())
+            listener.updateRecentlyVisitedWorlds(recentWorldsStateFlow.value)
         }
     }
 }

@@ -19,28 +19,15 @@ package cc.sovellus.vrcaa
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.ContextCompat
-import cc.sovellus.vrcaa.activity.CrashActivity
-import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
-import cc.sovellus.vrcaa.extension.authToken
-import cc.sovellus.vrcaa.extension.crashAnalytics
 import cc.sovellus.vrcaa.extension.currentThemeOption
 import cc.sovellus.vrcaa.extension.minimalistMode
 import cc.sovellus.vrcaa.extension.networkLogging
-import cc.sovellus.vrcaa.extension.twoFactorToken
-import cc.sovellus.vrcaa.helper.NotificationHelper
-import cc.sovellus.vrcaa.manager.ApiManager.api
-import cc.sovellus.vrcaa.service.PipelineService
-import com.google.firebase.Firebase
-import com.google.firebase.crashlytics.crashlytics
 
 class App : Application() {
 
@@ -73,7 +60,7 @@ class App : Application() {
             return preferences.currentThemeOption != 0
         }
 
-        fun getLoadingText(): MutableState<String> { return loadingText }
+        fun getLoadingText(): State<String> { return loadingText }
         fun setLoadingText(resourceId: Int) { loadingText.value = context.getString(resourceId) }
 
         fun getIsValidSession(): Boolean { return validSession.value }

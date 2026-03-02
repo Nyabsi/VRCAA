@@ -16,13 +16,10 @@
 
 package cc.sovellus.vrcaa.ui.screen.feed
 
-import androidx.compose.runtime.toMutableStateList
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
 
 class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.Init) {
 
@@ -32,14 +29,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
         data object Result : FeedState()
     }
 
-    private var feedStateFlow = MutableStateFlow(listOf<FeedManager.Feed>())
-    var feed = feedStateFlow.asStateFlow()
-
-    private val listener = object : FeedManager.FeedListener {
-        override fun onReceiveUpdate(list: List<FeedManager.Feed>) {
-            feedStateFlow.update { list }
-        }
-    }
+    val feed: StateFlow<List<FeedManager.Feed>> = FeedManager.feedState
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun startCacheRefresh() {
@@ -47,20 +37,22 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
         }
 
         override fun endCacheRefresh() {
-            feedStateFlow.update { FeedManager.getFeed().toMutableStateList() }
             mutableState.value = FeedState.Result
         }
     }
 
     init {
         mutableState.value = FeedState.Loading
-        FeedManager.addListener(listener)
         CacheManager.addListener(cacheListener)
 
         if (CacheManager.isBuilt())
         {
-            feedStateFlow.update { FeedManager.getFeed().toMutableStateList() }
             mutableState.value = FeedState.Result
         }
+    }
+
+    override fun onDispose() {
+        CacheManager.removeListener(cacheListener)
+        super.onDispose()
     }
 }

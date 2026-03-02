@@ -57,4 +57,9 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
             mutableState.value = ProfileState.Result(it)
         }
     }
+
+    override fun onDispose() {
+        CacheManager.removeListener(cacheListener)
+        super.onDispose()
+    }
 }

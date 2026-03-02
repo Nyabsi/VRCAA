@@ -82,6 +82,9 @@ class FavoritesScreen : Screen {
     @Composable
     fun ShowScreen(model: FavoritesScreenModel) {
 
+        val version = model.version.collectAsState()
+        version.value
+
         if (model.editDialogShown.value) {
             FavoriteEditDialog(
                 model.currentSelectedGroup.value,
@@ -183,10 +186,10 @@ class FavoritesScreen : Screen {
     fun ShowWorlds(
         model: FavoritesScreenModel,
     ) {
-        val worldList = model.worldList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
+        val worldList = model.getWorldList()
 
-        worldList.value.forEach { item ->
+        worldList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_WORLD)})",
@@ -222,10 +225,10 @@ class FavoritesScreen : Screen {
     fun ShowAvatars(
         model: FavoritesScreenModel,
     ) {
-        val avatarList = model.avatarList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
+        val avatarList = model.getAvatarList()
 
-        avatarList.value.forEach { item ->
+        avatarList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_AVATAR)})",
@@ -261,10 +264,10 @@ class FavoritesScreen : Screen {
     fun ShowFriends(
         model: FavoritesScreenModel
     ) {
-        val friendList = model.friendList.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
+        val friendList = model.getFriendList()
 
-        friendList.value.forEach { item ->
+        friendList.forEach { item ->
             if (item.value.isNotEmpty()) {
                 FavoriteHorizontalRow(
                     title = "${FavoriteManager.getDisplayNameFromTag(item.key)} (${FavoriteManager.getGroupMetadata(item.key)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_FRIEND)})",
