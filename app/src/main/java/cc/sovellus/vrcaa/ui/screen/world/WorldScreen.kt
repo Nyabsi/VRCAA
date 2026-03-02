@@ -459,33 +459,31 @@ class WorldScreen(
         }
 
         if (instances.isEmpty()) {
-            Column(
+            Box(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
+                contentAlignment = Alignment.Center
             ) {
                 Text(stringResource(R.string.world_instance_no_public_instances_message))
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(instances) { instance ->
-                    instance.second.let { instance ->
-                        instance.instance?.let {
-                            InstanceItem(
-                                instance = instance.instance,
-                                creator = instance.creator,
-                                friends = instance.friends,
-                                onClick = {
-                                    dialogState.value = true
-                                    model.selectedInstanceId.value = instance.instance.id
-                                }
-                            )
+                items(
+                    items = instances
+                ) { (_, item) ->
+                    val inst = item.instance ?: return@items
+                    InstanceItem(
+                        instance = inst,
+                        creator = item.creator,
+                        friends = item.friends,
+                        onClick = {
+                            dialogState.value = true
+                            model.selectedInstanceId.value = inst.id
                         }
-                    }
+                    )
                 }
             }
         }

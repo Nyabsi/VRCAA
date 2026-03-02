@@ -141,16 +141,14 @@ fun InstanceItem(instance: Instance, creator: String?, friends: List<Friend>, on
                     if (friends.isNotEmpty()) {
                         VerticalDivider(Modifier.padding(4.dp))
 
-                        LazyColumn(
-                            modifier = Modifier.heightIn(max = 240.dp)
+                        Column(
+                            modifier = Modifier
+                                .heightIn(max = 240.dp)
                         ) {
-                            items(friends) { friend ->
+                            friends.forEach { friend ->
                                 ElevatedCard(
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation = 2.dp
-                                    ),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                                    modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Row(
                                         horizontalArrangement = Arrangement.Start,
@@ -158,11 +156,13 @@ fun InstanceItem(instance: Instance, creator: String?, friends: List<Friend>, on
                                         modifier = Modifier.padding(8.dp)
                                     ) {
                                         Badge(
-                                            containerColor = StatusHelper.getStatusFromString(friend.status)
-                                                .toColor(), modifier = Modifier.size(40.dp)
+                                            containerColor = StatusHelper.getStatusFromString(friend.status).toColor(),
+                                            modifier = Modifier.size(40.dp)
                                         ) {
                                             GlideImage(
-                                                model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
+                                                model = friend.userIcon.ifEmpty {
+                                                    friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl }
+                                                },
                                                 contentDescription = null,
                                                 modifier = Modifier
                                                     .size(32.dp)
