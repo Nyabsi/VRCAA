@@ -136,7 +136,7 @@ fun ProfileCard(
                 ) {
                     Text(
                         text = displayName,
-                        fontSize = 24.sp,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Left,
                         color = trustRankColor,

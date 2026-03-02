@@ -17,7 +17,6 @@
 package cc.sovellus.vrcaa.ui.components.layout
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -43,8 +42,7 @@ fun HorizontalRow(
 
     LazyRow(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         content = content
     )

@@ -24,10 +24,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,7 +46,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
@@ -82,8 +83,10 @@ fun WorldCard(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .heightIn(0.dp, 260.dp)
+            .heightIn(min = 220.dp)
             .widthIn(0.dp, 520.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()
     ) {
         Box(
             Modifier
@@ -113,7 +116,6 @@ fun WorldCard(
                     Badge(
                         containerColor = Color(0, 168, 252, 191),
                         modifier = Modifier
-                            .height(height = 26.dp)
                             .padding(start = 2.dp, top = 8.dp),
                         content = {
                             Text(
@@ -127,7 +129,6 @@ fun WorldCard(
                     Badge(
                         containerColor = Color(103, 215, 129, 191),
                         modifier = Modifier
-                            .height(height = 26.dp)
                             .padding(start = 2.dp, top = 8.dp),
                         content = {
                             Text(
@@ -141,7 +142,6 @@ fun WorldCard(
                     Badge(
                         containerColor = Color(121, 136, 151, 191),
                         modifier = Modifier
-                            .height(height = 26.dp)
                             .padding(start = 2.dp, top = 8.dp),
                         content = {
                             Text(
@@ -160,8 +160,8 @@ fun WorldCard(
                 text = world.name,
                 modifier = Modifier
                     .padding(start = 8.dp, top = 4.dp),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Left,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis

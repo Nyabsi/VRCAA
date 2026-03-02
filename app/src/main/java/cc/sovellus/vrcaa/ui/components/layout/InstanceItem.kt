@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -140,7 +141,9 @@ fun InstanceItem(instance: Instance, creator: String?, friends: List<Friend>, on
                     if (friends.isNotEmpty()) {
                         VerticalDivider(Modifier.padding(4.dp))
 
-                        LazyColumn {
+                        LazyColumn(
+                            modifier = Modifier.heightIn(max = 240.dp)
+                        ) {
                             items(friends) { friend ->
                                 ElevatedCard(
                                     elevation = CardDefaults.cardElevation(
@@ -173,7 +176,7 @@ fun InstanceItem(instance: Instance, creator: String?, friends: List<Friend>, on
                                         Spacer(Modifier.padding(start = 4.dp, end = 4.dp))
                                         Text(
                                             text = friend.displayName,
-                                            maxLines = 1,
+                                            maxLines = 2,
                                             fontWeight = FontWeight.Normal,
                                         )
                                     }

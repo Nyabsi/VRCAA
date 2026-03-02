@@ -52,9 +52,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -195,7 +196,7 @@ class ItemsScreen : Screen {
                                 model.currentIndex.intValue = index
                             }, checked = index == model.currentIndex.intValue
                             ) {
-                                Text(text = label, softWrap = true, maxLines = 1)
+                                Text(text = label, softWrap = true, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                         }
                     }
@@ -222,7 +223,8 @@ class ItemsScreen : Screen {
                 Text(text = stringResource(R.string.result_not_found))
             }
         } else {
-            val window = LocalWindowInfo.current
+            val configuration = LocalConfiguration.current
+            val maxItemWidth = (configuration.screenWidthDp.dp / 2).coerceAtLeast(166.dp)
             LazyVerticalGrid(
                 columns = when (model.preferences.columnCountOption) {
                     0 -> GridCells.Adaptive(166.dp)
@@ -245,7 +247,7 @@ class ItemsScreen : Screen {
                                     .fillMaxWidth()
                                     .padding(4.dp)
                                     .heightIn(125.dp)
-                                    .widthIn(166.dp, (window.containerSize.width.dp / 2))
+                                    .widthIn(166.dp, maxItemWidth)
                                     .aspectRatio(4f / 3f)
                                     .clip(RoundedCornerShape(10)),
                                 contentScale = ContentScale.FillBounds,

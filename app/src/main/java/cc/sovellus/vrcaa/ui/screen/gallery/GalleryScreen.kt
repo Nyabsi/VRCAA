@@ -54,7 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -198,7 +198,8 @@ class GalleryScreen : Screen {
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val window = LocalWindowInfo.current
+                    val configuration = LocalConfiguration.current
+                    val maxItemWidth = (configuration.screenWidthDp.dp / 2).coerceAtLeast(133.dp)
                     LazyVerticalGrid(
                         columns = when (model.preferences.columnCountOption) {
                             0 -> GridCells.Adaptive(180.dp)
@@ -220,7 +221,7 @@ class GalleryScreen : Screen {
                                         .fillMaxWidth()
                                         .padding(4.dp)
                                         .heightIn(100.dp)
-                                        .widthIn(133.dp, (window.containerSize.width.dp / 2))
+                                        .widthIn(133.dp, maxItemWidth)
                                         .aspectRatio(16f / 10f)
                                         .clip(RoundedCornerShape(10))
                                         .clickable(onClick = {

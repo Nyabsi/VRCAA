@@ -53,6 +53,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -166,7 +167,7 @@ class SearchResultScreen(
                             model.currentIndex.intValue = index
                         }, checked = index == model.currentIndex.intValue
                         ) {
-                            Text(text = label, softWrap = true, maxLines = 1)
+                            Text(text = label, softWrap = true, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     }
                 }

@@ -18,7 +18,6 @@ package cc.sovellus.vrcaa.ui.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -88,15 +87,14 @@ class HomeScreen : Screen {
                 if (onlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_active_friends),
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     LazyRow(
                         modifier = Modifier
                             .height(100.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
@@ -127,15 +125,14 @@ class HomeScreen : Screen {
                 if (recent.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_recently_visited),
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     LazyRow(
                         modifier = Modifier
                             .height(190.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
@@ -164,15 +161,14 @@ class HomeScreen : Screen {
                 if (friendLocations.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_friend_locations),
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     LazyRow(
                         modifier = Modifier
                             .height(190.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
@@ -205,15 +201,14 @@ class HomeScreen : Screen {
                 if (offlineFriends.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_offline_friends),
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     LazyRow(
                         modifier = Modifier
                             .height(190.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
