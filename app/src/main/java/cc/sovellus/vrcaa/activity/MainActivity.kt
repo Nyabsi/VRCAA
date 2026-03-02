@@ -42,13 +42,6 @@ import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
-import cc.sovellus.vrcaa.manager.DatabaseManager
-import cc.sovellus.vrcaa.manager.DebugManager
-import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.manager.FeedManager
-import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.NotificationManager
-import cc.sovellus.vrcaa.manager.ThemeManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
@@ -164,17 +157,5 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        CacheManager.clearListeners()
-        DatabaseManager.clearListeners()
-        DebugManager.clearListeners()
-        FavoriteManager.clearListeners()
-        FeedManager.clearListeners()
-        FriendManager.clearListeners()
-        NotificationManager.clearListeners()
-        ThemeManager.clearListeners()
-        super.onDestroy()
     }
 }
