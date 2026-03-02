@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -134,7 +135,7 @@ class ThemeScreen : Screen {
                                     },
                                     checked = index == model.currentIndex.intValue
                                 ) {
-                                    Text(text = label, softWrap = true, maxLines = 1)
+                                    Text(text = label, softWrap = true, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                 }
                             }
                         }
@@ -177,7 +178,7 @@ class ThemeScreen : Screen {
                                             },
                                             checked = index == model.currentColumnIndex.intValue
                                         ) {
-                                            Text(text = label, softWrap = true, maxLines = 1)
+                                            Text(text = label, softWrap = true, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                         }
                                     }
                                 }

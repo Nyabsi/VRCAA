@@ -54,7 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -217,7 +217,8 @@ class PrintsScreen(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val window = LocalWindowInfo.current
+                    val configuration = LocalConfiguration.current
+                    val maxItemWidth = (configuration.screenWidthDp.dp / 2).coerceAtLeast(166.dp)
                     LazyVerticalGrid(
                         columns = when (model.preferences.columnCountOption) {
                             0 -> GridCells.Adaptive(166.dp)
@@ -239,7 +240,7 @@ class PrintsScreen(
                                         .fillMaxWidth()
                                         .padding(4.dp)
                                         .heightIn(125.dp)
-                                        .widthIn(166.dp, (window.containerSize.width.dp / 2))
+                                        .widthIn(166.dp, maxItemWidth)
                                         .aspectRatio(16f / 10f)
                                         .clip(RoundedCornerShape(10))
                                         .clickable(onClick = {

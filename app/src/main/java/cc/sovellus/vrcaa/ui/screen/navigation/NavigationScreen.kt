@@ -44,6 +44,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -1004,7 +1005,7 @@ class NavigationScreen : Screen {
                                     bottomEnd = 10.dp
                                 )
                             )
-                            .fillMaxWidth(0.7f)
+                            .widthIn(min = 280.dp, max = 420.dp)
                             .background(MaterialTheme.colorScheme.surfaceContainer)
                             .zIndex(1f),
                         shadowElevation = 8.dp
@@ -1119,7 +1120,7 @@ class NavigationScreen : Screen {
 
                                             Text(
                                                 text = label,
-                                                maxLines = 1,
+                                                maxLines = 2,
                                                 overflow = TextOverflow.Ellipsis,
                                                 modifier = Modifier.padding(start = 4.dp)
                                             )

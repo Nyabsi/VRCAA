@@ -122,7 +122,7 @@ class NetworkLogScreen : Screen {
                                 },
                                 checked = index == model.currentIndex.intValue
                             ) {
-                                Text(text = label, softWrap = true, maxLines = 1)
+                                Text(text = label, softWrap = true, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                         }
                     }

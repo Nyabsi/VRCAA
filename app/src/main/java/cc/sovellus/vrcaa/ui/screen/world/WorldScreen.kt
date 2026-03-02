@@ -325,7 +325,7 @@ class WorldScreen(
                                     },
                                     checked = index == model.currentTabIndex.intValue
                                 ) {
-                                    Text(text = label, softWrap = true, maxLines = 1)
+                                    Text(text = label, softWrap = true, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                 }
                             }
                         }

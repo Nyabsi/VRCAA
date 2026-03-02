@@ -35,7 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,7 +49,8 @@ import com.bumptech.glide.integration.compose.placeholder
 fun GridItem(
     name: String, url: String, count: Int?, onClick: () -> Unit
 ) {
-    val window = LocalWindowInfo.current
+    val configuration = LocalConfiguration.current
+    val maxItemWidth = (configuration.screenWidthDp.dp * 0.5f).coerceIn(166.dp, 280.dp)
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -59,7 +60,7 @@ fun GridItem(
             .padding(4.dp)
             .fillMaxWidth()
             .heightIn(125.dp)
-            .widthIn(166.dp, (window.containerSize.width.dp / 2))
+            .widthIn(166.dp, maxItemWidth)
             .aspectRatio(4f / 3f)
             .clickable(onClick = { onClick() })
     ) {
