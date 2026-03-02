@@ -1005,7 +1005,7 @@ class NavigationScreen : Screen {
                                     bottomEnd = 10.dp
                                 )
                             )
-                            .widthIn(min = 280.dp, max = 420.dp)
+                            .fillMaxWidth(0.7f)
                             .background(MaterialTheme.colorScheme.surfaceContainer)
                             .zIndex(1f),
                         shadowElevation = 8.dp

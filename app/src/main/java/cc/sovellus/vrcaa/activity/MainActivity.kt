@@ -47,7 +47,6 @@ import cc.sovellus.vrcaa.manager.DebugManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.GatewayManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.manager.ThemeManager
 import cc.sovellus.vrcaa.service.PipelineService
@@ -174,7 +173,6 @@ class MainActivity : BaseActivity() {
         FavoriteManager.clearListeners()
         FeedManager.clearListeners()
         FriendManager.clearListeners()
-        GatewayManager.clearListeners()
         NotificationManager.clearListeners()
         ThemeManager.clearListeners()
         super.onDestroy()
