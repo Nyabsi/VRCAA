@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -49,7 +50,20 @@ class OnboardingScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
 
-        Scaffold { padding ->
+        Scaffold(
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { navigator.push(OnboardingPermissionsScreen()) },
+                    modifier = Modifier.padding(top = 24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null
+                    )
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End
+        ) { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -80,16 +94,6 @@ class OnboardingScreen : Screen {
                             .fillMaxWidth()
                             .padding(top = 8.dp)
                     )
-
-                    FloatingActionButton(
-                        onClick = { navigator.push(OnboardingPermissionsScreen()) },
-                        modifier = Modifier.padding(top = 24.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = stringResource(R.string.onboarding_button_text)
-                        )
-                    }
                 }
             }
         }

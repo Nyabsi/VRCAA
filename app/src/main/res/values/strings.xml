@@ -45,11 +45,9 @@
     <!-- Onboarding -->
 
     <string name="onboarding_title">Let\'s get started!</string>
-    <string name="onboarding_description">VRCAA helps you stay connected with your VRChat activity.</string>
-    <string name="onboarding_button_text">Continue</string>
-    <string name="onboarding_permissions_title">Permissions</string>
-    <string name="onboarding_permissions_description">Please allow notification access so friend and activity updates can work properly.</string>
-    <string name="onboarding_permissions_button_text">Grant permissions</string>
+    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
+    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
+    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
 
     <!-- Two Auth -->
 

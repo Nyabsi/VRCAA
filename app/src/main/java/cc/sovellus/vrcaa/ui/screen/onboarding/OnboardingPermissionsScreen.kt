@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -47,6 +48,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.extension.onboardingCompleted
+import cc.sovellus.vrcaa.ui.components.misc.Logo
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
 
@@ -59,20 +61,61 @@ class OnboardingPermissionsScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        Scaffold { padding ->
+        Scaffold(
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = {
+                        if (
+                            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                            ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            (context as? Activity)?.let { activity ->
+                                ActivityCompat.requestPermissions(
+                                    activity,
+                                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                                    0
+                                )
+                            }
+                        }
+
+                        App.getPreferences().onboardingCompleted = true
+
+                        navigator.replaceAll(
+                            if (App.getIsValidSession()) {
+                                NavigationScreen()
+                            } else {
+                                LoginScreen()
+                            }
+                        )
+                    },
+                    modifier = Modifier.padding(top = 24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null
+                    )
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End
+        ) { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 Column(
                     modifier = Modifier.widthIn(max = 520.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
+                    Logo(size = 172.dp)
+
                     Text(
                         text = stringResource(R.string.onboarding_permissions_title),
                         textAlign = TextAlign.Center,
@@ -86,42 +129,6 @@ class OnboardingPermissionsScreen : Screen {
                             .fillMaxWidth()
                             .padding(top = 8.dp)
                     )
-
-                    FloatingActionButton(
-                        onClick = {
-                            if (
-                                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                                ActivityCompat.checkSelfPermission(
-                                    context,
-                                    Manifest.permission.POST_NOTIFICATIONS
-                                ) != PackageManager.PERMISSION_GRANTED
-                            ) {
-                                (context as? Activity)?.let { activity ->
-                                    ActivityCompat.requestPermissions(
-                                        activity,
-                                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                                        0
-                                    )
-                                }
-                            }
-
-                            App.getPreferences().onboardingCompleted = true
-
-                            navigator.replaceAll(
-                                if (App.getIsValidSession()) {
-                                    NavigationScreen()
-                                } else {
-                                    LoginScreen()
-                                }
-                            )
-                        },
-                        modifier = Modifier.padding(top = 24.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = stringResource(R.string.onboarding_permissions_button_text)
-                        )
-                    }
                 }
             }
         }
