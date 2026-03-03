@@ -119,3 +119,7 @@ internal var SharedPreferences.fixedColumnSize: Int
 internal var SharedPreferences.timeInBackground: Long
     get() = getLong("timeInBackground", 0L)
     set(it) = edit { putLong("timeInBackground", it) }
+
+internal var SharedPreferences.onboardingCompleted: Boolean
+    get() = getBoolean("onboardingCompleted", false)
+    set(it) = edit { putBoolean("onboardingCompleted", it) }

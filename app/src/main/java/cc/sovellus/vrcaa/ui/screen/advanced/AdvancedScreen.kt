@@ -181,6 +181,32 @@ class AdvancedScreen : Screen {
                                 }
                             )
                         )
+
+                        Spacer(modifier = Modifier.padding(4.dp))
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = stringResource(R.string.advanced_page_section_testing),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        )
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.advanced_page_reset_onboarding)) },
+                            supportingContent = { Text(stringResource(R.string.advanced_page_reset_onboarding_description)) },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    model.resetOnboardingState()
+                                }
+                            )
+                        )
                     }
                 }
             },

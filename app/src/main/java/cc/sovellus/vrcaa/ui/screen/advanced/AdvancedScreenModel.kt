@@ -27,6 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.extension.networkLogging
+import cc.sovellus.vrcaa.extension.onboardingCompleted
 import androidx.core.net.toUri
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.manager.DatabaseManager
@@ -84,5 +85,14 @@ class AdvancedScreenModel : ScreenModel {
         context.startActivity(mainIntent)
 
         Runtime.getRuntime().exit(0)
+    }
+
+    fun resetOnboardingState() {
+        preferences.onboardingCompleted = false
+        Toast.makeText(
+            context,
+            context.getString(R.string.advanced_page_reset_onboarding_toast),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
