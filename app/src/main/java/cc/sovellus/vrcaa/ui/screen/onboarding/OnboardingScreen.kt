@@ -18,10 +18,14 @@ package cc.sovellus.vrcaa.ui.screen.onboarding
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,8 +52,8 @@ class OnboardingScreen : Screen {
         Scaffold { padding ->
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = padding.calculateTopPadding())
+                    .fillMaxSize()
+                    .padding(padding)
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -77,16 +81,14 @@ class OnboardingScreen : Screen {
                             .padding(top = 8.dp)
                     )
 
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .widthIn(max = 320.dp)
-                            .padding(top = 24.dp),
-                        onClick = {
-                            navigator.push(OnboardingPermissionsScreen())
-                        }
+                    FloatingActionButton(
+                        onClick = { navigator.push(OnboardingPermissionsScreen()) },
+                        modifier = Modifier.padding(top = 24.dp)
                     ) {
-                        Text(text = stringResource(R.string.onboarding_button_text))
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = stringResource(R.string.onboarding_button_text)
+                        )
                     }
                 }
             }

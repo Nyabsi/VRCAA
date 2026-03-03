@@ -467,6 +467,10 @@
     <string name="advanced_page_section_database">Database</string>
     <string name="advanced_page_database_delete">Delete Database</string>
     <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
+    <string name="advanced_page_section_testing">Testing</string>
+    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
+    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
+    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
 
     <!-- Database -->
 
