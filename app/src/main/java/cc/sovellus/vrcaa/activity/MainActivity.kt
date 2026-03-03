@@ -17,14 +17,10 @@
 package cc.sovellus.vrcaa.activity
 
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
@@ -37,6 +33,7 @@ import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.base.BaseClient.AuthorizationType
 import cc.sovellus.vrcaa.extension.authToken
 import cc.sovellus.vrcaa.extension.crashAnalytics
+import cc.sovellus.vrcaa.extension.onboardingCompleted
 import cc.sovellus.vrcaa.extension.timeInBackground
 import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
@@ -45,6 +42,7 @@ import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
 import cc.sovellus.vrcaa.ui.screen.navigation.NavigationScreen
+import cc.sovellus.vrcaa.ui.screen.onboarding.OnboardingScreen
 import com.google.firebase.Firebase
 import com.google.firebase.crashlytics.crashlytics
 import kotlinx.coroutines.Dispatchers
@@ -54,21 +52,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO: check is first time launch, redirect to "on-boarding" for permissions.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    0
-                )
-            }
-        }
 
         val invalidSession = intent.extras?.getBoolean("INVALID_SESSION") == true
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION") == true
@@ -127,7 +110,9 @@ class MainActivity : BaseActivity() {
     @Composable
     override fun Content(bundle: Bundle?) {
         Navigator(
-            screen = if (App.getIsValidSession()) {
+            screen = if (!preferences.onboardingCompleted) {
+                OnboardingScreen()
+            } else if (App.getIsValidSession()) {
                 NavigationScreen()
             } else {
                 LoginScreen()
