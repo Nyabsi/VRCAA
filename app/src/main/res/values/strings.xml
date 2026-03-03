@@ -42,6 +42,15 @@
     <string name="login_toast_wrong_credentials">Wrong username or password.</string>
     <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
 
+    <!-- Onboarding -->
+
+    <string name="onboarding_title">Let\'s get started!</string>
+    <string name="onboarding_description">VRCAA helps you stay connected with your VRChat activity.</string>
+    <string name="onboarding_button_text">Continue</string>
+    <string name="onboarding_permissions_title">Permissions</string>
+    <string name="onboarding_permissions_description">Please allow notification access so friend and activity updates can work properly.</string>
+    <string name="onboarding_permissions_button_text">Grant permissions</string>
+
     <!-- Two Auth -->
 
     <string name="auth_text_email">Input the code sent to your e-mail</string>
