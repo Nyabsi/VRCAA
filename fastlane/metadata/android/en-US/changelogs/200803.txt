@@ -1,0 +1,2 @@
+- Now the UI is scale is fixed across all devices, you won't no longer have overly large UI on smaller devices
+- Improved backend state management to reduce memory leaks and other state desynchronisations
