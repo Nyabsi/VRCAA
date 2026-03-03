@@ -30,6 +30,11 @@
     <string name="login_button_text">Entrar</string>
     <string name="login_toast_wrong_credentials">Nome de usuário ou senha incorreta.</string>
     <string name="login_toast_wrong_code">Falha ao verificar, verifique o código novamente.</string>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Let\'s get started!</string>
+    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
+    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
+    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Insira o código enviado para seu e-mail</string>
     <string name="auth_text_app">Insira o código do seu aplicativo de Autenticação de Duas Etapas</string>
@@ -359,6 +364,10 @@
     <string name="advanced_page_section_database">Banco de Dados</string>
     <string name="advanced_page_database_delete">Excluir Banco de Dados</string>
     <string name="advanced_page_database_delete_description">Exclui o banco de dados interno responsável pelo armazenamento de dados</string>
+    <string name="advanced_page_section_testing">Testing</string>
+    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
+    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
+    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
     <!-- Database -->
     <string name="database_page_title">Banco de Dados &amp; Estatísticas</string>
     <string name="database_page_section_statistics">Estatísticas</string>
