@@ -31,6 +31,11 @@
     <string name="login_button_text">登录</string>
     <string name="login_toast_wrong_credentials">用户名或密码错误。</string>
     <string name="login_toast_wrong_code">验证失败，请检查代码。</string>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Let\'s get started!</string>
+    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
+    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
+    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">输入发送到您电子邮件的代码</string>
     <string name="auth_text_app">输入您身份验证应用中的代码</string>
@@ -360,6 +365,10 @@
     <string name="advanced_page_section_database">数据库</string>
     <string name="advanced_page_database_delete">删除数据库</string>
     <string name="advanced_page_database_delete_description">删除负责存储数据的内部数据库</string>
+    <string name="advanced_page_section_testing">Testing</string>
+    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
+    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
+    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
     <!-- Database -->
     <string name="database_page_title">数据库和统计信息</string>
     <string name="database_page_section_statistics">统计数据</string>

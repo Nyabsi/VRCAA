@@ -30,6 +30,11 @@
     <string name="login_button_text">Логин</string>
     <string name="login_toast_wrong_credentials">Неверное имя пользователя или пароль.</string>
     <string name="login_toast_wrong_code">Проверка не удалась, проверьте код еще раз.</string>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Let\'s get started!</string>
+    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
+    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
+    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Введите код, отправленный на вашу эл. почту</string>
     <string name="auth_text_app">Введите код из вашего приложения для двухфакторной аутентификации</string>
@@ -359,6 +364,10 @@
     <string name="advanced_page_section_database">База данных</string>
     <string name="advanced_page_database_delete">Удалить базу данных</string>
     <string name="advanced_page_database_delete_description">Удаляет внутреннюю базу данных, ответственную за хранение данных</string>
+    <string name="advanced_page_section_testing">Testing</string>
+    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
+    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
+    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
     <!-- Database -->
     <string name="database_page_title">Статистика  &amp; базы данных</string>
     <string name="database_page_section_statistics">Статистика</string>
