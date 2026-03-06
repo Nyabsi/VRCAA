@@ -30,6 +30,11 @@
     <string name="login_button_text">ログイン</string>
     <string name="login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
     <string name="login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Let\'s get started!</string>
+    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
+    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
+    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">メールで送信されたコードを入力して下さい。</string>
     <string name="auth_text_app">2段階認証アプリに表示されているコードを入力して下さい。</string>
@@ -359,6 +364,10 @@
     <string name="advanced_page_section_database">データベース</string>
     <string name="advanced_page_database_delete">データベースの削除</string>
     <string name="advanced_page_database_delete_description">データを保持している内部データベースを削除する</string>
+    <string name="advanced_page_section_testing">Testing</string>
+    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
+    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
+    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
     <!-- Database -->
     <string name="database_page_title">データベース &amp; 統計情報</string>
     <string name="database_page_section_statistics">統計情報</string>

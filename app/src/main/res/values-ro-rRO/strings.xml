@@ -30,6 +30,11 @@
     <string name="login_button_text">Autentificare</string>
     <string name="login_toast_wrong_credentials">Nume de Utilizator sau Parolă greșită.</string>
     <string name="login_toast_wrong_code">Verificarea a eșuat, verificați codul din nou.</string>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Let\'s get started!</string>
+    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
+    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
+    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Introduceți codul trimis pe adresa de e-mail</string>
     <string name="auth_text_app">Introduceți codul din aplicația de autentificare</string>
@@ -359,6 +364,10 @@
     <string name="advanced_page_section_database">Bază de date</string>
     <string name="advanced_page_database_delete">Șterge Bază de date</string>
     <string name="advanced_page_database_delete_description">Șterge baza de date internă responsabilă pentru stocarea de date</string>
+    <string name="advanced_page_section_testing">Testing</string>
+    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
+    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
+    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
     <!-- Database -->
     <string name="database_page_title">Statistici &amp; bază de date</string>
     <string name="database_page_section_statistics">Statistici</string>
