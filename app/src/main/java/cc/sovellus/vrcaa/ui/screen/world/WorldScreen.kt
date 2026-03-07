@@ -102,6 +102,7 @@ import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
 import cc.sovellus.vrcaa.ui.components.dialog.GenericDialog
+import cc.sovellus.vrcaa.ui.components.dialog.ImagePreviewDialog
 import cc.sovellus.vrcaa.ui.components.layout.InstanceItem
 import cc.sovellus.vrcaa.ui.components.misc.BadgesFromTags
 import cc.sovellus.vrcaa.ui.components.misc.Description
@@ -112,6 +113,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import java.text.NumberFormat
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -183,6 +185,8 @@ class WorldScreen(
 
         var isQuickMenuExpanded by remember { mutableStateOf(false) }
         var favoriteDialogShown by remember { mutableStateOf(false) }
+        var peekUrl by remember { mutableStateOf("") }
+        var peekWorldPicture by remember { mutableStateOf(false) }
         val groupMetadata by model.groupMetadata.collectAsState()
 
         if (world == null) {
@@ -328,7 +332,12 @@ class WorldScreen(
                             }
 
                             when (model.currentTabIndex.intValue) {
-                                0 -> ShowInfo(world)
+                                0 -> ShowInfo(world) { url ->
+                                    if (url.isNotEmpty()) {
+                                        peekUrl = url
+                                        peekWorldPicture = true
+                                    }
+                                }
                                 1 -> ShowInstances(instances, model)
                             }
                         }
@@ -373,7 +382,13 @@ class WorldScreen(
                                         contentDescription = null,
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .height(160.dp),
+                                            .height(160.dp)
+                                            .clickable(onClick = {
+                                                if (world.thumbnailImageUrl.isNotEmpty()) {
+                                                    peekUrl = world.thumbnailImageUrl
+                                                    peekWorldPicture = true
+                                                }
+                                            }),
                                         contentScale = ContentScale.Crop,
                                         loading = placeholder(R.drawable.image_placeholder),
                                         failure = placeholder(R.drawable.image_placeholder)
@@ -501,19 +516,27 @@ class WorldScreen(
                         }
                     }
                 }
+
+                if (peekWorldPicture) {
+                    ImagePreviewDialog(
+                        url = peekUrl,
+                        name = "${world.name}-${LocalDateTime.now()}",
+                        onDismiss = { peekWorldPicture = false }
+                    )
+                }
             }
         }
     }
 
     @Composable
-    fun ShowInfo(world: World) {
+    fun ShowInfo(world: World, onImageClick: (String) -> Unit) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                WorldCard(world)
+                WorldCard(world, onImageClick)
 
                 Column(
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),

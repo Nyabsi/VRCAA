@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.components.card
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,7 +57,8 @@ import com.bumptech.glide.integration.compose.placeholder
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun WorldCard(
-    world: World
+    world: World,
+    onImageClick: (String) -> Unit = {}
 ) {
     var foundWindows by remember { mutableStateOf(false) }
     var foundAndroid by remember { mutableStateOf(false) }
@@ -100,6 +102,7 @@ fun WorldCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp)
+                    .clickable(onClick = { onImageClick(world.thumbnailImageUrl) })
                     .zIndex(0f),
                 contentScale = ContentScale.Crop,
                 loading = placeholder(R.drawable.image_placeholder),
