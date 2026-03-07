@@ -160,6 +160,7 @@ class WorldScreen(
 
         var isMenuExpanded by remember { mutableStateOf(false) }
         var favoriteDialogShown by remember { mutableStateOf(false) }
+        val groupMetadata by model.groupMetadata.collectAsState()
 
         if (world == null) {
             Toast.makeText(
@@ -270,6 +271,8 @@ class WorldScreen(
                                 world.name,
                                 world.thumbnailImageUrl
                             ),
+                            groupMetadata = groupMetadata,
+                            maximumFavorites = FavoriteManager.getMaximumFavoritesForType(IFavorites.FavoriteType.FAVORITE_WORLD),
                             onDismiss = { favoriteDialogShown = false },
                             onConfirmation = { favoriteDialogShown = false }
                         )

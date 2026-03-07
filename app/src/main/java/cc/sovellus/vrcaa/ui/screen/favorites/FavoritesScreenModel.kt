@@ -35,6 +35,7 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     }
 
     val version: StateFlow<Long> = FavoriteManager.versionState
+    val groupMetadata: StateFlow<Map<String, FavoriteManager.FavoriteGroupMetadata>> = FavoriteManager.groupMetadataState
 
     var currentIndex = mutableIntStateOf(0)
     var currentSelectedGroup = mutableStateOf("")
