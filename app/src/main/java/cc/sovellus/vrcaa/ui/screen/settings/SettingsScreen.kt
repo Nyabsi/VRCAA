@@ -16,6 +16,7 @@
 
 package cc.sovellus.vrcaa.ui.screen.settings
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.Translate
@@ -34,10 +36,14 @@ import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.ImagesearchRoller
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Storage
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +80,7 @@ class SettingsScreen : Screen {
 
     override val key = uniqueScreenKey
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
@@ -133,179 +140,200 @@ class SettingsScreen : Screen {
             )
         }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-        ) {
-            item {
-                Box(
-                    modifier = Modifier
-                        .height(172.dp)
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    contentAlignment = Alignment.TopCenter
-                ) {
-                    Image(
-                        painter = if (App.isAppInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
-                        contentDescription = null,
-                        contentScale = ContentScale.FillHeight,
-                        alignment = Alignment.Center
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navigator.pop()
+                        }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    title = {
+                        Text(text = stringResource(R.string.tabs_label_settings))
+                    }
+                )
+            }
+        ) { padding ->
+            LazyColumn(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+            ) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .height(172.dp)
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        contentAlignment = Alignment.TopCenter
+                    ) {
+                        Image(
+                            painter = if (App.isAppInDarkTheme()) { painterResource(R.drawable.logo_dark) } else { painterResource(R.drawable.logo_white) },
+                            contentDescription = null,
+                            contentScale = ContentScale.FillHeight,
+                            alignment = Alignment.Center
+                        )
+                    }
+                }
+                item {
+
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_item_about)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null
+                            )
+                        },
+                        supportingContent = { Text(text = stringResource(R.string.settings_item_about_description)) },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(AboutScreen())
+                            }
+                        )
                     )
                 }
-            }
-            item {
+                item {
 
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_about)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = null
-                        )
-                    },
-                    supportingContent = { Text(text = stringResource(R.string.settings_item_about_description)) },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            navigator.parent?.parent?.push(AboutScreen())
-                        }
-                    )
-                )
-            }
-            item {
-
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_theming)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.ImagesearchRoller,
-                            contentDescription = null
-                        )
-                    },
-                    supportingContent = { Text(text = stringResource(R.string.settings_item_theming_description)) },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            navigator.parent?.parent?.push(ThemeScreen())
-                        }
-                    )
-                )
-            }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_rich_presence)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Image,
-                            contentDescription = null
-                        )
-                    },
-                    supportingContent = { Text(text = stringResource(R.string.settings_item_rich_presence_description)) },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            if (model.preferences.richPresenceWarningAcknowledged)
-                                navigator.parent?.parent?.push(RichPresenceScreen())
-                            else
-                                dialogState.value = true
-                        }
-                    )
-                )
-            }
-            item {
-
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_database_settings)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.Storage,
-                            contentDescription = null
-                        )
-                    },
-                    supportingContent = { Text(text = stringResource(R.string.settings_item_database_settings_description)) },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            navigator.parent?.parent?.push(DatabaseScreen())
-                        }
-                    )
-                )
-            }
-            item {
-
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_advanced_settings)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Outlined.DeveloperMode,
-                            contentDescription = null
-                        )
-                    },
-                    supportingContent = { Text(text = stringResource(R.string.settings_item_advanced_settings_description)) },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            navigator.parent?.parent?.push(AdvancedScreen())
-                        }
-                    )
-                )
-
-                HorizontalDivider(
-                    color = Color.Gray,
-                    thickness = 0.5.dp
-                )
-            }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.about_page_translate_title)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Filled.Translate,
-                            contentDescription = null
-                        )
-                    },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                BuildConfig.CROWDIN_URL.toUri()
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_item_theming)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Outlined.ImagesearchRoller,
+                                contentDescription = null
                             )
-                            context.startActivity(intent)
-                        }
-                    )
-                )
-            }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_kofi_donation_button)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Filled.Coffee,
-                            contentDescription = null
+                        },
+                        supportingContent = { Text(text = stringResource(R.string.settings_item_theming_description)) },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(ThemeScreen())
+                            }
                         )
-                    },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                BuildConfig.KOFI_URL.toUri()
+                    )
+                }
+                item {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_item_rich_presence)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Outlined.Image,
+                                contentDescription = null
                             )
-                            context.startActivity(intent)
-                        }
-                    )
-                )
-            }
-            item {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.settings_item_logout)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.Logout,
-                            contentDescription = null
+                        },
+                        supportingContent = { Text(text = stringResource(R.string.settings_item_rich_presence_description)) },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                if (model.preferences.richPresenceWarningAcknowledged)
+                                    navigator.parent?.parent?.push(RichPresenceScreen())
+                                else
+                                    dialogState.value = true
+                            }
                         )
-                    },
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            logoutState.value = true
-                        }
                     )
-                )
+                }
+                item {
+
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_item_database_settings)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Outlined.Storage,
+                                contentDescription = null
+                            )
+                        },
+                        supportingContent = { Text(text = stringResource(R.string.settings_item_database_settings_description)) },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(DatabaseScreen())
+                            }
+                        )
+                    )
+                }
+                item {
+
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_item_advanced_settings)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Outlined.DeveloperMode,
+                                contentDescription = null
+                            )
+                        },
+                        supportingContent = { Text(text = stringResource(R.string.settings_item_advanced_settings_description)) },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navigator.parent?.parent?.push(AdvancedScreen())
+                            }
+                        )
+                    )
+
+                    HorizontalDivider(
+                        color = Color.Gray,
+                        thickness = 0.5.dp
+                    )
+                }
+                item {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.about_page_translate_title)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Filled.Translate,
+                                contentDescription = null
+                            )
+                        },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    BuildConfig.CROWDIN_URL.toUri()
+                                )
+                                context.startActivity(intent)
+                            }
+                        )
+                    )
+                }
+                item {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_kofi_donation_button)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Filled.Coffee,
+                                contentDescription = null
+                            )
+                        },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    BuildConfig.KOFI_URL.toUri()
+                                )
+                                context.startActivity(intent)
+                            }
+                        )
+                    )
+                }
+                item {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_item_logout)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.Logout,
+                                contentDescription = null
+                            )
+                        },
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                logoutState.value = true
+                            }
+                        )
+                    )
+                }
             }
         }
     }

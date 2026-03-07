@@ -67,6 +67,7 @@ import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
@@ -146,6 +147,7 @@ import cc.sovellus.vrcaa.ui.screen.items.ItemsScreen
 import cc.sovellus.vrcaa.ui.screen.notifications.NotificationsScreen
 import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
+import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.screen.stickers.StickersScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
@@ -193,10 +195,9 @@ class NavigationScreen : Screen {
             arrayListOf(
                 HomeTab,
                 FriendsTab,
-                FavoritesTab,
                 FeedTab,
-                ProfileTab,
-                SettingsTab
+                FavoritesTab,
+                ProfileTab
             )
         }
 
@@ -387,6 +388,16 @@ class NavigationScreen : Screen {
                                         Icon(
                                             imageVector = Icons.Filled.Menu,
                                             contentDescription = null
+                                        )
+                                    }
+                                },
+                                actions = {
+                                    IconButton(onClick = {
+                                        navigator.push(SettingsScreen())
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Settings,
+                                            contentDescription = stringResource(R.string.tabs_label_settings)
                                         )
                                     }
                                 }
