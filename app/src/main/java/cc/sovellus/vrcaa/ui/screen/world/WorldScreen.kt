@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -81,9 +82,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -105,6 +108,9 @@ import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
 import cc.sovellus.vrcaa.ui.screen.misc.LoadingIndicatorScreen
 import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import java.text.NumberFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -165,7 +171,7 @@ class WorldScreen(
     }
 
     @SuppressLint("LocalContextGetResourceValueCall")
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable
     fun MultiChoiceHandler(
         model: WorldScreenModel,
@@ -356,11 +362,56 @@ class WorldScreen(
                     ) {
                         LazyColumn {
                             item {
+                                ElevatedCard(
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                                    modifier = Modifier
+                                        .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                                        .fillMaxWidth()
+                                ) {
+                                    GlideImage(
+                                        model = world.thumbnailImageUrl,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(160.dp),
+                                        contentScale = ContentScale.Crop,
+                                        loading = placeholder(R.drawable.image_placeholder),
+                                        failure = placeholder(R.drawable.image_placeholder)
+                                    )
+
+                                    Column(
+                                        modifier = Modifier.padding(
+                                            start = 12.dp,
+                                            end = 12.dp,
+                                            top = 8.dp,
+                                            bottom = 12.dp
+                                        )
+                                    ) {
+                                        Text(
+                                            text = world.name,
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = FontWeight.SemiBold,
+                                            maxLines = 2,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+
+                                        Text(
+                                            text = stringResource(R.string.world_author_label)
+                                                .format(world.authorName),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                    }
+                                }
+                            }
+
+                            item {
                                 Column(
                                     modifier = Modifier.padding(
                                         start = 8.dp,
                                         end = 8.dp,
-                                        top = 16.dp,
+                                        top = 8.dp,
                                         bottom = 16.dp
                                     )
                                 ) {
