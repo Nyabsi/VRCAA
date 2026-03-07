@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 class NavigationScreenModel : ScreenModel {
 
     companion object {
-        const val SEARCH_FILTER_MIN_COUNT = 50
+        const val SEARCH_FILTER_MIN_COUNT = 5
         const val SEARCH_FILTER_MAX_COUNT = 100
         const val SEARCH_FILTER_SNAP_STEP = 5
     }
