@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.extension.clickableIf
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -58,7 +59,8 @@ import com.bumptech.glide.integration.compose.placeholder
 @Composable
 fun WorldCard(
     world: World,
-    onImageClick: (String) -> Unit = {}
+    onImageClick: (String) -> Unit = {},
+    clickable: Boolean
 ) {
     var foundWindows by remember { mutableStateOf(false) }
     var foundAndroid by remember { mutableStateOf(false) }
@@ -102,7 +104,7 @@ fun WorldCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp)
-                    .clickable(onClick = { onImageClick(world.thumbnailImageUrl) })
+                    .clickableIf(clickable, onClick = { onImageClick(world.thumbnailImageUrl) })
                     .zIndex(0f),
                 contentScale = ContentScale.Crop,
                 loading = placeholder(R.drawable.image_placeholder),

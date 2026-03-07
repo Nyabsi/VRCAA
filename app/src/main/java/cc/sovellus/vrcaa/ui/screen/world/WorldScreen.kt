@@ -98,6 +98,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
+import cc.sovellus.vrcaa.extension.clickableIf
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
@@ -332,12 +333,12 @@ class WorldScreen(
                             }
 
                             when (model.currentTabIndex.intValue) {
-                                0 -> ShowInfo(world) { url ->
+                                0 -> ShowInfo(world, { url ->
                                     if (url.isNotEmpty()) {
                                         peekUrl = url
                                         peekWorldPicture = true
                                     }
-                                }
+                                }, !isQuickMenuExpanded)
                                 1 -> ShowInstances(instances, model)
                             }
                         }
@@ -383,7 +384,7 @@ class WorldScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .height(160.dp)
-                                            .clickable(onClick = {
+                                            .clickableIf(!isQuickMenuExpanded, onClick = {
                                                 if (world.thumbnailImageUrl.isNotEmpty()) {
                                                     peekUrl = world.thumbnailImageUrl
                                                     peekWorldPicture = true
@@ -529,14 +530,14 @@ class WorldScreen(
     }
 
     @Composable
-    fun ShowInfo(world: World, onImageClick: (String) -> Unit) {
+    fun ShowInfo(world: World, onImageClick: (String) -> Unit, clickable: Boolean) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                WorldCard(world, onImageClick)
+                WorldCard(world, onImageClick, clickable)
 
                 Column(
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
