@@ -82,6 +82,7 @@ class SettingsScreen : Screen {
 
         val model = navigator.rememberNavigatorScreenModel { SettingsScreenModel() }
 
+        val dialogState = remember { mutableStateOf(false) }
         val logoutState = remember { mutableStateOf(false) }
         
         if (logoutState.value) {
@@ -144,7 +145,7 @@ class SettingsScreen : Screen {
                         supportingContent = { Text(text = stringResource(R.string.settings_item_about_description)) },
                         modifier = Modifier.clickable(
                             onClick = {
-                                navigator.parent?.parent?.push(AboutScreen())
+                                navigator.push(AboutScreen())
                             }
                         )
                     )
@@ -162,7 +163,7 @@ class SettingsScreen : Screen {
                     supportingContent = { Text(text = stringResource(R.string.settings_item_theming_description)) },
                     modifier = Modifier.clickable(
                         onClick = {
-                            navigator.parent?.parent?.push(ThemeScreen())
+                            navigator.push(ThemeScreen())
                         }
                     )
                 )
@@ -180,7 +181,7 @@ class SettingsScreen : Screen {
                         supportingContent = { Text(text = stringResource(R.string.settings_item_database_settings_description)) },
                         modifier = Modifier.clickable(
                             onClick = {
-                                navigator.parent?.parent?.push(DatabaseScreen())
+                                navigator.push(DatabaseScreen())
                             }
                         )
                     )
@@ -198,7 +199,7 @@ class SettingsScreen : Screen {
                         supportingContent = { Text(text = stringResource(R.string.settings_item_advanced_settings_description)) },
                         modifier = Modifier.clickable(
                             onClick = {
-                                navigator.parent?.parent?.push(AdvancedScreen())
+                                navigator.push(AdvancedScreen())
                             }
                         )
                     )
