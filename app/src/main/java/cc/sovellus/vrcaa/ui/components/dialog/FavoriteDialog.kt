@@ -50,6 +50,8 @@ fun FavoriteDialog(
     type: IFavorites.FavoriteType,
     id: String,
     metadata: FavoriteManager.FavoriteMetadata,
+    groupMetadata: Map<String, FavoriteManager.FavoriteGroupMetadata>,
+    maximumFavorites: Int,
     onDismiss: () -> Unit,
     onConfirmation: () -> Unit
 ) {
@@ -113,6 +115,9 @@ fun FavoriteDialog(
             ) {
                 item {
                     groups.forEach {
+                        val displayName = groupMetadata[it]?.displayName ?: groupMetadata[it]?.name ?: it
+                        val currentSize = groupMetadata[it]?.size ?: 0
+
                         Row(
                             Modifier
                                 .fillMaxWidth()
@@ -125,7 +130,7 @@ fun FavoriteDialog(
                             RadioButton(selected = it == selectedGroup.value, onClick = {
                                 selectedGroup.value = it
                             })
-                            Text(text ="${FavoriteManager.getDisplayNameFromTag(it)} (${FavoriteManager.getGroupMetadata(it)?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(type)})")
+                            Text(text = "$displayName ($currentSize/$maximumFavorites)")
                         }
                     }
                 }

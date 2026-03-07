@@ -139,6 +139,7 @@ class AvatarScreen(
 
         var isMenuExpanded by remember { mutableStateOf(false) }
         var isDialogShown by remember { mutableStateOf(false) }
+        val groupMetadata by model.groupMetadata.collectAsState()
 
         Scaffold(
             topBar = {
@@ -234,6 +235,8 @@ class AvatarScreen(
                             avatar.name,
                             avatar.thumbnailImageUrl
                         ),
+                        groupMetadata = groupMetadata,
+                        maximumFavorites = FavoriteManager.getMaximumFavoritesForType(IFavorites.FavoriteType.FAVORITE_AVATAR),
                         onDismiss = { isDialogShown = false },
                         onConfirmation = { isDialogShown = false }
                     )

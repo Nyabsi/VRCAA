@@ -30,6 +30,7 @@ import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class UserProfileScreenModel(
@@ -52,6 +53,7 @@ class UserProfileScreenModel(
     private var instance: Instance? = null
     var status: FriendStatus? = null
     val note = mutableStateOf("")
+    val groupMetadata: StateFlow<Map<String, FavoriteManager.FavoriteGroupMetadata>> = FavoriteManager.groupMetadataState
 
     init {
         fetchProfile()

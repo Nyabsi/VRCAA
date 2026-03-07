@@ -34,6 +34,7 @@ import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class WorldScreenModel(
@@ -60,6 +61,7 @@ class WorldScreenModel(
 
     var currentTabIndex = mutableIntStateOf(0)
     var selectedInstanceId = mutableStateOf("")
+    val groupMetadata: StateFlow<Map<String, FavoriteManager.FavoriteGroupMetadata>> = FavoriteManager.groupMetadataState
 
     init {
         mutableState.value = WorldInfoState.Loading

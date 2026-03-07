@@ -77,8 +77,13 @@ internal var SharedPreferences.groupsAmount: Int
     set(it) = edit { putInt("groupsAmount", it) }
 
 internal var SharedPreferences.avatarsAmount: Int
-    get() = getInt("groupsAmount", 50)
-    set(it) = edit { putInt("groupsAmount", it) }
+    get() = if (contains("avatarsAmount")) {
+        getInt("avatarsAmount", 50)
+    } else {
+        // fallback for users upgrading from the old broken version.
+        getInt("groupsAmount", 50)
+    }
+    set(it) = edit { putInt("avatarsAmount", it) }
 
 internal var SharedPreferences.avatarProvider: String
     get() = getString("avatarProviderPreference", "avtrdb")!!
