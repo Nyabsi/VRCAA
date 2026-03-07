@@ -36,10 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 
 class RichPresenceWebViewLogin : Screen {
+
+    override val key = uniqueScreenKey
 
     @SuppressLint("SetJavaScriptEnabled")
     @OptIn(ExperimentalMaterial3Api::class)
