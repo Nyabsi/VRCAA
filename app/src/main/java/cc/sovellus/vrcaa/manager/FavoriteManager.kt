@@ -16,7 +16,6 @@
 
 package cc.sovellus.vrcaa.manager
 
-import androidx.compose.runtime.mutableStateMapOf
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites.FavoriteType
 import cc.sovellus.vrcaa.api.vrchat.http.models.FavoriteLimits
 import cc.sovellus.vrcaa.base.BaseManager
@@ -27,6 +26,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 object FavoriteManager : BaseManager<Any>() {
 
@@ -43,7 +43,7 @@ object FavoriteManager : BaseManager<Any>() {
         val type: String,
         val displayName: String,
         val visibility: String,
-        var size: Int = 0
+        val size: Int = 0
     )
 
     private var favoriteLimits: FavoriteLimits? = null
@@ -62,7 +62,28 @@ object FavoriteManager : BaseManager<Any>() {
     private val versionStateFlow = MutableStateFlow(0L)
     val versionState: StateFlow<Long> = versionStateFlow.asStateFlow()
 
-    private var tagToGroupMetadataMap = mutableStateMapOf<String, FavoriteGroupMetadata>()
+    private val tagToGroupMetadataStateFlow = MutableStateFlow<Map<String, FavoriteGroupMetadata>>(emptyMap())
+    val groupMetadataState: StateFlow<Map<String, FavoriteGroupMetadata>> = tagToGroupMetadataStateFlow.asStateFlow()
+
+    private fun putGroupMetadata(tag: String, metadata: FavoriteGroupMetadata) {
+        tagToGroupMetadataStateFlow.update { current ->
+            current + (tag to metadata)
+        }
+    }
+
+    private fun putGroupMetadataPreservingSize(tag: String, metadata: FavoriteGroupMetadata) {
+        tagToGroupMetadataStateFlow.update { current ->
+            val previousSize = current[tag]?.size ?: -1
+            current + (tag to metadata.copy(size = previousSize))
+        }
+    }
+
+    private fun updateGroupSize(tag: String, delta: Int) {
+        tagToGroupMetadataStateFlow.update { current ->
+            val existing = current[tag] ?: return@update current
+            current + (tag to existing.copy(size = existing.size + delta))
+        }
+    }
 
     suspend fun refresh() = coroutineScope {
         favoriteLimits = api.favorites.fetchLimits()
@@ -70,7 +91,7 @@ object FavoriteManager : BaseManager<Any>() {
         worldList.clear()
         avatarList.clear()
         friendList.clear()
-        tagToGroupMetadataMap.clear()
+        tagToGroupMetadataStateFlow.value = emptyMap()
 
         favoriteLimits?.let {
             repeat(it.maxFavoriteGroups.world) { i ->
@@ -99,8 +120,11 @@ object FavoriteManager : BaseManager<Any>() {
                 }
 
                 worldList[group.name]?.addAll(metadataList)
-                tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(
-                    group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                putGroupMetadata(
+                    group.name,
+                    FavoriteGroupMetadata(
+                        group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                    )
                 )
             }
         }.awaitAll()
@@ -113,8 +137,11 @@ object FavoriteManager : BaseManager<Any>() {
                 }
 
                 avatarList[group.name]?.addAll(metadataList)
-                tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(
-                    group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                putGroupMetadata(
+                    group.name,
+                    FavoriteGroupMetadata(
+                        group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                    )
                 )
             }
         }.awaitAll()
@@ -127,8 +154,11 @@ object FavoriteManager : BaseManager<Any>() {
                 }
 
                 friendList[group.name]?.addAll(metadataList)
-                tagToGroupMetadataMap[group.name] = FavoriteGroupMetadata(
-                    group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                putGroupMetadata(
+                    group.name,
+                    FavoriteGroupMetadata(
+                        group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                    )
                 )
             }
         }.awaitAll()
@@ -149,18 +179,16 @@ object FavoriteManager : BaseManager<Any>() {
     }
 
     fun getDisplayNameFromTag(tag: String): String {
-        return tagToGroupMetadataMap[tag]?.displayName ?: tagToGroupMetadataMap[tag]?.name ?: tag
+        val metadata = tagToGroupMetadataStateFlow.value[tag]
+        return metadata?.displayName ?: metadata?.name ?: tag
     }
 
     fun getGroupMetadata(tag: String): FavoriteGroupMetadata? {
-        return tagToGroupMetadataMap[tag]
+        return tagToGroupMetadataStateFlow.value[tag]
     }
 
     suspend fun updateGroupMetadata(tag: String, metadata: FavoriteGroupMetadata): Boolean {
-
-        val tmp = tagToGroupMetadataMap
-        tagToGroupMetadataMap[tag] = metadata
-        tagToGroupMetadataMap[tag]?.size = tmp[tag]?.size ?: -1 // re-adjust size
+        putGroupMetadataPreservingSize(tag, metadata)
 
         val dType = when (metadata.type) {
             "world" -> FavoriteType.FAVORITE_WORLD
@@ -178,10 +206,7 @@ object FavoriteManager : BaseManager<Any>() {
     }
 
     suspend fun updateGroupMetadataOnlyName(tag: String, metadata: FavoriteGroupMetadata): Boolean {
-
-        val tmp = tagToGroupMetadataMap
-        tagToGroupMetadataMap[tag] = metadata
-        tagToGroupMetadataMap[tag]?.size = tmp[tag]?.size ?: -1 // re-adjust size
+        putGroupMetadataPreservingSize(tag, metadata)
 
         val dType = when (metadata.type) {
             "world" -> FavoriteType.FAVORITE_WORLD
@@ -270,9 +295,7 @@ object FavoriteManager : BaseManager<Any>() {
         try {
             val result = api.favorites.addFavorite(type, id, tag)
 
-            tagToGroupMetadataMap[tag]?.let { groupMetadata ->
-                groupMetadata.size += 1
-            }
+            updateGroupSize(tag, 1)
 
             result?.let {
                 when (type) {
@@ -328,9 +351,7 @@ object FavoriteManager : BaseManager<Any>() {
                         FavoriteType.FAVORITE_VRC_PLUS_WORLD -> { }
                     }
 
-                    tagToGroupMetadataMap[favorite.second]?.let { groupMetadata ->
-                        groupMetadata.size -= 1
-                    }
+                    updateGroupSize(favorite.second, -1)
 
                     versionStateFlow.value += 1
 

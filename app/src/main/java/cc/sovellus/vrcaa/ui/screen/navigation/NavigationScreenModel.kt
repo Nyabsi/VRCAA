@@ -46,6 +46,12 @@ import kotlinx.coroutines.launch
 
 class NavigationScreenModel : ScreenModel {
 
+    companion object {
+        const val SEARCH_FILTER_MIN_COUNT = 5
+        const val SEARCH_FILTER_MAX_COUNT = 100
+        const val SEARCH_FILTER_SNAP_STEP = 5
+    }
+
     private val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
@@ -57,10 +63,10 @@ class NavigationScreenModel : ScreenModel {
 
     var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
     var sortWorlds = mutableStateOf(preferences.sortWorlds)
-    var worldsAmount = mutableIntStateOf(preferences.worldsAmount)
-    var usersAmount = mutableIntStateOf(preferences.usersAmount)
-    var groupsAmount = mutableIntStateOf(preferences.groupsAmount)
-    var avatarsAmount = mutableIntStateOf(preferences.avatarsAmount)
+    var worldsAmount = mutableIntStateOf(normalizeSearchCount(preferences.worldsAmount))
+    var usersAmount = mutableIntStateOf(normalizeSearchCount(preferences.usersAmount))
+    var groupsAmount = mutableIntStateOf(normalizeSearchCount(preferences.groupsAmount))
+    var avatarsAmount = mutableIntStateOf(normalizeSearchCount(preferences.avatarsAmount))
     var avatarProvider = mutableStateOf(preferences.avatarProvider)
 
     val status = mutableStateOf("")
@@ -135,19 +141,24 @@ class NavigationScreenModel : ScreenModel {
         featuredWorlds.value = false
         preferences.sortWorlds = "relevance"
         sortWorlds.value = "relevance"
-        preferences.worldsAmount = 50
-        worldsAmount.intValue = 50
-        preferences.usersAmount = 50
-        usersAmount.intValue = 50
-        preferences.avatarsAmount = 50
-        avatarsAmount.intValue = 50
+        preferences.worldsAmount = SEARCH_FILTER_MIN_COUNT
+        worldsAmount.intValue = SEARCH_FILTER_MIN_COUNT
+        preferences.usersAmount = SEARCH_FILTER_MIN_COUNT
+        usersAmount.intValue = SEARCH_FILTER_MIN_COUNT
+        preferences.avatarsAmount = SEARCH_FILTER_MIN_COUNT
+        avatarsAmount.intValue = SEARCH_FILTER_MIN_COUNT
         avatarProvider.value = "avtrdb"
         preferences.avatarProvider = "avtrdb"
-        preferences.groupsAmount = 50
-        groupsAmount.intValue = 50
+        preferences.groupsAmount = SEARCH_FILTER_MIN_COUNT
+        groupsAmount.intValue = SEARCH_FILTER_MIN_COUNT
     }
 
     fun applySettings() {
+        worldsAmount.intValue = normalizeSearchCount(worldsAmount.intValue)
+        usersAmount.intValue = normalizeSearchCount(usersAmount.intValue)
+        groupsAmount.intValue = normalizeSearchCount(groupsAmount.intValue)
+        avatarsAmount.intValue = normalizeSearchCount(avatarsAmount.intValue)
+
         preferences.searchFeaturedWorlds = featuredWorlds.value
         preferences.sortWorlds = sortWorlds.value
         preferences.worldsAmount = worldsAmount.intValue
@@ -155,6 +166,12 @@ class NavigationScreenModel : ScreenModel {
         preferences.groupsAmount = groupsAmount.intValue
         preferences.avatarsAmount = avatarsAmount.intValue
         preferences.avatarProvider = avatarProvider.value
+    }
+
+    private fun normalizeSearchCount(value: Int): Int {
+        val clamped = value.coerceIn(SEARCH_FILTER_MIN_COUNT, SEARCH_FILTER_MAX_COUNT)
+        val snappedSteps = ((clamped - SEARCH_FILTER_MIN_COUNT + SEARCH_FILTER_SNAP_STEP / 2) / SEARCH_FILTER_SNAP_STEP)
+        return SEARCH_FILTER_MIN_COUNT + snappedSteps * SEARCH_FILTER_SNAP_STEP
     }
 
     fun getCurrentProfileValues() {

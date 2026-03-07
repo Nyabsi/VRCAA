@@ -33,8 +33,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -44,7 +45,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,6 +67,7 @@ import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Cabin
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.People
@@ -90,6 +91,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SearchBarDefaults.InputField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -106,6 +108,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -146,6 +149,7 @@ import cc.sovellus.vrcaa.ui.screen.items.ItemsScreen
 import cc.sovellus.vrcaa.ui.screen.notifications.NotificationsScreen
 import cc.sovellus.vrcaa.ui.screen.prints.PrintsScreen
 import cc.sovellus.vrcaa.ui.screen.search.SearchResultScreen
+import cc.sovellus.vrcaa.ui.screen.settings.SettingsScreen
 import cc.sovellus.vrcaa.ui.screen.stickers.StickersScreen
 import cc.sovellus.vrcaa.ui.screen.worlds.WorldsScreen
 import cc.sovellus.vrcaa.ui.tabs.FavoritesTab
@@ -156,6 +160,7 @@ import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 import cc.sovellus.vrcaa.ui.tabs.SettingsTab
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class NavigationScreen : Screen {
 
@@ -193,10 +198,9 @@ class NavigationScreen : Screen {
             arrayListOf(
                 HomeTab,
                 FriendsTab,
-                FavoritesTab,
                 FeedTab,
-                ProfileTab,
-                SettingsTab
+                FavoritesTab,
+                ProfileTab
             )
         }
 
@@ -387,6 +391,16 @@ class NavigationScreen : Screen {
                                         Icon(
                                             imageVector = Icons.Filled.Menu,
                                             contentDescription = null
+                                        )
+                                    }
+                                },
+                                actions = {
+                                    IconButton(onClick = {
+                                        navigator.push(SettingsScreen())
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Settings,
+                                            contentDescription = stringResource(R.string.tabs_label_settings)
                                         )
                                     }
                                 }
@@ -749,210 +763,143 @@ class NavigationScreen : Screen {
                                 showSettingsSheet = false
                             }, sheetState = settingsSheetState
                         ) {
-                            LazyColumn {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentPadding = PaddingValues(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    top = 8.dp,
+                                    bottom = 24.dp
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
                                 item {
-                                    ListItem(leadingContent = {
-                                        OutlinedButton(onClick = {
-                                            model.resetSettings()
-                                        }) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                    ) {
+                                        OutlinedButton(
+                                            modifier = Modifier.weight(1f),
+                                            onClick = {
+                                                model.resetSettings()
+                                            }
+                                        ) {
                                             Text(stringResource(R.string.search_filter_button_reset))
                                         }
-                                    }, trailingContent = {
-                                        Button(onClick = {
-                                            scope.launch {
-                                                model.applySettings()
-                                                settingsSheetState.hide()
-                                            }.invokeOnCompletion {
-                                                if (!settingsSheetState.isVisible) {
-                                                    showSettingsSheet = false
+
+                                        Button(
+                                            modifier = Modifier.weight(1f),
+                                            onClick = {
+                                                scope.launch {
+                                                    model.applySettings()
+                                                    settingsSheetState.hide()
+                                                }.invokeOnCompletion {
+                                                    if (!settingsSheetState.isVisible) {
+                                                        showSettingsSheet = false
+                                                    }
                                                 }
                                             }
-                                        }) {
+                                        ) {
                                             Text(stringResource(R.string.search_filter_button_apply))
                                         }
-                                    }, headlineContent = { })
-                                }
-                                item {
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_worlds)) },
-                                        leadingContent = {
-                                            Icon(
-                                                imageVector = Icons.Outlined.Cabin,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    )
-
-                                    Spacer(modifier = Modifier.padding(2.dp))
+                                    }
                                 }
 
                                 item {
-                                    ListItem(
-                                        headlineContent = {
-                                            Text(
-                                                text = stringResource(R.string.search_filter_category_worlds_sort_by),
-                                                color = MaterialTheme.colorScheme.secondary,
-                                                fontWeight = FontWeight.SemiBold,
-                                                modifier = Modifier.padding(bottom = 8.dp)
-                                            )
-                                        },
-                                        supportingContent = {
-                                            val options = listOf(
-                                                "popularity",
-                                                "heat",
-                                                "trust",
-                                                "shuffle",
-                                                "random",
-                                                "favorites",
-                                                "publicationDate",
-                                                "labsPublicationDate",
-                                                "created",
-                                                "updated",
-                                                "order",
-                                                "relevance",
-                                                "name"
-                                            )
-                                            ComboInput(
-                                                options = options, selection = model.sortWorlds
-                                            )
-                                        }
-                                    )
-                                }
-                                item {
-                                    var worldCount by remember { mutableStateOf(model.worldsAmount.intValue.toString()) }
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_worlds_count)) },
-                                        trailingContent = {
-                                            OutlinedTextField(
-                                                value = worldCount,
-                                                onValueChange = {
-                                                    worldCount = it
-                                                    if (it.isNotEmpty()) model.worldsAmount.intValue =
-                                                        it.toIntOrNull()
-                                                            ?: model.worldsAmount.intValue
-                                                },
-                                                singleLine = true,
-                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                                            )
-                                        }
-                                    )
-                                }
-                                item {
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_users)) },
-                                        leadingContent = {
-                                            Icon(
-                                                imageVector = Icons.Outlined.People,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    )
+                                    SearchFilterSection(
+                                        title = stringResource(R.string.search_filter_category_worlds),
+                                        icon = Icons.Outlined.Cabin
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.search_filter_category_worlds_sort_by),
+                                            color = MaterialTheme.colorScheme.secondary,
+                                            fontWeight = FontWeight.SemiBold,
+                                        )
 
-                                    Spacer(modifier = Modifier.padding(2.dp))
-                                }
-                                item {
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_users_count)) },
-                                        trailingContent = {
-                                            OutlinedTextField(
-                                                value = model.usersAmount.intValue.toString(),
-                                                onValueChange = {
-                                                    if (it.isNotEmpty()) model.usersAmount.intValue =
-                                                        it.toIntOrNull()
-                                                            ?: model.usersAmount.intValue
-                                                },
-                                                singleLine = true,
-                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                                            )
-                                        }
-                                    )
-                                }
-                                item {
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_avatars)) },
-                                        leadingContent = {
-                                            Icon(
-                                                imageVector = Icons.Outlined.Person,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    )
+                                        val options = listOf(
+                                            "popularity",
+                                            "heat",
+                                            "trust",
+                                            "shuffle",
+                                            "random",
+                                            "favorites",
+                                            "publicationDate",
+                                            "labsPublicationDate",
+                                            "created",
+                                            "updated",
+                                            "order",
+                                            "relevance",
+                                            "name"
+                                        )
 
-                                    Spacer(modifier = Modifier.padding(2.dp))
-                                }
-                                item {
-                                    ListItem(
-                                        headlineContent = {
-                                            Text(
-                                                text = stringResource(R.string.search_filter_category_avatars_provider),
-                                                color = MaterialTheme.colorScheme.secondary,
-                                                fontWeight = FontWeight.SemiBold,
-                                                modifier = Modifier.padding(bottom = 8.dp)
-                                            )
-                                        },
-                                        supportingContent = {
-                                            val options = listOf("avtrdb", "justhparty")
-                                            val optionsReadable = mapOf(
-                                                "avtrdb" to "avtrDB",
-                                                "justhparty" to "Just-H Party"
-                                            )
-                                            ComboInput(
-                                                options = options,
-                                                selection = model.avatarProvider,
-                                                readableOptions = optionsReadable
-                                            )
-                                        }
-                                    )
-                                }
-                                item {
-                                    var avatarCount by remember { mutableStateOf(model.avatarsAmount.intValue.toString()) }
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_label_count)) },
-                                        trailingContent = {
-                                            OutlinedTextField(
-                                                value = avatarCount,
-                                                onValueChange = {
-                                                    avatarCount = it
-                                                    if (it.isNotEmpty()) model.avatarsAmount.intValue =
-                                                        it.toIntOrNull()
-                                                            ?: model.avatarsAmount.intValue
-                                                },
-                                                singleLine = true,
-                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                                            )
-                                        })
-                                }
-                                item {
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_groups)) },
-                                        leadingContent = {
-                                            Icon(
-                                                imageVector = Icons.Outlined.Groups,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    )
+                                        ComboInput(
+                                            options = options,
+                                            selection = model.sortWorlds
+                                        )
 
-                                    Spacer(modifier = Modifier.padding(2.dp))
+                                        SnappedCountSlider(
+                                            label = stringResource(R.string.search_filter_category_worlds_count),
+                                            value = model.worldsAmount.intValue,
+                                            onValueChange = { model.worldsAmount.intValue = it }
+                                        )
+                                    }
                                 }
+
                                 item {
-                                    var groupCount by remember { mutableStateOf(model.groupsAmount.intValue.toString()) }
-                                    ListItem(
-                                        headlineContent = { Text(stringResource(R.string.search_filter_category_groups_count)) },
-                                        trailingContent = {
-                                            OutlinedTextField(
-                                                value = groupCount,
-                                                onValueChange = {
-                                                    groupCount = it
-                                                    if (it.isNotEmpty()) model.groupsAmount.intValue =
-                                                        it.toIntOrNull()
-                                                            ?: model.groupsAmount.intValue
-                                                },
-                                                singleLine = true,
-                                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                                            )
-                                        }
-                                    )
+                                    SearchFilterSection(
+                                        title = stringResource(R.string.search_filter_category_users),
+                                        icon = Icons.Outlined.People
+                                    ) {
+                                        SnappedCountSlider(
+                                            label = stringResource(R.string.search_filter_category_users_count),
+                                            value = model.usersAmount.intValue,
+                                            onValueChange = { model.usersAmount.intValue = it }
+                                        )
+                                    }
+                                }
+
+                                item {
+                                    SearchFilterSection(
+                                        title = stringResource(R.string.search_filter_category_avatars),
+                                        icon = Icons.Outlined.Person
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.search_filter_category_avatars_provider),
+                                            color = MaterialTheme.colorScheme.secondary,
+                                            fontWeight = FontWeight.SemiBold,
+                                        )
+
+                                        val options = listOf("avtrdb", "justhparty")
+                                        val optionsReadable = mapOf(
+                                            "avtrdb" to "avtrDB",
+                                            "justhparty" to "Just-H Party"
+                                        )
+
+                                        ComboInput(
+                                            options = options,
+                                            selection = model.avatarProvider,
+                                            readableOptions = optionsReadable
+                                        )
+
+                                        SnappedCountSlider(
+                                            label = stringResource(R.string.search_filter_label_count),
+                                            value = model.avatarsAmount.intValue,
+                                            onValueChange = { model.avatarsAmount.intValue = it }
+                                        )
+                                    }
+                                }
+
+                                item {
+                                    SearchFilterSection(
+                                        title = stringResource(R.string.search_filter_category_groups),
+                                        icon = Icons.Outlined.Groups
+                                    ) {
+                                        SnappedCountSlider(
+                                            label = stringResource(R.string.search_filter_category_groups_count),
+                                            value = model.groupsAmount.intValue,
+                                            onValueChange = { model.groupsAmount.intValue = it }
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -1134,4 +1081,123 @@ class NavigationScreen : Screen {
             }
         }
     }
+}
+
+private const val SEARCH_FILTER_MIN_COUNT = NavigationScreenModel.SEARCH_FILTER_MIN_COUNT
+private const val SEARCH_FILTER_MAX_COUNT = NavigationScreenModel.SEARCH_FILTER_MAX_COUNT
+private const val SEARCH_FILTER_SNAP_STEP = NavigationScreenModel.SEARCH_FILTER_SNAP_STEP
+
+@Composable
+private fun SearchFilterSection(
+    title: String,
+    icon: ImageVector,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        tonalElevation = 2.dp,
+        color = MaterialTheme.colorScheme.surfaceContainerLow
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+
+            content()
+        }
+    }
+}
+
+@Composable
+private fun SnappedCountSlider(
+    label: String,
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    min: Int = SEARCH_FILTER_MIN_COUNT,
+    max: Int = SEARCH_FILTER_MAX_COUNT,
+    step: Int = SEARCH_FILTER_SNAP_STEP
+) {
+    val normalizedValue = snapCountValue(value, min, max, step)
+
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Text(
+                text = normalizedValue.toString(),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        Slider(
+            value = normalizedValue.toFloat(),
+            onValueChange = { onValueChange(snapCountValue(it, min, max, step)) },
+            valueRange = min.toFloat()..max.toFloat(),
+            steps = ((max - min) / step).coerceAtLeast(1) - 1
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = min.toString(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Text(
+                text = max.toString(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+private fun snapCountValue(
+    value: Int,
+    min: Int,
+    max: Int,
+    step: Int
+): Int {
+    return snapCountValue(value.toFloat(), min, max, step)
+}
+
+private fun snapCountValue(
+    value: Float,
+    min: Int,
+    max: Int,
+    step: Int
+): Int {
+    val clamped = value.coerceIn(min.toFloat(), max.toFloat())
+    val snappedSteps = ((clamped - min) / step).roundToInt()
+    return (min + snappedSteps * step).coerceIn(min, max)
 }

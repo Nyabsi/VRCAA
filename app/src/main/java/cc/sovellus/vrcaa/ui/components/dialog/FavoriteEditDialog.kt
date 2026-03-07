@@ -49,21 +49,30 @@ import kotlinx.coroutines.launch
 fun FavoriteEditDialog(
     tag: String,
     isFriend: Boolean,
+    groupMetadata: Map<String, FavoriteManager.FavoriteGroupMetadata>,
     onDismiss: () -> Unit,
-    onConfirmation: (result: Boolean) -> Unit
+    onConfirmation: (result: Boolean) -> Unit,
+    onUpdateGroupMetadata: suspend (
+        tag: String,
+        metadata: FavoriteManager.FavoriteGroupMetadata,
+        isFriend: Boolean
+    ) -> Boolean
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val staticName = remember { mutableStateOf(FavoriteManager.getDisplayNameFromTag(tag)) }
-    val name = remember { mutableStateOf(FavoriteManager.getDisplayNameFromTag(tag)) }
+    val initialMetadata = groupMetadata[tag]
+    val initialDisplayName = initialMetadata?.displayName ?: initialMetadata?.name ?: tag
 
-    val visibility = remember { mutableStateOf("") }
+    val staticName = remember(tag) { mutableStateOf(initialDisplayName) }
+    val name = remember(tag) { mutableStateOf(initialDisplayName) }
+
+    val visibility = remember(tag) { mutableStateOf(initialMetadata?.visibility ?: "") }
     val options = listOf("private", "public")
     val optionsFormat = mapOf("private" to stringResource(R.string.generic_text_private), "public" to stringResource(R.string.generic_text_public))
 
-    LaunchedEffect(Unit) {
-        val metadata = FavoriteManager.getGroupMetadata(tag)
+    LaunchedEffect(tag) {
+        val metadata = groupMetadata[tag]
 
         metadata?.let {
             staticName.value = metadata.displayName
@@ -127,12 +136,15 @@ fun FavoriteEditDialog(
             TextButton(
                 onClick = {
                     coroutineScope.launch {
-                        val metadata = FavoriteManager.getGroupMetadata(tag)
+                        val metadata = groupMetadata[tag]
                         metadata?.let {
-                            val result = if (isFriend)
-                                FavoriteManager.updateGroupMetadataOnlyName(tag, metadata.copy(displayName = name.value))
-                            else
-                                FavoriteManager.updateGroupMetadata(tag, metadata.copy(displayName = name.value, visibility = visibility.value))
+                            val nextMetadata = if (isFriend) {
+                                metadata.copy(displayName = name.value)
+                            } else {
+                                metadata.copy(displayName = name.value, visibility = visibility.value)
+                            }
+
+                            val result = onUpdateGroupMetadata(tag, nextMetadata, isFriend)
 
                             Toast.makeText(
                                 context,

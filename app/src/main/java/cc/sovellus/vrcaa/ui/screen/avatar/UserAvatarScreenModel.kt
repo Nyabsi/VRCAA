@@ -26,6 +26,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.Avatar
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class UserAvatarScreenModel(
@@ -41,6 +42,7 @@ class UserAvatarScreenModel(
     }
 
     private val context: Context = App.getContext()
+    val groupMetadata: StateFlow<Map<String, FavoriteManager.FavoriteGroupMetadata>> = FavoriteManager.groupMetadataState
 
     init {
         mutableState.value = UserAvatarState.Result(avatar)

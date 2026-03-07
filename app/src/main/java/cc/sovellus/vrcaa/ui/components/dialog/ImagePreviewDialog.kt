@@ -24,8 +24,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -103,6 +103,8 @@ fun ImagePreviewDialog(
     url: String,
     onDismiss: () -> Unit
 ) {
+    val regularDismissDurationMs = 380L
+
     var pendingImageUrl by remember { mutableStateOf<String?>(null) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("image/jpeg")) { uri ->
         uri?.let {
@@ -116,9 +118,9 @@ fun ImagePreviewDialog(
     var isVisible by remember { mutableStateOf(true) }
     var slideExit by remember { mutableStateOf(false) }
 
-    LaunchedEffect(isVisible) {
+    LaunchedEffect(isVisible, slideExit) {
         if (!isVisible) {
-            delay(250)
+            delay(if (slideExit) 250L else regularDismissDurationMs)
             onDismiss()
         }
     }
@@ -135,7 +137,7 @@ fun ImagePreviewDialog(
             exit = if (slideExit)
                 slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut()
             else
-                slideOutHorizontally(targetOffsetX = { it }) + fadeOut()
+                fadeOut(animationSpec = tween(durationMillis = regularDismissDurationMs.toInt()))
         ) {
             Scaffold(
                 modifier = Modifier

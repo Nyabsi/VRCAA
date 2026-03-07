@@ -174,6 +174,7 @@ class UserProfileScreen(
         var favoriteDialogShown by remember { mutableStateOf(false) }
         var isQuickMenuExpanded by remember { mutableStateOf(false) }
         var noteDialogShown by remember { mutableStateOf(false) }
+        val groupMetadata by model.groupMetadata.collectAsState()
 
         if (noteDialogShown) {
             InputDialog(
@@ -261,6 +262,8 @@ class UserProfileScreen(
                                 metadata = FavoriteManager.FavoriteMetadata(
                                     profile.id, "", profile.displayName, ""
                                 ),
+                                groupMetadata = groupMetadata,
+                                maximumFavorites = FavoriteManager.getMaximumFavoritesForType(IFavorites.FavoriteType.FAVORITE_FRIEND),
                                 onDismiss = { favoriteDialogShown = false },
                                 onConfirmation = { favoriteDialogShown = false })
                         }
