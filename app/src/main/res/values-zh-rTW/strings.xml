@@ -31,10 +31,10 @@
     <string name="login_toast_wrong_credentials">使用者名稱或密碼輸入錯誤。</string>
     <string name="login_toast_wrong_code">驗證失敗，請檢察驗證碼是否輸入正確。</string>
     <!-- Onboarding -->
-    <string name="onboarding_title">Let\'s get started!</string>
-    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
-    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
-    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
+    <string name="onboarding_title">讓我們開始吧！</string>
+    <string name="onboarding_description">使用你的 Android 裝置即可隨時連線到 VRChat 世界。輕鬆管理個人檔案、掌握好友動態，不錯過任何最新消息。</string>
+    <string name="onboarding_permissions_title">我們需要您授予我們權限。</string>
+    <string name="onboarding_permissions_description">請允許通知權限，以便即時接收好友與活動動態。</string>
     <!-- Two Auth -->
     <string name="auth_text_email">輸入寄送到你電子郵件的驗證碼</string>
     <string name="auth_text_app">輸入二步驟驗證應用程式產生的驗證碼</string>
@@ -364,10 +364,10 @@
     <string name="advanced_page_section_database">資料庫</string>
     <string name="advanced_page_database_delete">刪除資料庫</string>
     <string name="advanced_page_database_delete_description">刪除存儲數據的内部資料庫。</string>
-    <string name="advanced_page_section_testing">Testing</string>
-    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
-    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
-    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
+    <string name="advanced_page_section_testing">測試用</string>
+    <string name="advanced_page_reset_onboarding">重設首次啟用引導狀態。</string>
+    <string name="advanced_page_reset_onboarding_description">下次啟用應用程式時會進入首次啟用引導頁面。</string>
+    <string name="advanced_page_reset_onboarding_toast">已重設首次啟用引導狀態。</string>
     <!-- Database -->
     <string name="database_page_title">資料庫及統計資料</string>
     <string name="database_page_section_statistics">統計資料</string>
