@@ -455,7 +455,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
-        super.onCreate()
+        startService()
 
         this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
@@ -468,8 +468,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        super.onStartCommand(intent, flags, startId)
-
+        /*
         try {
             startService()
         } catch (_:  Throwable) {
@@ -480,6 +479,7 @@ class PipelineService : Service(), CoroutineScope {
                 true
             )
         }
+        */
 
         launch {
             api.auth.fetchToken()?.let { token ->
@@ -491,7 +491,6 @@ class PipelineService : Service(), CoroutineScope {
             }
             CacheManager.buildCache()
         }
-
 
         return START_STICKY
     }
