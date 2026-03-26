@@ -10,14 +10,14 @@
         <item>Webpagina</item>
         <item>Offline</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">Je vriendenverzoek voor %1$s was afgezegd.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Afzeggen van vriendenverzoek voor %1$s is mislukt.</string>
+    <string name="friend_toast_friend_removed">%1$s Is verwijderd van je vriendenlijst.</string>
+    <string name="friend_toast_friend_remove_failed">Verwijderen van %1$s van je vriendenlijst is mislukt.</string>
+    <string name="friend_toast_friend_requested">Je vriendenverzoek was verstuurd naar %1$s.</string>
+    <string name="friend_toast_friend_request_failed">Versturen van vriendenverzoek naar %1$s is mislukt.</string>
+    <string name="friend_toast_friend_request_accepted">Vriendenverzoek van %1$s is geaccepteerd.</string>
+    <string name="friend_toast_friend_request_accept_failed">Accepteren van %1$s\'s vriendenverzoek is mislukt.</string>
     <!-- Home -->
     <string name="home_active_friends">Online Vrienden</string>
     <string name="home_recently_visited">Onlangs bezocht</string>
@@ -31,10 +31,11 @@
     <string name="login_toast_wrong_credentials">Foutieve gebruikersnaam of wachtwoord.</string>
     <string name="login_toast_wrong_code">Verificatie mislukt, controleer de code opnieuw.</string>
     <!-- Onboarding -->
-    <string name="onboarding_title">Let\'s get started!</string>
-    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
-    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
-    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
+    <string name="onboarding_title">Laten we beginnen!</string>
+    <string name="onboarding_description">Blijf aangesloten op de VRChat wereld.
+Manage je profiel, blijf op de hoogte van vrienden, en mis nooit wat er gebeurt - allemaal vanaf je Android apparaat.</string>
+    <string name="onboarding_permissions_title">Je moet mogelijk toestemming verlenen.</string>
+    <string name="onboarding_permissions_description">Zet notificaties aan om updates over vrienden en activity alerts in real time te ontvangen.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Voer de code in die naar uw e-mail verzonden is</string>
     <string name="auth_text_app">Voer de code van uw verificatie-app in</string>
@@ -53,7 +54,7 @@
     <string name="profile_user_not_found_message">Gebruiker bestaat niet.</string>
     <string name="profile_user_avatar_private">Avatar is privé!</string>
     <string name="profile_user_avatar_unreachable">Avatar is onbereikbaar!</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_note_dialog_title">Maak Notitie</string>
     <!-- Search -->
     <string name="search_text_result">Resultaten voor</string>
     <string name="search_filter_category_worlds">Wereld</string>
@@ -83,7 +84,7 @@
     <string name="settings_item_about_description">Meer informatie over jouw apparaat en VRCAA</string>
     <string name="settings_item_theming">Weergave</string>
     <string name="settings_item_theming_description">Weergave configuratie, simpele modus</string>
-    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimental)</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimenteel)</string>
     <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence integratie</string>
     <string name="settings_item_advanced_settings">Geavanceerd</string>
     <string name="settings_item_advanced_settings_description">Geavanceerd logging en functies</string>
@@ -103,46 +104,46 @@
     <string name="world_title_occupants">Aanwezigen</string>
     <string name="world_title_publication_date">Datum Gepubliceerd</string>
     <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
-    <string name="world_toast_not_found">World is private, or it doesn\'t exist.</string>
+    <string name="world_title_popularity">Populariteit</string>
+    <string name="world_toast_not_found">Wereld is privé, of bestaat niet.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
         <item>Instances</item>
     </string-array>
-    <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
-    <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
-    <string name="world_instance_no_public_instances_message">No public instances</string>
+    <string name="world_author_label">Door %1$s</string>
+    <string name="world_instance_invite_dialog_title">Weet je het zeker?</string>
+    <string name="world_instance_invite_dialog_description">Je gaat een uitnodiging naar jezelf sturen voor deze instance, wil je dit echt doen?</string>
+    <string name="world_instance_no_public_instances_message">Geen openbare instances</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Vrienden</string>
-    <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_home">Thuis</string>
+    <string name="tabs_label_favorites">Favorieten</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_profile">Profiel</string>
+    <string name="tabs_label_settings">Instellingen</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
-    <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
-    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
-    <string name="notification_service_title_online">Friend has came online!</string>
-    <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
-    <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
-    <string name="notification_service_title_location">Friend changed location!</string>
-    <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
-    <string name="notification_service_title_friend_removed">Your friend has removed you.</string>
-    <string name="notification_service_description_friend_removed">Your friend, %1$s is no longer your friend :(</string>
-    <string name="notification_service_title_friend_added">You got a new friend!</string>
-    <string name="notification_service_description_friend_added">%1$s is now your friend!</string>
-    <string name="notification_title_player">\'s Notifications</string>
-    <string name="notification_label_enable">Enable Notifications</string>
-    <string name="notification_label_intent_online">Online Notifications</string>
-    <string name="notification_label_intent_offline">Offline Notifications</string>
-    <string name="notification_label_intent_location">Location Notifications</string>
-    <string name="notification_label_intent_status">Status Change Notifications</string>
-    <string name="notification_service_title_status">Friend changed status!</string>
-    <string name="notification_service_description_status">Your friend, %1$s has changed their status from %2$s to %3$s.</string>
-    <string name="notifications_page_title">Notifications</string>
+    <string name="service_notification">VRCAA is nu je vrienden in de achtergrond aan her monitoren.</string>
+    <string name="service_killed_by_vendor_notification">VRCAA was getermineerd door je systeem! Check https://dontkillmyapp.com/ voor meer informatie.</string>
+    <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA is nu rich presence informatie aan het melden.</string>
+    <string name="notification_service_title_online">Vriend is online gekomen!</string>
+    <string name="notification_service_description_online">Je vriend, %1$s is online gekomen!</string>
+    <string name="notification_service_title_offline">Vriend is offline gegaan!</string>
+    <string name="notification_service_description_offline">Je vriend, %1$s is offline gegaan!</string>
+    <string name="notification_service_title_location">Vriend is van locatie verandert!</string>
+    <string name="notification_service_description_location">Je vriend, %1$s is naar %2$s gegaan.</string>
+    <string name="notification_service_title_friend_removed">Je vriend heeft je verwijdert.</string>
+    <string name="notification_service_description_friend_removed">Je vriend, %1$s is niet meer je vriend :(</string>
+    <string name="notification_service_title_friend_added">Je hebt een nieuwe vriend!</string>
+    <string name="notification_service_description_friend_added">%1$s Is nu je vriend!</string>
+    <string name="notification_title_player">\'s Notificaties</string>
+    <string name="notification_label_enable">Zet Notificaties Aan</string>
+    <string name="notification_label_intent_online">Online Notificaties</string>
+    <string name="notification_label_intent_offline">Offline Notificaties</string>
+    <string name="notification_label_intent_location">Locatie Notificaties</string>
+    <string name="notification_label_intent_status">Notificaties voor Veranderen van Status</string>
+    <string name="notification_service_title_status">Vriend is van status verandert!</string>
+    <string name="notification_service_description_status">Je vriend, %1$s heeft hun status aangepast van %2$s naar %3$s.</string>
+    <string name="notifications_page_title">Notificaties</string>
     <string name="notifications_type_invite">Invite</string>
     <string name="notifications_type_invite_response">Invite Response</string>
     <string name="notifications_type_invite_request">Invite Request</string>
@@ -194,118 +195,118 @@
     <string name="feed_search_placeholder">Search for User or Location…</string>
     <string name="feed_friend_avatar_label">Avatar Change</string>
     <string name="feed_friend_avatar_text">changed their avatar to</string>
-    <string name="feed_friend_username_changed_label">Username Change</string>
-    <string name="feed_friend_username_changed_text">changed their username to</string>
+    <string name="feed_friend_username_changed_label">Gebruikersnaam Verandert</string>
+    <string name="feed_friend_username_changed_text">heeft hun gebruikersnaam verandert naar</string>
     <!-- About -->
-    <string name="about_page_title">About</string>
-    <string name="about_page_open_source_licenses_title">Open Source Licenses</string>
-    <string name="about_page_translate_title">Contribute to Translation</string>
-    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_title">Over</string>
+    <string name="about_page_open_source_licenses_title">Open Source Licenties</string>
+    <string name="about_page_translate_title">Draag bij aan het Vertalen</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Batterij optimalisaties zijn al uitgeschakeld.</string>
     <string name="license_title">Open Source licenties</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+    <string name="api_session_has_expired_text">Je sessie is afgelopen, log alsjeblieft opnieuw in.</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Set Webhook Url</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Service opnieuw aan het opstarten om toe te passen.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Rich Presence Inschakelen</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Webhook URL Instellen</string>
     <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Laat je huidige status is Discord zien.</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
-    <string name="crash_button_restart_text">Restart</string>
-    <string name="crash_button_copy_log_text">Copy Information</string>
-    <string name="crash_button_report_text">Report Issue</string>
+    <string name="crash_title_text">De applicatie kwam een fatale error tegen.</string>
+    <string name="crash_button_restart_text">Opnieuw Opstarten</string>
+    <string name="crash_button_copy_log_text">Informatie Kopiëren</string>
+    <string name="crash_button_report_text">Probleem Melden</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
         <item>Info</item>
         <item>Instances</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_toast_not_found_message">Groep niet gevonden, weet je zeker dat het bestaat?</string>
+    <string name="group_page_label_description">Beschrijving</string>
+    <string name="group_page_label_rules">Regels</string>
+    <string name="group_page_dropdown_view_author">Profiel van Auteur Bekijken</string>
+    <string name="group_page_dropdown_request_invite">Uitnodiging Aanvragen</string>
+    <string name="group_page_dropdown_request_invite_cancel">Aanvraag voor Uitnodiging Afzeggen</string>
+    <string name="group_page_dropdown_join_group">Aansluiten bij Groep</string>
+    <string name="group_page_dropdown_leave_group">Groep Verlaten</string>
+    <string name="group_page_toast_invite_requested">Aanvraag voor Uitnodiging Verzonden</string>
+    <string name="group_page_toast_invite_requested_fail">Aanvraag voor Uitnodiging Mislukt</string>
+    <string name="group_page_toast_invite_requested_cancel">Aanvraag voor Uitnodiging Afgezegd</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Afzeggen van Aanvraag voor Uitnodiging Mislukt</string>
+    <string name="group_page_toast_join_group">Aangesloten bij Groep</string>
+    <string name="group_page_toast_join_group_fail">Aansluiten bij Groep Mislukt</string>
+    <string name="group_page_toast_leave_group">Groep Verlaten</string>
+    <string name="group_page_toast_leave_group_fail">Groep Verlaten Mislukt</string>
+    <string name="group_user_no_groups_message">Gebruiker is geen lid van een groep.</string>
+    <string name="group_user_viewing_groups_username">%1$s\'s Groepen</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
-    <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
-    <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
+    <string name="misc_no_internet_title">Geen Internet Verbinding</string>
+    <string name="misc_no_internet_description">Zorg er alsjeblieft voor dat je bent verbonden met het internet, deze applicatie werkt niet zonder internet.</string>
+    <string name="misc_no_internet_label">Applicatie Opnieuw Opstarten</string>
+    <string name="misc_exit_toast_label">Druk nog een keer om te verlaten.</string>
+    <string name="misc_no_premium_subscription">Deze functie vereist een actief VRC+ abonnement.</string>
+    <string name="global_app_default_loading_text">Initialiseren…</string>
+    <string name="generic_text_public">Openbaar</string>
+    <string name="generic_text_private">Privé</string>
+    <string name="generic_text_upload">Uploaden</string>
+    <string name="generic_text_cancel">Annuleren</string>
     <string name="generic_text_ok">OK</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
-    <string name="user_overlay_friend_accept">Accept Request</string>
-    <string name="user_overlay_friend_cancel">Cancel Request</string>
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
-    <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_friend_add">Vriend Toevoegen</string>
+    <string name="user_overlay_friend_remove">Vriend Verwijderen</string>
+    <string name="user_overlay_friend_accept">Aanvraag Accepteren</string>
+    <string name="user_overlay_friend_cancel">Aanvraag Annuleren</string>
+    <string name="user_overlay_groups">Groepen</string>
+    <string name="user_overlay_worlds">Werelden</string>
+    <string name="user_overlay_favorites">Favorieten</string>
+    <string name="user_overlay_find_avatar">Vind Avatar</string>
+    <string name="user_overlay_invite">Stuur Mij een Uitnodiging</string>
+    <string name="user_overlay_note">Voeg Notitie Toe</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Zichtbaarheid van Leeftijdsverificatie</string>
+    <string name="profile_edit_dialog_title_status_description">Status Beschrijving</string>
     <string name="profile_edit_dialog_title_bio">Bio</string>
     <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
+    <string name="profile_edit_dialog_toast_updated">Profiel bijgewerkt.</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Veranderingen zijn verwijderd.</string>
     <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_cancel">Annuleren</string>
+    <string name="profile_edit_dialog_button_apply">Toepassen</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
+    <string name="logout_dialog_title">Weet je het zeker?</string>
+    <string name="logout_dialog_description">Door onderaan op \"Doorgaan\" te drukken zul je worden uitgelogd van VRCAA en zul je opnieuw moeten inloggen op de applicatie te blijven gebruiken.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Huidige locatie van vrienden bekijken.</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">De horizon is helder, mijn vriend.</string>
+    <string name="favorite_page_title">Favorieten</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
+        <item>Werelden</item>
         <item>Avatars</item>
-        <item>Friends</item>
+        <item>Vrienden</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
-        <item>Worlds</item>
+        <item>Werelden</item>
         <item>Avatars</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
+    <string name="favorite_label_add">Aan favorieten toevoegen</string>
+    <string name="favorite_label_remove">Uit favorieten verwijderen</string>
+    <string name="favorite_toast_favorite_added">%1$s Is toegevoegd aan favorieten.</string>
+    <string name="favorite_toast_favorite_added_failed">Toevoegen van %1$s aan favorieten is mislukt.</string>
+    <string name="favorite_toast_favorite_removed">%1$s Is uit favorieten verwijderd.</string>
+    <string name="favorite_toast_favorite_removed_failed">Verwijderen van %1$s uit favorieten is mislukt.</string>
+    <string name="favorite_dialog_button_add">Toevoegen</string>
+    <string name="favorite_dialog_button_cancel">Annuleren</string>
     <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
+    <string name="favorite_edit_title">%1$s Aan het bewerken</string>
     <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
-    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
+    <string name="favorite_edit_visibility">Zichtbaarheid</string>
+    <string name="favorite_edit_discarded">Veranderingen zijn verwijderd.</string>
+    <string name="favorite_edit_applied">Veranderingen zijn toegepast.</string>
+    <string name="favorite_dialog_button_edit">Bewerken</string>
+    <string name="favorite_tab_refresh_favorites">Favorieten Verversen</string>
+    <string name="favorite_toast_refreshed_favorites">Favorieten Ververst</string>
+    <string name="favorite_remove_dialog_title">Wil je deze favoriet verwijderen?</string>
     <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
     <!-- Activities -->
     <!-- Worlds -->
