@@ -247,7 +247,7 @@
     <string name="misc_no_premium_subscription">此功能需要您有活跃的 VRC+ 订阅</string>
     <string name="global_app_default_loading_text">初始化...</string>
     <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
+    <string name="generic_text_private">私人</string>
     <string name="generic_text_upload">上传</string>
     <string name="generic_text_cancel">取消</string>
     <string name="generic_text_ok">OK</string>
@@ -425,4 +425,5 @@
     <string name="image_preview_dialog_title">预览</string>
     <string name="image_preview_toast_picture_saved">图片已保存。</string>
     <string name="image_preview_toast_picture_save_failed">无法保存图片。</string>
+    <string name="activity_peek_no_url_handler">No app available to open the URL.</string>
 </resources>

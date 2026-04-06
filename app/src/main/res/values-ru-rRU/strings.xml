@@ -424,4 +424,5 @@
     <string name="image_preview_dialog_title">Предпросмотр</string>
     <string name="image_preview_toast_picture_saved">Saved picture.</string>
     <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
+    <string name="activity_peek_no_url_handler">No app available to open the URL.</string>
 </resources>
