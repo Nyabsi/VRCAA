@@ -88,42 +88,12 @@ class UserProfileScreenModel(
         screenModelScope.launch {
             profile?.let {
                 val fileId = ApiHelper.extractFileIdFromUrl(it.currentAvatarImageUrl)
-
                 if (fileId != null) {
-                    api.files.fetchMetadataByFileId(fileId)?.let { metadata ->
-
-                        val name = metadata.name.split(" - ")
-
-                        if (name.size > 1) {
-                            val nameAvatars = avatarProvider.searchAll(name[1])
-                            if (nameAvatars.isNotEmpty()) {
-                                for (avatar in nameAvatars) {
-                                    avatar.imageUrl?.let {
-                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                        if (avatarFileId == fileId) {
-                                            callback(avatar.id)
-                                            return@launch
-                                        }
-                                    }
-                                }
-                            }
-
-                            // fallback to using author search
-                            val authorAvatars = avatarProvider.searchAll(metadata.ownerId)
-                            if (authorAvatars.isNotEmpty()) {
-                                for (avatar in authorAvatars) {
-                                    avatar.imageUrl?.let {
-                                        val avatarFileId = ApiHelper.extractFileIdFromUrl(avatar.imageUrl)
-                                        if (avatarFileId == fileId) {
-                                            callback(avatar.id)
-                                            return@launch
-                                        }
-                                    }
-                                }
-                            }
-
-                            callback(null)
-                        }
+                    val result = avatarProvider.searchFileId(fileId)
+                    if (result.isNotEmpty()) {
+                        callback(result[0].id)
+                    } else {
+                        callback(null)
                     }
                 }
             }

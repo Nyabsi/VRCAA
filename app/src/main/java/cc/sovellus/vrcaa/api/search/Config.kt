@@ -22,5 +22,4 @@ object Config {
     const val API_USER_AGENT = "VRCAA/${BuildConfig.VERSION_NAME} nyabsi@sovellus.cc"
     const val API_REFERER = "vrcaa.sovellus.cc"
     const val AVTR_DB_API_BASE_URL = "https://api.avtrdb.com/v2"
-    const val JUST_H_PARTY_API_BASE_URL = "https://avtr.just-h.party"
 }
