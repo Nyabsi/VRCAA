@@ -247,7 +247,7 @@
     <string name="misc_no_premium_subscription">此功能需要您有活跃的 VRC+ 订阅</string>
     <string name="global_app_default_loading_text">初始化...</string>
     <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
+    <string name="generic_text_private">私人</string>
     <string name="generic_text_upload">上传</string>
     <string name="generic_text_cancel">取消</string>
     <string name="generic_text_ok">OK</string>
