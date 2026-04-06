@@ -46,7 +46,7 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
         FRIEND_FEED_USERNAME_CHANGE;
 
         companion object {
-            fun fromInt(value: Int) = entries.first { it.ordinal == value }
+            fun fromInt(value: Int): FeedType = entries.first { it.ordinal == value }
         }
     }
 
@@ -71,7 +71,7 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
 
     init {
         synchronized(feedLock) {
-            DatabaseManager.readFeeds().takeLast(MAX_FEED_ENTRIES).forEach {
+            DatabaseManager.readFeeds(MAX_FEED_ENTRIES).forEach {
                 feedList.add(it)
             }
             feedStateFlow.value = feedList.toList()
