@@ -27,6 +27,7 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
     override fun onCreate(database: SQLiteDatabase) {
         database.execSQL(Queries.SQL_CREATE_FEED_TABLE)
         database.execSQL(Queries.SQL_CREATE_SEARCH_HISTORY_TABLE)
+        database.execSQL(Queries.SQL_CREATE_FEED_TIMESTAMP_INDEX)
     }
 
     override fun onUpgrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -39,25 +40,35 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
             database.execSQL(Queries.SQL_CREATE_SEARCH_HISTORY_TABLE)
         }
 
-        // onUpgrade(database, oldVersion, newVersion)
+        if (oldVersion <= 3 && newVersion >= 4) {
+            database.execSQL(Queries.SQL_CREATE_FEED_TIMESTAMP_INDEX)
+        }
     }
 
-    override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        super.onDowngrade(db, oldVersion, newVersion)
+    override fun onDowngrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+
+        if (newVersion < 4) {
+            database.execSQL(Downgrades.SQL_DROP_FEED_TIMESTAMP_INDEX)
+        }
     }
 
     object Constants {
         const val DATABASE_NAME = "vrcaa.db"
-        const val DATABASE_VERSION = 3
+        const val DATABASE_VERSION = 4
     }
 
     object Queries {
         const val SQL_CREATE_FEED_TABLE = "CREATE TABLE feed(type INTEGER, feedId TEXT, friendId TEXT, friendName TEXT, friendPictureUrl TEXT, friendStatus TEXT, travelDestination TEXT, worldId TEXT, avatarName TEXT, feedTimestamp BIGINT)"
         const val SQL_CREATE_SEARCH_HISTORY_TABLE = "CREATE TABLE search_history(query TEXT)"
+        const val SQL_CREATE_FEED_TIMESTAMP_INDEX = "CREATE INDEX IF NOT EXISTS idx_feed_timestamp ON feed(feedTimestamp DESC)"
     }
 
     object Migrations {
         const val SQL_FEED_TABLE_V2_MIGRATION = "ALTER TABLE feed ADD avatarName TEXT"
+    }
+
+    object Downgrades {
+        const val SQL_DROP_FEED_TIMESTAMP_INDEX = "DROP INDEX IF EXISTS idx_feed_timestamp"
     }
 
     object Tables {

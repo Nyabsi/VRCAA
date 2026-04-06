@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
+import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.DatabaseHelper
@@ -45,7 +46,7 @@ object DatabaseManager: BaseManager<Any>() {
         db.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_FEED, null, values)
     }
 
-    fun readFeeds(): MutableList<FeedManager.Feed> {
+    fun readFeeds(limit: Int = 1000): MutableList<FeedManager.Feed> {
         val cursor = db.readableDatabase.query(
             DatabaseHelper.Tables.SQL_TABLE_FEED,
             arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "avatarName", "feedTimestamp"),
@@ -53,7 +54,8 @@ object DatabaseManager: BaseManager<Any>() {
             null,
             null,
             null,
-            null
+            "feedTimestamp DESC",
+            limit.toString()
         )
 
         val feeds = mutableListOf<FeedManager.Feed>()
@@ -62,15 +64,17 @@ object DatabaseManager: BaseManager<Any>() {
             while (moveToNext()) {
                 val feed = FeedManager.Feed(
                     type = FeedManager.FeedType.fromInt(getInt(getColumnIndexOrThrow("type"))),
-                    feedId = UUID.fromString(getString(getColumnIndexOrThrow("feedId"))),
-                    friendId = getString(getColumnIndexOrThrow("friendId")),
-                    friendName = getString(getColumnIndexOrThrow("friendName")),
-                    friendPictureUrl = getString(getColumnIndexOrThrow("friendPictureUrl")),
+                    feedId = getStringOrNull(getColumnIndex("feedId"))?.let { UUID.fromString(it) } ?: UUID.randomUUID(),
+                    friendId = getStringOrNull(getColumnIndex("friendId")) ?: "",
+                    friendName = getStringOrNull(getColumnIndex("friendName")) ?: "",
+                    friendPictureUrl = getStringOrNull(getColumnIndex("friendPictureUrl")) ?: "",
                     friendStatus = StatusHelper.Status.fromInt(getInt(getColumnIndexOrThrow("friendStatus"))),
-                    travelDestination = getString(getColumnIndexOrThrow("travelDestination")),
-                    worldId = getString(getColumnIndexOrThrow("worldId")),
+                    travelDestination = getStringOrNull(getColumnIndex("travelDestination")) ?: "",
+                    worldId = getStringOrNull(getColumnIndex("worldId")) ?: "",
                     avatarName = getStringOrNull(getColumnIndex("avatarName")) ?: "",
-                    feedTimestamp = LocalDateTime.ofEpochSecond(getLong(getColumnIndexOrThrow("feedTimestamp")), 0, ZoneOffset.UTC)
+                    feedTimestamp = getLongOrNull(getColumnIndex("feedTimestamp"))
+                        ?.let { LocalDateTime.ofEpochSecond(it, 0, ZoneOffset.UTC) }
+                        ?: LocalDateTime.now(ZoneOffset.UTC)
                 )
                 feeds.add(feed)
             }
@@ -97,7 +101,8 @@ object DatabaseManager: BaseManager<Any>() {
 
         with(cursor) {
             while (moveToNext()) {
-                queries.add(getString(getColumnIndexOrThrow("query")))
+                val query = getStringOrNull(getColumnIndex("query")) ?: continue
+                queries.add(query)
             }
         }
 
