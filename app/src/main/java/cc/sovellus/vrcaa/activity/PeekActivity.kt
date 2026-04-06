@@ -17,8 +17,10 @@
 package cc.sovellus.vrcaa.activity
 
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.core.net.toUri
@@ -26,6 +28,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
+import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.base.BaseActivity
 import cc.sovellus.vrcaa.ui.screen.avatar.AvatarScreen
 import cc.sovellus.vrcaa.ui.screen.group.GroupScreen
@@ -62,9 +65,17 @@ class PeekActivity : BaseActivity() {
         }
 
         if (earlyFinish) {
-            val intent = Intent(Intent.ACTION_VIEW, "http://www.vrchat.com/$path".toUri())
-            startActivity(intent)
-            finish()
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, "http://www.vrchat.com/$path".toUri())
+                startActivity(intent)
+                finish()
+            } catch (_: ActivityNotFoundException) {
+                Toast.makeText(
+                    this,
+                    this.getString(R.string.activity_peek_no_url_handler),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
