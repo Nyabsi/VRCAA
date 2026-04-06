@@ -26,7 +26,6 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
-import cc.sovellus.vrcaa.api.search.justhparty.JustHPartyProvider
 import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
@@ -56,7 +55,6 @@ class SearchResultScreenModel(
     val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, MODE_PRIVATE)
 
     private val avtrDbProvider = AvtrDbProvider()
-    private val justHPartyProvider = JustHPartyProvider()
 
     private var worldOffset = 0
     private val worldStateFlow = MutableStateFlow(listOf<World>())
@@ -120,10 +118,6 @@ class SearchResultScreenModel(
                     )
                     avatarLimitReached.value = result.first
                     avatarStateFlow.value = result.second
-                }
-                "justhparty" -> {
-                    avatarLimitReached.value = true // doesn't support pagination
-                    avatarStateFlow.value = justHPartyProvider.search(query)
                 }
             }
 

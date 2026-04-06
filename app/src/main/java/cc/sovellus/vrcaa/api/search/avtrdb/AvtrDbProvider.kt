@@ -20,11 +20,14 @@ import cc.sovellus.vrcaa.api.search.Config
 import cc.sovellus.vrcaa.base.BaseClient
 import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse
+import cc.sovellus.vrcaa.api.search.avtrdb.models.SearchAvatars
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import okhttp3.Headers
 
 class AvtrDbProvider : BaseClient() {
+
+    private val gson = Gson()
 
     tailrec suspend fun search(
         query: String,
@@ -51,7 +54,7 @@ class AvtrDbProvider : BaseClient() {
             is Result.Succeeded -> {
 
                 val avatars: ArrayList<SearchAvatar> = arrayListOf()
-                val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
+                val json = gson.fromJson(result.body, AvtrDbResponse::class.java)
                 avatars.addAll(json.avatars)
                 Pair(!json.hasMore, avatars)
             }
@@ -65,22 +68,16 @@ class AvtrDbProvider : BaseClient() {
         }
     }
 
-    tailrec suspend fun searchAll(
-        query: String,
-        n: Int = 50,
-        offset: Int = 0,
-        avatars: ArrayList<SearchAvatar> = arrayListOf()
+    suspend fun searchFileId(
+        fileId: String
     ): ArrayList<SearchAvatar> {
 
         val result = doRequest(
             method = "GET",
             url = buildString {
                 append(Config.AVTR_DB_API_BASE_URL)
-                append("/avatar/search")
-                append("?query=${query}")
-                append("&page_size=${n}")
-                append("&page=${offset}")
-                append("&legacy=true")
+                append("/avatar/search/vrcx")
+                append("?fileId=${fileId}")
             },
             headers = GENERIC_HEADER,
             body = null,
@@ -89,19 +86,7 @@ class AvtrDbProvider : BaseClient() {
 
         return when (result) {
             is Result.Succeeded -> {
-
-                val json = Gson().fromJson(result.body, AvtrDbResponse::class.java)
-                avatars.addAll(json.avatars)
-
-                if (!json.hasMore)
-                    return avatars
-
-                delay(1000) // 1rq/s rl
-                searchAll(query, n, offset + 1, avatars)
-            }
-            is Result.RateLimited -> {
-                delay(1000)
-                searchAll(query, n, offset, avatars)
+                gson.fromJson(result.body, SearchAvatars::class.java)
             }
             else -> {
                 arrayListOf()

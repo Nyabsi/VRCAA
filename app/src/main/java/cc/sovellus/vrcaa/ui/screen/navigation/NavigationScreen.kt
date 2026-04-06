@@ -869,10 +869,9 @@ class NavigationScreen : Screen {
                                             fontWeight = FontWeight.SemiBold,
                                         )
 
-                                        val options = listOf("avtrdb", "justhparty")
+                                        val options = listOf("avtrdb")
                                         val optionsReadable = mapOf(
-                                            "avtrdb" to "avtrDB",
-                                            "justhparty" to "Just-H Party"
+                                            "avtrdb" to "avtrDB"
                                         )
 
                                         ComboInput(
