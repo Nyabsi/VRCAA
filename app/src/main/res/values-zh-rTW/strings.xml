@@ -424,4 +424,5 @@
     <string name="image_preview_dialog_title">預覽</string>
     <string name="image_preview_toast_picture_saved">已儲存圖片。</string>
     <string name="image_preview_toast_picture_save_failed">保存圖片失敗。</string>
+    <string name="activity_peek_no_url_handler">No app available to open the URL.</string>
 </resources>
