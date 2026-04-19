@@ -49,10 +49,11 @@ class RichPresenceScreenModel : ScreenModel {
         preferences.richPresenceEnabled = !preferences.richPresenceEnabled
 
         val intent = Intent(context, RichPresenceService::class.java)
-
-        // we have no idea if it's actually running, nobody cares, it will start regardless.
-        context.stopService(intent)
-        ContextCompat.startForegroundService(context, intent)
+        if (preferences.richPresenceEnabled) {
+            ContextCompat.startForegroundService(context, intent)
+        } else {
+            context.stopService(intent)
+        }
 
         Toast.makeText(
             context,

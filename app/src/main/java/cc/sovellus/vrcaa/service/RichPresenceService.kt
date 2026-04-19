@@ -18,58 +18,34 @@ package cc.sovellus.vrcaa.service
 
 import android.app.Service
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.discord.GatewaySocket
-import cc.sovellus.vrcaa.api.discord.GatewaySocket.PresenceInfo
-import cc.sovellus.vrcaa.extension.discordToken
-import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.NotificationHelper
-import cc.sovellus.vrcaa.helper.StatusHelper
-import cc.sovellus.vrcaa.manager.GatewayManager
+import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.PresenceManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
-class RichPresenceService : Service() {
+class RichPresenceService : Service(), CoroutineScope {
 
-    private lateinit var preferences: SharedPreferences
+    private val serviceJob = SupervisorJob()
+    override val coroutineContext = Dispatchers.IO + serviceJob
 
-    val presence: PresenceInfo = PresenceInfo()
     val gateway = GatewaySocket()
 
-    val listener = object : GatewayManager.GatewayListener {
-        override suspend fun onUpdateWorld(
-            info: PresenceInfo
-        ) {
-            presence.apply {
-                worldName = info.worldName
-                worldThumbnailUrl = info.worldThumbnailUrl
-                worldId = info.worldId
-                instanceInfo = info.instanceInfo
-                instanceNonce = info.instanceNonce
-                instanceType = info.instanceType
-                userStatus = info.userStatus
-            }
-            gateway.sendPresence(presence)
-        }
-
-        override suspend fun onUpdateStatus(status: String) {
-            presence.apply {
-                userStatus = StatusHelper.getStatusFromString(status)
-            }
+    val listener = object : PresenceManager.PresenceListener {
+        override suspend fun onUpdatePresence(presence: PresenceManager.PresenceInfo) {
             gateway.sendPresence(presence)
         }
     }
 
     override fun onCreate() {
-        this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         val builder = NotificationCompat.Builder(this, NotificationHelper.CHANNEL_DEFAULT_ID)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(application.getString(R.string.app_name))
@@ -87,8 +63,11 @@ class RichPresenceService : Service() {
             // Older versions do not require to specify the `foregroundServiceType`
             startForeground(NOTIFICATION_ID, builder.build())
         }
+    }
 
-        GatewayManager.addListener(listener)
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        PresenceManager.addListener(listener)
         gateway.connect()
 
         return START_STICKY
@@ -96,6 +75,7 @@ class RichPresenceService : Service() {
 
     override fun onDestroy() {
         gateway.disconnect()
+        super.onDestroy()
     }
 
     override fun onBind(intent: Intent?): IBinder? { return null }

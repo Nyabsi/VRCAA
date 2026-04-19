@@ -39,14 +39,6 @@ import cc.sovellus.vrcaa.extension.twoFactorToken
 import cc.sovellus.vrcaa.helper.NotificationHelper
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
-import cc.sovellus.vrcaa.manager.DatabaseManager
-import cc.sovellus.vrcaa.manager.DebugManager
-import cc.sovellus.vrcaa.manager.FavoriteManager
-import cc.sovellus.vrcaa.manager.FeedManager
-import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.GatewayManager
-import cc.sovellus.vrcaa.manager.NotificationManager
-import cc.sovellus.vrcaa.manager.ThemeManager
 import cc.sovellus.vrcaa.service.PipelineService
 import cc.sovellus.vrcaa.service.RichPresenceService
 import cc.sovellus.vrcaa.ui.screen.login.LoginScreen
@@ -119,8 +111,12 @@ class MainActivity : BaseActivity() {
             }
 
             if (App.getIsValidSession()) {
-                val intent = Intent(this, PipelineService::class.java)
+                var intent = Intent(this, PipelineService::class.java)
                 ContextCompat.startForegroundService(this, intent)
+                if (preferences.richPresenceEnabled) {
+                    intent = Intent(this, RichPresenceService::class.java)
+                    ContextCompat.startForegroundService(this, intent)
+                }
             }
         }
     }

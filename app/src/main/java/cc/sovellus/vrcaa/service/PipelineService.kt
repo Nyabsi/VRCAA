@@ -18,7 +18,6 @@ package cc.sovellus.vrcaa.service
 
 import android.app.Service
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
 import android.os.Build
 import android.os.Handler
@@ -28,9 +27,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
-import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.discord.GatewaySocket.PresenceInfo
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendAdd
@@ -46,7 +43,6 @@ import cc.sovellus.vrcaa.api.vrchat.pipeline.models.NotificationV2Delete
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.SeeNotification
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserLocation
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.UserUpdate
-import cc.sovellus.vrcaa.extension.richPresenceEnabled
 import cc.sovellus.vrcaa.helper.ApiHelper
 import cc.sovellus.vrcaa.helper.JsonHelper
 import cc.sovellus.vrcaa.helper.LocationHelper
@@ -56,8 +52,8 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.GatewayManager
 import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.manager.PresenceManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -69,10 +65,7 @@ class PipelineService : Service(), CoroutineScope {
     private val serviceJob = SupervisorJob()
     override val coroutineContext = Dispatchers.IO + serviceJob
 
-    private lateinit var preferences: SharedPreferences
-
     private var pipeline: PipelineSocket? = null
-
     private var handlerThread: HandlerThread? = null
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -290,19 +283,19 @@ class PipelineService : Service(), CoroutineScope {
                                 } else {
                                     CacheManager.addWorld(instance.world)
                                 }
-                                if (preferences.richPresenceEnabled) {
-                                    val location = LocationHelper.parseLocationInfo(user.location)
-                                    val info = PresenceInfo().apply {
-                                        worldName = instance.world.name
-                                        worldThumbnailUrl = instance.world.thumbnailImageUrl
-                                        worldId = instance.world.id
-                                        instanceInfo = "${location.instanceType} #${instance.name}"
-                                        instanceNonce = user.location
-                                        instanceType = location.instanceType
-                                        userStatus = StatusHelper.getStatusFromString(user.user.status)
-                                    }
-                                    GatewayManager.updateWorld(info)
+
+                                val location = LocationHelper.parseLocationInfo(user.location)
+                                val info = PresenceManager.PresenceInfo().apply {
+                                    worldName = instance.world.name
+                                    worldThumbnailUrl = instance.world.thumbnailImageUrl
+                                    worldId = instance.world.id
+                                    instanceInfo = "${location.instanceType} #${instance.name}"
+                                    instanceNonce = user.location
+                                    instanceType = location.instanceType
+                                    userStatus = StatusHelper.getStatusFromString(user.user.status)
                                 }
+
+                                PresenceManager.updateWorld(info)
                                 CacheManager.addRecentWorld(instance.world)
                             }
                         }
@@ -312,10 +305,8 @@ class PipelineService : Service(), CoroutineScope {
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
 
-                    if (preferences.richPresenceEnabled) {
-                        launch {
-                            GatewayManager.updateStatus(user.user.status)
-                        }
+                    launch {
+                        PresenceManager.updateStatus(user.user.status)
                     }
 
                     CacheManager.updateProfile(user.user)
@@ -456,8 +447,6 @@ class PipelineService : Service(), CoroutineScope {
 
     override fun onCreate() {
         startService()
-
-        this.preferences = getSharedPreferences(App.PREFERENCES_NAME, 0)
 
         handlerThread = HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()

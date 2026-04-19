@@ -17,7 +17,6 @@
 package cc.sovellus.vrcaa.api.discord
 
 import android.util.ArrayMap
-import android.util.Log
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.api.discord.models.websocket.Hello
 import cc.sovellus.vrcaa.api.discord.models.websocket.Incoming
@@ -26,6 +25,7 @@ import cc.sovellus.vrcaa.extension.discordToken
 import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.DebugManager
+import cc.sovellus.vrcaa.manager.PresenceManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Headers
@@ -58,21 +58,12 @@ class GatewaySocket {
     private var sequence: Int = 0
     private var interval: Long = 0
     private var sessionId = ""
+
     private var shouldResume: Boolean = false
     private var sessionTime: Int = 0
 
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
     private lateinit var schedule: ScheduledFuture<*>
-
-    data class PresenceInfo(
-        var worldName: String = "",
-        var worldThumbnailUrl: String = "",
-        var worldId: String = "",
-        var instanceInfo: String = "",
-        var instanceNonce: String = "",
-        var instanceType: String = "",
-        var userStatus: StatusHelper.Status = StatusHelper.Status.Offline
-    )
 
     private val heartbeatRunnable = Runnable {
         sendHeartbeat()
@@ -98,7 +89,7 @@ class GatewaySocket {
 
                 val payload = Gson().fromJson(uncompressedStream.toString(), Incoming::class.java)
 
-                if (payload.s!= null) {
+                if (payload.s != null) {
                     sequence = payload.s
                 }
 
@@ -115,6 +106,7 @@ class GatewaySocket {
                         schedule = scheduler.scheduleWithFixedDelay(heartbeatRunnable, interval, interval, TimeUnit.MILLISECONDS)
                     }
                     Opcodes.HEARTBEAT_ACK -> {
+                        // Discord expect you to acknowledge the acknowledgement.
                         scheduler.schedule(heartbeatRunnable, interval, TimeUnit.MILLISECONDS)
                     }
                     else -> {
@@ -173,7 +165,6 @@ class GatewaySocket {
     }
 
     fun disconnect() {
-
         val presence = ArrayMap<String, Any?>()
         presence["status"] = "idle"
         presence["since"] = 0
@@ -215,7 +206,7 @@ class GatewaySocket {
         }
     }
 
-    suspend fun sendPresence(info: PresenceInfo) {
+    suspend fun sendPresence(info: PresenceManager.PresenceInfo) {
 
         val assets = ArrayMap<String, String>()
 
@@ -252,7 +243,7 @@ class GatewaySocket {
         // TODO: how do we actually determine the amount of people without log parsing, we don't, for future.
         // val party = ArrayMap<String, Any?>()
         // party["size"] = arrayOf<Any>(16, 64)
-        
+
         val activity = ArrayMap<String, Any>()
 
         activity["name"] = "VRChat"
