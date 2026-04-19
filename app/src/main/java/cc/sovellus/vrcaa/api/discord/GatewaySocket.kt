@@ -45,13 +45,13 @@ import java.util.zip.InflaterOutputStream
 
 class GatewaySocket {
 
-    val preferences = App.getPreferences()
+    private val preferences = App.getPreferences()
 
     private var socket: WebSocket? = null
     private val client: OkHttpClient by lazy { OkHttpClient() }
     private val gson = GsonBuilder().serializeNulls().create()
     private val inflater = Inflater()
-    private val mp: DiscordMediaProxy = DiscordMediaProxy(preferences.richPresenceWebhookUrl)
+    private val mp: DiscordMediaProxy = DiscordMediaProxy()
 
     private var currentGatewayUrl = "wss://gateway.discord.gg/?encoding=json&v=9&compress=zlib-stream"
 

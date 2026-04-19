@@ -16,14 +16,16 @@
 
 package cc.sovellus.vrcaa.api.discord
 
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.api.discord.models.WebHookResponse
 import cc.sovellus.vrcaa.base.BaseClient
+import cc.sovellus.vrcaa.extension.richPresenceWebhookUrl
 import com.google.gson.Gson
 import okhttp3.Headers
 
-class DiscordMediaProxy(
-    private val webHookUrl: String
-)  : BaseClient() {
+class DiscordMediaProxy : BaseClient() {
+
+    private val preferences = App.getPreferences()
 
     private fun handleRequest(result: Result): String? {
         return when (result) {
@@ -47,7 +49,7 @@ class DiscordMediaProxy(
 
         doRequest(
             method = "DELETE",
-            url = "$webHookUrl/messages/${id}",
+            url = "${preferences.richPresenceWebhookUrl}/messages/${id}",
             headers = GENERIC_HEADER,
             body = null
         )
@@ -62,7 +64,7 @@ class DiscordMediaProxy(
 
         val result = doRequest(
             method = "POST",
-            url = "$webHookUrl?wait=true",
+            url = "${preferences.richPresenceWebhookUrl}?wait=true",
             headers = GENERIC_HEADER,
             body = body
         )
