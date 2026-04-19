@@ -107,7 +107,7 @@ class GatewaySocket {
                     }
                     Opcodes.HEARTBEAT_ACK -> {
                         // Discord expect you to acknowledge the acknowledgement.
-                        scheduler.schedule(heartbeatRunnable, interval, TimeUnit.MILLISECONDS)
+                        // scheduler.schedule(heartbeatRunnable, interval, TimeUnit.MILLISECONDS)
                     }
                     else -> {
                         isUnknown = true
@@ -220,10 +220,8 @@ class GatewaySocket {
             APP_ASSET_LARGE_ICON
         }
 
-        assets["large_url"] = if (info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) {
-            "https://vrchat.com/home/world/${info.worldId}/info"
-        } else {
-            ""
+        if (info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) {
+            assets["large_url"] = "https://vrchat.com/home/world/${info.worldId}/info"
         }
 
         assets["small_image"] = when(info.userStatus) {
@@ -255,10 +253,8 @@ class GatewaySocket {
             "User location hidden."
         }
 
-        activity["details_url"] = if ((info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) && (info.instanceType == "Public" || info.instanceType == "Group" || info.instanceType == "Group+")) {
-            "vrchat://launch?ref=vrchat.com&id=${info.instanceNonce}"
-        } else {
-            ""
+        if ((info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) && (info.instanceType == "Public" || info.instanceType == "Group" || info.instanceType == "Group+")) {
+            activity["details_url"] = "vrchat://launch?ref=vrchat.com&id=${info.instanceNonce}"
         }
 
         activity["details"] = if (info.userStatus == StatusHelper.Status.JoinMe || info.userStatus == StatusHelper.Status.Active) {
