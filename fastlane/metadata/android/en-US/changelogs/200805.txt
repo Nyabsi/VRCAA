@@ -1,0 +1,6 @@
+- Optimized "Find Avatar" endpoint to reduce service traffic.
+- Fixed PeekActivity crash when no default browser is set.
+- Improved performance by indexing database fields and limiting results to the latest 1000.
+- Updated translations for multiple languages.
+- Updated Rich Presence to support recent Discord changes.
+- Enhanced UI/UX across the application for a smoother experience.
