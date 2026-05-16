@@ -741,6 +741,8 @@ class HttpClient : BaseClient(), CoroutineScope {
         override suspend fun fetchWorldsByName(
             query: String,
             sort: String,
+            tags: List<String>,
+            notags: List<String>,
             n: Int,
             offset: Int
         ): ArrayList<World> {
@@ -754,6 +756,12 @@ class HttpClient : BaseClient(), CoroutineScope {
                     append("&n=${n}")
                     append("&sort=${sort}")
                     append("&search=${query}")
+                    if (tags.isNotEmpty()) {
+                        append("&tag=${tags.joinToString(",")}")
+                    }
+                    if (notags.isNotEmpty()) {
+                        append("&notag=${notags.joinToString(",")}")
+                    }
                     append("&offset=${offset}")
                 },
                 headers = GENERIC_HEADER,
