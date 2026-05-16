@@ -96,7 +96,9 @@ class SearchResultScreenModel(
                 query = query,
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds,
-                offset = worldOffset
+                offset = worldOffset,
+                tags = listOf(),
+                notags = listOf()
             )
 
             App.setLoadingText(R.string.loading_text_users)
@@ -142,7 +144,9 @@ class SearchResultScreenModel(
                 query = query,
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds,
-                offset = worldOffset
+                offset = worldOffset,
+                tags = listOf(),
+                notags = listOf()
             )
 
             if (worlds.isEmpty())

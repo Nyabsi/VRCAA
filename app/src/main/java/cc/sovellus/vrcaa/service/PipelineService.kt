@@ -55,6 +55,7 @@ import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.manager.RecommendationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -287,14 +288,25 @@ class PipelineService : Service(), CoroutineScope {
                                 } else {
                                     CacheManager.addWorld(instance.world)
                                 }
+                                RecommendationManager.updateLocation(instance)
                                 CacheManager.addRecentWorld(instance.world)
+                            } ?: run {
+                                RecommendationManager.updateLocation(null)
                             }
+                        }
+                    } else {
+                        launch {
+                            RecommendationManager.updateLocation(null)
                         }
                     }
                 }
 
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
+
+                    launch {
+                        PresenceManager.updateStatus(user.user.status)
+                    }
 
                     CacheManager.updateProfile(user.user)
                 }

@@ -43,6 +43,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.manager.RecommendationManager
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
@@ -197,8 +198,8 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                val offlineFriends = friends.filter { it.platform.isEmpty() }
-                if (offlineFriends.isEmpty()) {
+                // val offlineFriends = friends.filter { it.platform.isEmpty() }
+                if (model.worlds.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_offline_friends),
                         style = MaterialTheme.typography.headlineSmall,
@@ -221,10 +222,10 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_offline_friends)
                     ) {
-                        items(offlineFriends) { friend ->
+                        items(model.worlds) { friend ->
                             RowItem(
-                                name = friend.displayName,
-                                url = friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl },
+                                name = friend.name,
+                                url = friend.imageUrl.ifEmpty { friend.thumbnailImageUrl },
                                 onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                             )
                         }
