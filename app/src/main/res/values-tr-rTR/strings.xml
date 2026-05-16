@@ -21,7 +21,6 @@
     <!-- Home -->
     <string name="home_active_friends">Çevrimiçi Arkadaşlar</string>
     <string name="home_recently_visited">Yakın zamanda ziyaret ettiklerim</string>
-    <string name="home_offline_friends">Çevrimdışı Arkadaşlar</string>
     <string name="home_friend_locations">Arkadaş konumları</string>
     <!-- Login -->
     <string name="login_text">VRC Android Asistanı\'na giriş yap</string>

@@ -21,7 +21,6 @@
     <!-- Home -->
     <string name="home_active_friends">Amigos En Línea </string>
     <string name="home_recently_visited">Visitado Recientemente</string>
-    <string name="home_offline_friends">Amigos Desconectados</string>
     <string name="home_friend_locations">Ubicaciones de Amigos</string>
     <!-- Login -->
     <string name="login_text">Inicia sesión en VRC Android Assistant</string>

@@ -21,7 +21,6 @@
     <!-- Home -->
     <string name="home_active_friends">Online Friends</string>
     <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_offline_friends">Offline Friends</string>
     <string name="home_friend_locations">Friend Locations</string>
     <!-- Login -->
     <string name="login_text">Login to VRC Android Assistant</string>
