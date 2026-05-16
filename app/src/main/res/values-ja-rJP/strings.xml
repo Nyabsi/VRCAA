@@ -21,7 +21,6 @@
     <!-- Home -->
     <string name="home_active_friends">アクティブ</string>
     <string name="home_recently_visited">最近訪れたワールド</string>
-    <string name="home_offline_friends">オフライン</string>
     <string name="home_friend_locations">フレンドのインスタンス</string>
     <!-- Login -->
     <string name="login_text">VRC Android Assistantへのログイン</string>

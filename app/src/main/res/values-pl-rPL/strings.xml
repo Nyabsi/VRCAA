@@ -21,7 +21,6 @@
     <!-- Home -->
     <string name="home_active_friends">Znajomi online</string>
     <string name="home_recently_visited">Ostatnio odwiedzone</string>
-    <string name="home_offline_friends">Nieaktywni znajomi</string>
     <string name="home_friend_locations">Lokacje znajomych</string>
     <!-- Login -->
     <string name="login_text">Zaloguj się do VRC AA</string>

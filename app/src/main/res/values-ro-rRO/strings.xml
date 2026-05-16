@@ -21,7 +21,6 @@
     <!-- Home -->
     <string name="home_active_friends">Prieteni Online</string>
     <string name="home_recently_visited">Vizitat Recent</string>
-    <string name="home_offline_friends">Prieteni Ofline</string>
     <string name="home_friend_locations">Locație Prieteni</string>
     <!-- Login -->
     <string name="login_text">Autentifică-te în asistentul VRC Android</string>
