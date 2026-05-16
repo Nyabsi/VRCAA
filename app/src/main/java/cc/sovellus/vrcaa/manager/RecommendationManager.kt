@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.manager
 
 import android.util.Log
+import cc.sovellus.vrcaa.BuildConfig
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
@@ -63,7 +64,9 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
         currentLocation = CurrentLocation(instance, now)
 
         val isFirstVisit = DatabaseManager.readLocationByWorldId(instance.worldId) == null
-        Log.d(TAG, "enter: worldId=${instance.worldId} name=${instance.world.name} firstVisit=$isFirstVisit at=$now")
+
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "enter: worldId=${instance.worldId} name=${instance.world.name} firstVisit=$isFirstVisit at=$now")
 
         if (isFirstVisit) {
             DatabaseManager.writeLocation(buildHistory(instance, 0L))
@@ -74,7 +77,8 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
         val now = System.currentTimeMillis() / 1000
         val timeSpent = now - previous.enteredAt
 
-        Log.d(TAG, "leave: worldId=${previous.instance.worldId} name=${previous.instance.world.name} timeSpent=${timeSpent}s")
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "leave: worldId=${previous.instance.worldId} name=${previous.instance.world.name} timeSpent=${timeSpent}s")
 
         DatabaseManager.writeLocation(buildHistory(previous.instance, timeSpent))
         currentLocation = null
@@ -156,7 +160,8 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             .map { it.key }
             .toList()
 
-        Log.d(TAG, "recommendWorlds: positiveCutoff=$positiveCutoff negativeCutoff=$negativeCutoff bestTags=$bestTags worstTags=$worstTags visitedCount=${visitedIds.size}")
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "recommendWorlds: positiveCutoff=$positiveCutoff negativeCutoff=$negativeCutoff bestTags=$bestTags worstTags=$worstTags visitedCount=${visitedIds.size}")
 
         val perTagFetch = (limit * 2).coerceAtMost(100)
         val candidates = mutableMapOf<String, World>()
@@ -181,7 +186,8 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             }
         }
 
-        Log.d(TAG, "recommendWorlds: candidates=${candidates.size}")
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "recommendWorlds: candidates=${candidates.size}")
 
         return candidates.values
             .filter { it.id !in visitedIds }
