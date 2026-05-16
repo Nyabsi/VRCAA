@@ -110,7 +110,7 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
 
     suspend fun recommendWorlds(limit: Int = 20): List<World> {
         val topLocations = DatabaseManager.readTopLocations(limit = 50)
-        val bouncedLocations = DatabaseManager.readBouncedLocations(limit = 50)
+        val bouncedLocations = DatabaseManager.readBouncedLocations(maxTimeSpent = 500, limit = 50)
         val visitedIds = DatabaseManager.readVisitedWorldIds()
 
         val positiveTagWeights = mutableMapOf<String, Long>()
@@ -127,24 +127,36 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             }
         }
 
-        val bestTags = positiveTagWeights.entries
-            .asSequence()
+        val positiveAuthorTags = positiveTagWeights.entries
             .filter { it.key.startsWith("author_tag_") }
+
+        val positiveCutoff = if (positiveAuthorTags.isNotEmpty()) {
+            positiveAuthorTags.sumOf { it.value } / positiveAuthorTags.size
+        } else 0L
+
+        val bestTags = positiveAuthorTags
+            .asSequence()
+            .filter { it.value >= positiveCutoff }
             .sortedByDescending { it.value }
-            .take(5)
             .map { it.key }
             .toSet()
 
-        val worstTags = negativeTagCounts.entries
-            .asSequence()
+        val negativeAuthorTags = negativeTagCounts.entries
             .filter { it.key.startsWith("author_tag_") }
+
+        val negativeCutoff = if (negativeAuthorTags.isNotEmpty()) {
+            negativeAuthorTags.sumOf { it.value.toLong() } / negativeAuthorTags.size
+        } else 0L
+
+        val worstTags = negativeAuthorTags
+            .asSequence()
+            .filter { it.value >= negativeCutoff }
+            .filter { it.key !in bestTags }
             .sortedByDescending { it.value }
             .map { it.key }
-            .filter { it !in bestTags }
-            .take(5)
             .toList()
 
-        Log.d(TAG, "recommendWorlds: bestTags=$bestTags worstTags=$worstTags visitedCount=${visitedIds.size}")
+        Log.d(TAG, "recommendWorlds: positiveCutoff=$positiveCutoff negativeCutoff=$negativeCutoff bestTags=$bestTags worstTags=$worstTags visitedCount=${visitedIds.size}")
 
         val perTagFetch = (limit * 2).coerceAtMost(100)
         val candidates = mutableMapOf<String, World>()
