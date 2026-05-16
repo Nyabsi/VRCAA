@@ -198,10 +198,9 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                // val offlineFriends = friends.filter { it.platform.isEmpty() }
-                if (model.worlds.isEmpty()) {
+                if (model.recommendedWorlds.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.home_offline_friends),
+                        text = stringResource(R.string.home_curated_for_you),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 4.dp)
@@ -220,13 +219,13 @@ class HomeScreen : Screen {
                     )
                 } else {
                     HorizontalRow(
-                        title = stringResource(R.string.home_offline_friends)
+                        title = stringResource(R.string.home_curated_for_you)
                     ) {
-                        items(model.worlds) { friend ->
+                        items(model.recommendedWorlds) { world ->
                             RowItem(
-                                name = friend.name,
-                                url = friend.imageUrl.ifEmpty { friend.thumbnailImageUrl },
-                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
+                                name = world.name,
+                                url = world.imageUrl.ifEmpty { world.thumbnailImageUrl },
+                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(world.id)) }
                             )
                         }
                     }
