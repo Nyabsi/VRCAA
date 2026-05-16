@@ -17,16 +17,38 @@
 package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.DatabaseHelper
 import cc.sovellus.vrcaa.helper.StatusHelper
+import com.google.gson.Gson
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
 object DatabaseManager: BaseManager<Any>() {
+
+    data class LocationHistory(
+        val worldId: String,
+        val worldName: String,
+        val tags: List<String>,
+        val authorId: String,
+        val authorName: String,
+        val thumbnailImageUrl: String,
+        val heat: Int,
+        val popularity: Int,
+        val favorites: Int,
+        val visits: Int,
+        val capacity: Int,
+        val recommendedCapacity: Int,
+        val releaseStatus: String,
+        val publicationDate: String,
+        val timeSpent: Long
+    )
+
+    private val gson by lazy { Gson() }
     val db = DatabaseHelper()
 
     fun writeFeed(feed: FeedManager.Feed) {
@@ -108,5 +130,147 @@ object DatabaseManager: BaseManager<Any>() {
 
         cursor.close()
         return queries
+    }
+
+    fun writeLocation(location: LocationHistory) {
+        val existing = readLocationByWorldId(location.worldId)
+        val accumulatedTimeSpent = (existing?.timeSpent ?: 0L) + location.timeSpent
+
+        val values = ContentValues().apply {
+            put("worldId", location.worldId)
+            put("worldName", location.worldName)
+            put("tags", gson.toJson(location.tags))
+            put("authorId", location.authorId)
+            put("authorName", location.authorName)
+            put("thumbnailImageUrl", location.thumbnailImageUrl)
+            put("heat", location.heat)
+            put("popularity", location.popularity)
+            put("favorites", location.favorites)
+            put("visits", location.visits)
+            put("capacity", location.capacity)
+            put("recommendedCapacity", location.recommendedCapacity)
+            put("releaseStatus", location.releaseStatus)
+            put("publicationDate", location.publicationDate)
+            put("timeSpent", accumulatedTimeSpent)
+        }
+
+        db.writableDatabase.insertWithOnConflict(
+            DatabaseHelper.Tables.SQL_TABLE_LOCATION_HISTORY,
+            null,
+            values,
+            SQLiteDatabase.CONFLICT_REPLACE
+        )
+    }
+
+    private fun queryLocations(
+        selection: String? = null,
+        selectionArgs: Array<String>? = null,
+        orderBy: String? = "timeSpent DESC",
+        limit: String? = null
+    ): MutableList<LocationHistory> {
+        val cursor = db.readableDatabase.query(
+            DatabaseHelper.Tables.SQL_TABLE_LOCATION_HISTORY,
+            arrayOf("worldId", "worldName", "tags", "authorId", "authorName", "thumbnailImageUrl",
+                "heat", "popularity", "favorites", "visits", "capacity", "recommendedCapacity",
+                "releaseStatus", "publicationDate", "timeSpent"),
+            selection,
+            selectionArgs,
+            null,
+            null,
+            orderBy,
+            limit
+        )
+
+        val locations = mutableListOf<LocationHistory>()
+
+        with(cursor) {
+            while (moveToNext()) {
+                val tagsJson = getStringOrNull(getColumnIndex("tags")) ?: "[]"
+                val tags = runCatching {
+                    gson.fromJson(tagsJson, Array<String>::class.java).toList()
+                }.getOrDefault(emptyList())
+
+                val location = LocationHistory(
+                    worldId = getStringOrNull(getColumnIndex("worldId")) ?: "",
+                    worldName = getStringOrNull(getColumnIndex("worldName")) ?: "",
+                    tags = tags,
+                    authorId = getStringOrNull(getColumnIndex("authorId")) ?: "",
+                    authorName = getStringOrNull(getColumnIndex("authorName")) ?: "",
+                    thumbnailImageUrl = getStringOrNull(getColumnIndex("thumbnailImageUrl")) ?: "",
+                    heat = getInt(getColumnIndexOrThrow("heat")),
+                    popularity = getInt(getColumnIndexOrThrow("popularity")),
+                    favorites = getInt(getColumnIndexOrThrow("favorites")),
+                    visits = getInt(getColumnIndexOrThrow("visits")),
+                    capacity = getInt(getColumnIndexOrThrow("capacity")),
+                    recommendedCapacity = getInt(getColumnIndexOrThrow("recommendedCapacity")),
+                    releaseStatus = getStringOrNull(getColumnIndex("releaseStatus")) ?: "",
+                    publicationDate = getStringOrNull(getColumnIndex("publicationDate")) ?: "",
+                    timeSpent = getLongOrNull(getColumnIndex("timeSpent")) ?: 0L
+                )
+                locations.add(location)
+            }
+        }
+
+        cursor.close()
+        return locations
+    }
+
+    fun readLocations(limit: Int = 100): MutableList<LocationHistory> {
+        return queryLocations(limit = limit.toString())
+    }
+
+    fun readTopLocations(limit: Int = 10): MutableList<LocationHistory> {
+        return queryLocations(orderBy = "timeSpent DESC", limit = limit.toString())
+    }
+
+    fun readBouncedLocations(maxTimeSpent: Long = 60, limit: Int = 50): MutableList<LocationHistory> {
+        return queryLocations(
+            selection = "timeSpent < ?",
+            selectionArgs = arrayOf(maxTimeSpent.toString()),
+            orderBy = "timeSpent ASC",
+            limit = limit.toString()
+        )
+    }
+
+    fun readLocationByWorldId(worldId: String): LocationHistory? {
+        return queryLocations(
+            selection = "worldId = ?",
+            selectionArgs = arrayOf(worldId),
+            limit = "1"
+        ).firstOrNull()
+    }
+
+    fun readVisitedWorldIds(): Set<String> {
+        val cursor = db.readableDatabase.query(
+            DatabaseHelper.Tables.SQL_TABLE_LOCATION_HISTORY,
+            arrayOf("worldId"), null, null, null, null, null
+        )
+
+        val ids = mutableSetOf<String>()
+
+        with(cursor) {
+            while (moveToNext()) {
+                getStringOrNull(getColumnIndex("worldId"))?.let { ids.add(it) }
+            }
+        }
+
+        cursor.close()
+        return ids
+    }
+
+    fun deleteLocation(worldId: String) {
+        db.writableDatabase.delete(
+            DatabaseHelper.Tables.SQL_TABLE_LOCATION_HISTORY,
+            "worldId = ?",
+            arrayOf(worldId)
+        )
+    }
+
+    fun clearLocationHistory() {
+        db.writableDatabase.delete(
+            DatabaseHelper.Tables.SQL_TABLE_LOCATION_HISTORY,
+            null,
+            null
+        )
     }
 }

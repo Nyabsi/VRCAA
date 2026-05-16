@@ -54,6 +54,7 @@ import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
 import cc.sovellus.vrcaa.manager.PresenceManager
+import cc.sovellus.vrcaa.manager.RecommendationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -284,6 +285,8 @@ class PipelineService : Service(), CoroutineScope {
                                     CacheManager.addWorld(instance.world)
                                 }
 
+                                RecommendationManager.updateLocation(instance)
+
                                 val location = LocationHelper.parseLocationInfo(user.location)
                                 val info = PresenceManager.PresenceInfo().apply {
                                     worldName = instance.world.name
@@ -297,7 +300,13 @@ class PipelineService : Service(), CoroutineScope {
 
                                 PresenceManager.updateWorld(info)
                                 CacheManager.addRecentWorld(instance.world)
+                            } ?: run {
+                                RecommendationManager.updateLocation(null)
                             }
+                        }
+                    } else {
+                        launch {
+                            RecommendationManager.updateLocation(null)
                         }
                     }
                 }
