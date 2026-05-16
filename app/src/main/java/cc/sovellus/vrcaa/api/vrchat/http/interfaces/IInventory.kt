@@ -34,5 +34,5 @@ interface IInventory {
         }
     }
 
-    suspend fun fetchInventory(type: PropType, tags: List<String>, flags: List<String>, notFlags: List<String>, archived: Boolean, n: Int = 100, offset: Int = 0, order: String = "newest_created", emojis: ArrayList<Inventory.Data> = arrayListOf()): ArrayList<Inventory.Data>
+    suspend fun fetchInventory(type: PropType, tags: List<String>, flags: List<String>, notFlags: List<String>, archived: Boolean, n: Int = 100, offset: Int = 0, order: String = "newest_created", items: ArrayList<Inventory.Data> = arrayListOf()): ArrayList<Inventory.Data>
 }
