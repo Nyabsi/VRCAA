@@ -225,7 +225,7 @@ class HomeScreen : Screen {
                             RowItem(
                                 name = world.name,
                                 url = world.imageUrl.ifEmpty { world.thumbnailImageUrl },
-                                onClick = { navigator.parent?.parent?.push(UserProfileScreen(world.id)) }
+                                onClick = { navigator.parent?.parent?.push(WorldScreen(world.id)) }
                             )
                         }
                     }
