@@ -23,6 +23,7 @@
     <string name="home_active_friends">好友（在线）</string>
     <string name="home_recently_visited">最近访问</string>
     <string name="home_friend_locations">好友位置</string>
+    <string name="home_curated_for_you">Curated For You</string>
     <!-- Login -->
     <string name="login_text">登录到 VRC Android Assistant</string>
     <string name="login_label_username">用户名或电子邮件地址</string>
