@@ -45,7 +45,8 @@ object DatabaseManager: BaseManager<Any>() {
         val recommendedCapacity: Int,
         val releaseStatus: String,
         val publicationDate: String,
-        val timeSpent: Long
+        val timeSpent: Long,
+        val lastVisited: LocalDateTime
     )
 
     private val gson by lazy { Gson() }
@@ -152,6 +153,7 @@ object DatabaseManager: BaseManager<Any>() {
             put("releaseStatus", location.releaseStatus)
             put("publicationDate", location.publicationDate)
             put("timeSpent", accumulatedTimeSpent)
+            put("lastVisited", location.lastVisited.toEpochSecond(ZoneOffset.UTC))
         }
 
         db.writableDatabase.insertWithOnConflict(
@@ -172,7 +174,7 @@ object DatabaseManager: BaseManager<Any>() {
             DatabaseHelper.Tables.SQL_TABLE_LOCATION_HISTORY,
             arrayOf("worldId", "worldName", "tags", "authorId", "authorName", "thumbnailImageUrl",
                 "heat", "popularity", "favorites", "visits", "capacity", "recommendedCapacity",
-                "releaseStatus", "publicationDate", "timeSpent"),
+                "releaseStatus", "publicationDate", "timeSpent", "lastVisited"),
             selection,
             selectionArgs,
             null,
@@ -205,7 +207,10 @@ object DatabaseManager: BaseManager<Any>() {
                     recommendedCapacity = getInt(getColumnIndexOrThrow("recommendedCapacity")),
                     releaseStatus = getStringOrNull(getColumnIndex("releaseStatus")) ?: "",
                     publicationDate = getStringOrNull(getColumnIndex("publicationDate")) ?: "",
-                    timeSpent = getLongOrNull(getColumnIndex("timeSpent")) ?: 0L
+                    timeSpent = getLongOrNull(getColumnIndex("timeSpent")) ?: 0L,
+                    lastVisited = getLongOrNull(getColumnIndex("lastVisited"))
+                        ?.let { LocalDateTime.ofEpochSecond(it, 0, ZoneOffset.UTC) }
+                        ?: LocalDateTime.now(ZoneOffset.UTC)
                 )
                 locations.add(location)
             }

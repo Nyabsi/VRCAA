@@ -50,6 +50,10 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
             database.execSQL(Queries.SQL_CREATE_LOCATION_HISTORY_TABLE)
             database.execSQL(Queries.SQL_CREATE_LOCATION_HISTORY_TIMESPENT_INDEX)
         }
+
+        if (oldVersion <= 5 && newVersion >= 6) {
+            database.execSQL(Migrations.SQL_LOCATION_HISTORY_TABLE_V2_MIGRATION)
+        }
     }
 
     override fun onDowngrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -66,19 +70,20 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
 
     object Constants {
         const val DATABASE_NAME = "vrcaa.db"
-        const val DATABASE_VERSION = 5
+        const val DATABASE_VERSION = 6
     }
 
     object Queries {
         const val SQL_CREATE_FEED_TABLE = "CREATE TABLE feed(type INTEGER, feedId TEXT, friendId TEXT, friendName TEXT, friendPictureUrl TEXT, friendStatus TEXT, travelDestination TEXT, worldId TEXT, avatarName TEXT, feedTimestamp BIGINT)"
         const val SQL_CREATE_SEARCH_HISTORY_TABLE = "CREATE TABLE search_history(query TEXT)"
         const val SQL_CREATE_FEED_TIMESTAMP_INDEX = "CREATE INDEX IF NOT EXISTS idx_feed_timestamp ON feed(feedTimestamp DESC)"
-        const val SQL_CREATE_LOCATION_HISTORY_TABLE = "CREATE TABLE location_history(worldId TEXT PRIMARY KEY, worldName TEXT, tags TEXT, authorId TEXT, authorName TEXT, thumbnailImageUrl TEXT, heat INTEGER, popularity INTEGER, favorites INTEGER, visits INTEGER, capacity INTEGER, recommendedCapacity INTEGER, releaseStatus TEXT, publicationDate TEXT, timeSpent BIGINT)"
+        const val SQL_CREATE_LOCATION_HISTORY_TABLE = "CREATE TABLE location_history(worldId TEXT PRIMARY KEY, worldName TEXT, tags TEXT, authorId TEXT, authorName TEXT, thumbnailImageUrl TEXT, heat INTEGER, popularity INTEGER, favorites INTEGER, visits INTEGER, capacity INTEGER, recommendedCapacity INTEGER, releaseStatus TEXT, publicationDate TEXT, timeSpent BIGINT, lastVisited BIGINT)"
         const val SQL_CREATE_LOCATION_HISTORY_TIMESPENT_INDEX = "CREATE INDEX IF NOT EXISTS idx_location_history_timespent ON location_history(timeSpent DESC)"
     }
 
     object Migrations {
         const val SQL_FEED_TABLE_V2_MIGRATION = "ALTER TABLE feed ADD avatarName TEXT"
+        const val SQL_LOCATION_HISTORY_TABLE_V2_MIGRATION = "ALTER TABLE location_history ADD lastVisited BIGINT"
     }
 
     object Downgrades {

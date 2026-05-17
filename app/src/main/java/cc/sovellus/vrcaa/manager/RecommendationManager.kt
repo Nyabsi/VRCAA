@@ -25,6 +25,7 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.time.LocalDateTime
 
 object RecommendationManager : BaseManager<RecommendationManager.RecommendationListener>() {
 
@@ -100,7 +101,8 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             recommendedCapacity = instance.world.recommendedCapacity,
             releaseStatus = instance.world.releaseStatus,
             publicationDate = instance.world.publicationDate,
-            timeSpent = timeSpent
+            timeSpent = timeSpent,
+            lastVisited = LocalDateTime.now()
         )
     }
 
