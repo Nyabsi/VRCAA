@@ -22,6 +22,7 @@
     <string name="home_active_friends">Друзья онлайн</string>
     <string name="home_recently_visited">Недавно посещенные</string>
     <string name="home_friend_locations">Местонахождение друзей</string>
+    <string name="home_curated_for_you">Curated For You</string>
     <!-- Login -->
     <string name="login_text">Войти в VRC Android Assistant</string>
     <string name="login_label_username">Имя пользователя или адрес электронной почты</string>
