@@ -22,6 +22,7 @@
     <string name="home_active_friends">上線的好友</string>
     <string name="home_recently_visited">最近造訪的世界</string>
     <string name="home_friend_locations">好友目前位置</string>
+    <string name="home_curated_for_you">Curated For You</string>
     <!-- Login -->
     <string name="login_text">登入VRC Android Assistant</string>
     <string name="login_label_username">使用者名稱或電子郵件地址</string>
