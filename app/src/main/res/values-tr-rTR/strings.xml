@@ -22,6 +22,7 @@
     <string name="home_active_friends">Çevrimiçi Arkadaşlar</string>
     <string name="home_recently_visited">Yakın zamanda ziyaret ettiklerim</string>
     <string name="home_friend_locations">Arkadaş konumları</string>
+    <string name="home_curated_for_you">Curated For You</string>
     <!-- Login -->
     <string name="login_text">VRC Android Asistanı\'na giriş yap</string>
     <string name="login_label_username">Kullanıcı adı ya da E-mail</string>
