@@ -22,6 +22,7 @@
     <string name="home_active_friends">Online Vrienden</string>
     <string name="home_recently_visited">Onlangs bezocht</string>
     <string name="home_friend_locations">Vriend Locaties</string>
+    <string name="home_curated_for_you">Curated For You</string>
     <!-- Login -->
     <string name="login_text">Inloggen op VRC Android Assistant</string>
     <string name="login_label_username">Gebruikersnaam of e-mailadres</string>
