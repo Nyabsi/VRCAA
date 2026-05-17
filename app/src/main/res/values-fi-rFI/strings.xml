@@ -22,6 +22,7 @@
     <string name="home_active_friends">Ystävät paikalla</string>
     <string name="home_recently_visited">Äskettäin Vieraillut</string>
     <string name="home_friend_locations">Ystävien Sijainnit</string>
+    <string name="home_curated_for_you">Curated For You</string>
     <!-- Login -->
     <string name="login_text">Kirjaudu VRC Android Assistant:iin</string>
     <string name="login_label_username">Käyttäjätunnus tai sähköpostiosoite</string>
