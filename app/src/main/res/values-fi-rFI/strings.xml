@@ -101,6 +101,7 @@
     <string name="world_title_favorites">Suosikit</string>
     <string name="world_title_capacity">Kapasiteetti</string>
     <string name="world_title_occupants">Käyttäjät</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">Julkaisupäivä</string>
     <string name="world_title_heat">Kuumuus</string>
     <string name="world_title_popularity">Suosio</string>
