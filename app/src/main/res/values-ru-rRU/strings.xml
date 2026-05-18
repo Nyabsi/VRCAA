@@ -101,6 +101,7 @@
     <string name="world_title_favorites">Избранное</string>
     <string name="world_title_capacity">Вместимость</string>
     <string name="world_title_occupants">Участники</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">Дата публикации</string>
     <string name="world_title_heat">Теплота</string>
     <string name="world_title_popularity">Популярность</string>
