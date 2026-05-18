@@ -23,6 +23,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
@@ -38,8 +40,8 @@ import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 
 class PeekActivity : BaseActivity() {
 
-    lateinit var type: String
-    lateinit var id: String
+    var type: MutableState<String> = mutableStateOf("")
+    var id: MutableState<String> = mutableStateOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +57,8 @@ class PeekActivity : BaseActivity() {
 
         try {
             if (!data.isNullOrEmpty() && allowedPaths.contains(data[0])) {
-                type = data[0]
-                id = data[1]
+                type.value = data[0]
+                id.value = data[1]
             } else {
                 earlyFinish = true
             }
@@ -75,6 +77,7 @@ class PeekActivity : BaseActivity() {
                     this.getString(R.string.activity_peek_no_url_handler),
                     Toast.LENGTH_SHORT
                 ).show()
+                finish()
             }
         }
     }
@@ -83,33 +86,37 @@ class PeekActivity : BaseActivity() {
     override fun Content(bundle: Bundle?) {
         var screen: Screen? = null
 
-        when (type) {
-            "world" -> {
-                screen = WorldScreen(id, true)
+        if (type.value.isNotEmpty() && id.value.isNotEmpty()) {
+            when (type.value) {
+                "world" -> {
+                    screen = WorldScreen(id.value, true)
+                }
+                "user" -> {
+                    screen = UserProfileScreen(id.value, true)
+                }
+                "avatar" -> {
+                    screen = AvatarScreen(id.value, true)
+                }
+                "group" -> {
+                    screen = GroupScreen(id.value, true)
+                }
+                else -> finish()
             }
-            "user" -> {
-                screen = UserProfileScreen(id, true)
-            }
-            "avatar" -> {
-                screen = AvatarScreen(id, true)
-            }
-            "group" -> {
-                screen = GroupScreen(id, true)
-            }
-            else -> finish()
-        }
 
-        screen?.let {
-            Navigator(
-                screen = it,
-                disposeBehavior = NavigatorDisposeBehavior(
-                    disposeNestedNavigators = false,
-                    disposeSteps = false
-                ),
-                onBackPressed = { true }
-            ) { navigator ->
-                SlideTransition(navigator = navigator)
+            screen?.let {
+                Navigator(
+                    screen = it,
+                    disposeBehavior = NavigatorDisposeBehavior(
+                        disposeNestedNavigators = false,
+                        disposeSteps = false
+                    ),
+                    onBackPressed = { true }
+                ) { navigator ->
+                    SlideTransition(navigator = navigator)
+                }
             }
+        } else {
+            finish()
         }
     }
 }
