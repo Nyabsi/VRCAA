@@ -101,6 +101,7 @@
     <string name="world_title_favorites">Favorites</string>
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">Publication Date</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>
