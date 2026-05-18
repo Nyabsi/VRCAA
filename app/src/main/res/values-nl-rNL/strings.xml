@@ -102,6 +102,7 @@ Manage je profiel, blijf op de hoogte van vrienden, en mis nooit wat er gebeurt 
     <string name="world_title_favorites">Favorieten</string>
     <string name="world_title_capacity">Capaciteit</string>
     <string name="world_title_occupants">Aanwezigen</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">Datum Gepubliceerd</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Populariteit</string>
