@@ -220,10 +220,6 @@ object DatabaseManager: BaseManager<Any>() {
         return locations
     }
 
-    fun readLocations(limit: Int = 100): MutableList<LocationHistory> {
-        return queryLocations(limit = limit.toString())
-    }
-
     fun readTopLocations(limit: Int = 10): MutableList<LocationHistory> {
         return queryLocations(orderBy = "timeSpent DESC", limit = limit.toString())
     }

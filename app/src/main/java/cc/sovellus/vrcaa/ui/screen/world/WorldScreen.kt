@@ -99,6 +99,8 @@ import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.extension.clickableIf
+import cc.sovellus.vrcaa.helper.TimeHelper
+import cc.sovellus.vrcaa.manager.DatabaseManager
 import cc.sovellus.vrcaa.manager.FavoriteManager
 import cc.sovellus.vrcaa.ui.components.card.WorldCard
 import cc.sovellus.vrcaa.ui.components.dialog.FavoriteDialog
@@ -577,6 +579,9 @@ class WorldScreen(
                         val occupancyRate = world.visits.takeIf { it != 0 }?.let {
                             String.format(Locale.ENGLISH, "%.1f", world.favorites.toFloat() / it.toFloat() * 100)
                         } ?: "0.0%"
+
+                        SubHeader(title = stringResource(R.string.world_title_time_spent))
+                        Description(text = TimeHelper.formatDuration(DatabaseManager.readLocationByWorldId(world.id)?.timeSpent ?: 0L))
 
                         SubHeader(title = stringResource(R.string.world_title_favorites))
                         Description(text = "${NumberFormat.getInstance().format(world.favorites)} (${occupancyRate}%)")
