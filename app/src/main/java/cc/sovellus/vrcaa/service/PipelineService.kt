@@ -304,10 +304,6 @@ class PipelineService : Service(), CoroutineScope {
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
 
-                    launch {
-                        PresenceManager.updateStatus(user.user.status)
-                    }
-
                     CacheManager.updateProfile(user.user)
                 }
 
