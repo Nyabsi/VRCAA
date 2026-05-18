@@ -101,6 +101,7 @@
     <string name="world_title_favorites">Favoriten</string>
     <string name="world_title_capacity">Kapazität</string>
     <string name="world_title_occupants">Vor Ort</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">Veröffentlichungsdatum</string>
     <string name="world_title_heat">Beliebtheit</string>
     <string name="world_title_popularity">Beliebtheit</string>
