@@ -101,6 +101,7 @@
     <string name="world_title_favorites">즐겨찾기 수</string>
     <string name="world_title_capacity">인원 제한</string>
     <string name="world_title_occupants">유저 수</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">공개일</string>
     <string name="world_title_heat">히트</string>
     <string name="world_title_popularity">인기</string>
