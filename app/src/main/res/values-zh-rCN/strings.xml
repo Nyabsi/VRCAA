@@ -102,6 +102,7 @@
     <string name="world_title_favorites">收藏人数</string>
     <string name="world_title_capacity">推荐人数</string>
     <string name="world_title_occupants">地图内在线人数</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">正式公开于</string>
     <string name="world_title_heat">热度</string>
     <string name="world_title_popularity">知名度</string>
