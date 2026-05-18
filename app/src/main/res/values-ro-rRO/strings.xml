@@ -101,6 +101,7 @@
     <string name="world_title_favorites">Favorite</string>
     <string name="world_title_capacity">Capacitate</string>
     <string name="world_title_occupants">Ocupanți</string>
+    <string name="world_title_time_spent">Time Spent</string>
     <string name="world_title_publication_date">Data publicări</string>
     <string name="world_title_heat">Căldură</string>
     <string name="world_title_popularity">Popularitate</string>
