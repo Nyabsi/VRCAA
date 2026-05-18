@@ -581,7 +581,7 @@ class WorldScreen(
                         } ?: "0.0%"
 
                         SubHeader(title = stringResource(R.string.world_title_time_spent))
-                        Description(text = TimeHelper.formatDuration(DatabaseManager.readLocationByWorldId(world.id)?.timeSpent ?: 0L))
+                        Description(text = TimeHelper.formatDuration(DatabaseManager.readLocationByWorldId(world.id)?.timeSpent ?: 0L), R.string.world_description_no_data_time_spent)
 
                         SubHeader(title = stringResource(R.string.world_title_favorites))
                         Description(text = "${NumberFormat.getInstance().format(world.favorites)} (${occupancyRate}%)")

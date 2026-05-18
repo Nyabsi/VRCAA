@@ -29,14 +29,14 @@ import androidx.compose.ui.unit.dp
 import cc.sovellus.vrcaa.R
 
 @Composable
-fun Description(text: String?) {
+fun Description(text: String?, resourceOverride: Int? = null) {
     Column(
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp, bottom = 4.dp).fillMaxWidth()
     ) {
         Text(
             text = if (text.isNullOrEmpty()) {
-                stringResource(R.string.profile_text_no_biography)
+                stringResource(resourceOverride ?: R.string.profile_text_no_biography)
             } else {
                 text
             },
