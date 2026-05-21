@@ -149,7 +149,7 @@
     <string name="notifications_type_invite_request">Invite Request</string>
     <string name="notifications_type_invite_request_response">Invite Request Response</string>
     <string name="notifications_type_friend_request">Friend Request</string>
-    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
+    <string name="notifications_type_friend_request_content">%1$s - veut être votre ami(e) !</string>
     <string name="notification_dialog_title">Notification</string>
     <string name="notification_dialog_description">What do you want to do with this notification?</string>
     <string name="notification_dialog_button_delete">Delete</string>
@@ -334,7 +334,7 @@
     <string name="loading_text_emojis">Chargement des émojis...</string>
     <string name="loading_text_items">Chargement des objets...</string>
     <string name="loading_text_favorites">Chargement des favoris…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_notifications">Chargement des notifications...</string>
     <!-- Theming -->
     <string name="theme_page_title">Thème</string>
     <string name="theme_page_minimalist_mode_text">Mode minimaliste</string>
