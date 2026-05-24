@@ -20,8 +20,8 @@ package cc.sovellus.vrcaa.api.vrchat.http.models
 import com.google.gson.annotations.SerializedName
 
 data class Avatar(
-    @SerializedName("assetUrl")
-    var assetUrl: String = "",
+    @SerializedName("attribution")
+    var attribution: Any = Any(),
     @SerializedName("authorId")
     var authorId: String = "",
     @SerializedName("authorName")
@@ -36,24 +36,65 @@ data class Avatar(
     var id: String = "",
     @SerializedName("imageUrl")
     var imageUrl: String = "",
+    @SerializedName("listingDate")
+    var listingDate: Any = Any(),
     @SerializedName("name")
     var name: String = "",
-    @SerializedName("pendingUpload")
-    var pendingUpload: Boolean = false,
+    @SerializedName("performance")
+    var performance: Performance = Performance(),
     @SerializedName("releaseStatus")
     var releaseStatus: String = "",
+    @SerializedName("searchable")
+    var searchable: Boolean = false,
     @SerializedName("styles")
     var styles: Styles = Styles(),
     @SerializedName("tags")
     var tags: List<String> = listOf(),
     @SerializedName("thumbnailImageUrl")
     var thumbnailImageUrl: String = "",
-    @SerializedName("unityPackageUrl")
-    var unityPackageUrl: String = "",
+    @SerializedName("unityPackages")
+    var unityPackages: List<UnityPackage> = listOf(),
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("version")
-    var version: Long = 0,
-    @SerializedName("unityPackages")
-    var unityPackages: List<UnityPackage> = listOf(),
-)
+    var version: Int = 0
+) {
+    data class Performance(
+        @SerializedName("android")
+        var android: String = "",
+        @SerializedName("android-sort")
+        var androidSort: Int = 0,
+        @SerializedName("standalonewindows")
+        var standalonewindows: String = "",
+        @SerializedName("standalonewindows-sort")
+        var standalonewindowsSort: Int = 0
+    )
+
+    data class Styles(
+        @SerializedName("primary")
+        var primary: String = "",
+        @SerializedName("secondary")
+        var secondary: String = ""
+    )
+
+    data class UnityPackage(
+        @SerializedName("assetVersion")
+        var assetVersion: Int = 0,
+        @SerializedName("created_at")
+        var createdAt: String = "",
+        @SerializedName("id")
+        var id: String = "",
+        @SerializedName("impostorizerVersion")
+        var impostorizerVersion: String = "",
+        @SerializedName("performanceRating")
+        var performanceRating: String = "",
+        @SerializedName("platform")
+        var platform: String = "",
+        @SerializedName("scanStatus")
+        var scanStatus: String = "",
+        @SerializedName("unityVersion")
+        var unityVersion: String = "",
+        @SerializedName("variant")
+        var variant: String = ""
+    )
+}

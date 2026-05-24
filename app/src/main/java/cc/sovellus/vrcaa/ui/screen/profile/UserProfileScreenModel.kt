@@ -91,7 +91,7 @@ class UserProfileScreenModel(
                 if (fileId != null) {
                     val result = avatarProvider.searchFileId(fileId)
                     if (result.isNotEmpty()) {
-                        callback(result[0].id)
+                        callback(result[0].vrcId)
                     } else {
                         callback(null)
                     }

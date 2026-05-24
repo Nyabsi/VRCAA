@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BadgesFromTags(
     tags: List<String>,
-    tagPropertyName: String,
+    tagPropertyName: String?,
     localizationResourceInt: Int
 ) {
     Row(
@@ -41,7 +41,7 @@ fun BadgesFromTags(
         tags.let {
             var found = false
             for (tag in tags) {
-                if (tag.contains(tagPropertyName)) {
+                if (tagPropertyName == null || tag.contains(tagPropertyName)) {
                     found = true
                     Badge(
                         containerColor = MaterialTheme.colorScheme.secondary,
@@ -50,9 +50,9 @@ fun BadgesFromTags(
                             .padding(2.dp),
                         content = {
                             Text(
-                                text = tag.substring(tagPropertyName.length + 1)
+                                text = if (tagPropertyName != null) { tag.substring(tagPropertyName.length + 1)
                                     .uppercase()
-                                    .replace("_", " "),
+                                    .replace("_", " ") } else { tag },
                                 textAlign = TextAlign.Left,
                                 fontWeight = FontWeight.SemiBold
                             )

@@ -18,8 +18,8 @@ package cc.sovellus.vrcaa.api.search.avtrdb
 
 import cc.sovellus.vrcaa.api.search.Config
 import cc.sovellus.vrcaa.base.BaseClient
-import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.AvtrDbResponse
+import cc.sovellus.vrcaa.api.search.avtrdb.models.SearchAvatar
 import cc.sovellus.vrcaa.api.search.avtrdb.models.SearchAvatars
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
@@ -43,7 +43,7 @@ class AvtrDbProvider : BaseClient() {
                 append("?query=${query}")
                 append("&page_size=${n}")
                 append("&page=${offset}")
-                append("&legacy=true")
+                // append("&legacy=true")
             },
             headers = GENERIC_HEADER,
             body = null,

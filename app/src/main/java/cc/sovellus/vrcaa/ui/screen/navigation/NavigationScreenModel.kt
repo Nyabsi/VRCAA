@@ -29,13 +29,6 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.activity.MainActivity
 import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
-import cc.sovellus.vrcaa.extension.avatarProvider
-import cc.sovellus.vrcaa.extension.avatarsAmount
-import cc.sovellus.vrcaa.extension.groupsAmount
-import cc.sovellus.vrcaa.extension.searchFeaturedWorlds
-import cc.sovellus.vrcaa.extension.sortWorlds
-import cc.sovellus.vrcaa.extension.usersAmount
-import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.DatabaseManager
@@ -46,13 +39,7 @@ import kotlinx.coroutines.launch
 
 class NavigationScreenModel : ScreenModel {
 
-    companion object {
-        const val SEARCH_FILTER_MIN_COUNT = 5
-        const val SEARCH_FILTER_MAX_COUNT = 100
-        const val SEARCH_FILTER_SNAP_STEP = 5
-    }
-
-    private val context: Context = App.getContext()
+    val context: Context = App.getContext()
     private val preferences: SharedPreferences = context.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     var searchModeActivated = mutableStateOf(false)
@@ -60,14 +47,6 @@ class NavigationScreenModel : ScreenModel {
     var searchHistory = DatabaseManager.readQueries()
     var hasNoInternet = mutableStateOf(false)
     var invalidSession = mutableStateOf(false)
-
-    var featuredWorlds = mutableStateOf(preferences.searchFeaturedWorlds)
-    var sortWorlds = mutableStateOf(preferences.sortWorlds)
-    var worldsAmount = mutableIntStateOf(normalizeSearchCount(preferences.worldsAmount))
-    var usersAmount = mutableIntStateOf(normalizeSearchCount(preferences.usersAmount))
-    var groupsAmount = mutableIntStateOf(normalizeSearchCount(preferences.groupsAmount))
-    var avatarsAmount = mutableIntStateOf(normalizeSearchCount(preferences.avatarsAmount))
-    var avatarProvider = mutableStateOf(preferences.avatarProvider)
 
     val status = mutableStateOf("")
     val description = mutableStateOf("")
@@ -134,44 +113,6 @@ class NavigationScreenModel : ScreenModel {
 
     fun clearSearchText() {
         searchText.value = ""
-    }
-
-    fun resetSettings() {
-        preferences.searchFeaturedWorlds = false
-        featuredWorlds.value = false
-        preferences.sortWorlds = "relevance"
-        sortWorlds.value = "relevance"
-        preferences.worldsAmount = SEARCH_FILTER_MIN_COUNT
-        worldsAmount.intValue = SEARCH_FILTER_MIN_COUNT
-        preferences.usersAmount = SEARCH_FILTER_MIN_COUNT
-        usersAmount.intValue = SEARCH_FILTER_MIN_COUNT
-        preferences.avatarsAmount = SEARCH_FILTER_MIN_COUNT
-        avatarsAmount.intValue = SEARCH_FILTER_MIN_COUNT
-        avatarProvider.value = "avtrdb"
-        preferences.avatarProvider = "avtrdb"
-        preferences.groupsAmount = SEARCH_FILTER_MIN_COUNT
-        groupsAmount.intValue = SEARCH_FILTER_MIN_COUNT
-    }
-
-    fun applySettings() {
-        worldsAmount.intValue = normalizeSearchCount(worldsAmount.intValue)
-        usersAmount.intValue = normalizeSearchCount(usersAmount.intValue)
-        groupsAmount.intValue = normalizeSearchCount(groupsAmount.intValue)
-        avatarsAmount.intValue = normalizeSearchCount(avatarsAmount.intValue)
-
-        preferences.searchFeaturedWorlds = featuredWorlds.value
-        preferences.sortWorlds = sortWorlds.value
-        preferences.worldsAmount = worldsAmount.intValue
-        preferences.usersAmount = usersAmount.intValue
-        preferences.groupsAmount = groupsAmount.intValue
-        preferences.avatarsAmount = avatarsAmount.intValue
-        preferences.avatarProvider = avatarProvider.value
-    }
-
-    private fun normalizeSearchCount(value: Int): Int {
-        val clamped = value.coerceIn(SEARCH_FILTER_MIN_COUNT, SEARCH_FILTER_MAX_COUNT)
-        val snappedSteps = ((clamped - SEARCH_FILTER_MIN_COUNT + SEARCH_FILTER_SNAP_STEP / 2) / SEARCH_FILTER_SNAP_STEP)
-        return SEARCH_FILTER_MIN_COUNT + snappedSteps * SEARCH_FILTER_SNAP_STEP
     }
 
     fun getCurrentProfileValues() {

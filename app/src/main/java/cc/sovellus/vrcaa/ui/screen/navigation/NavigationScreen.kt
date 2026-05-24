@@ -16,7 +16,6 @@
 
 package cc.sovellus.vrcaa.ui.screen.navigation
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -33,8 +32,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
@@ -68,10 +65,6 @@ import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Cabin
-import androidx.compose.material.icons.outlined.Groups
-import androidx.compose.material.icons.outlined.People
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
@@ -91,7 +84,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SearchBarDefaults.InputField
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -108,7 +100,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -121,12 +112,10 @@ import androidx.compose.ui.zIndex
 import androidx.core.os.bundleOf
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
@@ -160,13 +149,11 @@ import cc.sovellus.vrcaa.ui.tabs.ProfileTab
 import cc.sovellus.vrcaa.ui.tabs.SettingsTab
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
 class NavigationScreen : Screen {
 
-    override val key = uniqueScreenKey
+    override val key = "navigation"
 
-    @SuppressLint("LocalContextGetResourceValueCall")
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
     @Composable
     override fun Content() {
@@ -195,7 +182,7 @@ class NavigationScreen : Screen {
         }
 
         val tabs = remember {
-            arrayListOf(
+            listOf(
                 HomeTab,
                 FriendsTab,
                 FeedTab,
@@ -204,15 +191,9 @@ class NavigationScreen : Screen {
             )
         }
 
-        TabNavigator(tabs[0], tabDisposable = {
-            TabDisposable(
-                navigator = it, tabs = tabs
-            )
-        }) { tabNavigator ->
-            val settingsSheetState = rememberModalBottomSheetState()
+        TabNavigator(tabs[0]) { tabNavigator ->
             val profileSheetState = rememberModalBottomSheetState()
 
-            var showSettingsSheet by remember { mutableStateOf(false) }
             var isMenuExpanded by remember { mutableStateOf(false) }
             var showProfileSheet by remember { mutableStateOf(false) }
             var isQuickMenuExpanded by remember { mutableStateOf(false) }
@@ -232,7 +213,7 @@ class NavigationScreen : Screen {
                     if (pressBackCounter == 1) {
                         Toast.makeText(
                             context,
-                            context.getString(R.string.misc_exit_toast_label),
+                            model.context.getString(R.string.misc_exit_toast_label),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -307,17 +288,9 @@ class NavigationScreen : Screen {
                                                             contentDescription = null
                                                         )
                                                     }
-                                                } else {
-                                                    IconButton(onClick = {
-                                                        showSettingsSheet = true
-                                                    }) {
-                                                        Icon(
-                                                            imageVector = Icons.Filled.MoreVert,
-                                                            contentDescription = null
-                                                        )
-                                                    }
                                                 }
-                                            })
+                                            }
+                                        )
                                     },
                                     expanded = model.searchModeActivated.value,
                                     onExpandedChange = { },
@@ -434,7 +407,7 @@ class NavigationScreen : Screen {
 
                                                     Toast.makeText(
                                                         context,
-                                                        context.getString(R.string.favorite_toast_refreshed_favorites),
+                                                        model.context.getString(R.string.favorite_toast_refreshed_favorites),
                                                         Toast.LENGTH_SHORT
                                                     ).show()
 
@@ -534,7 +507,7 @@ class NavigationScreen : Screen {
                                         Button(onClick = {
                                             Toast.makeText(
                                                 context,
-                                                context.getString(R.string.profile_edit_dialog_toast_updated),
+                                                model.context.getString(R.string.profile_edit_dialog_toast_updated),
                                                 Toast.LENGTH_LONG
                                             ).show()
                                             scope.launch {
@@ -557,9 +530,7 @@ class NavigationScreen : Screen {
                                                 }
                                                 profileSheetState.hide()
                                             }.invokeOnCompletion {
-                                                if (!settingsSheetState.isVisible) {
-                                                    showProfileSheet = false
-                                                }
+                                                showProfileSheet = false
                                             }
                                         }) {
                                             Text(stringResource(R.string.profile_edit_dialog_button_apply))
@@ -756,153 +727,6 @@ class NavigationScreen : Screen {
                             }
                         }
                     }
-
-                    if (showSettingsSheet) {
-                        ModalBottomSheet(
-                            onDismissRequest = {
-                                showSettingsSheet = false
-                            }, sheetState = settingsSheetState
-                        ) {
-                            LazyColumn(
-                                modifier = Modifier.fillMaxWidth(),
-                                contentPadding = PaddingValues(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 8.dp,
-                                    bottom = 24.dp
-                                ),
-                                verticalArrangement = Arrangement.spacedBy(12.dp)
-                            ) {
-                                item {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                                    ) {
-                                        OutlinedButton(
-                                            modifier = Modifier.weight(1f),
-                                            onClick = {
-                                                model.resetSettings()
-                                            }
-                                        ) {
-                                            Text(stringResource(R.string.search_filter_button_reset))
-                                        }
-
-                                        Button(
-                                            modifier = Modifier.weight(1f),
-                                            onClick = {
-                                                scope.launch {
-                                                    model.applySettings()
-                                                    settingsSheetState.hide()
-                                                }.invokeOnCompletion {
-                                                    if (!settingsSheetState.isVisible) {
-                                                        showSettingsSheet = false
-                                                    }
-                                                }
-                                            }
-                                        ) {
-                                            Text(stringResource(R.string.search_filter_button_apply))
-                                        }
-                                    }
-                                }
-
-                                item {
-                                    SearchFilterSection(
-                                        title = stringResource(R.string.search_filter_category_worlds),
-                                        icon = Icons.Outlined.Cabin
-                                    ) {
-                                        Text(
-                                            text = stringResource(R.string.search_filter_category_worlds_sort_by),
-                                            color = MaterialTheme.colorScheme.secondary,
-                                            fontWeight = FontWeight.SemiBold,
-                                        )
-
-                                        val options = listOf(
-                                            "popularity",
-                                            "heat",
-                                            "trust",
-                                            "shuffle",
-                                            "random",
-                                            "favorites",
-                                            "publicationDate",
-                                            "labsPublicationDate",
-                                            "created",
-                                            "updated",
-                                            "order",
-                                            "relevance",
-                                            "name"
-                                        )
-
-                                        ComboInput(
-                                            options = options,
-                                            selection = model.sortWorlds
-                                        )
-
-                                        SnappedCountSlider(
-                                            label = stringResource(R.string.search_filter_category_worlds_count),
-                                            value = model.worldsAmount.intValue,
-                                            onValueChange = { model.worldsAmount.intValue = it }
-                                        )
-                                    }
-                                }
-
-                                item {
-                                    SearchFilterSection(
-                                        title = stringResource(R.string.search_filter_category_users),
-                                        icon = Icons.Outlined.People
-                                    ) {
-                                        SnappedCountSlider(
-                                            label = stringResource(R.string.search_filter_category_users_count),
-                                            value = model.usersAmount.intValue,
-                                            onValueChange = { model.usersAmount.intValue = it }
-                                        )
-                                    }
-                                }
-
-                                item {
-                                    SearchFilterSection(
-                                        title = stringResource(R.string.search_filter_category_avatars),
-                                        icon = Icons.Outlined.Person
-                                    ) {
-                                        Text(
-                                            text = stringResource(R.string.search_filter_category_avatars_provider),
-                                            color = MaterialTheme.colorScheme.secondary,
-                                            fontWeight = FontWeight.SemiBold,
-                                        )
-
-                                        val options = listOf("avtrdb")
-                                        val optionsReadable = mapOf(
-                                            "avtrdb" to "avtrDB"
-                                        )
-
-                                        ComboInput(
-                                            options = options,
-                                            selection = model.avatarProvider,
-                                            readableOptions = optionsReadable
-                                        )
-
-                                        SnappedCountSlider(
-                                            label = stringResource(R.string.search_filter_label_count),
-                                            value = model.avatarsAmount.intValue,
-                                            onValueChange = { model.avatarsAmount.intValue = it }
-                                        )
-                                    }
-                                }
-
-                                item {
-                                    SearchFilterSection(
-                                        title = stringResource(R.string.search_filter_category_groups),
-                                        icon = Icons.Outlined.Groups
-                                    ) {
-                                        SnappedCountSlider(
-                                            label = stringResource(R.string.search_filter_category_groups_count),
-                                            value = model.groupsAmount.intValue,
-                                            onValueChange = { model.groupsAmount.intValue = it }
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
                 },
                     bottomBar = {
                     if (!model.searchModeActivated.value) {
@@ -1080,123 +904,4 @@ class NavigationScreen : Screen {
             }
         }
     }
-}
-
-private const val SEARCH_FILTER_MIN_COUNT = NavigationScreenModel.SEARCH_FILTER_MIN_COUNT
-private const val SEARCH_FILTER_MAX_COUNT = NavigationScreenModel.SEARCH_FILTER_MAX_COUNT
-private const val SEARCH_FILTER_SNAP_STEP = NavigationScreenModel.SEARCH_FILTER_SNAP_STEP
-
-@Composable
-private fun SearchFilterSection(
-    title: String,
-    icon: ImageVector,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        tonalElevation = 2.dp,
-        color = MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-
-            content()
-        }
-    }
-}
-
-@Composable
-private fun SnappedCountSlider(
-    label: String,
-    value: Int,
-    onValueChange: (Int) -> Unit,
-    min: Int = SEARCH_FILTER_MIN_COUNT,
-    max: Int = SEARCH_FILTER_MAX_COUNT,
-    step: Int = SEARCH_FILTER_SNAP_STEP
-) {
-    val normalizedValue = snapCountValue(value, min, max, step)
-
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Text(
-                text = normalizedValue.toString(),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        Slider(
-            value = normalizedValue.toFloat(),
-            onValueChange = { onValueChange(snapCountValue(it, min, max, step)) },
-            valueRange = min.toFloat()..max.toFloat(),
-            steps = ((max - min) / step).coerceAtLeast(1) - 1
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = min.toString(),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Text(
-                text = max.toString(),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-private fun snapCountValue(
-    value: Int,
-    min: Int,
-    max: Int,
-    step: Int
-): Int {
-    return snapCountValue(value.toFloat(), min, max, step)
-}
-
-private fun snapCountValue(
-    value: Float,
-    min: Int,
-    max: Int,
-    step: Int
-): Int {
-    val clamped = value.coerceIn(min.toFloat(), max.toFloat())
-    val snappedSteps = ((clamped - min) / step).roundToInt()
-    return (min + snappedSteps * step).coerceIn(min, max)
 }

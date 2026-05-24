@@ -16,8 +16,6 @@
 
 package cc.sovellus.vrcaa.api.search.avtrdb.models
 
-
-import cc.sovellus.vrcaa.api.search.models.SearchAvatar
 import com.google.gson.annotations.SerializedName
 
 data class AvtrDbResponse(
