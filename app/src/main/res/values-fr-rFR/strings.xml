@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Résultats pour</string>
-    <string name="search_filter_category_worlds">Mondes</string>
-    <string name="search_filter_category_worlds_sort_by">Trier par</string>
-    <string name="search_filter_category_worlds_count">Quantité</string>
-    <string name="search_filter_category_users">Utilisateurs</string>
-    <string name="search_filter_category_users_count">Quantité</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Fournisseurs</string>
-    <string name="search_filter_category_groups">Groupes</string>
-    <string name="search_filter_category_groups_count">Quantité</string>
+    <string name="search_filter_label_count">Quantité</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">Copier l\'ID</string>
     <string name="copied_toast">L\'identifiant de %1$s a été copié avec succès.</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Quantité</string>
     <string name="search_filter_button_reset">Réinitialiser</string>
     <string name="search_filter_button_apply">Appliquer</string>
     <string-array name="search_selection_options">
@@ -101,6 +94,8 @@
     <string name="world_title_favorites">Favoris</string>
     <string name="world_title_capacity">Capacité</string>
     <string name="world_title_occupants">Occupants</string>
+    <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Date de publication</string>
     <string name="world_title_heat">Popularité</string>
     <string name="world_title_popularity">Popularité</string>
@@ -148,7 +143,7 @@
     <string name="notifications_type_invite_request">Invite Request</string>
     <string name="notifications_type_invite_request_response">Invite Request Response</string>
     <string name="notifications_type_friend_request">Friend Request</string>
-    <string name="notifications_type_friend_request_content">%1$s - wants to be your friend!</string>
+    <string name="notifications_type_friend_request_content">%1$s - veut être votre ami(e) !</string>
     <string name="notification_dialog_title">Notification</string>
     <string name="notification_dialog_description">What do you want to do with this notification?</string>
     <string name="notification_dialog_button_delete">Delete</string>
@@ -333,7 +328,7 @@
     <string name="loading_text_emojis">Chargement des émojis...</string>
     <string name="loading_text_items">Chargement des objets...</string>
     <string name="loading_text_favorites">Chargement des favoris…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_notifications">Chargement des notifications...</string>
     <!-- Theming -->
     <string name="theme_page_title">Thème</string>
     <string name="theme_page_minimalist_mode_text">Mode minimaliste</string>

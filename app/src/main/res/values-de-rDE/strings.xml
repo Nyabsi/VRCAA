@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">Notiz Festlegen</string>
     <!-- Search -->
     <string name="search_text_result">Ergebnisse für</string>
-    <string name="search_filter_category_worlds">Welten</string>
-    <string name="search_filter_category_worlds_sort_by">Sortiere nach</string>
-    <string name="search_filter_category_worlds_count">Anzahl</string>
-    <string name="search_filter_category_users">Nutzer</string>
-    <string name="search_filter_category_users_count">Anzahl</string>
-    <string name="search_filter_category_avatars">Avatare</string>
-    <string name="search_filter_category_avatars_provider">Anbieter</string>
-    <string name="search_filter_category_groups">Gruppen</string>
-    <string name="search_filter_category_groups_count">Anzahl</string>
+    <string name="search_filter_label_count">Anzahl</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">ID kopieren</string>
     <string name="copied_toast">%1$s\'s ID kopiert.</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Anzahl</string>
     <string name="search_filter_button_reset">Zurücksetzen</string>
     <string name="search_filter_button_apply">Anwenden</string>
     <string-array name="search_selection_options">
@@ -101,6 +94,8 @@
     <string name="world_title_favorites">Favoriten</string>
     <string name="world_title_capacity">Kapazität</string>
     <string name="world_title_occupants">Vor Ort</string>
+    <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Veröffentlichungsdatum</string>
     <string name="world_title_heat">Beliebtheit</string>
     <string name="world_title_popularity">Beliebtheit</string>

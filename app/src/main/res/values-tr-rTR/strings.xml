@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Arama Sonuçları;</string>
-    <string name="search_filter_category_worlds">Dünyalar</string>
-    <string name="search_filter_category_worlds_sort_by">Sırala</string>
-    <string name="search_filter_category_worlds_count">Dünya Adedi</string>
-    <string name="search_filter_category_users">Kullanıcılar</string>
-    <string name="search_filter_category_users_count">Kullanıcı adedi</string>
-    <string name="search_filter_category_avatars">Avatarlar</string>
-    <string name="search_filter_category_avatars_provider">Avatar sağlayıcı</string>
-    <string name="search_filter_category_groups">Guruplar</string>
-    <string name="search_filter_category_groups_count">Gurup adedi</string>
+    <string name="search_filter_label_count">Count</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">Copy Id</string>
     <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Count</string>
     <string name="search_filter_button_reset">Reset</string>
     <string name="search_filter_button_apply">Uygula</string>
     <string-array name="search_selection_options">
@@ -101,6 +94,8 @@
     <string name="world_title_favorites">Favorites</string>
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
+    <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Publication Date</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularity</string>

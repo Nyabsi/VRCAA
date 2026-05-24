@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Результаты по</string>
-    <string name="search_filter_category_worlds">Миры</string>
-    <string name="search_filter_category_worlds_sort_by">Сортировать по</string>
-    <string name="search_filter_category_worlds_count">Количество</string>
-    <string name="search_filter_category_users">Юзеры</string>
-    <string name="search_filter_category_users_count">Количество</string>
-    <string name="search_filter_category_avatars">Аватары</string>
-    <string name="search_filter_category_avatars_provider">Провайдер</string>
-    <string name="search_filter_category_groups">Группы</string>
-    <string name="search_filter_category_groups_count">Количество</string>
+    <string name="search_filter_label_count">Кол-во</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">Копировать ID</string>
     <string name="copied_toast">Успешно скопирован ID %1$s</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Кол-во</string>
     <string name="search_filter_button_reset">Сброс</string>
     <string name="search_filter_button_apply">Применить</string>
     <string-array name="search_selection_options">
@@ -101,6 +94,8 @@
     <string name="world_title_favorites">Избранное</string>
     <string name="world_title_capacity">Вместимость</string>
     <string name="world_title_occupants">Участники</string>
+    <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Дата публикации</string>
     <string name="world_title_heat">Теплота</string>
     <string name="world_title_popularity">Популярность</string>
