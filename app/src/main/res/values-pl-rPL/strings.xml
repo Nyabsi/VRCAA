@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Wyniki dla</string>
-    <string name="search_filter_category_worlds">Światy</string>
-    <string name="search_filter_category_worlds_sort_by">Sortuj wg</string>
-    <string name="search_filter_category_worlds_count">Ilość</string>
-    <string name="search_filter_category_users">Użytkownicy</string>
-    <string name="search_filter_category_users_count">Ilość</string>
-    <string name="search_filter_category_avatars">Awatary</string>
-    <string name="search_filter_category_avatars_provider">Dostawca</string>
-    <string name="search_filter_category_groups">Grupy</string>
-    <string name="search_filter_category_groups_count">Ilość</string>
+    <string name="search_filter_label_count">Ilość</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">Kopiuj Id</string>
     <string name="copied_toast">Pomyślnie skopiowano Id %1$s.</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Ilość</string>
     <string name="search_filter_button_reset">Reset</string>
     <string name="search_filter_button_apply">Zastosuj</string>
     <string-array name="search_selection_options">
@@ -102,6 +95,7 @@
     <string name="world_title_capacity">Pojemność</string>
     <string name="world_title_occupants">Liczba użytkowników</string>
     <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Data publikacji</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Popularność</string>
