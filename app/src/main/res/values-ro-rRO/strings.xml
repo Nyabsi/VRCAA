@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">Set Note</string>
     <!-- Search -->
     <string name="search_text_result">Rezultate pentru</string>
-    <string name="search_filter_category_worlds">Lumi</string>
-    <string name="search_filter_category_worlds_sort_by">Sortează după</string>
-    <string name="search_filter_category_worlds_count">Număr</string>
-    <string name="search_filter_category_users">Useri</string>
-    <string name="search_filter_category_users_count">Număr</string>
-    <string name="search_filter_category_avatars">Avatare</string>
-    <string name="search_filter_category_avatars_provider">Furnizor</string>
-    <string name="search_filter_category_groups">Grupuri</string>
-    <string name="search_filter_category_groups_count">Număr</string>
+    <string name="search_filter_label_count">Număr</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">Copiază Id</string>
     <string name="copied_toast">Id-ul lui %1$s a fost copiat cu succes.</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Număr</string>
     <string name="search_filter_button_reset">Resetează</string>
     <string name="search_filter_button_apply">Aplică</string>
     <string-array name="search_selection_options">
@@ -101,6 +94,8 @@
     <string name="world_title_favorites">Favorite</string>
     <string name="world_title_capacity">Capacitate</string>
     <string name="world_title_occupants">Ocupanți</string>
+    <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Data publicări</string>
     <string name="world_title_heat">Căldură</string>
     <string name="world_title_popularity">Popularitate</string>
