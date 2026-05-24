@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">ノートの記載</string>
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
-    <string name="search_filter_category_worlds">ワールド</string>
-    <string name="search_filter_category_worlds_sort_by">ソート</string>
-    <string name="search_filter_category_worlds_count">表示数</string>
-    <string name="search_filter_category_users">ユーザー</string>
-    <string name="search_filter_category_users_count">表示数</string>
-    <string name="search_filter_category_avatars">アバター</string>
-    <string name="search_filter_category_avatars_provider">提供者</string>
-    <string name="search_filter_category_groups">グループ</string>
-    <string name="search_filter_category_groups_count">表示数</string>
+    <string name="search_filter_label_count">表示数</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">IDをコピー</string>
     <string name="copied_toast">%1$s さんのIDをコピーしました。</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">表示数</string>
     <string name="search_filter_button_reset">リセット</string>
     <string name="search_filter_button_apply">適用</string>
     <string-array name="search_selection_options">
@@ -102,6 +95,7 @@
     <string name="world_title_capacity">最大人数</string>
     <string name="world_title_occupants">利用中人数</string>
     <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">作成日時</string>
     <string name="world_title_heat">ヒート</string>
     <string name="world_title_popularity">人気度</string>
