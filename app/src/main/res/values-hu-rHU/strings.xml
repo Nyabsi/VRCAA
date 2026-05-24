@@ -56,41 +56,41 @@
     <string name="profile_user_note_dialog_title">Megjegyzés hozzáadása</string>
     <!-- Search -->
     <string name="search_text_result">Results for</string>
-    <string name="search_filter_label_count">Count</string>
-    <string name="search_filter_label_platform">Platform</string>
-    <string name="search_filter_label_content_gating">Content Gating</string>
-    <string name="search_filter_label_performance_rank">Performance Rank</string>
-    <string name="copy_id_label">Copy Id</string>
-    <string name="copied_toast">Successfully copied %1$s\'s Id.</string>
-    <string name="search_filter_button_reset">Reset</string>
-    <string name="search_filter_button_apply">Apply</string>
+    <string name="search_filter_label_count">Mennyiség</string>
+    <string name="search_filter_label_platform">Felület</string>
+    <string name="search_filter_label_content_gating">Tartalomszűrő</string>
+    <string name="search_filter_label_performance_rank">Teljesítmény-minősítés</string>
+    <string name="copy_id_label">Azonosító másolása</string>
+    <string name="copied_toast">%1$s azonosítója a vágólapra másolva!</string>
+    <string name="search_filter_button_reset">Szűrő törlése</string>
+    <string name="search_filter_button_apply">Szűrés</string>
     <string-array name="search_selection_options">
         <item>Worlds</item>
         <item>Users</item>
         <item>Avatars</item>
-        <item>Groups</item>
+        <item>Csoport</item>
     </string-array>
-    <string name="search_button_more">More…</string>
+    <string name="search_button_more">Több…</string>
     <!-- Settings -->
-    <string name="settings_item_about">About</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
-    <string name="settings_item_theming">Appearance</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
-    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Experimental)</string>
-    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence integration</string>
-    <string name="settings_item_advanced_settings">Advanced</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_about">Névjegy</string>
+    <string name="settings_item_about_description">Bővebben az eszközödről és a VRCAA alkalmazásról</string>
+    <string name="settings_item_theming">Megjelenítés</string>
+    <string name="settings_item_theming_description">Megjelenítés beállítása, minimalista mód</string>
+    <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Discord Rich Presence (kísérleti)</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">A Discord-profilon megjelenő információ az alkalmazás használatakor</string>
+    <string name="settings_item_advanced_settings">Haladó beállítások</string>
+    <string name="settings_item_advanced_settings_description">Naplózás, networking…</string>
+    <string name="settings_item_database_settings">Adatbázis és statisztikák</string>
+    <string name="settings_item_database_settings_description">Statisztikák megjelenítése, adatok tárolása és visszaállítása</string>
     <string name="settings_item_logout">Kijelentkezés </string>
-    <string name="settings_kofi_donation_button">Donate through Ko-fi</string>
+    <string name="settings_kofi_donation_button">Támogass minket a Ko-fi oldalunkon!</string>
     <!-- Worlds -->
     <string name="world_label_description">Description</string>
     <string name="world_label_tags">Tags</string>
     <string name="world_text_no_tags">The author has not provided tags.</string>
     <string name="world_title_created_at">Creation Date</string>
     <string name="world_title_updated_at">Last Updated</string>
-    <string name="world_title_visits">Visits</string>
+    <string name="world_title_visits">Látogatások száma</string>
     <string name="world_title_favorites">Kedvencek</string>
     <string name="world_title_capacity">Capacity</string>
     <string name="world_title_occupants">Occupants</string>
@@ -206,66 +206,66 @@
     <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
     <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Shows your current status in discord</string>
     <!-- Crash -->
-    <string name="crash_title_text">The application encountered fatal error.</string>
+    <string name="crash_title_text">Az alkalmazás végzetes hibába ütközött.</string>
     <string name="crash_button_restart_text">Újraindítás</string>
     <string name="crash_button_copy_log_text">Információ másolása</string>
     <string name="crash_button_report_text"> problémá jelentése</string>
     <!-- Groups -->
     <string-array name="group_selection_options">
         <item>Infó</item>
-        <item>Instances</item>
+        <item>Helyzetek</item>
     </string-array>
-    <string name="group_toast_not_found_message">Group was not found, are you sure it exists?</string>
-    <string name="group_page_label_description">Description</string>
-    <string name="group_page_label_rules">Rules</string>
-    <string name="group_page_dropdown_view_author">View Author\'s Profile</string>
-    <string name="group_page_dropdown_request_invite">Request Invite</string>
-    <string name="group_page_dropdown_request_invite_cancel">Cancel Invite Request</string>
-    <string name="group_page_dropdown_join_group">Join Group</string>
-    <string name="group_page_dropdown_leave_group">Leave Group</string>
-    <string name="group_page_toast_invite_requested">Sent invite request.</string>
-    <string name="group_page_toast_invite_requested_fail">Failed to request invite.</string>
-    <string name="group_page_toast_invite_requested_cancel">Cancelled invite request.</string>
-    <string name="group_page_toast_invite_requested_cancel_fail">Failed to cancel request invite.</string>
-    <string name="group_page_toast_join_group">Joined the group.</string>
-    <string name="group_page_toast_join_group_fail">Failed to join the group.</string>
-    <string name="group_page_toast_leave_group">Left the group.</string>
-    <string name="group_page_toast_leave_group_fail">Failed to leave the group.</string>
-    <string name="group_user_no_groups_message">User is not apart of any groups.</string>
-    <string name="group_user_viewing_groups_username">%1$s\'s Groups</string>
+    <string name="group_toast_not_found_message">A csoport nem található. Biztos nem gépelted el?</string>
+    <string name="group_page_label_description">Leírás</string>
+    <string name="group_page_label_rules">Szabályzat</string>
+    <string name="group_page_dropdown_view_author">Tulajdonos profilja</string>
+    <string name="group_page_dropdown_request_invite">Meghívás kérelmezése</string>
+    <string name="group_page_dropdown_request_invite_cancel">Kérelmezés törlése</string>
+    <string name="group_page_dropdown_join_group">Csatlakozás a csoportba</string>
+    <string name="group_page_dropdown_leave_group">Kilépés a csoportból</string>
+    <string name="group_page_toast_invite_requested">Meghívás kérelmezve.</string>
+    <string name="group_page_toast_invite_requested_fail">Nem sikerült kérelmet küldeni.</string>
+    <string name="group_page_toast_invite_requested_cancel">Kérelem törölve.</string>
+    <string name="group_page_toast_invite_requested_cancel_fail">Nem sikerült a kérelmet törölni.</string>
+    <string name="group_page_toast_join_group">Most már a csoport tagja vagy!</string>
+    <string name="group_page_toast_join_group_fail">Nem sikerült csatlakozni a csoporthoz.</string>
+    <string name="group_page_toast_leave_group">Kiléptél a csoportból!</string>
+    <string name="group_page_toast_leave_group_fail">Nem sikerült kilépni a csoportból.</string>
+    <string name="group_user_no_groups_message">A felhasználó egy csoportnak sem a tagja.</string>
+    <string name="group_user_viewing_groups_username">Csoportok, ahol %1$s a tagja</string>
     <!-- Misc -->
-    <string name="misc_no_internet_title">No Internet Connection</string>
-    <string name="misc_no_internet_description">Please make sure you\'re connected to the internet, this application cannot work without Internet connection.</string>
-    <string name="misc_no_internet_label">Restart Application</string>
-    <string name="misc_exit_toast_label">Press again to quit.</string>
-    <string name="misc_no_premium_subscription">This features requires you to have an active VRC+ subscription.</string>
-    <string name="global_app_default_loading_text">Initializing…</string>
-    <string name="generic_text_public">Public</string>
-    <string name="generic_text_private">Private</string>
-    <string name="generic_text_upload">Upload</string>
-    <string name="generic_text_cancel">Cancel</string>
+    <string name="misc_no_internet_title">Nincs internetkapcsolat</string>
+    <string name="misc_no_internet_description">Kérlek, csatlakozz az internethez! Anélkül az alkalmazás nem működik.</string>
+    <string name="misc_no_internet_label">Újraindítás</string>
+    <string name="misc_exit_toast_label">A kilépéshez nyomd meg újra a Vissza gombot.</string>
+    <string name="misc_no_premium_subscription">VRC+-előfizetés szükséges a funkció használatához!</string>
+    <string name="global_app_default_loading_text">Betöltés…</string>
+    <string name="generic_text_public">Nyilvános</string>
+    <string name="generic_text_private">Privát</string>
+    <string name="generic_text_upload">Feltöltés</string>
+    <string name="generic_text_cancel">Mégse</string>
     <string name="generic_text_ok">OK</string>
     <!-- User -->
-    <string name="user_overlay_friend_add">Add Friend</string>
-    <string name="user_overlay_friend_remove">Remove Friend</string>
-    <string name="user_overlay_friend_accept">Accept Request</string>
-    <string name="user_overlay_friend_cancel">Cancel Request</string>
-    <string name="user_overlay_groups">Groups</string>
-    <string name="user_overlay_worlds">Worlds</string>
-    <string name="user_overlay_favorites">Favorites</string>
-    <string name="user_overlay_find_avatar">Find Avatar</string>
-    <string name="user_overlay_invite">Invite Me</string>
-    <string name="user_overlay_note">Add Note</string>
+    <string name="user_overlay_friend_add">Barátkérelem küldése</string>
+    <string name="user_overlay_friend_remove">Barát törlése</string>
+    <string name="user_overlay_friend_accept">Barátkérelem elfogadása</string>
+    <string name="user_overlay_friend_cancel">Barátkérelem elutasítása</string>
+    <string name="user_overlay_groups">Csoport</string>
+    <string name="user_overlay_worlds">Világ</string>
+    <string name="user_overlay_favorites">Kedvencek</string>
+    <string name="user_overlay_find_avatar">Avatár keresése</string>
+    <string name="user_overlay_invite">Önmeghívás</string>
+    <string name="user_overlay_note">Jegyzet hozzáadása</string>
     <!-- Profile Edit Dialog -->
-    <string name="profile_edit_dialog_title_status">Status</string>
-    <string name="profile_edit_dialog_title_age_verification_visibility">Age Verification Visibility</string>
-    <string name="profile_edit_dialog_title_status_description">Status Description</string>
-    <string name="profile_edit_dialog_title_bio">Bio</string>
-    <string name="profile_edit_dialog_title_bio_links">Social Links</string>
-    <string name="profile_edit_dialog_toast_updated">Updated profile.</string>
-    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">Changes were discarded.</string>
-    <string name="profile_edit_dialog_title_pronouns">Pronouns</string>
-    <string name="profile_edit_dialog_button_cancel">Cancel</string>
+    <string name="profile_edit_dialog_title_status">Állapot szerkesztése</string>
+    <string name="profile_edit_dialog_title_age_verification_visibility">Életkor-igazolás láthatóságának beállítása</string>
+    <string name="profile_edit_dialog_title_status_description">Állapotleírás hozzáadása</string>
+    <string name="profile_edit_dialog_title_bio">Bemutatkozás</string>
+    <string name="profile_edit_dialog_title_bio_links">Oldalak, linkek</string>
+    <string name="profile_edit_dialog_toast_updated">A profil frissítve!</string>
+    <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">A módosítások nincsenek elmentve!</string>
+    <string name="profile_edit_dialog_title_pronouns">Névmások</string>
+    <string name="profile_edit_dialog_button_cancel">Mégse</string>
     <string name="profile_edit_dialog_button_apply">Apply</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Are you sure?</string>
@@ -327,48 +327,48 @@
     <string name="loading_text_stickers">Loading stickers…</string>
     <string name="loading_text_emojis">Loading emojis…</string>
     <string name="loading_text_items">Loading items…</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_favorites">Kedvencek betöltése…</string>
+    <string name="loading_text_notifications">Értesítések betöltése…</string>
     <!-- Theming -->
-    <string name="theme_page_title">Theme</string>
-    <string name="theme_page_minimalist_mode_text">Minimalist Mode</string>
-    <string name="theme_page_minimalist_mode_text_description">"Minimalist Mode helps content to fit on smaller screens."</string>
+    <string name="theme_page_title">Téma</string>
+    <string name="theme_page_minimalist_mode_text">MInimalista mód</string>
+    <string name="theme_page_minimalist_mode_text_description">"A minimalista mód úgy rendezi el az ablakokat, hogy azok a kisebb képernyőkön is elférjenek."</string>
     <string-array name="theme_page_selection_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System</item>
+        <item>Világos</item>
+        <item>Sötét</item>
+        <item>Kövesse a rendszerbeállítást</item>
     </string-array>
     <string-array name="column_count_options">
-        <item>Adaptive</item>
-        <item>Fixed</item>
+        <item>Alkalmazkodó</item>
+        <item>Rögzített</item>
     </string-array>
-    <string name="theme_page_section_theme_title">Theme</string>
-    <string name="theme_page_section_display_title">Display</string>
-    <string name="theme_page_section_column_title">Column Count</string>
+    <string name="theme_page_section_theme_title">Téma</string>
+    <string name="theme_page_section_display_title">Kijelző</string>
+    <string name="theme_page_section_column_title">Oszlopok száma</string>
     <!-- Advanced Settings -->
-    <string name="advanced_page_title">Advanced Settings</string>
+    <string name="advanced_page_title">Haladó beállítások</string>
     <string name="advanced_page_section_networking">Networking</string>
-    <string name="advanced_page_network_logging">Network Logging</string>
-    <string name="advanced_page_network_logging_description">Intercept HTTP and WebSocket traffic</string>
-    <string name="advanced_page_view_network_logs">Show Network Logs</string>
-    <string name="advanced_page_section_background_activities">Background Activities</string>
-    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Disable Battery Optimizations</string>
-    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">May help with not receiving real-time network events</string>
-    <string name="advanced_page_kill_service">Kill background service</string>
-    <string name="advanced_page_kill_service_description">Kills the background service responsible for real-time events</string>
-    <string name="advanced_page_section_database">Database</string>
-    <string name="advanced_page_database_delete">Delete Database</string>
-    <string name="advanced_page_database_delete_description">Deletes the internal database responsible for storing data</string>
-    <string name="advanced_page_section_testing">Testing</string>
-    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
-    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
-    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
+    <string name="advanced_page_network_logging">Hálózat naplózása</string>
+    <string name="advanced_page_network_logging_description">HTTP és WebSocket-forgalom naplózása</string>
+    <string name="advanced_page_view_network_logs">Hálózati naplók mutatása</string>
+    <string name="advanced_page_section_background_activities">Háttéraktivitás</string>
+    <string name="advanced_page_battery_optimization" tools:keep="@string/advanced_page_battery_optimization">Akkumulátor-optimalizáció letiltása</string>
+    <string name="advanced_page_battery_optimization_description" tools:keep="@string/advanced_page_battery_optimization_description">Ha az értesítések nem valós időben jönnének, kapcsold be ezt az opciót!</string>
+    <string name="advanced_page_kill_service">Háttérszolgáltatás kényszerített leállítása</string>
+    <string name="advanced_page_kill_service_description">Azokat a háttérszolgáltatásokat állítja le, amiket a valósidejű értesítések küldést szolgálja.</string>
+    <string name="advanced_page_section_database">Adatbázis</string>
+    <string name="advanced_page_database_delete">Adatbázis törlése</string>
+    <string name="advanced_page_database_delete_description">Minden belső adatokat, amiket az alkalmazás tárol, kitörli</string>
+    <string name="advanced_page_section_testing">Tesztelés</string>
+    <string name="advanced_page_reset_onboarding">Beléptető újraengedélyezése</string>
+    <string name="advanced_page_reset_onboarding_description">Amikor legközelebb megnyitod az alkalmazást, a beléptetést fogod látni először.</string>
+    <string name="advanced_page_reset_onboarding_toast">Beléptető engedélyezve.</string>
     <!-- Database -->
-    <string name="database_page_title">Database &amp; Statistics</string>
-    <string name="database_page_section_statistics">Statistics</string>
-    <string name="database_page_statistics_size">Database Size</string>
-    <string name="database_page_statistics_row_count">Row Count</string>
-    <string name="database_page_section_recovery">Restore &amp; Backup</string>
+    <string name="database_page_title">Adatbázis és statisztikák</string>
+    <string name="database_page_section_statistics">Statisztikák</string>
+    <string name="database_page_statistics_size">Lemezen lévő adatbázis mérete</string>
+    <string name="database_page_statistics_row_count">Sorok száma</string>
+    <string name="database_page_section_recovery">Visszaállítás és biztonsági mentés</string>
     <string name="database_page_recovery_backup">Backup Database</string>
     <string name="database_page_recovery_backup_description">Backup your current data</string>
     <string name="database_page_recovery_restore">Restore Database</string>
