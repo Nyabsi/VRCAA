@@ -6,23 +6,23 @@
     <!-- Friends -->
     <string-array name="friend_selection_options">
         <item>Favorite</item>
-        <item>Online</item>
+        <item>Elérhető</item>
         <item>Weboldal</item>
-        <item>Offline</item>
+        <item>Nem elérhető</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">A %1$s felhasználónak szánt barátkérelem törölve.</string>
+    <string name="friend_toast_friend_request_cancel_failed">Nem sikerült törölni a %1$s felhasználónak elküldött barátkérelmet.</string>
+    <string name="friend_toast_friend_removed">%1$s már nem a barátod.</string>
+    <string name="friend_toast_friend_remove_failed">Egy hiba miatt %1$s még a barátod.</string>
+    <string name="friend_toast_friend_requested">Barátkérelem elküldve %1$s számára.</string>
+    <string name="friend_toast_friend_request_failed">Nem sikerült barátkérelmet küldeni %1$s számára.</string>
+    <string name="friend_toast_friend_request_accepted">Elfogadtad %1$s barátkérelmét!</string>
+    <string name="friend_toast_friend_request_accept_failed">Nem sikerült %1$s barátkérelmét elfogadnod!</string>
     <!-- Home -->
-    <string name="home_active_friends">Online Friends</string>
+    <string name="home_active_friends">Elérhető barátok</string>
     <string name="home_recently_visited">Recently Visited</string>
-    <string name="home_friend_locations">Friend Locations</string>
-    <string name="home_curated_for_you">Curated For You</string>
+    <string name="home_friend_locations">Világok, ahol a barátaid vannak</string>
+    <string name="home_curated_for_you">Számodra ajánlott</string>
     <!-- Login -->
     <string name="login_text">Login to VRC Android Assistant</string>
     <string name="login_label_username">Username or E-Mail Address</string>
@@ -31,29 +31,29 @@
     <string name="login_toast_wrong_credentials">Wrong username or password.</string>
     <string name="login_toast_wrong_code">Failed to verify, check the code again.</string>
     <!-- Onboarding -->
-    <string name="onboarding_title">Let\'s get started!</string>
-    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
-    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
-    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
+    <string name="onboarding_title">Kezdjük is el!</string>
+    <string name="onboarding_description">Ne szakadj el a VRChattől! E alkalmazás segítségével nyomonkövetheted a barátaid, kezelheted a profilodat, és mindennel képben maradhatsz — csupán a kezedben!</string>
+    <string name="onboarding_permissions_title">Az alkalmazásnak engedélyre van szükség.</string>
+    <string name="onboarding_permissions_description">Ha engedélyezed az értesítéseket, értesítést kaphatsz a barátaidtól és a csoportjaidtól!</string>
     <!-- Two Auth -->
     <string name="auth_text_email">Input the code sent to your e-mail</string>
     <string name="auth_text_app">Input the code from your Authenticator app</string>
     <string name="auth_button_text">Verify</string>
-    <string name="auth_button_paste">Paste</string>
+    <string name="auth_button_paste">Beilleszt</string>
     <!-- Main -->
-    <string name="main_search_placeholder">Search for worlds, users or avatars…</string>
+    <string name="main_search_placeholder">Világok, felhasználók keresése…</string>
     <!-- Profile -->
-    <string name="profile_label_current_location">Current Location</string>
-    <string name="profile_label_note">Note</string>
+    <string name="profile_label_current_location">Jelenleg itt tartózkodik</string>
+    <string name="profile_label_note">Jegyzet</string>
     <string name="profile_label_biography">Bio</string>
-    <string name="profile_label_last_activity">Last Activity</string>
-    <string name="profile_label_date_joined">Date Joined</string>
+    <string name="profile_label_last_activity">Utolsó aktivitás:</string>
+    <string name="profile_label_date_joined">Regisztráció dátuma:</string>
     <string name="profile_text_no_biography">No description specified.</string>
-    <string name="profile_user_dropdown_manage_notifications">Manage notifications</string>
-    <string name="profile_user_not_found_message">User doesn\'t exist.</string>
-    <string name="profile_user_avatar_private">Avatar is private!</string>
-    <string name="profile_user_avatar_unreachable">Avatar is unreachable!</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_dropdown_manage_notifications">Értesítési beállítások</string>
+    <string name="profile_user_not_found_message">Nincs ilyen felhasználó.</string>
+    <string name="profile_user_avatar_private">Az avatár privát!</string>
+    <string name="profile_user_avatar_unreachable">Az avatár nem elérhető!</string>
+    <string name="profile_user_note_dialog_title">Megjegyzés hozzáadása</string>
     <!-- Search -->
     <string name="search_text_result">Results for</string>
     <string name="search_filter_label_count">Count</string>
