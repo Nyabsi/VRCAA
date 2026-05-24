@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Universal Strings -->
-    <string name="result_not_found">There\'s nothing but chickens here!</string>
-    <string name="legal_disclaimer">"VRCAA is not endorsed by VRChat Inc. or any of their affiliates."</string>
+    <string name="result_not_found">Olyan magányos itt…</string>
+    <string name="legal_disclaimer">"A VRCAA nem tartozik, vagy jóvá van hagyva a VRChat Inc., vagy egyéb hozzátartozói által."</string>
     <!-- Friends -->
     <string-array name="friend_selection_options">
-        <item>Favorite</item>
+        <item>Kedvencek</item>
         <item>Elérhető</item>
         <item>Weboldal</item>
         <item>Nem elérhető</item>
@@ -20,15 +20,15 @@
     <string name="friend_toast_friend_request_accept_failed">Nem sikerült %1$s barátkérelmét elfogadnod!</string>
     <!-- Home -->
     <string name="home_active_friends">Elérhető barátok</string>
-    <string name="home_recently_visited">Recently Visited</string>
+    <string name="home_recently_visited">Nemrég meglátogatott</string>
     <string name="home_friend_locations">Világok, ahol a barátaid vannak</string>
     <string name="home_curated_for_you">Számodra ajánlott</string>
     <!-- Login -->
-    <string name="login_text">Login to VRC Android Assistant</string>
-    <string name="login_label_username">Username or E-Mail Address</string>
-    <string name="login_label_password">Password</string>
-    <string name="login_button_text">Login</string>
-    <string name="login_toast_wrong_credentials">Wrong username or password.</string>
+    <string name="login_text">Bejelentkezés a VRC Android Assistant alkalmazásba</string>
+    <string name="login_label_username">Felhasználónév vagy e-mail</string>
+    <string name="login_label_password">Jelszó</string>
+    <string name="login_button_text">Belépés</string>
+    <string name="login_toast_wrong_credentials">Hibás felhasználónév vagy jelszó.</string>
     <string name="login_toast_wrong_code">Hibás kód; próbáld újra.</string>
     <!-- Onboarding -->
     <string name="onboarding_title">Kezdjük is el!</string>
@@ -65,9 +65,9 @@
     <string name="search_filter_button_reset">Szűrő törlése</string>
     <string name="search_filter_button_apply">Szűrés</string>
     <string-array name="search_selection_options">
-        <item>Worlds</item>
-        <item>Users</item>
-        <item>Avatars</item>
+        <item>Világ</item>
+        <item>Felhasználó</item>
+        <item>Avatár</item>
         <item>Csoport</item>
     </string-array>
     <string name="search_button_more">Több…</string>
@@ -78,16 +78,16 @@
     <string name="settings_item_theming_description">Megjelenítés beállítása, minimalista mód</string>
     <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Discord Rich Presence (kísérleti)</string>
     <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">A Discord-profilon megjelenő információ az alkalmazás használatakor</string>
-    <string name="settings_item_advanced_settings">Haladó beállítások</string>
+    <string name="settings_item_advanced_settings">Haladó</string>
     <string name="settings_item_advanced_settings_description">Naplózás, networking…</string>
     <string name="settings_item_database_settings">Adatbázis és statisztikák</string>
     <string name="settings_item_database_settings_description">Statisztikák megjelenítése, adatok tárolása és visszaállítása</string>
-    <string name="settings_item_logout">Kijelentkezés </string>
+    <string name="settings_item_logout">Kijelentkezés</string>
     <string name="settings_kofi_donation_button">Támogass minket a Ko-fi oldalunkon!</string>
     <!-- Worlds -->
-    <string name="world_label_description">Description</string>
-    <string name="world_label_tags">Tags</string>
-    <string name="world_text_no_tags">The author has not provided tags.</string>
+    <string name="world_label_description">Leírás</string>
+    <string name="world_label_tags">Címkék</string>
+    <string name="world_text_no_tags">Ehhez a világhoz nem tartozik címke.</string>
     <string name="world_title_created_at">Feltöltés ideje</string>
     <string name="world_title_updated_at">Utolsó frissítés</string>
     <string name="world_title_visits">Látogatók száma</string>
@@ -107,7 +107,7 @@
     <string name="world_author_label">%1$s</string>
     <string name="world_instance_invite_dialog_title">Biztos meghívod magad?</string>
     <string name="world_instance_invite_dialog_description">Ez a funkció arra szolgál, hogy saját magadnak küldj meghívót, hogy azon keresztül csatlakozz az általad kiválasztott világba; biztos vagy benne?</string>
-    <string name="world_instance_no_public_instances_message">Nincs egy helyzet se.</string>
+    <string name="world_instance_no_public_instances_message">Egy nyilvános helyzet sincs.</string>
     <!-- Tabs -->
     <string name="tabs_label_friends">Barátok</string>
     <string name="tabs_label_home">Otthon</string>
@@ -129,7 +129,7 @@
     <string name="notification_service_description_friend_removed">Már nem vagy %1$s barátja. :(</string>
     <string name="notification_service_title_friend_added">Új barátod van!</string>
     <string name="notification_service_description_friend_added">%1$s a barátod lett!</string>
-    <string name="notification_title_player">értesítés beállításai</string>
+    <string name="notification_title_player">értesítéseinek beállításai</string>
     <string name="notification_label_enable">Értesítések engedélyezése</string>
     <string name="notification_label_intent_online">Értesíts, ha a barát belépett a VRChat-re</string>
     <string name="notification_label_intent_offline">Értesíts, ha a barát kilépett a VRChat-ből</string>
@@ -159,7 +159,7 @@
     <string name="notification_invite_text">meghívott téged ide:</string>
     <string name="notification_invite_response_text">nem fogadta el a meghívói kérelmed</string>
     <string name="notification_invite_request_text">hozzád szeretne csatlakozni</string>
-    <string name="notification_invite_request_response_text">rejected your invite request</string>
+    <string name="notification_invite_request_response_text">nem fogadta el a meghívód</string>
     <!-- Avatars -->
     <string name="avatar_dropdown_label_select">Avatár hordása</string>
     <string name="avatar_dropdown_toast_select_avatar">Avatár kiválasztva!</string>
@@ -186,25 +186,25 @@
     <string name="feed_removed_text">és te már nem vagyok barátok.</string>
     <string name="feed_friend_request_label">Barátfelkérés</string>
     <string name="feed_friend_request_text">a barátod akar lenni!</string>
-    <string name="feed_search_placeholder">Search for User or Location…</string>
+    <string name="feed_search_placeholder">Felhasználó vagy világ keresése…</string>
     <string name="feed_friend_avatar_label">Avatár változás</string>
-    <string name="feed_friend_avatar_text">changed their avatar to</string>
-    <string name="feed_friend_username_changed_label">Username Change</string>
-    <string name="feed_friend_username_changed_text">changed their username to</string>
+    <string name="feed_friend_avatar_text">új avatárt öltött fel: </string>
+    <string name="feed_friend_username_changed_label">Névváltoztatás</string>
+    <string name="feed_friend_username_changed_text">új neve: </string>
     <!-- About -->
     <string name="about_page_title">Névjegy</string>
     <string name="about_page_open_source_licenses_title">Nyílt forráskódú licenszek megtekintése</string>
     <string name="about_page_translate_title">Segíts a fordításban!</string>
-    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Battery optimizations are already disabled.</string>
+    <string name="about_page_battery_optimizations_toast" tools:keep="@string/about_page_battery_optimizations_toast">Az akkumulátor optimalizáció már le van tiltva.</string>
     <string name="license_title">Nyílt forráskódú licenszek listája</string>
     <!-- API -->
-    <string name="api_session_has_expired_text">Your session has expired, please login again.</string>
+    <string name="api_session_has_expired_text">Ez a munkamenet lejárt; kérlek, lépj be újra</string>
     <!-- Discord Rich Presence -->
-    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">Restarted service to take effect.</string>
-    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Enable Rich Presence</string>
-    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Set Webhook Url</string>
-    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Required for world thumbnail support (Optional)</string>
-    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">Shows your current status in discord</string>
+    <string name="discord_login_restarted_service_toast" tools:keep="@string/discord_login_restarted_service_toast">A beállítások érvényesítése érdekében a szolgáltatás újra lett indítva.</string>
+    <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">Rich Presence engedélyezése</string>
+    <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Webhook URL beállítása</string>
+    <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">Szükséges, hogy a világ indexképét megjelenítse (Nem kötelező)</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">A Discordon mutatja a jelenlegi állapotod</string>
     <!-- Crash -->
     <string name="crash_title_text">Az alkalmazás végzetes hibába ütközött.</string>
     <string name="crash_button_restart_text">Újraindítás</string>
@@ -266,67 +266,67 @@
     <string name="profile_edit_dialog_toast_cancelled" tools:keep="@string/profile_edit_dialog_toast_cancelled">A módosítások nincsenek elmentve!</string>
     <string name="profile_edit_dialog_title_pronouns">Névmások</string>
     <string name="profile_edit_dialog_button_cancel">Mégse</string>
-    <string name="profile_edit_dialog_button_apply">Apply</string>
+    <string name="profile_edit_dialog_button_apply">Alkalmazás</string>
     <!-- Logout dialog -->
-    <string name="logout_dialog_title">Are you sure?</string>
-    <string name="logout_dialog_description">By pressing \"Continue\" below you will log-out of VRCAA and you have to re-login to keep using the application.</string>
+    <string name="logout_dialog_title">Biztos kilépsz?</string>
+    <string name="logout_dialog_description">Ki leszel léptetve a VRCAA alkalmazásból. Az alkalmazás használatához újra be kell lépned.</string>
     <!-- Widgets -->
-    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">See current friend locations</string>
-    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">The horizon is bright, my friend.</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">Barátok tartózkodási helyének megtekintése</string>
+    <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">A legjobb barátság örökké tart.</string>
+    <string name="favorite_page_title">Kedvencek</string>
     <string-array name="favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
-        <item>Friends</item>
+        <item>Világ</item>
+        <item>Avatár</item>
+        <item>Barátok</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>Világ</item>
+        <item>Avatár</item>
     </string-array>
-    <string name="favorite_label_add">Add to favorites</string>
-    <string name="favorite_label_remove">Remove from favorites</string>
-    <string name="favorite_toast_favorite_added">Added %1$s to favorites.</string>
-    <string name="favorite_toast_favorite_added_failed">Adding %1$s to favorites failed.</string>
-    <string name="favorite_toast_favorite_removed">Removed %1$s from favorites.</string>
-    <string name="favorite_toast_favorite_removed_failed">Removing %1$s from favorites failed.</string>
-    <string name="favorite_dialog_button_add">Add</string>
-    <string name="favorite_dialog_button_cancel">Cancel</string>
-    <string name="favorite_dialog_title">"Add Favorite"</string>
-    <string name="favorite_edit_title">Editing %1$s</string>
-    <string name="favorite_edit_display_name">Display Name</string>
-    <string name="favorite_edit_visibility">Visibility</string>
-    <string name="favorite_edit_discarded">Changes were discarded.</string>
-    <string name="favorite_edit_applied">Changes have been applied.</string>
-    <string name="favorite_dialog_button_edit">Edit</string>
-    <string name="favorite_tab_refresh_favorites">Refresh Favorites</string>
-    <string name="favorite_toast_refreshed_favorites">Refreshed favorites.</string>
-    <string name="favorite_remove_dialog_title">Do you want remove this favorite?</string>
-    <string name="favorite_remove_dialog_description">This favorite is no longer available, it might have been deleted or made private by the author do you want to remove it from the list?</string>
+    <string name="favorite_label_add">Hozzáadás a kedvencekhez</string>
+    <string name="favorite_label_remove">Eltávolítás a kedvencekből</string>
+    <string name="favorite_toast_favorite_added">%1$s hozzáadva a kedvencekhez.</string>
+    <string name="favorite_toast_favorite_added_failed">%1$s hozzáadása a kedvencekhez sikertelen.</string>
+    <string name="favorite_toast_favorite_removed">%1$s eltávolítva a kedvencekből.</string>
+    <string name="favorite_toast_favorite_removed_failed">%1$s eltávolítása a kedvencekből sikertelen.</string>
+    <string name="favorite_dialog_button_add">Hozzáadás</string>
+    <string name="favorite_dialog_button_cancel">Mégse</string>
+    <string name="favorite_dialog_title">"Hozzáadás a kedvencekhez"</string>
+    <string name="favorite_edit_title">%1$s szerkesztése</string>
+    <string name="favorite_edit_display_name">Megjelenítő név</string>
+    <string name="favorite_edit_visibility">Láthatóság</string>
+    <string name="favorite_edit_discarded">Módosítások elvetve.</string>
+    <string name="favorite_edit_applied">Módosítások alkalmazva.</string>
+    <string name="favorite_dialog_button_edit">Szerkesztés</string>
+    <string name="favorite_tab_refresh_favorites">Kedvencek frissítése</string>
+    <string name="favorite_toast_refreshed_favorites">Frissített kedvencek.</string>
+    <string name="favorite_remove_dialog_title">Ki akarod törölni a kedvencek listából?</string>
+    <string name="favorite_remove_dialog_description">Ez a tétel már nem érhető el, lehet, el lett távolítva, vagy priváttá tették; el akarod távolítani a listából?</string>
     <!-- Activities -->
     <!-- Worlds -->
-    <string name="worlds_page_title">%1$s\'s Worlds</string>
+    <string name="worlds_page_title">%1$s világai</string>
     <!-- Avatars -->
-    <string name="avatars_page_title">Viewing avatars</string>
+    <string name="avatars_page_title">Avatár</string>
     <!-- Debug -->
-    <string name="developer_mode_toggle_toast">Restart the application to make the changes take effect.</string>
-    <string name="debug_notification_title_out_of_memory">Notice!</string>
-    <string name="debug_notification_content_out_of_memory">The application has ran out of memory! Cleared Debug cache to continue operation.</string>
+    <string name="developer_mode_toggle_toast">A beállítások módosításához indítsd újra az appot.</string>
+    <string name="debug_notification_title_out_of_memory">Figyelem!</string>
+    <string name="debug_notification_content_out_of_memory">Elfogyott a memória; a hibakereső gyorsítótár automatikusan ki lett ürítve a zökkenőmentes működés érdekében.</string>
     <!-- Loading Texts -->
-    <string name="loading_text_worlds">Loading worlds…</string>
-    <string name="loading_text_users">Loading users…</string>
-    <string name="loading_text_avatars">Loading avatars…</string>
-    <string name="loading_text_groups">Loading groups…</string>
-    <string name="loading_text_user">Loading user…</string>
-    <string name="loading_text_world">Loading world…</string>
-    <string name="loading_text_avatar">Loading avatar…</string>
-    <string name="loading_text_group">Loading group…</string>
-    <string name="loading_text_instances">Loading instances…</string>
-    <string name="loading_text_gallery">Loading gallery…</string>
-    <string name="loading_text_icons">Loading icons…</string>
-    <string name="loading_text_prints">Loading prints…</string>
-    <string name="loading_text_stickers">Loading stickers…</string>
-    <string name="loading_text_emojis">Loading emojis…</string>
-    <string name="loading_text_items">Loading items…</string>
+    <string name="loading_text_worlds">Világok betöltése…</string>
+    <string name="loading_text_users">Felhasználók betöltése…</string>
+    <string name="loading_text_avatars">Avatárok betöltése…</string>
+    <string name="loading_text_groups">Csoportok betöltése…</string>
+    <string name="loading_text_user">Felhasználó betöltése…</string>
+    <string name="loading_text_world">Világ betöltése…</string>
+    <string name="loading_text_avatar">Avatár betöltése…</string>
+    <string name="loading_text_group">Csoport betöltése…</string>
+    <string name="loading_text_instances">Helyzetek betöltése…</string>
+    <string name="loading_text_gallery">Galéria betöltése…</string>
+    <string name="loading_text_icons">Felhasználói ikonok betöltése…</string>
+    <string name="loading_text_prints">Nyomtatványok betöltése…</string>
+    <string name="loading_text_stickers">Címkék betöltése…</string>
+    <string name="loading_text_emojis">Hangulatjelek betöltése…</string>
+    <string name="loading_text_items">Tárgyak betöltése…</string>
     <string name="loading_text_favorites">Kedvencek betöltése…</string>
     <string name="loading_text_notifications">Értesítések betöltése…</string>
     <!-- Theming -->
@@ -386,38 +386,38 @@
         <item>Világ</item>
         <item>Avatár</item>
         <item>Csoport</item>
-        <item>Emojis</item>
-        <item>Stickers</item>
-        <item>Prints</item>
-        <item>Items</item>
+        <item>Hangulatjel</item>
+        <item>Címke</item>
+        <item>Nyomtatvány</item>
+        <item>Tárgy</item>
     </string-array>
-    <string name="gallery_page_title">Gallery</string>
-    <string name="gallery_page_button_upload">Upload Image</string>
-    <string name="icon_gallery_page_title">User Icons</string>
-    <string name="icon_gallery_page_button_upload">Upload Icon</string>
-    <string name="prints_page_title">Prints</string>
-    <string name="prints_page_button_upload">Upload Print</string>
-    <string name="emojis_page_title">Emojis</string>
-    <string name="emojis_page_button_upload">Upload Emoji</string>
+    <string name="gallery_page_title">Galéria</string>
+    <string name="gallery_page_button_upload">Kép feltöltése</string>
+    <string name="icon_gallery_page_title">Felhasználói ikonok</string>
+    <string name="icon_gallery_page_button_upload">Felhasználói ikon feltöltése</string>
+    <string name="prints_page_title">Nyomtatvány</string>
+    <string name="prints_page_button_upload">Új nyomtatvány</string>
+    <string name="emojis_page_title">Hangulatjel</string>
+    <string name="emojis_page_button_upload">Hangulatjel feltöltése</string>
     <string-array name="emojis_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>VRChat-hangulatjelek</item>
+        <item>Saját</item>
+        <item>Archíválva</item>
     </string-array>
-    <string name="stickers_page_title">Stickers</string>
-    <string name="stickers_page_button_upload">Upload Sticker</string>
+    <string name="stickers_page_title">Címkék</string>
+    <string name="stickers_page_button_upload">Címke feltöltése</string>
     <string-array name="sticker_page_sections">
-        <item>Official</item>
-        <item>Custom</item>
-        <item>Archived</item>
+        <item>VRChat-címkék</item>
+        <item>Saját</item>
+        <item>Archívált</item>
     </string-array>
-    <string name="items_page_title">Items</string>
+    <string name="items_page_title">Tárgy</string>
     <string-array name="items_page_sections">
-        <item>All Items</item>
-        <item>Archive</item>
+        <item>Összes tárgy</item>
+        <item>Archívált</item>
     </string-array>
-    <string name="image_preview_dialog_title">Preview</string>
-    <string name="image_preview_toast_picture_saved">Saved picture.</string>
-    <string name="image_preview_toast_picture_save_failed">Unable to save picture.</string>
-    <string name="activity_peek_no_url_handler">No app available to open the URL.</string>
+    <string name="image_preview_dialog_title">Előnézet</string>
+    <string name="image_preview_toast_picture_saved">Mentett kép.</string>
+    <string name="image_preview_toast_picture_save_failed">Sikertelen elmenteni a képet.</string>
+    <string name="activity_peek_no_url_handler">Egy alkalmazás sem tudja megnyitni a linket.</string>
 </resources>
