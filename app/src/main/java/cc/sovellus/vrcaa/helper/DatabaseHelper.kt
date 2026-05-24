@@ -50,10 +50,6 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
             database.execSQL(Queries.SQL_CREATE_LOCATION_HISTORY_TABLE)
             database.execSQL(Queries.SQL_CREATE_LOCATION_HISTORY_TIMESPENT_INDEX)
         }
-
-        if (oldVersion <= 5 && newVersion >= 6) {
-            database.execSQL(Migrations.SQL_LOCATION_HISTORY_TABLE_V2_MIGRATION)
-        }
     }
 
     override fun onDowngrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -83,7 +79,6 @@ class DatabaseHelper : SQLiteOpenHelper(App.getContext(),
 
     object Migrations {
         const val SQL_FEED_TABLE_V2_MIGRATION = "ALTER TABLE feed ADD avatarName TEXT"
-        const val SQL_LOCATION_HISTORY_TABLE_V2_MIGRATION = "ALTER TABLE location_history ADD lastVisited BIGINT"
     }
 
     object Downgrades {
