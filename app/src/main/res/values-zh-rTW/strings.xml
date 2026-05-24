@@ -56,19 +56,12 @@
     <string name="profile_user_note_dialog_title">添加備註</string>
     <!-- Search -->
     <string name="search_text_result">搜尋結果：</string>
-    <string name="search_filter_category_worlds">世界</string>
-    <string name="search_filter_category_worlds_sort_by">排序方式:</string>
-    <string name="search_filter_category_worlds_count">數量</string>
-    <string name="search_filter_category_users">用戶</string>
-    <string name="search_filter_category_users_count">數量</string>
-    <string name="search_filter_category_avatars">模型</string>
-    <string name="search_filter_category_avatars_provider">提供方</string>
-    <string name="search_filter_category_groups">群組</string>
-    <string name="search_filter_category_groups_count">數量</string>
+    <string name="search_filter_label_count">數量</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">複製ID</string>
     <string name="copied_toast">成功複製ID : %1$s。</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">數量</string>
     <string name="search_filter_button_reset">重設</string>
     <string name="search_filter_button_apply">套用</string>
     <string-array name="search_selection_options">
@@ -102,6 +95,7 @@
     <string name="world_title_capacity">推薦人數</string>
     <string name="world_title_occupants">地圖內目前遊玩人數</string>
     <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">公開日期</string>
     <string name="world_title_heat">熱門度</string>
     <string name="world_title_popularity">知名度</string>
