@@ -57,19 +57,12 @@ Manage je profiel, blijf op de hoogte van vrienden, en mis nooit wat er gebeurt 
     <string name="profile_user_note_dialog_title">Maak Notitie</string>
     <!-- Search -->
     <string name="search_text_result">Resultaten voor</string>
-    <string name="search_filter_category_worlds">Wereld</string>
-    <string name="search_filter_category_worlds_sort_by">Sorteer Op</string>
-    <string name="search_filter_category_worlds_count">Wereld Aantal</string>
-    <string name="search_filter_category_users">Gebruikers</string>
-    <string name="search_filter_category_users_count">Aantal</string>
-    <string name="search_filter_category_avatars">Avatars</string>
-    <string name="search_filter_category_avatars_provider">Aanbieder</string>
-    <string name="search_filter_category_groups">Groepen</string>
-    <string name="search_filter_category_groups_count">Aantal</string>
+    <string name="search_filter_label_count">Aantal</string>
+    <string name="search_filter_label_platform">Platform</string>
+    <string name="search_filter_label_content_gating">Content Gating</string>
+    <string name="search_filter_label_performance_rank">Performance Rank</string>
     <string name="copy_id_label">Kopieer ID</string>
     <string name="copied_toast">%1$s\'s ID succesvol gekopieerd.</string>
-    <!-- TODO: remove duplicate labels :) -->
-    <string name="search_filter_label_count">Aantal</string>
     <string name="search_filter_button_reset">Herstel</string>
     <string name="search_filter_button_apply">Toepassen</string>
     <string-array name="search_selection_options">
@@ -103,6 +96,7 @@ Manage je profiel, blijf op de hoogte van vrienden, en mis nooit wat er gebeurt 
     <string name="world_title_capacity">Capaciteit</string>
     <string name="world_title_occupants">Aanwezigen</string>
     <string name="world_title_time_spent">Time Spent</string>
+    <string name="world_description_no_data_time_spent">No data available.</string>
     <string name="world_title_publication_date">Datum Gepubliceerd</string>
     <string name="world_title_heat">Heat</string>
     <string name="world_title_popularity">Populariteit</string>
