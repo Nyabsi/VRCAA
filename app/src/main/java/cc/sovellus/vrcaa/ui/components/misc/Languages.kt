@@ -93,7 +93,7 @@ private val languageFlags = mapOf(
     "wuu" to R.drawable.flag_cn,
     "yue" to R.drawable.flag_hk,
     "zho" to R.drawable.flag_cn,
-    "zxx" to R.drawable.flag_unk,
+    "zxx" to R.drawable.flag_zxx,
 
     "ase" to R.drawable.flag_us,
     "asf" to R.drawable.flag_au,
