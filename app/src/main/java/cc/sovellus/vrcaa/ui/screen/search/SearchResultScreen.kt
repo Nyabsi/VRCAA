@@ -281,7 +281,7 @@ class SearchResultScreen(
                                 when (model.currentIndex.intValue) {
                                     0 -> { // worlds
                                         SearchFilterSection(
-                                            title = stringResource(R.string.search_filter_category_worlds_count),
+                                            title = stringResource(R.string.search_filter_label_count),
                                             icon = Icons.Outlined.Devices
                                         ) {
                                             SnappedCountSlider(
@@ -297,7 +297,7 @@ class SearchResultScreen(
                                         )
 
                                         SearchFilterSection(
-                                            title = "Platform",
+                                            title = stringResource(R.string.search_filter_label_platform),
                                             icon = Icons.Outlined.Devices
                                         ) {
                                             LimitedChipSelect(
@@ -318,7 +318,7 @@ class SearchResultScreen(
                                         )
 
                                         SearchFilterSection(
-                                            title = "Content Gating",
+                                            title = stringResource(R.string.search_filter_label_content_gating),
                                             icon = Icons.Outlined.WarningAmber
                                         ) {
                                             LimitedChipSelect(
@@ -334,7 +334,7 @@ class SearchResultScreen(
                                     }
                                     1 -> { // users
                                         SearchFilterSection(
-                                            title = stringResource(R.string.search_filter_category_users_count),
+                                            title = stringResource(R.string.search_filter_label_count),
                                             icon = Icons.Outlined.Devices
                                         ) {
                                             SnappedCountSlider(
@@ -345,7 +345,7 @@ class SearchResultScreen(
                                     }
                                     2 -> { // avatars
                                         SearchFilterSection(
-                                            title = stringResource(R.string.search_filter_category_worlds_count),
+                                            title = stringResource(R.string.search_filter_label_count),
                                             icon = Icons.Outlined.Devices
                                         ) {
                                             SnappedCountSlider(
@@ -359,7 +359,7 @@ class SearchResultScreen(
                                             DividerDefaults.color
                                         )
                                         SearchFilterSection(
-                                            title = "Platform",
+                                            title = stringResource(R.string.search_filter_label_platform),
                                             icon = Icons.Outlined.Devices
                                         ) {
                                             LimitedChipSelect(
@@ -378,7 +378,7 @@ class SearchResultScreen(
                                             DividerDefaults.color
                                         )
                                         SearchFilterSection(
-                                            title = "Performance Rank",
+                                            title = stringResource(R.string.search_filter_label_performance_rank),
                                             icon = Icons.Outlined.Shield
                                         ) {
                                             LimitedChipSelect(
@@ -397,7 +397,7 @@ class SearchResultScreen(
                                             DividerDefaults.color
                                         )
                                         SearchFilterSection(
-                                            title = "Content Gating",
+                                            title = stringResource(R.string.search_filter_label_content_gating),
                                             icon = Icons.Outlined.WarningAmber
                                         ) {
                                             LimitedChipSelect(
@@ -413,7 +413,7 @@ class SearchResultScreen(
                                     }
                                     3 -> { // groups
                                         SearchFilterSection(
-                                            title = stringResource(R.string.search_filter_category_worlds_count),
+                                            title = stringResource(R.string.search_filter_label_count),
                                             icon = Icons.Outlined.Devices
                                         ) {
                                             SnappedCountSlider(
