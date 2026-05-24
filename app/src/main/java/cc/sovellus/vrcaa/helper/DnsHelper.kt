@@ -34,14 +34,18 @@ class DnsHelper : Dns {
     }
 
     private fun hasIPv4(): Boolean {
-        val interfaces = NetworkInterface.getNetworkInterfaces()
-        for (i in interfaces) {
-            for (address in i.inetAddresses) {
-                if (!address.isLoopbackAddress && address is Inet4Address) {
-                    return true
+        try {
+            val interfaces = NetworkInterface.getNetworkInterfaces()
+            for (i in interfaces) {
+                for (address in i.inetAddresses) {
+                    if (!address.isLoopbackAddress && address is Inet4Address) {
+                        return true
+                    }
                 }
             }
+            return false
+        } catch (_: Throwable) {
+            return false
         }
-        return false
     }
 }
