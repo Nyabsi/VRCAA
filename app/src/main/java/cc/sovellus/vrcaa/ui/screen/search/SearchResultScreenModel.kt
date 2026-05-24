@@ -26,7 +26,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.search.avtrdb.AvtrDbProvider
-import cc.sovellus.vrcaa.api.search.models.SearchAvatar
+import cc.sovellus.vrcaa.api.search.avtrdb.models.SearchAvatar
 import cc.sovellus.vrcaa.api.vrchat.http.models.Group
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
@@ -37,6 +37,9 @@ import cc.sovellus.vrcaa.extension.sortWorlds
 import cc.sovellus.vrcaa.extension.usersAmount
 import cc.sovellus.vrcaa.extension.worldsAmount
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.ui.components.misc.SEARCH_FILTER_MAX_COUNT
+import cc.sovellus.vrcaa.ui.components.misc.SEARCH_FILTER_MIN_COUNT
+import cc.sovellus.vrcaa.ui.components.misc.SEARCH_FILTER_SNAP_STEP
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -57,7 +60,8 @@ class SearchResultScreenModel(
     private val avtrDbProvider = AvtrDbProvider()
 
     private var worldOffset = 0
-    private val worldStateFlow = MutableStateFlow(listOf<World>())
+    private val _worldStateFlow = MutableStateFlow(listOf<World>())
+    private var worldStateFlow = MutableStateFlow(listOf<World>())
 
     var worldLimitReached = mutableStateOf(false)
     val worlds = worldStateFlow.asStateFlow()
@@ -69,6 +73,7 @@ class SearchResultScreenModel(
     val users = userStateFlow.asStateFlow()
 
     private var avatarOffset = 0
+    private val _avatarStateFlow = MutableStateFlow(listOf<SearchAvatar>())
     private val avatarStateFlow = MutableStateFlow(listOf<SearchAvatar>())
 
     var avatarLimitReached = mutableStateOf(false)
@@ -82,9 +87,27 @@ class SearchResultScreenModel(
 
     var currentIndex = mutableIntStateOf(0)
 
+    var worldsAmount = mutableIntStateOf(normalizeSearchCount(preferences.worldsAmount))
+    var usersAmount = mutableIntStateOf(normalizeSearchCount(preferences.usersAmount))
+    var groupsAmount = mutableIntStateOf(normalizeSearchCount(preferences.groupsAmount))
+    var avatarsAmount = mutableIntStateOf(normalizeSearchCount(preferences.avatarsAmount))
+
+    val worldPlatformFilterSelection = mutableStateOf(listOf("PC", "Android"))
+    val worldContentFilterSelection = mutableStateOf(listOf<String>())
+
+    val avatarPlatformFilterSelection = mutableStateOf(listOf("PC", "Android"))
+    val avatarPerformanceFilterSelection = mutableStateOf(listOf("Very Poor", "Poor", "Medium", "Good", "Excellent"))
+    val avatarContentFilterSelection = mutableStateOf(listOf<String>())
+
     init {
         mutableState.value = SearchState.Loading
         getContent()
+    }
+
+    private fun normalizeSearchCount(value: Int): Int {
+        val clamped = value.coerceIn(SEARCH_FILTER_MIN_COUNT, SEARCH_FILTER_MAX_COUNT)
+        val snappedSteps = ((clamped - SEARCH_FILTER_MIN_COUNT + SEARCH_FILTER_SNAP_STEP / 2) / SEARCH_FILTER_SNAP_STEP)
+        return SEARCH_FILTER_MIN_COUNT + snappedSteps * SEARCH_FILTER_SNAP_STEP
     }
 
     private fun getContent() {
@@ -92,14 +115,16 @@ class SearchResultScreenModel(
 
             App.setLoadingText(R.string.loading_text_worlds)
 
-            worldStateFlow.value = api.worlds.fetchWorldsByName(
+            _worldStateFlow.value = api.worlds.fetchWorldsByName(
                 query = query,
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds,
                 offset = worldOffset,
-                tags = listOf(),
-                notags = listOf()
+                tags = emptyList(),
+                notags = emptyList(),
             )
+
+            filterWorlds()
 
             App.setLoadingText(R.string.loading_text_users)
 
@@ -119,7 +144,8 @@ class SearchResultScreenModel(
                         offset = avatarOffset
                     )
                     avatarLimitReached.value = result.first
-                    avatarStateFlow.value = result.second
+                    _avatarStateFlow.value = result.second
+                    filterAvatars()
                 }
             }
 
@@ -136,7 +162,18 @@ class SearchResultScreenModel(
     }
 
     fun fetchMoreWorlds() {
-        worldOffset += 50
+        worldOffset += preferences.worldsAmount
+
+        val contentFilterMap = mapOf(
+            "Sexually Suggestive" to "content_sex",
+            "Adult Language and Themes" to "content_adult",
+            "Graphic Violence" to "content_violence",
+            "Excessive Gore" to "content_gore",
+            "Extreme Horror" to "content_horror"
+        )
+
+        val contentFilters = worldContentFilterSelection.value
+            .mapNotNull { contentFilterMap[it] }
 
         screenModelScope.launch {
 
@@ -145,19 +182,26 @@ class SearchResultScreenModel(
                 n = preferences.worldsAmount,
                 sort = preferences.sortWorlds,
                 offset = worldOffset,
-                tags = listOf(),
-                notags = listOf()
+                tags = contentFilters,
+                notags = emptyList(),
             )
 
-            if (worlds.isEmpty())
+            if (worlds.isEmpty()) {
                 worldLimitReached.value = true
-            else
-                worldStateFlow.value += worlds
+            }
+            else {
+                if (worldsContainsFilterRequirements(worlds)) {
+                    _worldStateFlow.value += worlds
+                    filterWorlds()
+                } else {
+                    fetchMoreWorlds()
+                }
+            }
         }
     }
 
     fun fetchMoreUsers() {
-        userOffset += 50
+        userOffset += preferences.usersAmount
 
         screenModelScope.launch {
 
@@ -175,7 +219,7 @@ class SearchResultScreenModel(
     }
 
     fun fetchMoreAvatars() {
-        avatarOffset += 1
+        avatarOffset += preferences.avatarsAmount
 
         screenModelScope.launch {
 
@@ -187,13 +231,19 @@ class SearchResultScreenModel(
 
             if (result.first)
                 avatarLimitReached.value = true
-            else
-                avatarStateFlow.value += result.second
+            else {
+                if (avatarContainsFilterRequirements(result.second)) {
+                    _avatarStateFlow.value += result.second
+                    filterAvatars()
+                } else {
+                    fetchMoreAvatars()
+                }
+            }
         }
     }
 
     fun fetchMoreGroups() {
-        groupOffset += 50
+        groupOffset += preferences.groupsAmount
 
         screenModelScope.launch {
 
@@ -208,5 +258,201 @@ class SearchResultScreenModel(
             else
                 groupStateFlow.value += groups
         }
+    }
+
+    fun filterWorlds() {
+
+        val platformFilterMap = mapOf(
+            "standalonewindows" to "PC",
+            "android" to "Android",
+            "ios" to "iOS"
+        )
+
+        val contentFilterMap = mapOf(
+            "content_sex" to "Sexually Suggestive",
+            "content_adult" to "Adult Language and Themes",
+            "content_violence" to "Graphic Violence",
+            "content_gore" to "Excessive Gore",
+            "content_horror" to "Extreme Horror"
+        )
+
+        val filtered = _worldStateFlow.value.filter { world ->
+
+            val worldPlatforms = world.unityPackages
+                .filter { it.variant == null }
+                .mapNotNull { platformFilterMap[it.platform] }
+
+            val contentFilters = world.tags
+                .mapNotNull { contentFilterMap[it] }
+
+            worldPlatformFilterSelection.value.all { it in worldPlatforms } &&
+            worldContentFilterSelection.value.all { it in contentFilters }
+        }
+
+        worldsAmount.intValue = normalizeSearchCount(worldsAmount.intValue)
+        preferences.worldsAmount = worldsAmount.intValue
+        worldStateFlow.value = filtered.distinctBy { it.id }
+    }
+
+    fun worldsContainsFilterRequirements(worlds: List<World>): Boolean {
+
+        val filterMap = mapOf(
+            "standalonewindows" to "PC",
+            "android" to "Android",
+            "ios" to "iOS"
+        )
+
+        val contentFilterMap = mapOf(
+            "Sexually Suggestive" to "content_sex",
+            "Adult Language and Themes" to "content_adult",
+            "Graphic Violence" to "content_violence",
+            "Excessive Gore" to "content_gore",
+            "Extreme Horror" to "content_horror"
+        )
+
+        val filtered = worlds.filter { world ->
+            val worldPlatforms = world.unityPackages
+                .filter { it.variant == null }
+                .mapNotNull { filterMap[it.platform] }
+
+            val contentFilters = world.tags
+                .mapNotNull { contentFilterMap[it] }
+
+            worldPlatformFilterSelection.value.all { it in worldPlatforms } &&
+            worldContentFilterSelection.value.all { it in contentFilters }
+        }
+
+        return filtered.isNotEmpty()
+    }
+
+    fun resetWorldFilters() {
+        worldPlatformFilterSelection.value = listOf("PC", "Android")
+        worldContentFilterSelection.value = listOf()
+        worldsAmount.intValue = SEARCH_FILTER_MIN_COUNT
+        preferences.worldsAmount = worldsAmount.intValue
+        filterWorlds()
+    }
+
+    fun filterAvatars() {
+
+        val platformFilterMap = mapOf(
+            "pc" to "PC",
+            "android" to "Android",
+            "ios" to "iOS"
+        )
+
+        val contentFilterMap = mapOf(
+            "sex" to "Sexually Suggestive",
+            "adult" to "Adult Language and Themes",
+            "violence" to "Graphic Violence",
+            "gore" to "Excessive Gore",
+            "horror" to "Extreme Horror"
+        )
+
+        val performanceFilterMap = mapOf(
+            "VeryPoor" to "Very Poor",
+            "Poor" to "Poor",
+            "Medium" to "Medium",
+            "Good" to "Good",
+            "Excellent" to "Excellent",
+        )
+
+        val filtered = _avatarStateFlow.value.filter { avatar ->
+
+            val worldPlatforms = avatar.compatibility
+                .mapNotNull { platformFilterMap[it] }
+
+            val contentFilters = avatar.tags.contentTags
+                .mapNotNull { contentFilterMap[it] }
+
+            val performanceList = listOf(avatar.performance.pcRating, avatar.performance.androidRating, avatar.performance.iosRating)
+            val performanceFilter = performanceList
+                .filter { it != "" }
+                .mapNotNull { performanceFilterMap[it] }
+
+            avatarPlatformFilterSelection.value.all { it in worldPlatforms } &&
+            avatarContentFilterSelection.value.all { it in contentFilters } &&
+            avatarPerformanceFilterSelection.value.any { it in performanceFilter }
+        }
+
+        avatarsAmount.intValue = normalizeSearchCount(avatarsAmount.intValue)
+        preferences.avatarsAmount = avatarsAmount.intValue
+        avatarStateFlow.value = filtered.distinctBy { it.vrcId }
+    }
+
+    fun avatarContainsFilterRequirements(avatars: List<SearchAvatar>): Boolean {
+
+        val platformFilterMap = mapOf(
+            "pc" to "PC",
+            "android" to "Android",
+            "ios" to "iOS"
+        )
+
+        val contentFilterMap = mapOf(
+            "sex" to "Sexually Suggestive",
+            "adult" to "Adult Language and Themes",
+            "violence" to "Graphic Violence",
+            "gore" to "Excessive Gore",
+            "horror" to "Extreme Horror"
+        )
+
+        val performanceFilterMap = mapOf(
+            "VeryPoor" to "Very Poor",
+            "Poor" to "Poor",
+            "Medium" to "Medium",
+            "Good" to "Good",
+            "Excellent" to "Excellent",
+        )
+
+        val filtered = avatars.filter { avatar ->
+
+            val worldPlatforms = avatar.compatibility
+                .mapNotNull { platformFilterMap[it] }
+
+            val contentFilters = avatar.tags.contentTags
+                .mapNotNull { contentFilterMap[it] }
+
+            val performanceList = listOf(avatar.performance.pcRating, avatar.performance.androidRating, avatar.performance.iosRating)
+            val performanceFilter = performanceList
+                .filter { it != "" }
+                .mapNotNull { performanceFilterMap[it] }
+
+            avatarPlatformFilterSelection.value.all { it in worldPlatforms } &&
+                    avatarContentFilterSelection.value.all { it in contentFilters } &&
+                    avatarPerformanceFilterSelection.value.any { it in performanceFilter }
+        }
+
+        return filtered.isNotEmpty()
+    }
+
+    fun resetAvatarFilters() {
+        avatarPlatformFilterSelection.value = listOf("PC", "Android")
+        avatarPerformanceFilterSelection.value = listOf("Very Poor", "Poor", "Medium", "Good", "Excellent")
+        avatarContentFilterSelection.value = listOf()
+        avatarsAmount.intValue = SEARCH_FILTER_MIN_COUNT
+        preferences.avatarsAmount = avatarsAmount.intValue
+        filterAvatars()
+    }
+
+    fun filterUsers() {
+        usersAmount.intValue = normalizeSearchCount(usersAmount.intValue)
+        preferences.usersAmount = usersAmount.intValue
+    }
+
+    fun resetUserFilters() {
+        usersAmount.intValue = SEARCH_FILTER_MIN_COUNT
+        preferences.usersAmount = usersAmount.intValue
+        filterUsers()
+    }
+
+    fun filterGroups() {
+        groupsAmount.intValue = normalizeSearchCount(groupsAmount.intValue)
+        preferences.groupsAmount = groupsAmount.intValue
+    }
+
+    fun resetGroupFilters() {
+        groupsAmount.intValue = SEARCH_FILTER_MIN_COUNT
+        preferences.groupsAmount = groupsAmount.intValue
+        filterGroups()
     }
 }

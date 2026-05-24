@@ -89,7 +89,7 @@ data class World(
         @SerializedName("unityVersion")
         var unityVersion: String = "",
         @SerializedName("variant")
-        var variant: String = "",
+        var variant: String? = null,
         @SerializedName("worldSignature")
         var worldSignature: String = ""
     )
