@@ -180,7 +180,7 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             for (tag in bestTags) {
                 api.worlds.fetchWorldsByName(
                     query = "",
-                    sort = "heat",
+                    sort = "random",
                     tags = listOf(tag),
                     notags = worstTags,
                     n = perTagFetch
