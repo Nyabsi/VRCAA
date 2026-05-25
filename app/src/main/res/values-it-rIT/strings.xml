@@ -73,15 +73,15 @@
     <string name="search_button_more">Di più...</string>
     <!-- Settings -->
     <string name="settings_item_about">Informazioni</string>
-    <string name="settings_item_about_description">More information about your device and VRCAA</string>
+    <string name="settings_item_about_description">Maggiori informazioni sul tuo dispositivo e su VRCAA</string>
     <string name="settings_item_theming">Aspetto</string>
-    <string name="settings_item_theming_description">Appearance configuration, minimalist mode</string>
+    <string name="settings_item_theming_description">Configurazione dell\'aspetto, modalità minimalista</string>
     <string name="settings_item_rich_presence" tools:keep="@string/settings_item_rich_presence">Rich Presence (Sperimentale)</string>
-    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Discord rich-presence integration</string>
+    <string name="settings_item_rich_presence_description" tools:keep="@string/settings_item_rich_presence_description">Integrazione con la Rich Presence di Discord</string>
     <string name="settings_item_advanced_settings">Avanzate</string>
-    <string name="settings_item_advanced_settings_description">Advanced logging and features</string>
-    <string name="settings_item_database_settings">Database &amp; Statistics</string>
-    <string name="settings_item_database_settings_description">View statistics, restore &amp; backup your data</string>
+    <string name="settings_item_advanced_settings_description">Funzioni e log avanzati</string>
+    <string name="settings_item_database_settings">Database &amp;  Statistiche</string>
+    <string name="settings_item_database_settings_description">Visualizza le statistiche, ripristina &amp; esegui il backup dei dati</string>
     <string name="settings_item_logout">Esci</string>
     <string name="settings_kofi_donation_button">Dona attraverso Ko-fi</string>
     <!-- Worlds -->
@@ -91,37 +91,37 @@
     <string name="world_title_created_at">Data di creazione</string>
     <string name="world_title_updated_at">Ultimo aggiornamento</string>
     <string name="world_title_visits">Visite</string>
-    <string name="world_title_favorites">Favorites</string>
-    <string name="world_title_capacity">Capacity</string>
-    <string name="world_title_occupants">Occupants</string>
-    <string name="world_title_time_spent">Time Spent</string>
-    <string name="world_description_no_data_time_spent">No data available.</string>
-    <string name="world_title_publication_date">Publication Date</string>
+    <string name="world_title_favorites">Preferiti</string>
+    <string name="world_title_capacity">Capienza</string>
+    <string name="world_title_occupants">Occupanti</string>
+    <string name="world_title_time_spent">Tempo Trascorso</string>
+    <string name="world_description_no_data_time_spent">Nessun dato disponibile.</string>
+    <string name="world_title_publication_date">Data di Pubblicazione</string>
     <string name="world_title_heat">Heat</string>
-    <string name="world_title_popularity">Popularity</string>
+    <string name="world_title_popularity">Popularità</string>
     <string name="world_toast_not_found">Il mondo è privato o non esiste.</string>
     <string-array name="world_selection_options">
         <item>Info</item>
-        <item>Instances</item>
+        <item>Istanze</item>
     </string-array>
-    <string name="world_author_label">By %1$s</string>
-    <string name="world_instance_invite_dialog_title">Are you sure?</string>
-    <string name="world_instance_invite_dialog_description">You\'re about to send invite to yourself onto this instance, do you really want to do that?</string>
-    <string name="world_instance_no_public_instances_message">No public instances</string>
+    <string name="world_author_label">Di %1$s</string>
+    <string name="world_instance_invite_dialog_title">Sei sicuro?</string>
+    <string name="world_instance_invite_dialog_description">Stai per inviare un invito a te stesso su questa istanza, vuoi davvero farlo?</string>
+    <string name="world_instance_no_public_instances_message">Nessuna istanza pubblica</string>
     <!-- Tabs -->
-    <string name="tabs_label_friends">Friends</string>
-    <string name="tabs_label_home">Home</string>
-    <string name="tabs_label_favorites">Favorites</string>
+    <string name="tabs_label_friends">Amici</string>
+    <string name="tabs_label_home">Casa</string>
+    <string name="tabs_label_favorites">Preferiti</string>
     <string name="tabs_label_feed">Feed</string>
-    <string name="tabs_label_profile">Profile</string>
-    <string name="tabs_label_settings">Settings</string>
+    <string name="tabs_label_profile">Profilo</string>
+    <string name="tabs_label_settings">Impostazioni</string>
     <!-- Notifications -->
-    <string name="service_notification">VRCAA is now monitoring your friends on the background.</string>
+    <string name="service_notification">VRCAA sta monitorando i tuoi amici in background.</string>
     <string name="service_killed_by_vendor_notification">VRCAA was killed by your system! check https://dontkillmyapp.com/ for more information.</string>
     <string name="service_notification_rich_presence" tools:keep="@string/service_notification_rich_presence">VRCAA is now reporting rich presence information.</string>
-    <string name="notification_service_title_online">Friend has came online!</string>
+    <string name="notification_service_title_online">L\'amico è andato online!</string>
     <string name="notification_service_description_online">Your friend, %1$s has came online!</string>
-    <string name="notification_service_title_offline">Friend has gone offline!</string>
+    <string name="notification_service_title_offline">L\'amico è andato offline!</string>
     <string name="notification_service_description_offline">Your friend, %1$s has gone offline!</string>
     <string name="notification_service_title_location">Friend changed location!</string>
     <string name="notification_service_description_location">Your friend, %1$s went to %2$s.</string>
