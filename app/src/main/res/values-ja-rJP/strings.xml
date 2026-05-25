@@ -7,7 +7,7 @@
     <string-array name="friend_selection_options">
         <item>お気に入り</item>
         <item>オンライン</item>
-        <item>ウェブサイト</item>
+        <item>サイト上</item>
         <item>オフライン</item>
     </string-array>
     <string name="friend_toast_friend_request_cancelled">%1$s へのフレンド申請はキャンセルされました。</string>
@@ -22,7 +22,7 @@
     <string name="home_active_friends">アクティブ</string>
     <string name="home_recently_visited">最近訪れたワールド</string>
     <string name="home_friend_locations">フレンドのインスタンス</string>
-    <string name="home_curated_for_you">Curated For You</string>
+    <string name="home_curated_for_you">あなたへのおすすめ</string>
     <!-- Login -->
     <string name="login_text">VRC Android Assistantへのログイン</string>
     <string name="login_label_username">ユーザー名 or メールアドレス</string>
@@ -31,10 +31,10 @@
     <string name="login_toast_wrong_credentials">ユーザー名・パスワードが違います。</string>
     <string name="login_toast_wrong_code">認証に失敗しました。認証コードを確認して下さい。</string>
     <!-- Onboarding -->
-    <string name="onboarding_title">Let\'s get started!</string>
-    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
-    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
-    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
+    <string name="onboarding_title">さぁ、始めましょう♪</string>
+    <string name="onboarding_description">VRChatの世界とつながり続けましょう。プロフィールの管理や友達との交流、最新情報のチェックなど、すべてがAndroid端末から行えます。</string>
+    <string name="onboarding_permissions_title">権限の許可が必要です。</string>
+    <string name="onboarding_permissions_description">通知を有効にすると、フレンドの最新情報やアクティビティの通知をリアルタイムで受け取ることができます。</string>
     <!-- Two Auth -->
     <string name="auth_text_email">メールで送信されたコードを入力して下さい。</string>
     <string name="auth_text_app">2段階認証アプリに表示されているコードを入力して下さい。</string>
@@ -57,9 +57,9 @@
     <!-- Search -->
     <string name="search_text_result">検索結果：</string>
     <string name="search_filter_label_count">表示数</string>
-    <string name="search_filter_label_platform">Platform</string>
-    <string name="search_filter_label_content_gating">Content Gating</string>
-    <string name="search_filter_label_performance_rank">Performance Rank</string>
+    <string name="search_filter_label_platform">プラットフォーム</string>
+    <string name="search_filter_label_content_gating">コンテンツの利用制限</string>
+    <string name="search_filter_label_performance_rank">パフォーマンスランク</string>
     <string name="copy_id_label">IDをコピー</string>
     <string name="copied_toast">%1$s さんのIDをコピーしました。</string>
     <string name="search_filter_button_reset">リセット</string>
@@ -94,8 +94,8 @@
     <string name="world_title_favorites">お気に入り数</string>
     <string name="world_title_capacity">最大人数</string>
     <string name="world_title_occupants">利用中人数</string>
-    <string name="world_title_time_spent">Time Spent</string>
-    <string name="world_description_no_data_time_spent">No data available.</string>
+    <string name="world_title_time_spent">滞在時間</string>
+    <string name="world_description_no_data_time_spent">データがありません。</string>
     <string name="world_title_publication_date">作成日時</string>
     <string name="world_title_heat">ヒート</string>
     <string name="world_title_popularity">人気度</string>
@@ -204,7 +204,7 @@
     <string name="discord_login_label_enable" tools:keep="@string/discord_login_label_enable">リッチプレゼンスを有効にする</string>
     <string name="discord_login_label_set_webhook" tools:keep="@string/discord_login_label_set_webhook">Webhook URLを設定する</string>
     <string name="discord_login_description_set_webhook" tools:keep="@string/discord_login_description_set_webhook">ワールドのサムネイル表示に必要 (任意)</string>
-    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">discordに現在のStatusを表示する</string>
+    <string name="discord_login_description_enable" tools:keep="@string/discord_login_description_enable">discordに現在のステータスを表示する</string>
     <!-- Crash -->
     <string name="crash_title_text">アプリに致命的な障害が発生しました </string>
     <string name="crash_button_restart_text">アプリの再起動</string>
@@ -254,7 +254,7 @@
     <string name="user_overlay_worlds">ワールド</string>
     <string name="user_overlay_favorites">お気に入り</string>
     <string name="user_overlay_find_avatar">アバターの検索</string>
-    <string name="user_overlay_invite">Invite Me</string>
+    <string name="user_overlay_invite">インバイト</string>
     <string name="user_overlay_note">ノートの追加</string>
     <!-- Profile Edit Dialog -->
     <string name="profile_edit_dialog_title_status">ステータス</string>
@@ -273,15 +273,15 @@
     <!-- Widgets -->
     <string name="widget_name_friend_list" tools:keep="@string/widget_name_friend_list">フレンドの現在地を表示する</string>
     <string name="widget_name_loading_text" tools:keep="@string/widget_name_loading_text">少女祈祷中・・・</string>
-    <string name="favorite_page_title">Favorites</string>
+    <string name="favorite_page_title">お気に入り</string>
     <string-array name="favorites_selection_options">
         <item>ワールド</item>
         <item>アバター</item>
         <item>フレンド</item>
     </string-array>
     <string-array name="user_favorites_selection_options">
-        <item>Worlds</item>
-        <item>Avatars</item>
+        <item>ワールド</item>
+        <item>アバター</item>
     </string-array>
     <string name="favorite_label_add">お気に入りへ追加</string>
     <string name="favorite_label_remove">お気に入りから削除</string>
@@ -327,8 +327,8 @@
     <string name="loading_text_stickers">ステッカーを読み込み中。。。</string>
     <string name="loading_text_emojis">絵文字を読み込み中。。。</string>
     <string name="loading_text_items">アイテムを読み込み中。。。</string>
-    <string name="loading_text_favorites">Loading favorites…</string>
-    <string name="loading_text_notifications">Loading notifications…</string>
+    <string name="loading_text_favorites">お気に入りを読み込み中。。。</string>
+    <string name="loading_text_notifications">通知を読み込み中。。。</string>
     <!-- Theming -->
     <string name="theme_page_title">テーマ</string>
     <string name="theme_page_minimalist_mode_text">簡易モード</string>
@@ -359,10 +359,10 @@
     <string name="advanced_page_section_database">データベース</string>
     <string name="advanced_page_database_delete">データベースの削除</string>
     <string name="advanced_page_database_delete_description">データを保持している内部データベースを削除する</string>
-    <string name="advanced_page_section_testing">Testing</string>
-    <string name="advanced_page_reset_onboarding">Reset Onboarding State</string>
-    <string name="advanced_page_reset_onboarding_description">Shows onboarding again when the app starts</string>
-    <string name="advanced_page_reset_onboarding_toast">Onboarding state reset.</string>
+    <string name="advanced_page_section_testing">テスト中</string>
+    <string name="advanced_page_reset_onboarding">オンボーディング状態を初期化する</string>
+    <string name="advanced_page_reset_onboarding_description">アプリを再起動した際にオンボーディングを再度表示する。</string>
+    <string name="advanced_page_reset_onboarding_toast">オンボーディング状態を初期化しました</string>
     <!-- Database -->
     <string name="database_page_title">データベース &amp; 統計情報</string>
     <string name="database_page_section_statistics">統計情報</string>
@@ -419,5 +419,5 @@
     <string name="image_preview_dialog_title">プレビュー</string>
     <string name="image_preview_toast_picture_saved">画像を保存しました。</string>
     <string name="image_preview_toast_picture_save_failed">画像の保存に失敗しました。</string>
-    <string name="activity_peek_no_url_handler">No app available to open the URL.</string>
+    <string name="activity_peek_no_url_handler">URLを開けるアプリがありません。</string>
 </resources>
