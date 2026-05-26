@@ -16,8 +16,8 @@
 
 package cc.sovellus.vrcaa.api.vrchat.http.interfaces
 
-import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
+import cc.sovellus.vrcaa.api.vrchat.http.models.NoteResponse
 
 interface INotes {
-    suspend fun updateNote(userId: String, note: String): Notification?
+    suspend fun updateNote(userId: String, note: String): NoteResponse?
 }
