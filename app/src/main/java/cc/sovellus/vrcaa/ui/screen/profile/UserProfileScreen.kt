@@ -270,12 +270,12 @@ class UserProfileScreen(
 
                         LazyColumn(
                             modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize()
+                                .fillMaxHeight()
                                 .padding(
                                     top = padding.calculateTopPadding(),
                                     bottom = padding.calculateBottomPadding()
-                                ),
+                                )
+                                .padding(16.dp),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -321,6 +321,7 @@ class UserProfileScreen(
 
                             item {
                                 Column(
+                                    modifier = Modifier.padding(bottom = 16.dp),
                                     verticalArrangement = Arrangement.SpaceBetween,
                                     horizontalAlignment = Alignment.Start
                                 ) {
