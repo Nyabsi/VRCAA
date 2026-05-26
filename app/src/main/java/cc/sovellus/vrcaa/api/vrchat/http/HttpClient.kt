@@ -2073,30 +2073,33 @@ class HttpClient : BaseClient(), CoroutineScope {
     val notes = object : INotes {
 
         override suspend fun updateNote(userId: String, note: String): Notification? {
+            try {
+                val update = UserNoteUpdate(
+                    targetUserId = userId,
+                    note = note
+                )
 
-            val update = UserNoteUpdate(
-                targetUserId = userId,
-                note = note
-            )
+                val result = doRequest(
+                    method = "POST",
+                    url = buildString {
+                        append(Config.API_BASE_URL)
+                        append("/userNotes")
+                    },
+                    headers = GENERIC_HEADER,
+                    body = gson.toJson(update, UserNoteUpdate::class.java)
+                )
 
-            val result = doRequest(
-                method = "POST",
-                url = buildString {
-                    append(Config.API_BASE_URL)
-                    append("/userNotes")
-                },
-                headers = GENERIC_HEADER,
-                body = gson.toJson(update, UserNoteUpdate::class.java)
-            )
-
-            when (result) {
-                is Result.Succeeded -> {
-                    return gson.fromJson(result.body, Notification::class.java)
+                when (result) {
+                    is Result.Succeeded -> {
+                        return gson.fromJson(result.body, Notification::class.java)
+                    }
+                    else -> {
+                        handleExceptions(result)
+                        return null
+                    }
                 }
-                else -> {
-                    handleExceptions(result)
-                    return null
-                }
+            } catch (_: Throwable) { // for some reason, this crashed for someone, so let's just catch it.
+                return null
             }
         }
     }
