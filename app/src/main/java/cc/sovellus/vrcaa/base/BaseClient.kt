@@ -96,7 +96,7 @@ open class BaseClient {
             .build()
     }
 
-    private lateinit var credentials: String
+    @Volatile private var credentials: String = ""
     private var authorizationType: AuthorizationType = AuthorizationType.None
     private var skipAuthNextFailure: AtomicBoolean = AtomicBoolean(false)
     private var skipNextAuthorization: AtomicBoolean = AtomicBoolean(false)
