@@ -537,51 +537,53 @@ class SearchResultScreen(
         val state = model.avatars.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (state.value.isEmpty()) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = stringResource(R.string.result_not_found))
-                }
-            } else {
-                LazyVerticalGrid(
-                    columns = when (model.preferences.columnCountOption) {
-                        0 -> GridCells.Adaptive(166.dp)
-                        else -> GridCells.Fixed(model.preferences.fixedColumnSize)
-                    },contentPadding = PaddingValues(
-                        start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
-                    ), content = {
-                        items(state.value) { avatar ->
-                            GridItem(
-                                name = avatar.name, url = avatar.imageUrl ?: "", count = null
-                            ) {
-                                navigator.push(AvatarScreen(avatar.vrcId))
-                            }
+        if (state.value.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.result_not_found))
+            }
+        } else {
+            LazyVerticalGrid(
+                columns = when (model.preferences.columnCountOption) {
+                    0 -> GridCells.Adaptive(166.dp)
+                    else -> GridCells.Fixed(model.preferences.fixedColumnSize)
+                }, contentPadding = PaddingValues(
+                    start = 12.dp, top = 16.dp, end = 16.dp, bottom = 16.dp
+                ), content = {
+                    items(state.value) { avatar ->
+                        GridItem(
+                            name = avatar.name, url = avatar.imageUrl ?: "", count = null
+                        ) {
+                            navigator.push(AvatarScreen(avatar.vrcId))
                         }
+                    }
 
-                        if (!model.avatarLimitReached.value) {
-                            item(span = { GridItemSpan(if (model.preferences.columnCountOption == 0) { 2 } else { model.preferences.fixedColumnSize })}) {
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    Button(onClick = { model.fetchMoreAvatars() }) {
-                                        Text(text = stringResource(R.string.search_button_more))
-                                    }
+                    if (!model.avatarLimitReached.value) {
+                        item(span = {
+                            GridItemSpan(
+                                if (model.preferences.columnCountOption == 0) {
+                                    2
+                                } else {
+                                    model.preferences.fixedColumnSize
+                                }
+                            )
+                        }) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Button(onClick = { model.fetchMoreAvatars() }) {
+                                    Text(text = stringResource(R.string.search_button_more))
                                 }
                             }
                         }
                     }
-                )
-            }
+                }
+            )
         }
     }
 
