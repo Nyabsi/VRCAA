@@ -19,6 +19,7 @@ package cc.sovellus.vrcaa.ui.screen.profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -69,7 +70,7 @@ class ProfileScreen : Screen {
     @Composable
     private fun RenderProfile(profile: User) {
         LazyColumn(
-            modifier = Modifier.padding(16.dp).fillMaxSize(),
+            modifier = Modifier.padding(16.dp).fillMaxHeight(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -92,6 +93,7 @@ class ProfileScreen : Screen {
 
             item {
                 Column(
+                    modifier = Modifier.padding(bottom = 16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start
                 ) {
