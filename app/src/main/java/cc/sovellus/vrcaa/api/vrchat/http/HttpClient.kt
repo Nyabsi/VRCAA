@@ -98,6 +98,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import okhttp3.Headers
 import java.time.LocalDateTime
@@ -119,10 +120,12 @@ class HttpClient : BaseClient(), CoroutineScope {
         setAuthorization(AuthorizationType.Cookie, preferences.twoFactorToken)
 
         if (reAuthorizationFailureCount <= Config.MAX_TOKEN_REFRESH_ATTEMPT) {
-            api.auth.login(
-                preferences.userCredentials.first,
-                preferences.userCredentials.second
-            )
+            withContext(Dispatchers.IO) {
+                api.auth.login(
+                    preferences.userCredentials.first,
+                    preferences.userCredentials.second
+                )
+            }
             reAuthorizationFailureCount++
         } else {
             setAuthorization(AuthorizationType.Cookie, "")
