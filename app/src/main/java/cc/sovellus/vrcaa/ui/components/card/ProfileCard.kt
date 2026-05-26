@@ -45,6 +45,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cc.sovellus.vrcaa.R
@@ -166,7 +167,7 @@ fun ProfileCard(
                             modifier = Modifier.padding(start = 8.dp)
                         ) {
                             Text(
-                                modifier = Modifier.padding(2.dp),
+                                modifier = Modifier.padding(2.dp).widthIn(Dp.Unspecified, 128.dp),
                                 text = pronouns,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold,
