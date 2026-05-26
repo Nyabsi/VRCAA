@@ -72,6 +72,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.InstanceCreateBody
 import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.http.models.NoteResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationResponse
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
@@ -2075,7 +2076,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
     val notes = object : INotes {
 
-        override suspend fun updateNote(userId: String, note: String): Notification? {
+        override suspend fun updateNote(userId: String, note: String): NoteResponse? {
             try {
                 val update = UserNoteUpdate(
                     targetUserId = userId,
@@ -2094,7 +2095,7 @@ class HttpClient : BaseClient(), CoroutineScope {
 
                 when (result) {
                     is Result.Succeeded -> {
-                        return gson.fromJson(result.body, Notification::class.java)
+                        return gson.fromJson(result.body, NoteResponse::class.java)
                     }
                     else -> {
                         handleExceptions(result)
