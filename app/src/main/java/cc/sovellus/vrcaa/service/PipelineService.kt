@@ -455,8 +455,6 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onCreate() {
-        startService()
-
         handlerThread = HandlerThread("VRCAA_BackgroundWorker", THREAD_PRIORITY_FOREGROUND).apply {
             start()
 
@@ -466,7 +464,7 @@ class PipelineService : Service(), CoroutineScope {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        /*
+
         try {
             startService()
         } catch (_:  Throwable) {
@@ -477,7 +475,6 @@ class PipelineService : Service(), CoroutineScope {
                 true
             )
         }
-        */
 
         launch {
             api.auth.fetchToken()?.let { token ->
