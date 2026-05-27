@@ -77,7 +77,7 @@ object DatabaseManager: BaseManager<Any>() {
             null,
             null,
             null,
-            "feedTimestamp DESC",
+            "feedTimestamp ASC",
             limit.toString()
         )
 
