@@ -43,7 +43,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.manager.CacheManager
-import cc.sovellus.vrcaa.manager.RecommendationManager
 import cc.sovellus.vrcaa.ui.components.layout.HorizontalRow
 import cc.sovellus.vrcaa.ui.components.layout.RoundedRowItem
 import cc.sovellus.vrcaa.ui.components.layout.RowItem
@@ -198,7 +197,8 @@ class HomeScreen : Screen {
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                if (model.recommendedWorlds.isEmpty()) {
+                val worlds = CacheManager.recommendedWorldsState.collectAsState()
+                if (worlds.value.isEmpty()) {
                     Text(
                         text = stringResource(R.string.home_curated_for_you),
                         style = MaterialTheme.typography.headlineSmall,
@@ -221,7 +221,7 @@ class HomeScreen : Screen {
                     HorizontalRow(
                         title = stringResource(R.string.home_curated_for_you)
                     ) {
-                        items(model.recommendedWorlds) { world ->
+                        items(worlds.value) { world ->
                             RowItem(
                                 name = world.name,
                                 url = world.imageUrl.ifEmpty { world.thumbnailImageUrl },

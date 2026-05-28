@@ -39,7 +39,6 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
 
     val friendsList: StateFlow<List<Friend>> = FriendManager.friendsState
     val recentlyVisited: StateFlow<List<WorldCache>> = CacheManager.recentWorldsState
-    var recommendedWorlds: List<World> = listOf()
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun startCacheRefresh() {
@@ -59,10 +58,6 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
             mutableState.value = HomeState.Result
         } else {
             mutableState.value = HomeState.Loading
-        }
-
-        screenModelScope.launch {
-            recommendedWorlds = RecommendationManager.recommendWorlds()
         }
     }
 
