@@ -55,8 +55,10 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     private var worldList = Collections.synchronizedList(mutableListOf<WorldCache>())
     private var recentWorldList = Collections.synchronizedList(mutableListOf<WorldCache>())
     private val recentWorldsStateFlow = MutableStateFlow<List<WorldCache>>(emptyList())
+    private val recommendedWorldsStateFlow = MutableStateFlow<List<World>>(emptyList())
 
     val recentWorldsState: StateFlow<List<WorldCache>> = recentWorldsStateFlow.asStateFlow()
+    val recommendedWorldsState: StateFlow<List<World>> = recommendedWorldsStateFlow.asStateFlow()
 
     private var cacheHasBeenBuilt: Boolean = false
 
@@ -124,6 +126,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
             })
             recentWorldsStateFlow.value = recentWorldList.toList()
         }
+
+        recommendedWorldsStateFlow.value = RecommendationManager.recommendWorlds()
 
         getListeners().forEach { listener ->
             listener.endCacheRefresh()
