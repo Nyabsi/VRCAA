@@ -56,47 +56,24 @@ class MainActivity : BaseActivity() {
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION") == true
         val restartSession = intent.extras?.getBoolean("RESTART_SESSION") == true
 
-        if (invalidSession) {
-
-            preferences.authToken = ""
-
-            var intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-
+        if (restartSession || terminateSession || invalidSession) {
+            stopService(Intent(this, PipelineService::class.java))
             if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
+                stopService(Intent(this, RichPresenceService::class.java))
             }
+        }
 
+        if (terminateSession || invalidSession) {
+            App.setIsValidSession(false)
+        }
+
+        if (invalidSession) {
+            preferences.authToken = ""
             Toast.makeText(
                 this,
                 getString(R.string.api_session_has_expired_text),
                 Toast.LENGTH_LONG
             ).show()
-
-            App.setIsValidSession(false)
-        }
-
-        if (restartSession) {
-            var intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-            ContextCompat.startForegroundService(this, intent)
-
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
-                ContextCompat.startForegroundService(this, intent)
-            }
-        }
-
-        if (terminateSession) {
-            var intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-            if (preferences.richPresenceEnabled) {
-                intent = Intent(this, RichPresenceService::class.java)
-                stopService(intent)
-            }
-            App.setIsValidSession(false)
         }
 
         if (savedInstanceState == null) {
@@ -119,6 +96,10 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
     }
 
     @Composable
