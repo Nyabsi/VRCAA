@@ -57,32 +57,21 @@ class MainActivity : BaseActivity() {
         val terminateSession = intent.extras?.getBoolean("TERMINATE_SESSION") == true
         val restartSession = intent.extras?.getBoolean("RESTART_SESSION") == true
 
+        if (restartSession || terminateSession || invalidSession) {
+            stopService(Intent(this, PipelineService::class.java))
+        }
+
+        if (terminateSession || invalidSession) {
+            App.setIsValidSession(false)
+        }
+
         if (invalidSession) {
-
             preferences.authToken = ""
-
-            var intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-
             Toast.makeText(
                 this,
                 getString(R.string.api_session_has_expired_text),
                 Toast.LENGTH_LONG
             ).show()
-
-            App.setIsValidSession(false)
-        }
-
-        if (restartSession) {
-            var intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-            ContextCompat.startForegroundService(this, intent)
-        }
-
-        if (terminateSession) {
-            var intent = Intent(this, PipelineService::class.java)
-            stopService(intent)
-            App.setIsValidSession(false)
         }
 
         if (savedInstanceState == null) {
@@ -105,6 +94,10 @@ class MainActivity : BaseActivity() {
                 ContextCompat.startForegroundService(this, intent)
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
     }
 
     @Composable
