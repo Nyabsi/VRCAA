@@ -32,12 +32,14 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
     val feed: StateFlow<List<FeedManager.Feed>> = FeedManager.feedState
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun startCacheRefresh() {
-            mutableState.value = FeedState.Loading
+        override fun startCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Feed)
+                mutableState.value = FeedState.Loading
         }
 
-        override fun endCacheRefresh() {
-            mutableState.value = FeedState.Result
+        override fun endCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Feed)
+                mutableState.value = FeedState.Result
         }
     }
 
@@ -45,7 +47,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
         mutableState.value = FeedState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt())
+        if (CacheManager.isBuilt(CacheManager.Stage.Feed))
         {
             mutableState.value = FeedState.Result
         }

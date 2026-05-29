@@ -30,14 +30,25 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.util.Collections
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlin.concurrent.atomics.AtomicBoolean
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@OptIn(ExperimentalAtomicApi::class)
 object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
+    sealed class Stage {
+        data object Profile : Stage()
+        data object Home : Stage()
+        data object Friends : Stage()
+        data object Feed : Stage()
+        data object Favorites : Stage()
+    }
+
     interface CacheListener {
-        fun updateRecentlyVisitedWorlds(worlds: List<WorldCache>) { }
-        fun startCacheRefresh() { }
-        fun endCacheRefresh() { }
+        fun startCacheRefresh(stage: Stage) { }
+        fun endCacheRefresh(stage: Stage) { }
         fun profileUpdated(profile: User) { }
     }
 
@@ -47,128 +58,181 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         var thumbnailUrl: String = "",
     )
 
-    private val worldListLock = Any()
-    private val recentWorldLock = Any()
     private val profileLock = Any()
 
     private var profile: User? = null
-    private var worldList = Collections.synchronizedList(mutableListOf<WorldCache>())
-    private var recentWorldList = Collections.synchronizedList(mutableListOf<WorldCache>())
+    private var worldListStateFlow = MutableStateFlow(emptyList<WorldCache>())
     private val recentWorldsStateFlow = MutableStateFlow<List<WorldCache>>(emptyList())
     private val recommendedWorldsStateFlow = MutableStateFlow<List<World>>(emptyList())
 
     val recentWorldsState: StateFlow<List<WorldCache>> = recentWorldsStateFlow.asStateFlow()
     val recommendedWorldsState: StateFlow<List<World>> = recommendedWorldsStateFlow.asStateFlow()
+    val worldList: StateFlow<List<WorldCache>> = worldListStateFlow.asStateFlow()
 
-    private var cacheHasBeenBuilt: Boolean = false
+    private var isProfileCacheBuilt = AtomicBoolean(false)
+    private var isHomeCacheBuilt = AtomicBoolean(false)
+    private var isFriendsCacheBuilt = AtomicBoolean(false)
+    private var isFeedCacheBuilt = AtomicBoolean(false)
+    private var isFavoriteCacheBuilt = AtomicBoolean(false)
 
     suspend fun buildCache() = coroutineScope {
-        cacheHasBeenBuilt = false
 
-        synchronized(worldListLock) {
-            worldList.clear()
-        }
-
-        synchronized(recentWorldLock) {
-            recentWorldList.clear()
-            recentWorldsStateFlow.value = emptyList()
-        }
+        recentWorldsStateFlow.value = emptyList()
+        recommendedWorldsStateFlow.value = emptyList()
 
         App.setLoadingText(R.string.global_app_default_loading_text)
-        
-        getListeners().forEach { listener ->
-            listener.startCacheRefresh()
-        }
 
-        val user = async { api.auth.fetchCurrentUser() }.await()
-        val onlineFriends = async { api.friends.fetchFriends(false) }.await()
-        val offlineFriends = async { api.friends.fetchFriends(true) }.await()
-        val recentWorlds = async { api.worlds.fetchRecent() }.await()
-        val notifications = async { api.user.fetchNotifications() }.await()
-        val notificationsV2 = async { api.notifications.fetchNotifications() }.await()
+        val user = async { api.auth.fetchCurrentUser() }
 
-        async { FavoriteManager.refresh() }.await()
+        val onlineFriends = async { api.friends.fetchFriends(false) }
+        val offlineFriends = async { api.friends.fetchFriends(true) }
 
-        val userLocations = onlineFriends.mapNotNull { friend ->
-            friend.location.takeIf { it.contains("wrld_") }?.split(":")?.getOrNull(0)
-        }.distinct().map { worldId ->
-            async {
-                api.worlds.fetchWorldByWorldId(worldId)
+        val recentWorlds = async { api.worlds.fetchRecent() }
+        val recommendedWorlds = async { RecommendationManager.recommendWorlds() }
+
+        val notifications = async { api.user.fetchNotifications() }
+        val notificationsV2 = async { api.notifications.fetchNotifications() }
+
+        val favorites = async { FavoriteManager.refresh() }
+
+        launch {
+            getListeners().forEach { listener ->
+                listener.startCacheRefresh(Stage.Profile)
             }
-        }.awaitAll()
 
-        synchronized(profileLock) {
-            profile = user
+            val result = (user).await()
+            synchronized(profileLock) {
+                profile = result
+            }
+
+            getListeners().forEach { listener ->
+                listener.endCacheRefresh(Stage.Profile)
+            }
+
+            isProfileCacheBuilt.exchange(true)
         }
 
-        val friendList: MutableList<Friend> = mutableListOf()
-        friendList.addAll((onlineFriends + offlineFriends))
-        FriendManager.setFriends(friendList)
+        launch {
+            getListeners().forEach { listener ->
+                listener.startCacheRefresh(Stage.Feed)
+            }
 
-        NotificationManager.setNotifications(notifications)
-        NotificationManager.setNotificationsV2(notificationsV2)
+            NotificationManager.setNotifications(notifications.await())
+            NotificationManager.setNotificationsV2(notificationsV2.await())
 
-        synchronized(worldListLock) {
-            worldList.addAll(userLocations.filterNotNull().filter { !isWorldCached(it.id) }.map {
-                WorldCache(it.id).apply {
-                    name = it.name
-                    thumbnailUrl = it.thumbnailImageUrl
+            getListeners().forEach { listener ->
+                listener.endCacheRefresh(Stage.Feed)
+            }
+
+            isFeedCacheBuilt.exchange(true)
+        }
+
+        launch {
+            getListeners().forEach { listener ->
+                listener.startCacheRefresh(Stage.Friends)
+            }
+
+            val online = onlineFriends.await()
+            val offline = offlineFriends.await()
+
+            val friends: MutableList<Friend> = mutableListOf()
+            friends.addAll((online + offline))
+            FriendManager.setFriends(friends)
+
+            val locations = friends.mapNotNull { friend ->
+                friend.location.takeIf { it.contains("wrld_") }?.split(":")?.getOrNull(0)
+            }.distinct().map { worldId ->
+                async {
+                    api.worlds.fetchWorldByWorldId(worldId)
                 }
-            })
+            }.awaitAll()
+
+            // TODO: should there be a "WorldManager" to track all of your friends to do correlation based on timestamp to figure out who you spend time with?
+            worldListStateFlow.value += locations.filterNotNull()
+                            .filter { !isWorldCached(it.id) }
+                            .map { WorldCache(it.id).apply { name = it.name; thumbnailUrl = it.thumbnailImageUrl } }
+
+            getListeners().forEach { listener ->
+                listener.endCacheRefresh(Stage.Friends)
+            }
+
+            isFriendsCacheBuilt.exchange(true)
         }
 
-        synchronized(recentWorldLock) {
-            recentWorldList.addAll(recentWorlds.map {
-                WorldCache(it.id).apply {
-                    name = it.name
-                    thumbnailUrl = it.thumbnailImageUrl
+        launch {
+            getListeners().forEach { listener ->
+                listener.startCacheRefresh(Stage.Home)
+            }
+
+            val worlds = recentWorlds.await()
+
+            recentWorldsStateFlow.value +=
+                worlds.map { world ->
+                    WorldCache(world.id).apply {
+                        name = world.name
+                        thumbnailUrl = world.thumbnailImageUrl
+                    }
                 }
-            })
-            recentWorldsStateFlow.value = recentWorldList.toList()
+
+            recommendedWorldsStateFlow.value = recommendedWorlds.await().toMutableList()
+
+            getListeners().forEach { listener ->
+                listener.endCacheRefresh(Stage.Home)
+            }
+
+            isHomeCacheBuilt.exchange(true)
         }
 
-        recommendedWorldsStateFlow.value = RecommendationManager.recommendWorlds()
+        launch {
+            getListeners().forEach { listener ->
+                listener.startCacheRefresh(Stage.Favorites)
+            }
 
-        getListeners().forEach { listener ->
-            listener.endCacheRefresh()
+            favorites.await()
+
+            getListeners().forEach { listener ->
+                listener.endCacheRefresh(Stage.Favorites)
+            }
+
+            isFavoriteCacheBuilt.exchange(true)
         }
-
-        cacheHasBeenBuilt = true
     }
 
-
-    fun isBuilt(): Boolean {
-        return cacheHasBeenBuilt
+    fun isBuilt(stage: Stage): Boolean {
+        return when (stage) {
+            Stage.Profile -> isProfileCacheBuilt.load()
+            Stage.Home -> isHomeCacheBuilt.load()
+            Stage.Friends -> isFriendsCacheBuilt.load()
+            Stage.Feed -> isFeedCacheBuilt.load()
+            Stage.Favorites -> isFavoriteCacheBuilt.load()
+        }
     }
 
     fun isWorldCached(worldId: String): Boolean {
-        synchronized(worldListLock) {
-            return worldList.any { it.id == worldId }
-        }
+        return worldList.value.any { it.id == worldId }
     }
 
-    fun getWorld(worldId: String): WorldCache {
-        synchronized(worldListLock) {
-            return worldList.firstOrNull { it.id == worldId } ?: WorldCache("invalid")
-        }
+    fun getWorld(worldId: String): WorldCache? {
+        return worldList.value.firstOrNull { it.id == worldId }
     }
 
     fun addWorld(world: World) {
-        synchronized(worldListLock) {
-            val cache = WorldCache(world.id).apply {
-                name = world.name
-                thumbnailUrl = world.thumbnailImageUrl
-            }
-            worldList.add(cache)
+        val cache = WorldCache(world.id).apply {
+            name = world.name
+            thumbnailUrl = world.thumbnailImageUrl
         }
+        worldListStateFlow.value += cache
     }
 
     fun updateWorld(world: World) {
-        synchronized(worldListLock) {
-            val index = worldList.indexOf(worldList.find { it.id == world.id })
-            worldList[index] = WorldCache(world.id).apply {
-                name = world.name
-                thumbnailUrl = world.thumbnailImageUrl
+        worldListStateFlow.update { current ->
+            current.map { cache ->
+                if (cache.id == world.id) {
+                    WorldCache(world.id).apply {
+                        name = world.name
+                        thumbnailUrl = world.thumbnailImageUrl
+                    }
+                } else cache
             }
         }
     }
@@ -191,24 +255,13 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         }
     }
 
-    fun getRecentWorlds(): List<WorldCache> {
-        return recentWorldsStateFlow.value
-    }
-
     fun addRecentWorld(world: World) {
-        synchronized(recentWorldLock) {
-            recentWorldList.removeIf { it.id == world.id }
-            recentWorldList.add(0,
-                WorldCache(world.id).apply {
-                    name = world.name
-                    thumbnailUrl = world.thumbnailImageUrl
-                }
-            )
-            recentWorldsStateFlow.value = recentWorldList.toList()
-        }
-
-        getListeners().forEach { listener ->
-            listener.updateRecentlyVisitedWorlds(recentWorldsStateFlow.value)
+        recentWorldsStateFlow.update { current ->
+            val newCache = WorldCache(world.id).apply {
+                name = world.name
+                thumbnailUrl = world.thumbnailImageUrl
+            }
+            listOf(newCache) + current.filterNot { it.id == world.id }
         }
     }
 }

@@ -46,12 +46,14 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     var deleteDialogShown = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun startCacheRefresh() {
-            mutableState.value = FavoriteState.Loading
+        override fun startCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Favorites)
+                mutableState.value = FavoriteState.Loading
         }
 
-        override fun endCacheRefresh() {
-            mutableState.value = FavoriteState.Result
+        override fun endCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Favorites)
+                mutableState.value = FavoriteState.Result
         }
     }
 
@@ -59,7 +61,7 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         mutableState.value = FavoriteState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt())
+        if (CacheManager.isBuilt(CacheManager.Stage.Favorites))
         {
             mutableState.value = FavoriteState.Result
         } else {

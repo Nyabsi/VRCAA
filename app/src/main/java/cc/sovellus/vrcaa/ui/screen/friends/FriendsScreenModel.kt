@@ -37,12 +37,14 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
     var currentIndex = mutableIntStateOf(0)
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun startCacheRefresh() {
-            mutableState.value = FriendsState.Loading
+        override fun startCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Friends)
+                mutableState.value = FriendsState.Loading
         }
 
-        override fun endCacheRefresh() {
-            mutableState.value = FriendsState.Result
+        override fun endCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Friends)
+                mutableState.value = FriendsState.Result
         }
     }
 
@@ -50,7 +52,7 @@ class FriendsScreenModel : StateScreenModel<FriendsState>(FriendsState.Init) {
         mutableState.value = FriendsState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt()) {
+        if (CacheManager.isBuilt(CacheManager.Stage.Friends)) {
             mutableState.value = FriendsState.Result
         } else {
             mutableState.value = FriendsState.Loading
