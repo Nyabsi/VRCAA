@@ -34,12 +34,12 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
             mutableState.value = ProfileState.Result(profile)
         }
 
-        override fun startCacheRefresh(stage: CacheManager.Stage) {
+        override fun startCacheRefresh(stage: Stage) {
             if (stage == Stage.Profile)
                 mutableState.value = ProfileState.Loading
         }
 
-        override fun endCacheRefresh(stage: CacheManager.Stage) {
+        override fun endCacheRefresh(stage: Stage) {
             if (stage == Stage.Profile)
                 fetchProfile()
         }
@@ -55,10 +55,7 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
     }
 
     private fun fetchProfile() {
-        val profile = CacheManager.getProfile()
-        profile?.let {
-            mutableState.value = ProfileState.Result(it)
-        }
+        mutableState.value = ProfileState.Result(CacheManager.profile.value)
     }
 
     override fun onDispose() {

@@ -62,7 +62,7 @@ class IconGalleryScreenModel : StateScreenModel<IconGalleryScreenModel.IconGalle
     }
 
     fun uploadFile(uri: Uri?) {
-        CacheManager.getProfile()?.let { profile ->
+        CacheManager.profile.value.let { profile ->
             uri?.let {
                 screenModelScope.launch {
                     api.files.uploadImage("icon", uri)?.let {

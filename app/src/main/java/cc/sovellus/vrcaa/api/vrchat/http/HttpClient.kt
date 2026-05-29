@@ -1060,7 +1060,7 @@ class HttpClient : BaseClient(), CoroutineScope {
             if (newVisibility != null)
                 body = "{\"displayName\":\"$newDisplayName\",\"visibility\":\"$newVisibility\"}"
 
-            val user = CacheManager.getProfile()?.id
+            val user = CacheManager.profile.value.id
 
             val dTypeString = when (type) {
                 FavoriteType.FAVORITE_WORLD -> "world"

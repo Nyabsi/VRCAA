@@ -117,7 +117,7 @@ class NavigationScreenModel : ScreenModel {
     }
 
     fun getCurrentProfileValues() {
-        CacheManager.getProfile()?.let {
+        CacheManager.profile.value.let {
             status.value = it.status
             description.value = it.statusDescription
             bio.value = it.bio
