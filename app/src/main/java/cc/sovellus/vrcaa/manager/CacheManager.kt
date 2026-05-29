@@ -55,8 +55,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
     data class WorldCache(
         val id: String,
-        var name: String = "???",
-        var thumbnailUrl: String = "",
+        val name: String = "???",
+        val thumbnailUrl: String = "",
     )
 
     private var profileStateFlow = MutableStateFlow(User())
@@ -154,13 +154,11 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
             val worlds = recentWorlds.await()
 
-            recentWorldsStateFlow.value +=
-                worlds.map { world ->
-                    WorldCache(world.id).apply {
-                        name = world.name
-                        thumbnailUrl = world.thumbnailImageUrl
-                    }
+            recentWorldsStateFlow.update {
+                it + worlds.map { world ->
+                    WorldCache(world.id, name = world.name, thumbnailUrl = world.thumbnailImageUrl)
                 }
+            }
 
             val online = onlineFriends.await()
             val offline = offlineFriends.await()
@@ -177,11 +175,13 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
             }.awaitAll()
 
             // TODO: should there be a "WorldManager" to track all of your friends to do correlation based on timestamp to figure out who you spend time with?
-            worldListStateFlow.value += locations.filterNotNull()
-                .filter { !isWorldCached(it.id) }
-                .map { WorldCache(it.id).apply { name = it.name; thumbnailUrl = it.thumbnailImageUrl } }
+            worldListStateFlow.update { current ->
+                current + locations.filterNotNull()
+                    .filter { w -> current.none { it.id == w.id } }
+                    .map { WorldCache(it.id, it.name, it.thumbnailImageUrl) }
+            }
 
-            recommendedWorldsStateFlow.value = recommendedWorlds.await().toMutableList()
+            recommendedWorldsStateFlow.value = recommendedWorlds.await()
 
             getListeners().forEach { listener ->
                 listener.endCacheRefresh(Stage.Home)
@@ -215,31 +215,19 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         }
     }
 
-    fun isWorldCached(worldId: String): Boolean {
-        return worldList.value.any { it.id == worldId }
-    }
-
     fun getWorld(worldId: String): WorldCache? {
         return worldList.value.firstOrNull { it.id == worldId }
     }
 
-    fun addWorld(world: World) {
-        val cache = WorldCache(world.id).apply {
-            name = world.name
-            thumbnailUrl = world.thumbnailImageUrl
-        }
-        worldListStateFlow.value += cache
-    }
-
     fun updateWorld(world: World) {
         worldListStateFlow.update { current ->
-            current.map { cache ->
-                if (cache.id == world.id) {
-                    WorldCache(world.id).apply {
-                        name = world.name
-                        thumbnailUrl = world.thumbnailImageUrl
-                    }
-                } else cache
+            val newCache = WorldCache(world.id, world.name, world.thumbnailImageUrl)
+            if (current.any { it.id == world.id }) {
+                current.map {
+                    if (it.id == world.id) newCache else it
+                }
+            } else {
+                current + newCache
             }
         }
     }
@@ -252,10 +240,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
     fun addRecentWorld(world: World) {
         recentWorldsStateFlow.update { current ->
-            val newCache = WorldCache(world.id).apply {
-                name = world.name
-                thumbnailUrl = world.thumbnailImageUrl
-            }
+            val newCache = WorldCache(world.id, world.name, world.thumbnailImageUrl)
             listOf(newCache) + current.filterNot { it.id == world.id }
         }
     }

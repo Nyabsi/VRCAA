@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.service
 
 import android.app.Service
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
 import android.os.Build
 import android.os.Handler
@@ -27,6 +28,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_FOREGROUND
 import androidx.core.app.NotificationCompat
+import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.pipeline.PipelineSocket
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.FriendActive
@@ -157,10 +159,7 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = FriendManager.getFriend(update.userId)
 
                     update.world?.let {
-                        if (CacheManager.isWorldCached(it.id))
-                            CacheManager.updateWorld(update.world)
-                        else
-                            CacheManager.addWorld(update.world)
+                        CacheManager.updateWorld(update.world)
                     }
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
@@ -279,11 +278,7 @@ class PipelineService : Service(), CoroutineScope {
                         launch {
                             val instance = api.instances.fetchInstance(user.location)
                             instance?.let {
-                                if (CacheManager.isWorldCached(it.id)) {
-                                    CacheManager.updateWorld(instance.world)
-                                } else {
-                                    CacheManager.addWorld(instance.world)
-                                }
+                                CacheManager.updateWorld(instance.world)
 
                                 RecommendationManager.updateLocation(instance)
 
