@@ -59,9 +59,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         var thumbnailUrl: String = "",
     )
 
-    private val profileLock = Any()
-
-    private var profile: User? = null
+    private var profileStateFlow = MutableStateFlow(User())
     private var worldListStateFlow = MutableStateFlow(emptyList<WorldCache>())
     private val recentWorldsStateFlow = MutableStateFlow<List<WorldCache>>(emptyList())
     private val recommendedWorldsStateFlow = MutableStateFlow<List<World>>(emptyList())
@@ -69,6 +67,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     val recentWorldsState: StateFlow<List<WorldCache>> = recentWorldsStateFlow.asStateFlow()
     val recommendedWorldsState: StateFlow<List<World>> = recommendedWorldsStateFlow.asStateFlow()
     val worldList: StateFlow<List<WorldCache>> = worldListStateFlow.asStateFlow()
+    val profile: StateFlow<User> = profileStateFlow.asStateFlow()
 
     private var isProfileCacheBuilt = AtomicBoolean(false)
     private var isHomeCacheBuilt = AtomicBoolean(false)
@@ -101,9 +100,9 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
                 listener.startCacheRefresh(Stage.Profile)
             }
 
-            val result = (user).await()
-            synchronized(profileLock) {
-                profile = result
+            val result = user.await()
+            result?.let {
+                profileStateFlow.value = it
             }
 
             getListeners().forEach { listener ->
@@ -238,21 +237,9 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         }
     }
 
-    fun getProfile(): User? {
-        synchronized(profileLock) {
-            return profile
-        }
-    }
-
     fun updateProfile(profile: User) {
-        synchronized(profileLock) {
-            this.profile?.let {
-                val result = JsonHelper.mergeJson(it, profile, User::class.java)
-                this.profile = result
-                getListeners().forEach { listener ->
-                    listener.profileUpdated(result)
-                }
-            }
+        profileStateFlow.update {
+            JsonHelper.mergeJson(it, profile, User::class.java)
         }
     }
 

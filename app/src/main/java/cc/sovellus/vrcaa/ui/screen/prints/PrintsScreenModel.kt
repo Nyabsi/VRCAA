@@ -25,12 +25,11 @@ import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.manager.ApiManager.api
+import cc.sovellus.vrcaa.manager.CacheManager
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
-class PrintsScreenModel(
-    private val userId: String
-) : StateScreenModel<PrintsScreenModel.PrintsState>(PrintsState.Init) {
+class PrintsScreenModel : StateScreenModel<PrintsScreenModel.PrintsState>(PrintsState.Init) {
 
     sealed class PrintsState {
         data object Init : PrintsState()
@@ -54,7 +53,7 @@ class PrintsScreenModel(
         mutableState.value = PrintsState.Loading
         App.setLoadingText(R.string.loading_text_prints)
         screenModelScope.launch {
-            prints = api.prints.fetchPrintsByUserId(userId)
+            prints = api.prints.fetchPrintsByUserId(CacheManager.profile.value.id)
 
             if (prints.isEmpty())
                 mutableState.value = PrintsState.Empty

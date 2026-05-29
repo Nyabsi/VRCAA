@@ -75,15 +75,13 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 
-class PrintsScreen(
-    private val userId: String
-) : Screen {
+class PrintsScreen : Screen {
 
     override val key = uniqueScreenKey
 
     @Composable
     override fun Content() {
-        val model = rememberScreenModel { PrintsScreenModel(userId) }
+        val model = rememberScreenModel { PrintsScreenModel() }
         val state by model.state.collectAsState()
 
         when (val result = state) {
@@ -182,7 +180,7 @@ class PrintsScreen(
                 ExtendedFloatingActionButton(
                     modifier = Modifier.padding(4.dp),
                     onClick = {
-                        CacheManager.getProfile()?.let { profile ->
+                        CacheManager.profile.value.let { profile ->
                             if (profile.tags.contains("system_supporter")) {
                                 pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
                             } else {

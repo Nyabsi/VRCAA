@@ -163,7 +163,7 @@ class IconGalleryScreen : Screen {
                 ExtendedFloatingActionButton(
                     modifier = Modifier.padding(4.dp),
                     onClick = {
-                        CacheManager.getProfile()?.let { profile ->
+                        CacheManager.profile.value.let { profile ->
                             if (profile.tags.contains("system_supporter")) {
                                 pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
                             } else {

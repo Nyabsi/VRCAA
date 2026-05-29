@@ -89,6 +89,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -193,6 +194,7 @@ class NavigationScreen : Screen {
 
         TabNavigator(tabs[0]) { tabNavigator ->
             val profileSheetState = rememberModalBottomSheetState()
+            val profile = CacheManager.profile.collectAsState().value
 
             var isMenuExpanded by remember { mutableStateOf(false) }
             var showProfileSheet by remember { mutableStateOf(false) }
@@ -511,7 +513,7 @@ class NavigationScreen : Screen {
                                                 Toast.LENGTH_LONG
                                             ).show()
                                             scope.launch {
-                                                CacheManager.getProfile()?.let {
+                                                profile.let {
                                                     api.user.updateProfileByUserId(
                                                         it.id,
                                                         model.status.value,
@@ -782,7 +784,7 @@ class NavigationScreen : Screen {
                     ) {
                         LazyColumn {
                             item {
-                                CacheManager.getProfile()?.let {
+                                profile.let {
                                     Box(modifier = Modifier.fillMaxWidth()) {
                                         QuickMenuCard(
                                             thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
@@ -834,49 +836,35 @@ class NavigationScreen : Screen {
                                                 .clickable(onClick = {
                                                     when (index) {
                                                         0 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(GalleryScreen())
-                                                            }
+                                                            navigator.push(GalleryScreen())
                                                         }
                                                         1 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(IconGalleryScreen())
-                                                            }
+                                                            navigator.push(IconGalleryScreen())
                                                         }
                                                         2 -> {
-                                                            CacheManager.getProfile()?.let {
+                                                            profile.let {
                                                                 navigator.push(WorldsScreen(it.displayName, it.id, true))
                                                             }
                                                         }
                                                         3 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(AvatarsScreen())
-                                                            }
+                                                            navigator.push(AvatarsScreen())
                                                         }
                                                         4 -> {
-                                                            CacheManager.getProfile()?.let {
+                                                            profile.let {
                                                                 navigator.push(UserGroupsScreen(it.displayName, it.id))
                                                             }
                                                         }
                                                         5 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(EmojisScreen())
-                                                            }
+                                                            navigator.push(EmojisScreen())
                                                         }
                                                         6 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(StickersScreen())
-                                                            }
+                                                            navigator.push(StickersScreen())
                                                         }
                                                         7 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(PrintsScreen(it.id))
-                                                            }
+                                                            navigator.push(PrintsScreen())
                                                         }
                                                         8 -> {
-                                                            CacheManager.getProfile()?.let {
-                                                                navigator.push(ItemsScreen())
-                                                            }
+                                                            navigator.push(ItemsScreen())
                                                         }
                                                     }
                                                     isQuickMenuExpanded = false

@@ -27,12 +27,15 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
 import cc.sovellus.vrcaa.manager.ApiManager.api
 import cc.sovellus.vrcaa.manager.NotificationManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 
 class NotificationsScreenModel : StateScreenModel<NotificationsScreenModel.NotificationsState>(NotificationsState.Init) {
 
@@ -72,11 +75,13 @@ class NotificationsScreenModel : StateScreenModel<NotificationsScreenModel.Notif
 
     fun fetchUsersFromNotifications() {
         screenModelScope.launch {
-            users += notificationStateFlow.value.filter { it.senderUserId.isNotEmpty() && users.find { user -> user?.id == it.senderUserId }  == null }.map {
-                async {
-                    api.users.fetchUserByUserId(it.senderUserId)
-                }
-            }.awaitAll()
+            withContext(Dispatchers.IO) {
+                users += notificationStateFlow.value.filter { it.senderUserId.isNotEmpty() && users.find { user -> user?.id == it.senderUserId }  == null }.map {
+                    async {
+                        api.users.fetchUserByUserId(it.senderUserId)
+                    }
+                }.awaitAll()
+            }
             mutableState.value = NotificationsState.Loaded
         }
     }
