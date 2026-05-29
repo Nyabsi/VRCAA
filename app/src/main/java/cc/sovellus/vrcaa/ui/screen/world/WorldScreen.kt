@@ -666,7 +666,7 @@ class WorldScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 items(
-                    items = instances
+                    instances.distinctBy { it.second.instance?.world?.id }
                 ) { (_, item) ->
                     val inst = item.instance ?: return@items
                     InstanceItem(
