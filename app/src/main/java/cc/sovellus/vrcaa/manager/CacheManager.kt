@@ -139,18 +139,6 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
             friends.addAll((online + offline))
             FriendManager.setFriends(friends)
 
-            val locations = friends.mapNotNull { friend ->
-                friend.location.takeIf { it.contains("wrld_") }?.split(":")?.getOrNull(0)
-            }.distinct().map { worldId ->
-                async {
-                    api.worlds.fetchWorldByWorldId(worldId)
-                }
-            }.awaitAll()
-
-            // TODO: should there be a "WorldManager" to track all of your friends to do correlation based on timestamp to figure out who you spend time with?
-            worldListStateFlow.value += locations.filterNotNull()
-                            .filter { !isWorldCached(it.id) }
-                            .map { WorldCache(it.id).apply { name = it.name; thumbnailUrl = it.thumbnailImageUrl } }
 
             getListeners().forEach { listener ->
                 listener.endCacheRefresh(Stage.Friends)
@@ -173,6 +161,25 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
                         thumbnailUrl = world.thumbnailImageUrl
                     }
                 }
+
+            val online = onlineFriends.await()
+            val offline = offlineFriends.await()
+
+            val friends: MutableList<Friend> = mutableListOf()
+            friends.addAll((online + offline))
+
+            val locations = friends.mapNotNull { friend ->
+                friend.location.takeIf { it.contains("wrld_") }?.split(":")?.getOrNull(0)
+            }.distinct().map { worldId ->
+                async {
+                    api.worlds.fetchWorldByWorldId(worldId)
+                }
+            }.awaitAll()
+
+            // TODO: should there be a "WorldManager" to track all of your friends to do correlation based on timestamp to figure out who you spend time with?
+            worldListStateFlow.value += locations.filterNotNull()
+                .filter { !isWorldCached(it.id) }
+                .map { WorldCache(it.id).apply { name = it.name; thumbnailUrl = it.thumbnailImageUrl } }
 
             recommendedWorldsStateFlow.value = recommendedWorlds.await().toMutableList()
 
