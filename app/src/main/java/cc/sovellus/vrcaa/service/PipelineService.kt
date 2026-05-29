@@ -159,10 +159,7 @@ class PipelineService : Service(), CoroutineScope {
                     val friend = FriendManager.getFriend(update.userId)
 
                     update.world?.let {
-                        if (CacheManager.isWorldCached(it.id))
-                            CacheManager.updateWorld(update.world)
-                        else
-                            CacheManager.addWorld(update.world)
+                        CacheManager.updateWorld(update.world)
                     }
 
                     // if "friend.travelingToLocation" is not empty, it means friend is currently travelling.
@@ -281,15 +278,10 @@ class PipelineService : Service(), CoroutineScope {
                         launch {
                             val instance = api.instances.fetchInstance(user.location)
                             instance?.let {
-                                if (CacheManager.isWorldCached(it.id)) {
-                                    CacheManager.updateWorld(instance.world)
-                                } else {
-                                    CacheManager.addWorld(instance.world)
-                                }
+                                CacheManager.updateWorld(instance.world)
 
                                 RecommendationManager.updateLocation(instance)
 
-                                val location = LocationHelper.parseLocationInfo(user.location)
                                 CacheManager.addRecentWorld(instance.world)
                             } ?: run {
                                 RecommendationManager.updateLocation(null)
