@@ -76,6 +76,7 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val friends = model.friendsList.collectAsState().value
         val recent = model.recentlyVisited.collectAsState().value
+        val cachedWorlds = CacheManager.worldList.collectAsState().value
 
         LazyColumn(
             modifier = Modifier
@@ -184,12 +185,13 @@ class HomeScreen : Screen {
                         items(
                             friendLocations.distinctBy { it.location.split(':')[0] }
                         ) { friend ->
-                            val world = CacheManager.getWorld(friend.location.split(':')[0])
+                            val worldId = friend.location.split(':')[0]
+                            val world = cachedWorlds.find { it.id == worldId }
                             RowItemWithFriends(
-                                name = world.name,
-                                url = world.thumbnailUrl,
+                                name = world?.name ?: "???",
+                                url = world?.thumbnailUrl ?: "",
                                 friends = friends.filter { it.location == friend.location },
-                                onClick = { navigator.parent?.parent?.push(WorldScreen(world.id)) }
+                                onClick = { navigator.parent?.parent?.push(WorldScreen(worldId)) }
                             )
                         }
                     }

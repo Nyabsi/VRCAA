@@ -19,6 +19,7 @@ package cc.sovellus.vrcaa.ui.screen.profile
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
+import cc.sovellus.vrcaa.manager.CacheManager.Stage
 
 class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(ProfileState.Init) {
 
@@ -33,12 +34,14 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
             mutableState.value = ProfileState.Result(profile)
         }
 
-        override fun startCacheRefresh() {
-            mutableState.value = ProfileState.Loading
+        override fun startCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == Stage.Profile)
+                mutableState.value = ProfileState.Loading
         }
 
-        override fun endCacheRefresh() {
-            fetchProfile()
+        override fun endCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == Stage.Profile)
+                fetchProfile()
         }
     }
 
@@ -46,7 +49,7 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
         mutableState.value = ProfileState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt()) {
+        if (CacheManager.isBuilt(Stage.Profile)) {
             fetchProfile()
         }
     }

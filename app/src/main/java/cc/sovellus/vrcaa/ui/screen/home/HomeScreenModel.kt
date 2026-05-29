@@ -17,17 +17,12 @@
 package cc.sovellus.vrcaa.ui.screen.home
 
 import cafe.adriel.voyager.core.model.StateScreenModel
-import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
-import cc.sovellus.vrcaa.api.vrchat.http.models.Inventory
-import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.CacheManager.WorldCache
 import cc.sovellus.vrcaa.manager.FriendManager
-import cc.sovellus.vrcaa.manager.RecommendationManager
 import cc.sovellus.vrcaa.ui.screen.home.HomeScreenModel.HomeState
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
 
@@ -41,12 +36,14 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
     val recentlyVisited: StateFlow<List<WorldCache>> = CacheManager.recentWorldsState
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun startCacheRefresh() {
-            mutableState.value = HomeState.Loading
+        override fun startCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Home)
+                mutableState.value = HomeState.Loading
         }
 
-        override fun endCacheRefresh() {
-            mutableState.value = HomeState.Result
+        override fun endCacheRefresh(stage: CacheManager.Stage) {
+            if (stage == CacheManager.Stage.Home)
+                mutableState.value = HomeState.Result
         }
     }
 
@@ -54,7 +51,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
         mutableState.value = HomeState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt()) {
+        if (CacheManager.isBuilt(CacheManager.Stage.Home)) {
             mutableState.value = HomeState.Result
         } else {
             mutableState.value = HomeState.Loading
