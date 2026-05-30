@@ -26,7 +26,7 @@ import java.util.UUID
 
 object FeedManager {
 
-    private const val MAX_FEED_ENTRIES = 100
+    private const val MAX_FEED_ENTRIES = 1000
     private var FEED_OFFSET = 0
 
     enum class FeedType {
