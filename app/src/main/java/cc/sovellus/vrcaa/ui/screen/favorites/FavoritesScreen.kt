@@ -286,7 +286,7 @@ class FavoritesScreen : Screen {
         groupMetadata: Map<String, FavoriteManager.FavoriteGroupMetadata>
     ) {
         val navigator = LocalNavigator.currentOrThrow
-        val friendList = model.avatarList.collectAsStateWithLifecycle()
+        val friendList = model.friendList.collectAsStateWithLifecycle()
 
         friendList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
