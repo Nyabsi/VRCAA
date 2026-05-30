@@ -2,24 +2,12 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Notification
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationV2
-import cc.sovellus.vrcaa.base.BaseManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
-object NotificationManager: BaseManager<NotificationManager.NotificationListener>() {
-
-    interface NotificationListener {
-        fun onUpdateNotifications(notifications: List<Notification>)
-        fun onUpdateNotificationsV2(notifications: List<NotificationV2>)
-        fun onUpdateNotificationCount(count: Int)
-    }
-
-    private val notificationLock = Any()
-    private val notificationLockV2 = Any()
-
-    private val notifications: MutableList<Notification> = mutableListOf()
-    private val notificationsV2: MutableList<NotificationV2> = mutableListOf()
+object NotificationManager {
 
     private val notificationsStateFlow = MutableStateFlow<List<Notification>>(emptyList())
     val notificationsState: StateFlow<List<Notification>> = notificationsStateFlow.asStateFlow()
@@ -31,86 +19,44 @@ object NotificationManager: BaseManager<NotificationManager.NotificationListener
     val notificationCountState: StateFlow<Int> = notificationCountStateFlow.asStateFlow()
 
     fun setNotifications(newNotifications: List<Notification>) {
-        synchronized(notificationLock) {
-            notifications.clear()
-            notifications.addAll(newNotifications)
-        }
-        publishNotifications()
+        notificationsStateFlow.update { newNotifications }
+        notificationCountStateFlow.update { current -> current + notificationsState.value.size }
     }
 
     fun setNotificationsV2(newNotifications: List<NotificationV2>) {
-        synchronized(notificationLockV2) {
-            notificationsV2.clear()
-            notificationsV2.addAll(newNotifications)
-        }
-        publishNotificationsV2()
-        notifyListeners()
+        notificationsV2StateFlow.update { newNotifications }
+        notificationCountStateFlow.update { current -> current + notificationsV2State.value.size }
     }
 
     fun addNotification(notification: Notification) {
-        synchronized(notificationLock) {
-            if (notifications.none { it.id == notification.id }) {
-                notifications.add(notification)
-            }
+        val oldSize = notificationsState.value.size
+        notificationsStateFlow.update { current ->
+            if (current.none { it.id == notification.id })
+                listOf(notification) + current
+            else
+                current
         }
-        publishNotifications()
+        if (notificationsState.value.size > oldSize)
+            notificationCountStateFlow.update { current -> current + 1 }
     }
 
     fun addNotificationV2(notification: NotificationV2) {
-        synchronized(notificationLockV2) {
-            if (notificationsV2.none { it.id == notification.id }) {
-                notificationsV2.add(notification)
-            }
+        val oldSize = notificationsV2State.value.size
+        notificationsV2StateFlow.update { current ->
+            if (current.none { it.id == notification.id })
+                listOf(notification) + current
+            else
+                current
         }
-        publishNotificationsV2()
-        notifyListeners()
+        if (notificationsV2State.value.size > oldSize)
+            notificationCountStateFlow.update { current -> current + 1 }
     }
 
     fun removeNotification(notificationId: String) {
-        synchronized(notificationLock) {
-            notifications.removeIf { it.id == notificationId }
-        }
-        publishNotifications()
+        notificationsStateFlow.update { current -> current.filterNot { it.id == notificationId } }
     }
 
     fun removeNotificationV2(notificationId: String) {
-        synchronized(notificationLockV2) {
-            notificationsV2.removeIf { it.id == notificationId }
-        }
-        publishNotificationsV2()
-        notifyListeners()
-    }
-
-    fun getNotifications(): List<Notification> {
-        return notificationsStateFlow.value
-    }
-
-    fun getNotificationsV2(): List<NotificationV2> {
-        return notificationsV2StateFlow.value
-    }
-
-    private fun publishNotifications() {
-        synchronized(notificationLock) {
-            notificationsStateFlow.value = notifications.toList()
-        }
-        notifyListeners()
-    }
-
-    private fun publishNotificationsV2() {
-        synchronized(notificationLockV2) {
-            notificationsV2StateFlow.value = notificationsV2.toList()
-        }
-    }
-
-    private fun notifyListeners() {
-        val i1 = notificationsStateFlow.value
-        val i2 = notificationsV2StateFlow.value
-        val count = i1.size + i2.size
-        notificationCountStateFlow.value = count
-        getListeners().forEach {
-            it.onUpdateNotifications(i1)
-            it.onUpdateNotificationsV2(i2)
-            it.onUpdateNotificationCount(count)
-        }
+        notificationsV2StateFlow.update { current -> current.filterNot { it.id == notificationId } }
     }
 }

@@ -359,7 +359,7 @@ class NavigationScreen : Screen {
                                 },
                                 navigationIcon = {
                                     IconButton(onClick = {
-                                        if (CacheManager.isBuilt(CacheManager.Stage.Profile)) {
+                                        if (CacheManager.isBuilt()) {
                                             isQuickMenuExpanded = true
                                         }
                                     }) {
@@ -385,7 +385,7 @@ class NavigationScreen : Screen {
                         FavoritesTab.options.index -> {
                             TopAppBar(actions = {
                                 IconButton(onClick = {
-                                    if (CacheManager.isBuilt(CacheManager.Stage.Favorites)) {
+                                    if (CacheManager.isBuilt()) {
                                         isMenuExpanded = true
                                     }
                                 }) {
@@ -434,7 +434,7 @@ class NavigationScreen : Screen {
                                     IconButton(
                                         modifier = Modifier.size(64.dp, 64.dp),
                                         onClick = {
-                                            if (CacheManager.isBuilt(CacheManager.Stage.Feed)) {
+                                            if (CacheManager.isBuilt()) {
                                                 navigator.push(FeedSearchScreen())
                                             }
                                         }) {
@@ -443,7 +443,7 @@ class NavigationScreen : Screen {
                                     IconButton(
                                         modifier = Modifier.size(64.dp, 64.dp),
                                         onClick = {
-                                            if (CacheManager.isBuilt(CacheManager.Stage.Feed)) {
+                                            if (CacheManager.isBuilt()) {
                                                 // ladies and gentlemen, we got 'em.
                                                 navigator.push(NotificationsScreen())
                                             }

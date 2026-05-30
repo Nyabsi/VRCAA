@@ -21,6 +21,7 @@ import cc.sovellus.vrcaa.helper.StatusHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 object PresenceManager : BaseManager<PresenceManager.PresenceListener>() {
 
@@ -34,8 +35,6 @@ object PresenceManager : BaseManager<PresenceManager.PresenceListener>() {
         var userStatus: StatusHelper.Status = StatusHelper.Status.Offline
     )
 
-    private val presenceLock = Any()
-    private var presence: PresenceInfo = PresenceInfo()
     private val presenceStateFlow = MutableStateFlow(PresenceInfo())
 
     val presenceState: StateFlow<PresenceInfo> = presenceStateFlow.asStateFlow()
@@ -45,22 +44,19 @@ object PresenceManager : BaseManager<PresenceManager.PresenceListener>() {
     }
 
     suspend fun updateWorld(info: PresenceInfo) {
-        presence = info
+        presenceStateFlow.update { info }
         publishPresence()
     }
 
     suspend fun updateStatus(status: String) {
-        presence = presence.apply {
+        presenceStateFlow.update { current -> current.apply {
             userStatus = StatusHelper.getStatusFromString(status)
-        }
+        } }
         publishPresence()
     }
 
     private suspend fun publishPresence() {
-        synchronized(presenceLock) {
-            presenceStateFlow.value = presence
-        }
-        val snapshot = presenceStateFlow.value
+        val snapshot = presenceState.value
         getListeners().forEach { it.onUpdatePresence(snapshot) }
     }
 }

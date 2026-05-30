@@ -51,6 +51,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -93,7 +94,7 @@ class FriendsScreen : Screen {
     @Composable
     fun ShowScreen(model: FriendsScreenModel)
     {
-        val friends = model.friends.collectAsState()
+        val friends by model.friends.collectAsStateWithLifecycle()
 
         val options = stringArrayResource(R.array.friend_selection_options)
         val icons = listOf(Icons.Filled.Star, Icons.Filled.Person, Icons.Filled.Web, Icons.Filled.PersonOff)
@@ -155,11 +156,11 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsFavorite(
-        friends: State<List<Friend>>
+        friends: List<Friend>
     ) {
-        val favoriteFriends = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform.isNotEmpty() }
-        val favoriteFriendsInInstances = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform.isNotEmpty() }
-        val favoriteFriendsOffline = friends.value.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }
+        val favoriteFriends = friends.filter { FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform.isNotEmpty() }
+        val favoriteFriendsInInstances = friends.filter { FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform.isNotEmpty() }
+        val favoriteFriendsOffline = friends.filter { FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }
 
         if (favoriteFriends.isEmpty() && favoriteFriendsInInstances.isEmpty() && favoriteFriendsOffline.isEmpty()) {
             Column(
@@ -226,9 +227,9 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsOnWebsite(
-        friends: State<List<Friend>>
+        friends: List<Friend>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform == "web" }
+        val filteredFriends = friends.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform == "web" }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -258,10 +259,10 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriends(
-        friends: State<List<Friend>>
+        friends: List<Friend>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
-        val filteredFriendsInInstances = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
+        val filteredFriends = friends.filter { !FavoriteManager.isFavorite("friend", it.id) && !it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
+        val filteredFriendsInInstances = friends.filter { !FavoriteManager.isFavorite("friend", it.id) && it.location.contains("wrld_") && it.platform != "web" && it.platform.isNotEmpty() }
 
         if (filteredFriends.isEmpty() && filteredFriendsInInstances.isEmpty()) {
             Column(
@@ -315,9 +316,9 @@ class FriendsScreen : Screen {
 
     @Composable
     fun ShowFriendsOffline(
-        friends: State<List<Friend>>
+        friends: List<Friend>
     ) {
-        val filteredFriends = friends.value.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }
+        val filteredFriends = friends.filter { !FavoriteManager.isFavorite("friend", it.id) && it.platform.isEmpty() }
         if (filteredFriends.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),

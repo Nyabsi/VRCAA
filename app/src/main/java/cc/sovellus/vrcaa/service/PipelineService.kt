@@ -312,7 +312,6 @@ class PipelineService : Service(), CoroutineScope {
                     launch {
                         PresenceManager.updateStatus(user.user.status)
                     }
-
                     CacheManager.updateProfile(user.user)
                 }
 
