@@ -18,7 +18,6 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
-import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.base.BaseManager
@@ -84,7 +83,6 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         val notifications = async { api.user.fetchNotifications() }
         val notificationsV2 = async { api.notifications.fetchNotifications() }
 
-        // Combined friends list, awaited once and shared by the consumers below.
         val friends = async { onlineFriends.await() + offlineFriends.await() }
 
         val jobs = listOf(
