@@ -46,6 +46,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
@@ -86,9 +87,7 @@ class FavoritesScreen : Screen {
     @Composable
     fun ShowScreen(model: FavoritesScreenModel) {
 
-        val version = model.version.collectAsState()
         val groupMetadata = model.groupMetadata.collectAsState()
-        version.value
 
         if (model.editDialogShown.value) {
             FavoriteEditDialog(
@@ -201,9 +200,9 @@ class FavoritesScreen : Screen {
         groupMetadata: Map<String, FavoriteManager.FavoriteGroupMetadata>
     ) {
         val navigator = LocalNavigator.currentOrThrow
-        val worldList = model.getWorldList()
+        val worldList = model.worldList.collectAsStateWithLifecycle()
 
-        worldList.forEach { item ->
+        worldList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
                 val metadata = groupMetadata[item.key]
                 val title = "${metadata?.displayName ?: metadata?.name ?: item.key} (${metadata?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_WORLD)})"
@@ -244,9 +243,9 @@ class FavoritesScreen : Screen {
         groupMetadata: Map<String, FavoriteManager.FavoriteGroupMetadata>
     ) {
         val navigator = LocalNavigator.currentOrThrow
-        val avatarList = model.getAvatarList()
+        val avatarList = model.avatarList.collectAsStateWithLifecycle()
 
-        avatarList.forEach { item ->
+        avatarList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
                 val metadata = groupMetadata[item.key]
                 val title = "${metadata?.displayName ?: metadata?.name ?: item.key} (${metadata?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_AVATAR)})"
@@ -287,9 +286,9 @@ class FavoritesScreen : Screen {
         groupMetadata: Map<String, FavoriteManager.FavoriteGroupMetadata>
     ) {
         val navigator = LocalNavigator.currentOrThrow
-        val friendList = model.getFriendList()
+        val friendList = model.avatarList.collectAsStateWithLifecycle()
 
-        friendList.forEach { item ->
+        friendList.value.forEach { item ->
             if (item.value.isNotEmpty()) {
                 val metadata = groupMetadata[item.key]
                 val title = "${metadata?.displayName ?: metadata?.name ?: item.key} (${metadata?.size ?: 0}/${FavoriteManager.getMaximumFavoritesForType(FavoriteType.FAVORITE_FRIEND)})"

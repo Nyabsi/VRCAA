@@ -25,27 +25,21 @@ import cc.sovellus.vrcaa.manager.ApiManager.api
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import java.time.LocalDateTime
 
-object RecommendationManager : BaseManager<RecommendationManager.RecommendationListener>() {
+object RecommendationManager {
 
     data class CurrentLocation(
         val instance: Instance,
         val enteredAt: Long
     )
 
-    private val locationLock = Any()
-    private var currentLocation: CurrentLocation? = null
     private val locationStateFlow = MutableStateFlow<CurrentLocation?>(null)
-
     val locationState: StateFlow<CurrentLocation?> = locationStateFlow.asStateFlow()
 
-    interface RecommendationListener {
-        suspend fun onLocationChanged(location: CurrentLocation?)
-    }
-
-    suspend fun updateLocation(instance: Instance?) {
-        val previous = currentLocation
+    fun updateLocation(instance: Instance?) {
+        val previous = locationState.value
 
         when {
             previous == null && instance != null -> enter(instance)
@@ -56,13 +50,11 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             }
             else -> return
         }
-
-        publishLocation()
     }
 
     private fun enter(instance: Instance) {
         val now = System.currentTimeMillis() / 1000
-        currentLocation = CurrentLocation(instance, now)
+        locationStateFlow.update { CurrentLocation(instance, now) }
 
         val isFirstVisit = DatabaseManager.readLocationByWorldId(instance.worldId) == null
 
@@ -82,7 +74,7 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             Log.d(TAG, "leave: worldId=${previous.instance.worldId} name=${previous.instance.world.name} timeSpent=${timeSpent}s")
 
         DatabaseManager.writeLocation(buildHistory(previous.instance, timeSpent))
-        currentLocation = null
+        locationStateFlow.update { null }
     }
 
     private fun buildHistory(instance: Instance, timeSpent: Long): DatabaseManager.LocationHistory {
@@ -104,14 +96,6 @@ object RecommendationManager : BaseManager<RecommendationManager.RecommendationL
             timeSpent = timeSpent,
             lastVisited = LocalDateTime.now()
         )
-    }
-
-    private suspend fun publishLocation() {
-        synchronized(locationLock) {
-            locationStateFlow.value = currentLocation
-        }
-        val snapshot = locationStateFlow.value
-        getListeners().forEach { it.onLocationChanged(snapshot) }
     }
 
     suspend fun recommendWorlds(limit: Int = 20): List<World> {

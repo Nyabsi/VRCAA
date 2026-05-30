@@ -18,8 +18,10 @@ package cc.sovellus.vrcaa.ui.screen.world
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cc.sovellus.vrcaa.App
@@ -102,7 +104,7 @@ class WorldScreenModel(
                 val injectedUserLocations: MutableList<Pair<String, InstanceWithFriends>> = mutableListOf()
                 injectedUserLocations.addAll(instances)
 
-                for (friend in FriendManager.getFriends()) {
+                for (friend in FriendManager.friendsState.value) {
                     val location = LocationHelper.parseLocationInfo(friend.location)
                     if (location.worldId == id) {
                         val existingLocation = injectedUserLocations.find { it.first == location.instanceId }

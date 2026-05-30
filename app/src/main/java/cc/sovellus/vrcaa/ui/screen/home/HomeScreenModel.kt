@@ -36,14 +36,12 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
     val recentlyVisited: StateFlow<List<WorldCache>> = CacheManager.recentWorldsState
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun startCacheRefresh(stage: CacheManager.Stage) {
-            if (stage == CacheManager.Stage.Home)
-                mutableState.value = HomeState.Loading
+        override fun startCacheRefresh() {
+            mutableState.value = HomeState.Loading
         }
 
-        override fun endCacheRefresh(stage: CacheManager.Stage) {
-            if (stage == CacheManager.Stage.Home)
-                mutableState.value = HomeState.Result
+        override fun endCacheRefresh() {
+            mutableState.value = HomeState.Result
         }
     }
 
@@ -51,7 +49,7 @@ class HomeScreenModel : StateScreenModel<HomeState>(HomeState.Init) {
         mutableState.value = HomeState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt(CacheManager.Stage.Home)) {
+        if (CacheManager.isBuilt()) {
             mutableState.value = HomeState.Result
         } else {
             mutableState.value = HomeState.Loading

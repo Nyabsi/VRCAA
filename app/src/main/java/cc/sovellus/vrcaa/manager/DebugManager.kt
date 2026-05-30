@@ -23,14 +23,11 @@ import cc.sovellus.vrcaa.helper.NotificationHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
-object DebugManager : BaseManager<DebugManager.DebugListener>() {
+object DebugManager {
 
     private const val MAX_DEBUG_ENTRIES = 1000
-
-    interface DebugListener {
-        fun onUpdateMetadata(metadata: List<DebugMetadataData>)
-    }
 
     enum class DebugType {
         DEBUG_TYPE_HTTP,
@@ -47,40 +44,19 @@ object DebugManager : BaseManager<DebugManager.DebugListener>() {
         val payload: String
     )
 
-    private val metadataLock = Any()
-    private val metadataList: MutableList<DebugMetadataData> = mutableListOf()
     private val metadataStateFlow = MutableStateFlow<List<DebugMetadataData>>(emptyList())
-
     val metadataState: StateFlow<List<DebugMetadataData>> = metadataStateFlow.asStateFlow()
 
     fun addDebugMetadata(metadata: DebugMetadataData) {
         try {
-            synchronized(metadataLock) {
-                if (metadataList.size >= MAX_DEBUG_ENTRIES) {
-                    metadataList.removeAt(0)
-                }
-                metadataList.add(metadata)
-                metadataStateFlow.value = metadataList.toList()
-            }
-
-            val snapshot = metadataStateFlow.value
-            getListeners().forEach { listener ->
-                listener.onUpdateMetadata(snapshot)
-            }
+            metadataStateFlow.update { current -> listOf(metadata) + current }
         } catch (_: Throwable) {
-            synchronized(metadataLock) {
-                metadataList.clear()
-                metadataStateFlow.value = emptyList()
-            }
+            metadataStateFlow.value = emptyList()
             NotificationHelper.pushNotification(
                 App.getContext().getString(R.string.debug_notification_title_out_of_memory),
                 App.getContext().getString(R.string.debug_notification_content_out_of_memory),
                 NotificationHelper.CHANNEL_DEFAULT_ID
             )
         }
-    }
-
-    fun getMetadata(): List<DebugMetadataData> {
-        return metadataStateFlow.value
     }
 }

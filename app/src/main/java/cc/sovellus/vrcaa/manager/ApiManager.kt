@@ -21,6 +21,6 @@ import cc.sovellus.vrcaa.api.vrchat.http.HttpClient
 import cc.sovellus.vrcaa.base.BaseManager
 
 @SuppressLint("StaticFieldLeak")
-object ApiManager : BaseManager<Any>() {
+object ApiManager {
     var api = HttpClient()
 }

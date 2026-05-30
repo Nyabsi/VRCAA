@@ -65,7 +65,7 @@ fun FavoriteDialog(
         when (type) {
             IFavorites.FavoriteType.FAVORITE_VRC_PLUS_WORLD,    // never actually used here.
             IFavorites.FavoriteType.FAVORITE_WORLD -> {
-                FavoriteManager.getWorldList().forEach {
+                FavoriteManager.worldListState.value.forEach {
                     groups.add(it.key)
                 }
 
@@ -76,7 +76,7 @@ fun FavoriteDialog(
                 }
             }
             IFavorites.FavoriteType.FAVORITE_AVATAR -> {
-                FavoriteManager.getAvatarList().forEach {
+                FavoriteManager.avatarListState.value.forEach {
                     groups.add(it.key)
                 }
 
@@ -88,7 +88,7 @@ fun FavoriteDialog(
             }
 
             IFavorites.FavoriteType.FAVORITE_FRIEND -> {
-                FavoriteManager.getFriendList().forEach {
+                FavoriteManager.friendListState.value.forEach {
                     groups.add(it.key)
                 }
 

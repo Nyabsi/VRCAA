@@ -29,7 +29,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
-object DatabaseManager: BaseManager<Any>() {
+object DatabaseManager {
 
     data class LocationHistory(
         val worldId: String,

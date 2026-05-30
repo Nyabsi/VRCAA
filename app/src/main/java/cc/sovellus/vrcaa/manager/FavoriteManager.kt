@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-object FavoriteManager : BaseManager<Any>() {
+object FavoriteManager {
 
     data class FavoriteMetadata(
         val id: String,
@@ -48,19 +48,13 @@ object FavoriteManager : BaseManager<Any>() {
 
     private var favoriteLimits: FavoriteLimits? = null
 
-    private var worldList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
-    private var avatarList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
-    private var friendList = mutableMapOf<String, MutableList<FavoriteMetadata>>()
+    private val worldListStateFlow = MutableStateFlow<Map<String, List<FavoriteMetadata>>>(emptyMap())
+    private val avatarListStateFlow = MutableStateFlow<Map<String, List<FavoriteMetadata>>>(emptyMap())
+    private val friendListStateFlow = MutableStateFlow<Map<String, List<FavoriteMetadata>>>(emptyMap())
 
-    private val worldListReadonly: Map<String, List<FavoriteMetadata>>
-        get() = worldList
-    private val avatarListReadonly: Map<String, List<FavoriteMetadata>>
-        get() = avatarList
-    private val friendListReadonly: Map<String, List<FavoriteMetadata>>
-        get() = friendList
-
-    private val versionStateFlow = MutableStateFlow(0L)
-    val versionState: StateFlow<Long> = versionStateFlow.asStateFlow()
+    val worldListState: StateFlow<Map<String, List<FavoriteMetadata>>> = worldListStateFlow.asStateFlow()
+    val avatarListState: StateFlow<Map<String, List<FavoriteMetadata>>> = avatarListStateFlow.asStateFlow()
+    val friendListState: StateFlow<Map<String, List<FavoriteMetadata>>> = friendListStateFlow.asStateFlow()
 
     private val tagToGroupMetadataStateFlow = MutableStateFlow<Map<String, FavoriteGroupMetadata>>(emptyMap())
     val groupMetadataState: StateFlow<Map<String, FavoriteGroupMetadata>> = tagToGroupMetadataStateFlow.asStateFlow()
@@ -85,106 +79,126 @@ object FavoriteManager : BaseManager<Any>() {
         }
     }
 
+    private fun appendToGroup(
+        flow: MutableStateFlow<Map<String, List<FavoriteMetadata>>>,
+        tag: String,
+        items: List<FavoriteMetadata>
+    ) {
+        flow.update { current ->
+            val existing = current[tag] ?: return@update current
+            current + (tag to (existing + items))
+        }
+    }
+
+    private fun addToGroup(
+        flow: MutableStateFlow<Map<String, List<FavoriteMetadata>>>,
+        tag: String,
+        item: FavoriteMetadata
+    ) {
+        flow.update { current ->
+            val existing = current[tag] ?: return@update current
+            current + (tag to (existing + item))
+        }
+    }
+
+    private fun removeFromGroup(
+        flow: MutableStateFlow<Map<String, List<FavoriteMetadata>>>,
+        tag: String,
+        id: String
+    ) {
+        flow.update { current ->
+            val existing = current[tag] ?: return@update current
+            current + (tag to existing.filterNot { it.id == id })
+        }
+    }
+
     suspend fun refresh() = coroutineScope {
         favoriteLimits = api.favorites.fetchLimits()
 
-        worldList.clear()
-        avatarList.clear()
-        friendList.clear()
         tagToGroupMetadataStateFlow.value = emptyMap()
+
+        val initialWorlds = mutableMapOf<String, List<FavoriteMetadata>>()
+        val initialAvatars = mutableMapOf<String, List<FavoriteMetadata>>()
+        val initialFriends = mutableMapOf<String, List<FavoriteMetadata>>()
 
         favoriteLimits?.let {
             repeat(it.maxFavoriteGroups.world) { i ->
-                worldList["worlds${i + 1}"] = mutableListOf()
+                initialWorlds["worlds${i + 1}"] = emptyList()
             }
             repeat(it.maxFavoriteGroups.vrcPlusWorld) { i ->
-                worldList["vrcPlusWorlds${i + 1}"] = mutableListOf()
+                initialWorlds["vrcPlusWorlds${i + 1}"] = emptyList()
             }
             repeat(it.maxFavoriteGroups.avatar) { i ->
-                avatarList["avatars${i + 1}"] = mutableListOf()
+                initialAvatars["avatars${i + 1}"] = emptyList()
             }
             repeat(it.maxFavoriteGroups.friend) { i ->
-                friendList["group_$i"] = mutableListOf()
+                initialFriends["group_$i"] = emptyList()
             }
         }
 
-        val worldGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_WORLD) + api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_VRC_PLUS_WORLD) }.await()
-        val avatarGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_AVATAR) }.await()
-        val friendGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_FRIEND) }.await()
+        worldListStateFlow.value = initialWorlds
+        avatarListStateFlow.value = initialAvatars
+        friendListStateFlow.value = initialFriends
 
-        worldGroups.map { group ->
-            async {
-                val worlds = api.favorites.fetchFavoriteWorlds(group.name)
-                val metadataList = worlds.map {
-                    FavoriteMetadata(it.id, it.favoriteId, it.name, it.thumbnailImageUrl)
-                }
+        val worldGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_WORLD) + api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_VRC_PLUS_WORLD) }
+        val avatarGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_AVATAR) }
+        val friendGroups = async { api.favorites.fetchFavoriteGroups(FavoriteType.FAVORITE_FRIEND) }
 
-                worldList[group.name]?.addAll(metadataList)
-                putGroupMetadata(
-                    group.name,
-                    FavoriteGroupMetadata(
-                        group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+        val worldJob = async {
+            worldGroups.await().map { group ->
+                async {
+                    val worlds = api.favorites.fetchFavoriteWorlds(group.name)
+                    val metadataList = worlds.map {
+                        FavoriteMetadata(it.id, it.favoriteId, it.name, it.thumbnailImageUrl)
+                    }
+                    appendToGroup(worldListStateFlow, group.name, metadataList)
+                    putGroupMetadata(
+                        group.name,
+                        FavoriteGroupMetadata(
+                            group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                        )
                     )
-                )
-            }
-        }.awaitAll()
-
-        avatarGroups.map { group ->
-            async {
-                val avatars = api.favorites.fetchFavoriteAvatars(group.name)
-                val metadataList = avatars.map {
-                    FavoriteMetadata(it.id, it.favoriteId, it.name, it.thumbnailImageUrl)
                 }
+            }.awaitAll()
+        }
 
-                avatarList[group.name]?.addAll(metadataList)
-                putGroupMetadata(
-                    group.name,
-                    FavoriteGroupMetadata(
-                        group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+        val avatarJob = async {
+            avatarGroups.await().map { group ->
+                async {
+                    val avatars = api.favorites.fetchFavoriteAvatars(group.name)
+                    val metadataList = avatars.map {
+                        FavoriteMetadata(it.id, it.favoriteId, it.name, it.thumbnailImageUrl)
+                    }
+                    appendToGroup(avatarListStateFlow, group.name, metadataList)
+                    putGroupMetadata(
+                        group.name,
+                        FavoriteGroupMetadata(
+                            group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                        )
                     )
-                )
-            }
-        }.awaitAll()
-
-        friendGroups.map { group ->
-            async {
-                val friends = api.favorites.fetchFavorites(FavoriteType.FAVORITE_FRIEND, group.name)
-                val metadataList = friends.map {
-                    FavoriteMetadata(id = it.favoriteId, favoriteId = it.id)
                 }
+            }.awaitAll()
+        }
 
-                friendList[group.name]?.addAll(metadataList)
-                putGroupMetadata(
-                    group.name,
-                    FavoriteGroupMetadata(
-                        group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+        val friendJob = async {
+            friendGroups.await().map { group ->
+                async {
+                    val friends = api.favorites.fetchFavorites(FavoriteType.FAVORITE_FRIEND, group.name)
+                    val metadataList = friends.map {
+                        FavoriteMetadata(id = it.favoriteId, favoriteId = it.id)
+                    }
+                    appendToGroup(friendListStateFlow, group.name, metadataList)
+                    putGroupMetadata(
+                        group.name,
+                        FavoriteGroupMetadata(
+                            group.id, group.name, group.type, group.displayName, group.visibility, metadataList.size
+                        )
                     )
-                )
-            }
-        }.awaitAll()
+                }
+            }.awaitAll()
+        }
 
-        versionStateFlow.value += 1
-    }
-
-    fun getAvatarList(): Map<String, List<FavoriteMetadata>> {
-        return avatarListReadonly
-    }
-
-    fun getWorldList(): Map<String, List<FavoriteMetadata>> {
-        return worldListReadonly
-    }
-
-    fun getFriendList(): Map<String, List<FavoriteMetadata>> {
-        return friendListReadonly
-    }
-
-    fun getDisplayNameFromTag(tag: String): String {
-        val metadata = tagToGroupMetadataStateFlow.value[tag]
-        return metadata?.displayName ?: metadata?.name ?: tag
-    }
-
-    fun getGroupMetadata(tag: String): FavoriteGroupMetadata? {
-        return tagToGroupMetadataStateFlow.value[tag]
+        awaitAll(worldJob, avatarJob, friendJob)
     }
 
     suspend fun updateGroupMetadata(tag: String, metadata: FavoriteGroupMetadata): Boolean {
@@ -199,9 +213,6 @@ object FavoriteManager : BaseManager<Any>() {
         }
 
         val updated = api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, metadata.visibility)
-        if (updated) {
-            versionStateFlow.value += 1
-        }
         return updated
     }
 
@@ -217,78 +228,35 @@ object FavoriteManager : BaseManager<Any>() {
         }
 
         val updated = api.favorites.updateFavoriteGroup(dType, metadata.name, metadata.displayName, null)
-        if (updated) {
-            versionStateFlow.value += 1
-        }
         return updated
     }
 
     // it's the 21th century, and we have computers faster than super computers in our pockets.
     fun isFavorite(type: String, id: String): Boolean {
         return when (type) {
-            "world" -> {
-                worldList.forEach { group ->
-                    group.value.forEach { world ->
-                        if (world.id == id)
-                            return true
-                    }
-                }
-                false
-            }
-            "avatar" -> {
-                avatarList.forEach { group ->
-                    group.value.forEach { avatar ->
-                        if (avatar.id == id)
-                            return true
-                    }
-                }
-                false
-            }
-            "friend" -> {
-                friendList.forEach { group ->
-                    group.value.forEach { friend ->
-                        if (friend.id == id)
-                            return true
-                    }
-                }
-                false
-            }
+            "world" -> worldListStateFlow.value.values.any { group -> group.any { it.id == id } }
+            "avatar" -> avatarListStateFlow.value.values.any { group -> group.any { it.id == id } }
+            "friend" -> friendListStateFlow.value.values.any { group -> group.any { it.id == id } }
             else -> false
         }
     }
 
     private fun getFavoriteId(type: FavoriteType, id: String): Pair<String?, String> {
-        return when (type) {
+        val source = when (type) {
             FavoriteType.FAVORITE_VRC_PLUS_WORLD,
-            FavoriteType.FAVORITE_WORLD -> {
-                worldList.forEach { group ->
-                    group.value.forEach { world ->
-                        if (world.id == id)
-                            return Pair(world.favoriteId, group.key)
-                    }
-                }
-                Pair(null, "")
-            }
-            FavoriteType.FAVORITE_AVATAR -> {
-                avatarList.forEach { group ->
-                    group.value.forEach { avatar ->
-                        if (avatar.id == id)
-                            return Pair(avatar.favoriteId, group.key)
-                    }
-                }
-                Pair(null, "")
-            }
-            FavoriteType.FAVORITE_FRIEND -> {
-                friendList.forEach { group ->
-                    group.value.forEach { friend ->
-                        if (friend.id == id)
-                            return Pair(friend.favoriteId, group.key)
-                    }
-                }
-                Pair(null, "")
-            }
-            else -> Pair(null, "")
+            FavoriteType.FAVORITE_WORLD -> worldListStateFlow.value
+            FavoriteType.FAVORITE_AVATAR -> avatarListStateFlow.value
+            FavoriteType.FAVORITE_FRIEND -> friendListStateFlow.value
+            else -> return Pair(null, "")
         }
+
+        source.forEach { (tag, group) ->
+            group.forEach { item ->
+                if (item.id == id)
+                    return Pair(item.favoriteId, tag)
+            }
+        }
+        return Pair(null, "")
     }
 
     suspend fun addFavorite(type: FavoriteType, id: String, tag: String, metadata: FavoriteMetadata?): Boolean {
@@ -303,24 +271,20 @@ object FavoriteManager : BaseManager<Any>() {
                     FavoriteType.FAVORITE_WORLD -> {
                         metadata?.let {
                             metadata.favoriteId = result.favoriteId
-                            worldList[tag]?.add(metadata)
+                            addToGroup(worldListStateFlow, tag, metadata)
                         }
                     }
                     FavoriteType.FAVORITE_AVATAR -> {
                         metadata?.let {
                             metadata.favoriteId = result.favoriteId
-                            avatarList[tag]?.add(metadata)
+                            addToGroup(avatarListStateFlow, tag, metadata)
                         }
                     }
                     FavoriteType.FAVORITE_FRIEND -> {
-                        friendList[tag]?.add(FavoriteMetadata(id = id, favoriteId = result.id))
+                        addToGroup(friendListStateFlow, tag, FavoriteMetadata(id = id, favoriteId = result.id))
                     }
                     else -> {}
                 }
-            }
-
-            if (result != null) {
-                versionStateFlow.value += 1
             }
 
             return result != null
@@ -338,13 +302,13 @@ object FavoriteManager : BaseManager<Any>() {
                 {
                     when (type) {
                         FavoriteType.FAVORITE_WORLD -> {
-                            worldList[favorite.second]?.removeIf { it.id == id }
+                            removeFromGroup(worldListStateFlow, favorite.second, id)
                         }
                         FavoriteType.FAVORITE_AVATAR -> {
-                            avatarList[favorite.second]?.removeIf { it.id == id }
+                            removeFromGroup(avatarListStateFlow, favorite.second, id)
                         }
                         FavoriteType.FAVORITE_FRIEND -> {
-                            friendList[favorite.second]?.removeIf { it.id == id }
+                            removeFromGroup(friendListStateFlow, favorite.second, id)
                         }
 
                         FavoriteType.FAVORITE_NONE -> { }
@@ -352,9 +316,6 @@ object FavoriteManager : BaseManager<Any>() {
                     }
 
                     updateGroupSize(favorite.second, -1)
-
-                    versionStateFlow.value += 1
-
                 }
                 return result
             }

@@ -2,93 +2,68 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.pipeline.models.PartialFriend
-import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.JsonHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
-object FriendManager : BaseManager<FriendManager.FriendListener>() {
+object FriendManager {
 
-    interface FriendListener {
-        fun onUpdateFriends(friends: List<Friend>)
-    }
-
-    private val friendsLock = Any()
-    private val friends: MutableList<Friend> = mutableListOf()
     private val friendsStateFlow = MutableStateFlow<List<Friend>>(emptyList())
-
     val friendsState: StateFlow<List<Friend>> = friendsStateFlow.asStateFlow()
 
     fun setFriends(newFriends: List<Friend>) {
-        synchronized(friendsLock) {
-            friends.clear()
-            friends.addAll(newFriends)
-        }
-        publishFriends()
+        friendsStateFlow.update { newFriends }
     }
 
     fun addFriend(friend: Friend) {
-        synchronized(friendsLock) {
-            if (friends.none { it.id == friend.id }) {
-                friends.add(friend)
-            }
+        friendsStateFlow.update { current ->
+            if (current.none { it.id == friend.id })
+                listOf(friend) + current
+            else
+                current
         }
-        publishFriends()
     }
 
     fun removeFriend(userId: String) {
-        synchronized(friendsLock) {
-            friends.removeIf { it.id == userId }
-        }
-        publishFriends()
+        friendsStateFlow.update { current -> current.filterNot { it.id == userId } }
     }
 
     fun updateFriend(partial: PartialFriend) {
-        synchronized(friendsLock) {
-            val index = friends.indexOfFirst { it.id == partial.id }
+        friendsStateFlow.update { current ->
+            val index = current.indexOfFirst { it.id == partial.id }
             if (index != -1) {
-                friends[index] = JsonHelper.mergeDiffJson(friends[index], partial, Friend::class.java)
-            }
+                current.toMutableList().apply {
+                    this[index] = JsonHelper.mergeDiffJson(this[index], partial, Friend::class.java)
+                }
+            } else current
         }
-        publishFriends()
     }
 
     fun updateLocation(userId: String, location: String) {
-        synchronized(friendsLock) {
-            val index = friends.indexOfFirst { it.id == userId }
+        friendsStateFlow.update { current ->
+            val index = current.indexOfFirst { it.id == userId }
             if (index != -1) {
-                friends[index] = friends[index].copy(location = location)
-            }
+                current.toMutableList().apply {
+                    this[index] = this[index].copy(location = location)
+                }
+            } else current
         }
-        publishFriends()
     }
 
     fun updatePlatform(userId: String, platform: String) {
-        synchronized(friendsLock) {
-            val index = friends.indexOfFirst { it.id == userId }
+        friendsStateFlow.update { current ->
+            val index = current.indexOfFirst { it.id == userId }
             if (index != -1) {
-                friends[index] = friends[index].copy(platform = platform)
-            }
+                current.toMutableList().apply {
+                    this[index] = this[index].copy(platform = platform)
+                }
+            } else current
         }
-        publishFriends()
     }
 
     fun getFriend(userId: String): Friend? {
-        synchronized(friendsLock) {
-            return friends.find { it.id == userId }
-        }
-    }
-
-    fun getFriends(): List<Friend> {
-        return friendsStateFlow.value
-    }
-
-    private fun publishFriends() {
-        synchronized(friendsLock) {
-            friendsStateFlow.value = friends.toList()
-        }
-        val snapshot = friendsStateFlow.value
-        getListeners().forEach { it.onUpdateFriends(snapshot) }
+        return friendsState.value.find { it.id == userId }
     }
 }

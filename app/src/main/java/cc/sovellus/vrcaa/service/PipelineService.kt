@@ -55,6 +55,7 @@ import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.manager.FeedManager
 import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.manager.NotificationManager
+import cc.sovellus.vrcaa.manager.PresenceManager
 import cc.sovellus.vrcaa.manager.RecommendationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +69,6 @@ class PipelineService : Service(), CoroutineScope {
     override val coroutineContext = Dispatchers.IO + serviceJob
 
     private var pipeline: PipelineSocket? = null
-
     private var handlerThread: HandlerThread? = null
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
@@ -282,6 +282,18 @@ class PipelineService : Service(), CoroutineScope {
 
                                 RecommendationManager.updateLocation(instance)
 
+                                val location = LocationHelper.parseLocationInfo(user.location)
+                                val info = PresenceManager.PresenceInfo().apply {
+                                    worldName = instance.world.name
+                                    worldThumbnailUrl = instance.world.thumbnailImageUrl
+                                    worldId = instance.world.id
+                                    instanceInfo = "${location.instanceType} #${instance.name}"
+                                    instanceNonce = user.location
+                                    instanceType = location.instanceType
+                                    userStatus = StatusHelper.getStatusFromString(user.user.status)
+                                }
+
+                                PresenceManager.updateWorld(info)
                                 CacheManager.addRecentWorld(instance.world)
                             } ?: run {
                                 RecommendationManager.updateLocation(null)
@@ -296,6 +308,10 @@ class PipelineService : Service(), CoroutineScope {
 
                 is UserUpdate -> {
                     val user = msg.obj as UserUpdate
+
+                    launch {
+                        PresenceManager.updateStatus(user.user.status)
+                    }
                     CacheManager.updateProfile(user.user)
                 }
 

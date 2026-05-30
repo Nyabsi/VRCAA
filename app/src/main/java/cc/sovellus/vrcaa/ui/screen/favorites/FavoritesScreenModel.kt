@@ -34,7 +34,6 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
         data object Result : FavoriteState()
     }
 
-    val version: StateFlow<Long> = FavoriteManager.versionState
     val groupMetadata: StateFlow<Map<String, FavoriteManager.FavoriteGroupMetadata>> = FavoriteManager.groupMetadataState
 
     var currentIndex = mutableIntStateOf(0)
@@ -46,39 +45,29 @@ class FavoritesScreenModel : StateScreenModel<FavoritesScreenModel.FavoriteState
     var deleteDialogShown = mutableStateOf(false)
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun startCacheRefresh(stage: CacheManager.Stage) {
-            if (stage == CacheManager.Stage.Favorites)
-                mutableState.value = FavoriteState.Loading
+        override fun startCacheRefresh() {
+            mutableState.value = FavoriteState.Loading
         }
 
-        override fun endCacheRefresh(stage: CacheManager.Stage) {
-            if (stage == CacheManager.Stage.Favorites)
-                mutableState.value = FavoriteState.Result
+        override fun endCacheRefresh() {
+            mutableState.value = FavoriteState.Result
         }
     }
+
+    val worldList = FavoriteManager.worldListState
+    val avatarList = FavoriteManager.avatarListState
+    val friendList = FavoriteManager.friendListState
 
     init {
         mutableState.value = FavoriteState.Loading
         CacheManager.addListener(cacheListener)
 
-        if (CacheManager.isBuilt(CacheManager.Stage.Favorites))
+        if (CacheManager.isBuilt())
         {
             mutableState.value = FavoriteState.Result
         } else {
             mutableState.value = FavoriteState.Loading
         }
-    }
-
-    fun getWorldList(): Map<String, List<FavoriteManager.FavoriteMetadata>> {
-        return FavoriteManager.getWorldList()
-    }
-
-    fun getAvatarList(): Map<String, List<FavoriteManager.FavoriteMetadata>> {
-        return FavoriteManager.getAvatarList()
-    }
-
-    fun getFriendList(): Map<String, List<FavoriteManager.FavoriteMetadata>> {
-        return FavoriteManager.getFriendList()
     }
 
     fun removeFavorite() {
