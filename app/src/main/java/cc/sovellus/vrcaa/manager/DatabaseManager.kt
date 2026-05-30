@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.manager
 
 import android.content.ContentValues
+import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
@@ -69,7 +70,7 @@ object DatabaseManager: BaseManager<Any>() {
         db.writableDatabase.insert(DatabaseHelper.Tables.SQL_TABLE_FEED, null, values)
     }
 
-    fun readFeeds(limit: Int = 1000): MutableList<FeedManager.Feed> {
+    fun readFeeds(limit: Int = 1000, offset: Int = 0): MutableList<FeedManager.Feed> {
         val cursor = db.readableDatabase.query(
             DatabaseHelper.Tables.SQL_TABLE_FEED,
             arrayOf("type", "feedId", "friendId", "friendName", "friendPictureUrl", "friendStatus", "travelDestination", "worldId", "avatarName", "feedTimestamp"),
@@ -77,8 +78,8 @@ object DatabaseManager: BaseManager<Any>() {
             null,
             null,
             null,
-            "feedTimestamp ASC",
-            limit.toString()
+            "feedTimestamp DESC",
+            "$offset,$limit"
         )
 
         val feeds = mutableListOf<FeedManager.Feed>()
@@ -105,6 +106,10 @@ object DatabaseManager: BaseManager<Any>() {
 
         cursor.close()
         return feeds
+    }
+
+    fun getFeedSize(): Long {
+        return DatabaseUtils.queryNumEntries(db.readableDatabase, DatabaseHelper.Tables.SQL_TABLE_FEED)
     }
 
     fun writeQuery(query: String) {
