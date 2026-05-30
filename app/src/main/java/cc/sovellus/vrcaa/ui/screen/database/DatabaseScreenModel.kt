@@ -131,6 +131,7 @@ class DatabaseScreenModel : ScreenModel {
         val databaseFile = File(context.getDatabasePath("vrcaa.db").path)
         databaseFile.delete()
         tempFile.copyTo(databaseFile, overwrite = true)
+        tempFile.delete()
 
         val pm = context.packageManager
         val intent = pm.getLaunchIntentForPackage(context.packageName)
