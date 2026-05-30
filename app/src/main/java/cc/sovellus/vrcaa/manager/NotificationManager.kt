@@ -54,9 +54,11 @@ object NotificationManager {
 
     fun removeNotification(notificationId: String) {
         notificationsStateFlow.update { current -> current.filterNot { it.id == notificationId } }
+        notificationCountStateFlow.update { current -> current - 1 }
     }
 
     fun removeNotificationV2(notificationId: String) {
         notificationsV2StateFlow.update { current -> current.filterNot { it.id == notificationId } }
+        notificationCountStateFlow.update { current -> current - 1 }
     }
 }
