@@ -16,7 +16,6 @@
 
 package cc.sovellus.vrcaa.manager
 
-import cc.sovellus.vrcaa.base.BaseManager
 import cc.sovellus.vrcaa.helper.StatusHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,15 +24,10 @@ import kotlinx.coroutines.flow.update
 import java.time.LocalDateTime
 import java.util.UUID
 
-
-object FeedManager : BaseManager<FeedManager.FeedListener>() {
+object FeedManager {
 
     private const val MAX_FEED_ENTRIES = 100
     private var FEED_OFFSET = 0
-
-    interface FeedListener {
-        fun onReceiveUpdate(list: List<Feed>)
-    }
 
     enum class FeedType {
         FRIEND_FEED_ONLINE,
@@ -89,9 +83,5 @@ object FeedManager : BaseManager<FeedManager.FeedListener>() {
     fun addFeed(feed: Feed) {
         feedStateFlow.update { current -> listOf(feed) + current }
         DatabaseManager.writeFeed(feed)
-        val snapshot = feedStateFlow.value
-        getListeners().forEach { listener ->
-            listener.onReceiveUpdate(snapshot)
-        }
     }
 }
