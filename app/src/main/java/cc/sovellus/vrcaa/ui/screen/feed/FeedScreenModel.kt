@@ -30,6 +30,7 @@ class FeedScreenModel : StateScreenModel<FeedScreenModel.FeedState>(FeedState.In
     }
 
     val feed: StateFlow<List<FeedManager.Feed>> = FeedManager.feedState
+    val hasMore: StateFlow<Boolean> = FeedManager.hasMoreFeedAvailable
 
     private val cacheListener = object : CacheManager.CacheListener {
         override fun startCacheRefresh(stage: CacheManager.Stage) {

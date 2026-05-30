@@ -16,14 +16,20 @@
 
 package cc.sovellus.vrcaa.ui.screen.feed
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -46,7 +52,7 @@ import cc.sovellus.vrcaa.ui.screen.profile.UserProfileScreen
 import cc.sovellus.vrcaa.ui.screen.world.WorldScreen
 
 @Composable
-fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
+fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false, hasMore: Boolean = false) {
     val navigator = LocalNavigator.currentOrThrow
 
     LazyColumn(
@@ -55,7 +61,7 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
             .padding(1.dp),
         state = rememberLazyListState()
     ) {
-        items(feed.reversed())
+        items(feed)
         { item ->
             when (item.type) {
                 FeedManager.FeedType.FRIEND_FEED_ONLINE -> {
@@ -274,6 +280,21 @@ fun FeedList(feed: List<FeedManager.Feed>, filter: Boolean = false) {
                 }
             }
         }
+        if (hasMore) {
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 2.dp, bottom = 2.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button({
+                        FeedManager.loadFeed()
+                    }) {
+                        Text(stringResource(R.string.search_button_more))
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -298,6 +319,7 @@ class FeedScreen : Screen {
     @Composable
     fun ShowScreen(model: FeedScreenModel) {
         val feed = model.feed.collectAsState()
-        FeedList(feed.value)
+        val hasMore = model.hasMore.collectAsState()
+        FeedList(feed.value, hasMore = hasMore.value)
     }
 }
