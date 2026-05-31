@@ -66,12 +66,11 @@ object FeedManager {
 
     fun loadFeed() {
         val feed = DatabaseManager.readFeeds(MAX_FEED_ENTRIES, FEED_OFFSET)
-        if (feed.size < MAX_FEED_ENTRIES) {
+        if (feed.size < MAX_FEED_ENTRIES && feed.isNotEmpty()) {
             hasMoreFeedAvailableFlow.update { false }
-        } else {
-            feedStateFlow.update { current -> current + feed }
-            FEED_OFFSET += MAX_FEED_ENTRIES
         }
+        feedStateFlow.update { current -> current + feed }
+        FEED_OFFSET += MAX_FEED_ENTRIES
     }
 
     init {
