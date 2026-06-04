@@ -1,0 +1,7 @@
+- Now recommended worlds load properly each time
+- Sped up application loading times
+- Added missing group instance type indicators where applicable
+- Changed database backup mime-type from application/octet-stream to application/zip for compatibility across OEMs
+- Implemented feed paging support
+- Updated translations
+- Bug fixes & other minor improvements
