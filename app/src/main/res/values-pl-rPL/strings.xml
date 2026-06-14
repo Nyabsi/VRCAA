@@ -10,8 +10,8 @@
         <item>Strona internetowa</item>
         <item>Niedostępny</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">Twoja prośba znajomości do %1$s została anulowana</string>
+    <string name="friend_toast_friend_request_cancel_failed">Nie udało się anulować prośby znajomości do %1$s</string>
     <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
     <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
     <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
