@@ -1,0 +1,1 @@
+- Fixed VRChat API changes breaking the application
