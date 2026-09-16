@@ -27,6 +27,6 @@ interface IUser {
     suspend fun hideNotification(notificationId: String): Notification?
     suspend fun fetchNotifications(n: Int = 100, offset: Int = 0, notifications: ArrayList<Notification> = arrayListOf()): ArrayList<Notification>
 
-    suspend fun updateProfileByUserId(userId: String, newStatus: String, newDescription: String, newBio: String, newBioLinks: List<String>, newPronouns: String, newAgeVerificationStatus: String?): User?
+    suspend fun updateUser(userId: String, newStatus: String, newDescription: String, newPronouns: String, newAgeVerificationStatus: String?): User?
     suspend fun fetchOwnedAvatars(n: Int = 100, offset: Int = 0, avatars: ArrayList<Avatar> = arrayListOf()): ArrayList<Avatar>
 }

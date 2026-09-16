@@ -5,55 +5,52 @@ import com.google.gson.annotations.SerializedName
 
 data class PartialFriend(
     @SerializedName("ageVerificationStatus")
-    var ageVerificationStatus: String,
+    var ageVerificationStatus: String = "",
     @SerializedName("ageVerified")
-    var ageVerified: Boolean,
+    var ageVerified: Boolean = false,
     @SerializedName("allowAvatarCopying")
-    var allowAvatarCopying: Boolean,
-    @SerializedName("bio")
-    var bio: String,
-    @SerializedName("bioLinks")
-    var bioLinks: List<String>,
-    @SerializedName("currentAvatarImageUrl")
-    var currentAvatarImageUrl: String,
-    @SerializedName("currentAvatarTags")
-    var currentAvatarTags: List<String>,
-    @SerializedName("currentAvatarThumbnailImageUrl")
-    var currentAvatarThumbnailImageUrl: String,
-    @SerializedName("date_joined")
-    var dateJoined: String,
+    var allowAvatarCopying: Boolean = false,
+    @SerializedName("bannerType")
+    var bannerType: String = "",
+    @SerializedName("bannerUrl")
+    var bannerUrl: String = "",
+    var dateJoined: String = "",
     @SerializedName("developerType")
-    var developerType: String,
+    var developerType: String = "",
     @SerializedName("displayName")
-    var displayName: String,
+    var displayName: String = "",
     @SerializedName("friendKey")
-    var friendKey: String,
+    var friendKey: String = "",
+    @SerializedName("iconFrame")
+    var iconFrame: String = "",
+    @SerializedName("iconUrl")
+    var iconUrl: String = "",
     @SerializedName("id")
-    var id: String,
+    var id: String = "",
+    @SerializedName("isEconomyCreator")
+    var isEconomyCreator: Boolean = false,
     @SerializedName("isFriend")
-    var isFriend: Boolean,
+    var isFriend: Boolean = false,
     @SerializedName("last_activity")
-    var lastActivity: String,
+    var lastActivity: String = "",
     @SerializedName("last_login")
-    var lastLogin: String,
+    var lastLogin: String = "",
     @SerializedName("last_mobile")
-    var lastMobile: Any,
+    var lastMobile: Any = Any(),
     @SerializedName("last_platform")
-    var lastPlatform: String,
-    @SerializedName("profilePicOverride")
-    var profilePicOverride: String,
-    @SerializedName("profilePicOverrideThumbnail")
-    var profilePicOverrideThumbnail: String,
+    var lastPlatform: String = "",
+    @SerializedName("nameplateEffect")
+    var nameplateEffect: String = "",
+    @SerializedName("profileEffect")
+    var profileEffect: String = "",
     @SerializedName("pronouns")
-    var pronouns: String,
+    var pronouns: String = "",
     @SerializedName("state")
-    var state: String,
+    var state: String = "",
     @SerializedName("status")
-    var status: String,
+    var status: String = "",
     @SerializedName("statusDescription")
-    var statusDescription: String,
+    var statusDescription: String = "",
     @SerializedName("tags")
-    var tags: List<String>,
-    @SerializedName("userIcon")
-    var userIcon: String
+    var tags: List<String> = listOf()
 )

@@ -113,7 +113,7 @@ class HomeScreen : Screen {
                         ) { friend ->
                             RoundedRowItem(
                                 name = friend.displayName,
-                                url = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
+                                url = friend.iconUrl,
                                 status = friend.status,
                                 onClick = { navigator.parent?.parent?.push(UserProfileScreen(friend.id)) }
                             )

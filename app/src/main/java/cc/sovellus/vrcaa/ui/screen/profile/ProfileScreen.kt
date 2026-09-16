@@ -37,9 +37,11 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.models.Profile
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
+import cc.sovellus.vrcaa.manager.CacheManager
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.misc.Description
 import cc.sovellus.vrcaa.ui.components.misc.SubHeader
@@ -68,7 +70,9 @@ class ProfileScreen : Screen {
     }
 
     @Composable
-    private fun RenderProfile(profile: User) {
+    private fun RenderProfile(profile: Profile) {
+        val user = CacheManager.user.collectAsState().value
+
         LazyColumn(
             modifier = Modifier.padding(16.dp).fillMaxHeight(),
             verticalArrangement = Arrangement.Top,
@@ -77,13 +81,13 @@ class ProfileScreen : Screen {
             item {
                 profile.let {
                     ProfileCard(
-                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarThumbnailImageUrl },
-                        iconUrl = it.userIcon.ifEmpty { it.currentAvatarThumbnailImageUrl },
+                        thumbnailUrl = if (profile.bannerType == "color") { profile.iconUrl.ifEmpty { profile.bannerCustomUrl.ifEmpty { profile.bannerUrl } } } else { profile.bannerCustomUrl.ifEmpty { profile.bannerUrl.ifEmpty { profile.iconUrl } } },
+                        iconUrl = it.iconUrl,
                         displayName = it.displayName,
                         statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
-                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                        trustRankColor = TrustHelper.getTrustRankFromTags(user.tags).toColor(),
                         statusColor = StatusHelper.getStatusFromString(it.status).toColor(),
-                        tags = profile.tags,
+                        tags = user.tags,
                         badges = profile.badges,
                         pronouns = profile.pronouns,
                         ageVerificationStatus = profile.ageVerificationStatus
@@ -106,19 +110,19 @@ class ProfileScreen : Screen {
                         SubHeader(title = stringResource(R.string.profile_label_biography))
                         Description(text = profile.bio)
 
-                        if (profile.lastActivity.isNotEmpty()) {
+                        if (user.lastActivity.isNotEmpty()) {
                             val userTimeZone = TimeZone.getDefault().toZoneId()
                             val formatter = DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
                                 .withLocale(Locale.getDefault())
 
-                            val lastActivity = ZonedDateTime.parse(profile.lastActivity).withZoneSameInstant(userTimeZone).format(formatter)
+                            val lastActivity = ZonedDateTime.parse(user.lastActivity).withZoneSameInstant(userTimeZone).format(formatter)
 
                             SubHeader(title = stringResource(R.string.profile_label_last_activity))
                             Description(text = lastActivity)
                         }
 
                         SubHeader(title = stringResource(R.string.profile_label_date_joined))
-                        Description(text = profile.dateJoined)
+                        Description(text = user.dateJoined)
                     }
                 }
             }

@@ -39,6 +39,7 @@ import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IInventory
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.INotes
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.INotifications
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IPrints
+import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IProfile
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUser
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IUsers
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IWorlds
@@ -80,7 +81,9 @@ import cc.sovellus.vrcaa.api.vrchat.http.models.Notifications
 import cc.sovellus.vrcaa.api.vrchat.http.models.NotificationsV2
 import cc.sovellus.vrcaa.api.vrchat.http.models.Print
 import cc.sovellus.vrcaa.api.vrchat.http.models.Prints
+import cc.sovellus.vrcaa.api.vrchat.http.models.Profile
 import cc.sovellus.vrcaa.api.vrchat.http.models.ProfileUpdate
+import cc.sovellus.vrcaa.api.vrchat.http.models.UserObjectUpdate
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroup
 import cc.sovellus.vrcaa.api.vrchat.http.models.UserGroups
@@ -340,6 +343,8 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
+        // DEPRECATED 15/09/2026, VRChat broke this endpoint and it no longer returns required profile data
+        // we've switched to their new crappy profile API instead
         override suspend fun fetchCurrentUser(): User? {
 
             val result = doRequest(
@@ -1767,20 +1772,16 @@ class HttpClient : BaseClient(), CoroutineScope {
             }
         }
 
-        override suspend fun updateProfileByUserId(
+        override suspend fun updateUser(
             userId: String,
             newStatus: String,
             newDescription: String,
-            newBio: String,
-            newBioLinks: List<String>,
             newPronouns: String,
             newAgeVerificationStatus: String?
         ): User? {
 
-            val update = ProfileUpdate(
+            val update = UserObjectUpdate(
                 ageVerificationStatus = newAgeVerificationStatus,
-                bio = newBio,
-                bioLinks = newBioLinks,
                 status = newStatus,
                 statusDescription = newDescription,
                 pronouns = newPronouns
@@ -1794,7 +1795,7 @@ class HttpClient : BaseClient(), CoroutineScope {
                     append(userId)
                 },
                 headers = GENERIC_HEADER,
-                body = gson.toJson(update, ProfileUpdate::class.java)
+                body = gson.toJson(update, UserObjectUpdate::class.java)
             )
 
             when (result) {
@@ -2150,6 +2151,69 @@ class HttpClient : BaseClient(), CoroutineScope {
                 else -> {
                     handleExceptions(result)
                     arrayListOf()
+                }
+            }
+        }
+    }
+
+    val profile = object : IProfile {
+        override suspend fun fetchProfile(
+            userId: String,
+            asSelf: Boolean,
+            withGroupsAndWorlds: Boolean
+        ): Profile? {
+            val result = doRequest(
+                method = "GET",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/profile/${userId}")
+                    append("?asSelf=${asSelf}")
+                    append("&withGroupsAndWorlds=${withGroupsAndWorlds}")
+                },
+                headers = GENERIC_HEADER,
+                body = null
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return gson.fromJson(result.body, Profile::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
+                }
+            }
+        }
+
+        override suspend fun updateProfile(
+            userId: String,
+            newBio: String,
+            newBioLinks: List<String>
+        ): Profile? {
+
+            val update = ProfileUpdate(
+                bio = newBio,
+                bioLinks = newBioLinks,
+            )
+
+            val result = doRequest(
+                method = "PUT",
+                url = buildString {
+                    append(Config.API_BASE_URL)
+                    append("/profile/")
+                    append(userId)
+                },
+                headers = GENERIC_HEADER,
+                body = gson.toJson(update, ProfileUpdate::class.java)
+            )
+
+            when (result) {
+                is Result.Succeeded -> {
+                    return gson.fromJson(result.body, Profile::class.java)
+                }
+                else -> {
+                    handleExceptions(result)
+                    return null
                 }
             }
         }

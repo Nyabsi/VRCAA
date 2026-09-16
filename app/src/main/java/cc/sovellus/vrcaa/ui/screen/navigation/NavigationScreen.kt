@@ -195,6 +195,7 @@ class NavigationScreen : Screen {
         TabNavigator(tabs[0]) { tabNavigator ->
             val profileSheetState = rememberModalBottomSheetState()
             val profile = CacheManager.profile.collectAsState().value
+            val user = CacheManager.user.collectAsState().value
 
             var isMenuExpanded by remember { mutableStateOf(false) }
             var showProfileSheet by remember { mutableStateOf(false) }
@@ -514,12 +515,10 @@ class NavigationScreen : Screen {
                                             ).show()
                                             scope.launch {
                                                 profile.let {
-                                                    api.user.updateProfileByUserId(
+                                                    api.user.updateUser(
                                                         it.id,
                                                         model.status.value,
                                                         model.description.value,
-                                                        model.bio.value,
-                                                        model.bioLinks,
                                                         model.pronouns.value,
                                                         if (model.ageVerified.value) {
                                                             model.verifiedStatus.value
@@ -527,7 +526,15 @@ class NavigationScreen : Screen {
                                                             null
                                                         }
                                                     )?.let { user ->
-                                                        CacheManager.updateProfile(user)
+                                                        CacheManager.updateUser(user)
+                                                    }
+
+                                                    api.profile.updateProfile(
+                                                        it.id,
+                                                        model.bio.value,
+                                                        model.bioLinks
+                                                    )?.let { profile ->
+                                                        CacheManager.updateProfile(profile)
                                                     }
                                                 }
                                                 profileSheetState.hide()
@@ -787,11 +794,11 @@ class NavigationScreen : Screen {
                                 profile.let {
                                     Box(modifier = Modifier.fillMaxWidth()) {
                                         QuickMenuCard(
-                                            thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                            iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
+                                            thumbnailUrl = it.currentAvatarImageUrl,
+                                            iconUrl = it.currentAvatarImageUrl,
                                             displayName = it.displayName,
                                             statusDescription = it.statusDescription.ifEmpty {  StatusHelper.getStatusFromString(it.status).toString() },
-                                            trustRankColor = TrustHelper.getTrustRankFromTags(it.tags).toColor(),
+                                            trustRankColor = TrustHelper.getTrustRankFromTags(user.tags).toColor(),
                                             statusColor = StatusHelper.getStatusFromString(it.status).toColor()
                                         )
 

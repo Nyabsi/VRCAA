@@ -36,12 +36,6 @@ data class User(
     var ageVerified: Boolean = false,
     @SerializedName("allowAvatarCopying")
     var allowAvatarCopying: Boolean = false,
-    @SerializedName("badges")
-    var badges: List<Badge> = listOf(),
-    @SerializedName("bio")
-    var bio: String = "",
-    @SerializedName("bioLinks")
-    var bioLinks: List<String> = listOf(),
     @SerializedName("contentFilters")
     var contentFilters: List<Any> = listOf(),
     @SerializedName("currentAvatar")
@@ -118,10 +112,6 @@ data class User(
     var picoId: String = "",
     @SerializedName("presence")
     var presence: Presence = Presence(),
-    @SerializedName("profilePicOverride")
-    var profilePicOverride: String = "",
-    @SerializedName("profilePicOverrideThumbnail")
-    var profilePicOverrideThumbnail: String = "",
     @SerializedName("pronouns")
     var pronouns: String = "",
     @SerializedName("receiveMobileInvitations")
@@ -150,8 +140,6 @@ data class User(
     var unsubscribe: Boolean = false,
     @SerializedName("updated_at")
     var updatedAt: String = "",
-    @SerializedName("userIcon")
-    var userIcon: String = "",
     @SerializedName("userLanguage")
     var userLanguage: Any? = Any(),
     @SerializedName("userLanguageCode")

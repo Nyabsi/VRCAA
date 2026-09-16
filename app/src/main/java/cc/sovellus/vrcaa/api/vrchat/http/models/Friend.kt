@@ -22,28 +22,36 @@ import com.google.gson.annotations.SerializedName
 data class Friend(
     @SerializedName("ageVerificationStatus")
     var ageVerificationStatus: String = "",
+    @SerializedName("ageVerified")
+    var ageVerified: Boolean = false,
     @SerializedName("allowAvatarCopying")
     var allowAvatarCopying: Boolean = false,
-    @SerializedName("bio")
-    var bio: String = "",
-    @SerializedName("bioLinks")
-    var bioLinks: List<Any> = listOf(),
-    @SerializedName("currentAvatarImageUrl")
-    var currentAvatarImageUrl: String = "",
-    @SerializedName("currentAvatarTags")
-    var currentAvatarTags: List<Any> = listOf(),
-    @SerializedName("currentAvatarThumbnailImageUrl")
-    var currentAvatarThumbnailImageUrl: String = "",
+    @SerializedName("bannerType")
+    var bannerType: String = "",
+    @SerializedName("bannerUrl")
+    var bannerUrl: String = "",
     @SerializedName("date_joined")
     var dateJoined: String = "",
     @SerializedName("developerType")
     var developerType: String = "",
+    @SerializedName("discordId")
+    var discordId: String = "",
     @SerializedName("displayName")
     var displayName: String = "",
     @SerializedName("friendKey")
     var friendKey: String = "",
+    @SerializedName("friendRequestStatus")
+    var friendRequestStatus: String = "",
+    @SerializedName("iconFrame")
+    var iconFrame: String = "",
+    @SerializedName("iconUrl")
+    var iconUrl: String = "",
     @SerializedName("id")
     var id: String = "",
+    @SerializedName("instanceId")
+    var instanceId: String = "",
+    @SerializedName("isEconomyCreator")
+    var isEconomyCreator: Boolean = false,
     @SerializedName("isFriend")
     var isFriend: Boolean = false,
     @SerializedName("last_activity")
@@ -51,13 +59,19 @@ data class Friend(
     @SerializedName("last_login")
     var lastLogin: String = "",
     @SerializedName("last_mobile")
-    var lastMobile: Any? = Any(),
+    var lastMobile: String = "",
     @SerializedName("last_platform")
     var lastPlatform: String = "",
-    @SerializedName("profilePicOverride")
-    var profilePicOverride: String = "",
-    @SerializedName("profilePicOverrideThumbnail")
-    var profilePicOverrideThumbnail: String = "",
+    @SerializedName("location")
+    var location: String = "",
+    @SerializedName("nameplateEffect")
+    var nameplateEffect: String = "",
+    @SerializedName("note")
+    var note: String = "",
+    @SerializedName("platform")
+    var platform: String = "",
+    @SerializedName("profileEffect")
+    var profileEffect: String = "",
     @SerializedName("pronouns")
     var pronouns: String = "",
     @SerializedName("state")
@@ -68,10 +82,12 @@ data class Friend(
     var statusDescription: String = "",
     @SerializedName("tags")
     var tags: List<String> = listOf(),
-    @SerializedName("userIcon")
-    var userIcon: String = "",
-    @SerializedName("location")
-    var location: String = "",
-    @SerializedName("platform")
-    var platform: String = ""
+    @SerializedName("travelingToInstance")
+    var travelingToInstance: String = "",
+    @SerializedName("travelingToLocation")
+    var travelingToLocation: String = "",
+    @SerializedName("travelingToWorld")
+    var travelingToWorld: String = "",
+    @SerializedName("worldId")
+    var worldId: String = ""
 )

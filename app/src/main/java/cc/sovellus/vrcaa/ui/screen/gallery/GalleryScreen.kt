@@ -135,6 +135,7 @@ class GalleryScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
 
         var previewFile by remember { mutableStateOf<File.Version.File?>(null) }
+        val user = CacheManager.user.collectAsState().value
 
         val pickImage = rememberLauncherForActivityResult(
             ActivityResultContracts.OpenDocument()
@@ -164,7 +165,7 @@ class GalleryScreen : Screen {
                     modifier = Modifier.padding(4.dp),
                     onClick = {
                         CacheManager.profile.value.let { profile ->
-                            if (profile.tags.contains("system_supporter")) {
+                            if (user.tags.contains("system_supporter")) {
                                 pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
                             } else {
                                 Toast.makeText(
