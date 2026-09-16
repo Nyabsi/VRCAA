@@ -79,7 +79,7 @@ class MainActivity : BaseActivity() {
         if (savedInstanceState == null) {
             preferences.timeInBackground = 0
 
-            //GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
+            GlobalExceptionHandler.initialize(applicationContext, CrashActivity::class.java)
             NotificationHelper.createNotificationChannels()
 
             if (preferences.authToken.isNotBlank() && preferences.twoFactorToken.isNotEmpty()) {

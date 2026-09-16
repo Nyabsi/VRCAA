@@ -312,8 +312,7 @@ class PipelineService : Service(), CoroutineScope {
                     launch {
                         PresenceManager.updateStatus(user.user.status)
                     }
-                    // TODO: what does userupdate return in modern age of vrchat?
-                    //CacheManager.updateProfile(user.user)
+                    CacheManager.updateUser(user.user)
                 }
 
                 is FriendDelete -> {
