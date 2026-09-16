@@ -170,14 +170,14 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         profileStateFlow.update {
             JsonHelper.mergeJson(it, profile, Profile::class.java)
         }
-        getListeners().forEach { it.profileUpdated(profile) }
+        getListeners().forEach { it.profileUpdated(this.profile.value) }
     }
 
-    fun updateUser(user: User) {
+    fun <T> updateUser(user: T) {
         userStateFlow.update {
-            JsonHelper.mergeJson(it, user, User::class.java)
+            JsonHelper.mergeDiffJson(it, user, User::class.java)
         }
-        getListeners().forEach { it.userUpdated(user) }
+        getListeners().forEach { it.userUpdated(this.user.value) }
     }
 
     fun addRecentWorld(world: World) {
