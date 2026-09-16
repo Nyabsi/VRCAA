@@ -83,7 +83,7 @@ fun FriendItem(friend: Friend, callback: () -> Unit) {
                         .align(Alignment.CenterHorizontally)
                 ) {
                     GlideImage(
-                        model = friend.userIcon.ifEmpty { friend.profilePicOverride.ifEmpty { friend.currentAvatarImageUrl } },
+                        model = friend.iconUrl,
                         contentDescription = null,
                         modifier = Modifier
                             .size(56.dp)

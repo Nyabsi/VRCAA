@@ -17,6 +17,7 @@
 package cc.sovellus.vrcaa.ui.screen.profile
 
 import cafe.adriel.voyager.core.model.StateScreenModel
+import cc.sovellus.vrcaa.api.vrchat.http.models.Profile
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.manager.CacheManager
 
@@ -25,12 +26,22 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
     sealed class ProfileState {
         data object Init : ProfileState()
         data object Loading : ProfileState()
-        data class Result(val profile: User) : ProfileState()
+        data class Result(val profile: Profile, val user: User) : ProfileState()
     }
 
     private val cacheListener = object : CacheManager.CacheListener {
-        override fun profileUpdated(profile: User) {
-            mutableState.value = ProfileState.Result(profile)
+        override fun profileUpdated(profile: Profile) {
+            val currentState = mutableState.value
+            if (currentState is ProfileState.Result) {
+                mutableState.value = currentState.copy(profile = profile)
+            }
+        }
+
+        override fun userUpdated(user: User) {
+            val currentState = mutableState.value
+            if (currentState is ProfileState.Result) {
+                mutableState.value = currentState.copy(user = user)
+            }
         }
 
         override fun startCacheRefresh() {
@@ -52,7 +63,7 @@ class ProfileScreenModel : StateScreenModel<ProfileScreenModel.ProfileState>(Pro
     }
 
     private fun fetchProfile() {
-        mutableState.value = ProfileState.Result(CacheManager.profile.value)
+        mutableState.value = ProfileState.Result(CacheManager.profile.value, CacheManager.user.value)
     }
 
     override fun onDispose() {

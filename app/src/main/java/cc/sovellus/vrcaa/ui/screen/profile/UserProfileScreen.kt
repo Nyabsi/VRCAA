@@ -75,6 +75,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -88,11 +89,14 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cc.sovellus.vrcaa.R
 import cc.sovellus.vrcaa.api.vrchat.http.interfaces.IFavorites
+import cc.sovellus.vrcaa.api.vrchat.http.models.Friend
 import cc.sovellus.vrcaa.api.vrchat.http.models.Instance
 import cc.sovellus.vrcaa.api.vrchat.http.models.LimitedUser
+import cc.sovellus.vrcaa.api.vrchat.http.models.Profile
 import cc.sovellus.vrcaa.helper.StatusHelper
 import cc.sovellus.vrcaa.helper.TrustHelper
 import cc.sovellus.vrcaa.manager.FavoriteManager
+import cc.sovellus.vrcaa.manager.FriendManager
 import cc.sovellus.vrcaa.ui.components.card.InstanceCard
 import cc.sovellus.vrcaa.ui.components.card.ProfileCard
 import cc.sovellus.vrcaa.ui.components.card.QuickMenuCard
@@ -131,7 +135,7 @@ class UserProfileScreen(
             is UserProfileScreenModel.UserProfileState.Loading -> LoadingIndicatorScreen().Content()
             is UserProfileScreenModel.UserProfileState.Failure -> HandleFailure()
             is UserProfileScreenModel.UserProfileState.Result -> Profile(
-                result.profile, result.instance, model
+                result.profile, result.user, result.instance, model
             )
 
             else -> {}
@@ -162,7 +166,8 @@ class UserProfileScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Profile(
-        profile: LimitedUser?,
+        profile: Profile?,
+        user: LimitedUser?,
         instance: Instance?,
         model: UserProfileScreenModel
     ) {
@@ -280,26 +285,28 @@ class UserProfileScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             item {
-                                profile.let {
-                                    ProfileCard(
-                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                        displayName = it.displayName,
-                                        statusDescription = it.statusDescription.ifEmpty {
-                                            StatusHelper.getStatusFromString(it.status).toString()
-                                        },
-                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
-                                            .toColor(),
-                                        statusColor = StatusHelper.getStatusFromString(it.status)
-                                            .toColor(),
-                                        tags = profile.tags,
+                                profile.let { profile ->
+                                    user?.let { user ->
+                                        ProfileCard(
+                                            thumbnailUrl = if (profile.bannerType == "color") { profile.iconUrl.ifEmpty { profile.bannerCustomUrl.ifEmpty { profile.bannerUrl } } } else { profile.bannerCustomUrl.ifEmpty { profile.bannerUrl.ifEmpty { profile.iconUrl } } },
+                                            iconUrl = profile.iconUrl,
+                                            displayName = profile.displayName,
+                                            statusDescription = profile.statusDescription.ifEmpty {
+                                                StatusHelper.getStatusFromString(user.status).toString()
+                                            },
+                                            trustRankColor = TrustHelper.getTrustRankFromTags(user.tags)
+                                                .toColor(),
+                                            statusColor = StatusHelper.getStatusFromString(user.status)
+                                                .toColor(),
+                                            tags = user.tags,
                                         badges = profile.badges,
                                         pronouns = profile.pronouns,
                                         ageVerificationStatus = profile.ageVerificationStatus,
                                         disablePeek = isQuickMenuExpanded
-                                    ) { url ->
-                                        peekUrl = url
-                                        peekProfilePicture = true
+                                        ) { url ->
+                                            peekUrl = url
+                                            peekProfilePicture = true
+                                        }
                                     }
                                 }
                             }
@@ -311,13 +318,14 @@ class UserProfileScreen(
                                         horizontalAlignment = Alignment.Start,
                                         modifier = Modifier.padding(top = 16.dp)
                                     ) {
-                                        InstanceCard(profile = profile, instance = instance, disabled = isQuickMenuExpanded) {
-                                            navigator.push(WorldScreen(instance.worldId))
+                                        user?.let {
+                                            InstanceCard(profile = user, instance = instance, disabled = isQuickMenuExpanded) {
+                                                navigator.push(WorldScreen(instance.worldId))
+                                            }
                                         }
                                     }
                                 }
                             }
-
 
                             item {
                                 Column(
@@ -334,31 +342,33 @@ class UserProfileScreen(
                                             .defaultMinSize(minHeight = 80.dp)
                                             .widthIn(0.dp, 520.dp),
                                     ) {
-                                        if (profile.note.isNotEmpty()) {
-                                            SubHeader(title = stringResource(R.string.profile_label_note))
-                                            Description(text = profile.note)
+                                        user?.let {
+                                            if (it.note.isNotEmpty()) {
+                                                SubHeader(title = stringResource(R.string.profile_label_note))
+                                                Description(text = it.note)
+                                            }
+
+                                            SubHeader(title = stringResource(R.string.profile_label_biography))
+                                            Description(text = profile.bio)
+
+                                            if (it.lastActivity.isNotEmpty()) {
+                                                val userTimeZone = TimeZone.getDefault().toZoneId()
+                                                val formatter =
+                                                    DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
+                                                        .withLocale(Locale.getDefault())
+
+                                                val lastActivity =
+                                                    ZonedDateTime.parse(it.lastActivity)
+                                                        .withZoneSameInstant(userTimeZone)
+                                                        .format(formatter)
+
+                                                SubHeader(title = stringResource(R.string.profile_label_last_activity))
+                                                Description(text = lastActivity)
+                                            }
+
+                                            SubHeader(title = stringResource(R.string.profile_label_date_joined))
+                                            Description(text = it.dateJoined)
                                         }
-
-                                        SubHeader(title = stringResource(R.string.profile_label_biography))
-                                        Description(text = profile.bio)
-
-                                        if (profile.lastActivity.isNotEmpty()) {
-                                            val userTimeZone = TimeZone.getDefault().toZoneId()
-                                            val formatter =
-                                                DateTimeFormatter.ofLocalizedDateTime(java.time.format.FormatStyle.SHORT)
-                                                    .withLocale(Locale.getDefault())
-
-                                            val lastActivity =
-                                                ZonedDateTime.parse(profile.lastActivity)
-                                                    .withZoneSameInstant(userTimeZone)
-                                                    .format(formatter)
-
-                                            SubHeader(title = stringResource(R.string.profile_label_last_activity))
-                                            Description(text = lastActivity)
-                                        }
-
-                                        SubHeader(title = stringResource(R.string.profile_label_date_joined))
-                                        Description(text = profile.dateJoined)
                                     }
                                 }
                             }
@@ -392,20 +402,22 @@ class UserProfileScreen(
                         LazyColumn {
                             item {
                                 profile.let {
-                                    QuickMenuCard(
-                                        thumbnailUrl = it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl },
-                                        iconUrl = it.userIcon.ifEmpty { it.profilePicOverride.ifEmpty { it.currentAvatarImageUrl } },
-                                        displayName = it.displayName,
-                                        statusDescription = it.statusDescription.ifEmpty {
-                                            StatusHelper.getStatusFromString(
-                                                it.status
-                                            ).toString()
-                                        },
-                                        trustRankColor = TrustHelper.getTrustRankFromTags(it.tags)
-                                            .toColor(),
-                                        statusColor = StatusHelper.getStatusFromString(it.status)
-                                            .toColor()
-                                    )
+                                    user?.let { user ->
+                                        QuickMenuCard(
+                                            thumbnailUrl = it.currentAvatarImageUrl,
+                                            iconUrl = it.currentAvatarImageUrl,
+                                            displayName = it.displayName,
+                                            statusDescription = it.statusDescription.ifEmpty {
+                                                StatusHelper.getStatusFromString(
+                                                    it.status
+                                                ).toString()
+                                            },
+                                            trustRankColor = TrustHelper.getTrustRankFromTags(user.tags)
+                                                .toColor(),
+                                            statusColor = StatusHelper.getStatusFromString(it.status)
+                                                .toColor()
+                                        )
+                                    }
                                 }
                             }
 
@@ -456,29 +468,37 @@ class UserProfileScreen(
                                         }
                                     }
 
-                                    if (profile.isFriend) {
-                                        options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
-                                        icons.add(Icons.Default.NotificationsActive)
-                                        notificationIndex = options.size - 1
-                                    }
+                                    /*
+                                    user?.let {
+                                        if (user.isFriend) {
+                                            options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
+                                            icons.add(Icons.Default.NotificationsActive)
+                                            notificationIndex = options.size - 1
+                                        }
 
-                                    if (profile.isFriend) {
-                                        if (FavoriteManager.isFavorite("friend", profile.id)) {
-                                            options.add(stringResource(R.string.favorite_label_remove))
-                                            icons.add(Icons.Default.Star)
-                                            favoriteIndex = options.size - 1
-                                        } else {
-                                            options.add(stringResource(R.string.favorite_label_add))
-                                            icons.add(Icons.Default.Star)
-                                            favoriteIndex = options.size - 1
+                                        if (user.isFriend) {
+                                            if (FavoriteManager.isFavorite("friend", profile.id)) {
+                                                options.add(stringResource(R.string.favorite_label_remove))
+                                                icons.add(Icons.Default.Star)
+                                                favoriteIndex = options.size - 1
+                                            } else {
+                                                options.add(stringResource(R.string.favorite_label_add))
+                                                icons.add(Icons.Default.Star)
+                                                favoriteIndex = options.size - 1
+                                            }
                                         }
                                     }
 
+                                     */
+
+                                    /*
                                     if (instance != null) {
                                         options.add(stringResource(R.string.user_overlay_invite))
                                         icons.add(Icons.Default.Navigation)
                                         inviteIndex = options.size - 1
                                     }
+
+                                     */
 
                                     options.add(stringResource(R.string.user_overlay_note))
                                     icons.add(Icons.AutoMirrored.Filled.Notes)
@@ -644,7 +664,7 @@ class UserProfileScreen(
 
                                                         avatarIndex -> {
                                                             model.findAvatar { avatarId ->
-                                                                if (profile.profilePicOverride.isNotEmpty()) {
+                                                                if (profile.iconUrl.isNotEmpty()) {
                                                                     Toast.makeText(
                                                                         context,
                                                                         context.getString(R.string.profile_user_avatar_unreachable),

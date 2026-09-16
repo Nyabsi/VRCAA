@@ -59,7 +59,7 @@ data class World(
     @SerializedName("unityPackages")
     var unityPackages: List<UnityPackage> = listOf(),
     @SerializedName("updated_at")
-    var updatedAt: String = "",
+    var updatedAt: String? = "",
     @SerializedName("urlList")
     var urlList: List<String> = listOf(),
     @SerializedName("version")
@@ -75,7 +75,7 @@ data class World(
         @SerializedName("assetVersion")
         var assetVersion: Int = 0,
         @SerializedName("created_at")
-        var createdAt: String = "",
+        var createdAt: String? = "",
         @SerializedName("id")
         var id: String = "",
         @SerializedName("platform")

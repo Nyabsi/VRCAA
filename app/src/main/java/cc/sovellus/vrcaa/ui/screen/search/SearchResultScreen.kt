@@ -505,7 +505,7 @@ class SearchResultScreen(
                     items(state.value) { user ->
                         GridItem(
                             name = user.displayName,
-                            url = user.profilePicOverride.ifEmpty { user.currentAvatarImageUrl },
+                            url = user.iconUrl,
                             count = null
                         ) {
                             navigator.push(UserProfileScreen(user.id))

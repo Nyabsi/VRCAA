@@ -152,6 +152,7 @@ class EmojisScreen : Screen {
     ) {
         val navigator = LocalNavigator.currentOrThrow
         var showEmojiDialog by remember { mutableStateOf(false) }
+        val user = CacheManager.user.collectAsState().value
 
         if (showEmojiDialog) {
             EmojiUploadConfigDialog(
@@ -196,7 +197,7 @@ class EmojisScreen : Screen {
                     modifier = Modifier.padding(4.dp),
                     onClick = {
                         CacheManager.profile.value.let { profile ->
-                            if (profile.tags.contains("system_supporter")) {
+                            if (user.tags.contains("system_supporter")) {
                                 pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
                             } else {
                                 Toast.makeText(

@@ -138,6 +138,8 @@ class PrintsScreen : Screen {
         var previewFile by remember { mutableStateOf<Print.Files?>(null) }
         var showPrintDialog by remember { mutableStateOf(false) }
 
+        val user = CacheManager.user.collectAsState().value
+
         if (showPrintDialog) {
             PrintUploadConfigDialog(
                 onDismiss = {
@@ -181,7 +183,7 @@ class PrintsScreen : Screen {
                     modifier = Modifier.padding(4.dp),
                     onClick = {
                         CacheManager.profile.value.let { profile ->
-                            if (profile.tags.contains("system_supporter")) {
+                            if (user.tags.contains("system_supporter")) {
                                 pickImage.launch(arrayOf("image/png", "image/jpeg", "image/gif"))
                             } else {
                                 Toast.makeText(

@@ -18,6 +18,7 @@ package cc.sovellus.vrcaa.manager
 
 import cc.sovellus.vrcaa.App
 import cc.sovellus.vrcaa.R
+import cc.sovellus.vrcaa.api.vrchat.http.models.Profile
 import cc.sovellus.vrcaa.api.vrchat.http.models.User
 import cc.sovellus.vrcaa.api.vrchat.http.models.World
 import cc.sovellus.vrcaa.base.BaseManager
@@ -41,7 +42,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     interface CacheListener {
         fun startCacheRefresh() { }
         fun endCacheRefresh() { }
-        fun profileUpdated(profile: User) { }
+        fun profileUpdated(profile: Profile) { }
+        fun userUpdated(user: User) { }
     }
 
     data class WorldCache(
@@ -50,7 +52,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         val thumbnailUrl: String = "",
     )
 
-    private var profileStateFlow = MutableStateFlow(User())
+    private var userStateFlow = MutableStateFlow(User())
+    private var profileStateFlow = MutableStateFlow(Profile())
     private var worldListStateFlow = MutableStateFlow(emptyList<WorldCache>())
     private val recentWorldsStateFlow = MutableStateFlow<List<WorldCache>>(emptyList())
     private val recommendedWorldsStateFlow = MutableStateFlow<List<World>>(emptyList())
@@ -58,7 +61,8 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
     val recentWorldsState: StateFlow<List<WorldCache>> = recentWorldsStateFlow.asStateFlow()
     val recommendedWorldsState: StateFlow<List<World>> = recommendedWorldsStateFlow.asStateFlow()
     val worldList: StateFlow<List<WorldCache>> = worldListStateFlow.asStateFlow()
-    val profile: StateFlow<User> = profileStateFlow.asStateFlow()
+    val profile: StateFlow<Profile> = profileStateFlow.asStateFlow()
+    val user: StateFlow<User> = userStateFlow.asStateFlow()
 
     private var isCacheBuilt = AtomicBoolean(false)
 
@@ -72,7 +76,12 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         isCacheBuilt.exchange(false)
         getListeners().forEach { it.startCacheRefresh() }
 
-        val user = async { api.auth.fetchCurrentUser() }
+        val userFetch = api.auth.fetchCurrentUser()
+        if (userFetch != null) {
+            userStateFlow.value = userFetch
+        }
+
+        val profile = async { api.profile.fetchProfile(userFetch?.id ?: "", asSelf = true, withGroupsAndWorlds = false) }
 
         val onlineFriends = async { api.friends.fetchFriends(false) }
         val offlineFriends = async { api.friends.fetchFriends(true) }
@@ -87,7 +96,7 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
 
         val jobs = listOf(
             launch {
-                user.await()?.let { profileStateFlow.value = it }
+                profile.await()?.let { profileStateFlow.value = it }
             },
 
             launch {
@@ -157,10 +166,18 @@ object CacheManager : BaseManager<CacheManager.CacheListener>() {
         }
     }
 
-    fun updateProfile(profile: User) {
+    fun updateProfile(profile: Profile) {
         profileStateFlow.update {
-            JsonHelper.mergeJson(it, profile, User::class.java)
+            JsonHelper.mergeJson(it, profile, Profile::class.java)
         }
+        getListeners().forEach { it.profileUpdated(profile) }
+    }
+
+    fun updateUser(user: User) {
+        userStateFlow.update {
+            JsonHelper.mergeJson(it, user, User::class.java)
+        }
+        getListeners().forEach { it.userUpdated(user) }
     }
 
     fun addRecentWorld(world: World) {
