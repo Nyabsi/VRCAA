@@ -404,8 +404,8 @@ class UserProfileScreen(
                                 profile.let {
                                     user?.let { user ->
                                         QuickMenuCard(
-                                            thumbnailUrl = it.currentAvatarImageUrl,
-                                            iconUrl = it.currentAvatarImageUrl,
+                                            thumbnailUrl = if (profile.bannerType == "color") { profile.iconUrl.ifEmpty { profile.bannerCustomUrl.ifEmpty { profile.bannerUrl } } } else { profile.bannerCustomUrl.ifEmpty { profile.bannerUrl.ifEmpty { profile.iconUrl } } },
+                                            iconUrl = profile.iconUrl,
                                             displayName = it.displayName,
                                             statusDescription = it.statusDescription.ifEmpty {
                                                 StatusHelper.getStatusFromString(
