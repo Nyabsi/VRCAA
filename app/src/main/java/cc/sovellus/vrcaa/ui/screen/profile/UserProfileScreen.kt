@@ -468,7 +468,6 @@ class UserProfileScreen(
                                         }
                                     }
 
-                                    /*
                                     user?.let {
                                         if (user.isFriend) {
                                             options.add(stringResource(R.string.profile_user_dropdown_manage_notifications))
@@ -489,16 +488,11 @@ class UserProfileScreen(
                                         }
                                     }
 
-                                     */
-
-                                    /*
                                     if (instance != null) {
                                         options.add(stringResource(R.string.user_overlay_invite))
                                         icons.add(Icons.Default.Navigation)
                                         inviteIndex = options.size - 1
                                     }
-
-                                     */
 
                                     options.add(stringResource(R.string.user_overlay_note))
                                     icons.add(Icons.AutoMirrored.Filled.Notes)
