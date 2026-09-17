@@ -59,7 +59,7 @@ data class Friend(
     @SerializedName("last_login")
     var lastLogin: String = "",
     @SerializedName("last_mobile")
-    var lastMobile: String = "",
+    var lastMobile: String? = "",
     @SerializedName("last_platform")
     var lastPlatform: String = "",
     @SerializedName("location")
