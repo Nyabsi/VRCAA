@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.VRCAA"
+        android:largeHeap="true"
+        tools:targetApi="s"
+        >
+
+        <activity
+            android:name=".activity.CrashActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:theme="@style/Theme.VRCAA"
+            android:fitsSystemWindows="true">
+        </activity>
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:exported="true"
+            android:theme="@style/Theme.VRCAA"
+            android:fitsSystemWindows="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.PeekActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:exported="true">
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="vrchat.com"/>
+                <data android:pathPrefix="/home/"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.SafeTrampolineActivity"
+            android:exported="true"
+            android:enabled="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:launchMode="singleInstance"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="androidx.glance.appwidget.action.INVISIBLE_ACTION_TRAMPOLINE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".service.PipelineService"
+            android:foregroundServiceType="specialUse"/>
+
+        <service
+            android:name=".service.RichPresenceService"
+            android:foregroundServiceType="specialUse"/>
+    </application>
+</manifest>
