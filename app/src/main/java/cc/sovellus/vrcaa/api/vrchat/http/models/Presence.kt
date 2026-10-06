@@ -23,7 +23,7 @@ data class Presence(
     @SerializedName("avatarThumbnail")
     var avatarThumbnail: String = "",
     @SerializedName("currentAvatarTags")
-    var currentAvatarTags: List<Any> = listOf(),
+    var currentAvatarTags: String? = "",
     @SerializedName("debugflag")
     var debugflag: String = "",
     @SerializedName("displayName")
