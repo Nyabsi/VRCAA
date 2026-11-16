@@ -57,9 +57,9 @@
     <!-- Search -->
     <string name="search_text_result">Resultados de</string>
     <string name="search_filter_label_count">Quantidade</string>
-    <string name="search_filter_label_platform">Platform</string>
-    <string name="search_filter_label_content_gating">Content Gating</string>
-    <string name="search_filter_label_performance_rank">Performance Rank</string>
+    <string name="search_filter_label_platform">Plataforma</string>
+    <string name="search_filter_label_content_gating">Filtragem de Conteúdo</string>
+    <string name="search_filter_label_performance_rank">Ranking de Performance</string>
     <string name="copy_id_label">Copiar ID</string>
     <string name="copied_toast">ID de %1$s copiado com sucesso.</string>
     <string name="search_filter_button_reset">Redefinir</string>
@@ -94,8 +94,8 @@
     <string name="world_title_favorites">Favoritos</string>
     <string name="world_title_capacity">Capacidade</string>
     <string name="world_title_occupants">Ocupantes</string>
-    <string name="world_title_time_spent">Time Spent</string>
-    <string name="world_description_no_data_time_spent">No data available.</string>
+    <string name="world_title_time_spent">Tempo Gasto</string>
+    <string name="world_description_no_data_time_spent">Não há dados disponíveis.</string>
     <string name="world_title_publication_date">Data de Publicação</string>
     <string name="world_title_heat">Calor</string>
     <string name="world_title_popularity">Popularidade</string>

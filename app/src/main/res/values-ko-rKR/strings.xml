@@ -10,19 +10,19 @@
         <item>웹사이트</item>
         <item>오프라인</item>
     </string-array>
-    <string name="friend_toast_friend_request_cancelled">Your friend request for %1$s was cancelled.</string>
-    <string name="friend_toast_friend_request_cancel_failed">Failed to cancel friend request for %1$s.</string>
-    <string name="friend_toast_friend_removed">Removed %1$s from your friend list.</string>
-    <string name="friend_toast_friend_remove_failed">Failed to remove %1$s from your friend list.</string>
-    <string name="friend_toast_friend_requested">Your friend request was sent to %1$s.</string>
-    <string name="friend_toast_friend_request_failed">Failed to send friend request for %1$s.</string>
-    <string name="friend_toast_friend_request_accepted">Accepted friend request from %1$s.</string>
-    <string name="friend_toast_friend_request_accept_failed">Failed to accept friend request for %1$s.</string>
+    <string name="friend_toast_friend_request_cancelled">%1$s님의 친구 요청이 취소되었습니다.</string>
+    <string name="friend_toast_friend_request_cancel_failed">%1$s님의 친구 요청을 취소하는 데 실패했습니다.</string>
+    <string name="friend_toast_friend_removed">%1$s님을 친구 목록에서 제거했습니다.</string>
+    <string name="friend_toast_friend_remove_failed">%1$s님을 친구 목록에서 제거하는 데 실패했습니다.</string>
+    <string name="friend_toast_friend_requested">%1$s님에게 친구 요청을 보냈습니다.</string>
+    <string name="friend_toast_friend_request_failed">%1$s님에게 친구 요청을 보내는 데 실패했습니다.</string>
+    <string name="friend_toast_friend_request_accepted">%1$s님의 친구 요청을 수락했습니다.</string>
+    <string name="friend_toast_friend_request_accept_failed">%1$s님의 친구 요청을 수락하는 데 실패했습니다.</string>
     <!-- Home -->
     <string name="home_active_friends">온라인 친구</string>
     <string name="home_recently_visited">최근 방문</string>
     <string name="home_friend_locations">친구 위치</string>
-    <string name="home_curated_for_you">Curated For You</string>
+    <string name="home_curated_for_you">나를 위한 추천</string>
     <!-- Login -->
     <string name="login_text">VRC Android Assistant에 로그인</string>
     <string name="login_label_username">닉네임 혹은 이메일</string>
@@ -31,10 +31,10 @@
     <string name="login_toast_wrong_credentials">닉네임 또는 비밀번호가 올바르지 않습니다.</string>
     <string name="login_toast_wrong_code">코드를 다시 한 번 확인해 주세요.</string>
     <!-- Onboarding -->
-    <string name="onboarding_title">Let\'s get started!</string>
-    <string name="onboarding_description">Stay connected to your VRChat world. Manage your profile, keep up with friends, and never miss what’s happening — all from your Android device.</string>
-    <string name="onboarding_permissions_title">You might need to grant permissions.</string>
-    <string name="onboarding_permissions_description">Enable notifications to receive friend updates and activity alerts in real time.</string>
+    <string name="onboarding_title">시작해 봅시다!</string>
+    <string name="onboarding_description">VRChat 월드에 연결한 상태를 유지하세요. Android 기기에서 프로필을 관리하고, 친구들과 소통하고, 무슨 일이 일어나고 있는지 놓치치 마세요.</string>
+    <string name="onboarding_permissions_title">권한을 부여해야 할 수 있습니다.</string>
+    <string name="onboarding_permissions_description">알림을 활성화해서 친구 업데이트와 활동 알림을 실시간으로 받으세요.</string>
     <!-- Two Auth -->
     <string name="auth_text_email">이메일로 전송된 숫자 코드를 입력하세요</string>
     <string name="auth_text_app">인증 앱의 코드를 입력해 주세요.</string>
@@ -53,13 +53,13 @@
     <string name="profile_user_not_found_message">유저를 찾을 수 없습니다.</string>
     <string name="profile_user_avatar_private">비공개 아바타입니다.</string>
     <string name="profile_user_avatar_unreachable">아바타를 찾을 수 없습니다.</string>
-    <string name="profile_user_note_dialog_title">Set Note</string>
+    <string name="profile_user_note_dialog_title">메모 설정</string>
     <!-- Search -->
     <string name="search_text_result">검색 결과:</string>
     <string name="search_filter_label_count">표시 수</string>
-    <string name="search_filter_label_platform">Platform</string>
-    <string name="search_filter_label_content_gating">Content Gating</string>
-    <string name="search_filter_label_performance_rank">Performance Rank</string>
+    <string name="search_filter_label_platform">플랫폼</string>
+    <string name="search_filter_label_content_gating">콘텐츠 필터링</string>
+    <string name="search_filter_label_performance_rank">성능 등급</string>
     <string name="copy_id_label">ID 복사</string>
     <string name="copied_toast">%1$s의 ID를 복사했습니다.</string>
     <string name="search_filter_button_reset">초기화</string>
